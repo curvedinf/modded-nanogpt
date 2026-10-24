@@ -1,0 +1,237 @@
+{
+  "updated_utc": "2026-10-24T22:14:05.512850+00:00",
+  "scope": "Completed PR393 MoE KS3 runs with measured full-validation CE<=3.68, sorted by complete elapsed wall time. These are sampled endpoints, not continuous time-to-loss estimates.",
+  "comparison_rule": "Compare compatible losses at comparable elapsed wall times. Do not infer a same-time loss from an endpoint at a different time. Preserve the below5 and one-sided+0.01 pruning rule.",
+  "measurement": "First10485760 validation tokens, canonical full-vocabulary CPLM. Complete wall includes setup, training, evaluations and shutdown. Per-observation wall_seconds marks evaluation completion.",
+  "control": {
+    "manifest": "configs/control393/control_set.json",
+    "best": {
+      "run_id": "009-pr393-moe-control-seed11",
+      "directory": "/root/modded-nanogpt/logs/control393/runs/009-pr393-moe-control-seed11",
+      "seed": 11,
+      "val_loss": 3.683013308048248,
+      "complete_wall_seconds": 451.5819543519974,
+      "time_to_target_seconds": 449.5802990489974,
+      "validation_tokens": 10485760
+    },
+    "mean_complete_wall_seconds": 452.2906052219987,
+    "limitation": "Frozen MLP control training attention was later found defective; its canonical validation remains recorded. Later KS3 runs use corrected attention and newer systems optimizations. These results do not isolate block speed or architecture advantage."
+  },
+  "reproduction": "Config snapshots are exact artifacts/config.json from each run and include its schedule and implementation flags. Historical source archives remain local at original_artifacts/source.tar.gz and are identified by SHA256; current repository code has evolved. Dataset, checkpoints and source archives are not uploaded in this log.",
+  "excluded": "Old3.793633 target hits (#98/#101), pilots, partial validation, failed/pruned trials and extrapolated outcomes are excluded from this ranking.",
+  "runs": [
+    {
+      "run_id": "run-000169-moe-ks3-async-mid96k",
+      "seed": 0,
+      "config": "research_results/ks3/configs/run-000169-moe-ks3-async-mid96k.json",
+      "config_sha256": "47e7bd0f23b3da289d559280de777b0d5b9fbca74a8041afb2d6301e54fea091",
+      "validation_loss": 3.6713224172592165,
+      "complete_wall_seconds": 341.06394463099423,
+      "first_measured_target_seconds": 338.06739271500555,
+      "validation_tokens": 10485760,
+      "ffn_parameters": 84899840,
+      "measurements": [
+        {
+          "val_loss": 3.6713224172592165,
+          "wall_seconds": 338.06739271500555,
+          "val_tokens": 10485760,
+          "weights": "raw",
+          "evaluation_seconds": 36.546390495001106,
+          "evaluation_signature": {
+            "loss_definition": "pr393-cplm-full10485760-canonical-final-yarn-v1",
+            "val_tokens": 10485760,
+            "attention_windows": [
+              768,
+              2560
+            ]
+          }
+        }
+      ],
+      "finished_utc": "2026-10-24T21:51:31.707793+00:00",
+      "source_archive_sha256": "d20c0d783cde9bfd73f73d93269da8f49f6667ee31066f01502485f9ffb49273",
+      "original_artifacts": "logs/ks3-autoresearch/runs/run-000169-moe-ks3-async-mid96k/artifacts",
+      "attention_status": "corrected attention verified against original SDPA and independent FP64 reference",
+      "replication": "single seed; not a replicated recipe result"
+    },
+    {
+      "run_id": "run-000157-moe-ks3-corrected-attention",
+      "seed": 0,
+      "config": "research_results/ks3/configs/run-000157-moe-ks3-corrected-attention.json",
+      "config_sha256": "9ce2c9d1af6724362f674b2d6e8c8cbd467e7032aba2e0265addc6af85f585a2",
+      "validation_loss": 3.6626537322998045,
+      "complete_wall_seconds": 362.20287117200496,
+      "first_measured_target_seconds": 359.4841626740017,
+      "validation_tokens": 10485760,
+      "ffn_parameters": 84899840,
+      "measurements": [
+        {
+          "val_loss": 3.6626537322998045,
+          "wall_seconds": 359.4841626740017,
+          "val_tokens": 10485760,
+          "weights": "raw",
+          "evaluation_seconds": 37.79142615599994,
+          "evaluation_signature": {
+            "loss_definition": "pr393-cplm-full10485760-canonical-final-yarn-v1",
+            "val_tokens": 10485760,
+            "attention_windows": [
+              768,
+              2560
+            ]
+          }
+        }
+      ],
+      "finished_utc": "2026-10-24T20:55:51.613584+00:00",
+      "source_archive_sha256": "8a49c878a41e4ff13073e07d66503ab98a133b89cb85d22c9c6fb1d552641f1f",
+      "original_artifacts": "logs/ks3-autoresearch/runs/run-000157-moe-ks3-corrected-attention/artifacts",
+      "attention_status": "corrected attention verified against original SDPA and independent FP64 reference",
+      "replication": "single seed; not a replicated recipe result"
+    },
+    {
+      "run_id": "run-000138-moe-ks3-mid112k",
+      "seed": 0,
+      "config": "research_results/ks3/configs/run-000138-moe-ks3-mid112k.json",
+      "config_sha256": "857ad512e20fe7884e2b5fd592aebabb9ab375e1276c2ca6ac556d786a44260c",
+      "validation_loss": 3.637467747926712,
+      "complete_wall_seconds": 390.67561044600006,
+      "first_measured_target_seconds": 387.89125117200456,
+      "validation_tokens": 10485760,
+      "ffn_parameters": 84899840,
+      "measurements": [
+        {
+          "val_loss": 3.637467747926712,
+          "wall_seconds": 387.89125117200456,
+          "val_tokens": 10485760,
+          "weights": "raw",
+          "evaluation_seconds": 37.511110425999505,
+          "evaluation_signature": {
+            "loss_definition": "pr393-cplm-full10485760-canonical-final-yarn-v1",
+            "val_tokens": 10485760,
+            "attention_windows": [
+              768,
+              2560
+            ]
+          }
+        }
+      ],
+      "finished_utc": "2026-10-24T19:56:59.575316+00:00",
+      "source_archive_sha256": "56e6d5b2bd6d8812d41287bb79173cc76541b7f21ea109f5d409d0e78d1510bc",
+      "original_artifacts": "logs/ks3-autoresearch/runs/run-000138-moe-ks3-mid112k/artifacts",
+      "attention_status": "historical training attention later found defective; canonical validation retained",
+      "replication": "single seed; not a replicated recipe result"
+    },
+    {
+      "run_id": "run-000123-moe-ks3-trainbucket-mid72k",
+      "seed": 0,
+      "config": "research_results/ks3/configs/run-000123-moe-ks3-trainbucket-mid72k.json",
+      "config_sha256": "895bb70ef2007fe720b0097f02da7de2d4c1b751af2f02dceda6e686163b9962",
+      "validation_loss": 3.669927328824997,
+      "complete_wall_seconds": 398.9255752789977,
+      "first_measured_target_seconds": 396.6697122820042,
+      "validation_tokens": 10485760,
+      "ffn_parameters": 84899840,
+      "measurements": [
+        {
+          "val_loss": 3.669927328824997,
+          "wall_seconds": 396.6697122820042,
+          "val_tokens": 10485760,
+          "weights": "raw",
+          "evaluation_seconds": 46.24704316000134,
+          "evaluation_signature": {
+            "loss_definition": "pr393-cplm-full10485760-canonical-final-yarn-v1",
+            "val_tokens": 10485760,
+            "attention_windows": [
+              768,
+              2560
+            ]
+          }
+        }
+      ],
+      "finished_utc": "2026-10-24T18:51:51.310461+00:00",
+      "source_archive_sha256": "8e883a13053c497a9d0a35de6c145bec8eaf307a852df135de073a9f7efb99c2",
+      "original_artifacts": "logs/ks3-autoresearch/runs/run-000123-moe-ks3-trainbucket-mid72k/artifacts",
+      "attention_status": "historical training attention later found defective; canonical validation retained",
+      "replication": "single seed; not a replicated recipe result"
+    },
+    {
+      "run_id": "run-000120-moe-ks3-trainbucket-mid80k",
+      "seed": 0,
+      "config": "research_results/ks3/configs/run-000120-moe-ks3-trainbucket-mid80k.json",
+      "config_sha256": "bc0187d8cdc84e3ceeacae6739e9ae4de0a680d54a37e6c659aad9e4a50d4371",
+      "validation_loss": 3.6312945663928984,
+      "complete_wall_seconds": 428.89920416600216,
+      "first_measured_target_seconds": 426.6812150199985,
+      "validation_tokens": 10485760,
+      "ffn_parameters": 84899840,
+      "measurements": [
+        {
+          "val_loss": 3.6312945663928984,
+          "wall_seconds": 426.6812150199985,
+          "val_tokens": 10485760,
+          "weights": "raw",
+          "evaluation_seconds": 46.077527893998194,
+          "evaluation_signature": {
+            "loss_definition": "pr393-cplm-full10485760-canonical-final-yarn-v1",
+            "val_tokens": 10485760,
+            "attention_windows": [
+              768,
+              2560
+            ]
+          }
+        }
+      ],
+      "finished_utc": "2026-10-24T18:36:27.878708+00:00",
+      "source_archive_sha256": "20910187f2c690778ddd91c2eacc44a4214e60c3135c831785ecd4f1602b3764",
+      "original_artifacts": "logs/ks3-autoresearch/runs/run-000120-moe-ks3-trainbucket-mid80k/artifacts",
+      "attention_status": "historical training attention later found defective; canonical validation retained",
+      "replication": "single seed; not a replicated recipe result"
+    },
+    {
+      "run_id": "run-000112-moe-ks3-c1024-mid96k",
+      "seed": 0,
+      "config": "research_results/ks3/configs/run-000112-moe-ks3-c1024-mid96k.json",
+      "config_sha256": "223b5b6ca3bea21b9e2023542836cb55ff2c58d965fc4caa640934592a6ada3f",
+      "validation_loss": 3.611097002029419,
+      "complete_wall_seconds": 523.722837219997,
+      "first_measured_target_seconds": 521.2013737980014,
+      "validation_tokens": 10485760,
+      "ffn_parameters": 84899840,
+      "measurements": [
+        {
+          "val_loss": 3.685123789310455,
+          "wall_seconds": 407.1777777620009,
+          "val_tokens": 10485760,
+          "weights": "raw",
+          "evaluation_seconds": 46.21603927099932,
+          "evaluation_signature": {
+            "loss_definition": "pr393-cplm-full10485760-canonical-final-yarn-v1",
+            "val_tokens": 10485760,
+            "attention_windows": [
+              768,
+              2560
+            ]
+          }
+        },
+        {
+          "val_loss": 3.611097002029419,
+          "wall_seconds": 521.2013737980014,
+          "val_tokens": 10485760,
+          "weights": "raw",
+          "evaluation_seconds": 41.083898436998425,
+          "evaluation_signature": {
+            "loss_definition": "pr393-cplm-full10485760-canonical-final-yarn-v1",
+            "val_tokens": 10485760,
+            "attention_windows": [
+              768,
+              2560
+            ]
+          }
+        }
+      ],
+      "finished_utc": "2026-10-24T17:58:49.777537+00:00",
+      "source_archive_sha256": "1fb980e2882ce9b2f288dfcb1097cddcac938c54af79e997c41e4620169d2997",
+      "original_artifacts": "logs/ks3-autoresearch/runs/run-000112-moe-ks3-c1024-mid96k/artifacts",
+      "attention_status": "historical training attention later found defective; canonical validation retained",
+      "replication": "single seed; not a replicated recipe result"
+    }
+  ]
+}
