@@ -1,0 +1,39 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    65536,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 880.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000023-gathered-attn-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Training-head systems ablation: share candidate-weight gather across all loss slabs and increase slab1024->4096, on fastest verified gathered8 attention and incumbent ML recipe. Full evaluation delegates unchanged to original loss path.29 CPU checks pass incl sampled/full CE, MTP/prefix shifts across slab boundaries, absent prefixes, dense reference, gradients and evaluation; tightened FP32 relative error check also passes. Registered GPU numerical/memory/timing pilot required. Independent-seed incumbent replication25 was screened at338.918182s (+.050393) and did not supply independent full validation; preserve exploratory incumbent.",
+  "attention_backend": "gathered_sdpa8",
+  "lr_stage_scales": [
+    0.9,
+    0.9,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "loss_backend": "shared_gather",
+  "loss_slab_tokens": 4096,
+  "verify_loss_head": true
+}

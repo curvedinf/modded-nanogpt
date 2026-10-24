@@ -1,0 +1,9 @@
+{
+  "updated_utc": "2026-10-24T17:18:20.459943+00:00",
+  "status": "resume_authorized",
+  "resume_requires_user_instruction": false,
+  "target_val_loss": 3.68,
+  "control_complete_wall_seconds": 451.5819543519974,
+  "control_actual_val_loss": 3.683013308048248,
+  "note": "User corrected objective to about 3.68 in 451 seconds. Prior KS3 results at 3.793633 are not matched-loss wins. Preserve historical measurements; require target/config/runner correction before any authorized resume."
+}

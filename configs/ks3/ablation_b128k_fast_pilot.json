@@ -1,0 +1,55 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    131072,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 500.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000060-both-projections-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Increase primary batch65536->131072 to improve GPU GEMM throughput and amortize optimizer launches; preserved early/tail batches,base1044,stageLRs,geometry.125 and verified bothBLAS/fusedattention. Increase primary candidates to18432 for larger real targetset; true batch/vocabulary logged, honest comparison eligibility unchanged. Exact CPU streamcapacity audit and new registered timing/memory/finite pilot required. Projected peak~180GiB from64/96k data, measuredpilot decides fit. SamecanonicalFULL500s/180s, unboundedsurvivors. Preliminary CPU audit1033batches max17687 fits18432; confirm CandidateBuilder coverage with this final budget beforelaunch.",
+  "attention_backend": "gathered_sdpa32_fused",
+  "lr_stage_scales": [
+    0.9,
+    0.9,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "loss_backend": "shared_gather",
+  "loss_slab_tokens": 4096,
+  "ks3_backward": "fp32_blas_all",
+  "sampled_candidates": [
+    [
+      10240
+    ],
+    [
+      10240
+    ],
+    [
+      18432,
+      18432,
+      24576
+    ],
+    [],
+    []
+  ],
+  "ks3_forward": "blas_both"
+}

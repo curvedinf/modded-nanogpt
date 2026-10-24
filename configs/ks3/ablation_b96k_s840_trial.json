@@ -1,0 +1,54 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    98304,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 840,
+  "first_validation_seconds": 720.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000032-b96k-p16k-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Schedule compression ablation after run33 canonical CE3.737198 at907.635784s (complete909.965907s): base900->840 (-6.67%) and first full800->720s,180s cadence thereafter. The prior run overshot target by.056435 after crossing its horizon at738.326s and continuing224 updates; test whether less initial stage training and earlier full measurement preserve target while lowering actual wall time. Same1536rank1/98304 batch/16384->24576 sampling/fast BLAS,gathered,sharedhead/LR scales/seed0. Reuse architecture-identical run32 pilot; CPU audit new exact continuous batch positions. Horizon912 never stops training; honest dynamic-best comparability unchanged.",
+  "attention_backend": "gathered_sdpa8",
+  "lr_stage_scales": [
+    0.9,
+    0.9,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "loss_backend": "shared_gather",
+  "loss_slab_tokens": 4096,
+  "ks3_backward": "fp32_blas",
+  "sampled_candidates": [
+    [
+      10240
+    ],
+    [
+      10240
+    ],
+    [
+      16384,
+      16384,
+      24576
+    ],
+    [],
+    []
+  ]
+}

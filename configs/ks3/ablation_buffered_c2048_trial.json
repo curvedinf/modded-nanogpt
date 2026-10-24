@@ -1,0 +1,29 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 2048,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    49152,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 1200.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000012-buffered-c2048-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Combine measured attention-buffer speedup with2048 rank1 charts (+33% FFN capacity). Buffered1536 run11 improved most eligible training-proxy observations but was screened at784.016s on first +.024542 gap; no full validation. Prior2048 original-attention run7 improved77 early comparable observations with only3.8% main-stage cost. Test whether added capacity plus the measured systems speedup improves loss/time enough to survive screening. Backend numerical checks already passed run10; new architecture/backend timing pilot required. Registered combined pilot passed finite/stage/split/geometry checks; use actual run12 timings. Full trial preserves current pruning and target-only survivor termination.",
+  "attention_backend": "buffered_sdpa"
+}

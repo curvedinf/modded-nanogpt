@@ -1,0 +1,36 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    65536,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 880.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000023-gathered-attn-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Full systems ablation of incumbent run21: gathered_sdpa8 replaces per-chunk packing copies with batched Q/K/V gathers, all winning ML settings retained. Run23 passed12 GPU FP32/BF16 checks with same numerical errors as grouped baseline and original evaluation bitwise equal; main-stage1.194451s vs1.295231s (-7.78%), other stages also faster. Test first FULL validation880 wall seconds then180s cadence to measure earlier target, no extrapolated success. Preserve canonical10485760 tokens, current dynamic references including incumbent, first eligible+.01 screen, and unbounded stateful continuation.",
+  "attention_backend": "gathered_sdpa8",
+  "lr_stage_scales": [
+    0.9,
+    0.9,
+    1.0,
+    1.0,
+    1.0
+  ]
+}

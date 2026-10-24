@@ -1,0 +1,17 @@
+{
+  "repository": "https://github.com/curvedinf/k-splanifolds",
+  "commit": "ea7a9c1121efe711345bd9e6cf22e69401c0c7b4",
+  "report": "experiments/nanogpt_ks2/reports/2026-10-24-ks3-wallclock/REPORT.md",
+  "upstream_files": {
+    "ks3_int8.py": "experiments/common/ks3_int8.py",
+    "ks3_reference.py": "experiments/common/ks3.py",
+    "LICENSE.k-splanifolds": "LICENSE"
+  },
+  "license": "CC-BY-SA-4.0, upstream LICENSE retained",
+  "modifications": "None; reference module renamed only.",
+  "sha256": {
+    "ks3_int8.py": "becdb04749963afa8adc39812a61ec3bb14b0ad966c2fc04e1e4edd4ec1ed501",
+    "ks3_reference.py": "81efd8fd89bd37a6dd7e75a9101fc67b1408a9ee16377a841a0e1f729c471080",
+    "LICENSE.k-splanifolds": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5"
+  }
+}

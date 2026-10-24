@@ -1,0 +1,74 @@
+{
+  "objective": "Optimize matched MoE KS3 loss versus elapsed time against the completed PR393 MoE control cohort.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.683013308048248,
+  "target_val_loss": 3.68,
+  "control_wall_seconds": 451.5819543519974,
+  "charts": 1024,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 0.9,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    32768,
+    65536,
+    81920,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 350.0,
+  "validation_interval_seconds": 120.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000079-fused-unpack-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Reinvest measured compiled-loss main-stage throughput (median0.3493s vs original0.3943s) into81920-token middle batches, which previously reached fullCE3.631295 in run120 at428.899s. Retain1024charts,originalrates,compiled trainingCPLM,fused canonical evaluation and350s readout. Honest batch/objective signatures; dynamic pruning unchanged and no time/step cutoff. New full validation required.",
+  "attention_backend": "gathered_sdpa128_trainbucket",
+  "lr_stage_scales": [
+    0.9,
+    0.9,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "loss_backend": "cplm_pr393",
+  "loss_slab_tokens": 4096,
+  "ks3_backward": "fp32_blas_all",
+  "sampled_candidates": [
+    [
+      10240
+    ],
+    [
+      16384
+    ],
+    [
+      18432,
+      18432,
+      24576
+    ],
+    [],
+    []
+  ],
+  "ks3_forward": "blas_fused_unpack",
+  "optimizer_backend": "eager",
+  "architecture": "pr393-moe-ks3",
+  "sampled_head": true,
+  "control_recipe_frozen_utc": "2026-10-24T15:11:36.072947+00:00",
+  "selected_short_recipe": "d128-g64-lr09",
+  "control_seeds": [
+    11,
+    22,
+    33
+  ],
+  "ks3_dynamic_rows": true,
+  "ks3_bf16_products": true,
+  "ks3_expert_unbind": true,
+  "training_bucket_revision": 2,
+  "eval_loss_backend": "fused_canonical_v1",
+  "eval_loss_block": 4096,
+  "verify_eval_loss": false,
+  "training_loss_backend": "compiled_cplm_v1",
+  "verify_training_loss": false
+}

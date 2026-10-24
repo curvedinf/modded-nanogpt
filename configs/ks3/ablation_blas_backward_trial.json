@@ -1,0 +1,39 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    65536,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 730.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000028-blas-backward-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Full FP32 BLAS KS3-backward ablation on gathered8/shared-gather4096 head and incumbent ML recipe. Run28 passed8 GPU cases including full-width, rank3, long reductions and independent small dense references; forward bitwise equal, maximum gradient relativeRMS4.61e-5 (BF16 inputs) /2.27e-6 (FP32), highest precision unchanged. Main-stage.935405s vs1.168422s (-19.94%), peak149.839GiB. First FULL730 wall seconds then180s periodic cadence to measure same target; no inferred success or fixed step/time stop. Dynamic-best screen and incumbent preservation remain unchanged.",
+  "attention_backend": "gathered_sdpa8",
+  "lr_stage_scales": [
+    0.9,
+    0.9,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "loss_backend": "shared_gather",
+  "loss_slab_tokens": 4096,
+  "ks3_backward": "fp32_blas"
+}

@@ -1,0 +1,55 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    98304,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 900,
+  "first_validation_seconds": 660.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000043-output-blas-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Forward systems ablation afterprofile35:replace only KS3 output projection with highestprecisionFP32BLAS over the exactGS32-dequantized h/up operands. Original fused input projection/geometry stays intact; use verified4-productFP32BLAS backward. Expected rounding differences are measured explicitly against original forwards/allgrads, plusindependentdense refs and autocast no_grad checks in registeredpilot. Same1536rank1/900-base/96k/P16384->24576/stageLR; firstFULL660s provisionally,180s cadence; canonicalvalidationdata/mask/windows/softcap unchanged. No extra compileflags. Incumbentseed1 replication42 screened220.168274s, so incumbentrun33 remainsunreplicated. Registered run43 passed12GPU originalforward/allgradient cases,3independentdense refs and12autocastinference checks; finite/stages passed,peak160.764GiB. Useactualrun43 cleanpilot withoutverification overhead in fulltrial.",
+  "attention_backend": "gathered_sdpa8",
+  "lr_stage_scales": [
+    0.9,
+    0.9,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "loss_backend": "shared_gather",
+  "loss_slab_tokens": 4096,
+  "ks3_backward": "fp32_blas_all",
+  "sampled_candidates": [
+    [
+      10240
+    ],
+    [
+      10240
+    ],
+    [
+      16384,
+      16384,
+      24576
+    ],
+    [],
+    []
+  ],
+  "ks3_forward": "blas_output"
+}

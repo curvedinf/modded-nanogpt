@@ -1,0 +1,17 @@
+{
+  "base_steps": 844,
+  "total_steps": 916,
+  "stage_seconds": [
+    0.9854636800009757,
+    1.656592719999935,
+    2.4257613779991516,
+    2.0413653770001474,
+    0.779314854000404
+  ],
+  "estimated_training_seconds": 1613.9078441809506,
+  "estimated_validation_seconds": 107.2959880710132,
+  "validation_count": 2,
+  "wall_budget_seconds": 2091.5553867050003,
+  "estimated_total_seconds": 1909.1943757974832,
+  "rationale": "Disposable measured pilot fits a tunable horizon to the wall-time budget; no matching to MLP steps or tokens."
+}

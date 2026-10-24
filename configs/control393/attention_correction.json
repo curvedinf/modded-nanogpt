@@ -1,0 +1,36 @@
+{
+  "updated_utc": "2026-10-24T20:49:36.133520+00:00",
+  "status": "verified",
+  "target_val_loss": 3.68,
+  "control_complete_wall_seconds": 451.5819543519974,
+  "evidence": [
+    {
+      "run_id": "run-000151-moe-ks3-halfv-oracle",
+      "finding": "Independent FP64 document oracle confirms grouped half-V training forward errors; original per-document SDPA agrees."
+    },
+    {
+      "run_id": "run-000153-moe-ks3-tiledfixed-model",
+      "finding": "Frozen-control g64 wide-head primitive fails real-document original/FP64 audit. Canonical evaluation is bitwise equal to original."
+    },
+    {
+      "run_id": "run-000154-moe-ks3-tiled-allstages",
+      "finding": "Width128 padding alone passes stages0/1/2 but fails taper/extension; canonical evaluation stays bitwise equal across all production shapes."
+    },
+    {
+      "run_id": "run-000156-moe-ks3-partialmath",
+      "finding": "Math SDPA for heterogeneous4D groups fixes all15 production stage/head cases against original and FP64. Canonical eval bitwise identical; all80 expert matrices/5routers/all geometry update. Main-stage median0.514747s, peak163.5606GiB."
+    }
+  ],
+  "preservation": "Original controls, source archives, curves, cancellations and full-validation measurements remain immutable; no control retraining or retiming.",
+  "compatibility": {
+    "legacy_training": "legacy-pr393-grouped-mask-v1",
+    "corrected_training": "document-causal-local-oracle-v1",
+    "training": "Do not compare legacy defective training attention proxies with corrected document-causal-local attention.",
+    "validation": "All compatible canonical full10485760-token results remain eligible, including controls and earlier MoE KS3 runs.",
+    "pruning": "Unchanged strictly-below5 latch and first comparable candidate-minus-best >=0.01; one-sided and unbounded continuation."
+  },
+  "current_test": null,
+  "cpu_checks": 33,
+  "corrected_training_semantics": "document-causal-local-oracle-v1",
+  "verification_run": "run-000156-moe-ks3-partialmath"
+}

@@ -1,0 +1,29 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    65536,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 1000.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000019-grouped-b64k-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Batch ablation on grouped8/1536 charts/LR1/base1044: increase only primary-CE stage batch49152->65536 tokens (+33%), preserving early/tail batches and stage/LR schedule. Test throughput per token and convergence under lower gradient sampling variance; added token budget is authorized. Lower LR0.9 failed the dynamic screen at339.992916s (gap+.184887), so restoreLR1.0. New batch timing pilot required. Log true batch/objective signatures; existing sampled-loss comparability excludes unequal sample batches, while canonical full validation remains comparable. No pruning-rule change, no schedule/runtime stop. Registered run19 passed finite/geometry/stage checks at148.622GiB, primary median1.295231s vs.985389s for33.3% more tokens (1.4% higher measured throughput). Full trial tests convergence as well as throughput, first FULL evaluation1000s and then180s cadence.",
+  "attention_backend": "grouped_sdpa8"
+}

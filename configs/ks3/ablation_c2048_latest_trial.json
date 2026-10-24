@@ -1,0 +1,56 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 2048,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    131072,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 400.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000077-c2048-memory-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Memory fix validated:12GPU forward/allgradient cases,3 independent references,6 rank1 storagealias assertions pass with same maxforwardRMS.000290964439/maxgradRMS.000174178436. C2048 pilot77 passed55.820877s at176.567GiB; primary.891689vs1536 .806294(+10.59%) for33.33% extra FFN parameters(34,783,232). Full trial tests convergence benefit per actualwalltime; use actual77pilot, same128k/base1044/P18432/LRs/fastkernels,FULL400s/180s and strict dynamic screen/unbounded survivors. No claimed quality evidence from diagnostic partialCE.",
+  "attention_backend": "gathered_sdpa64_fused",
+  "lr_stage_scales": [
+    0.9,
+    0.9,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "loss_backend": "fused_softcap",
+  "loss_slab_tokens": 4096,
+  "ks3_backward": "fp32_blas_all",
+  "sampled_candidates": [
+    [
+      10240
+    ],
+    [
+      10240
+    ],
+    [
+      18432,
+      18432,
+      24576
+    ],
+    [],
+    []
+  ],
+  "ks3_forward": "blas_both",
+  "optimizer_backend": "eager"
+}

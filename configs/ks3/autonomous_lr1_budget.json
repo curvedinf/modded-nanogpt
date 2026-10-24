@@ -1,0 +1,27 @@
+{
+  "objective": "Lower full validation loss within the measured MLP complete-run wall time. Parameter counts, optimizer steps, token budgets and batch sizes are tunable.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    49152,
+    40960,
+    16384
+  ],
+  "wall_budget_fraction": 1.12,
+  "validation_fractions": [
+    1.0
+  ],
+  "pilot_path": "logs/ks3-pilot-primary/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 5,
+  "research_note": "Follow run-000001: LR 1.0 plus longer horizon and only final full validation. The planning budget exceeds the fixed control duration to compensate for measured conservative planning; success still requires actual complete wall time under 2091.555386705 s and full CE <= 3.793633. No architecture, batch, precision, or objective definition change; actual horizon-dependent objective signatures remain logged."
+}

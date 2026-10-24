@@ -1,0 +1,31 @@
+{
+  "status": "prepared_and_verified",
+  "full_ks3_trial_run": false,
+  "control": "configs/ks3/mlp_control.json",
+  "checks": {
+    "numerical_and_model_tests": "logs/ks3-verification/unit.log",
+    "wall_time_and_comparison_tests": "logs/ks3-verification/planning.log",
+    "stage_pilot": "logs/ks3-pilot-primary/result.json",
+    "validation_then_training": "logs/ks3-smoke-validation-resume/result.json"
+  },
+  "checks_sha256": {
+    "logs/ks3-verification/unit.log": "4d9a7e28748666798d8c75053f1acaff1f643b1f359e8357253d160338fd61eb",
+    "logs/ks3-verification/planning.log": "e7605321e7165d4358bb4f20f3adbf88661c28a9428c8bb6777bec7686b7c1b1",
+    "logs/ks3-pilot-primary/result.json": "42e44543abbf9754b3c8275f012cac6d9e09cde0091a6c384d3097e7fd433c4a",
+    "logs/ks3-smoke-validation-resume/result.json": "ae73eddd3d11f6bddaf6c1d22c85ac65c8b0df3a3af2ad96ff8a5cb944fafda6"
+  },
+  "source_sha256": {
+    "train_gpt_ks3.py": "4e953fea8fa71fd5d7667575f400f0b149dc05edbcfe61a56bd9e5acc1ef9b39",
+    "run_ks3.sh": "8863323e7628e9856c7fdf6c4a8b70dcdc8bbf85ef0dd6cb1dbba5aea84fe2f3",
+    "test_ks3.py": "499c24ba1b2dba2ff74c4c85e29d67373479501ce611c2551fd5823d3f35bd6d",
+    "ks3_research/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ks3_research/launch.py": "6d7b310113861e22df102fade391afe681486dfd8a36ab590f92b411a88e2208",
+    "ks3_research/model.py": "862da0455f495b0520a0eb8762e65bc94209ca685c0e59afaf7618cd976054f2",
+    "ks3_research/optim.py": "d328afa425dc29653b9312335f3f2c52a4d5fae0538e3cddedaa9d74a0c7c91d",
+    "ks3_research/planning.py": "3cec760d4f4f5297c9fe2bb71f9131df032db6f23621fe5514c4f01d5baaaba7",
+    "ks3_research/vendor/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ks3_research/vendor/ks3_int8.py": "becdb04749963afa8adc39812a61ec3bb14b0ad966c2fc04e1e4edd4ec1ed501",
+    "ks3_research/vendor/ks3_reference.py": "81efd8fd89bd37a6dd7e75a9101fc67b1408a9ee16377a841a0e1f729c471080"
+  },
+  "objective": "Lower full validation loss in less complete-run wall time than the fixed MLP control; parameter and training budgets may change."
+}

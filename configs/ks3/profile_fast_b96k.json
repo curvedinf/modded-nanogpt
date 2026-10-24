@@ -1,0 +1,55 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    98304,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 900,
+  "first_validation_seconds": 800.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000032-b96k-p16k-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Disposable operator-profile diagnostic of successful run33 fast96k/P16384 implementation at primary stage; timings include profiler overhead and must not replace clean run32 pilot. Select next concrete systems optimization after base840 was screened. Not a convergence trial or dynamic-reference curve.",
+  "attention_backend": "gathered_sdpa8",
+  "lr_stage_scales": [
+    0.9,
+    0.9,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "loss_backend": "shared_gather",
+  "loss_slab_tokens": 4096,
+  "ks3_backward": "fp32_blas",
+  "sampled_candidates": [
+    [
+      10240
+    ],
+    [
+      10240
+    ],
+    [
+      16384,
+      16384,
+      24576
+    ],
+    [],
+    []
+  ],
+  "profile_step": 964
+}

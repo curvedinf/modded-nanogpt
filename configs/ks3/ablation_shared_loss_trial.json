@@ -1,0 +1,38 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    65536,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 880.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000026-shared-loss-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Full shared-gather/4096-slab training-head ablation on gathered8 attention +incumbent ML recipe. Run26 passed6 GPU FP32/BF16 cases, BF16 gradient max relativeRMS.004705/forward maxabs.000329, original evaluation bitwise equal; full-model finite/stage/geometry passed148.734GiB. Primary median1.168422s vs1.194451s (-2.18%); test actual loss/time rather than infer a target from timing. Same full880s first/180s cadence and target<=3.793633; dynamic-best screening and unbounded continuation unchanged. Incumbent run21 remains exploratory and preserved.",
+  "attention_backend": "gathered_sdpa8",
+  "lr_stage_scales": [
+    0.9,
+    0.9,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "loss_backend": "shared_gather",
+  "loss_slab_tokens": 4096
+}

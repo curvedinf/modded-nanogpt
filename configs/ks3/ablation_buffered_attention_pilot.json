@@ -1,0 +1,30 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    49152,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 1950.0,
+  "validation_interval_seconds": 240.0,
+  "pilot_path": "logs/ks3-pilot-primary/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Systems ablation: preserve the strongest 1536-chart LR1.0 schedule while replacing per-chunk full-sequence SliceBackward allocations with three reusable gradient accumulation buffers. Recompute the identical local SDPA chunks; full evaluation uses the original path. CPU output/gradient/document/window checks pass. This registered diagnostic performs FP32/BF16 GPU equivalence checks before the full-model stage-transition timing pilot; a trial will use this actual pilot artifact.",
+  "attention_backend": "buffered_sdpa",
+  "verify_attention_buffers": true
+}

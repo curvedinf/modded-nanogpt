@@ -1,0 +1,39 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    98304,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 900,
+  "first_validation_seconds": 800.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000028-blas-backward-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Joint batch/stage optimization using verified fast BLAS/gathered/head pipeline: primary batch65536->98304 (+50%) and initial base1044->900 (-13.8%), other batches/LR scales/geometry unchanged. Use saved systems compute for more tokens per gradient while completing initial LR stages earlier; planned horizon972 never stops training. Test throughput/memory and candidate sampling capacity in registered pilot before full convergence. Run29 screened at300.037496s (+.137978 vs run27), no full score. Preserve canonical target, true batch/objective signatures and unchanged dynamic pruning; first full800s then180s cadence for survivors.",
+  "attention_backend": "gathered_sdpa8",
+  "lr_stage_scales": [
+    0.9,
+    0.9,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "loss_backend": "shared_gather",
+  "loss_slab_tokens": 4096,
+  "ks3_backward": "fp32_blas"
+}

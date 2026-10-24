@@ -1,0 +1,29 @@
+{
+  "objective": "Minimize complete time to full validation CE <= 3.793633. Continue through schedule horizons and beyond the control runtime until target, defensible pruning, failure, or explicit stop.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    49152,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 1950.0,
+  "validation_interval_seconds": 240.0,
+  "pilot_path": "logs/ks3-pilot-primary/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 5,
+  "research_note": "Disposable systems profile, not a repeated convergence trial: capture a primary-CE stage step on the best LR1.0 1536-chart reference architecture to locate expensive operations. Prior LR/capacity/schedule ablations were screened; use actual trace evidence for the next execution-speed change. Pilot observations are excluded from dynamic reference curves.",
+  "profile_step": 683
+}

@@ -1,0 +1,22 @@
+{
+  "objective": "Minimize complete time to full validation CE <= 3.793633. Continue through schedule horizons and beyond the control runtime until target, defensible pruning, failure, or explicit stop.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [16384, 32768, 49152, 40960, 16384],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 1950.0,
+  "validation_interval_seconds": 240.0,
+  "pilot_path": "logs/ks3-pilot-primary/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 5,
+  "research_note": "Retain run-000002's LR and initial stage schedule to measure genuine continuation beyond its 3.826514 CE endpoint. The first full evaluation is near its observed 1926.55-second training horizon, then repeats every 240 wall seconds indefinitely. Reversible tail averages preserve raw weights and optimizer state; no fixed time or step stop. This is a new run because the legacy trial saved no resumable state."
+}

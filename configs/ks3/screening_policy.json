@@ -1,0 +1,27 @@
+{
+  "updated_utc": "2026-10-24T07:28:15.200728+00:00",
+  "status": "resume_authorized_implement_watchdog_then_launch",
+  "resume_requires_user_instruction": false,
+  "objective": "Screen meaningful optimization ablations by loss versus elapsed wall time. Do not repeat an unchanged recipe merely to fill unused time or measure the remaining loss gap.",
+  "warmup": "Always allow candidate KS3 to reach loss strictly below 5.0 before comparative early pruning; genuine errors and explicit user stop remain exceptions.",
+  "reference": "Current best available comparable loss-versus-wall-time curve, whether MLP or KS3; update as better KS3 evidence becomes available.",
+  "cancel_rule": "Once the candidate has reached loss <5.0, cancel on the first comparable observation where KS3_loss - current_best_loss >= 0.01 at comparable elapsed wall time.",
+  "margin": 0.01,
+  "direction": "worse_only",
+  "consecutive_observations": 1,
+  "better_run": "Continue; improvement is not a cancellation reason.",
+  "comparability": "Use the same loss definition and comparable objective/evaluation conditions. Never compare sampled or auxiliary training loss against full validation CE or compare at matched steps.",
+  "supersedes": "The original fixed-MLP 0.5/10%-margin two-observation gate and unconditional repeat-until-target instruction are obsolete.",
+  "implementation_required_before_resume": "Update and test the watchdog against this policy before any new GPU experiment; do not use the previous pruning gate.",
+  "implementation_details": {
+    "version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_loss_below": 5.0,
+    "training_observation_every_steps": 1,
+    "watchdog_poll_seconds": 1.0,
+    "training_reference": "Latest compatible nonfuture measurement per eligible continuous run, within 15 wall seconds; choose the lowest across runs. No step alignment or interpolation.",
+    "mtp_weight_tolerance": 1e-06,
+    "full_validation_reference": "Best canonical full-validation score already achieved by the candidate elapsed time; a model can retain its measured score after stopping.",
+    "evidence": "Per-run screening policy, hashed reference snapshots, screening_state.json latch, and pruning.jsonl selected-reference evidence.",
+    "tests": "test_ks3_screening.py: 11 CPU tests passed before launch."
+  }
+}

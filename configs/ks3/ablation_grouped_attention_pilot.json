@@ -1,0 +1,30 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    49152,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 1200.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000010-buffered-attn-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Systems ablation after buffered2048 was screened against buffered1536: retain1536 charts/LR1/base1044 and batch up to8 independent local attention chunks per SDPA call. Masks preserve exact document/window/causal rules, packed padding is excluded, recomputed gradients accumulate in original reverse chunk order; full evaluation remains original.26 CPU attention/screening/continuation checks passed. Registered pilot must pass GPU FP32/BF16 equivalence including multiple groups and measure stage costs before a full trial.",
+  "attention_backend": "grouped_sdpa8",
+  "verify_attention_buffers": true
+}

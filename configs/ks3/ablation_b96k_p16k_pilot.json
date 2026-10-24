@@ -1,0 +1,54 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    98304,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 900,
+  "first_validation_seconds": 800.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000030-b96k-s900-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Correct the observed run31 failure (14504 distinct targets >14336) with explicit16384 primary candidate classes before the existing24576 ramp; other b98304/base900/fast-BLAS/gathered/head/LR settings retained. CPU real-stream target-capacity preflight plus new registered timing pilot required. This changes the sampled objective honestly; per-update candidates and batch are logged, mismatches are ineligible for proxy screening, full evaluation stays canonical. First full800s then180s; horizon972 only schedules, never stops.",
+  "attention_backend": "gathered_sdpa8",
+  "lr_stage_scales": [
+    0.9,
+    0.9,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "loss_backend": "shared_gather",
+  "loss_slab_tokens": 4096,
+  "ks3_backward": "fp32_blas",
+  "sampled_candidates": [
+    [
+      10240
+    ],
+    [
+      10240
+    ],
+    [
+      16384,
+      16384,
+      24576
+    ],
+    [],
+    []
+  ]
+}

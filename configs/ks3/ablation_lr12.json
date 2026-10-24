@@ -1,0 +1,28 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633; screen inferior ablations after the below-5 milestone against the dynamic best comparable loss/time curve.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.2,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    49152,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 1950.0,
+  "validation_interval_seconds": 240.0,
+  "pilot_path": "logs/ks3-pilot-primary/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Meaningful LR-only ablation: increase overall learning rate from 1.0 to 1.2, retaining charts, precision, batches, geometry multiplier and initial 1044-step base schedule. Test faster convergence after the legacy LR1 endpoint CE3.826514. Reuse the architecture timing pilot. Every update is logged for the one-second dynamic-best watchdog; warmup latch below5, first comparable +0.01 regression cancels. Survivors retain unbounded continuation and periodic full validation."
+}

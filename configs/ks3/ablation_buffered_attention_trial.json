@@ -1,0 +1,29 @@
+{
+  "objective": "Optimize complete time to full CE <=3.793633 with dynamic-best one-sided ablation screening.",
+  "control_result": "configs/ks3/mlp_control.json",
+  "control_manifest": "configs/ks3/mlp_control_manifest.json",
+  "control_val_loss": 3.7936333656311034,
+  "target_val_loss": 3.793633,
+  "control_wall_seconds": 2091.5553867050003,
+  "charts": 1536,
+  "rank": 1,
+  "nonlinear": "fp16",
+  "lr_scale": 1.0,
+  "geometry_lr_mul": 0.125,
+  "batch_tokens": [
+    16384,
+    32768,
+    49152,
+    40960,
+    16384
+  ],
+  "schedule_time_fraction": 1.12,
+  "schedule_base_steps": 1044,
+  "first_validation_seconds": 1200.0,
+  "validation_interval_seconds": 180.0,
+  "pilot_path": "logs/ks3-autoresearch/runs/run-000010-buffered-attn-timing/artifacts/pilot.json",
+  "save_checkpoint": false,
+  "log_every_steps": 1,
+  "research_note": "Systems-only training ablation of strongest 1536-chart/LR1/base1044 reference: direct attention chunk-gradient accumulation. Registered run10 passed ten FP32/BF16 GPU numerical cases with observed zero output/gradient differences, unchanged evaluation, and finite/geometry/stage-transition checks. Main-stage median about1.428s vs original2.429s; first full validation at1200 wall seconds and then every180s to measure faster time-to-target. Same canonical full validation and data; below5-latched first +.01 worse dynamic-best screening, unbounded stateful continuation, no horizon/runtime stop.",
+  "attention_backend": "buffered_sdpa"
+}

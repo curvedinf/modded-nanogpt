@@ -1,0 +1,29 @@
+{
+  "status": "completed",
+  "command": "./run_mi300.sh",
+  "hardware": "1 AMD Instinct MI300X VF, gfx942, 192 GiB",
+  "seed": 0,
+  "training_steps": 1194,
+  "training_tokens": 41082880,
+  "validation_tokens": 10485760,
+  "validation_loss": 3.7936333656311034,
+  "training_reported_seconds": 1987.4801528420003,
+  "training_plus_validation_reported_seconds": 2077.861757079,
+  "post_training_validation_seconds": 90.38160423699992,
+  "end_to_end_wall_seconds": 2091.5553867050003,
+  "peak_allocated_gib": 142.22745418548584,
+  "source_unchanged_during_run": true,
+  "trainer_logdir": "/root/modded-nanogpt/logs/mi300-20261024-044414",
+  "started_utc": "2026-10-24T04:44:02.945980+00:00",
+  "finished_utc": "2026-10-24T05:18:54.501372+00:00",
+  "checkpoint_saved": false,
+  "torch": "2.10.0+rocm7.1",
+  "hip": "7.1.25424",
+  "cache_policy": "Use existing installed environment and compilation caches; no warm-up or cache clearing before the timed control.",
+  "comparison_objective": "Reach a lower full-validation loss in less complete-run wall time. Parameter counts, steps, batches and token budgets may vary for KS3; preserve the underlying token streams and validation definition.",
+  "limitations": [
+    "One seed; exploratory control, not statistical record evidence.",
+    "Single-MI300 adaptations and reduced per-step batch are documented in MI300.md.",
+    "Trainer timing excludes startup; end-to-end wall time includes launcher, initialization, training, final validation and shutdown."
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "created_utc": "2026-10-24T04:43:59.116649+00:00",
+  "command": [
+    "./run_mi300.sh"
+  ],
+  "cwd": "/root/modded-nanogpt",
+  "git_commit": "4ea6b937337a4889b8cfe3f38a93d120048d8f71",
+  "git_status_before": "?? MI300.md\n?? mi300/\n?? requirements-mi300.lock.txt\n?? requirements-mi300.txt\n?? run_mi300.sh\n?? test_mi300.py\n?? train_gpt_mi300.py\n",
+  "hardware_note": "rocm-smi identifies one AMD Instinct MI300X VF (gfx942), not MI100",
+  "platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39",
+  "cpu_count": 20,
+  "relevant_environment": {
+    "DATA_PATH": null,
+    "NUM_SCHEDULED_ITERATIONS": null,
+    "TRAIN_SEED": null,
+    "MI300_NGRAM_ROWS": null,
+    "MASTER_PORT": null,
+    "OMP_NUM_THREADS": null,
+    "TOKENIZERS_PARALLELISM": null,
+    "GLOO_SOCKET_IFNAME": null,
+    "HIP_VISIBLE_DEVICES": null,
+    "ROCR_VISIBLE_DEVICES": null,
+    "CUDA_VISIBLE_DEVICES": null,
+    "HSA_OVERRIDE_GFX_VERSION": null,
+    "PYTORCH_ALLOC_CONF": null,
+    "PYTORCH_CUDA_ALLOC_CONF": null,
+    "TORCHINDUCTOR_CACHE_DIR": null,
+    "TRITON_CACHE_DIR": null,
+    "HSA_ENABLE_SDMA": null
+  },
+  "source_sha256": {
+    "train_gpt_mi300.py": "49277a64df64e1484f217fcdc7211c5d43b5e550d0089a0f2f1427cdba866841",
+    "run_mi300.sh": "4145b5978873defc7ac683d9362affa6165c13cd56cd547309baf71cf667fa32",
+    "MI300.md": "197e6baba9e0ddf9db6fb7b11523910a10954c9dd41c4af50a99bf9dfb5ee4ee",
+    "test_mi300.py": "32512a73451dca64c83eb485499338a10a0f91285ccdbf3606e6d4ea2d3c7782",
+    "requirements-mi300.txt": "5ee2b3023ab1e7220e278a9a2feb2468bd0f7310df278035d98a8500a9be6f8a",
+    "requirements-mi300.lock.txt": "ece3750b93c9e4c6160437cc849532571803d4d798c36172b913c68b0f55e1d6",
+    "mi300/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mi300/canonical_mask.py": "63de32166de65a2728e9cb5225406944a4743c0c141ec8e4547b7d4703946080",
+    "mi300/config.py": "f2a337b79453f277ded33e5f03717cd1ef15c11c3691a3d9cccaf001d7743095",
+    "mi300/data.py": "76da3300727099d77917851fc99834bd06baceca4a2d9d06fb91fead66a93ec7",
+    "mi300/distributed.py": "dc5f11c9e92a5e4c1db002871769cef3691d5103af8ff183ec4dec0b32eac341",
+    "mi300/model/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mi300/model/attention.py": "e33b2830a02ac51e2533ef30875c176ae3f4df5827431ff908ba0e8340bc47f7",
+    "mi300/model/gpt.py": "2121ae8ac97e8bb94a6c5a7acdf256739b93f0ab2e758546dc524f0d3d3dbbbd",
+    "mi300/model/layers.py": "a40436f2c206564b7558d696c4ce190143f5dd31444adfde15a84c10ffd8ed17",
+    "mi300/model/prefix_prediction.py": "22aba6065addaea0014d81dbea861b28c8aa9a67aaec2e4765230cc4338b13fa",
+    "mi300/ngram_table.py": "1605ce2b86fbb3b38f0299eefdbb2961ec73986981c5faaf49ea7c8ab0a0e937",
+    "mi300/optim/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mi300/optim/anvil.py": "e2767f466c6270e4fc8d6833d9da5b5df29c82180f3eb373d75299ef97fbabcd",
+    "mi300/perf/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mi300/perf/bank_scalars.py": "b0c261e51789d5f398270346248859ea971cefea5336be1b3e5d802dfc14a279",
+    "mi300/perf/kernels/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mi300/perf/kernels/lerp.py": "efe03ab419587481e5fdcc7a74b0f3e795fc657a3924f25a68efb8586f9f006b",
+    "mi300/perf/kernels/ngram_adam.py": "99bc46e4e403104abd218eafe972a4581ddd3068256daa7d54552befbd40be1f",
+    "mi300/perf/kernels/ngram_embed.py": "3bf1685f5bd7fe077f66f7089a509e69a7da758203eeff230e7b536f7bca3790",
+    "mi300/perf/kernels/polar_express.py": "b4ca30e48699852b01b7ea7a3e0316b612b0742daa3e1c9b2b3c1b783a58967a",
+    "mi300/perf/kernels/replicated_adam.py": "a3a156dffdfe3afc45d0defdcaf4d6d50e22ee371af2ad2b3ea32a7db632e615",
+    "mi300/perf/kernels/row_scatter.py": "63823011176ced95dcd3d0ce93fbe0bc82016021e273b02b0428148883981362",
+    "mi300/perf/kernels/transpose.py": "a05e09dfbae1dbc58da7b413fe3772776de0c4550e770c2398bd7e81cbb553b1",
+    "mi300/perf/kernels/value_embed.py": "32e2f832ee16a8b735f43ad132c889c29870533d2324359b00eb7202f91a4d0e",
+    "mi300/perf/pinned_batches.py": "dae88f5534429633caa83ee09f4cfddcac25a5bc44f28bf71aea2e422ac5caae",
+    "mi300/perf/replicated_adam.py": "7aa9b23c9af9ef3d3db99322c2836e9629a4dc67ff58d223cd2079639386e6be",
+    "mi300/perf/residual_fusion.py": "e39760a57d310c4eeef371df72d5ab618b471365618b8a4e6bc7abcfe9700ca3",
+    "mi300/perf/row_prefetch.py": "4e593e926fe128d0e600d1b84f8e16a772089fc81c58e62df9c32cf47988c995",
+    "mi300/perf/sampled_softmax_overlap.py": "c412727027508dc74dcf8de1f217f2fe06551d435ee3d11ffab5a67ae607c49b",
+    "mi300/perf/value_embed_pull.py": "bbfffde1cc5d3e9552ff69b5e70152420632254b22d3a394c6063077f5f8d21a",
+    "mi300/portable.py": "1c728a60f0a986c45eebba99dd3ac1240c94a74f1970fe4b053bb884856714d1",
+    "mi300/sampled_softmax.py": "96c40b6a55f7519323de957978d369a7ca5eab97d10404ee704597dff6d18307",
+    "mi300/schedule.py": "5edae8da7ea7f4be084fcd20ffde0b7bf8adaa4c7bba941f7f376a685675aaa9",
+    "mi300/sharded_rows.py": "2ef4c257e7d91464d1ac1947eee6199c24de7f74573f287df3c868022054f3b9",
+    "mi300/tail_average.py": "5862eb6c524f7cb9e770f9c1dcbbeb98ba90b3423c5be886cc88b163aeb76fb0",
+    "mi300/training.py": "deecec7d08f11184b6bbc3e5fce291a5a0a41de161a41491163058b03f001384"
+  },
+  "data": [
+    {
+      "path": "data/fineweb10B/fineweb_train_000001.bin",
+      "bytes": 200001024,
+      "sha256": "771fa4a99b9fe0946ffb6e848b4ba5c6a9b0fe87860ebf03bc2c1c7e45f8178e"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000002.bin",
+      "bytes": 200001024,
+      "sha256": "d4ba8d2d740905a836a4222d2aff01750560e7d49a51a745a1b3235520aec2cd"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000003.bin",
+      "bytes": 200001024,
+      "sha256": "f70fa272369730fd9e39f1848bfe4daa3289b6e490c1e7762777f00ea8b66246"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000004.bin",
+      "bytes": 200001024,
+      "sha256": "d8d88850f89fe2030e866380e90d544167467d407080403b830b903543925835"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000005.bin",
+      "bytes": 200001024,
+      "sha256": "36cef3fc41863eb6731b41e986edde38e368853ee6deb87b928990bf445a119c"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000006.bin",
+      "bytes": 200001024,
+      "sha256": "d80e5b209983e636655fc738fdf281f0132f0298bf4c0848f7e7a6bea6ca06f0"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000007.bin",
+      "bytes": 200001024,
+      "sha256": "fa9f94dce61686b5467bc6cd3078424203db23ac254d804a6d8d5d440afc1e11"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000008.bin",
+      "bytes": 200001024,
+      "sha256": "308e6937af5d78b7489a8aac3a3951dced5b46103e613f8bc4eb543f5092526c"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000009.bin",
+      "bytes": 200001024,
+      "sha256": "1635300891634346ecff3a78d6e489a69c647885f0dcd249fe3eb76fac683458"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_val_000000.bin",
+      "bytes": 200001024,
+      "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+    }
+  ],
+  "existing_trainer_logdirs": [
+    "logs/mi300-20261024-030813-smoke",
+    "logs/mi300-20261024-031012-smoke",
+    "logs/mi300-20261024-031225-smoke",
+    "logs/mi300-20261024-031452-smoke"
+  ],
+  "cache_policy": "Use existing installed environment and compilation caches; no warm-up or cache clearing before the timed control.",
+  "checkpoint": false
+}
