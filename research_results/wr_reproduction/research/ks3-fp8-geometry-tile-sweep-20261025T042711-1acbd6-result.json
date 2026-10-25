@@ -1,0 +1,250 @@
+{
+  "run_id": "ks3-fp8-geometry-tile-sweep-20261025T042711-1acbd6",
+  "status": "correctness_passed",
+  "seed": 169,
+  "code_commit": "b3a676c5c9623aafe75a45292e18463bfb28f7d7",
+  "recipe": {
+    "name": "fp8-geometry-tile-sweep",
+    "hypothesis": "Diagnostic only: compare geometry backward producer/reduction tiles of 32, 64 and 128 rows. Larger tiles reduce partial-gradient storage and reduction extent but may increase register pressure. Check finite gradients and relative RMS against the independently checked 64-row baseline at 1,257,16384,49152 tokens, including empty experts; time 16k/49k cases in alternating order. Precision, coefficient equations and all six FP8 products stay fixed. No training trajectory or convergence claim; exclude from reference curves.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "weight_packing": "loop",
+    "training_gs32": true,
+    "geometry_backward_rows": 64,
+    "diagnostic_geometry_sweep": true
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "training_projection_gs32": true,
+    "coefficient_gs32": true,
+    "charts": 1024,
+    "geometry_backward_rows": 64,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "bank": 0.0,
+          "geometry": 1.2434067997446618e-08
+        },
+        "post_amax": 7.158477783203125,
+        "dpre_amax": 0.07970885932445526
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 4.877150905358008e-10,
+          "bank": 6.967591303919107e-08,
+          "geometry": 1.626491865636126e-07
+        },
+        "post_amax": 10.06915283203125,
+        "dpre_amax": 0.18012376129627228
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 3.6353617338669153e-10,
+          "dx": 5.101589067635359e-06,
+          "bank": 2.9003078907408053e-06,
+          "geometry": 1.1886421447115936e-07
+        },
+        "post_amax": 14.3402099609375,
+        "dpre_amax": 0.249906525015831
+      }
+    ],
+    "full_convergence_verified": false,
+    "geometry_sweep": {
+      "cases": [
+        {
+          "tokens": 1,
+          "relative_rms_vs_64": {
+            "32": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 0.0,
+              "weight_gradient": 0.0
+            },
+            "64": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 0.0,
+              "weight_gradient": 0.0
+            },
+            "128": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 0.0,
+              "weight_gradient": 0.0
+            }
+          },
+          "backward_ms": {
+            "32": [],
+            "64": [],
+            "128": []
+          },
+          "median_ms": {}
+        },
+        {
+          "tokens": 257,
+          "relative_rms_vs_64": {
+            "32": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 9.705532733050859e-08,
+              "weight_gradient": 0.0
+            },
+            "64": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 0.0,
+              "weight_gradient": 0.0
+            },
+            "128": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 1.0222778712432046e-07,
+              "weight_gradient": 0.0
+            }
+          },
+          "backward_ms": {
+            "32": [],
+            "64": [],
+            "128": []
+          },
+          "median_ms": {}
+        },
+        {
+          "tokens": 16384,
+          "relative_rms_vs_64": {
+            "32": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 1.1969062541083986e-07,
+              "weight_gradient": 0.0
+            },
+            "64": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 0.0,
+              "weight_gradient": 0.0
+            },
+            "128": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 1.194639764889871e-07,
+              "weight_gradient": 0.0
+            }
+          },
+          "backward_ms": {
+            "32": [
+              1.1912118027849896,
+              1.1953344670737662,
+              1.1994421768188477
+            ],
+            "64": [
+              1.248493094193308,
+              1.2558384585690188,
+              1.254619786646459
+            ],
+            "128": [
+              1.4631715178489686,
+              1.4741725864695079,
+              1.4713131297718396
+            ]
+          },
+          "median_ms": {
+            "32": 1.1953344670737662,
+            "64": 1.254619786646459,
+            "128": 1.4713131297718396
+          }
+        },
+        {
+          "tokens": 49152,
+          "relative_rms_vs_64": {
+            "32": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 1.2744472144277097e-07,
+              "weight_gradient": 0.0
+            },
+            "64": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 0.0,
+              "weight_gradient": 0.0
+            },
+            "128": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 1.2893204370811873e-07,
+              "weight_gradient": 0.0
+            }
+          },
+          "backward_ms": {
+            "32": [
+              3.376286999932651,
+              3.3800281524658202,
+              3.3872027166958514
+            ],
+            "64": [
+              3.449235943385533,
+              3.4905426025390627,
+              3.4968029022216798
+            ],
+            "128": [
+              4.100115489959717,
+              4.123561827341716,
+              4.128400039672852
+            ]
+          },
+          "median_ms": {
+            "32": 3.3800281524658202,
+            "64": 3.4905426025390627,
+            "128": 4.123561827341716
+          }
+        }
+      ],
+      "scope": "Expert backward only; no whole-update speed or convergence claim"
+    },
+    "utc": "2026-10-25T04:27:55.785761+00:00"
+  },
+  "terminal_geometry": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T04:27:56.761664+00:00",
+  "events_sha256": "a82a37e3f3049bea6402cd62f324377387ed3706f644c96078191de664050f7a",
+  "previous_result_commit": "5c4177db34196b4a030c35bd952e8c85ee4f2f7a"
+}

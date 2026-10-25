@@ -8,8 +8,8 @@ import subprocess
 import time
 
 ROOT=Path(__file__).resolve().parents[2]
-STATE=ROOT/'logs/ks3-autoresearch'
-PROMPT=ROOT/'configs/ks3/autonomous_prompt.txt'
+STATE=Path(os.environ.get('KS3_MANAGER_STATE',str(ROOT/'logs/ks3-autoresearch')))
+PROMPT=Path(os.environ.get('KS3_MANAGER_PROMPT',str(ROOT/'configs/ks3/autonomous_prompt.txt')))
 CODEX='/root/.local/bin/codex'
 
 
@@ -53,6 +53,9 @@ def main():
             selector.register(process.stdout,selectors.EVENT_READ)
             buffer=b''
             while selector.get_map():
+                if (STATE/'STOP').exists() and process.poll() is None:
+                    import signal
+                    os.killpg(process.pid,signal.SIGTERM)
                 for key,_ in selector.select(timeout=10):
                     chunk=os.read(key.fd,65536)
                     if not chunk:

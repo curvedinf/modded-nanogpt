@@ -1,0 +1,143 @@
+{
+  "run_id": "pr393-ks3-fp8-timing-20261025T010839Z",
+  "utc": "2026-10-25T01:12:59.030455+00:00",
+  "status": "timing_complete",
+  "updates": 100,
+  "global_tokens_per_update": 131072,
+  "comparison": {
+    "bf16": {
+      "events": "logs/wr-reproduction/pr393-ks3-block-20261025T002719Z/events.jsonl",
+      "first_100_seconds": 59.95450335800706,
+      "first_100_seconds_per_update": 0.5995450335800706,
+      "updates_26_through_100_seconds_per_update": 0.5989437466268039,
+      "observations": [
+        {
+          "event": "train",
+          "step": 25,
+          "objective": 11.49413013458252,
+          "train_seconds": 15.033722360996762,
+          "utc": "2026-10-25T00:29:56.955978+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1"
+        },
+        {
+          "event": "train",
+          "step": 50,
+          "objective": 10.494006156921387,
+          "train_seconds": 30.010921724999207,
+          "utc": "2026-10-25T00:30:11.933181+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1"
+        },
+        {
+          "event": "train",
+          "step": 75,
+          "objective": 9.94772720336914,
+          "train_seconds": 44.970427118008956,
+          "utc": "2026-10-25T00:30:26.892687+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1"
+        },
+        {
+          "event": "train",
+          "step": 100,
+          "objective": 9.33907413482666,
+          "train_seconds": 59.95450335800706,
+          "utc": "2026-10-25T00:30:41.876763+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1"
+        }
+      ]
+    },
+    "fp8": {
+      "events": "logs/wr-reproduction/pr393-ks3-fp8-timing-20261025T010839Z/events.jsonl",
+      "first_100_seconds": 59.55930390799767,
+      "first_100_seconds_per_update": 0.5955930390799767,
+      "updates_26_through_100_seconds_per_update": 0.5935849982800816,
+      "observations": [
+        {
+          "event": "train",
+          "step": 25,
+          "objective": 11.53617000579834,
+          "train_seconds": 15.040429036991554,
+          "utc": "2026-10-25T01:11:28.134778+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-fp8-c1024-r1"
+        },
+        {
+          "event": "train",
+          "step": 50,
+          "objective": 10.540069580078125,
+          "train_seconds": 29.8815741790022,
+          "utc": "2026-10-25T01:11:42.975929+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-fp8-c1024-r1"
+        },
+        {
+          "event": "train",
+          "step": 75,
+          "objective": 9.968119621276855,
+          "train_seconds": 44.70879680800135,
+          "utc": "2026-10-25T01:11:57.803150+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-fp8-c1024-r1"
+        },
+        {
+          "event": "train",
+          "step": 100,
+          "objective": 9.35842514038086,
+          "train_seconds": 59.55930390799767,
+          "utc": "2026-10-25T01:12:12.653655+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-fp8-c1024-r1"
+        }
+      ]
+    }
+  },
+  "validation_performed": false,
+  "limitation": "One first-stage timing check; comparison uses the saved BF16 run, not a contemporaneous paired replication. Does not establish later-stage or convergence speed.",
+  "total_time_reduction_fraction": 0.006591655803560359,
+  "post_bootstrap_time_reduction_fraction": 0.008946997738773166,
+  "source_sha256": {
+    "wr_reproduction/accumulation.py": "f4faf897f77ed28cf61150f4e17f51985983d754587218e0c6fe60b155ce15b8",
+    "wr_reproduction/train.py": "839fdb9850314f953b5509dd7d44e9226c8cae1e6d4a5555eeeceb4880d5d023",
+    "wr_reproduction/check_model.py": "0a4efc4b286db3ac7852837fcd4a48ccca0310631138d1a770e5addcf36a3140",
+    "wr_reproduction/contracts.py": "35f97f05d4a9d1d7cf2d5753e9e60866685b786f656aa30ee4ed2cc4d880cca5",
+    "wr_reproduction/backend.py": "372d89f0d4a7d096598ece0c53fb01325d0df6c337b275229945d50da67a3fa9",
+    "wr_reproduction/check_ks3_moe.py": "9ee4bb0ef05013b3153d56f0d990c9b4214cfdcb463bc4ec610131a70772f800",
+    "wr_reproduction/virtual_tables.py": "9f265abf4009a9e2495abc191c6806cd7ab6770c8e17475d9d6ac936c12314a9",
+    "wr_reproduction/check_moe.py": "7d8ee016c424cd700167193059b01f56a6767398a10a105da8fdbbebffdec828",
+    "wr_reproduction/check_attention.py": "c396bed51c5ca32467b077765c984a39d912f47ca5277a843fc8e7abe603935e",
+    "wr_reproduction/mlp_kernels.py": "13e4312e3f0d934a2fb02319213d9ec1158eb512a16285c0de7f20a0fe5ee385",
+    "wr_reproduction/bench_updates.py": "58a7e0cef84c22f173332ab34ea447b51fced253604e8aba94209fe2e2abb8af",
+    "wr_reproduction/fp8.py": "069bbc9e632bba8ff458246eb38fd0369096c3d751b5dcfebd7fc0901435c12e",
+    "wr_reproduction/check_validation_kernels.py": "90ee67259b0ed5bd0cb08e472a54ba604b5c1bfc9f5103e0f5a2394762941c67",
+    "wr_reproduction/check_sparse_accumulation.py": "0bdd65d0a7a13ceff6beb251a89c44bfae0265afccd2984085a44182e302b87f",
+    "wr_reproduction/check_ks3.py": "622f5688bacd5c42951f1b54211cb7cf6081ae6b5c2582cfda47ba57ddb96222",
+    "wr_reproduction/optimizer_kernel.py": "28372b054a91539352223b1cee56bffeb6de37ea382fc1910ca1ac6098f4df3c",
+    "wr_reproduction/check_ce.py": "6d8e86c9f818e276fbb6f78bd3f9bc6488bac69e92958c87e2b8a691a102ffa1",
+    "wr_reproduction/rank_state.py": "59fa77a626cebc93c03ae426543b6fdddff352ff64b5808d5a0968037afb8dfe",
+    "wr_reproduction/attention_quant.py": "623ffbb6cba52b36defefcee7db61c3e5c447e45558d801d5189c56054645f04",
+    "wr_reproduction/__init__.py": "6260c9a6f46e98e082a6836441c3696f51f550d62b8165de1d029189d41c1fd4",
+    "wr_reproduction/ks3_moe.py": "0593028c0dfeafcc83661c554edbe151365c00c9ea3be9bdd94f9a508ffcd0db",
+    "wr_reproduction/ks3_kernel.py": "23e230bd4c7b6dc2311f2a85dd8e5e56fb2ce653149228a6360dfc78ad3e7273",
+    "wr_reproduction/moe_kernels.py": "9a72ef17fd57c93fcba7e0d9cbb3e1c24ce481967f9d9d5a1daa30b9ec1e5c61",
+    "wr_reproduction/profile_ks3_precision.py": "f2410a0b0d3634f0ae3c8a91ed5063883f5c0fefbced8a35dc8add6921932085",
+    "wr_reproduction/ce_kernel.py": "e21bd250f035f0121c9d3a6ff8bdbf67c777441592abc8150c73af9ac49565bd",
+    "wr_reproduction/fused_fp8.py": "d617ea240890fe86a92e386ab278c71e6866f403245a6b6a915d066a82ce88e4",
+    "wr_reproduction/attention_kernel.py": "21338e7fc869a801d2d916d4ec6ca85c8c10530c488991d258717fe8b159d58f",
+    "wr_reproduction/ks3_moe_fp8.py": "82f4b05613360ea85076365b25329f5efd6c5f1288eb727830410c435bd84000",
+    "wr_reproduction/bench_ks3_backends.py": "777ec953dbf228c23a80c50611c9e3e745e833fb48d8276938da31688ae8c45a",
+    "wr_reproduction/check_ks3_fp8_moe.py": "6d182d62bbd455a830f1ae34f13de58af0bf59db94e0e93fa038ef9ff6e3de97",
+    "wr_reproduction/local_collectives.py": "873c92d94f5bf30802204fccd6232b03672f10b443a9425cff9566e959c07767",
+    "wr_reproduction/check_mlp.py": "3adda319be8af08c8aa8da8d896ab4bc5842a5d59bf51ddc780903d0dbbfd93a"
+  }
+}

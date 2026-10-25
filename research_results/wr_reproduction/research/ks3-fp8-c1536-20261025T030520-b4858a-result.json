@@ -1,0 +1,163 @@
+{
+  "run_id": "ks3-fp8-c1536-20261025T030520-b4858a",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "b5415bc648358a54bd9178d460d19d86f7d93452",
+  "recipe": {
+    "name": "fp8-c1536",
+    "hypothesis": "Increase only KS3 expert charts from 1024 to 1536, adding 31,621,120 parameters while preserving eight top1 experts and original non-expert initialization. Numerical checks passed; 100 updates took 60.154421s versus 56.488074s at 1024 charts (6.49% more time). Test whether capacity improves loss enough to compensate at the exact 902.359214543s budget. This is a parameter-capacity/cost tradeoff with the existing verified FP8 precision, not a claimed precision speedup. Keep geometry 0/0.75/0, Adam lr_mul 0.125, original schedule/objective/global batch, and full GS32/BF16 evaluation.",
+    "precision": "fp8",
+    "charts": 1536,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "parameter_budget_change": {
+      "original_expert_projection_parameters": 62914560,
+      "new_expert_projection_parameters": 94371840,
+      "original_geometry_parameters": 327680,
+      "new_geometry_parameters": 491520,
+      "added_parameters": 31621120
+    },
+    "initialization_preservation": "Replay only original 1024-chart expert draws after wider expert initialization; restore original router and subsequent CPU RNG state. Actual pinned init_moe body verified in CPU test.",
+    "timing_evidence": {
+      "run_id": "ks3-fp8-c1536-20261025T025332-4e7267",
+      "first100_seconds": 60.154421261002426,
+      "updates25_to100_seconds": 44.91622986699804,
+      "baseline1024_first100_seconds": 56.48807423899416,
+      "interpretation": "Capacity cost measured; continuous loss/time screening decides usefulness."
+    },
+    "optimizer_shape_scaling": "Original ANVIL formulas evaluated at the wider expert shape; no optimizer hyperparameter constants changed."
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.5477871894836426,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.0428013801574706,
+    "reference_run_id": "pr393-ks3-block-20261025T002719Z",
+    "reference_wall_seconds": 540.1385891999962,
+    "reference_age_seconds": 1.6913806380034657,
+    "reference_objective": 3.504985809326172,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "reference_source_step": 600,
+    "comparable_runs": 1,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/pr393-ks3-block-20261025T002719Z/events.jsonl",
+      "sha256": "40235396e3a1dad5ceb6c05e4c377aa441d1312f62024ecd553f4e91609da1d0",
+      "line": 52,
+      "row_sha256": "2d1d4a0e3966e176207f6a035cded91e860b0e5fc1307ca199898f6867b1ff23",
+      "contract_sha256": "c8f6b00b986edd70e53e927992d1bb54a25711982fd3cc8dd9286caeedb2af8b",
+      "derivation": "train step N is source update N-1; validation uses time_limit step"
+    },
+    "step": 601,
+    "train_seconds": 541.8299698379997,
+    "reference_snapshot_sha256": "50597104d1d030b644a47e2a1a2c01cffd954bc88e2cca4bc7f7d89492fc5e8d",
+    "utc": "2026-10-25T03:16:45.636364+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-fp8-c1536-r1",
+    "run_id": "ks3-fp8-c1536-20261025T030520-b4858a",
+    "seed": 168,
+    "code_commit": "b5415bc648358a54bd9178d460d19d86f7d93452",
+    "training_projection_gs32": true
+  },
+  "completed_utc": "2026-10-25T03:16:47.554365+00:00",
+  "events_sha256": "eea99d3177d224acc4951fe2af0a999a27b14038ec4537d5bc1135fdfc325255",
+  "previous_result_commit": "b5415bc648358a54bd9178d460d19d86f7d93452"
+}

@@ -1,0 +1,595 @@
+{
+  "run_id": "ks3-fp8-prepared-packed-head-v1-20261025T160420-76c487",
+  "status": "timing_complete",
+  "seed": 168,
+  "code_commit": "990eaab688d19c88c18ab804f7dff9fe58e1636c",
+  "recipe": {
+    "name": "fp8-prepared-packed-head-v1",
+    "hypothesis": "Use the same256x256x128 head tile with two rather than one pipeline stages, selected in all eight paired packed-decoder head shape tests with12.6-19.0percent kernel gains. Only head logits/input-gradient launches change relative to complete native FP8+packed decoder. Preserve stored formats/layouts/scales, producer kernels, geometry/optimizers/objective/globalbatch/schedule/evaluation. Require public-dispatch exactness and100-update whole-model timing before discovery.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 2.0,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "weight_packing": "batched",
+    "training_gs32": true,
+    "geometry_backward_rows": 32,
+    "fp8_prepared_native_weights": true,
+    "shared_fp8_gemm_tuning": "mi300-v2",
+    "shared_fp8_amax": "partial",
+    "validation_window_policy": "accepted-control",
+    "hardware_change_scope": "KS3 FP8 only adds125829120 bytes of native half-value weight caches and fused stores. Original FN caches, delayed scale values, FP32 accumulation, geometry, all nonexpert configurations/global batches/objective unchanged. Shared FP8v2/partial-amax previously independently checked; MLP defaults remain legacy. Three fused KS3 producers additionally emit native rows; no standalone operand conversion; original activations and gradients remain stored. Native dual activation layouts reused by two weight-gradient products; originalFN/E5 layouts still emitted and default paths unchanged. Pinned gathered-gradient kernel adds native row/transpose stores after the original stores; original arithmetic and reduction order retained.",
+    "parent_native_weight_correctness_evidence": {
+      "run_id": "ks3-fp8-prepared-native-weights-20261025T130013-ff0980",
+      "code_commit": "29392a6fa9ad83995be3b4d7b82d8bc71159b0a4",
+      "events_sha256": "5a68d14f3cafb71ea6b821d6792352de829d45b1f266b9c5e948ea70656c7ce6",
+      "all256_bytes": true,
+      "original_cached_weights_scales_and_amax_bitwise": true,
+      "captured_refresh_replay": true,
+      "full_block_bitwise": true,
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "original": 1.785050794813368,
+          "prepared": 1.6125815200805664
+        },
+        {
+          "tokens": 49152,
+          "original": 4.971816749572754,
+          "prepared": 4.520385342552548
+        }
+      ],
+      "refresh_milliseconds": {
+        "original": 0.19805803876331304,
+        "prepared": 0.26466181734774974
+      }
+    },
+    "fp8_prepared_native_activations": true,
+    "parent_row_producer_correctness_evidence": {
+      "run_id": "ks3-fp8-prepared-native-producers-20261025T130905-3b7d46",
+      "code_commit": "b2c9755df3f431c3ff0632d1ea06b9518be0be86",
+      "events_sha256": "d63b008d769fce78a0e4c92172ef8026935507824c51ab75f2d5c239538c20d5",
+      "all256_activation_and_weight_bytes": true,
+      "full_block_bitwise_equal": true,
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "original": 1.786434088812934,
+          "weights_only": 1.6150987010891154,
+          "prepared": 1.4653466209998498
+        },
+        {
+          "tokens": 49152,
+          "original": 4.978804702758789,
+          "weights_only": 4.530874161493211,
+          "prepared": 4.130240498418393
+        }
+      ]
+    },
+    "fp8_prepared_native_dual": true,
+    "parent_dual_correctness_evidence": {
+      "run_id": "ks3-fp8-prepared-native-dual-20261025T131548-bd407b",
+      "code_commit": "e054696e72eb5d2556fbfd17e1a8ab1e91622c74",
+      "events_sha256": "1563acec8389d90f5ca33364b2a89f64647fa19f350821d11290dadb112e6133",
+      "all256_bytes": true,
+      "weight_gradient_format_cases": 12,
+      "empty_experts_and_accumulation": true,
+      "native_transposes_bitwise": true,
+      "full_block_bitwise": true,
+      "original_weight_bytes_scales_amax_retained": true,
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "original": 1.7920351805510344,
+          "weights_only": 1.6201259289757681,
+          "rows_only": 1.470582263653095,
+          "prepared": 1.2415856759759445
+        },
+        {
+          "tokens": 49152,
+          "original": 4.987646484375,
+          "weights_only": 4.540071723574684,
+          "rows_only": 4.13295782338018,
+          "prepared": 3.5019676753452846
+        }
+      ]
+    },
+    "fp8_prepared_native_gather": true,
+    "parent_gather_correctness_evidence": {
+      "run_id": "ks3-fp8-prepared-native-gather-20261025T133048-c69b05",
+      "code_commit": "50ce67c725361255fcf354de40b07b1e73f79262",
+      "events_sha256": "31b5ebe3857a50e07d51d351346cb30a087ec039c703098d0bbb256bb5bcda08",
+      "full_block_bitwise": true,
+      "all256_bytes": true,
+      "weight_gradient_format_cases": 12,
+      "original_gather_bytes_gate_gradients_exact": true,
+      "gather_checks": [
+        {
+          "tokens": 1,
+          "nonfinite": false,
+          "original_bytes_and_gate_gradient_exact": true,
+          "native_layouts_exact": true
+        },
+        {
+          "tokens": 257,
+          "nonfinite": false,
+          "original_bytes_and_gate_gradient_exact": true,
+          "native_layouts_exact": true
+        },
+        {
+          "tokens": 257,
+          "nonfinite": true,
+          "original_bytes_and_gate_gradient_exact": true,
+          "native_layouts_exact": true
+        },
+        {
+          "tokens": 16384,
+          "nonfinite": false,
+          "original_bytes_and_gate_gradient_exact": true,
+          "native_layouts_exact": true
+        },
+        {
+          "tokens": 49152,
+          "nonfinite": false,
+          "original_bytes_and_gate_gradient_exact": true,
+          "native_layouts_exact": true
+        }
+      ],
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "original": 1.797176677775833,
+          "weights_only": 1.6258527723409362,
+          "rows_only": 1.4770456988994891,
+          "dual_only": 1.2441227999600497,
+          "prepared": 1.1777532224301939
+        },
+        {
+          "tokens": 49152,
+          "original": 5.008654504073293,
+          "weights_only": 4.554410589308966,
+          "rows_only": 4.150529380466627,
+          "dual_only": 3.5297410636112607,
+          "prepared": 3.32731441629344
+        }
+      ]
+    },
+    "parent_native_timing_evidence": {
+      "run_id": "ks3-fp8-prepared-native-gather-20261025T133244-bc25b5",
+      "code_commit": "48a613ba3d3eaa11bd61d26f5a78c65ac1b2d036",
+      "first100_seconds": 36.750987613995676,
+      "after25_through100_seconds": 27.449032877004356,
+      "references": [
+        {
+          "run_id": "ks3-bf16-projection-v2-shared-fp8-amax-20261025T114619-2be590",
+          "code_commit": "707e863f06eefd3b091cf20d2754c24ba753f80e",
+          "first100_seconds": 37.682322256005136,
+          "after25_through100_seconds": 28.140079172997503,
+          "first100_reduction": 0.024715425861553397,
+          "steady_reduction": 0.024557368575432337
+        },
+        {
+          "run_id": "ks3-bf16-shared-fp8-v2-partial-amax-20261025T110818-37b466",
+          "code_commit": "65123565c73ed6dcb3a01b352ba0ad7fd42cfe43",
+          "first100_seconds": 37.7528903830098,
+          "after25_through100_seconds": 28.18139608099591,
+          "first100_reduction": 0.026538438748653137,
+          "steady_reduction": 0.02598747066634577
+        }
+      ],
+      "validation": false,
+      "gate_passed": true
+    },
+    "fp8_native_gemm_tuning": "mi300-v2",
+    "native_tile_sweep_evidence": {
+      "run_id": "ks3-native-fp8-tile-sweep-20261025T141621-3261b4",
+      "code_commit": "a2c4cd0b27fb0c434e6fba8c89ba3eab006b3e38",
+      "artifact_sha256": "17eee1c248d701f80cce30931fb7c8281c47ec5d40feb058b63a4f2fedea9836",
+      "cases": 12,
+      "tested_configurations": 168,
+      "failed_configurations": 0,
+      "selected_minimum_paired_gain": 0.03,
+      "selected": [
+        {
+          "role": "output_projection",
+          "rows": 16384,
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            1,
+            16
+          ],
+          "paired_speedup": 1.1401138761290617
+        },
+        {
+          "role": "input_gradient",
+          "rows": 16384,
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            1,
+            16
+          ],
+          "paired_speedup": 1.1341047666271964
+        },
+        {
+          "role": "output_weight_gradient",
+          "rows": 16384,
+          "config": [
+            128,
+            256,
+            128,
+            8,
+            1,
+            32
+          ],
+          "paired_speedup": 1.0762365878023403
+        },
+        {
+          "role": "input_weight_gradient",
+          "rows": 16384,
+          "config": [
+            128,
+            256,
+            128,
+            8,
+            1,
+            32
+          ],
+          "paired_speedup": 1.0695910884168933
+        },
+        {
+          "role": "output_projection",
+          "rows": 49152,
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            1,
+            16
+          ],
+          "paired_speedup": 1.042985202526267
+        },
+        {
+          "role": "input_gradient",
+          "rows": 49152,
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            1,
+            16
+          ],
+          "paired_speedup": 1.0419087267519447
+        },
+        {
+          "role": "output_weight_gradient",
+          "rows": 49152,
+          "config": [
+            128,
+            256,
+            128,
+            8,
+            1,
+            32
+          ],
+          "paired_speedup": 1.130312150044112
+        },
+        {
+          "role": "input_weight_gradient",
+          "rows": 49152,
+          "config": [
+            128,
+            256,
+            128,
+            8,
+            1,
+            32
+          ],
+          "paired_speedup": 1.1211513556674846
+        }
+      ],
+      "max_relative_rms": 0.0,
+      "whole_model_speed_unverified": true
+    },
+    "native_tile_full_block_evidence": {
+      "run_id": "ks3-fp8-prepared-native-tiles-v2-20261025T142909-9c3597",
+      "code_commit": "91c42d42e16a2de41458acce4a990ed9951a15f1",
+      "events_sha256": "3697ad6613ccdea44fc6895987eee8dc070308d0ce1487bb02e9ce7c2e35a084",
+      "full_block_bitwise": true,
+      "native_tile_policy": "mi300-v2",
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "native_v1": 1.1714780109684642,
+          "prepared": 1.1595038999994116
+        },
+        {
+          "tokens": 49152,
+          "native_v1": 3.295580317179362,
+          "prepared": 3.24384765625
+        }
+      ],
+      "max_decoded_oracle_relative_rms": 5.101589067635359e-06
+    },
+    "whole_model_timing_evidence": {
+      "run_id": "ks3-fp8-prepared-native-tiles-v2-20261025T143217-3e3aa6",
+      "code_commit": "26c9ed859e8a25563b01c711308a0fa96292e3ae",
+      "first100_seconds": 36.73941637799726,
+      "after25_through100_seconds": 27.36929167198832,
+      "parent": {
+        "run_id": "ks3-fp8-prepared-native-gather-20261025T133244-bc25b5",
+        "code_commit": "48a613ba3d3eaa11bd61d26f5a78c65ac1b2d036",
+        "first100_seconds": 36.750987613995676,
+        "after25_through100_seconds": 27.449032877004356
+      },
+      "validation": false,
+      "full_convergence_launched": false,
+      "time_reduction_vs_parent": {
+        "first100_seconds": 0.00031485510321394017,
+        "after25_through100_seconds": 0.0029050642830785733
+      },
+      "decision": "Only0.0315% first100 and0.2905% steady-window nominal improvement; single archived comparison does not establish useful whole-model gain. Preserve opt-in code/evidence, skip standalone convergence and prioritize meaningful optimizer ablation. Do not repeat timing unchanged."
+    },
+    "shared_fp8_decode": "packed4-selected",
+    "shared_packed_decode_evidence": {
+      "run_id": "ks3-shared-fp8-packed-decode-check-20261025T152820-72bf44",
+      "code_commit": "fb09c8ed2f0c292693869bf7d6b93f4a6879e69c",
+      "artifact_sha256": "75e6588c64321ce4cafdc11acaa30d2b84cdb2d66e3d5e787384dff325714f8b",
+      "all_outputs_exact": true,
+      "independent_source_format_checks": 24,
+      "byte_cases": 4,
+      "bytes_per_case": 1310723,
+      "original_dense_mlp_autograd": true,
+      "full_convergence_verified": false
+    },
+    "shared_packed_decode_change": {
+      "parent_recipe": "configs/wr_reproduction/research_fp8_prepared_tiles_v2.json",
+      "parent_sha256": "adfadef563f231273758bb54fdd79b8cbfb538ebbcfcfcdd70f731ddcdcf5365",
+      "before": "scalar",
+      "after": "packed4-selected",
+      "previous_native_v2_timing_run": "ks3-fp8-prepared-native-tiles-v2-20261025T143217-3e3aa6",
+      "previous_native_v2_first100": 36.73941637799726,
+      "previous_native_v2_after25_through100": 27.36929167198832
+    },
+    "combined_whole_model_timing": {
+      "run_id": "ks3-fp8-prepared-packed-shared-decode-20261025T154433-14abbe",
+      "code_commit": "a17bfb21057c1e3dafa08ede534c939efb68b4bb",
+      "first100_seconds": 35.13042204498197,
+      "after25_through100_seconds": 26.154114384989953,
+      "bf16_reference": {
+        "run_id": "ks3-bf16-shared-fp8-packed-decode-20261025T153159-89512c",
+        "first100_seconds": 36.00539114300045,
+        "after25_through100_seconds": 26.88107477000449
+      },
+      "prior_native_fp8_reference": {
+        "run_id": "ks3-fp8-prepared-native-tiles-v2-20261025T143217-3e3aa6",
+        "first100_seconds": 36.73941637799726,
+        "after25_through100_seconds": 27.36929167198832
+      },
+      "time_reduction_vs_bf16": {
+        "first100": 0.024301057987216934,
+        "after25_through100": 0.027043575870177694
+      },
+      "time_reduction_vs_prior_fp8": {
+        "first100": 0.04379477116514274,
+        "after25_through100": 0.04439929617331195
+      },
+      "validation": false,
+      "timing_gate_passed": true
+    },
+    "shared_fp8_head_tuning": "packed-v1",
+    "packed_head_tile_change": {
+      "parent_recipe": "configs/wr_reproduction/research_fp8_prepared_packed_decode.json",
+      "parent_sha256": "068cced9f909a77675b723e1f06dd3af8d67c53278749d4a7e7b32dc1bbac425",
+      "scope": "Head logits/dX only; m>=16384, hidden768, candidate dimension>=10240",
+      "before": [
+        256,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "after": [
+        256,
+        256,
+        128,
+        8,
+        2,
+        32
+      ],
+      "evidence_run": "ks3-packed-head-tile-sweep-20261025T155655-bf1151",
+      "code_commit": "c11558797956d38738be4dafa20e31da095c8ab3",
+      "artifact_sha256": "b9522945d327b9594fdd05540b6cd31fa37e8ec30bd7b7f8edbd5ad4fe37b65b",
+      "paired_shape_gains": [
+        {
+          "name": "head_logits",
+          "config": [
+            256,
+            256,
+            128,
+            8,
+            2,
+            32
+          ],
+          "baseline_ms": 1.013884452293659,
+          "initial_baseline_ms": 1.0078403988400022,
+          "best_ms": 0.9007797479629517,
+          "speedup": 1.1255631075037882
+        },
+        {
+          "name": "head_dx",
+          "config": [
+            256,
+            256,
+            128,
+            8,
+            2,
+            32
+          ],
+          "baseline_ms": 0.8669095656451057,
+          "initial_baseline_ms": 0.8689481984014097,
+          "best_ms": 0.7283454552674905,
+          "speedup": 1.1902450401461302
+        },
+        {
+          "name": "large_head_logits",
+          "config": [
+            256,
+            256,
+            128,
+            8,
+            2,
+            32
+          ],
+          "baseline_ms": 4.164549364362444,
+          "initial_baseline_ms": 4.1461102379692925,
+          "best_ms": 3.646983027458191,
+          "speedup": 1.1419162998586745
+        },
+        {
+          "name": "large_head_dx",
+          "config": [
+            256,
+            256,
+            128,
+            8,
+            2,
+            32
+          ],
+          "baseline_ms": 2.9978805351257325,
+          "initial_baseline_ms": 2.981895974966196,
+          "best_ms": 2.5594359311190518,
+          "speedup": 1.1713051687193363
+        },
+        {
+          "name": "late_head_logits",
+          "config": [
+            256,
+            256,
+            128,
+            8,
+            2,
+            32
+          ],
+          "baseline_ms": 7.122024393081665,
+          "initial_baseline_ms": 7.114211654663086,
+          "best_ms": 6.250371503829956,
+          "speedup": 1.1394561729198973
+        },
+        {
+          "name": "late_head_dx",
+          "config": [
+            256,
+            256,
+            128,
+            8,
+            2,
+            32
+          ],
+          "baseline_ms": 5.0809978485107425,
+          "initial_baseline_ms": 5.0811302185058596,
+          "best_ms": 4.354774284362793,
+          "speedup": 1.1667649151772774
+        },
+        {
+          "name": "taper_head_logits",
+          "config": [
+            256,
+            256,
+            128,
+            8,
+            2,
+            32
+          ],
+          "baseline_ms": 11.017046451568604,
+          "initial_baseline_ms": 11.073364384969075,
+          "best_ms": 9.598113059997559,
+          "speedup": 1.1478346194404387
+        },
+        {
+          "name": "taper_head_dx",
+          "config": [
+            256,
+            256,
+            128,
+            8,
+            2,
+            32
+          ],
+          "baseline_ms": 9.570182863871256,
+          "initial_baseline_ms": 9.61990852355957,
+          "best_ms": 8.195243326822917,
+          "speedup": 1.16777287533955
+        }
+      ]
+    },
+    "packed_head_public_correctness": {
+      "run_id": "ks3-packed-head-public-check-20261025T160331-8c0e4f",
+      "code_commit": "5686b4ebcf665a2e673f4d35261f36c45689d5c9",
+      "events_sha256": "fda3898309527acfd94d50f68414acf6a89ce18d734575df02de196c134db4c6",
+      "all_outputs_exact": true,
+      "shape_checks": 8,
+      "source_format_pairs": 4,
+      "all_byte_patterns_checked": true,
+      "public_custom_op": true,
+      "full_convergence_verified": false
+    }
+  },
+  "validation": null,
+  "timing": {
+    "event": "timing_complete",
+    "steps": 100,
+    "train_seconds": 34.883998285018606,
+    "full_schedule_complete": false,
+    "validation_performed": false,
+    "utc": "2026-10-25T16:07:20.009785+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-fp8-c1024-r1",
+    "run_id": "ks3-fp8-prepared-packed-head-v1-20261025T160420-76c487",
+    "seed": 168,
+    "code_commit": "990eaab688d19c88c18ab804f7dff9fe58e1636c",
+    "training_projection_gs32": true
+  },
+  "kernel_check": null,
+  "profile": null,
+  "terminal_geometry": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T16:07:22.059293+00:00",
+  "events_sha256": "86e6068b9f912b1a62b27552f89cffcd01ef700f6be2ee9990d449c827bd4574",
+  "previous_result_commit": "990eaab688d19c88c18ab804f7dff9fe58e1636c"
+}

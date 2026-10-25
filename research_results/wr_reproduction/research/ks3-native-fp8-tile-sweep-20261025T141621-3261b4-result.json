@@ -1,0 +1,770 @@
+{
+  "run_id": "ks3-native-fp8-tile-sweep-20261025T141621-3261b4",
+  "status": "correctness_passed",
+  "seed": 169,
+  "code_commit": "a2c4cd0b27fb0c434e6fba8c89ba3eab006b3e38",
+  "recipe": {
+    "name": "native-fp8-tile-sweep",
+    "hypothesis": "Retune projection and weight-gradient tiles after all FP8 operands are prepared in producers. Original tile choices included repeated register decoding, which can change their performance ranking. Measure14 configs at16k/49k routed rows, both original activation formats and all six expert products, against decoded sampled oracles and current full outputs. Interleave3 baseline/candidate timing pairs per config. Diagnostic only; no training-reference evidence or convergence claim.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 2.0,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "weight_packing": "batched",
+    "training_gs32": true,
+    "geometry_backward_rows": 32,
+    "fp8_prepared_native_weights": true,
+    "shared_fp8_gemm_tuning": "mi300-v2",
+    "shared_fp8_amax": "partial",
+    "validation_window_policy": "accepted-control",
+    "hardware_change_scope": "KS3 FP8 only adds125829120 bytes of native half-value weight caches and fused stores. Original FN caches, delayed scale values, FP32 accumulation, geometry, all nonexpert configurations/global batches/objective unchanged. Shared FP8v2/partial-amax previously independently checked; MLP defaults remain legacy. Three fused KS3 producers additionally emit native rows; no standalone operand conversion; original activations and gradients remain stored. Native dual activation layouts reused by two weight-gradient products; originalFN/E5 layouts still emitted and default paths unchanged. Pinned gathered-gradient kernel adds native row/transpose stores after the original stores; original arithmetic and reduction order retained.",
+    "parent_native_weight_correctness_evidence": {
+      "run_id": "ks3-fp8-prepared-native-weights-20261025T130013-ff0980",
+      "code_commit": "29392a6fa9ad83995be3b4d7b82d8bc71159b0a4",
+      "events_sha256": "5a68d14f3cafb71ea6b821d6792352de829d45b1f266b9c5e948ea70656c7ce6",
+      "all256_bytes": true,
+      "original_cached_weights_scales_and_amax_bitwise": true,
+      "captured_refresh_replay": true,
+      "full_block_bitwise": true,
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "original": 1.785050794813368,
+          "prepared": 1.6125815200805664
+        },
+        {
+          "tokens": 49152,
+          "original": 4.971816749572754,
+          "prepared": 4.520385342552548
+        }
+      ],
+      "refresh_milliseconds": {
+        "original": 0.19805803876331304,
+        "prepared": 0.26466181734774974
+      }
+    },
+    "fp8_prepared_native_activations": true,
+    "parent_row_producer_correctness_evidence": {
+      "run_id": "ks3-fp8-prepared-native-producers-20261025T130905-3b7d46",
+      "code_commit": "b2c9755df3f431c3ff0632d1ea06b9518be0be86",
+      "events_sha256": "d63b008d769fce78a0e4c92172ef8026935507824c51ab75f2d5c239538c20d5",
+      "all256_activation_and_weight_bytes": true,
+      "full_block_bitwise_equal": true,
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "original": 1.786434088812934,
+          "weights_only": 1.6150987010891154,
+          "prepared": 1.4653466209998498
+        },
+        {
+          "tokens": 49152,
+          "original": 4.978804702758789,
+          "weights_only": 4.530874161493211,
+          "prepared": 4.130240498418393
+        }
+      ]
+    },
+    "fp8_prepared_native_dual": true,
+    "parent_dual_correctness_evidence": {
+      "run_id": "ks3-fp8-prepared-native-dual-20261025T131548-bd407b",
+      "code_commit": "e054696e72eb5d2556fbfd17e1a8ab1e91622c74",
+      "events_sha256": "1563acec8389d90f5ca33364b2a89f64647fa19f350821d11290dadb112e6133",
+      "all256_bytes": true,
+      "weight_gradient_format_cases": 12,
+      "empty_experts_and_accumulation": true,
+      "native_transposes_bitwise": true,
+      "full_block_bitwise": true,
+      "original_weight_bytes_scales_amax_retained": true,
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "original": 1.7920351805510344,
+          "weights_only": 1.6201259289757681,
+          "rows_only": 1.470582263653095,
+          "prepared": 1.2415856759759445
+        },
+        {
+          "tokens": 49152,
+          "original": 4.987646484375,
+          "weights_only": 4.540071723574684,
+          "rows_only": 4.13295782338018,
+          "prepared": 3.5019676753452846
+        }
+      ]
+    },
+    "fp8_prepared_native_gather": true,
+    "prepared_native_gather_correctness_evidence": {
+      "run_id": "ks3-fp8-prepared-native-gather-20261025T133048-c69b05",
+      "code_commit": "50ce67c725361255fcf354de40b07b1e73f79262",
+      "events_sha256": "31b5ebe3857a50e07d51d351346cb30a087ec039c703098d0bbb256bb5bcda08",
+      "full_block_bitwise": true,
+      "all256_bytes": true,
+      "weight_gradient_format_cases": 12,
+      "original_gather_bytes_gate_gradients_exact": true,
+      "gather_checks": [
+        {
+          "tokens": 1,
+          "nonfinite": false,
+          "original_bytes_and_gate_gradient_exact": true,
+          "native_layouts_exact": true
+        },
+        {
+          "tokens": 257,
+          "nonfinite": false,
+          "original_bytes_and_gate_gradient_exact": true,
+          "native_layouts_exact": true
+        },
+        {
+          "tokens": 257,
+          "nonfinite": true,
+          "original_bytes_and_gate_gradient_exact": true,
+          "native_layouts_exact": true
+        },
+        {
+          "tokens": 16384,
+          "nonfinite": false,
+          "original_bytes_and_gate_gradient_exact": true,
+          "native_layouts_exact": true
+        },
+        {
+          "tokens": 49152,
+          "nonfinite": false,
+          "original_bytes_and_gate_gradient_exact": true,
+          "native_layouts_exact": true
+        }
+      ],
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "original": 1.797176677775833,
+          "weights_only": 1.6258527723409362,
+          "rows_only": 1.4770456988994891,
+          "dual_only": 1.2441227999600497,
+          "prepared": 1.1777532224301939
+        },
+        {
+          "tokens": 49152,
+          "original": 5.008654504073293,
+          "weights_only": 4.554410589308966,
+          "rows_only": 4.150529380466627,
+          "dual_only": 3.5297410636112607,
+          "prepared": 3.32731441629344
+        }
+      ]
+    },
+    "whole_model_timing_evidence": {
+      "run_id": "ks3-fp8-prepared-native-gather-20261025T133244-bc25b5",
+      "code_commit": "48a613ba3d3eaa11bd61d26f5a78c65ac1b2d036",
+      "first100_seconds": 36.750987613995676,
+      "after25_through100_seconds": 27.449032877004356,
+      "references": [
+        {
+          "run_id": "ks3-bf16-projection-v2-shared-fp8-amax-20261025T114619-2be590",
+          "code_commit": "707e863f06eefd3b091cf20d2754c24ba753f80e",
+          "first100_seconds": 37.682322256005136,
+          "after25_through100_seconds": 28.140079172997503,
+          "first100_reduction": 0.024715425861553397,
+          "steady_reduction": 0.024557368575432337
+        },
+        {
+          "run_id": "ks3-bf16-shared-fp8-v2-partial-amax-20261025T110818-37b466",
+          "code_commit": "65123565c73ed6dcb3a01b352ba0ad7fd42cfe43",
+          "first100_seconds": 37.7528903830098,
+          "after25_through100_seconds": 28.18139608099591,
+          "first100_reduction": 0.026538438748653137,
+          "steady_reduction": 0.02598747066634577
+        }
+      ],
+      "validation": false,
+      "gate_passed": true
+    },
+    "diagnostic_native_fp8_tile_sweep": true
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "scope": "Primitive nativeFP8 tile sweep only; no model/convergence speed claim. Failed configs retained. All candidates must pass full block and whole-model gates before training.",
+    "case_count": 12,
+    "artifact": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-native-fp8-tile-sweep-20261025T141621-3261b4/native-fp8-tiles.json",
+    "artifact_sha256": "17eee1c248d701f80cce30931fb7c8281c47ec5d40feb058b63a4f2fedea9836",
+    "cases": [
+      {
+        "role": "input_projection",
+        "m": 16384,
+        "k": 768,
+        "n": 1024,
+        "output_dtype": "torch.float32",
+        "a_format": "torch.float8_e4m3fn",
+        "b_format": "torch.float8_e4m3fn",
+        "prepared_a": true,
+        "prepared_b": true,
+        "independent_decoded_oracle_max_rms": 1.765861767921706e-08,
+        "baseline_config": [
+          64,
+          128,
+          128,
+          4,
+          1,
+          16
+        ],
+        "best": {
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            1,
+            16
+          ],
+          "relative_rms": 0.0,
+          "samples_ms": {
+            "baseline": [
+              0.053775242817254716,
+              0.054254881660893275,
+              0.05443632770058335
+            ],
+            "candidate": [
+              0.05401475419669316,
+              0.054407784820645615,
+              0.054300689194007414
+            ]
+          },
+          "paired_speedup": 0.997189682317404,
+          "median_ms": 0.054300689194007414
+        }
+      },
+      {
+        "role": "output_projection",
+        "m": 16384,
+        "k": 1024,
+        "n": 768,
+        "output_dtype": "torch.bfloat16",
+        "a_format": "torch.float8_e4m3fn",
+        "b_format": "torch.float8_e4m3fn",
+        "prepared_a": true,
+        "prepared_b": true,
+        "independent_decoded_oracle_max_rms": 0.0,
+        "baseline_config": [
+          128,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "best": {
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            1,
+            16
+          ],
+          "relative_rms": 0.0,
+          "samples_ms": {
+            "baseline": [
+              0.05953443638847681,
+              0.05974621402167286,
+              0.05970234619943719
+            ],
+            "candidate": [
+              0.05424978813553301,
+              0.052237056303306446,
+              0.05236524828742532
+            ]
+          },
+          "paired_speedup": 1.1401138761290617,
+          "median_ms": 0.05236524828742532
+        }
+      },
+      {
+        "role": "feature_gradient",
+        "m": 16384,
+        "k": 768,
+        "n": 1024,
+        "output_dtype": "torch.float32",
+        "a_format": "torch.float8_e5m2",
+        "b_format": "torch.float8_e4m3fn",
+        "prepared_a": true,
+        "prepared_b": true,
+        "independent_decoded_oracle_max_rms": 1.513584280132818e-08,
+        "baseline_config": [
+          64,
+          128,
+          128,
+          4,
+          1,
+          16
+        ],
+        "best": {
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            1,
+            16
+          ],
+          "relative_rms": 0.0,
+          "samples_ms": {
+            "baseline": [
+              0.05505781582222379,
+              0.055192718043471825,
+              0.05523903787750559
+            ],
+            "candidate": [
+              0.05513129997253418,
+              0.055197205760782,
+              0.05508110118362139
+            ]
+          },
+          "paired_speedup": 0.9999186966577688,
+          "median_ms": 0.05513129997253418
+        }
+      },
+      {
+        "role": "input_gradient",
+        "m": 16384,
+        "k": 1024,
+        "n": 768,
+        "output_dtype": "torch.bfloat16",
+        "a_format": "torch.float8_e5m2",
+        "b_format": "torch.float8_e4m3fn",
+        "prepared_a": true,
+        "prepared_b": true,
+        "independent_decoded_oracle_max_rms": 0.0,
+        "baseline_config": [
+          128,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "best": {
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            1,
+            16
+          ],
+          "relative_rms": 0.0,
+          "samples_ms": {
+            "baseline": [
+              0.05924835155856225,
+              0.05951347205475086,
+              0.05931836163198903
+            ],
+            "candidate": [
+              0.05213056801223266,
+              0.05410558786548552,
+              0.052304128663880484
+            ]
+          },
+          "paired_speedup": 1.1341047666271964,
+          "median_ms": 0.052304128663880484
+        }
+      },
+      {
+        "role": "output_weight_gradient",
+        "m": 16384,
+        "k": 1024,
+        "n": 768,
+        "output_dtype": "torch.bfloat16",
+        "a_format": "torch.float8_e4m3fn",
+        "b_format": "torch.float8_e5m2",
+        "prepared_a": true,
+        "prepared_b": true,
+        "independent_decoded_oracle_max_rms": 0.0,
+        "baseline_config": [
+          64,
+          128,
+          64,
+          4,
+          1,
+          16
+        ],
+        "best": {
+          "config": [
+            128,
+            256,
+            128,
+            8,
+            1,
+            32
+          ],
+          "relative_rms": 0.0,
+          "samples_ms": {
+            "baseline": [
+              0.1005164383868782,
+              0.1010167515967503,
+              0.1010459016101195
+            ],
+            "candidate": [
+              0.09353637613627334,
+              0.09352585433365462,
+              0.093888186626747
+            ]
+          },
+          "paired_speedup": 1.0762365878023403,
+          "median_ms": 0.09353637613627334
+        }
+      },
+      {
+        "role": "input_weight_gradient",
+        "m": 16384,
+        "k": 1024,
+        "n": 768,
+        "output_dtype": "torch.bfloat16",
+        "a_format": "torch.float8_e5m2",
+        "b_format": "torch.float8_e4m3fn",
+        "prepared_a": true,
+        "prepared_b": true,
+        "independent_decoded_oracle_max_rms": 1.6322171347837866e-07,
+        "baseline_config": [
+          64,
+          128,
+          64,
+          4,
+          1,
+          16
+        ],
+        "best": {
+          "config": [
+            128,
+            256,
+            128,
+            8,
+            1,
+            32
+          ],
+          "relative_rms": 0.0,
+          "samples_ms": {
+            "baseline": [
+              0.10000442202728574,
+              0.10053907012939453,
+              0.10053600685269225
+            ],
+            "candidate": [
+              0.09367830457185444,
+              0.09382310379056422,
+              0.09399480599777253
+            ]
+          },
+          "paired_speedup": 1.0695910884168933,
+          "median_ms": 0.09382310379056422
+        }
+      },
+      {
+        "role": "input_projection",
+        "m": 49152,
+        "k": 768,
+        "n": 1024,
+        "output_dtype": "torch.float32",
+        "a_format": "torch.float8_e4m3fn",
+        "b_format": "torch.float8_e4m3fn",
+        "prepared_a": true,
+        "prepared_b": true,
+        "independent_decoded_oracle_max_rms": 1.870239607626445e-08,
+        "baseline_config": [
+          64,
+          128,
+          128,
+          4,
+          1,
+          16
+        ],
+        "best": {
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            1,
+            16
+          ],
+          "relative_rms": 0.0,
+          "samples_ms": {
+            "baseline": [
+              0.168370454097507,
+              0.1687944424947103,
+              0.16822184602292584
+            ],
+            "candidate": [
+              0.16853826193161953,
+              0.1681898845988474,
+              0.16865425472018084
+            ]
+          },
+          "paired_speedup": 0.9990043338990846,
+          "median_ms": 0.16853826193161953
+        }
+      },
+      {
+        "role": "output_projection",
+        "m": 49152,
+        "k": 1024,
+        "n": 768,
+        "output_dtype": "torch.bfloat16",
+        "a_format": "torch.float8_e4m3fn",
+        "b_format": "torch.float8_e4m3fn",
+        "prepared_a": true,
+        "prepared_b": true,
+        "independent_decoded_oracle_max_rms": 0.0,
+        "baseline_config": [
+          128,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "best": {
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            1,
+            16
+          ],
+          "relative_rms": 0.0,
+          "samples_ms": {
+            "baseline": [
+              0.15774257634979447,
+              0.15267066357651474,
+              0.15249644054914469
+            ],
+            "candidate": [
+              0.14610032432957698,
+              0.1463785518785151,
+              0.14649795733000104
+            ]
+          },
+          "paired_speedup": 1.042985202526267,
+          "median_ms": 0.1463785518785151
+        }
+      },
+      {
+        "role": "feature_gradient",
+        "m": 49152,
+        "k": 768,
+        "n": 1024,
+        "output_dtype": "torch.float32",
+        "a_format": "torch.float8_e5m2",
+        "b_format": "torch.float8_e4m3fn",
+        "prepared_a": true,
+        "prepared_b": true,
+        "independent_decoded_oracle_max_rms": 2.2249558639941824e-08,
+        "baseline_config": [
+          64,
+          128,
+          128,
+          4,
+          1,
+          16
+        ],
+        "best": {
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            1,
+            16
+          ],
+          "relative_rms": 0.0,
+          "samples_ms": {
+            "baseline": [
+              0.16749087304973284,
+              0.16743392453699635,
+              0.16760635375976562
+            ],
+            "candidate": [
+              0.16738618655566728,
+              0.16763973598238788,
+              0.16741661543954856
+            ]
+          },
+          "paired_speedup": 1.0006254189561261,
+          "median_ms": 0.16741661543954856
+        }
+      },
+      {
+        "role": "input_gradient",
+        "m": 49152,
+        "k": 1024,
+        "n": 768,
+        "output_dtype": "torch.bfloat16",
+        "a_format": "torch.float8_e5m2",
+        "b_format": "torch.float8_e4m3fn",
+        "prepared_a": true,
+        "prepared_b": true,
+        "independent_decoded_oracle_max_rms": 0.0,
+        "baseline_config": [
+          128,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "best": {
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            1,
+            16
+          ],
+          "relative_rms": 0.0,
+          "samples_ms": {
+            "baseline": [
+              0.15089562590865843,
+              0.15781732760601164,
+              0.15136228690118148
+            ],
+            "candidate": [
+              0.14617814002098975,
+              0.1454861070798791,
+              0.14527403698118507
+            ]
+          },
+          "paired_speedup": 1.0419087267519447,
+          "median_ms": 0.1454861070798791
+        }
+      },
+      {
+        "role": "output_weight_gradient",
+        "m": 49152,
+        "k": 1024,
+        "n": 768,
+        "output_dtype": "torch.bfloat16",
+        "a_format": "torch.float8_e4m3fn",
+        "b_format": "torch.float8_e5m2",
+        "prepared_a": true,
+        "prepared_b": true,
+        "independent_decoded_oracle_max_rms": 0.0,
+        "baseline_config": [
+          64,
+          128,
+          64,
+          4,
+          1,
+          16
+        ],
+        "best": {
+          "config": [
+            128,
+            256,
+            128,
+            8,
+            1,
+            32
+          ],
+          "relative_rms": 0.0,
+          "samples_ms": {
+            "baseline": [
+              0.2879097878592355,
+              0.2873499537088785,
+              0.2877308197021484
+            ],
+            "candidate": [
+              0.2565852781136831,
+              0.2538687818478315,
+              0.25455872494241466
+            ]
+          },
+          "paired_speedup": 1.130312150044112,
+          "median_ms": 0.25455872494241466
+        }
+      },
+      {
+        "role": "input_weight_gradient",
+        "m": 49152,
+        "k": 1024,
+        "n": 768,
+        "output_dtype": "torch.bfloat16",
+        "a_format": "torch.float8_e5m2",
+        "b_format": "torch.float8_e4m3fn",
+        "prepared_a": true,
+        "prepared_b": true,
+        "independent_decoded_oracle_max_rms": 0.0,
+        "baseline_config": [
+          64,
+          128,
+          64,
+          4,
+          1,
+          16
+        ],
+        "best": {
+          "config": [
+            128,
+            256,
+            128,
+            8,
+            1,
+            32
+          ],
+          "relative_rms": 0.0,
+          "samples_ms": {
+            "baseline": [
+              0.2878261014905279,
+              0.288350253385656,
+              0.28941769171617704
+            ],
+            "candidate": [
+              0.2567236796669338,
+              0.2587729928381156,
+              0.25385525617649946
+            ]
+          },
+          "paired_speedup": 1.1211513556674846,
+          "median_ms": 0.2567236796669338
+        }
+      }
+    ],
+    "utc": "2026-10-25T14:25:30.286772+00:00"
+  },
+  "profile": null,
+  "terminal_geometry": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T14:25:30.990340+00:00",
+  "events_sha256": "1e12c66ea96f734ecc6d0e59bbb657e5a7d7c6546e8bf6ef8e3fb86fb98cf530",
+  "previous_result_commit": "1c6420d903169dbece2e065ba5789ede07feec40"
+}

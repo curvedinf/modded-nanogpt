@@ -1,0 +1,338 @@
+{
+  "run_id": "ks3-fp8-prepared-native-weights-20261025T130013-ff0980",
+  "status": "correctness_passed",
+  "seed": 169,
+  "code_commit": "29392a6fa9ad83995be3b4d7b82d8bc71159b0a4",
+  "recipe": {
+    "name": "fp8-prepared-native-weights",
+    "hypothesis": "Fuse native half-value FP8 weight operand preparation into the existing batched GS32 packer, retaining all original FN dual layouts and delayed scales. Reuse extra native dual layouts across forward/backward products, removing repeated per-GEMM weight decoding without changing numerical values. Retain sharedFP8-v2/partial-amax hardware and accepted BF16 evaluation. Requires independent numerical checks and100-update whole-model timing against fastest saved BF16 before convergence.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 2.0,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "weight_packing": "batched",
+    "training_gs32": true,
+    "geometry_backward_rows": 32,
+    "fp8_prepared_native_weights": true,
+    "shared_fp8_gemm_tuning": "mi300-v2",
+    "shared_fp8_amax": "partial",
+    "validation_window_policy": "accepted-control",
+    "hardware_change_scope": "KS3 FP8 only adds125829120 bytes of native half-value weight caches and fused stores. Original FN caches, delayed scale values, FP32 accumulation, geometry, all nonexpert configurations/global batches/objective unchanged. Shared FP8v2/partial-amax previously independently checked; MLP defaults remain legacy."
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "training_projection_gs32": true,
+    "coefficient_gs32": true,
+    "charts": 1024,
+    "geometry_backward_rows": 32,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "bank": 0.0,
+          "geometry": 1.2434067997446618e-08
+        },
+        "post_amax": 7.158477783203125,
+        "dpre_amax": 0.07970885932445526
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 4.877150905358008e-10,
+          "bank": 6.967591303919107e-08,
+          "geometry": 1.6244513290075702e-07
+        },
+        "post_amax": 10.06915283203125,
+        "dpre_amax": 0.18012376129627228
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 3.6353617338669153e-10,
+          "dx": 5.101589067635359e-06,
+          "bank": 2.9003078907408053e-06,
+          "geometry": 1.19334046644326e-07
+        },
+        "post_amax": 14.3402099609375,
+        "dpre_amax": 0.249906525015831
+      }
+    ],
+    "full_convergence_verified": false,
+    "prepared_native_weights": {
+      "byte_checks": [
+        {
+          "activation_format": "torch.float8_e4m3fn",
+          "transposed_weights": false,
+          "all256_bytes": true,
+          "decoded_fp32_oracle": true
+        },
+        {
+          "activation_format": "torch.float8_e4m3fn",
+          "transposed_weights": true,
+          "all256_bytes": true,
+          "decoded_fp32_oracle": true
+        },
+        {
+          "activation_format": "torch.float8_e5m2",
+          "transposed_weights": false,
+          "all256_bytes": true,
+          "decoded_fp32_oracle": true
+        },
+        {
+          "activation_format": "torch.float8_e5m2",
+          "transposed_weights": true,
+          "all256_bytes": true,
+          "decoded_fp32_oracle": true
+        }
+      ],
+      "refresh_checks": [
+        {
+          "exact": true,
+          "original_caches_and_scales_bitwise": true,
+          "native_byte_mapping_exact": true
+        },
+        {
+          "exact": false,
+          "original_caches_and_scales_bitwise": true,
+          "native_byte_mapping_exact": true
+        },
+        {
+          "exact": false,
+          "original_caches_and_scales_bitwise": true,
+          "native_byte_mapping_exact": true
+        },
+        {
+          "exact": true,
+          "original_caches_and_scales_bitwise": true,
+          "native_byte_mapping_exact": true
+        },
+        {
+          "captured_replay": true,
+          "original_caches_and_scales_bitwise": true,
+          "native_byte_mapping_exact": true
+        },
+        {
+          "captured_replay": true,
+          "original_caches_and_scales_bitwise": true,
+          "native_byte_mapping_exact": true
+        }
+      ],
+      "refresh_samples_ms": {
+        "original": [
+          0.19624779640526743,
+          0.19805803876331304,
+          0.1983163640916962
+        ],
+        "prepared": [
+          0.26451474548016907,
+          0.26466181734774974,
+          0.26606131522886217
+        ]
+      },
+      "refresh_median_ms": {
+        "original": 0.19805803876331304,
+        "prepared": 0.26466181734774974
+      },
+      "block_checks": [
+        {
+          "tokens": 1,
+          "full_forward_backward_bitwise_equal": true,
+          "core_samples_ms": {
+            "original": [],
+            "prepared": []
+          },
+          "median_ms": {}
+        },
+        {
+          "tokens": 257,
+          "full_forward_backward_bitwise_equal": true,
+          "core_samples_ms": {
+            "original": [],
+            "prepared": []
+          },
+          "median_ms": {}
+        },
+        {
+          "tokens": 16384,
+          "full_forward_backward_bitwise_equal": true,
+          "core_samples_ms": {
+            "original": [
+              1.770512178209093,
+              1.785095539799443,
+              1.785050794813368
+            ],
+            "prepared": [
+              1.6097129313151042,
+              1.6125815200805664,
+              1.6153683161331436
+            ]
+          },
+          "median_ms": {
+            "original": 1.785050794813368,
+            "prepared": 1.6125815200805664
+          }
+        },
+        {
+          "tokens": 49152,
+          "full_forward_backward_bitwise_equal": true,
+          "core_samples_ms": {
+            "original": [
+              4.9252778705797695,
+              4.973115310668946,
+              4.971816749572754
+            ],
+            "prepared": [
+              4.515629681673917,
+              4.520385342552548,
+              4.523864201136997
+            ]
+          },
+          "median_ms": {
+            "original": 4.971816749572754,
+            "prepared": 4.520385342552548
+          }
+        }
+      ],
+      "original_formats_retained": true,
+      "extra_native_cache_bytes": 125829120,
+      "scope": "Correctness and isolated core/producer timing; whole-model speed and convergence not established"
+    },
+    "weight_packing": {
+      "charts": 1024,
+      "gs32": true,
+      "checks": [
+        {
+          "iteration": 0,
+          "exact_scale": true,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 1,
+          "exact_scale": false,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 2,
+          "exact_scale": false,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 3,
+          "exact_scale": true,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 0,
+          "captured_replay": true,
+          "exact_scale": false,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 1,
+          "captured_replay": true,
+          "exact_scale": false,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        }
+      ],
+      "delayed_refresh_ms": {
+        "loop": [
+          7.156621962327224,
+          7.178507936917819,
+          7.157768521990095
+        ],
+        "batched": [
+          0.19861912737310805,
+          0.19968121110900375,
+          0.1987072458881846
+        ]
+      },
+      "median_ms": {
+        "loop": 7.157768521990095,
+        "batched": 0.1987072458881846
+      },
+      "scope": "Weight refresh only; whole-model speed not established"
+    },
+    "utc": "2026-10-25T13:01:16.364193+00:00"
+  },
+  "profile": null,
+  "terminal_geometry": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T13:01:17.698731+00:00",
+  "events_sha256": "5a68d14f3cafb71ea6b821d6792352de829d45b1f266b9c5e948ea70656c7ce6",
+  "previous_result_commit": "29392a6fa9ad83995be3b4d7b82d8bc71159b0a4"
+}

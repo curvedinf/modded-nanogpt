@@ -1,0 +1,436 @@
+{
+  "name": "shared-fp8-v2-dispatch-check",
+  "hypothesis": "Hardware-only selective shared FP8 tile update from paired twenty-shape expanded sweep. Larger256x256x128 tiles improve attention/dense-down/head products; selected four-warp or256-reduction tiles improve narrow attention, sampled head dW and long-reduction dW. Keep verified v1 dense-producer tiles because their larger alternatives did not improve paired timing. Preserve original FN/E5 stored bytes, in-register native reinterpretation, FP32 accumulation, producer epilogues, dual layouts, delayed scales, cached weights and default MLP dispatch. KS3 remains1024 charts/rank1 tuned BF16/GS32/FP16, original projection optimizer, geometry Adam0.125 at zero/0.75/zero, original objective/global batch/schedule and exact budget. Require actual-dispatch/autograd plus accepted-state GPU restoration checks and100 whole-model updates before continuous discovery.",
+  "precision": "bf16",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "validation_precision": "bf16",
+  "max_train_seconds": 902.3592145430011,
+  "validation_setup_reserve_seconds": 2.0,
+  "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+  "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+  "training_gs32": true,
+  "weight_packing": "loop",
+  "geometry_backward_rows": 64,
+  "bf16_kernel_mode": "tuned",
+  "kernel_evidence": {
+    "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+    "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+    "matrix_max_relative_rms": 4.411854752106592e-05
+  },
+  "block_correctness_evidence": {
+    "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+    "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+    "max_relative_rms": 0.0,
+    "evaluation_original_kernels": true,
+    "bitwise_input_and_weight_producers": true
+  },
+  "timing_evidence": {
+    "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+    "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+    "first100_seconds": 54.066861718994915,
+    "updates25_to100_seconds": 40.427348073004396,
+    "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+    "reference_first100": 55.488501123007154,
+    "reference_25to100": 41.43367328601016,
+    "validation": false,
+    "first100_time_reduction": 0.025620432616493716,
+    "steady_time_reduction": 0.024287617611387313,
+    "timing_gate_passed": true
+  },
+  "shared_fp8_gemm_tuning": "mi300-v2",
+  "hardware_change_scope": "Opt-in shared FP8 tile dispatch mi300-v2. No numerical kernel-body, precision, architecture, objective, batch, optimizer or schedule change; default MLP remains legacy.",
+  "shared_fp8_correctness_evidence": {
+    "run_id": "ks3-shared-fp8-dispatch-check-20261025T075607-ff0ab5",
+    "code_commit": "bcb2f5f79d96c9d82c4b0ccfcbbf0b75253fa4e1",
+    "source_format_pairs": 4,
+    "independent_shape_cases": 15,
+    "all_stored_byte_patterns": true,
+    "original_dense_mlp_autograd": true,
+    "validation": false
+  },
+  "validation_window_policy": "accepted-control",
+  "evaluation_protocol": "Capture live stage-two YaRN frequencies/attention scales on first reach of640/1408 windows. For terminal stage four or full-schedule completion only, restore those nonlearned buffers and use640/1408 evaluation arguments. Preserve raw learned weights, training schedule and all updates; no canonical mask, tail shipping or final window extension. Early-stage evaluation remains incompatible. All restoration/rebuild/readback/setup is inside original training timer; no strict qualification if actual elapsed exceeds902.3592145430011.",
+  "shared_fp8_timing_evidence": {
+    "run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+    "code_commit": "2959f2a2250c36cb7dd10f28c02cdcfcc86fd729",
+    "first100_seconds": 39.57759546399757,
+    "after25_through100_seconds": 29.55288318300154,
+    "baseline_run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+    "baseline_first100_seconds": 54.06715966599586,
+    "baseline_after25_through100_seconds": 40.427348073004396,
+    "first100_time_reduction": 0.26799196206178977,
+    "steady_time_reduction": 0.2689878364112719,
+    "validation": false,
+    "gate_passed": true
+  },
+  "v2_tile_evidence": {
+    "run_id": "ks3-shared-fp8-expanded-sweep-20261025T100101-631bcf",
+    "code_commit": "a3491f3d119c84a9dda640287affeddded380137",
+    "source_sha256": "ff06490d6897418b634fce141239f6c8f103366a758e68c2ff5f682f361a8199",
+    "note": "Use variant paired_baseline_ms with paired_speedup; case baseline_ms was a separate initial measurement. Producer cases and small dense dW stay on verified v1 tiles.",
+    "cases": [
+      {
+        "name": "attention_narrow",
+        "config": [
+          128,
+          256,
+          128,
+          4,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.06281690436982948,
+        "candidate_ms": 0.05805844393643466,
+        "paired_speedup": 1.0819598341044865,
+        "retain_v1": false
+      },
+      {
+        "name": "attention_wide",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.26819277150290355,
+        "candidate_ms": 0.21999326003225225,
+        "paired_speedup": 1.2190954007572095,
+        "retain_v1": false
+      },
+      {
+        "name": "attention_dx",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.2333253554715455,
+        "candidate_ms": 0.17693910326276507,
+        "paired_speedup": 1.3186760369472625,
+        "retain_v1": false
+      },
+      {
+        "name": "attention_dw",
+        "config": [
+          64,
+          64,
+          256,
+          4,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.35713097832419655,
+        "candidate_ms": 0.3366798300492136,
+        "paired_speedup": 1.0607436099513106,
+        "retain_v1": false
+      },
+      {
+        "name": "dense_up_producer",
+        "config": [
+          256,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.4980929132235252,
+        "candidate_ms": 0.4905006877711562,
+        "paired_speedup": 1.0154785215223006,
+        "retain_v1": true
+      },
+      {
+        "name": "dense_dpre_producer",
+        "config": [
+          256,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.507771718299995,
+        "candidate_ms": 0.521669079964621,
+        "paired_speedup": 0.9733598133407323,
+        "retain_v1": true
+      },
+      {
+        "name": "dense_down",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.4190465600149972,
+        "candidate_ms": 0.3078369731903076,
+        "paired_speedup": 1.3612613055285558,
+        "retain_v1": false
+      },
+      {
+        "name": "dense_dw",
+        "config": [
+          64,
+          128,
+          256,
+          4,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.50500705281242,
+        "candidate_ms": 0.48125414334810696,
+        "paired_speedup": 1.049356270055283,
+        "retain_v1": true
+      },
+      {
+        "name": "head_logits",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 1.2805675838304602,
+        "candidate_ms": 1.1205424382136417,
+        "paired_speedup": 1.1428104283778213,
+        "retain_v1": false
+      },
+      {
+        "name": "head_dx",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 1.4629255580902099,
+        "candidate_ms": 1.073772076198033,
+        "paired_speedup": 1.3624172117327498,
+        "retain_v1": false
+      },
+      {
+        "name": "head_sampled_dw",
+        "config": [
+          128,
+          256,
+          128,
+          4,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.3143721351623535,
+        "candidate_ms": 0.28721314384823754,
+        "paired_speedup": 1.0945604053847435,
+        "retain_v1": false
+      },
+      {
+        "name": "large_dense_up",
+        "config": [
+          256,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 1.453728151321411,
+        "candidate_ms": 1.4339710998535156,
+        "paired_speedup": 1.0137778588912383,
+        "retain_v1": true
+      },
+      {
+        "name": "large_dense_dw",
+        "config": [
+          64,
+          128,
+          256,
+          4,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 1.5668629294947574,
+        "candidate_ms": 1.4543468952178955,
+        "paired_speedup": 1.0773653346714123,
+        "retain_v1": false
+      },
+      {
+        "name": "large_head_logits",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 5.413051300048828,
+        "candidate_ms": 4.608832804361979,
+        "paired_speedup": 1.1744950467558086,
+        "retain_v1": false
+      },
+      {
+        "name": "large_head_dx",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 4.757007884979248,
+        "candidate_ms": 3.553856706619263,
+        "paired_speedup": 1.3385480275890265,
+        "retain_v1": false
+      },
+      {
+        "name": "late_head_logits",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 9.304556719462077,
+        "candidate_ms": 7.875556055704752,
+        "paired_speedup": 1.1814475896876147,
+        "retain_v1": false
+      },
+      {
+        "name": "late_head_dx",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 8.168813769022623,
+        "candidate_ms": 6.065137243270874,
+        "paired_speedup": 1.346847308044963,
+        "retain_v1": false
+      },
+      {
+        "name": "taper_head_logits",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 15.052580738067627,
+        "candidate_ms": 12.659452724456788,
+        "paired_speedup": 1.189038820689899,
+        "retain_v1": false
+      },
+      {
+        "name": "taper_head_dx",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 16.320703125,
+        "candidate_ms": 11.739782047271728,
+        "paired_speedup": 1.3902049509337235,
+        "retain_v1": false
+      },
+      {
+        "name": "large_dense_dpre_producer",
+        "config": [
+          256,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 1.4940103721618652,
+        "candidate_ms": 1.5442048323781867,
+        "paired_speedup": 0.9674949468076599,
+        "retain_v1": true
+      }
+    ]
+  },
+  "base_verification_evidence": {
+    "recipe_id": "180b3675a8cc56a5ff30a6bccd7a2e54e58bd382a4c3b536ed98640dccea6501",
+    "code_commit": "f1366345fcdbde52d06711b33300e481db855c34",
+    "statistics": {
+      "scores": [
+        {
+          "seed": 169,
+          "loss": 3.3001344203948975,
+          "train_seconds": 900.3585499659966,
+          "run_id": "ks3-bf16-tuned-shared-fp8-20261025T082815-952036"
+        },
+        {
+          "seed": 170,
+          "loss": 3.30049991607666,
+          "train_seconds": 899.9505667749909,
+          "run_id": "ks3-bf16-tuned-shared-fp8-20261025T084550-1d295d"
+        },
+        {
+          "seed": 171,
+          "loss": 3.3012843132019043,
+          "train_seconds": 900.6974310789956,
+          "run_id": "ks3-bf16-tuned-shared-fp8-20261025T090326-4ebb3e"
+        }
+      ],
+      "count": 3,
+      "mean": 3.300639549891154,
+      "sample_std": 0.0005875258024241021,
+      "minimum": 3.3001344203948975,
+      "maximum": 3.3012843132019043,
+      "count_beating_control": 3
+    },
+    "control_loss": 3.454925298690796,
+    "control_seconds": 902.3592145430011,
+    "mean_loss_improvement": 0.15428574879964208,
+    "discovery_excluded": true,
+    "all_evaluation_signatures_compatible": true,
+    "scope": "KS3 plus shared nongrouped FP8 hardware optimization; not an isolated architecture comparison",
+    "updated_utc": "2026-10-25T09:24:10.042656+00:00"
+  },
+  "diagnostic_shared_fp8_dispatch": true
+}

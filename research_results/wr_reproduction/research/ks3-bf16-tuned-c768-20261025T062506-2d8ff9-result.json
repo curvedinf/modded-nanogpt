@@ -1,0 +1,284 @@
+{
+  "run_id": "ks3-bf16-tuned-c768-20261025T062506-2d8ff9",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "5ef4a7c47e5fd7967ac74719ddb5c00efb0b846a",
+  "recipe": {
+    "name": "bf16-tuned-c768",
+    "hypothesis": "Use768 charts at rank1 with the verified tuned BF16 KS3 kernels. This retains75 percent of the original expert projection width and removes15,810,560 total parameters versus1024 charts, a midpoint between the faster512-chart candidate and1024 charts. Test the capacity versus elapsed-time tradeoff after projection-rate2x was unstable and0.5x failed screening. Preserve original router/subsequent initialization by replaying original1024-chart draws. Geometry Adam stays0.125, zero coefficients/rawscale0.75/shift0, original projection LR and shape-scaling formula (effective shape multiplier1.0), original c_proj relative2x rate. Preserve all non-KS3 configuration, objective, global updates and raw full BF16 evaluation. Confirm complete expert output/gradient correctness against original BF16 kernels, then measure100 full-model updates before the first continuous candidate.",
+    "precision": "bf16",
+    "charts": 768,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "parameter_budget_change": {
+      "original_expert_projection_parameters": 62914560,
+      "new_expert_projection_parameters": 47185920,
+      "original_geometry_parameters": 327680,
+      "new_geometry_parameters": 245760,
+      "added_parameters": -15810560
+    },
+    "initialization_preservation": "Replay original1024-chart expert draws to restore router and subsequent CPU RNG exactly.",
+    "optimizer_shape_scaling": "Original ANVIL formulas at768 features, shape multiplier1.0, no hyperparameter constant changes.",
+    "timing_evidence": {
+      "run_id": "ks3-bf16-tuned-c512-20261025T052450-7caba7",
+      "code_commit": "28aeb8abe45708b6c5b1287dd0e601d5b9d72368",
+      "first100_seconds": 51.635587994009256,
+      "updates25_to100_seconds": 38.58336434401281,
+      "reference": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "reference_first100": 54.066861718994915,
+      "reference_25to100": 40.427348073004396,
+      "validation": false,
+      "first100_time_reduction": 0.044967909134838835,
+      "steady_time_reduction": 0.04561228517046656,
+      "timing_gate_passed": true
+    },
+    "block_correctness_evidence": {
+      "run_id": "ks3-bf16-tuned-c512-20261025T052253-69e0ae",
+      "code_commit": "8d5f544",
+      "max_relative_rms": 0.0,
+      "weight_and_input_bitwise_equal": true,
+      "original_evaluation_kernels": true
+    },
+    "projection_lr_multiplier": 1.0
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": null,
+  "terminal_geometry": {
+    "terminal_condition": "dynamic_best_training_proxy",
+    "event": "terminal_geometry",
+    "shape": [
+      5,
+      8,
+      768,
+      8
+    ],
+    "all_finite": true,
+    "components": {
+      "c0": {
+        "finite_count": 30720,
+        "total_count": 30720,
+        "mean": 0.005780388950137549,
+        "rms": 0.01112250629205464,
+        "minimum": -0.04111148416996002,
+        "maximum": 0.0539691336452961,
+        "abs_p95": 0.021749823912978167,
+        "delta_rms": 0.01112250629205464
+      },
+      "c1": {
+        "finite_count": 30720,
+        "total_count": 30720,
+        "mean": -0.003734834017548838,
+        "rms": 0.010838233939456111,
+        "minimum": -0.0728096067905426,
+        "maximum": 0.04395652189850807,
+        "abs_p95": 0.02176067410036921,
+        "delta_rms": 0.010838233939456111
+      },
+      "c2": {
+        "finite_count": 30720,
+        "total_count": 30720,
+        "mean": 0.007323457288054651,
+        "rms": 0.012431418315224768,
+        "minimum": -0.04582476615905762,
+        "maximum": 0.06040501594543457,
+        "abs_p95": 0.023939824756234882,
+        "delta_rms": 0.012431418315224768
+      },
+      "c3": {
+        "finite_count": 30720,
+        "total_count": 30720,
+        "mean": 0.008276054326260714,
+        "rms": 0.012838375658486481,
+        "minimum": -0.04074150323867798,
+        "maximum": 0.06428078562021255,
+        "abs_p95": 0.024399627745151517,
+        "delta_rms": 0.012838375658486481
+      },
+      "c4": {
+        "finite_count": 30720,
+        "total_count": 30720,
+        "mean": 0.00981062423108714,
+        "rms": 0.015182133665226307,
+        "minimum": -0.048053428530693054,
+        "maximum": 0.1760617047548294,
+        "abs_p95": 0.028772385418415064,
+        "delta_rms": 0.015182133665226307
+      },
+      "c5": {
+        "finite_count": 30720,
+        "total_count": 30720,
+        "mean": 0.01083524727803864,
+        "rms": 0.016669377884433408,
+        "minimum": -0.040837135165929794,
+        "maximum": 0.17898154258728027,
+        "abs_p95": 0.03183512203395367,
+        "delta_rms": 0.016669377884433408
+      },
+      "raw_scale": {
+        "finite_count": 30720,
+        "total_count": 30720,
+        "mean": 0.7384572867362295,
+        "rms": 0.7385861004742754,
+        "minimum": 0.6244537830352783,
+        "maximum": 0.9116122722625732,
+        "abs_p95": 0.7594224750995636,
+        "delta_rms": 0.017986042073013887
+      },
+      "raw_shift": {
+        "finite_count": 30720,
+        "total_count": 30720,
+        "mean": -0.01333294624274813,
+        "rms": 0.019874577403176087,
+        "minimum": -0.14621363580226898,
+        "maximum": 0.1055934876203537,
+        "abs_p95": 0.03824297059327364,
+        "delta_rms": 0.019874577403176087
+      }
+    },
+    "artifact": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-bf16-tuned-c768-20261025T062506-2d8ff9/terminal-geometry.pt",
+    "artifact_sha256": "4f1a16a8d51d1c5045a345fff1bb940aef8d475dafed4f13bd8f19a96f9e38d5",
+    "diagnostic_seconds": 0.2018065649899654,
+    "outside_timed_training": true,
+    "used_for_screening": false,
+    "utc": "2026-10-25T06:35:22.809108+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c768-r1",
+    "run_id": "ks3-bf16-tuned-c768-20261025T062506-2d8ff9",
+    "seed": 168,
+    "code_commit": "5ef4a7c47e5fd7967ac74719ddb5c00efb0b846a",
+    "training_projection_gs32": true
+  },
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.5593819618225098,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.0715334415435791,
+    "reference_run_id": "ks3-fp8-c512-20261025T032238-9c59b5",
+    "reference_wall_seconds": 476.14440317900153,
+    "reference_age_seconds": 0.2521655379969161,
+    "reference_objective": 3.4878485202789307,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "reference_source_step": 600,
+    "comparable_runs": 2,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-fp8-c512-20261025T032238-9c59b5/events.jsonl",
+      "sha256": "b0c1630cb6cad22a5def97e78676466d227b683459bec7b55ecc01a3e1aa2e20",
+      "line": 629,
+      "row_sha256": "9c3109d96296eec39ce6dc077aebb1c9817b8b551b2ff5d58fd0c101c4197551"
+    },
+    "step": 597,
+    "train_seconds": 476.39656871699844,
+    "reference_snapshot_sha256": "bff023ba5d8a3d44730ce3b9074d404e284e0ad985454c31e1be68896e8718ee",
+    "utc": "2026-10-25T06:35:22.582105+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c768-r1",
+    "run_id": "ks3-bf16-tuned-c768-20261025T062506-2d8ff9",
+    "seed": 168,
+    "code_commit": "5ef4a7c47e5fd7967ac74719ddb5c00efb0b846a",
+    "training_projection_gs32": true
+  },
+  "completed_utc": "2026-10-25T06:35:24.834518+00:00",
+  "events_sha256": "2f35007c3cd6c2ecd91f884f4f15de2deeb788b315db57f8b381cafe24aa3f4c",
+  "previous_result_commit": "5ef4a7c47e5fd7967ac74719ddb5c00efb0b846a"
+}

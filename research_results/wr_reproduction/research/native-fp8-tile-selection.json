@@ -1,0 +1,117 @@
+{
+  "run_id": "ks3-native-fp8-tile-sweep-20261025T141621-3261b4",
+  "code_commit": "a2c4cd0b27fb0c434e6fba8c89ba3eab006b3e38",
+  "artifact_sha256": "17eee1c248d701f80cce30931fb7c8281c47ec5d40feb058b63a4f2fedea9836",
+  "cases": 12,
+  "tested_configurations": 168,
+  "failed_configurations": 0,
+  "selected_minimum_paired_gain": 0.03,
+  "selected": [
+    {
+      "role": "output_projection",
+      "rows": 16384,
+      "config": [
+        64,
+        128,
+        128,
+        4,
+        1,
+        16
+      ],
+      "paired_speedup": 1.1401138761290617
+    },
+    {
+      "role": "input_gradient",
+      "rows": 16384,
+      "config": [
+        64,
+        128,
+        128,
+        4,
+        1,
+        16
+      ],
+      "paired_speedup": 1.1341047666271964
+    },
+    {
+      "role": "output_weight_gradient",
+      "rows": 16384,
+      "config": [
+        128,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_speedup": 1.0762365878023403
+    },
+    {
+      "role": "input_weight_gradient",
+      "rows": 16384,
+      "config": [
+        128,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_speedup": 1.0695910884168933
+    },
+    {
+      "role": "output_projection",
+      "rows": 49152,
+      "config": [
+        64,
+        128,
+        128,
+        4,
+        1,
+        16
+      ],
+      "paired_speedup": 1.042985202526267
+    },
+    {
+      "role": "input_gradient",
+      "rows": 49152,
+      "config": [
+        64,
+        128,
+        128,
+        4,
+        1,
+        16
+      ],
+      "paired_speedup": 1.0419087267519447
+    },
+    {
+      "role": "output_weight_gradient",
+      "rows": 49152,
+      "config": [
+        128,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_speedup": 1.130312150044112
+    },
+    {
+      "role": "input_weight_gradient",
+      "rows": 49152,
+      "config": [
+        128,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_speedup": 1.1211513556674846
+    }
+  ],
+  "max_relative_rms": 0.0,
+  "whole_model_speed_unverified": true
+}

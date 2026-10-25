@@ -1,0 +1,76 @@
+{
+  "run_id": "ks3-bf16-tuned-c512-20261025T052450-7caba7",
+  "status": "timing_complete",
+  "seed": 168,
+  "code_commit": "28aeb8abe45708b6c5b1287dd0e601d5b9d72368",
+  "recipe": {
+    "name": "bf16-tuned-c512",
+    "hypothesis": "Reduce tuned BF16 KS3 experts from1024 to512 charts while keeping eight top1 experts, rank1, geometry Adam0.125 and zero/0.75/zero initialization. This removes31,621,120 parameters. The1024-chart tuned BF16 candidate passed117 comparisons before pruning at485.646s with+0.031355 gap; test whether lower block cost improves loss at comparable elapsed time. Preserve original router and later initialization by replaying the original1024-chart RNG draws, plus all non-KS3 settings and original BF16 evaluation kernels. Validate this width and measure100 full-model updates before its first continuous run.",
+    "precision": "bf16",
+    "charts": 512,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "parameter_budget_change": {
+      "original_expert_projection_parameters": 62914560,
+      "new_expert_projection_parameters": 31457280,
+      "original_geometry_parameters": 327680,
+      "new_geometry_parameters": 163840,
+      "added_parameters": -31621120
+    },
+    "initialization_preservation": "Replay original1024-chart expert draws to restore router and subsequent CPU RNG exactly.",
+    "optimizer_shape_scaling": "Original ANVIL shape formulas at512 charts, no hyperparameter constant changes."
+  },
+  "validation": null,
+  "timing": {
+    "event": "timing_complete",
+    "steps": 100,
+    "train_seconds": 51.635902125010034,
+    "full_schedule_complete": false,
+    "validation_performed": false,
+    "utc": "2026-10-25T05:30:04.194771+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c512-r1",
+    "run_id": "ks3-bf16-tuned-c512-20261025T052450-7caba7",
+    "seed": 168,
+    "code_commit": "28aeb8abe45708b6c5b1287dd0e601d5b9d72368",
+    "training_projection_gs32": true
+  },
+  "kernel_check": null,
+  "terminal_geometry": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T05:30:06.080781+00:00",
+  "events_sha256": "bb9954b7f448b32051ddceb5924e3cdbd4c539e724fdff872c95bc8bb169a85b",
+  "previous_result_commit": "28aeb8abe45708b6c5b1287dd0e601d5b9d72368"
+}

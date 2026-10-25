@@ -1,0 +1,220 @@
+{
+  "name": "fp8-batched-weights-vjp32",
+  "hypothesis": "Verified hardware combination: batched weight packing plus32-row geometry backward. Original-schedule100-update time55.488501s and updates25-100 time41.433673s, each0.35% below batched-packing/64-row baseline. Forward/backward and captured weight packing checked. These establish kernel correctness and short whole-model speed only; this exact default-geometry combination has not had a convergence trial.",
+  "precision": "fp8",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "validation_precision": "bf16",
+  "max_train_seconds": 902.3592145430011,
+  "validation_setup_reserve_seconds": 1.25,
+  "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+  "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+  "weight_packing": "batched",
+  "training_gs32": true,
+  "correctness_evidence": {
+    "run_id": "ks3-fp8-batched-weights-20261025T041225-e9424b",
+    "code_commit": "b61da26eba80c3ac98bae9a5676ea8570098c489",
+    "changing_weight_replay_bitwise_equal": true
+  },
+  "geometry_backward_rows": 32,
+  "geometry_kernel_evidence": {
+    "run_id": "ks3-fp8-geometry-tile-sweep-20261025T042711-1acbd6",
+    "code_commit": "b3a676c5c9623aafe75a45292e18463bfb28f7d7",
+    "selected_backward_rows": 32,
+    "geometry_sweep": {
+      "cases": [
+        {
+          "tokens": 1,
+          "relative_rms_vs_64": {
+            "32": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 0.0,
+              "weight_gradient": 0.0
+            },
+            "64": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 0.0,
+              "weight_gradient": 0.0
+            },
+            "128": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 0.0,
+              "weight_gradient": 0.0
+            }
+          },
+          "backward_ms": {
+            "32": [],
+            "64": [],
+            "128": []
+          },
+          "median_ms": {}
+        },
+        {
+          "tokens": 257,
+          "relative_rms_vs_64": {
+            "32": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 9.705532733050859e-08,
+              "weight_gradient": 0.0
+            },
+            "64": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 0.0,
+              "weight_gradient": 0.0
+            },
+            "128": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 1.0222778712432046e-07,
+              "weight_gradient": 0.0
+            }
+          },
+          "backward_ms": {
+            "32": [],
+            "64": [],
+            "128": []
+          },
+          "median_ms": {}
+        },
+        {
+          "tokens": 16384,
+          "relative_rms_vs_64": {
+            "32": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 1.1969062541083986e-07,
+              "weight_gradient": 0.0
+            },
+            "64": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 0.0,
+              "weight_gradient": 0.0
+            },
+            "128": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 1.194639764889871e-07,
+              "weight_gradient": 0.0
+            }
+          },
+          "backward_ms": {
+            "32": [
+              1.1912118027849896,
+              1.1953344670737662,
+              1.1994421768188477
+            ],
+            "64": [
+              1.248493094193308,
+              1.2558384585690188,
+              1.254619786646459
+            ],
+            "128": [
+              1.4631715178489686,
+              1.4741725864695079,
+              1.4713131297718396
+            ]
+          },
+          "median_ms": {
+            "32": 1.1953344670737662,
+            "64": 1.254619786646459,
+            "128": 1.4713131297718396
+          }
+        },
+        {
+          "tokens": 49152,
+          "relative_rms_vs_64": {
+            "32": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 1.2744472144277097e-07,
+              "weight_gradient": 0.0
+            },
+            "64": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 0.0,
+              "weight_gradient": 0.0
+            },
+            "128": {
+              "dx": 0.0,
+              "dgate": 0.0,
+              "geometry": 1.2893204370811873e-07,
+              "weight_gradient": 0.0
+            }
+          },
+          "backward_ms": {
+            "32": [
+              3.376286999932651,
+              3.3800281524658202,
+              3.3872027166958514
+            ],
+            "64": [
+              3.449235943385533,
+              3.4905426025390627,
+              3.4968029022216798
+            ],
+            "128": [
+              4.100115489959717,
+              4.123561827341716,
+              4.128400039672852
+            ]
+          },
+          "median_ms": {
+            "32": 3.3800281524658202,
+            "64": 3.4905426025390627,
+            "128": 4.123561827341716
+          }
+        }
+      ],
+      "scope": "Expert backward only; no whole-update speed or convergence claim"
+    }
+  },
+  "weight_packing_timing_evidence": {
+    "run_id": "ks3-fp8-batched-weights-20261025T040727-a45604",
+    "code_commit": "2e1afb279b35b46af2b494e6a3bc6072546993fc",
+    "first100_seconds": 55.685453496000264,
+    "updates25_to100_seconds": 41.5808563640021,
+    "first100_time_reduction": 0.014208675969340057,
+    "steady_time_reduction": 0.01356509181913046
+  },
+  "timing_evidence": {
+    "run_id": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+    "code_commit": "828bb571ef83b2ab433fa19fe3e78e785ad713e7",
+    "first100_seconds": 55.488501123007154,
+    "updates25_to100_seconds": 41.43367328601016,
+    "reference": "ks3-fp8-batched-weights-20261025T040727-a45604",
+    "reference_first100": 55.685453496000264,
+    "reference_25to100": 41.5808563640021,
+    "validation": false,
+    "first100_time_reduction": 0.003536872928712964,
+    "steady_time_reduction": 0.0035396836636428786,
+    "timing_gate_passed": true
+  }
+}

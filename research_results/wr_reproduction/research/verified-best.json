@@ -1,0 +1,39 @@
+{
+  "recipe_id": "180b3675a8cc56a5ff30a6bccd7a2e54e58bd382a4c3b536ed98640dccea6501",
+  "code_commit": "f1366345fcdbde52d06711b33300e481db855c34",
+  "statistics": {
+    "scores": [
+      {
+        "seed": 169,
+        "loss": 3.3001344203948975,
+        "train_seconds": 900.3585499659966,
+        "run_id": "ks3-bf16-tuned-shared-fp8-20261025T082815-952036"
+      },
+      {
+        "seed": 170,
+        "loss": 3.30049991607666,
+        "train_seconds": 899.9505667749909,
+        "run_id": "ks3-bf16-tuned-shared-fp8-20261025T084550-1d295d"
+      },
+      {
+        "seed": 171,
+        "loss": 3.3012843132019043,
+        "train_seconds": 900.6974310789956,
+        "run_id": "ks3-bf16-tuned-shared-fp8-20261025T090326-4ebb3e"
+      }
+    ],
+    "count": 3,
+    "mean": 3.300639549891154,
+    "sample_std": 0.0005875258024241021,
+    "minimum": 3.3001344203948975,
+    "maximum": 3.3012843132019043,
+    "count_beating_control": 3
+  },
+  "control_loss": 3.454925298690796,
+  "control_seconds": 902.3592145430011,
+  "mean_loss_improvement": 0.15428574879964208,
+  "discovery_excluded": true,
+  "all_evaluation_signatures_compatible": true,
+  "scope": "KS3 plus shared nongrouped FP8 hardware optimization; not an isolated architecture comparison",
+  "updated_utc": "2026-10-25T09:24:10.042656+00:00"
+}

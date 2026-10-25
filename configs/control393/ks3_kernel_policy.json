@@ -1,0 +1,16 @@
+{
+  "updated_utc": "2026-10-24T22:34:45.927312+00:00",
+  "source": "https://github.com/curvedinf/k-splanifolds/blob/main/experiments/common/ks3_int8.py",
+  "commit": "ea7a9c1121efe711345bd9e6cf22e69401c0c7b4",
+  "sha256": "becdb04749963afa8adc39812a61ec3bb14b0ad966c2fc04e1e4edd4ec1ed501",
+  "entrypoint": "ks3_research.backward.ks3_blas_fused_unpack",
+  "require_unmodified": false,
+  "forbidden_replacements": [],
+  "manager_resume_authorized": false,
+  "selected_arguments": {
+    "dynamic_rows": true,
+    "fp8_products": true,
+    "bf16_products": false
+  },
+  "status": "foreground_microbenchmark_only_not_training_validated"
+}

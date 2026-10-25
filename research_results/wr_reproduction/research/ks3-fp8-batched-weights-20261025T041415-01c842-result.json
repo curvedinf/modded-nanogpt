@@ -1,0 +1,265 @@
+{
+  "run_id": "ks3-fp8-batched-weights-20261025T041415-01c842",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "c6b46ed24404cc32411308378cd5c000cc36f6c7",
+  "recipe": {
+    "name": "fp8-batched-weights",
+    "hypothesis": "Use batched KS3 weight packing to improve loss per elapsed time with identical precision and math. Both FP8 layouts, per-expert scales and maxima matched bit for bit across exact-scale, delayed-scale and changing-weight captured replay checks. Whole-model first100 time fell from 56.488074s to 55.685453s (1.42%), and updates25-100 from 42.152661s to 41.580856s (1.36%). Run a continuous candidate using default 1024-chart geometry (Adam 0.125, zero/0.75/zero), all original non-KS3 settings and full GS32/BF16 evaluation. No isolated-microbenchmark or matched-step loss win is claimed.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "weight_packing": "batched",
+    "training_gs32": true,
+    "timing_evidence": {
+      "run_id": "ks3-fp8-batched-weights-20261025T040727-a45604",
+      "code_commit": "2e1afb279b35b46af2b494e6a3bc6072546993fc",
+      "first100_seconds": 55.685453496000264,
+      "updates25_to100_seconds": 41.5808563640021,
+      "first100_time_reduction": 0.014208675969340057,
+      "steady_time_reduction": 0.01356509181913046
+    },
+    "correctness_evidence": {
+      "run_id": "ks3-fp8-batched-weights-20261025T041225-e9424b",
+      "code_commit": "b61da26eba80c3ac98bae9a5676ea8570098c489",
+      "changing_weight_replay_bitwise_equal": true
+    }
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": null,
+  "terminal_geometry": {
+    "terminal_condition": "dynamic_best_training_proxy",
+    "event": "terminal_geometry",
+    "shape": [
+      5,
+      8,
+      1024,
+      8
+    ],
+    "all_finite": true,
+    "components": {
+      "c0": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.005204709863358392,
+        "rms": 0.011534345955496086,
+        "minimum": -0.05019855871796608,
+        "maximum": 0.06553765386343002,
+        "abs_p95": 0.022569154668599357,
+        "delta_rms": 0.011534345955496086
+      },
+      "c1": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": -0.004436313989190676,
+        "rms": 0.011709627188395617,
+        "minimum": -0.06436469405889511,
+        "maximum": 0.04335881397128105,
+        "abs_p95": 0.02347253309562799,
+        "delta_rms": 0.011709627188395617
+      },
+      "c2": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.006727641378619706,
+        "rms": 0.012757220785632954,
+        "minimum": -0.05284125730395317,
+        "maximum": 0.07053185254335403,
+        "abs_p95": 0.02466094177216291,
+        "delta_rms": 0.012757220785632954
+      },
+      "c3": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.007935760224524913,
+        "rms": 0.013317998512607138,
+        "minimum": -0.047161780297756195,
+        "maximum": 0.062256183475255966,
+        "abs_p95": 0.025290308333933347,
+        "delta_rms": 0.013317998512607138
+      },
+      "c4": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.008531968136756218,
+        "rms": 0.014528315897742521,
+        "minimum": -0.06317313760519028,
+        "maximum": 0.11481951922178268,
+        "abs_p95": 0.02797473035752773,
+        "delta_rms": 0.014528315897742521
+      },
+      "c5": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.010511708438585576,
+        "rms": 0.01636331956673756,
+        "minimum": -0.05168643221259117,
+        "maximum": 0.13940902054309845,
+        "abs_p95": 0.031331812776625154,
+        "delta_rms": 0.01636331956673756
+      },
+      "raw_scale": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.7383220832241932,
+        "rms": 0.7384486948109452,
+        "minimum": 0.6090087294578552,
+        "maximum": 0.9076585173606873,
+        "abs_p95": 0.759289738535881,
+        "delta_rms": 0.017981936261110554
+      },
+      "raw_shift": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": -0.013300415685485923,
+        "rms": 0.019809264441245502,
+        "minimum": -0.15495747327804565,
+        "maximum": 0.12314670532941818,
+        "abs_p95": 0.037713795714080296,
+        "delta_rms": 0.019809264441245502
+      }
+    },
+    "artifact": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-fp8-batched-weights-20261025T041415-01c842/terminal-geometry.pt",
+    "artifact_sha256": "3a5392dae0e41c106fd06b93359556b91c89b1499a7a5580efe089d1f40ef06e",
+    "diagnostic_seconds": 0.24122634400555398,
+    "outside_timed_training": true,
+    "used_for_screening": false,
+    "utc": "2026-10-25T04:24:56.452131+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-fp8-c1024-r1",
+    "run_id": "ks3-fp8-batched-weights-20261025T041415-01c842",
+    "seed": 168,
+    "code_commit": "c6b46ed24404cc32411308378cd5c000cc36f6c7",
+    "training_projection_gs32": true
+  },
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.5558724403381348,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.0325233936309815,
+    "reference_run_id": "ks3-fp8-c512-20261025T032238-9c59b5",
+    "reference_wall_seconds": 498.9870322350034,
+    "reference_age_seconds": 0.31215466700086836,
+    "reference_objective": 3.5233490467071533,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "reference_source_step": 614,
+    "comparable_runs": 1,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-fp8-c512-20261025T032238-9c59b5/events.jsonl",
+      "sha256": "b0c1630cb6cad22a5def97e78676466d227b683459bec7b55ecc01a3e1aa2e20",
+      "line": 643,
+      "row_sha256": "fb71769367598af0ee3042e845698cfe01862be8a0731118839170cf372f1e64"
+    },
+    "step": 597,
+    "train_seconds": 499.2991869020043,
+    "reference_snapshot_sha256": "349150ea321ff4511e7cb36734183fe7988713b71137096dc2c4e326070d35b8",
+    "utc": "2026-10-25T04:24:56.191714+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-fp8-c1024-r1",
+    "run_id": "ks3-fp8-batched-weights-20261025T041415-01c842",
+    "seed": 168,
+    "code_commit": "c6b46ed24404cc32411308378cd5c000cc36f6c7",
+    "training_projection_gs32": true
+  },
+  "completed_utc": "2026-10-25T04:24:58.504283+00:00",
+  "events_sha256": "5ec9d4ac7976ec9b0377f99afc0875447bcdf82ddffe9f485164fc5238064b9e",
+  "previous_result_commit": "c6b46ed24404cc32411308378cd5c000cc36f6c7"
+}

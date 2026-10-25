@@ -1,0 +1,141 @@
+{
+  "run_id": "ks3-fp8-geom-lr025-20261025T020347-e71ee9",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "dc67780acb2a35df781fe1c3e16caead7bb91de8",
+  "recipe": {
+    "name": "fp8-geom-lr025",
+    "hypothesis": "Double only the baseline added KS3 geometry Adam lr_mul from 0.125 to 0.25 at seed 168. The 0.0625 ablation passed 116 compatible comparisons but was pruned on a +0.074201 training-proxy gap at 504.940s; it supplied no full-validation result. Test whether faster learned curvature can improve the continuous loss/time trajectory. Keep all original PR393 settings, initial geometry, FP8 kernels and evaluation fixed.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.25,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping."
+  },
+  "validation": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.6157240867614746,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.0581355094909666,
+    "reference_run_id": "ks3-fp8-geom-lr00625-20261025T015146-ecaf0e",
+    "reference_wall_seconds": 504.9399932009983,
+    "reference_age_seconds": 5.732868609993602,
+    "reference_objective": 3.557588577270508,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "reference_source_step": 597,
+    "comparable_runs": 2,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-fp8-geom-lr00625-20261025T015146-ecaf0e/events.jsonl",
+      "sha256": "f57c0c003f917c846de0fa1b94f0e7238916a2c30eb6ca5e4022a5a45329a533",
+      "line": 624,
+      "row_sha256": "266a62385d14c1e0ee6e2142307d0208c12f8610a729cf81083088dd32cf0fda"
+    },
+    "step": 599,
+    "train_seconds": 510.6728618109919,
+    "reference_snapshot_sha256": "bbc14a68bf401b9f8f7a1fd50a34cc54d2332d2fb4297b5faac5d9f3282f750a",
+    "utc": "2026-10-25T02:14:40.367704+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-fp8-c1024-r1",
+    "run_id": "ks3-fp8-geom-lr025-20261025T020347-e71ee9",
+    "seed": 168,
+    "code_commit": "dc67780acb2a35df781fe1c3e16caead7bb91de8"
+  },
+  "completed_utc": "2026-10-25T02:14:42.707615+00:00",
+  "events_sha256": "fa1972c26322eda48d1f891983f68dc585a0563c9efab7316fac03e5a7b41b86",
+  "previous_result_commit": "dc67780acb2a35df781fe1c3e16caead7bb91de8"
+}

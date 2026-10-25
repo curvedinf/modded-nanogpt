@@ -1,0 +1,62 @@
+{
+  "name": "bf16-tuned-profile",
+  "hypothesis": "Diagnostic bottleneck profile of the original1024-chart rank-one tuned BF16 KS3 model: full original24-update warmup,25 original preparation updates, then Kineto CPU/GPU tracing of updates26-29. Preserve all model/optimizer/objective/global-batch settings. Annotate graph launches, logical-rank state, gradient accumulation, sampled head, ngram-table work and optimizers. This trace cannot establish convergence or a speedup and is excluded from reference curves; kernel-duration sums may overlap across streams. Use its measured costs to choose meaningful hardware optimizations.",
+  "precision": "bf16",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "validation_precision": "bf16",
+  "max_train_seconds": 902.3592145430011,
+  "validation_setup_reserve_seconds": 1.25,
+  "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+  "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+  "training_gs32": true,
+  "weight_packing": "loop",
+  "geometry_backward_rows": 64,
+  "bf16_kernel_mode": "tuned",
+  "kernel_evidence": {
+    "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+    "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+    "matrix_max_relative_rms": 4.411854752106592e-05
+  },
+  "block_correctness_evidence": {
+    "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+    "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+    "max_relative_rms": 0.0,
+    "evaluation_original_kernels": true,
+    "bitwise_input_and_weight_producers": true
+  },
+  "timing_evidence": {
+    "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+    "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+    "first100_seconds": 54.066861718994915,
+    "updates25_to100_seconds": 40.427348073004396,
+    "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+    "reference_first100": 55.488501123007154,
+    "reference_25to100": 41.43367328601016,
+    "validation": false,
+    "first100_time_reduction": 0.025620432616493716,
+    "steady_time_reduction": 0.024287617611387313,
+    "timing_gate_passed": true
+  }
+}

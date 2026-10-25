@@ -1,0 +1,71 @@
+{
+  "run_id": "ks3-fp8-c1536-20261025T025332-4e7267",
+  "status": "timing_complete",
+  "seed": 168,
+  "code_commit": "ec19ccb352500f97f7ab8c844e21763547caabc4",
+  "recipe": {
+    "name": "fp8-c1536",
+    "hypothesis": "Increase only KS3 expert charts from 1024 to 1536 (rank one, eight top1 experts) to test whether extra expert capacity lowers loss enough to offset its measured update cost. Keep optimized GS32/FP8 kernels, geometry initialization 0/0.75/0, geometry Adam lr_mul 0.125, all original non-KS3 settings and full GS32/BF16 evaluation. Preserve the original CPU RNG stream after expert initialization and exactly restore original router draws, so all non-expert initialization is unchanged. Run width-specific numerical checks and a 100-update cost measurement before a full-budget candidate.",
+    "precision": "fp8",
+    "charts": 1536,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "parameter_budget_change": {
+      "original_expert_projection_parameters": 62914560,
+      "new_expert_projection_parameters": 94371840,
+      "original_geometry_parameters": 327680,
+      "new_geometry_parameters": 491520,
+      "added_parameters": 31621120
+    },
+    "initialization_preservation": "Replay only original 1024-chart expert draws after wider expert initialization; restore original router and subsequent CPU RNG state. Actual pinned init_moe body verified in CPU test."
+  },
+  "validation": null,
+  "timing": {
+    "event": "timing_complete",
+    "steps": 100,
+    "train_seconds": 60.154421261002426,
+    "full_schedule_complete": false,
+    "validation_performed": false,
+    "utc": "2026-10-25T02:59:24.547880+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-fp8-c1536-r1",
+    "run_id": "ks3-fp8-c1536-20261025T025332-4e7267",
+    "seed": 168,
+    "code_commit": "ec19ccb352500f97f7ab8c844e21763547caabc4",
+    "training_projection_gs32": true
+  },
+  "kernel_check": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T02:59:26.420533+00:00",
+  "events_sha256": "bc7242e2b4bd72f2206626fd0ef65656c9a953c30d6f099028ed9195948684f4",
+  "previous_result_commit": "ec19ccb352500f97f7ab8c844e21763547caabc4"
+}

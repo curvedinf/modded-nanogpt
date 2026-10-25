@@ -1,0 +1,91 @@
+{
+  "run_id": "ks3-fp8-native-pack-20261025T021636-eedb11",
+  "status": "correctness_passed",
+  "seed": 169,
+  "code_commit": "2c8ae72c7a46f0ddd0bf6de00dcedbb12c66b9c0",
+  "recipe": {
+    "name": "fp8-native-pack",
+    "hypothesis": "Remove only the extra GS32 round/decode of FP8 training projection operands (inputs, weights and nonlinear features), keeping native E4M3/E5M2 products, FP32 accumulation, GS32 geometry coefficients, FP16 nonlinearities, geometry Adam lr_mul 0.125, delayed scales, reusable dual layouts and BF16/GS32 validation. Avoiding double rounding may improve convergence and packing throughput. Run numerical checks and a 100-update whole-model timing screen before a convergence trial.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping. Native packing applies only to FP8 training operands; coefficient quantization and the complete accepted GS32/BF16 evaluation path remain fixed.",
+    "training_gs32": false
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "training_projection_gs32": false,
+    "coefficient_gs32": true,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "bank": 0.0,
+          "geometry": 3.2014629169907494e-08
+        },
+        "post_amax": 7.1796875,
+        "dpre_amax": 0.07799758017063141
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 1.5302077827072935e-06,
+          "dx": 2.513151855509932e-07,
+          "bank": 6.227439826034242e-06,
+          "geometry": 1.725179856748582e-07
+        },
+        "post_amax": 10.0234375,
+        "dpre_amax": 0.1825719177722931
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 1.7970543922274373e-05,
+          "dx": 7.4649619818956126e-06,
+          "bank": 6.8644485509139486e-06,
+          "geometry": 2.2635951779648167e-07
+        },
+        "post_amax": 14.4609375,
+        "dpre_amax": 0.24946391582489014
+      }
+    ],
+    "full_convergence_verified": false,
+    "utc": "2026-10-25T02:16:53.470228+00:00"
+  },
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T02:16:54.586982+00:00",
+  "events_sha256": "2ad862a6c4713b150cfc3f09cd501d8f9a8fd93a0317a86449b91afe4866c8fe",
+  "previous_result_commit": "d97ceedc439d15d6afa20409e56a54f93e5486c4"
+}

@@ -1,0 +1,33 @@
+{
+  "name": "fp8-geom-lr0015625",
+  "hypothesis": "Reduce only geometry Adam lr_mul from 0.125 to 0.015625. The spline Hermite basis has cubic terms that can amplify small coefficient updates; test whether eightfold slower geometry adaptation better preserves the initial ReLU-squared behavior and improves loss per elapsed second. Original 1024 charts, zero coefficients, raw_scale 0.75/raw_shift 0, optimized GS32/FP8 training, BF16 validation and all non-KS3 settings remain fixed. Add terminal-only geometry evidence to measure the actual drift, without per-update diagnostic synchronization.",
+  "precision": "fp8",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.015625,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "validation_precision": "bf16",
+  "max_train_seconds": 902.3592145430011,
+  "validation_setup_reserve_seconds": 1.25,
+  "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+  "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping."
+}

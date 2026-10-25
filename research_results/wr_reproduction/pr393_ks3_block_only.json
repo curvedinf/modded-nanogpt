@@ -1,0 +1,430 @@
+{
+  "run_id": "pr393-ks3-block-20261025T002719Z",
+  "finished_utc": "2026-10-25T00:45:08.900899+00:00",
+  "status": "completed_at_time_limit",
+  "config": "configs/wr_reproduction/pr393_ks3_block_only.json",
+  "run_directory": "logs/wr-reproduction/pr393-ks3-block-20261025T002719Z",
+  "hypothesis": "Replace only the original PR393 MoE expert block with the fastest measured KS3 block recipe: GS32/BF16, 1024 charts, rank1, FP16 nonlinearities, geometry Adam multiplier0.125. Keep all existing control training settings.",
+  "requested_train_seconds": 902.36,
+  "validation": {
+    "event": "validation",
+    "final": false,
+    "loss": 3.469724655151367,
+    "train_seconds": 904.6114261370094,
+    "val_tokens": 10485760,
+    "utc": "2026-10-25T00:45:08.897760+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1"
+  },
+  "control": {
+    "events": "logs/wr-reproduction/pr393-control-20261024T234443Z/events.jsonl",
+    "validation_loss": 3.454925298690796,
+    "train_seconds": 902.3592145430011,
+    "val_tokens": 10485760,
+    "weights": "raw",
+    "canonical_mask": false,
+    "final_window_extension": false
+  },
+  "loss_delta_vs_control": 0.014799356460571289,
+  "time_delta_vs_control_seconds": 2.2522115940082585,
+  "validation_conditions": {
+    "val_tokens": 10485760,
+    "weights": "raw intermediate",
+    "canonical_mask": false,
+    "final_window_extension": false,
+    "attention_windows_tokens": [
+      640,
+      1408
+    ]
+  },
+  "decision": "This first block-only KS3 trial did not beat the control; preserve both measurements. No additional ablation or manager started.",
+  "block_equivalence": {
+    "passed": true,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.00018708209972828627,
+          "dx": 0.0,
+          "bank": 0.0,
+          "geometry": 8.006492180356872e-07
+        },
+        "active_experts": 1
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 0.00018035114044323564,
+          "dx": 0.00010275512613588944,
+          "bank": 0.0001350675302091986,
+          "geometry": 8.078554856183473e-07
+        },
+        "active_experts": 1
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 0.000168353202752769,
+          "dx": 0.0001266682957066223,
+          "bank": 0.0001311195082962513,
+          "geometry": 7.995342912181513e-07
+        },
+        "active_experts": 8
+      }
+    ]
+  },
+  "geometry_activity": {
+    "event": "ks3_geometry_activity",
+    "coefficient_max_abs": 0.010879063047468662,
+    "raw_scale_max_change": 0.009139776229858398,
+    "raw_shift_max_abs": 0.009627869352698326,
+    "utc": "2026-10-25T00:29:56.955710+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1"
+  },
+  "training_curve": [
+    {
+      "event": "train",
+      "step": 25,
+      "objective": 11.49413013458252,
+      "train_seconds": 15.033722360996762,
+      "utc": "2026-10-25T00:29:56.955978+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 50,
+      "objective": 10.494006156921387,
+      "train_seconds": 30.010921724999207,
+      "utc": "2026-10-25T00:30:11.933181+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 75,
+      "objective": 9.94772720336914,
+      "train_seconds": 44.970427118008956,
+      "utc": "2026-10-25T00:30:26.892687+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 100,
+      "objective": 9.33907413482666,
+      "train_seconds": 59.95450335800706,
+      "utc": "2026-10-25T00:30:41.876763+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 125,
+      "objective": 9.093389511108398,
+      "train_seconds": 74.91468007699586,
+      "utc": "2026-10-25T00:30:56.836941+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 150,
+      "objective": 8.8723783493042,
+      "train_seconds": 89.89664848000393,
+      "utc": "2026-10-25T00:31:11.818907+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 175,
+      "objective": 8.534278869628906,
+      "train_seconds": 104.85103549499763,
+      "utc": "2026-10-25T00:31:26.773295+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 200,
+      "objective": 8.331093788146973,
+      "train_seconds": 119.82704699900933,
+      "utc": "2026-10-25T00:31:41.749307+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 225,
+      "objective": 8.055269241333008,
+      "train_seconds": 134.78653503299574,
+      "utc": "2026-10-25T00:31:56.708796+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 250,
+      "objective": 7.8575119972229,
+      "train_seconds": 149.76604902200052,
+      "utc": "2026-10-25T00:32:11.688309+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 275,
+      "objective": 7.566021919250488,
+      "train_seconds": 164.7329770840006,
+      "utc": "2026-10-25T00:32:26.655237+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 300,
+      "objective": 7.511368751525879,
+      "train_seconds": 190.87384296899836,
+      "utc": "2026-10-25T00:32:52.796102+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 325,
+      "objective": 7.135548114776611,
+      "train_seconds": 219.76025997700344,
+      "utc": "2026-10-25T00:33:21.682520+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 350,
+      "objective": 6.825238227844238,
+      "train_seconds": 248.6206035840005,
+      "utc": "2026-10-25T00:33:50.542862+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 375,
+      "objective": 6.432588577270508,
+      "train_seconds": 277.4375857529958,
+      "utc": "2026-10-25T00:34:19.359846+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 400,
+      "objective": 6.0047783851623535,
+      "train_seconds": 306.2814035229967,
+      "utc": "2026-10-25T00:34:48.203663+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 425,
+      "objective": 5.894640922546387,
+      "train_seconds": 335.0938783120073,
+      "utc": "2026-10-25T00:35:17.016138+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 450,
+      "objective": 5.4099836349487305,
+      "train_seconds": 363.900577420005,
+      "utc": "2026-10-25T00:35:45.822836+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 475,
+      "objective": 5.055508613586426,
+      "train_seconds": 392.70229831300094,
+      "utc": "2026-10-25T00:36:14.624558+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 500,
+      "objective": 4.84237003326416,
+      "train_seconds": 421.538651224997,
+      "utc": "2026-10-25T00:36:43.460910+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 525,
+      "objective": 4.43129825592041,
+      "train_seconds": 450.33501022000564,
+      "utc": "2026-10-25T00:37:12.257269+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 550,
+      "objective": 4.096808433532715,
+      "train_seconds": 479.14739678500337,
+      "utc": "2026-10-25T00:37:41.069656+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 575,
+      "objective": 3.76017427444458,
+      "train_seconds": 507.9365850670001,
+      "utc": "2026-10-25T00:38:09.858845+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 600,
+      "objective": 3.504985809326172,
+      "train_seconds": 540.1385891999962,
+      "utc": "2026-10-25T00:38:42.060849+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 625,
+      "objective": 3.490189552307129,
+      "train_seconds": 585.8472824720084,
+      "utc": "2026-10-25T00:39:27.769543+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 650,
+      "objective": 3.4255738258361816,
+      "train_seconds": 631.5762101820001,
+      "utc": "2026-10-25T00:40:13.498471+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 675,
+      "objective": 3.4261293411254883,
+      "train_seconds": 677.2921113979974,
+      "utc": "2026-10-25T00:40:59.214372+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 700,
+      "objective": 3.3660621643066406,
+      "train_seconds": 723.0391838350042,
+      "utc": "2026-10-25T00:41:44.961443+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 725,
+      "objective": 3.386282444000244,
+      "train_seconds": 768.7552883790049,
+      "utc": "2026-10-25T00:42:30.677549+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 750,
+      "objective": 3.368189811706543,
+      "train_seconds": 814.4767315750069,
+      "utc": "2026-10-25T00:43:16.398990+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    },
+    {
+      "event": "train",
+      "step": 775,
+      "objective": 3.318134069442749,
+      "train_seconds": 860.2158687560004,
+      "utc": "2026-10-25T00:44:02.138128+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1"
+    }
+  ],
+  "source_sha256": {
+    "wr_reproduction/accumulation.py": "f4faf897f77ed28cf61150f4e17f51985983d754587218e0c6fe60b155ce15b8",
+    "wr_reproduction/train.py": "9fad8e5e437f39a9bbc00ebb76f87897f9ac99b27166308867d61b3e4168b223",
+    "wr_reproduction/check_model.py": "0a4efc4b286db3ac7852837fcd4a48ccca0310631138d1a770e5addcf36a3140",
+    "wr_reproduction/contracts.py": "35f97f05d4a9d1d7cf2d5753e9e60866685b786f656aa30ee4ed2cc4d880cca5",
+    "wr_reproduction/backend.py": "372d89f0d4a7d096598ece0c53fb01325d0df6c337b275229945d50da67a3fa9",
+    "wr_reproduction/check_ks3_moe.py": "9ee4bb0ef05013b3153d56f0d990c9b4214cfdcb463bc4ec610131a70772f800",
+    "wr_reproduction/virtual_tables.py": "9f265abf4009a9e2495abc191c6806cd7ab6770c8e17475d9d6ac936c12314a9",
+    "wr_reproduction/check_moe.py": "7d8ee016c424cd700167193059b01f56a6767398a10a105da8fdbbebffdec828",
+    "wr_reproduction/check_attention.py": "c396bed51c5ca32467b077765c984a39d912f47ca5277a843fc8e7abe603935e",
+    "wr_reproduction/mlp_kernels.py": "13e4312e3f0d934a2fb02319213d9ec1158eb512a16285c0de7f20a0fe5ee385",
+    "wr_reproduction/bench_updates.py": "58a7e0cef84c22f173332ab34ea447b51fced253604e8aba94209fe2e2abb8af",
+    "wr_reproduction/fp8.py": "069bbc9e632bba8ff458246eb38fd0369096c3d751b5dcfebd7fc0901435c12e",
+    "wr_reproduction/check_validation_kernels.py": "90ee67259b0ed5bd0cb08e472a54ba604b5c1bfc9f5103e0f5a2394762941c67",
+    "wr_reproduction/check_sparse_accumulation.py": "0bdd65d0a7a13ceff6beb251a89c44bfae0265afccd2984085a44182e302b87f",
+    "wr_reproduction/check_ks3.py": "622f5688bacd5c42951f1b54211cb7cf6081ae6b5c2582cfda47ba57ddb96222",
+    "wr_reproduction/optimizer_kernel.py": "28372b054a91539352223b1cee56bffeb6de37ea382fc1910ca1ac6098f4df3c",
+    "wr_reproduction/check_ce.py": "6d8e86c9f818e276fbb6f78bd3f9bc6488bac69e92958c87e2b8a691a102ffa1",
+    "wr_reproduction/rank_state.py": "59fa77a626cebc93c03ae426543b6fdddff352ff64b5808d5a0968037afb8dfe",
+    "wr_reproduction/attention_quant.py": "623ffbb6cba52b36defefcee7db61c3e5c447e45558d801d5189c56054645f04",
+    "wr_reproduction/__init__.py": "6260c9a6f46e98e082a6836441c3696f51f550d62b8165de1d029189d41c1fd4",
+    "wr_reproduction/ks3_moe.py": "8eed8ac7498a5841667ae7f981398baa043a4c1b3d85ad91697581469601efbf",
+    "wr_reproduction/ks3_kernel.py": "23e230bd4c7b6dc2311f2a85dd8e5e56fb2ce653149228a6360dfc78ad3e7273",
+    "wr_reproduction/moe_kernels.py": "9a72ef17fd57c93fcba7e0d9cbb3e1c24ce481967f9d9d5a1daa30b9ec1e5c61",
+    "wr_reproduction/ce_kernel.py": "e21bd250f035f0121c9d3a6ff8bdbf67c777441592abc8150c73af9ac49565bd",
+    "wr_reproduction/fused_fp8.py": "d617ea240890fe86a92e386ab278c71e6866f403245a6b6a915d066a82ce88e4",
+    "wr_reproduction/attention_kernel.py": "21338e7fc869a801d2d916d4ec6ca85c8c10530c488991d258717fe8b159d58f",
+    "wr_reproduction/bench_ks3_backends.py": "777ec953dbf228c23a80c50611c9e3e745e833fb48d8276938da31688ae8c45a",
+    "wr_reproduction/local_collectives.py": "873c92d94f5bf30802204fccd6232b03672f10b443a9425cff9566e959c07767",
+    "wr_reproduction/check_mlp.py": "3adda319be8af08c8aa8da8d896ab4bc5842a5d59bf51ddc780903d0dbbfd93a"
+  }
+}

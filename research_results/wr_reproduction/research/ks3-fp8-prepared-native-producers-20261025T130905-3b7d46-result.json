@@ -1,0 +1,383 @@
+{
+  "run_id": "ks3-fp8-prepared-native-producers-20261025T130905-3b7d46",
+  "status": "correctness_passed",
+  "seed": 169,
+  "code_commit": "b2c9755df3f431c3ff0632d1ea06b9518be0be86",
+  "recipe": {
+    "name": "fp8-prepared-native-producers",
+    "hypothesis": "Extend prepared native weight operands with native activation rows emitted in the existing input-pack, geometry-forward and geometry-VJP producers. Original FN/E5 row and transpose layouts remain present; weight gradients and gathered output gradients keep their original paths. Remove activation decoding from three projection GEMMs while preserving exact pre-existing products. Compare against prepared-weight-only and BF16 whole-model timing; no convergence run if slower. Same geometry, sharedFP8-v2/partial-amax, batch/objective and accepted BF16 evaluation.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 2.0,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "weight_packing": "batched",
+    "training_gs32": true,
+    "geometry_backward_rows": 32,
+    "fp8_prepared_native_weights": true,
+    "shared_fp8_gemm_tuning": "mi300-v2",
+    "shared_fp8_amax": "partial",
+    "validation_window_policy": "accepted-control",
+    "hardware_change_scope": "KS3 FP8 only adds125829120 bytes of native half-value weight caches and fused stores. Original FN caches, delayed scale values, FP32 accumulation, geometry, all nonexpert configurations/global batches/objective unchanged. Shared FP8v2/partial-amax previously independently checked; MLP defaults remain legacy. Three fused KS3 producers additionally emit native rows; no standalone operand conversion; original activations and gradients remain stored.",
+    "parent_native_weight_correctness_evidence": {
+      "run_id": "ks3-fp8-prepared-native-weights-20261025T130013-ff0980",
+      "code_commit": "29392a6fa9ad83995be3b4d7b82d8bc71159b0a4",
+      "events_sha256": "5a68d14f3cafb71ea6b821d6792352de829d45b1f266b9c5e948ea70656c7ce6",
+      "all256_bytes": true,
+      "original_cached_weights_scales_and_amax_bitwise": true,
+      "captured_refresh_replay": true,
+      "full_block_bitwise": true,
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "original": 1.785050794813368,
+          "prepared": 1.6125815200805664
+        },
+        {
+          "tokens": 49152,
+          "original": 4.971816749572754,
+          "prepared": 4.520385342552548
+        }
+      ],
+      "refresh_milliseconds": {
+        "original": 0.19805803876331304,
+        "prepared": 0.26466181734774974
+      }
+    },
+    "fp8_prepared_native_activations": true
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "training_projection_gs32": true,
+    "coefficient_gs32": true,
+    "charts": 1024,
+    "geometry_backward_rows": 32,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "bank": 0.0,
+          "geometry": 1.2434067997446618e-08
+        },
+        "post_amax": 7.158477783203125,
+        "dpre_amax": 0.07970885932445526
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 4.877150905358008e-10,
+          "bank": 6.967591303919107e-08,
+          "geometry": 1.6244513290075702e-07
+        },
+        "post_amax": 10.06915283203125,
+        "dpre_amax": 0.18012376129627228
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 3.6353617338669153e-10,
+          "dx": 5.101589067635359e-06,
+          "bank": 2.9003078907408053e-06,
+          "geometry": 1.19334046644326e-07
+        },
+        "post_amax": 14.3402099609375,
+        "dpre_amax": 0.249906525015831
+      }
+    ],
+    "full_convergence_verified": false,
+    "prepared_native_weights": {
+      "prepared_activations": true,
+      "byte_checks": [
+        {
+          "activation_format": "torch.float8_e4m3fn",
+          "transposed_weights": false,
+          "all256_bytes": true,
+          "decoded_fp32_oracle": true,
+          "prepared_activations": true
+        },
+        {
+          "activation_format": "torch.float8_e4m3fn",
+          "transposed_weights": true,
+          "all256_bytes": true,
+          "decoded_fp32_oracle": true,
+          "prepared_activations": true
+        },
+        {
+          "activation_format": "torch.float8_e5m2",
+          "transposed_weights": false,
+          "all256_bytes": true,
+          "decoded_fp32_oracle": true,
+          "prepared_activations": true
+        },
+        {
+          "activation_format": "torch.float8_e5m2",
+          "transposed_weights": true,
+          "all256_bytes": true,
+          "decoded_fp32_oracle": true,
+          "prepared_activations": true
+        }
+      ],
+      "refresh_checks": [
+        {
+          "exact": true,
+          "original_caches_and_scales_bitwise": true,
+          "native_byte_mapping_exact": true
+        },
+        {
+          "exact": false,
+          "original_caches_and_scales_bitwise": true,
+          "native_byte_mapping_exact": true
+        },
+        {
+          "exact": false,
+          "original_caches_and_scales_bitwise": true,
+          "native_byte_mapping_exact": true
+        },
+        {
+          "exact": true,
+          "original_caches_and_scales_bitwise": true,
+          "native_byte_mapping_exact": true
+        },
+        {
+          "captured_replay": true,
+          "original_caches_and_scales_bitwise": true,
+          "native_byte_mapping_exact": true
+        },
+        {
+          "captured_replay": true,
+          "original_caches_and_scales_bitwise": true,
+          "native_byte_mapping_exact": true
+        }
+      ],
+      "refresh_samples_ms": {
+        "original": [
+          0.1964885672343146,
+          0.1983765368191701,
+          0.19868646309736104
+        ],
+        "prepared": [
+          0.2656533784763787,
+          0.2665756388346354,
+          0.2679230107487859
+        ]
+      },
+      "refresh_median_ms": {
+        "original": 0.1983765368191701,
+        "prepared": 0.2665756388346354
+      },
+      "block_checks": [
+        {
+          "tokens": 1,
+          "full_forward_backward_bitwise_equal": true,
+          "core_samples_ms": {
+            "original": [],
+            "weights_only": [],
+            "prepared": []
+          },
+          "median_ms": {}
+        },
+        {
+          "tokens": 257,
+          "full_forward_backward_bitwise_equal": true,
+          "core_samples_ms": {
+            "original": [],
+            "weights_only": [],
+            "prepared": []
+          },
+          "median_ms": {}
+        },
+        {
+          "tokens": 16384,
+          "full_forward_backward_bitwise_equal": true,
+          "core_samples_ms": {
+            "original": [
+              1.770565880669488,
+              1.786434088812934,
+              1.7904423749005351
+            ],
+            "weights_only": [
+              1.6044640233961203,
+              1.6150987010891154,
+              1.6181808600991459
+            ],
+            "prepared": [
+              1.4635589144123133,
+              1.4653466209998498,
+              1.4745282921424279
+            ]
+          },
+          "median_ms": {
+            "original": 1.786434088812934,
+            "weights_only": 1.6150987010891154,
+            "prepared": 1.4653466209998498
+          }
+        },
+        {
+          "tokens": 49152,
+          "full_forward_backward_bitwise_equal": true,
+          "core_samples_ms": {
+            "original": [
+              4.931823768615723,
+              4.978804702758789,
+              4.979712355764288
+            ],
+            "weights_only": [
+              4.512793913341704,
+              4.530874161493211,
+              4.537074824741908
+            ],
+            "prepared": [
+              4.121249124278193,
+              4.130240498418393,
+              4.130830250615659
+            ]
+          },
+          "median_ms": {
+            "original": 4.978804702758789,
+            "weights_only": 4.530874161493211,
+            "prepared": 4.130240498418393
+          }
+        }
+      ],
+      "original_formats_retained": true,
+      "extra_native_cache_bytes": 125829120,
+      "scope": "Correctness and isolated core/producer timing; whole-model speed and convergence not established"
+    },
+    "weight_packing": {
+      "charts": 1024,
+      "gs32": true,
+      "checks": [
+        {
+          "iteration": 0,
+          "exact_scale": true,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 1,
+          "exact_scale": false,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 2,
+          "exact_scale": false,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 3,
+          "exact_scale": true,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 0,
+          "captured_replay": true,
+          "exact_scale": false,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 1,
+          "captured_replay": true,
+          "exact_scale": false,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        }
+      ],
+      "delayed_refresh_ms": {
+        "loop": [
+          7.160923297588642,
+          7.16987310556265,
+          7.163382016695463
+        ],
+        "batched": [
+          0.19854121198236072,
+          0.1991179404784141,
+          0.19824743290700933
+        ]
+      },
+      "median_ms": {
+        "loop": 7.163382016695463,
+        "batched": 0.19854121198236072
+      },
+      "scope": "Weight refresh only; whole-model speed not established"
+    },
+    "utc": "2026-10-25T13:10:18.687122+00:00"
+  },
+  "profile": null,
+  "terminal_geometry": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T13:10:19.919521+00:00",
+  "events_sha256": "d63b008d769fce78a0e4c92172ef8026935507824c51ab75f2d5c239538c20d5",
+  "previous_result_commit": "d790a849930df88367385b5b7d12044239dea352"
+}

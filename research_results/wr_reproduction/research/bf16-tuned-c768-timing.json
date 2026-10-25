@@ -1,0 +1,14 @@
+{
+  "run_id": "ks3-bf16-tuned-c768-20261025T061710-49f0a5",
+  "code_commit": "1ff219ded593cfcab3319dd6e6264ad953c9fe6f",
+  "first100_seconds": 52.903092396998545,
+  "updates25_to100_seconds": 39.526103374999366,
+  "reference": "ks3-bf16-tuned-20261025T050142-be4e00",
+  "reference_first100": 54.066861718994915,
+  "reference_25to100": 40.427348073004396,
+  "validation": false,
+  "first100_time_reduction": 0.021524632371764052,
+  "steady_time_reduction": 0.02229294625948619,
+  "events_sha256": "19ba5265290be9c4d9eb0f3b8d3b831ee02536ac472b6658239d999f932c048c",
+  "reference_events_sha256": "3816de729b33bb9bbfd6b6c2186e3f7d4ac4c6a519a6765df15315b04901e785"
+}

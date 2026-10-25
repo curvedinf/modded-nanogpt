@@ -1,0 +1,41 @@
+{
+  "name": "fp8-native-pack",
+  "hypothesis": "Numerical checks passed. Native packing took 56.543696s for 100 original updates versus BF16 59.954503s and optimized FP8 56.488074s; it does not establish a speedup over optimized FP8. Test whether removing extra GS32 rounding from native FP8 training projection operands improves loss within the exact 902.359214543s budget. Keep GS32 coefficients, FP16 nonlinearities, geometry Adam lr_mul 0.125, original WR settings, and GS32/BF16 validation fixed.",
+  "precision": "fp8",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "validation_precision": "bf16",
+  "max_train_seconds": 902.3592145430011,
+  "validation_setup_reserve_seconds": 1.25,
+  "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+  "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping. Native packing applies only to FP8 training operands; coefficient quantization and the complete accepted GS32/BF16 evaluation path remain fixed.",
+  "training_gs32": false,
+  "timing_evidence": {
+    "run_id": "ks3-fp8-native-pack-20261025T021800-ae9499",
+    "bf16_precision_gate_passed": true,
+    "optimized_fp8_speedup": false,
+    "first100_seconds": 56.54369610999129,
+    "updates25_to100_seconds": 42.19737380600418
+  }
+}

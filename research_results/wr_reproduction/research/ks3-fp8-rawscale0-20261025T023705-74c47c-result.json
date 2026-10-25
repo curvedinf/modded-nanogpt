@@ -1,0 +1,145 @@
+{
+  "run_id": "ks3-fp8-rawscale0-20261025T023705-74c47c",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "9945be6e2b1c7f83acc9ad98ecd4d3e0499f38c7",
+  "recipe": {
+    "name": "fp8-rawscale0",
+    "hypothesis": "Change only KS3 initial raw_scale from 0.75 to 0.0 (softplus scale about 1.137 to 0.693), retaining the optimized GS32/FP8 training path and geometry Adam lr_mul 0.125 at seed 168. A broader tanh warp may reduce saturation while learned coefficients develop; zero initial coefficients preserve the initial ReLU-squared function. All original PR393 settings and GS32/BF16 evaluation stay fixed. Apply separately tested reference-snapshot caching to reduce bookkeeping overhead without changing decisions.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.0,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.574716091156006,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.081385850906372,
+    "reference_run_id": "ks3-fp8-geom-lr025-20261025T020347-e71ee9",
+    "reference_wall_seconds": 505.4815465579886,
+    "reference_age_seconds": 0.7596625300211599,
+    "reference_objective": 3.493330240249634,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "reference_source_step": 596,
+    "comparable_runs": 3,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-fp8-geom-lr025-20261025T020347-e71ee9/events.jsonl",
+      "sha256": "fa1972c26322eda48d1f891983f68dc585a0563c9efab7316fac03e5a7b41b86",
+      "line": 623,
+      "row_sha256": "74d51ae4f54daae53dc3878bac4aa9fe8d865397a6383acdd6d32fa750e9edbd"
+    },
+    "step": 599,
+    "train_seconds": 506.2412090880098,
+    "reference_snapshot_sha256": "d5bff41a6b86ba59bb5d72bdac4dace92d36aa7698ecdbaaf3057520d14c8876",
+    "utc": "2026-10-25T02:49:00.942700+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-fp8-c1024-r1",
+    "run_id": "ks3-fp8-rawscale0-20261025T023705-74c47c",
+    "seed": 168,
+    "code_commit": "9945be6e2b1c7f83acc9ad98ecd4d3e0499f38c7",
+    "training_projection_gs32": true
+  },
+  "completed_utc": "2026-10-25T02:49:02.941364+00:00",
+  "events_sha256": "5e3c795ad2dc1b79200d87392f0a30527fecbb17044090b490afba7f7acb02ee",
+  "previous_result_commit": "ffe5199766ff2c815b647410c8d55d7b8069439b"
+}

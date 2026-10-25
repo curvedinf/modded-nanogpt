@@ -1,0 +1,43 @@
+{
+  "name": "fp8-c512",
+  "hypothesis": "Reduce KS3 expert width from 1024 to 512 charts, removing 31,621,120 parameters. The 1536-chart candidate was pruned at 541.830s with a compatible +0.042801 objective gap; test the opposite capacity/time tradeoff. Retain rank one, optimized GS32/FP8 training, BF16 evaluation, geometry 0/0.75/0 and Adam lr_mul 0.125, original non-expert initialization, eight top1 experts, objective/schedule/global update sizes. Run width-specific numerical checks then one continuous screened candidate; measure update speed from that candidate without a redundant timing run.",
+  "precision": "fp8",
+  "charts": 512,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "validation_precision": "bf16",
+  "max_train_seconds": 902.3592145430011,
+  "validation_setup_reserve_seconds": 1.25,
+  "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+  "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+  "training_gs32": true,
+  "parameter_budget_change": {
+    "original_expert_projection_parameters": 62914560,
+    "new_expert_projection_parameters": 31457280,
+    "original_geometry_parameters": 327680,
+    "new_geometry_parameters": 163840,
+    "added_parameters": -31621120
+  },
+  "initialization_preservation": "Replay original 1024-chart expert random draws after resized expert initialization, restoring original router and subsequent CPU RNG state.",
+  "optimizer_shape_scaling": "Original ANVIL formulas evaluated at the smaller expert shape; no optimizer hyperparameter constants changed."
+}

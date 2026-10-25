@@ -1,0 +1,50 @@
+{
+  "name": "fp8-c1536",
+  "hypothesis": "Increase only KS3 expert charts from 1024 to 1536, adding 31,621,120 parameters while preserving eight top1 experts and original non-expert initialization. Numerical checks passed; 100 updates took 60.154421s versus 56.488074s at 1024 charts (6.49% more time). Test whether capacity improves loss enough to compensate at the exact 902.359214543s budget. This is a parameter-capacity/cost tradeoff with the existing verified FP8 precision, not a claimed precision speedup. Keep geometry 0/0.75/0, Adam lr_mul 0.125, original schedule/objective/global batch, and full GS32/BF16 evaluation.",
+  "precision": "fp8",
+  "charts": 1536,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "validation_precision": "bf16",
+  "max_train_seconds": 902.3592145430011,
+  "validation_setup_reserve_seconds": 1.25,
+  "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+  "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+  "training_gs32": true,
+  "parameter_budget_change": {
+    "original_expert_projection_parameters": 62914560,
+    "new_expert_projection_parameters": 94371840,
+    "original_geometry_parameters": 327680,
+    "new_geometry_parameters": 491520,
+    "added_parameters": 31621120
+  },
+  "initialization_preservation": "Replay only original 1024-chart expert draws after wider expert initialization; restore original router and subsequent CPU RNG state. Actual pinned init_moe body verified in CPU test.",
+  "timing_evidence": {
+    "run_id": "ks3-fp8-c1536-20261025T025332-4e7267",
+    "first100_seconds": 60.154421261002426,
+    "updates25_to100_seconds": 44.91622986699804,
+    "baseline1024_first100_seconds": 56.48807423899416,
+    "interpretation": "Capacity cost measured; continuous loss/time screening decides usefulness."
+  },
+  "optimizer_shape_scaling": "Original ANVIL formulas evaluated at the wider expert shape; no optimizer hyperparameter constants changed."
+}

@@ -1,0 +1,207 @@
+{
+  "updated_utc": "2026-10-25T13:44:45.812470+00:00",
+  "hypothesis": "Prepare native half-value operands once in fused producers and reuse layouts, preserving original formats and numerical products.",
+  "original_FNE5_formats_and_layouts_retained": true,
+  "delayed_scales_and_global_updates_unchanged": true,
+  "extra_persistent_weight_cache_bytes": 125829120,
+  "control_default_unchanged": true,
+  "variants": [
+    {
+      "variant": "native_weights",
+      "check_run": "ks3-fp8-prepared-native-weights-20261025T130013-ff0980",
+      "check_commit": "29392a6fa9ad83995be3b4d7b82d8bc71159b0a4",
+      "timing_run": "ks3-fp8-prepared-native-weights-20261025T130143-836812",
+      "timing_commit": "58bbf33739dda48326393a5c01968f4a8f41f84e",
+      "full_block_bitwise_equal": true,
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "original": 1.785050794813368,
+          "prepared": 1.6125815200805664
+        },
+        {
+          "tokens": 49152,
+          "original": 4.971816749572754,
+          "prepared": 4.520385342552548
+        }
+      ],
+      "first100_seconds": 38.54547814800753,
+      "after25_through100_seconds": 28.73227177800436,
+      "full_convergence_launched": false
+    },
+    {
+      "variant": "native_activation_rows",
+      "check_run": "ks3-fp8-prepared-native-producers-20261025T130905-3b7d46",
+      "check_commit": "b2c9755df3f431c3ff0632d1ea06b9518be0be86",
+      "timing_run": "ks3-fp8-prepared-native-producers-20261025T131043-808c66",
+      "timing_commit": "68e0f96760323d1ea0dad9f709e6ab72b571e049",
+      "full_block_bitwise_equal": true,
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "original": 1.786434088812934,
+          "weights_only": 1.6150987010891154,
+          "prepared": 1.4653466209998498
+        },
+        {
+          "tokens": 49152,
+          "original": 4.978804702758789,
+          "weights_only": 4.530874161493211,
+          "prepared": 4.130240498418393
+        }
+      ],
+      "first100_seconds": 37.923143334992346,
+      "after25_through100_seconds": 28.275780009003938,
+      "full_convergence_launched": false
+    },
+    {
+      "variant": "native_activation_dual",
+      "check_run": "ks3-fp8-prepared-native-dual-20261025T131548-bd407b",
+      "check_commit": "e054696e72eb5d2556fbfd17e1a8ab1e91622c74",
+      "timing_run": "ks3-fp8-prepared-native-dual-20261025T131720-363a76",
+      "timing_commit": "0775035ca69cbb5f9187d8053b904f28c2ba441e",
+      "full_block_bitwise_equal": true,
+      "core_milliseconds": [
+        {
+          "tokens": 16384,
+          "original": 1.7920351805510344,
+          "weights_only": 1.6201259289757681,
+          "rows_only": 1.470582263653095,
+          "prepared": 1.2415856759759445
+        },
+        {
+          "tokens": 49152,
+          "original": 4.987646484375,
+          "weights_only": 4.540071723574684,
+          "rows_only": 4.13295782338018,
+          "prepared": 3.5019676753452846
+        }
+      ],
+      "first100_seconds": 37.0789506269939,
+      "after25_through100_seconds": 27.690438338991953,
+      "full_convergence_launched": true
+    }
+  ],
+  "fastest_saved_bf16_reference": {
+    "run_id": "ks3-bf16-projection-v2-shared-fp8-amax-20261025T114619-2be590",
+    "first100_seconds": 37.682322256005136,
+    "after25_through100_seconds": 28.140079172997503
+  },
+  "discovery_code_commit": "8c14438",
+  "validation_result": "No validation: discovery pruned at342.437799s. Timing improvement did not establish convergence win.",
+  "followup": {
+    "isolated_commit": "7fea07b",
+    "worktree": "/tmp/wr-ks3-native-direct-quant",
+    "gpu_tested": false,
+    "description": "Remove preliminary GS32 rounding from training producer values only; keep original FP8 formats and accepted GS32 BF16 evaluation."
+  },
+  "discovery_result": {
+    "run_id": "ks3-fp8-prepared-native-dual-20261025T132209-945099",
+    "status": "pruned",
+    "code_commit": "8c144380ee3375994ef89afb06f5bfdc6ea45dd5",
+    "step": 601,
+    "train_seconds": 342.4377990339999,
+    "candidate_objective": 3.5724172592163086,
+    "reference_objective": 3.49867844581604,
+    "reference_wall_seconds": 341.72145041500335,
+    "reference_run_id": "ks3-bf16-shared-fp8-v2-partial-amax-20261025T111635-d1d1aa",
+    "gap": 0.0737388134002686
+  },
+  "gather_discovery_result": {
+    "run_id": "ks3-fp8-prepared-native-gather-20261025T133614-c5cca4",
+    "status": "pruned",
+    "code_commit": "438c53ef7e1defeace21c01fb3e1dea6b44c3e53",
+    "step": 599,
+    "train_seconds": 337.5749022520031,
+    "candidate_objective": 3.5964365005493164,
+    "reference_objective": 3.4972352981567383,
+    "reference_wall_seconds": 336.9847179509961,
+    "reference_run_id": "ks3-fp8-prepared-native-dual-20261025T132209-945099",
+    "gap": 0.0992012023925781
+  },
+  "gather_timing": {
+    "run_id": "ks3-fp8-prepared-native-gather-20261025T133244-bc25b5",
+    "code_commit": "48a613ba3d3eaa11bd61d26f5a78c65ac1b2d036",
+    "first100_seconds": 36.750987613995676,
+    "after25_through100_seconds": 27.449032877004356,
+    "references": [
+      {
+        "run_id": "ks3-bf16-projection-v2-shared-fp8-amax-20261025T114619-2be590",
+        "code_commit": "707e863f06eefd3b091cf20d2754c24ba753f80e",
+        "first100_seconds": 37.682322256005136,
+        "after25_through100_seconds": 28.140079172997503,
+        "first100_reduction": 0.024715425861553397,
+        "steady_reduction": 0.024557368575432337
+      },
+      {
+        "run_id": "ks3-bf16-shared-fp8-v2-partial-amax-20261025T110818-37b466",
+        "code_commit": "65123565c73ed6dcb3a01b352ba0ad7fd42cfe43",
+        "first100_seconds": 37.7528903830098,
+        "after25_through100_seconds": 28.18139608099591,
+        "first100_reduction": 0.026538438748653137,
+        "steady_reduction": 0.02598747066634577
+      }
+    ],
+    "validation": false,
+    "gate_passed": true
+  },
+  "gather_correctness": {
+    "run_id": "ks3-fp8-prepared-native-gather-20261025T133048-c69b05",
+    "code_commit": "50ce67c725361255fcf354de40b07b1e73f79262",
+    "events_sha256": "31b5ebe3857a50e07d51d351346cb30a087ec039c703098d0bbb256bb5bcda08",
+    "full_block_bitwise": true,
+    "all256_bytes": true,
+    "weight_gradient_format_cases": 12,
+    "original_gather_bytes_gate_gradients_exact": true,
+    "gather_checks": [
+      {
+        "tokens": 1,
+        "nonfinite": false,
+        "original_bytes_and_gate_gradient_exact": true,
+        "native_layouts_exact": true
+      },
+      {
+        "tokens": 257,
+        "nonfinite": false,
+        "original_bytes_and_gate_gradient_exact": true,
+        "native_layouts_exact": true
+      },
+      {
+        "tokens": 257,
+        "nonfinite": true,
+        "original_bytes_and_gate_gradient_exact": true,
+        "native_layouts_exact": true
+      },
+      {
+        "tokens": 16384,
+        "nonfinite": false,
+        "original_bytes_and_gate_gradient_exact": true,
+        "native_layouts_exact": true
+      },
+      {
+        "tokens": 49152,
+        "nonfinite": false,
+        "original_bytes_and_gate_gradient_exact": true,
+        "native_layouts_exact": true
+      }
+    ],
+    "core_milliseconds": [
+      {
+        "tokens": 16384,
+        "original": 1.797176677775833,
+        "weights_only": 1.6258527723409362,
+        "rows_only": 1.4770456988994891,
+        "dual_only": 1.2441227999600497,
+        "prepared": 1.1777532224301939
+      },
+      {
+        "tokens": 49152,
+        "original": 5.008654504073293,
+        "weights_only": 4.554410589308966,
+        "rows_only": 4.150529380466627,
+        "dual_only": 3.5297410636112607,
+        "prepared": 3.32731441629344
+      }
+    ]
+  }
+}

@@ -66,10 +66,13 @@ def cplm_loss(m,x,inputs,targets,seqlens,mtp,prefix,sampled):
         if sampled is None:
             weight=m.lm_head.weight;mapped=targets;ps=m.prefix_table[targets];cc=COPY
         else:
-            ids=(sampled.vocab_pos>=0).nonzero().flatten()
+            if hasattr(sampled,'candidate_ids'):
+                ids=sampled.candidate_ids;cc=sampled.copy_column
+            else:
+                ids=(sampled.vocab_pos>=0).nonzero().flatten()
+                cc=int(sampled.vocab_pos[COPY])
             weight=m.lm_head.weight.index_select(1,ids)
             mapped=sampled.target_pos[:n];ps=sampled.prefix_pos[:n]
-            cc=int(sampled.vocab_pos[COPY])
             assert cc>=0
         labels=torch.stack([F.pad(mapped[i:],(0,i),value=-1) for i in range(mtp.numel())],1)
         sampled_dw=m.sampled_head and sampled is not None and n>=32768

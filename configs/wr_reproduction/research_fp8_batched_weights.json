@@ -1,0 +1,48 @@
+{
+  "name": "fp8-batched-weights",
+  "hypothesis": "Use batched KS3 weight packing to improve loss per elapsed time with identical precision and math. Both FP8 layouts, per-expert scales and maxima matched bit for bit across exact-scale, delayed-scale and changing-weight captured replay checks. Whole-model first100 time fell from 56.488074s to 55.685453s (1.42%), and updates25-100 from 42.152661s to 41.580856s (1.36%). Run a continuous candidate using default 1024-chart geometry (Adam 0.125, zero/0.75/zero), all original non-KS3 settings and full GS32/BF16 evaluation. No isolated-microbenchmark or matched-step loss win is claimed.",
+  "precision": "fp8",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "validation_precision": "bf16",
+  "max_train_seconds": 902.3592145430011,
+  "validation_setup_reserve_seconds": 1.25,
+  "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+  "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+  "weight_packing": "batched",
+  "training_gs32": true,
+  "timing_evidence": {
+    "run_id": "ks3-fp8-batched-weights-20261025T040727-a45604",
+    "code_commit": "2e1afb279b35b46af2b494e6a3bc6072546993fc",
+    "first100_seconds": 55.685453496000264,
+    "updates25_to100_seconds": 41.5808563640021,
+    "first100_time_reduction": 0.014208675969340057,
+    "steady_time_reduction": 0.01356509181913046
+  },
+  "correctness_evidence": {
+    "run_id": "ks3-fp8-batched-weights-20261025T041225-e9424b",
+    "code_commit": "b61da26eba80c3ac98bae9a5676ea8570098c489",
+    "changing_weight_replay_bitwise_equal": true
+  }
+}

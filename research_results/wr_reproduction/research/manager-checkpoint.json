@@ -1,0 +1,452 @@
+{
+  "updated_utc": "2026-10-25T10:44:06.345320+00:00",
+  "authorization": "Indefinite new WR study only; stop on new explicit stop or study STOP",
+  "control": {
+    "loss": 3.454925298690796,
+    "train_seconds": 902.3592145430011,
+    "val_tokens": 10485760,
+    "weights": "raw",
+    "canonical_mask": false,
+    "tail_shipping": false,
+    "final_window_extension": false
+  },
+  "discovery_results": [
+    {
+      "run_id": "ks3-fp8-optimized-20261025T013840-afc75b",
+      "recipe": "fp8-optimized",
+      "status": "pruned",
+      "code_commit": "4d8025f08cda7cb12c14b0595d48452ceb9dc8ae",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 517.7399260769889,
+        "gap": 0.050178050994873,
+        "reference_run_id": "pr393-control-20261024T234443Z"
+      }
+    },
+    {
+      "run_id": "ks3-fp8-geom-lr00625-20261025T015146-ecaf0e",
+      "recipe": "fp8-geom-lr00625",
+      "status": "pruned",
+      "code_commit": "911b75a16390bc58ce44330e0d87dca042edcfab",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 504.9399932009983,
+        "gap": 0.0742011070251467,
+        "reference_run_id": "ks3-fp8-optimized-20261025T013840-afc75b"
+      }
+    },
+    {
+      "run_id": "ks3-fp8-geom-lr025-20261025T020347-e71ee9",
+      "recipe": "fp8-geom-lr025",
+      "status": "pruned",
+      "code_commit": "dc67780acb2a35df781fe1c3e16caead7bb91de8",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 510.6728618109919,
+        "gap": 0.0581355094909666,
+        "reference_run_id": "ks3-fp8-geom-lr00625-20261025T015146-ecaf0e"
+      }
+    },
+    {
+      "run_id": "ks3-fp8-native-pack-20261025T022459-908a40",
+      "recipe": "fp8-native-pack",
+      "status": "pruned",
+      "code_commit": "fa64e5a6a40bf9b11e55fa1098819adabdb96d35",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 389.93444899500173,
+        "gap": 0.012184619903564,
+        "reference_run_id": "ks3-fp8-optimized-20261025T013840-afc75b"
+      }
+    },
+    {
+      "run_id": "ks3-fp8-rawscale0-20261025T023705-74c47c",
+      "recipe": "fp8-rawscale0",
+      "status": "pruned",
+      "code_commit": "9945be6e2b1c7f83acc9ad98ecd4d3e0499f38c7",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 506.2412090880098,
+        "gap": 0.081385850906372,
+        "reference_run_id": "ks3-fp8-geom-lr025-20261025T020347-e71ee9"
+      }
+    },
+    {
+      "run_id": "ks3-fp8-c1536-20261025T030520-b4858a",
+      "recipe": "fp8-c1536",
+      "status": "pruned",
+      "code_commit": "b5415bc648358a54bd9178d460d19d86f7d93452",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 541.8299698379997,
+        "gap": 0.0428013801574706,
+        "reference_run_id": "pr393-ks3-block-20261025T002719Z"
+      }
+    },
+    {
+      "run_id": "ks3-fp8-c512-20261025T032238-9c59b5",
+      "recipe": "fp8-c512",
+      "status": "pruned",
+      "code_commit": "a437e5f16ef21370f387d0fe47ec62857d702b59",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 505.5152769999986,
+        "gap": 0.0537862777709963,
+        "reference_run_id": "ks3-fp8-rawscale0-20261025T023705-74c47c"
+      }
+    },
+    {
+      "run_id": "ks3-fp8-bias005-20261025T033806-d8b003",
+      "recipe": "fp8-bias005",
+      "status": "pruned",
+      "code_commit": "3a0a08d06f7cb3301f67eeefe5be0a97169ec9a6",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 503.53402077600185,
+        "gap": 0.0560595989227295,
+        "reference_run_id": "ks3-fp8-c512-20261025T032238-9c59b5"
+      }
+    },
+    {
+      "run_id": "ks3-fp8-geom-lr0015625-20261025T035020-dab7e6",
+      "recipe": "fp8-geom-lr0015625",
+      "status": "pruned",
+      "code_commit": "64ef5e10cf4eadd4380923a60e3b8f3bf5430d24",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 503.5997872940061,
+        "gap": 0.0503945350646973,
+        "reference_run_id": "ks3-fp8-c512-20261025T032238-9c59b5"
+      }
+    },
+    {
+      "run_id": "ks3-fp8-batched-weights-20261025T041415-01c842",
+      "recipe": "fp8-batched-weights",
+      "status": "pruned",
+      "code_commit": "c6b46ed24404cc32411308378cd5c000cc36f6c7",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 499.2991869020043,
+        "gap": 0.0325233936309815,
+        "reference_run_id": "ks3-fp8-c512-20261025T032238-9c59b5"
+      }
+    },
+    {
+      "run_id": "ks3-fp8-warpminus005-vjp32-20261025T043437-49bcde",
+      "recipe": "fp8-warpminus005-vjp32",
+      "status": "pruned",
+      "code_commit": "d5206b82d543ef9d802035d7b24bd1d2b22ecf8e",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 496.078048039999,
+        "gap": 0.0135211944580078,
+        "reference_run_id": "ks3-fp8-c512-20261025T032238-9c59b5"
+      }
+    },
+    {
+      "run_id": "ks3-bf16-tuned-20261025T050655-6b59bf",
+      "recipe": "bf16-tuned",
+      "status": "pruned",
+      "code_commit": "263c7b256b59419e47d8eae580fa8397d53b3763",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 485.646021078006,
+        "gap": 0.031355142593384,
+        "reference_run_id": "ks3-fp8-c512-20261025T032238-9c59b5"
+      }
+    },
+    {
+      "run_id": "ks3-bf16-tuned-c512-20261025T053121-71fe02",
+      "recipe": "bf16-tuned-c512",
+      "status": "pruned",
+      "code_commit": "0b6bfad80079d162143355cbc4e64f530ad42d3a",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 470.1094930279942,
+        "gap": 0.0595293045043947,
+        "reference_run_id": "ks3-fp8-c512-20261025T032238-9c59b5"
+      }
+    },
+    {
+      "run_id": "ks3-bf16-tuned-projlr2-20261025T054525-45f4cd",
+      "recipe": "bf16-tuned-projlr2",
+      "status": "error",
+      "code_commit": "2ff306cb59739f90f5062055a948c0dd1501033f",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 370.5385784179962,
+        "gap": null,
+        "reference_run_id": null
+      }
+    },
+    {
+      "run_id": "ks3-bf16-tuned-projlr05-20261025T055720-8256cd",
+      "recipe": "bf16-tuned-projlr05",
+      "status": "error",
+      "code_commit": "7495a1e954aa67e597d8107adc0d45faea892249",
+      "validation": null,
+      "pruning": null
+    },
+    {
+      "run_id": "ks3-bf16-tuned-projlr05-20261025T060208-0e591d",
+      "recipe": "bf16-tuned-projlr05",
+      "status": "pruned",
+      "code_commit": "1ac797345aad96b8212d7f68a3f45ad6a125ba8f",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 486.39113992700004,
+        "gap": 0.0360312461853027,
+        "reference_run_id": "ks3-fp8-c512-20261025T032238-9c59b5"
+      }
+    },
+    {
+      "run_id": "ks3-bf16-tuned-c768-20261025T062506-2d8ff9",
+      "recipe": "bf16-tuned-c768",
+      "status": "pruned",
+      "code_commit": "5ef4a7c47e5fd7967ac74719ddb5c00efb0b846a",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 476.39656871699844,
+        "gap": 0.0715334415435791,
+        "reference_run_id": "ks3-fp8-c512-20261025T032238-9c59b5"
+      }
+    },
+    {
+      "run_id": "ks3-bf16-tuned-c512-r2-20261025T064856-20d590",
+      "recipe": "bf16-tuned-c512-r2",
+      "status": "pruned",
+      "code_commit": "1eca6ce6241c63d1a8212e50bc08e8765c97134a",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 484.6638248740055,
+        "gap": 0.1217079162597655,
+        "reference_run_id": "ks3-bf16-tuned-20261025T050655-6b59bf"
+      }
+    },
+    {
+      "run_id": "ks3-bf16-tuned-c256-r4-20261025T071143-366cff",
+      "recipe": "bf16-tuned-c256-r4",
+      "status": "pruned",
+      "code_commit": "86eae3ab368972d58e5e848143941ef31b46b953",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 480.5701362550026,
+        "gap": 0.0692641735076905,
+        "reference_run_id": "ks3-bf16-tuned-c512-r2-20261025T064856-20d590"
+      }
+    },
+    {
+      "run_id": "ks3-bf16-tuned-shared-fp8-20261025T081042-bb500f",
+      "recipe": "bf16-tuned-shared-fp8",
+      "code_commit": "f1366345fcdbde52d06711b33300e481db855c34",
+      "status": "complete",
+      "validation": {
+        "event": "validation",
+        "final": false,
+        "loss": 3.3019189834594727,
+        "train_seconds": 900.7395800709928,
+        "val_tokens": 10485760,
+        "evaluation_signature": {
+          "loss_definition": "pr393-cplm-full10485760-raw-no-canonical-no-tail-bf16-v1",
+          "val_tokens": 10485760,
+          "val_data": [
+            {
+              "name": "fineweb_val_000000.bin",
+              "bytes": 200001024,
+              "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+            }
+          ],
+          "cplm": true,
+          "softcap": [
+            23.0,
+            5.0,
+            7.5
+          ],
+          "attention_windows": [
+            640,
+            1408
+          ],
+          "attention_segment_cap": 2560,
+          "align_to_bos": false,
+          "val_global_batch_tokens": 2097152,
+          "logical_ranks": 8,
+          "weights": "raw",
+          "canonical_mask": false,
+          "tail_shipping": false,
+          "final_window_extension": false,
+          "expert_evaluation": "bf16",
+          "mtp": false,
+          "prefix": false,
+          "moe_aux": false
+        },
+        "step": 1020,
+        "budget_seconds": 902.3592145430011,
+        "budget_overrun_seconds": 0.0,
+        "within_control_budget": true,
+        "evaluation_protocol": {
+          "policy": "accepted-control",
+          "training_windows": [
+            640,
+            1408
+          ],
+          "attention_windows": [
+            640,
+            1408
+          ],
+          "yarn_snapshot_step": 595,
+          "restored": false,
+          "compatible": true,
+          "setup_on_training_clock": true,
+          "yarn_snapshot_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612"
+        },
+        "utc": "2026-10-25T08:28:13.472548+00:00",
+        "version": "pr393",
+        "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+        "expert_block": "ks3-gs32-bf16-c1024-r1",
+        "run_id": "ks3-bf16-tuned-shared-fp8-20261025T081042-bb500f",
+        "seed": 168,
+        "code_commit": "f1366345fcdbde52d06711b33300e481db855c34",
+        "training_projection_gs32": true
+      },
+      "pruning": null
+    },
+    {
+      "run_id": "ks3-bf16-shared-fp8-shiftminus1-20261025T092410-7a0de6",
+      "recipe": "bf16-shared-fp8-shiftminus1",
+      "status": "pruned",
+      "code_commit": "9f3e67c2e677c5c4ca3273cec06b0bf1ab85da87",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 295.3343456260045,
+        "gap": 0.010066509246826,
+        "reference_run_id": "ks3-bf16-tuned-shared-fp8-20261025T084550-1d295d"
+      }
+    },
+    {
+      "run_id": "ks3-bf16-shared-fp8-c1536-20261025T094323-54294f",
+      "recipe": "bf16-shared-fp8-c1536",
+      "status": "pruned",
+      "code_commit": "de05d9891d40b6174f2d1d09f6c9776b1799298f",
+      "validation": null,
+      "pruning": {
+        "train_seconds": 380.9771092180017,
+        "gap": 0.0667366981506347,
+        "reference_run_id": "ks3-bf16-tuned-shared-fp8-20261025T084550-1d295d"
+      }
+    }
+  ],
+  "active": null,
+  "next_action": "Launch first continuous MI300-v2 discovery. Preserve frozen code for any immediately queued three-seed verification. Original schedule and exact902.3592145430011s budget/evaluation protocol retained.",
+  "verification_state": "/root/modded-nanogpt/logs/wr-reproduction/research/verification.json",
+  "launch_command": ".venv-mi300/bin/python -m wr_reproduction.research_controller launch --recipe CONFIG --seed 168",
+  "notes": "Three-seed verified v1 mean3.30063955 remains best. V2 numerical/public-dispatch/GPU-evaluation checks passed; whole-model first10037.960s versus39.578s v1, about4.1percent faster. No v2 full validation yet.",
+  "prepared_change": null,
+  "latest_completed": "ks3-bf16-shared-fp8-v2-20261025T103628-0c4d55",
+  "completed_discoveries": 21,
+  "proxy_pruned_discoveries": 19,
+  "nonfinite_discoveries": 1,
+  "full_validation_results": 4,
+  "previous_code_commit": "2ff306cb59739f90f5062055a948c0dd1501033f",
+  "discovery_attempts": 22,
+  "reached_training_discoveries": 21,
+  "harness_failures": 1,
+  "prepared_isolated_change": {
+    "commit": "81b5146",
+    "worktree": "/tmp/wr-ks3-rank2",
+    "description": "Rank-one1024-chart tuned BF16 initialization-only ablation: raw_shift=-1, actual shift=-0.380797. Motivated by negative mean learned raw shift in completed rank-one candidates. Only geometry initialization changes; recipe validated, no new code/kernels.",
+    "next_required": "Complete current rank-four timing and its first continuous discovery, plus any immediate qualifying verification. Then consider this meaningful initialization candidate with full24 warmup and no redundant timing screen.",
+    "superseded_by": "4682c5e (same shift hypothesis rebased onto qualifying shared FP8 recipe)",
+    "status": "Superseded by4682c5e; replacement merged and tested asshiftminus1, then pruned. Do not repeat unchanged."
+  },
+  "prepared_candidates": [],
+  "discovery_result_commit": "ba85222",
+  "verification_complete": 3,
+  "discovery_full_validation_results": 1,
+  "verification_progress": {
+    "updated_utc": "2026-10-25T09:24:09.928298+00:00",
+    "recipe_id": "180b3675a8cc56a5ff30a6bccd7a2e54e58bd382a4c3b536ed98640dccea6501",
+    "code_commit": "f1366345fcdbde52d06711b33300e481db855c34",
+    "status": "complete",
+    "discovery_run_id": "ks3-bf16-tuned-shared-fp8-20261025T081042-bb500f",
+    "discovery_excluded_from_statistics": true,
+    "seeds": [
+      {
+        "seed": 169,
+        "status": "complete",
+        "run_id": "ks3-bf16-tuned-shared-fp8-20261025T082815-952036",
+        "loss": 3.3001344203948975,
+        "train_seconds": 900.3585499659966,
+        "step": 1020,
+        "within_control_budget": true,
+        "budget_overrun_seconds": 0.0,
+        "comparative_proxy_abort_checks_ignored": 12
+      },
+      {
+        "seed": 170,
+        "status": "complete",
+        "run_id": "ks3-bf16-tuned-shared-fp8-20261025T084550-1d295d",
+        "loss": 3.30049991607666,
+        "train_seconds": 899.9505667749909,
+        "step": 1019,
+        "within_control_budget": true,
+        "budget_overrun_seconds": 0.0,
+        "comparative_proxy_abort_checks_ignored": 8
+      },
+      {
+        "seed": 171,
+        "status": "complete",
+        "run_id": "ks3-bf16-tuned-shared-fp8-20261025T090326-4ebb3e",
+        "loss": 3.3012843132019043,
+        "train_seconds": 900.6974310789956,
+        "step": 1020,
+        "within_control_budget": true,
+        "budget_overrun_seconds": 0.0,
+        "comparative_proxy_abort_checks_ignored": 189
+      }
+    ],
+    "statistics": {
+      "scores": [
+        {
+          "seed": 169,
+          "loss": 3.3001344203948975,
+          "train_seconds": 900.3585499659966,
+          "run_id": "ks3-bf16-tuned-shared-fp8-20261025T082815-952036"
+        },
+        {
+          "seed": 170,
+          "loss": 3.30049991607666,
+          "train_seconds": 899.9505667749909,
+          "run_id": "ks3-bf16-tuned-shared-fp8-20261025T084550-1d295d"
+        },
+        {
+          "seed": 171,
+          "loss": 3.3012843132019043,
+          "train_seconds": 900.6974310789956,
+          "run_id": "ks3-bf16-tuned-shared-fp8-20261025T090326-4ebb3e"
+        }
+      ],
+      "count": 3,
+      "mean": 3.300639549891154,
+      "sample_std": 0.0005875258024241021,
+      "minimum": 3.3001344203948975,
+      "maximum": 3.3012843132019043,
+      "count_beating_control": 3
+    }
+  },
+  "verification_result_commit": "1412b459ee47d7720ab92427dff7ca3201f8196f",
+  "verified_summary_commit": "9f3e67c",
+  "used_preparations": [
+    {
+      "commit": "6b080d6",
+      "worktree": "/tmp/wr-ks3-width1536",
+      "recipe": "configs/wr_reproduction/research_bf16_shared_fp8_c1536.json",
+      "description": "Only KS3 chart capacity1024 to1536; retain shared FP8 hardware and accepted evaluation.47 CPU regressions passed. Not merged or GPU-tested. Requires new-shape block correctness and whole-model timing before discovery."
+    },
+    {
+      "commit": "4682c5e",
+      "worktree": "/tmp/wr-ks3-width1536",
+      "recipe": "configs/wr_reproduction/research_bf16_shared_fp8_shiftminus1.json",
+      "description": "Only raw_shift0 to-1, actual shift-0.380797, on qualifying shared-FP8/tuned-BF161024-rank1 recipe. CPU source-surrogate check confirmed equal initial function/input derivative and altered c4/c5 coefficient gradients. No new kernels/shapes; no redundant timing screen. Not merged or run. Supersedes stale81b5146 recipe without shared hardware."
+    }
+  ]
+}

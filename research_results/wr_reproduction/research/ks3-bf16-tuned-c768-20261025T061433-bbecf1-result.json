@@ -1,0 +1,185 @@
+{
+  "run_id": "ks3-bf16-tuned-c768-20261025T061433-bbecf1",
+  "status": "correctness_passed",
+  "seed": 169,
+  "code_commit": "661257cb861ed930533ef0be32a16ebd55ba4a27",
+  "recipe": {
+    "name": "bf16-tuned-c768",
+    "hypothesis": "Use768 charts at rank1 with the verified tuned BF16 KS3 kernels. This retains75 percent of the original expert projection width and removes15,810,560 total parameters versus1024 charts, a midpoint between the faster512-chart candidate and1024 charts. Test the capacity versus elapsed-time tradeoff after projection-rate2x was unstable and0.5x failed screening. Preserve original router/subsequent initialization by replaying original1024-chart draws. Geometry Adam stays0.125, zero coefficients/rawscale0.75/shift0, original projection LR and shape-scaling formula (effective shape multiplier1.0), original c_proj relative2x rate. Preserve all non-KS3 configuration, objective, global updates and raw full BF16 evaluation. Confirm complete expert output/gradient correctness against original BF16 kernels, then measure100 full-model updates before the first continuous candidate.",
+    "precision": "bf16",
+    "charts": 768,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "parameter_budget_change": {
+      "original_expert_projection_parameters": 62914560,
+      "new_expert_projection_parameters": 47185920,
+      "original_geometry_parameters": 327680,
+      "new_geometry_parameters": 245760,
+      "added_parameters": -15810560
+    },
+    "initialization_preservation": "Replay original1024-chart expert draws to restore router and subsequent CPU RNG exactly.",
+    "optimizer_shape_scaling": "Original ANVIL formulas at768 features, shape multiplier1.0, no hyperparameter constant changes.",
+    "timing_evidence": {
+      "run_id": "ks3-bf16-tuned-c512-20261025T052450-7caba7",
+      "code_commit": "28aeb8abe45708b6c5b1287dd0e601d5b9d72368",
+      "first100_seconds": 51.635587994009256,
+      "updates25_to100_seconds": 38.58336434401281,
+      "reference": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "reference_first100": 54.066861718994915,
+      "reference_25to100": 40.427348073004396,
+      "validation": false,
+      "first100_time_reduction": 0.044967909134838835,
+      "steady_time_reduction": 0.04561228517046656,
+      "timing_gate_passed": true
+    },
+    "block_correctness_evidence": {
+      "run_id": "ks3-bf16-tuned-c512-20261025T052253-69e0ae",
+      "code_commit": "8d5f544",
+      "max_relative_rms": 0.0,
+      "weight_and_input_bitwise_equal": true,
+      "original_evaluation_kernels": true
+    },
+    "projection_lr_multiplier": 1.0
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "precision": "bf16",
+    "charts": 768,
+    "validation_uses_original_kernels": true,
+    "weight_packing_bitwise_equal": true,
+    "weight_refresh_ms": {
+      "legacy": 0.3713829713709214,
+      "batched": 0.07479556701858968
+    },
+    "checks": [
+      {
+        "tokens": 1,
+        "input_pack_bitwise_equal": true,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "dgate": 0.0,
+          "geometry": 0.0,
+          "weight_gradient": 0.0
+        },
+        "core_samples_ms": {
+          "legacy": [],
+          "tuned": []
+        },
+        "median_ms": {}
+      },
+      {
+        "tokens": 257,
+        "input_pack_bitwise_equal": true,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "dgate": 0.0,
+          "geometry": 0.0,
+          "weight_gradient": 0.0
+        },
+        "core_samples_ms": {
+          "legacy": [],
+          "tuned": []
+        },
+        "median_ms": {}
+      },
+      {
+        "tokens": 16384,
+        "input_pack_bitwise_equal": true,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "dgate": 0.0,
+          "geometry": 0.0,
+          "weight_gradient": 0.0
+        },
+        "core_samples_ms": {
+          "legacy": [
+            2.1711876763237847,
+            2.1504678311555283,
+            2.153981449293054
+          ],
+          "tuned": [
+            1.1882460720567818,
+            1.184890572421522,
+            1.1924171080072241
+          ]
+        },
+        "median_ms": {
+          "legacy": 2.153981449293054,
+          "tuned": 1.1882460720567818
+        }
+      },
+      {
+        "tokens": 49152,
+        "input_pack_bitwise_equal": true,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "dgate": 0.0,
+          "geometry": 0.0,
+          "weight_gradient": 0.0
+        },
+        "core_samples_ms": {
+          "legacy": [
+            5.996452379226684,
+            6.008594417572022,
+            6.0106316089630125
+          ],
+          "tuned": [
+            3.20100346226846,
+            3.210546308948148,
+            3.221503005489226
+          ]
+        },
+        "median_ms": {
+          "legacy": 6.008594417572022,
+          "tuned": 3.210546308948148
+        }
+      }
+    ],
+    "scope": "Complete expert forward/backward, excluding router and optimizer; no whole-update speed claim",
+    "full_convergence_verified": false,
+    "utc": "2026-10-25T06:15:00.039551+00:00"
+  },
+  "terminal_geometry": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T06:15:00.845688+00:00",
+  "events_sha256": "fd3b87bccb008896ec8636451d1c482542ee21031b963da9df9b8e7ef760d3aa",
+  "previous_result_commit": "cff6af17e2ede2315e84d28846723bc5729e4be7"
+}

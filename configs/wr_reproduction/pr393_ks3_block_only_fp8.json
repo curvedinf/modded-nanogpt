@@ -1,0 +1,55 @@
+{
+  "created_utc": "2026-10-25T00:52:08.756800+00:00",
+  "architecture": "pr393-full-moe-ks3-block-only-fp8",
+  "base_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+  "base_contract": "wr_reproduction/pr393/contract.json",
+  "control": {
+    "events": "logs/wr-reproduction/pr393-control-20261024T234443Z/events.jsonl",
+    "validation_loss": 3.454925298690796,
+    "train_seconds": 902.3592145430011,
+    "val_tokens": 10485760,
+    "weights": "raw",
+    "canonical_mask": false,
+    "final_window_extension": false
+  },
+  "block": {
+    "recipe_source": "research_results/ks3/configs/run-000169-moe-ks3-async-mid96k.json",
+    "charts": 1024,
+    "rank": 1,
+    "experts": 8,
+    "layers": [
+      1,
+      3,
+      5,
+      6,
+      8
+    ],
+    "nonlinear": "fp16",
+    "projection_operands": "fp8 E4M3FN forward / E5M2 backward gradients; native MI300 FNUZ register interpretation",
+    "projection_accumulation": "fp32",
+    "quantization": "original GS32 round/decode for projections, inputs, features and coefficients",
+    "geometry_lr_mul": 0.125,
+    "geometry_adam_betas": [
+      0.9,
+      0.99
+    ],
+    "geometry_weight_decay": 0,
+    "initial_coefficients": 0,
+    "initial_raw_scale": 0.75,
+    "initial_raw_shift": 0,
+    "geometry_parameters_added": 327680,
+    "adapter": "wr_reproduction/ks3_moe_fp8.py",
+    "parameter_storage": "original control BF16 matrix banks with original FP32-master mantissa tracking; added geometry FP32",
+    "routing": "original device-side top1 dropless routing, gate and auxiliary objective",
+    "packing": "GS32 decoding fused into FP8 producers; dual row/transpose layouts reused; weight caches refreshed once per optimizer update",
+    "scales": "Original static input/gradient scales and original rank-local delayed post/dpre scales; exact weight bootstrap then delayed weight amax",
+    "evaluation_precision": "same GS32/BF16 expert evaluation as the BF16 KS3 trial"
+  },
+  "preserved": "All non-KS3 control settings, including router, dense branches, attention, loss, FP8 kernels, global batch sizes, schedule, ANVIL and original-parameter Adam settings, eight logical rank accumulation, validation data/count, and timer accounting. No historical global LR/batch/schedule/attention changes transplanted. BF16 KS3 trial geometry and geometry optimizer settings are unchanged; validation remains BF16.",
+  "max_train_seconds": 902.36,
+  "manager_resume_authorized": false,
+  "screening": "One requested fixed-budget block-only trial; no ablation manager or intermediate comparisons",
+  "validation": "At the time cap, evaluate current iterate using original intermediate evaluation; report actual time including update-boundary overrun and validation setup.",
+  "bf16_ks3_reference": "research_results/wr_reproduction/pr393_ks3_block_only.json",
+  "hypothesis": "Change only KS3 matrix-product precision and its required packing/scales to FP8, preserving the BF16 trial block geometry, optimizer, model and full run/evaluation settings."
+}

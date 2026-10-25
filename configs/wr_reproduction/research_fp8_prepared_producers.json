@@ -1,0 +1,110 @@
+{
+  "name": "fp8-prepared-native-producers",
+  "hypothesis": "Extend prepared native weight operands with native activation rows emitted in the existing input-pack, geometry-forward and geometry-VJP producers. Original FN/E5 row and transpose layouts remain present; weight gradients and gathered output gradients keep their original paths. Remove activation decoding from three projection GEMMs while preserving exact pre-existing products. Compare against prepared-weight-only and BF16 whole-model timing; no convergence run if slower. Same geometry, sharedFP8-v2/partial-amax, batch/objective and accepted BF16 evaluation.",
+  "precision": "fp8",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "validation_precision": "bf16",
+  "max_train_seconds": 902.3592145430011,
+  "validation_setup_reserve_seconds": 2.0,
+  "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+  "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+  "weight_packing": "batched",
+  "training_gs32": true,
+  "geometry_backward_rows": 32,
+  "fp8_prepared_native_weights": true,
+  "shared_fp8_gemm_tuning": "mi300-v2",
+  "shared_fp8_amax": "partial",
+  "validation_window_policy": "accepted-control",
+  "hardware_change_scope": "KS3 FP8 only adds125829120 bytes of native half-value weight caches and fused stores. Original FN caches, delayed scale values, FP32 accumulation, geometry, all nonexpert configurations/global batches/objective unchanged. Shared FP8v2/partial-amax previously independently checked; MLP defaults remain legacy. Three fused KS3 producers additionally emit native rows; no standalone operand conversion; original activations and gradients remain stored.",
+  "parent_native_weight_correctness_evidence": {
+    "run_id": "ks3-fp8-prepared-native-weights-20261025T130013-ff0980",
+    "code_commit": "29392a6fa9ad83995be3b4d7b82d8bc71159b0a4",
+    "events_sha256": "5a68d14f3cafb71ea6b821d6792352de829d45b1f266b9c5e948ea70656c7ce6",
+    "all256_bytes": true,
+    "original_cached_weights_scales_and_amax_bitwise": true,
+    "captured_refresh_replay": true,
+    "full_block_bitwise": true,
+    "core_milliseconds": [
+      {
+        "tokens": 16384,
+        "original": 1.785050794813368,
+        "prepared": 1.6125815200805664
+      },
+      {
+        "tokens": 49152,
+        "original": 4.971816749572754,
+        "prepared": 4.520385342552548
+      }
+    ],
+    "refresh_milliseconds": {
+      "original": 0.19805803876331304,
+      "prepared": 0.26466181734774974
+    }
+  },
+  "fp8_prepared_native_activations": true,
+  "prepared_native_producer_correctness_evidence": {
+    "run_id": "ks3-fp8-prepared-native-producers-20261025T130905-3b7d46",
+    "code_commit": "b2c9755df3f431c3ff0632d1ea06b9518be0be86",
+    "events_sha256": "d63b008d769fce78a0e4c92172ef8026935507824c51ab75f2d5c239538c20d5",
+    "all256_activation_and_weight_bytes": true,
+    "full_block_bitwise_equal": true,
+    "core_milliseconds": [
+      {
+        "tokens": 16384,
+        "original": 1.786434088812934,
+        "weights_only": 1.6150987010891154,
+        "prepared": 1.4653466209998498
+      },
+      {
+        "tokens": 49152,
+        "original": 4.978804702758789,
+        "weights_only": 4.530874161493211,
+        "prepared": 4.130240498418393
+      }
+    ]
+  },
+  "whole_model_timing_evidence": {
+    "run_id": "ks3-fp8-prepared-native-producers-20261025T131043-808c66",
+    "code_commit": "68e0f96760323d1ea0dad9f709e6ab72b571e049",
+    "first100_seconds": 37.923143334992346,
+    "after25_through100_seconds": 28.275780009003938,
+    "references": [
+      {
+        "run_id": "ks3-bf16-projection-v2-shared-fp8-amax-20261025T114619-2be590",
+        "code_commit": "707e863f06eefd3b091cf20d2754c24ba753f80e",
+        "first100_seconds": 37.682322256005136,
+        "after25_through100_seconds": 28.140079172997503
+      },
+      {
+        "run_id": "ks3-bf16-shared-fp8-v2-partial-amax-20261025T110818-37b466",
+        "code_commit": "65123565c73ed6dcb3a01b352ba0ad7fd42cfe43",
+        "first100_seconds": 37.7528903830098,
+        "after25_through100_seconds": 28.18139608099591
+      }
+    ],
+    "validation": false,
+    "gate_passed": false
+  }
+}

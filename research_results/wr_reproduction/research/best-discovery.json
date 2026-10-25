@@ -1,0 +1,84 @@
+{
+  "milestone": "first_qualifying_full_validation",
+  "run_id": "ks3-bf16-tuned-shared-fp8-20261025T081042-bb500f",
+  "code_commit": "f1366345fcdbde52d06711b33300e481db855c34",
+  "seed": 168,
+  "validation": {
+    "event": "validation",
+    "final": false,
+    "loss": 3.3019189834594727,
+    "train_seconds": 900.7395800709928,
+    "val_tokens": 10485760,
+    "evaluation_signature": {
+      "loss_definition": "pr393-cplm-full10485760-raw-no-canonical-no-tail-bf16-v1",
+      "val_tokens": 10485760,
+      "val_data": [
+        {
+          "name": "fineweb_val_000000.bin",
+          "bytes": 200001024,
+          "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+        }
+      ],
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "attention_segment_cap": 2560,
+      "align_to_bos": false,
+      "val_global_batch_tokens": 2097152,
+      "logical_ranks": 8,
+      "weights": "raw",
+      "canonical_mask": false,
+      "tail_shipping": false,
+      "final_window_extension": false,
+      "expert_evaluation": "bf16",
+      "mtp": false,
+      "prefix": false,
+      "moe_aux": false
+    },
+    "step": 1020,
+    "budget_seconds": 902.3592145430011,
+    "budget_overrun_seconds": 0.0,
+    "within_control_budget": true,
+    "evaluation_protocol": {
+      "policy": "accepted-control",
+      "training_windows": [
+        640,
+        1408
+      ],
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "yarn_snapshot_step": 595,
+      "restored": false,
+      "compatible": true,
+      "setup_on_training_clock": true,
+      "yarn_snapshot_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612"
+    },
+    "utc": "2026-10-25T08:28:13.472548+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "run_id": "ks3-bf16-tuned-shared-fp8-20261025T081042-bb500f",
+    "seed": 168,
+    "code_commit": "f1366345fcdbde52d06711b33300e481db855c34",
+    "training_projection_gs32": true
+  },
+  "control": {
+    "loss": 3.454925298690796,
+    "train_seconds": 902.3592145430011,
+    "source": "logs/wr-reproduction/pr393-control-20261024T234443Z/events.jsonl"
+  },
+  "loss_improvement": 0.15300631523132324,
+  "budget_remaining_seconds": 1.6196344720083289,
+  "scope": "KS3 plus opt-in shared nongrouped native FP8 hardware tiles. Not an isolated KS3 architecture comparison. Original MLP control unchanged.",
+  "verification_status": "Three fresh independent seeds169/170/171 automatically queued;169 running; no comparative pruning. Discovery separate, reliability not yet established.",
+  "utc": "2026-10-25T08:30:13.959850+00:00"
+}

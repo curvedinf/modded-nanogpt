@@ -1,0 +1,34 @@
+{
+  "name": "fp8-rawscale0",
+  "hypothesis": "Change only KS3 initial raw_scale from 0.75 to 0.0 (softplus scale about 1.137 to 0.693), retaining the optimized GS32/FP8 training path and geometry Adam lr_mul 0.125 at seed 168. A broader tanh warp may reduce saturation while learned coefficients develop; zero initial coefficients preserve the initial ReLU-squared function. All original PR393 settings and GS32/BF16 evaluation stay fixed. Apply separately tested reference-snapshot caching to reduce bookkeeping overhead without changing decisions.",
+  "precision": "fp8",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.0,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "validation_precision": "bf16",
+  "max_train_seconds": 902.3592145430011,
+  "validation_setup_reserve_seconds": 1.25,
+  "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+  "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+  "training_gs32": true
+}

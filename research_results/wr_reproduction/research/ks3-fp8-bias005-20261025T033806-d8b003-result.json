@@ -1,0 +1,163 @@
+{
+  "run_id": "ks3-fp8-bias005-20261025T033806-d8b003",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "3a0a08d06f7cb3301f67eeefe5be0a97169ec9a6",
+  "recipe": {
+    "name": "fp8-bias005",
+    "hypothesis": "Initialize spline endpoints c0=c1=0.05 with c2=c3=c4=c5=0. Their Hermite polynomial is the constant +0.05, shifting the initial pre-ReLU activation slightly positive to increase early gradient coverage. Restore the original 1024 charts after both width ablations failed loss/time screening; keep optimized GS32/FP8 kernels, raw_scale 0.75/raw_shift 0, geometry Adam lr_mul 0.125, all non-KS3 settings and full GS32/BF16 validation. This changes only KS3 coefficient initialization from the first optimized FP8 candidate.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0.05,
+        0.05,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "initialization_change": {
+      "old_coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "new_coefficients": [
+        0.05,
+        0.05,
+        0,
+        0,
+        0,
+        0
+      ],
+      "initial_pre_relu_offset": 0.05
+    }
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.5516092777252197,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.0560595989227295,
+    "reference_run_id": "ks3-fp8-c512-20261025T032238-9c59b5",
+    "reference_wall_seconds": 502.26679909200175,
+    "reference_age_seconds": 1.2672216840001056,
+    "reference_objective": 3.4955496788024902,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "reference_source_step": 616,
+    "comparable_runs": 4,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-fp8-c512-20261025T032238-9c59b5/events.jsonl",
+      "sha256": "b0c1630cb6cad22a5def97e78676466d227b683459bec7b55ecc01a3e1aa2e20",
+      "line": 645,
+      "row_sha256": "c089ad9ca43ae2ada51d87810bdee63d5e869f64258239db8e9d33f18f26216e"
+    },
+    "step": 597,
+    "train_seconds": 503.53402077600185,
+    "reference_snapshot_sha256": "9a08e4fedfb3ea36caeea98e71c1f6c411747482484ed46520131207248fea0e",
+    "utc": "2026-10-25T03:48:50.659087+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-fp8-c1024-r1",
+    "run_id": "ks3-fp8-bias005-20261025T033806-d8b003",
+    "seed": 168,
+    "code_commit": "3a0a08d06f7cb3301f67eeefe5be0a97169ec9a6",
+    "training_projection_gs32": true
+  },
+  "completed_utc": "2026-10-25T03:48:52.962808+00:00",
+  "events_sha256": "450ec084f8b7fb35abcf7225ba82a7986302e67caaee67878041d6bb1291a77e",
+  "previous_result_commit": "3a0a08d06f7cb3301f67eeefe5be0a97169ec9a6"
+}

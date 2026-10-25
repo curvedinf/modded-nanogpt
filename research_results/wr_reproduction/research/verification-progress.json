@@ -1,0 +1,71 @@
+{
+  "updated_utc": "2026-10-25T09:24:09.928298+00:00",
+  "recipe_id": "180b3675a8cc56a5ff30a6bccd7a2e54e58bd382a4c3b536ed98640dccea6501",
+  "code_commit": "f1366345fcdbde52d06711b33300e481db855c34",
+  "status": "complete",
+  "discovery_run_id": "ks3-bf16-tuned-shared-fp8-20261025T081042-bb500f",
+  "discovery_excluded_from_statistics": true,
+  "seeds": [
+    {
+      "seed": 169,
+      "status": "complete",
+      "run_id": "ks3-bf16-tuned-shared-fp8-20261025T082815-952036",
+      "loss": 3.3001344203948975,
+      "train_seconds": 900.3585499659966,
+      "step": 1020,
+      "within_control_budget": true,
+      "budget_overrun_seconds": 0.0,
+      "comparative_proxy_abort_checks_ignored": 12
+    },
+    {
+      "seed": 170,
+      "status": "complete",
+      "run_id": "ks3-bf16-tuned-shared-fp8-20261025T084550-1d295d",
+      "loss": 3.30049991607666,
+      "train_seconds": 899.9505667749909,
+      "step": 1019,
+      "within_control_budget": true,
+      "budget_overrun_seconds": 0.0,
+      "comparative_proxy_abort_checks_ignored": 8
+    },
+    {
+      "seed": 171,
+      "status": "complete",
+      "run_id": "ks3-bf16-tuned-shared-fp8-20261025T090326-4ebb3e",
+      "loss": 3.3012843132019043,
+      "train_seconds": 900.6974310789956,
+      "step": 1020,
+      "within_control_budget": true,
+      "budget_overrun_seconds": 0.0,
+      "comparative_proxy_abort_checks_ignored": 189
+    }
+  ],
+  "statistics": {
+    "scores": [
+      {
+        "seed": 169,
+        "loss": 3.3001344203948975,
+        "train_seconds": 900.3585499659966,
+        "run_id": "ks3-bf16-tuned-shared-fp8-20261025T082815-952036"
+      },
+      {
+        "seed": 170,
+        "loss": 3.30049991607666,
+        "train_seconds": 899.9505667749909,
+        "run_id": "ks3-bf16-tuned-shared-fp8-20261025T084550-1d295d"
+      },
+      {
+        "seed": 171,
+        "loss": 3.3012843132019043,
+        "train_seconds": 900.6974310789956,
+        "run_id": "ks3-bf16-tuned-shared-fp8-20261025T090326-4ebb3e"
+      }
+    ],
+    "count": 3,
+    "mean": 3.300639549891154,
+    "sample_std": 0.0005875258024241021,
+    "minimum": 3.3001344203948975,
+    "maximum": 3.3012843132019043,
+    "count_beating_control": 3
+  }
+}

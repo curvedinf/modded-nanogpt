@@ -1,0 +1,97 @@
+{
+  "run_id": "ks3-bf16-tuned-c768-20261025T061710-49f0a5",
+  "status": "timing_complete",
+  "seed": 168,
+  "code_commit": "1ff219ded593cfcab3319dd6e6264ad953c9fe6f",
+  "recipe": {
+    "name": "bf16-tuned-c768",
+    "hypothesis": "Use768 charts at rank1 with the verified tuned BF16 KS3 kernels. This retains75 percent of the original expert projection width and removes15,810,560 total parameters versus1024 charts, a midpoint between the faster512-chart candidate and1024 charts. Test the capacity versus elapsed-time tradeoff after projection-rate2x was unstable and0.5x failed screening. Preserve original router/subsequent initialization by replaying original1024-chart draws. Geometry Adam stays0.125, zero coefficients/rawscale0.75/shift0, original projection LR and shape-scaling formula (effective shape multiplier1.0), original c_proj relative2x rate. Preserve all non-KS3 configuration, objective, global updates and raw full BF16 evaluation. Confirm complete expert output/gradient correctness against original BF16 kernels, then measure100 full-model updates before the first continuous candidate.",
+    "precision": "bf16",
+    "charts": 768,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "parameter_budget_change": {
+      "original_expert_projection_parameters": 62914560,
+      "new_expert_projection_parameters": 47185920,
+      "original_geometry_parameters": 327680,
+      "new_geometry_parameters": 245760,
+      "added_parameters": -15810560
+    },
+    "initialization_preservation": "Replay original1024-chart expert draws to restore router and subsequent CPU RNG exactly.",
+    "optimizer_shape_scaling": "Original ANVIL formulas at768 features, shape multiplier1.0, no hyperparameter constant changes.",
+    "timing_evidence": {
+      "run_id": "ks3-bf16-tuned-c512-20261025T052450-7caba7",
+      "code_commit": "28aeb8abe45708b6c5b1287dd0e601d5b9d72368",
+      "first100_seconds": 51.635587994009256,
+      "updates25_to100_seconds": 38.58336434401281,
+      "reference": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "reference_first100": 54.066861718994915,
+      "reference_25to100": 40.427348073004396,
+      "validation": false,
+      "first100_time_reduction": 0.044967909134838835,
+      "steady_time_reduction": 0.04561228517046656,
+      "timing_gate_passed": true
+    },
+    "block_correctness_evidence": {
+      "run_id": "ks3-bf16-tuned-c512-20261025T052253-69e0ae",
+      "code_commit": "8d5f544",
+      "max_relative_rms": 0.0,
+      "weight_and_input_bitwise_equal": true,
+      "original_evaluation_kernels": true
+    },
+    "projection_lr_multiplier": 1.0
+  },
+  "validation": null,
+  "timing": {
+    "event": "timing_complete",
+    "steps": 100,
+    "train_seconds": 52.903390321007464,
+    "full_schedule_complete": false,
+    "validation_performed": false,
+    "utc": "2026-10-25T06:22:28.612008+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c768-r1",
+    "run_id": "ks3-bf16-tuned-c768-20261025T061710-49f0a5",
+    "seed": 168,
+    "code_commit": "1ff219ded593cfcab3319dd6e6264ad953c9fe6f",
+    "training_projection_gs32": true
+  },
+  "kernel_check": null,
+  "terminal_geometry": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T06:22:30.379719+00:00",
+  "events_sha256": "19ba5265290be9c4d9eb0f3b8d3b831ee02536ac472b6658239d999f932c048c",
+  "previous_result_commit": "1ff219ded593cfcab3319dd6e6264ad953c9fe6f"
+}

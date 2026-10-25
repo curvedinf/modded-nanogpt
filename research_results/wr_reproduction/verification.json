@@ -1,0 +1,184 @@
+{
+  "purpose": "Pinned WR reproduction on one MI300, PR393 full MoE first; record360 dense ANVIL2 second",
+  "versions": {
+    "pr393": {
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "source_files": 63,
+      "contract": "wr_reproduction/pr393/contract.json",
+      "preflight": {
+        "event": "preflight_passed",
+        "step_graphs": 6,
+        "optimizer_graphs": 4,
+        "fp8_refresh_graphs": 5,
+        "utc": "2026-10-24T23:38:44.508293+00:00",
+        "version": "pr393",
+        "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+      },
+      "diagnostic_updates": [
+        {
+          "event": "diagnostic_update",
+          "step": 1,
+          "objective": 17.166168212890625,
+          "seconds": 0.5403951760090422,
+          "global_tokens": 131072,
+          "logical_ranks": 8,
+          "utc": "2026-10-24T23:38:45.480961+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+        },
+        {
+          "event": "diagnostic_update",
+          "step": 2,
+          "objective": 17.133031845092773,
+          "seconds": 0.5732575239962898,
+          "global_tokens": 131072,
+          "logical_ranks": 8,
+          "utc": "2026-10-24T23:38:46.054511+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+        },
+        {
+          "event": "diagnostic_update",
+          "step": 3,
+          "objective": 15.04216194152832,
+          "seconds": 0.5671043889888097,
+          "global_tokens": 131072,
+          "logical_ranks": 8,
+          "utc": "2026-10-24T23:38:46.621889+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+        }
+      ],
+      "mean_update_seconds": 0.5602523629980473,
+      "raw_log": "logs/wr-reproduction/pr393-final-launcher-check.jsonl"
+    },
+    "record360": {
+      "source_commit": "4ea6b937337a4889b8cfe3f38a93d120048d8f71",
+      "source_files": 54,
+      "contract": "wr_reproduction/record360/contract.json",
+      "preflight": {
+        "event": "preflight_passed",
+        "step_graphs": 6,
+        "optimizer_graphs": 3,
+        "fp8_refresh_graphs": 3,
+        "utc": "2026-10-24T23:41:46.844425+00:00",
+        "version": "record360",
+        "source_commit": "4ea6b937337a4889b8cfe3f38a93d120048d8f71"
+      },
+      "diagnostic_updates": [
+        {
+          "event": "diagnostic_update",
+          "step": 1,
+          "objective": 17.1259765625,
+          "seconds": 0.6770669219986303,
+          "global_tokens": 131072,
+          "logical_ranks": 8,
+          "utc": "2026-10-24T23:41:47.942487+00:00",
+          "version": "record360",
+          "source_commit": "4ea6b937337a4889b8cfe3f38a93d120048d8f71"
+        },
+        {
+          "event": "diagnostic_update",
+          "step": 2,
+          "objective": 17.05288314819336,
+          "seconds": 0.7172415030072443,
+          "global_tokens": 131072,
+          "logical_ranks": 8,
+          "utc": "2026-10-24T23:41:48.660009+00:00",
+          "version": "record360",
+          "source_commit": "4ea6b937337a4889b8cfe3f38a93d120048d8f71"
+        },
+        {
+          "event": "diagnostic_update",
+          "step": 3,
+          "objective": 14.848552703857422,
+          "seconds": 0.700106614996912,
+          "global_tokens": 131072,
+          "logical_ranks": 8,
+          "utc": "2026-10-24T23:41:49.360382+00:00",
+          "version": "record360",
+          "source_commit": "4ea6b937337a4889b8cfe3f38a93d120048d8f71"
+        }
+      ],
+      "mean_update_seconds": 0.6981383466675956,
+      "raw_log": "logs/wr-reproduction/record360-final-launcher-check.jsonl"
+    }
+  },
+  "preserved": [
+    "Original architecture and complete parameter tables",
+    "Original optimizer hyperparameters and update schedules",
+    "Original global batch sizes, training token budgets, sampled vocabulary schedules and evaluation token count",
+    "Original FP8 quantization values, cached weight layouts, fused producer epilogues and delayed scale updates",
+    "Eight logical ranks with separate activation scales, sampling state, auxiliary objectives and gradient accumulation histories",
+    "Original tail averaging, prefix prediction and final canonical-token mask"
+  ],
+  "hardware_adaptations": [
+    "MI300 FP8 GEMM and fused epilogues interpret original cache bytes in registers with scale correction; no separately materialized FNUZ copies per GEMM",
+    "ROCm causal/windowed variable-length attention and CE kernels replace CUDA-only binaries",
+    "Optimizer launch tiles fit MI300 LDS",
+    "Eight logical ranks execute serially on one physical device; one optimizer update preserves the original global batch"
+  ],
+  "commands": {
+    "pr393": {
+      "preflight": ".venv-mi300/bin/python -m wr_reproduction.train --version pr393 --preflight --out logs/wr-reproduction/pr393-preflight-NEW.jsonl",
+      "short_check": ".venv-mi300/bin/python -m wr_reproduction.train --version pr393 --check-updates 3 --out logs/wr-reproduction/pr393-check-NEW.jsonl",
+      "full_run": ".venv-mi300/bin/python -m wr_reproduction.train --version pr393 --out logs/wr-reproduction/pr393-full-NEW.jsonl"
+    },
+    "record360": {
+      "preflight": ".venv-mi300/bin/python -m wr_reproduction.train --version record360 --preflight --out logs/wr-reproduction/record360-preflight-NEW.jsonl",
+      "short_check": ".venv-mi300/bin/python -m wr_reproduction.train --version record360 --check-updates 3 --out logs/wr-reproduction/record360-check-NEW.jsonl",
+      "full_run": ".venv-mi300/bin/python -m wr_reproduction.train --version record360 --out logs/wr-reproduction/record360-full-NEW.jsonl"
+    }
+  },
+  "limitations": [
+    "Full-length convergence and final 10,485,760-token evaluation have not been run.",
+    "Cross-vendor kernels are numerically checked, not bitwise-identical to Hopper kernels.",
+    "Short diagnostic timing must not be extrapolated to the entire changing-batch schedule."
+  ],
+  "verification": {
+    "unit_tests": {
+      "command": ".venv-mi300/bin/python -m unittest test_wr_reproduction test_wr_accumulation",
+      "tests": 7,
+      "passed": true
+    },
+    "independent_checks": [
+      "check_mlp: both versions original FP8 autograd",
+      "check_moe: original routed FP8 MoE and gradients",
+      "check_attention: document/window boundaries and mixed QK/V dimensions",
+      "check_ce: original sampled/full CE and CPLM",
+      "check_sparse_accumulation: owner-order sparse Adam and value embeddings",
+      "check_validation_kernels: BF16 grouped experts and optimizer epilogue"
+    ]
+  },
+  "research_manager_resumed": false,
+  "verified_utc": "2026-10-24T23:41:58.374457+00:00",
+  "adapter_sha256": {
+    "wr_reproduction/__init__.py": "6260c9a6f46e98e082a6836441c3696f51f550d62b8165de1d029189d41c1fd4",
+    "wr_reproduction/accumulation.py": "f4faf897f77ed28cf61150f4e17f51985983d754587218e0c6fe60b155ce15b8",
+    "wr_reproduction/attention_kernel.py": "21338e7fc869a801d2d916d4ec6ca85c8c10530c488991d258717fe8b159d58f",
+    "wr_reproduction/attention_quant.py": "623ffbb6cba52b36defefcee7db61c3e5c447e45558d801d5189c56054645f04",
+    "wr_reproduction/backend.py": "372d89f0d4a7d096598ece0c53fb01325d0df6c337b275229945d50da67a3fa9",
+    "wr_reproduction/bench_ks3_backends.py": "777ec953dbf228c23a80c50611c9e3e745e833fb48d8276938da31688ae8c45a",
+    "wr_reproduction/bench_updates.py": "58a7e0cef84c22f173332ab34ea447b51fced253604e8aba94209fe2e2abb8af",
+    "wr_reproduction/ce_kernel.py": "e21bd250f035f0121c9d3a6ff8bdbf67c777441592abc8150c73af9ac49565bd",
+    "wr_reproduction/check_attention.py": "c396bed51c5ca32467b077765c984a39d912f47ca5277a843fc8e7abe603935e",
+    "wr_reproduction/check_ce.py": "6d8e86c9f818e276fbb6f78bd3f9bc6488bac69e92958c87e2b8a691a102ffa1",
+    "wr_reproduction/check_ks3.py": "622f5688bacd5c42951f1b54211cb7cf6081ae6b5c2582cfda47ba57ddb96222",
+    "wr_reproduction/check_mlp.py": "3adda319be8af08c8aa8da8d896ab4bc5842a5d59bf51ddc780903d0dbbfd93a",
+    "wr_reproduction/check_model.py": "0a4efc4b286db3ac7852837fcd4a48ccca0310631138d1a770e5addcf36a3140",
+    "wr_reproduction/check_moe.py": "7d8ee016c424cd700167193059b01f56a6767398a10a105da8fdbbebffdec828",
+    "wr_reproduction/check_sparse_accumulation.py": "0bdd65d0a7a13ceff6beb251a89c44bfae0265afccd2984085a44182e302b87f",
+    "wr_reproduction/check_validation_kernels.py": "90ee67259b0ed5bd0cb08e472a54ba604b5c1bfc9f5103e0f5a2394762941c67",
+    "wr_reproduction/contracts.py": "35f97f05d4a9d1d7cf2d5753e9e60866685b786f656aa30ee4ed2cc4d880cca5",
+    "wr_reproduction/fp8.py": "069bbc9e632bba8ff458246eb38fd0369096c3d751b5dcfebd7fc0901435c12e",
+    "wr_reproduction/fused_fp8.py": "d617ea240890fe86a92e386ab278c71e6866f403245a6b6a915d066a82ce88e4",
+    "wr_reproduction/ks3_kernel.py": "23e230bd4c7b6dc2311f2a85dd8e5e56fb2ce653149228a6360dfc78ad3e7273",
+    "wr_reproduction/local_collectives.py": "873c92d94f5bf30802204fccd6232b03672f10b443a9425cff9566e959c07767",
+    "wr_reproduction/mlp_kernels.py": "13e4312e3f0d934a2fb02319213d9ec1158eb512a16285c0de7f20a0fe5ee385",
+    "wr_reproduction/moe_kernels.py": "9a72ef17fd57c93fcba7e0d9cbb3e1c24ce481967f9d9d5a1daa30b9ec1e5c61",
+    "wr_reproduction/optimizer_kernel.py": "28372b054a91539352223b1cee56bffeb6de37ea382fc1910ca1ac6098f4df3c",
+    "wr_reproduction/rank_state.py": "59fa77a626cebc93c03ae426543b6fdddff352ff64b5808d5a0968037afb8dfe",
+    "wr_reproduction/train.py": "c9a04183cff86a1c01c6d60ce4c05b743fd93ea77ed689e0c700558249f6d2ff",
+    "wr_reproduction/virtual_tables.py": "9f265abf4009a9e2495abc191c6806cd7ab6770c8e17475d9d6ac936c12314a9"
+  }
+}

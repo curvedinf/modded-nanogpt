@@ -1,0 +1,37 @@
+{
+  "name": "fp8-geometry-tile-sweep",
+  "hypothesis": "Diagnostic only: compare geometry backward producer/reduction tiles of 32, 64 and 128 rows. Larger tiles reduce partial-gradient storage and reduction extent but may increase register pressure. Check finite gradients and relative RMS against the independently checked 64-row baseline at 1,257,16384,49152 tokens, including empty experts; time 16k/49k cases in alternating order. Precision, coefficient equations and all six FP8 products stay fixed. No training trajectory or convergence claim; exclude from reference curves.",
+  "precision": "fp8",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "validation_precision": "bf16",
+  "max_train_seconds": 902.3592145430011,
+  "validation_setup_reserve_seconds": 1.25,
+  "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+  "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+  "weight_packing": "loop",
+  "training_gs32": true,
+  "geometry_backward_rows": 64,
+  "diagnostic_geometry_sweep": true
+}

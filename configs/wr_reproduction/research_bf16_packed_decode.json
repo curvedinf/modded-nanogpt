@@ -1,0 +1,778 @@
+{
+  "name": "bf16-shared-fp8-packed-decode",
+  "hypothesis": "First continuous BF16 KS3 discovery with exact packed shared FP8 decoder. Whole-model100 updates36.0054s versus37.6823s scalar parent; original24 warmup and schedule, no validation in timing. Decoder selected for18 measured matrix roles, scalar retained elsewhere. Preserve original FP8 tensors/scale/layout/producer semantics; tunedBF16 expert rank1/charts1024, GS32/FP16 spine, geometryAdam.125, expertLR1, all nonexpert objectives/global updates/schedules/optimizers. Accepted raw BF16 full validation at strict902.3592145430011s budget. Dynamic best below5/one-sided+.01 screening; immediate three fresh seeds on qualification.",
+  "precision": "bf16",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "validation_precision": "bf16",
+  "max_train_seconds": 902.3592145430011,
+  "validation_setup_reserve_seconds": 2.0,
+  "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+  "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+  "training_gs32": true,
+  "weight_packing": "loop",
+  "geometry_backward_rows": 64,
+  "bf16_kernel_mode": "tuned",
+  "kernel_evidence": {
+    "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+    "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+    "matrix_max_relative_rms": 4.411854752106592e-05
+  },
+  "block_correctness_evidence": {
+    "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+    "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+    "max_relative_rms": 0.0,
+    "evaluation_original_kernels": true,
+    "bitwise_input_and_weight_producers": true
+  },
+  "timing_evidence": {
+    "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+    "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+    "first100_seconds": 54.066861718994915,
+    "updates25_to100_seconds": 40.427348073004396,
+    "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+    "reference_first100": 55.488501123007154,
+    "reference_25to100": 41.43367328601016,
+    "validation": false,
+    "first100_time_reduction": 0.025620432616493716,
+    "steady_time_reduction": 0.024287617611387313,
+    "timing_gate_passed": true
+  },
+  "shared_fp8_gemm_tuning": "mi300-v2",
+  "hardware_change_scope": "Four BF16 expert projection launch choices relative to the prior partial-amax recipe; other kernels and settings retained. BF16 validation continues using original expert kernels.",
+  "shared_fp8_correctness_evidence": {
+    "run_id": "ks3-shared-fp8-dispatch-check-20261025T075607-ff0ab5",
+    "code_commit": "bcb2f5f79d96c9d82c4b0ccfcbbf0b75253fa4e1",
+    "source_format_pairs": 4,
+    "independent_shape_cases": 15,
+    "all_stored_byte_patterns": true,
+    "original_dense_mlp_autograd": true,
+    "validation": false
+  },
+  "validation_window_policy": "accepted-control",
+  "evaluation_protocol": "Capture live stage-two YaRN frequencies/attention scales on first reach of640/1408 windows. For terminal stage four or full-schedule completion only, restore those nonlearned buffers and use640/1408 evaluation arguments. Preserve raw learned weights, training schedule and all updates; no canonical mask, tail shipping or final window extension. Early-stage evaluation remains incompatible. All restoration/rebuild/readback/setup is inside original training timer; no strict qualification if actual elapsed exceeds902.3592145430011.",
+  "shared_fp8_timing_evidence": {
+    "run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+    "code_commit": "2959f2a2250c36cb7dd10f28c02cdcfcc86fd729",
+    "first100_seconds": 39.57759546399757,
+    "after25_through100_seconds": 29.55288318300154,
+    "baseline_run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+    "baseline_first100_seconds": 54.06715966599586,
+    "baseline_after25_through100_seconds": 40.427348073004396,
+    "first100_time_reduction": 0.26799196206178977,
+    "steady_time_reduction": 0.2689878364112719,
+    "validation": false,
+    "gate_passed": true
+  },
+  "v2_tile_evidence": {
+    "run_id": "ks3-shared-fp8-expanded-sweep-20261025T100101-631bcf",
+    "code_commit": "a3491f3d119c84a9dda640287affeddded380137",
+    "source_sha256": "ff06490d6897418b634fce141239f6c8f103366a758e68c2ff5f682f361a8199",
+    "note": "Use variant paired_baseline_ms with paired_speedup; case baseline_ms was a separate initial measurement. Producer cases and small dense dW stay on verified v1 tiles.",
+    "cases": [
+      {
+        "name": "attention_narrow",
+        "config": [
+          128,
+          256,
+          128,
+          4,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.06281690436982948,
+        "candidate_ms": 0.05805844393643466,
+        "paired_speedup": 1.0819598341044865,
+        "retain_v1": false
+      },
+      {
+        "name": "attention_wide",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.26819277150290355,
+        "candidate_ms": 0.21999326003225225,
+        "paired_speedup": 1.2190954007572095,
+        "retain_v1": false
+      },
+      {
+        "name": "attention_dx",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.2333253554715455,
+        "candidate_ms": 0.17693910326276507,
+        "paired_speedup": 1.3186760369472625,
+        "retain_v1": false
+      },
+      {
+        "name": "attention_dw",
+        "config": [
+          64,
+          64,
+          256,
+          4,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.35713097832419655,
+        "candidate_ms": 0.3366798300492136,
+        "paired_speedup": 1.0607436099513106,
+        "retain_v1": false
+      },
+      {
+        "name": "dense_up_producer",
+        "config": [
+          256,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.4980929132235252,
+        "candidate_ms": 0.4905006877711562,
+        "paired_speedup": 1.0154785215223006,
+        "retain_v1": true
+      },
+      {
+        "name": "dense_dpre_producer",
+        "config": [
+          256,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.507771718299995,
+        "candidate_ms": 0.521669079964621,
+        "paired_speedup": 0.9733598133407323,
+        "retain_v1": true
+      },
+      {
+        "name": "dense_down",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.4190465600149972,
+        "candidate_ms": 0.3078369731903076,
+        "paired_speedup": 1.3612613055285558,
+        "retain_v1": false
+      },
+      {
+        "name": "dense_dw",
+        "config": [
+          64,
+          128,
+          256,
+          4,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.50500705281242,
+        "candidate_ms": 0.48125414334810696,
+        "paired_speedup": 1.049356270055283,
+        "retain_v1": true
+      },
+      {
+        "name": "head_logits",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 1.2805675838304602,
+        "candidate_ms": 1.1205424382136417,
+        "paired_speedup": 1.1428104283778213,
+        "retain_v1": false
+      },
+      {
+        "name": "head_dx",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 1.4629255580902099,
+        "candidate_ms": 1.073772076198033,
+        "paired_speedup": 1.3624172117327498,
+        "retain_v1": false
+      },
+      {
+        "name": "head_sampled_dw",
+        "config": [
+          128,
+          256,
+          128,
+          4,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 0.3143721351623535,
+        "candidate_ms": 0.28721314384823754,
+        "paired_speedup": 1.0945604053847435,
+        "retain_v1": false
+      },
+      {
+        "name": "large_dense_up",
+        "config": [
+          256,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 1.453728151321411,
+        "candidate_ms": 1.4339710998535156,
+        "paired_speedup": 1.0137778588912383,
+        "retain_v1": true
+      },
+      {
+        "name": "large_dense_dw",
+        "config": [
+          64,
+          128,
+          256,
+          4,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 1.5668629294947574,
+        "candidate_ms": 1.4543468952178955,
+        "paired_speedup": 1.0773653346714123,
+        "retain_v1": false
+      },
+      {
+        "name": "large_head_logits",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 5.413051300048828,
+        "candidate_ms": 4.608832804361979,
+        "paired_speedup": 1.1744950467558086,
+        "retain_v1": false
+      },
+      {
+        "name": "large_head_dx",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 4.757007884979248,
+        "candidate_ms": 3.553856706619263,
+        "paired_speedup": 1.3385480275890265,
+        "retain_v1": false
+      },
+      {
+        "name": "late_head_logits",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 9.304556719462077,
+        "candidate_ms": 7.875556055704752,
+        "paired_speedup": 1.1814475896876147,
+        "retain_v1": false
+      },
+      {
+        "name": "late_head_dx",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 8.168813769022623,
+        "candidate_ms": 6.065137243270874,
+        "paired_speedup": 1.346847308044963,
+        "retain_v1": false
+      },
+      {
+        "name": "taper_head_logits",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 15.052580738067627,
+        "candidate_ms": 12.659452724456788,
+        "paired_speedup": 1.189038820689899,
+        "retain_v1": false
+      },
+      {
+        "name": "taper_head_dx",
+        "config": [
+          256,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 16.320703125,
+        "candidate_ms": 11.739782047271728,
+        "paired_speedup": 1.3902049509337235,
+        "retain_v1": false
+      },
+      {
+        "name": "large_dense_dpre_producer",
+        "config": [
+          256,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "paired_baseline_ms": 1.4940103721618652,
+        "candidate_ms": 1.5442048323781867,
+        "paired_speedup": 0.9674949468076599,
+        "retain_v1": true
+      }
+    ]
+  },
+  "base_verification_evidence": {
+    "recipe_id": "180b3675a8cc56a5ff30a6bccd7a2e54e58bd382a4c3b536ed98640dccea6501",
+    "code_commit": "f1366345fcdbde52d06711b33300e481db855c34",
+    "statistics": {
+      "scores": [
+        {
+          "seed": 169,
+          "loss": 3.3001344203948975,
+          "train_seconds": 900.3585499659966,
+          "run_id": "ks3-bf16-tuned-shared-fp8-20261025T082815-952036"
+        },
+        {
+          "seed": 170,
+          "loss": 3.30049991607666,
+          "train_seconds": 899.9505667749909,
+          "run_id": "ks3-bf16-tuned-shared-fp8-20261025T084550-1d295d"
+        },
+        {
+          "seed": 171,
+          "loss": 3.3012843132019043,
+          "train_seconds": 900.6974310789956,
+          "run_id": "ks3-bf16-tuned-shared-fp8-20261025T090326-4ebb3e"
+        }
+      ],
+      "count": 3,
+      "mean": 3.300639549891154,
+      "sample_std": 0.0005875258024241021,
+      "minimum": 3.3001344203948975,
+      "maximum": 3.3012843132019043,
+      "count_beating_control": 3
+    },
+    "control_loss": 3.454925298690796,
+    "control_seconds": 902.3592145430011,
+    "mean_loss_improvement": 0.15428574879964208,
+    "discovery_excluded": true,
+    "all_evaluation_signatures_compatible": true,
+    "scope": "KS3 plus shared nongrouped FP8 hardware optimization; not an isolated architecture comparison",
+    "updated_utc": "2026-10-25T09:24:10.042656+00:00"
+  },
+  "v2_dispatch_correctness_evidence": {
+    "run_id": "ks3-shared-fp8-v2-dispatch-check-20261025T103202-437b5d",
+    "code_commit": "91f1add9b24ca3744dc458d53590c8d873e8d8b6",
+    "source_format_pairs": 4,
+    "independent_shape_cases": 20,
+    "max_shape_relative_error": 9.651410073274747e-05,
+    "original_dense_mlp_autograd_checked": true,
+    "accepted_evaluation_gpu_check": {
+      "passed": true,
+      "device": "cuda",
+      "table_rows": 262144,
+      "source_window_schedule_traversed": true,
+      "original_buffer_addresses_preserved": true,
+      "rotary_tables_bitwise_equal": true,
+      "learned_weight_fixture_unchanged": true,
+      "matches_verified_yarn_snapshot": true,
+      "evaluation_protocol": {
+        "policy": "accepted-control",
+        "training_windows": [
+          768,
+          1664
+        ],
+        "attention_windows": [
+          640,
+          1408
+        ],
+        "yarn_snapshot_step": 595,
+        "restored": true,
+        "compatible": true,
+        "setup_on_training_clock": true,
+        "yarn_snapshot_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612"
+      },
+      "full_model_validation_performed": false
+    },
+    "events_sha256": "e2383595ec0394713d3c74f1916dc98357d39225da9e24e506506965a8e12583"
+  },
+  "v2_whole_model_timing_evidence": {
+    "run_id": "ks3-bf16-shared-fp8-v2-20261025T103628-0c4d55",
+    "code_commit": "a85c9031a97e788aacd7199ce1828ea41a71c9ca",
+    "first100_seconds": 37.96049347499502,
+    "after25_through100_seconds": 28.340886591991875,
+    "reference_run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+    "reference_first100_seconds": 39.57759546399757,
+    "reference_after25_through100_seconds": 29.55288318300154,
+    "first100_time_reduction": 0.04085902566955013,
+    "steady_time_reduction": 0.041011111623342034,
+    "validation": false,
+    "speed_gate_passed": true
+  },
+  "shared_fp8_amax": "partial",
+  "partial_amax_correctness_evidence": {
+    "run_id": "ks3-shared-fp8-partial-amax-check-20261025T110458-06d7e0",
+    "code_commit": "1f105c25e150fd15c2eb26af06b123b71fe72f25",
+    "events_sha256": "99cd3a27cb0c4cf6cbee978ed9d35617359fff5ebea962d724bbe5ced054bb64",
+    "artifact_sha256": "efaa49f9eef972fc6bee0ce788205f00c5e79d4149aa43610c9f5d1ff5816922",
+    "source_format_pairs": 4,
+    "format_layout_cases": 16,
+    "all_outputs_bitwise_equal": true,
+    "delayed_maximum_semantics_checked": true,
+    "nonfinite_inputs_and_initial_maximum_checked": true,
+    "original_dense_mlp_autograd_checked": true,
+    "paired_kernel_speedup_min": 1.0443088474785507,
+    "paired_kernel_speedup_max": 1.073931080257518,
+    "whole_model_speed_measured": false,
+    "validation": false
+  },
+  "partial_amax_whole_model_timing_evidence": {
+    "run_id": "ks3-bf16-shared-fp8-v2-partial-amax-20261025T110818-37b466",
+    "code_commit": "65123565c73ed6dcb3a01b352ba0ad7fd42cfe43",
+    "first100_seconds": 37.7528903830098,
+    "after25_through100_seconds": 28.18139608099591,
+    "reference_run_id": "ks3-bf16-shared-fp8-v2-20261025T103628-0c4d55",
+    "reference_first100_seconds": 37.96049347499502,
+    "reference_after25_through100_seconds": 28.340886591991875,
+    "first100_time_reduction": 0.005468925005465808,
+    "steady_time_reduction": 0.005627576627790898,
+    "validation": false,
+    "speed_gate_passed": true,
+    "small_gain_measurement_caveat": "Single whole-model timing screen, supported by eight interleaved paired kernel cases; nominal whole-model gain is small.",
+    "numerical_observations": {
+      "comparison_only": "Prefix correctness diagnostic, never screening/quality comparison",
+      "saved_observation_count": 4,
+      "max_difference_from_original_v2_timing": 0.005756378173828125,
+      "prior_unchanged_v2_timing_vs_discovery_max_difference": 0.0119781494140625,
+      "full_model_bitwise_equality_claimed": false
+    }
+  },
+  "bf16_gemm_tuning": "mi300-v2",
+  "bf16_tile_evidence": {
+    "run_id": "ks3-bf16-expanded-tiles-20261025T113543-8e040b",
+    "code_commit": "a88b7b2f12cdbc01f2cdd2d8f465f8ee105805db",
+    "artifact_sha256": "1837c4e6a8bc0ba983da68ee6688a2131a435a965bf40a6b0b33efa028f7a425",
+    "cases": [
+      {
+        "tokens": 16384,
+        "routed_capacity": 17280,
+        "role": "input_projection",
+        "config": [
+          64,
+          256,
+          64,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 0.10107087816510882,
+        "candidate_ms": 0.1002132235707103,
+        "speedup": 1.0085582976361733,
+        "select": false
+      },
+      {
+        "tokens": 16384,
+        "routed_capacity": 17280,
+        "role": "output_projection",
+        "config": [
+          128,
+          128,
+          64,
+          8,
+          2,
+          32
+        ],
+        "baseline_ms": 0.09836077888171893,
+        "candidate_ms": 0.09656378226944164,
+        "speedup": 1.0186094265369923,
+        "select": false
+      },
+      {
+        "tokens": 16384,
+        "routed_capacity": 17280,
+        "role": "feature_gradient",
+        "config": [
+          128,
+          256,
+          64,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 0.10407530866711345,
+        "candidate_ms": 0.09836171052166234,
+        "speedup": 1.0580876249014883,
+        "select": true
+      },
+      {
+        "tokens": 16384,
+        "routed_capacity": 17280,
+        "role": "input_gradient",
+        "config": [
+          128,
+          128,
+          64,
+          8,
+          2,
+          32
+        ],
+        "baseline_ms": 0.09991841888427734,
+        "candidate_ms": 0.09719018430899311,
+        "speedup": 1.0280710916918365,
+        "select": false
+      },
+      {
+        "tokens": 16384,
+        "routed_capacity": 17280,
+        "role": "weight_gradient",
+        "config": [
+          128,
+          128,
+          64,
+          8,
+          2,
+          32
+        ],
+        "baseline_ms": 0.0957057365538582,
+        "candidate_ms": 0.09952496302167707,
+        "speedup": 0.9616254419809528,
+        "select": false
+      },
+      {
+        "tokens": 49152,
+        "routed_capacity": 50048,
+        "role": "input_projection",
+        "config": [
+          64,
+          256,
+          64,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 0.27486382500600004,
+        "candidate_ms": 0.26665442862161776,
+        "speedup": 1.0307866493229385,
+        "select": true
+      },
+      {
+        "tokens": 49152,
+        "routed_capacity": 50048,
+        "role": "output_projection",
+        "config": [
+          128,
+          128,
+          64,
+          8,
+          2,
+          32
+        ],
+        "baseline_ms": 0.26109546792918237,
+        "candidate_ms": 0.24972267932579165,
+        "speedup": 1.0455416730034104,
+        "select": true
+      },
+      {
+        "tokens": 49152,
+        "routed_capacity": 50048,
+        "role": "feature_gradient",
+        "config": [
+          64,
+          256,
+          64,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 0.27935797691345216,
+        "candidate_ms": 0.27278417067094285,
+        "speedup": 1.0240989285644408,
+        "select": false
+      },
+      {
+        "tokens": 49152,
+        "routed_capacity": 50048,
+        "role": "input_gradient",
+        "config": [
+          128,
+          128,
+          64,
+          8,
+          2,
+          32
+        ],
+        "baseline_ms": 0.25926856225536715,
+        "candidate_ms": 0.24944960994105184,
+        "speedup": 1.039362468101817,
+        "select": true
+      },
+      {
+        "tokens": 49152,
+        "routed_capacity": 50048,
+        "role": "weight_gradient",
+        "config": [
+          128,
+          128,
+          64,
+          8,
+          2,
+          32
+        ],
+        "baseline_ms": 0.2652436543286331,
+        "candidate_ms": 0.26837112151824677,
+        "speedup": 0.9883464838842543,
+        "select": false
+      }
+    ],
+    "max_relative_rms": 4.411854752106592e-05,
+    "whole_model_speed_measured": false,
+    "validation": false
+  },
+  "bf16_v2_block_evidence": {
+    "run_id": "ks3-bf16-projection-v2-shared-fp8-amax-20261025T114305-6212d1",
+    "code_commit": "a0172dab97ed5efbceabe34d71df1e9649253e86",
+    "events_sha256": "9f041a00badeb1a7e8aa780c5a1041049b6e452071bb7c73f4594467ad68f6e4",
+    "tile_policy": "mi300-v2",
+    "max_relative_rms": 0.0,
+    "input_and_weight_producers_bitwise_equal": true,
+    "validation_uses_original_kernels": true,
+    "core_timing": [
+      {
+        "tokens": 16384,
+        "v1_ms": 1.444547957268314,
+        "v2_ms": 1.4338765019955841,
+        "time_reduction": 0.007387401172135433
+      },
+      {
+        "tokens": 49152,
+        "v1_ms": 3.9595088500976563,
+        "v2_ms": 3.951701110839844,
+        "time_reduction": 0.0019718958975479817
+      }
+    ],
+    "whole_model_speed_measured": false,
+    "validation": false
+  },
+  "bf16_v2_whole_model_timing_evidence": {
+    "run_id": "ks3-bf16-projection-v2-shared-fp8-amax-20261025T114619-2be590",
+    "code_commit": "707e863f06eefd3b091cf20d2754c24ba753f80e",
+    "reference_run_id": "ks3-bf16-shared-fp8-v2-partial-amax-20261025T110818-37b466",
+    "first100_seconds": 37.682322256005136,
+    "reference_first100_seconds": 37.7528903830098,
+    "after25_through100_seconds": 28.140079172997503,
+    "reference_after25_through100_seconds": 28.18139608099591,
+    "first100_time_reduction": 0.001869211238894164,
+    "steady_time_reduction": 0.0014661057911985464,
+    "speed_gate_passed": true,
+    "validation": false,
+    "caveat": "Single whole-model screen; nominal0.15\u20130.19percent gain may be within timing noise. Paired full-block timing and matrix sweep also nominally faster. No convergence claim."
+  },
+  "shared_fp8_decode": "packed4-selected",
+  "packed_decode_change": {
+    "parent_recipe": "configs/wr_reproduction/research_bf16_projection_v2.json",
+    "parent_sha256": "8193529505a33aaebd6b938ba858d2ef838e7e9a882cc9193c83a7251aa37088",
+    "before": "scalar",
+    "after": "packed4-selected",
+    "scope": "Shared nongrouped GEMM register decoding only; grouped/KS3 prepared kernels default unchanged",
+    "fallback": "Retain scalar for narrow attention, sampled head dW, small/grouped and unsupported-layout calls; tested cases selected only when paired speedup>=1.03."
+  },
+  "packed_decode_correctness_evidence": {
+    "run_id": "ks3-shared-fp8-packed-decode-check-20261025T152820-72bf44",
+    "code_commit": "fb09c8ed2f0c292693869bf7d6b93f4a6879e69c",
+    "artifact_sha256": "75e6588c64321ce4cafdc11acaa30d2b84cdb2d66e3d5e787384dff325714f8b",
+    "all_outputs_exact": true,
+    "independent_source_format_checks": 24,
+    "byte_cases": 4,
+    "bytes_per_case": 1310723,
+    "original_dense_mlp_autograd": true,
+    "full_convergence_verified": false
+  },
+  "packed_decode_whole_model_timing": {
+    "run_id": "ks3-bf16-shared-fp8-packed-decode-20261025T153159-89512c",
+    "code_commit": "432daece47d3ca0920912743d76d8f96d13dfd08",
+    "first100_seconds": 36.00539114300045,
+    "after25_through100_seconds": 26.88107477000449,
+    "reference_run_id": "ks3-bf16-projection-v2-shared-fp8-amax-20261025T114619-2be590",
+    "reference_first100": 37.682322256005136,
+    "reference_after25_through100": 28.140079172997503,
+    "time_reduction": {
+      "first100": 0.04450179852536673,
+      "after25_through100": 0.04474061338822111
+    },
+    "validation": false,
+    "timing_gate_passed": true,
+    "only_runtime_change": "Shared FP8 register decoder selection"
+  }
+}

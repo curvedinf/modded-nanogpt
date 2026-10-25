@@ -1,0 +1,305 @@
+{
+  "run_id": "ks3-shared-fp8-tile-sweep-20261025T074031-06118e",
+  "status": "correctness_passed",
+  "seed": 169,
+  "code_commit": "fe386ff64f802df9a67ca9eb13661fd333e3cfc7",
+  "recipe": {
+    "name": "shared-fp8-tile-sweep",
+    "hypothesis": "Diagnostic tile sweep motivated by the original-update profile: shared FP8 _gemm is64.16percent of summed GPU kernel duration. Test larger MI300 matrix tiles for immutable PR393 attention, dense2816-wide MLP and sampled-head dimensions at original16384/49152 logical-token counts. Preserve original FN/E5 cache encodings, exact in-register FNUZ reinterpretation, mixed-format selector workaround, FP32 accumulation, fused producer epilogues, dual layouts and delayed-scale semantics. All four source-format combinations, transposed input layouts, tail masks and256 byte patterns must pass before representative shape timings against independent decoded-FP8 FP32 products. This is a kernel diagnostic, not convergence or whole-update speed evidence; no production dispatch is changed yet.",
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "kernel_evidence": {
+      "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+      "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+      "matrix_max_relative_rms": 4.411854752106592e-05
+    },
+    "block_correctness_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+      "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+      "max_relative_rms": 0.0,
+      "evaluation_original_kernels": true,
+      "bitwise_input_and_weight_producers": true
+    },
+    "timing_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+      "first100_seconds": 54.066861718994915,
+      "updates25_to100_seconds": 40.427348073004396,
+      "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+      "reference_first100": 55.488501123007154,
+      "reference_25to100": 41.43367328601016,
+      "validation": false,
+      "first100_time_reduction": 0.025620432616493716,
+      "steady_time_reduction": 0.024287617611387313,
+      "timing_gate_passed": true
+    },
+    "diagnostic_shared_fp8_sweep": true
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "scope": "Shared native FP8 products, original fused producer epilogues and dual layouts; diagnostic tile sweep only",
+    "original_fn_e5_cache_encodings_preserved": true,
+    "all_stored_byte_patterns_checked": true,
+    "fp32_accumulation": true,
+    "full_convergence_verified": false,
+    "case_count": 15,
+    "passed_format_configurations": 8,
+    "artifact": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-shared-fp8-tile-sweep-20261025T074031-06118e/shared-fp8-tile-sweep.json",
+    "artifact_sha256": "d822831d2902462e1c1e1c607c002f06d6bcf14735f6890c771ca85f98b47bcd",
+    "fastest": [
+      {
+        "name": "attention_narrow",
+        "config": [
+          128,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 0.10260483608689419,
+        "best_ms": 0.06249272677734999,
+        "speedup": 1.6418684441864126
+      },
+      {
+        "name": "attention_wide",
+        "config": [
+          128,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 0.5637785593668619,
+        "best_ms": 0.2668605595471566,
+        "speedup": 2.1126335053915577
+      },
+      {
+        "name": "attention_dx",
+        "config": [
+          128,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 0.38786808125023703,
+        "best_ms": 0.2332585525257702,
+        "speedup": 1.662824694101562
+      },
+      {
+        "name": "attention_dw",
+        "config": [
+          64,
+          64,
+          128,
+          4,
+          1,
+          32
+        ],
+        "baseline_ms": 0.45384311060751636,
+        "best_ms": 0.35435561290331286,
+        "speedup": 1.2807560938264269
+      },
+      {
+        "name": "dense_up_producer",
+        "config": [
+          128,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 1.085722620346967,
+        "best_ms": 0.4952870472238704,
+        "speedup": 2.192107842174639
+      },
+      {
+        "name": "dense_dpre_producer",
+        "config": [
+          128,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 1.0431654027990394,
+        "best_ms": 0.5040529202176379,
+        "speedup": 2.0695553203989485
+      },
+      {
+        "name": "dense_down",
+        "config": [
+          128,
+          128,
+          128,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 0.7013148307800293,
+        "best_ms": 0.4181502344232747,
+        "speedup": 1.6771838756644575
+      },
+      {
+        "name": "dense_dw",
+        "config": [
+          64,
+          128,
+          128,
+          4,
+          1,
+          32
+        ],
+        "baseline_ms": 0.8117085083671238,
+        "best_ms": 0.5031569868762319,
+        "speedup": 1.613231117799802
+      },
+      {
+        "name": "head_logits",
+        "config": [
+          128,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 2.5664554341634114,
+        "best_ms": 1.275832007623488,
+        "speedup": 2.011593547448294
+      },
+      {
+        "name": "head_dx",
+        "config": [
+          128,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 2.5724082946777345,
+        "best_ms": 1.4565733591715495,
+        "speedup": 1.7660684774166369
+      },
+      {
+        "name": "head_sampled_dw",
+        "config": [
+          128,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 0.6504989687601725,
+        "best_ms": 0.3126219171261603,
+        "speedup": 2.080784913418787
+      },
+      {
+        "name": "large_dense_up",
+        "config": [
+          128,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 3.4365293329412285,
+        "best_ms": 1.4419236712985568,
+        "speedup": 2.3832949006561384
+      },
+      {
+        "name": "large_dense_dw",
+        "config": [
+          64,
+          128,
+          128,
+          4,
+          1,
+          32
+        ],
+        "baseline_ms": 2.4401965618133543,
+        "best_ms": 1.5589369672139486,
+        "speedup": 1.5652952063702403
+      },
+      {
+        "name": "large_head_logits",
+        "config": [
+          128,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 10.941252136230469,
+        "best_ms": 5.394222722734724,
+        "speedup": 2.028327842326012
+      },
+      {
+        "name": "large_head_dx",
+        "config": [
+          128,
+          256,
+          128,
+          8,
+          1,
+          32
+        ],
+        "baseline_ms": 11.059733072916668,
+        "best_ms": 4.744712567329406,
+        "speedup": 2.33095955044158
+      }
+    ],
+    "utc": "2026-10-25T07:44:02.591148+00:00"
+  },
+  "profile": null,
+  "terminal_geometry": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T07:44:03.715257+00:00",
+  "events_sha256": "0e2225443a99e042bb424228424674c4b8a29e9ac894e676d6e6c7a8e95dee54",
+  "previous_result_commit": "8d0e7a21bd78d9e02b37c2166a37677e903af8ca"
+}

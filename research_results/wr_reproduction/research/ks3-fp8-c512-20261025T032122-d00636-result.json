@@ -1,0 +1,101 @@
+{
+  "run_id": "ks3-fp8-c512-20261025T032122-d00636",
+  "status": "correctness_passed",
+  "seed": 169,
+  "code_commit": "5006d277a4d131f42bb5ac246b0154c276c8d00e",
+  "recipe": {
+    "name": "fp8-c512",
+    "hypothesis": "Reduce KS3 expert width from 1024 to 512 charts, removing 31,621,120 parameters. The 1536-chart candidate was pruned at 541.830s with a compatible +0.042801 objective gap; test the opposite capacity/time tradeoff. Retain rank one, optimized GS32/FP8 training, BF16 evaluation, geometry 0/0.75/0 and Adam lr_mul 0.125, original non-expert initialization, eight top1 experts, objective/schedule/global update sizes. Run width-specific numerical checks then one continuous screened candidate; measure update speed from that candidate without a redundant timing run.",
+    "precision": "fp8",
+    "charts": 512,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "parameter_budget_change": {
+      "original_expert_projection_parameters": 62914560,
+      "new_expert_projection_parameters": 31457280,
+      "original_geometry_parameters": 327680,
+      "new_geometry_parameters": 163840,
+      "added_parameters": -31621120
+    },
+    "initialization_preservation": "Replay original 1024-chart expert random draws after resized expert initialization, restoring original router and subsequent CPU RNG state.",
+    "optimizer_shape_scaling": "Original ANVIL formulas evaluated at the smaller expert shape; no optimizer hyperparameter constants changed."
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "training_projection_gs32": true,
+    "coefficient_gs32": true,
+    "charts": 512,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "bank": 0.0,
+          "geometry": 8.353335800848072e-09
+        },
+        "post_amax": 6.507354736328125,
+        "dpre_amax": 0.10444558411836624
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 1.7178614086788002e-10,
+          "bank": 8.037953307393764e-07,
+          "geometry": 1.2031514984300884e-07
+        },
+        "post_amax": 8.650634765625,
+        "dpre_amax": 0.1538471281528473
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 3.14311887450458e-06,
+          "bank": 6.277462489379104e-06,
+          "geometry": 1.2204387189740373e-07
+        },
+        "post_amax": 14.92156982421875,
+        "dpre_amax": 0.19565068185329437
+      }
+    ],
+    "full_convergence_verified": false,
+    "utc": "2026-10-25T03:21:45.027378+00:00"
+  },
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T03:21:46.297196+00:00",
+  "events_sha256": "1751dfca4c2b45871521cbad61cecf741216e2307dbdf4605023b6cfbb6a6b84",
+  "previous_result_commit": "5006d277a4d131f42bb5ac246b0154c276c8d00e"
+}

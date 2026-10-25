@@ -1,0 +1,180 @@
+{
+  "run_id": "ks3-bf16-expanded-tiles-20261025T113543-8e040b",
+  "code_commit": "a88b7b2f12cdbc01f2cdd2d8f465f8ee105805db",
+  "artifact_sha256": "1837c4e6a8bc0ba983da68ee6688a2131a435a965bf40a6b0b33efa028f7a425",
+  "cases": [
+    {
+      "tokens": 16384,
+      "routed_capacity": 17280,
+      "role": "input_projection",
+      "config": [
+        64,
+        256,
+        64,
+        8,
+        1,
+        32
+      ],
+      "baseline_ms": 0.10107087816510882,
+      "candidate_ms": 0.1002132235707103,
+      "speedup": 1.0085582976361733,
+      "select": false
+    },
+    {
+      "tokens": 16384,
+      "routed_capacity": 17280,
+      "role": "output_projection",
+      "config": [
+        128,
+        128,
+        64,
+        8,
+        2,
+        32
+      ],
+      "baseline_ms": 0.09836077888171893,
+      "candidate_ms": 0.09656378226944164,
+      "speedup": 1.0186094265369923,
+      "select": false
+    },
+    {
+      "tokens": 16384,
+      "routed_capacity": 17280,
+      "role": "feature_gradient",
+      "config": [
+        128,
+        256,
+        64,
+        8,
+        1,
+        32
+      ],
+      "baseline_ms": 0.10407530866711345,
+      "candidate_ms": 0.09836171052166234,
+      "speedup": 1.0580876249014883,
+      "select": true
+    },
+    {
+      "tokens": 16384,
+      "routed_capacity": 17280,
+      "role": "input_gradient",
+      "config": [
+        128,
+        128,
+        64,
+        8,
+        2,
+        32
+      ],
+      "baseline_ms": 0.09991841888427734,
+      "candidate_ms": 0.09719018430899311,
+      "speedup": 1.0280710916918365,
+      "select": false
+    },
+    {
+      "tokens": 16384,
+      "routed_capacity": 17280,
+      "role": "weight_gradient",
+      "config": [
+        128,
+        128,
+        64,
+        8,
+        2,
+        32
+      ],
+      "baseline_ms": 0.0957057365538582,
+      "candidate_ms": 0.09952496302167707,
+      "speedup": 0.9616254419809528,
+      "select": false
+    },
+    {
+      "tokens": 49152,
+      "routed_capacity": 50048,
+      "role": "input_projection",
+      "config": [
+        64,
+        256,
+        64,
+        8,
+        1,
+        32
+      ],
+      "baseline_ms": 0.27486382500600004,
+      "candidate_ms": 0.26665442862161776,
+      "speedup": 1.0307866493229385,
+      "select": true
+    },
+    {
+      "tokens": 49152,
+      "routed_capacity": 50048,
+      "role": "output_projection",
+      "config": [
+        128,
+        128,
+        64,
+        8,
+        2,
+        32
+      ],
+      "baseline_ms": 0.26109546792918237,
+      "candidate_ms": 0.24972267932579165,
+      "speedup": 1.0455416730034104,
+      "select": true
+    },
+    {
+      "tokens": 49152,
+      "routed_capacity": 50048,
+      "role": "feature_gradient",
+      "config": [
+        64,
+        256,
+        64,
+        8,
+        1,
+        32
+      ],
+      "baseline_ms": 0.27935797691345216,
+      "candidate_ms": 0.27278417067094285,
+      "speedup": 1.0240989285644408,
+      "select": false
+    },
+    {
+      "tokens": 49152,
+      "routed_capacity": 50048,
+      "role": "input_gradient",
+      "config": [
+        128,
+        128,
+        64,
+        8,
+        2,
+        32
+      ],
+      "baseline_ms": 0.25926856225536715,
+      "candidate_ms": 0.24944960994105184,
+      "speedup": 1.039362468101817,
+      "select": true
+    },
+    {
+      "tokens": 49152,
+      "routed_capacity": 50048,
+      "role": "weight_gradient",
+      "config": [
+        128,
+        128,
+        64,
+        8,
+        2,
+        32
+      ],
+      "baseline_ms": 0.2652436543286331,
+      "candidate_ms": 0.26837112151824677,
+      "speedup": 0.9883464838842543,
+      "select": false
+    }
+  ],
+  "max_relative_rms": 4.411854752106592e-05,
+  "whole_model_speed_measured": false,
+  "validation": false
+}

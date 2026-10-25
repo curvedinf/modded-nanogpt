@@ -1,0 +1,229 @@
+{
+  "utc": "2026-10-25T01:06:23.992934+00:00",
+  "finding": "All six KS3 projection/weight-gradient GEMMs use FP8 operands. The main avoidable slowdown was scalar amax atomic contention in geometry producer kernels.",
+  "fix": "Store tile maxima and reduce them; retain fused dual FP8 stores and identical delayed scale statistics. Applied to feature and coordinate-gradient producers.",
+  "workload": "Synthetic tensors at the trial first-stage shape: 16384 rows, 8 experts, 1024 charts, width768; CUDA-graph GPU timing, 100ms repetitions. Routing and weight refresh excluded.",
+  "before": {
+    "tokens": 16384,
+    "experts": 8,
+    "charts": 1024,
+    "block_ms": {
+      "bf16_forward": 0.8973912247987551,
+      "bf16_backward": 1.8065882268941627,
+      "fp8_forward": 1.7043822847563646,
+      "fp8_backward": 1.8639414713932918
+    },
+    "matrix_products": [
+      {
+        "name": "input_projection",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e4m3fn",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.2664603208884215,
+        "fp8_ms": 0.2693480497150752
+      },
+      {
+        "name": "output_projection",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e4m3fn",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.2694958565451882,
+        "fp8_ms": 0.26904671058226165
+      },
+      {
+        "name": "feature_gradient",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e5m2",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.2940065151936299,
+        "fp8_ms": 0.27228586018265555
+      },
+      {
+        "name": "input_gradient",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e5m2",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.28641485687870305,
+        "fp8_ms": 0.26535983907765354
+      },
+      {
+        "name": "output_weight_gradient",
+        "fp8_operands": [
+          "torch.float8_e4m3fn",
+          "torch.float8_e5m2"
+        ],
+        "fp8_ms": 0.36791790181940254
+      },
+      {
+        "name": "input_weight_gradient",
+        "fp8_operands": [
+          "torch.float8_e5m2",
+          "torch.float8_e4m3fn"
+        ],
+        "fp8_ms": 0.36921680912827
+      }
+    ],
+    "producer_ms": {
+      "bf16_input_gather_pack": 0.07783520229215511,
+      "fp8_input_gather_pack_dual": 0.06040705917887605,
+      "bf16_geometry_pack": 0.27385448176686356,
+      "fp8_geometry_pack_dual_legacy_atomic": 1.074440168297809
+    },
+    "expert_core_total_ms": {
+      "bf16": 2.7039794516929176,
+      "fp8": 3.568323756149656
+    }
+  },
+  "after": {
+    "tokens": 16384,
+    "experts": 8,
+    "charts": 1024,
+    "block_ms": {
+      "bf16_forward": 0.8961035068218525,
+      "bf16_backward": 1.8028538541973762,
+      "fp8_forward": 0.8917150775205742,
+      "fp8_backward": 1.734846224103655
+    },
+    "matrix_products": [
+      {
+        "name": "input_projection",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e4m3fn",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.26648802107030695,
+        "fp8_ms": 0.2695290068275908
+      },
+      {
+        "name": "output_projection",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e4m3fn",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.2695809266061494,
+        "fp8_ms": 0.2672079746742988
+      },
+      {
+        "name": "feature_gradient",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e5m2",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.29360477035469296,
+        "fp8_ms": 0.27280023607904513
+      },
+      {
+        "name": "input_gradient",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e5m2",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.28579513549804686,
+        "fp8_ms": 0.26575267288711046
+      },
+      {
+        "name": "output_weight_gradient",
+        "fp8_operands": [
+          "torch.float8_e4m3fn",
+          "torch.float8_e5m2"
+        ],
+        "fp8_ms": 0.36771612385757096
+      },
+      {
+        "name": "input_weight_gradient",
+        "fp8_operands": [
+          "torch.float8_e5m2",
+          "torch.float8_e4m3fn"
+        ],
+        "fp8_ms": 0.3691954645120873
+      }
+    ],
+    "producer_ms": {
+      "bf16_input_gather_pack": 0.07800080107864862,
+      "fp8_input_gather_pack_dual": 0.06036181516538278,
+      "bf16_geometry_pack": 0.27410097694396973,
+      "fp8_geometry_pack_dual_legacy_atomic": 1.0795870656552522
+    },
+    "expert_core_total_ms": {
+      "bf16": 2.698957361019229,
+      "fp8": 2.6265613016242293
+    }
+  },
+  "correctness": {
+    "passed": true,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "bank": 0.0,
+          "geometry": 1.2434067997446618e-08
+        },
+        "post_amax": 7.158477783203125,
+        "dpre_amax": 0.07970885932445526
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 4.877150905358008e-10,
+          "bank": 6.967591303919107e-08,
+          "geometry": 1.626491865636126e-07
+        },
+        "post_amax": 10.06915283203125,
+        "dpre_amax": 0.18012376129627228
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 3.6353617338669153e-10,
+          "dx": 5.101589067635359e-06,
+          "bank": 2.9003078907408053e-06,
+          "geometry": 1.1886421447115936e-07
+        },
+        "post_amax": 14.3402099609375,
+        "dpre_amax": 0.249906525015831
+      }
+    ]
+  },
+  "amax_statistics_exactly_preserved": true,
+  "training_restarted": false,
+  "limitation": "This establishes expert-core timing at one shape, not whole-update or end-to-end speedup."
+}

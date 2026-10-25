@@ -100,6 +100,17 @@ def main():
             checks=run_device_checks(env.device)
         (out/'eval-metadata-verification.json').write_text(json.dumps(checks,indent=2)+'\n')
         if not checks['passed']:raise RuntimeError('Canonical metadata evaluation failed numerical checks')
+    if checking and config.get('verify_sampled_metadata'):
+        from test_control393_sampled_metadata import run_device_checks
+        with torch.random.fork_rng(devices=[env.device]):
+            checks=run_device_checks(env.device)
+        (out/'sampled-metadata-verification.json').write_text(json.dumps(checks,indent=2)+'\n')
+    if checking and config.get('verify_dense_pointwise'):
+        from test_control393_dense_pointwise import run_device_checks
+        with torch.random.fork_rng(devices=[env.device]):
+            checks=run_device_checks(env.device)
+        (out/'dense-pointwise-verification.json').write_text(json.dumps(checks,indent=2)+'\n')
+        if not checks['passed']:raise RuntimeError('Dense pointwise path failed numerical checks')
     if checking and config['architecture'] == 'pr393-moe-ks3':
         from test_control393_ks3 import run_device_checks
         with torch.random.fork_rng(devices=[env.device]):
@@ -163,7 +174,8 @@ def main():
         model_type=MoEKS3GPT;model_extra=dict(charts=config['charts'],rank=config.get('rank',1),
                                            dynamic_rows=config.get('ks3_dynamic_rows',False),
                                            bf16_products=config.get('ks3_bf16_products',False),
-                                           expert_unbind=config.get('ks3_expert_unbind',False))
+                                           expert_unbind=config.get('ks3_expert_unbind',False),
+                                           dense_pointwise=config.get('dense_pointwise',False))
     model = model_type(vocab_size=50257,num_layers=11,num_heads=6,head_dim=128,
                    model_dim=768,max_seq_len=capacity,ngram_dim=NGRAM_DIM,world_size=1,device=env.device,
                    attention_backend=config['attention_backend'],loss_slab_tokens=config['loss_slab_tokens'],
@@ -181,7 +193,8 @@ def main():
     ks3_before = None
     if checking and hasattr(model, 'ks3_coefficients'):
         ks3_before = dict(bank=model.moe_bank[:, :16, :16].detach().clone(),
-                          router=model.moe_router.detach().clone())
+                          router=model.moe_router.detach().clone(),
+                          dense=model.mlp_bank.view(10,2816,768)[:, :16, :16].detach().clone())
     table = ContinuingNgramTable(model.ngram_cache, max_tokens,
                                  2 if smoke else schedule.total_steps, 0, 1, env.device)
     manager=make_manager(model,schedule,config['lr_scale'],config['lr_stage_scales'],
@@ -191,7 +204,8 @@ def main():
                         rank=0, world_size=1, device=env.device)
     prefetch_staging = PrefetchStaging(2*MAX_CYCLE_STEPS*max_tokens, model.value_embeds.shape[0], env.device)
     sampled = KS3SampledSoftmax(schedule, model.vocab_size, 768, max_tokens, 0, 1,
-                                env.device, config['sampled_candidates'])
+                                env.device, config['sampled_candidates'],
+                                host_metadata=config.get('sampled_host_metadata',False))
     sampled.counts = HoldLast(sampled.counts)
     model.prefix_table.copy_(build_prefix_table_bucket(model.vocab_size, bucket=0, num_buckets=1))
     sampled.set_prefix_table(model.prefix_table.cpu().numpy())
@@ -223,6 +237,8 @@ def main():
                     eval_loss_backend=model.eval_loss_backend,eval_loss_block=model.eval_loss_block,
                     training_loss_backend=model.training_loss_backend,
                     head_projection_rows=model.head_projection_rows,
+                    sampled_host_metadata=config.get('sampled_host_metadata',False),
+                    dense_pointwise=config.get('dense_pointwise',False),
                     float32_matmul_precision=torch.get_float32_matmul_precision(),
                     optimizer_backend=config['optimizer_backend'],
                     optimizer_graphs=(manager.optimizer.bank_graphs.stats()
@@ -439,11 +455,14 @@ def main():
                                              .abs().flatten(1).sum(1)>0).sum()),
                 routers_changed=int(((model.moe_router-ks3_before['router'])
                                      .abs().flatten(1).sum(1)>0).sum()),
+                dense_matrices_changed=int(((model.mlp_bank.view(10,2816,768)[:, :16, :16]-ks3_before['dense'])
+                                            .abs().flatten(1).sum(1)>0).sum()),
                 coefficients_changed=int(torch.count_nonzero(model.ks3_coefficients)),
                 scales_changed=int(torch.count_nonzero(model.ks3_scale-.75)),
                 shifts_changed=int(torch.count_nonzero(model.ks3_shift)))
             assert activity['expert_matrices_changed'] == 80, activity
             assert activity['routers_changed'] == 5, activity
+            assert activity['dense_matrices_changed'] == 10, activity
             assert all(activity[k] > 0 for k in ('coefficients_changed','scales_changed','shifts_changed')), activity
             (out/'moe-ks3-updates.json').write_text(json.dumps(activity,indent=2)+'\n')
         if pilot:

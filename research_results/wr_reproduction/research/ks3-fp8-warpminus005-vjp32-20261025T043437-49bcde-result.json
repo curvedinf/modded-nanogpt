@@ -1,0 +1,457 @@
+{
+  "run_id": "ks3-fp8-warpminus005-vjp32-20261025T043437-49bcde",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "d5206b82d543ef9d802035d7b24bd1d2b22ecf8e",
+  "recipe": {
+    "name": "fp8-warpminus005-vjp32",
+    "hypothesis": "Using the newly verified batched-weight/32-row FP8 kernels, initialize only warped even coefficient c4=-0.05 (other coefficients0, raw_scale0.75, raw_shift0). The initial pre-ReLU perturbation is approximately +0.05 near zero and -0.05 at saturated warp inputs, opening small activations while damping large ones and activating scale/shift learning from initialization. Test loss per elapsed time with geometry Adam0.125, original1024 charts/rank1, all non-KS3 settings and full GS32/BF16 evaluation. Relative to the last batched-weight convergence candidate, explicitly change geometry backward tile64->32 (measured0.35% whole-update improvement) and c4 initialization0->-0.05.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        -0.05,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "weight_packing": "batched",
+    "training_gs32": true,
+    "correctness_evidence": {
+      "run_id": "ks3-fp8-batched-weights-20261025T041225-e9424b",
+      "code_commit": "b61da26eba80c3ac98bae9a5676ea8570098c489",
+      "changing_weight_replay_bitwise_equal": true
+    },
+    "geometry_backward_rows": 32,
+    "geometry_kernel_evidence": {
+      "run_id": "ks3-fp8-geometry-tile-sweep-20261025T042711-1acbd6",
+      "code_commit": "b3a676c5c9623aafe75a45292e18463bfb28f7d7",
+      "selected_backward_rows": 32,
+      "geometry_sweep": {
+        "cases": [
+          {
+            "tokens": 1,
+            "relative_rms_vs_64": {
+              "32": {
+                "dx": 0.0,
+                "dgate": 0.0,
+                "geometry": 0.0,
+                "weight_gradient": 0.0
+              },
+              "64": {
+                "dx": 0.0,
+                "dgate": 0.0,
+                "geometry": 0.0,
+                "weight_gradient": 0.0
+              },
+              "128": {
+                "dx": 0.0,
+                "dgate": 0.0,
+                "geometry": 0.0,
+                "weight_gradient": 0.0
+              }
+            },
+            "backward_ms": {
+              "32": [],
+              "64": [],
+              "128": []
+            },
+            "median_ms": {}
+          },
+          {
+            "tokens": 257,
+            "relative_rms_vs_64": {
+              "32": {
+                "dx": 0.0,
+                "dgate": 0.0,
+                "geometry": 9.705532733050859e-08,
+                "weight_gradient": 0.0
+              },
+              "64": {
+                "dx": 0.0,
+                "dgate": 0.0,
+                "geometry": 0.0,
+                "weight_gradient": 0.0
+              },
+              "128": {
+                "dx": 0.0,
+                "dgate": 0.0,
+                "geometry": 1.0222778712432046e-07,
+                "weight_gradient": 0.0
+              }
+            },
+            "backward_ms": {
+              "32": [],
+              "64": [],
+              "128": []
+            },
+            "median_ms": {}
+          },
+          {
+            "tokens": 16384,
+            "relative_rms_vs_64": {
+              "32": {
+                "dx": 0.0,
+                "dgate": 0.0,
+                "geometry": 1.1969062541083986e-07,
+                "weight_gradient": 0.0
+              },
+              "64": {
+                "dx": 0.0,
+                "dgate": 0.0,
+                "geometry": 0.0,
+                "weight_gradient": 0.0
+              },
+              "128": {
+                "dx": 0.0,
+                "dgate": 0.0,
+                "geometry": 1.194639764889871e-07,
+                "weight_gradient": 0.0
+              }
+            },
+            "backward_ms": {
+              "32": [
+                1.1912118027849896,
+                1.1953344670737662,
+                1.1994421768188477
+              ],
+              "64": [
+                1.248493094193308,
+                1.2558384585690188,
+                1.254619786646459
+              ],
+              "128": [
+                1.4631715178489686,
+                1.4741725864695079,
+                1.4713131297718396
+              ]
+            },
+            "median_ms": {
+              "32": 1.1953344670737662,
+              "64": 1.254619786646459,
+              "128": 1.4713131297718396
+            }
+          },
+          {
+            "tokens": 49152,
+            "relative_rms_vs_64": {
+              "32": {
+                "dx": 0.0,
+                "dgate": 0.0,
+                "geometry": 1.2744472144277097e-07,
+                "weight_gradient": 0.0
+              },
+              "64": {
+                "dx": 0.0,
+                "dgate": 0.0,
+                "geometry": 0.0,
+                "weight_gradient": 0.0
+              },
+              "128": {
+                "dx": 0.0,
+                "dgate": 0.0,
+                "geometry": 1.2893204370811873e-07,
+                "weight_gradient": 0.0
+              }
+            },
+            "backward_ms": {
+              "32": [
+                3.376286999932651,
+                3.3800281524658202,
+                3.3872027166958514
+              ],
+              "64": [
+                3.449235943385533,
+                3.4905426025390627,
+                3.4968029022216798
+              ],
+              "128": [
+                4.100115489959717,
+                4.123561827341716,
+                4.128400039672852
+              ]
+            },
+            "median_ms": {
+              "32": 3.3800281524658202,
+              "64": 3.4905426025390627,
+              "128": 4.123561827341716
+            }
+          }
+        ],
+        "scope": "Expert backward only; no whole-update speed or convergence claim"
+      }
+    },
+    "weight_packing_timing_evidence": {
+      "run_id": "ks3-fp8-batched-weights-20261025T040727-a45604",
+      "code_commit": "2e1afb279b35b46af2b494e6a3bc6072546993fc",
+      "first100_seconds": 55.685453496000264,
+      "updates25_to100_seconds": 41.5808563640021,
+      "first100_time_reduction": 0.014208675969340057,
+      "steady_time_reduction": 0.01356509181913046
+    },
+    "timing_evidence": {
+      "run_id": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+      "code_commit": "828bb571ef83b2ab433fa19fe3e78e785ad713e7",
+      "first100_seconds": 55.488501123007154,
+      "updates25_to100_seconds": 41.43367328601016,
+      "reference": "ks3-fp8-batched-weights-20261025T040727-a45604",
+      "reference_first100": 55.685453496000264,
+      "reference_25to100": 41.5808563640021,
+      "validation": false,
+      "first100_time_reduction": 0.003536872928712964,
+      "steady_time_reduction": 0.0035396836636428786,
+      "timing_gate_passed": true
+    },
+    "initialization_change": {
+      "old_coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "new_coefficients": [
+        0,
+        0,
+        0,
+        0,
+        -0.05,
+        0
+      ],
+      "near_zero_perturbation": 0.05,
+      "saturated_warp_perturbation": -0.05
+    }
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": null,
+  "terminal_geometry": {
+    "terminal_condition": "dynamic_best_training_proxy",
+    "event": "terminal_geometry",
+    "shape": [
+      5,
+      8,
+      1024,
+      8
+    ],
+    "all_finite": true,
+    "components": {
+      "c0": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.004526499717318,
+        "rms": 0.011158737670548452,
+        "minimum": -0.04707131162285805,
+        "maximum": 0.059169985353946686,
+        "abs_p95": 0.02191522009670728,
+        "delta_rms": 0.011158737670548452
+      },
+      "c1": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": -0.0043263075557574025,
+        "rms": 0.011464120999847276,
+        "minimum": -0.0680750384926796,
+        "maximum": 0.047759365290403366,
+        "abs_p95": 0.02283997414633626,
+        "delta_rms": 0.011464120999847276
+      },
+      "c2": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.006433873400080748,
+        "rms": 0.012570301384610443,
+        "minimum": -0.048439912497997284,
+        "maximum": 0.06474553048610687,
+        "abs_p95": 0.024355874489992855,
+        "delta_rms": 0.012570301384610443
+      },
+      "c3": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.008019301564640724,
+        "rms": 0.013340401747265281,
+        "minimum": -0.04202530160546303,
+        "maximum": 0.06517563760280609,
+        "abs_p95": 0.02525579975917933,
+        "delta_rms": 0.013340401747265281
+      },
+      "c4": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": -0.040355624177173866,
+        "rms": 0.04201939637846771,
+        "minimum": -0.10351865738630295,
+        "maximum": 0.07799277454614639,
+        "abs_p95": 0.058748409338295456,
+        "delta_rms": 0.015167968508163486
+      },
+      "c5": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.010963048340418263,
+        "rms": 0.016392236630480055,
+        "minimum": -0.05237765610218048,
+        "maximum": 0.14284870028495789,
+        "abs_p95": 0.03155302498489617,
+        "delta_rms": 0.016392236630480055
+      },
+      "raw_scale": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.7514454782227403,
+        "rms": 0.751500093793646,
+        "minimum": 0.6320448517799377,
+        "maximum": 0.857652485370636,
+        "abs_p95": 0.7660921066999435,
+        "delta_rms": 0.00917461921543297
+      },
+      "raw_shift": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.006143593556531879,
+        "rms": 0.010590888621757085,
+        "minimum": -0.09670810401439667,
+        "maximum": 0.0681842789053917,
+        "abs_p95": 0.020605158805847148,
+        "delta_rms": 0.010590888621757085
+      }
+    },
+    "artifact": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-fp8-warpminus005-vjp32-20261025T043437-49bcde/terminal-geometry.pt",
+    "artifact_sha256": "f0b950d7473819a41915b944a1b51c59a6448bca0f5928403c53a48c0cc6066e",
+    "diagnostic_seconds": 0.22424660999968182,
+    "outside_timed_training": true,
+    "used_for_screening": false,
+    "utc": "2026-10-25T04:45:14.811789+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-fp8-c1024-r1",
+    "run_id": "ks3-fp8-warpminus005-vjp32-20261025T043437-49bcde",
+    "seed": 168,
+    "code_commit": "d5206b82d543ef9d802035d7b24bd1d2b22ecf8e",
+    "training_projection_gs32": true
+  },
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.4964256286621094,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.0135211944580078,
+    "reference_run_id": "ks3-fp8-c512-20261025T032238-9c59b5",
+    "reference_wall_seconds": 495.73509605499567,
+    "reference_age_seconds": 0.34295198500331026,
+    "reference_objective": 3.4829044342041016,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "reference_source_step": 612,
+    "comparable_runs": 1,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-fp8-c512-20261025T032238-9c59b5/events.jsonl",
+      "sha256": "b0c1630cb6cad22a5def97e78676466d227b683459bec7b55ecc01a3e1aa2e20",
+      "line": 641,
+      "row_sha256": "2bf13a50369d73b5cea5f4aa4c4de31206ca04ede2631916ae5620959613d00a"
+    },
+    "step": 596,
+    "train_seconds": 496.078048039999,
+    "reference_snapshot_sha256": "fb883b4e7ee284b24189c98c4ebf48e9afb0253f11a1869e37d5810c644a670f",
+    "utc": "2026-10-25T04:45:14.567866+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-fp8-c1024-r1",
+    "run_id": "ks3-fp8-warpminus005-vjp32-20261025T043437-49bcde",
+    "seed": 168,
+    "code_commit": "d5206b82d543ef9d802035d7b24bd1d2b22ecf8e",
+    "training_projection_gs32": true
+  },
+  "completed_utc": "2026-10-25T04:45:16.620161+00:00",
+  "events_sha256": "f0b209e23f295cc1f5992d2f6699ca34a20f50e25fffcdd4fb634b4c87f7f4e1",
+  "previous_result_commit": "d5206b82d543ef9d802035d7b24bd1d2b22ecf8e"
+}

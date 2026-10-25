@@ -1,0 +1,28 @@
+{
+  "run_id": "pr393-ks3-fp8-20261025T005649Z",
+  "status": "cancelled",
+  "utc": "2026-10-25T00:59:39.224718+00:00",
+  "reason": "User instructed cancellation if FP8 is slower; completed short update checks show 6.6 percent slower.",
+  "timing_checks": {
+    "bf16": {
+      "update_seconds": [
+        0.5564590149879223,
+        0.6033302360010566,
+        0.5859596240043174
+      ],
+      "mean_seconds": 0.5819162916644322
+    },
+    "fp8": {
+      "update_seconds": [
+        0.5989291950099869,
+        0.6355095179897035,
+        0.6266486850072397
+      ],
+      "mean_seconds": 0.62036246600231
+    }
+  },
+  "slowdown_fraction": 0.06606822130363765,
+  "validation_loss": null,
+  "limitation": "Three initial original-size updates, not a steady-state benchmark of every schedule stage.",
+  "decision": "Do not resume. Screen future precision implementations with short timing checks before any full trial."
+}

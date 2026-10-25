@@ -1,9 +1,26 @@
 """PR393 candidate construction, with existing MI300 staging."""
 import numpy as np
 import math
+from dataclasses import dataclass
+import torch
 from mi300.sampled_softmax import NEGATIVE_STRIDE
+from mi300.sampled_softmax import SampledLoss
 from ks3_research.sampling import KS3SampledSoftmax
 COPY_TOKEN_ID=50257
+
+
+@dataclass(slots=True)
+class SampledHeadInputs(SampledLoss):
+    candidate_ids: torch.Tensor
+    copy_column: int
+
+
+def host_copy_column(staged):
+    candidates=staged.slot.candidates[:staged.num_candidates].numpy()
+    column=int(np.searchsorted(candidates,COPY_TOKEN_ID))
+    if column>=len(candidates) or candidates[column]!=COPY_TOKEN_ID:
+        raise ValueError('CPLM candidate set omitted the copy token')
+    return column
 
 class CandidateBuilder:
     """Host half of the candidate build: numpy only, no device work, so it can run on a worker thread.
@@ -71,7 +88,21 @@ class CandidateBuilder:
 
 
 class SampledSoftmax(KS3SampledSoftmax):
-    def __init__(self,*args,**kwargs):
+    def __init__(self,*args,host_metadata=False,**kwargs):
+        self.host_metadata=host_metadata
         super().__init__(*args,**kwargs)
         self.builder=CandidateBuilder(self.builder.vocab_size,max(self.counts),args[3])
         self.builder.reset(self.rank,self.world_size)
+
+    def gather(self,step,lm_head_f8_col):
+        if not self.host_metadata or not self.counts[step]:
+            return super().gather(step,lm_head_f8_col)
+        uploaded_step,staged=self.uploaded
+        assert uploaded_step==step
+        copy_column=host_copy_column(staged)
+        inputs=super().gather(step,lm_head_f8_col)
+        # The existing upload WAR/RAW events protect this shared index view
+        # through the whole forward and backward, including index_select's
+        # weight-gradient scatter. Only one microbatch is active per step.
+        return SampledHeadInputs(inputs.rows,inputs.rows_t,inputs.target_pos,inputs.prefix_pos,
+                                 inputs.vocab_pos,self.candidates[:self.counts[step]],copy_column)

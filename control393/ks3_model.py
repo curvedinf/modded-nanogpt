@@ -3,15 +3,19 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 from control393.model import MoEGPT,MOE_LAYERS
-from ks3_research.backward import ks3_blas_fused_unpack
+from ks3_research.vendor.ks3_int8 import ks3_int8
 
 class MoEKS3GPT(MoEGPT):
-    def __init__(self,*args,charts=1024,rank=1,dynamic_rows=False,bf16_products=False,expert_unbind=False,**kwargs):
+    def __init__(self,*args,charts=1024,rank=1,dynamic_rows=False,bf16_products=False,expert_unbind=False,
+                 dense_pointwise=False,**kwargs):
         if rank!=1:raise ValueError('Initial MoE KS3 implementation supports rank1; retain routing topology when extending ranks')
+        if dynamic_rows or bf16_products:
+            raise ValueError('Use the user-selected upstream ks3_int8 kernel unchanged; legacy dynamic_rows/BF16 BLAS replacements are forbidden')
         self.ks3_charts=charts
         self.ks3_dynamic_rows=dynamic_rows
         self.ks3_bf16_products=bf16_products
         self.ks3_expert_unbind=expert_unbind
+        self.dense_pointwise=dense_pointwise
         super().__init__(*args,**kwargs)
         self.register_buffer('ks3_tanh_lut',(torch.tanh(torch.arange(-128,128,device=self.device).float()*(3.2/127.))*127).round().clamp(-127,127).to(torch.int8),persistent=False)
 
@@ -36,7 +40,11 @@ class MoEKS3GPT(MoEGPT):
         self.moe_bank.data=master
 
     def _mlp(self,x,c_fc,c_proj,*,slot=None):
-        if slot not in MOE_LAYERS:return super()._mlp(x,c_fc,c_proj,slot=slot)
+        if slot not in MOE_LAYERS:
+            if self.dense_pointwise:
+                from control393.dense_pointwise import dense_pointwise_mlp
+                return dense_pointwise_mlp(x,c_fc,c_proj)
+            return super()._mlp(x,c_fc,c_proj,slot=slot)
         k=MOE_LAYERS.index(slot);up,down,router=self._expert_views[k]
         flat=x.reshape(-1,x.shape[-1])
         probs=F.softmax(F.linear(flat,router.to(flat.dtype)).float(),-1)
@@ -57,9 +65,8 @@ class MoEKS3GPT(MoEGPT):
             else:
                 coeff=self.ks3_coefficients[k,e];scale=self.ks3_scale[k,e];shift=self.ks3_shift[k,e]
             if count:
-                y=ks3_blas_fused_unpack(h,up[e],down[e].T,coeff,scale,shift,
-                    subspace_rank=1,nonlinear='fp16',tanh_lut=self.ks3_tanh_lut,
-                    dynamic_rows=self.ks3_dynamic_rows,bf16_products=self.ks3_bf16_products)
+                y=ks3_int8(h,up[e],down[e].T,coeff,scale,shift,
+                    subspace_rank=1,nonlinear='fp16',tanh_lut=self.ks3_tanh_lut)
             else:y=h+(up[e].sum()+down[e].sum()+coeff.sum()+scale.sum()+shift.sum()).to(h.dtype)*0
             parts.append(y)
         ys=torch.cat(parts);y=torch.empty_like(ys).index_copy(0,order,ys)

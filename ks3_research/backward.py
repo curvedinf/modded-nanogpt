@@ -22,21 +22,29 @@ def unpack_bf16(codes,scales):
     return unpack_gs32(codes,scales,dtype=torch.bfloat16)
 
 
-def matrix_product(a,b,bf16=False):
+def matrix_product(a,b,bf16=False,fp8=False):
+    if fp8:
+        if bf16:raise ValueError('Select FP8 or BF16 products, not both')
+        from ks3_research.fp8_blas import matrix_product as fp8_mm
+        return fp8_mm(a,b)
     if bf16:
         with torch.autocast('cuda',enabled=False):
             return torch.mm(a.to(torch.bfloat16),b.to(torch.bfloat16),out_dtype=torch.float32)
     return a@b
 
 
-def project_features_blas(qx,sx,qd,sd,p,ps,scale,shift,lut,rank,nonlinear,unpack=unpack_fp32,dynamic_rows=False,bf16_products=False):
+def project_features_blas(qx,sx,qd,sd,p,ps,scale,shift,lut,rank,nonlinear,unpack=unpack_fp32,dynamic_rows=False,bf16_products=False,fp8_products=False,prepared=None):
     """FP32 input product followed by the original FP16/GS32 geometry kernel.
 
     A different product summation can cross a later quantization boundary; this
     is an explicitly measured numerical variant, not a bitwise replacement.
     """
     with torch.autocast('cuda',enabled=False):
-        coords=matrix_product(unpack(qx,sx),unpack(qd,sd).T,bf16_products)
+        if prepared is not None:
+            from ks3_research.fp8_blas import product
+            coords=product(prepared[0],prepared[1],transpose_b=True)
+        else:
+            coords=matrix_product(unpack(qx,sx),unpack(qd,sd).T,bf16_products,fp8_products)
     m,n=coords.shape
     clipped=coords.clamp(-65504.,65504.)
     mean=clipped if rank==1 else clipped.reshape(m,n//rank,rank).mean(-1)
@@ -64,6 +72,7 @@ class _BLASKS3Train(torch.autograd.Function):
     def backward(ctx,grad):
         rank=ctx.subspace_rank
         bf16_products=getattr(ctx,'bf16_products',False)
+        fp8_products=getattr(ctx,'fp8_products',False)
         unpack=unpack_fp32
         if getattr(ctx,'fused_unpack',False):
             from ks3_research.unpack import unpack_gs32
@@ -80,7 +89,13 @@ class _BLASKS3Train(torch.autograd.Function):
             all_products=getattr(ctx,'all_products',False)
             if all_products:
                 grad_product=grad.to(torch.bfloat16 if bf16_products else torch.float32)
-                dc=matrix_product(grad_product,unpack(qu,su),bf16_products)
+                if fp8_products:
+                    from ks3_research.fp8_blas import Operand,product
+                    fx,fd,fu,fh=ctx.fp8_operands
+                    fg=Operand(grad)
+                    dc=product(fg,fu)
+                else:
+                    dc=matrix_product(grad_product,unpack(qu,su),bf16_products)
             else:
                 dc=torch.empty_like(coords)
             dmean=torch.empty_like(coords) if rank>1 else dc
@@ -107,9 +122,15 @@ class _BLASKS3Train(torch.autograd.Function):
             # The optional BF16 operand variant retains FP32 GEMM outputs and masters.
             # Separate GEMMs let BLAS tile long weight-gradient reductions instead
             # of sharing one persistent launch with the input gradient.
-            dx=matrix_product(dc,unpack(qd,sd),bf16_products)
-            ddown=matrix_product(dc.T,unpack(qx,sx),bf16_products)
-            dup=matrix_product((grad_product if all_products else grad.float()).T,unpack(h,hs),bf16_products)
+            if fp8_products:
+                fc=Operand(dc)
+                dx=product(fc,fd)
+                ddown=product(fc,fx,transpose_a=True)
+                dup=product(fg,fh,transpose_a=True)
+            else:
+                dx=matrix_product(dc,unpack(qd,sd),bf16_products)
+                ddown=matrix_product(dc.T,unpack(qx,sx),bf16_products)
+                dup=matrix_product((grad_product if all_products else grad.float()).T,unpack(h,hs),bf16_products)
             reduce_geometry = original._reduce_geometry
             if getattr(ctx,'dynamic_rows',False):
                 from control393.ks3_dynamic import _reduce_geometry
@@ -178,16 +199,27 @@ class _OutputBLASKS3Train(_BLASKS3Train):
                 unpack=unpack_gs32
             if getattr(ctx,'bf16_products',False):
                 unpack=unpack_bf16
+            prepared=None
+            if getattr(ctx,'fp8_products',False):
+                from ks3_research.fp8_blas import Operand,product
+                fx,fd,fu=Operand(qx,sx),Operand(qd,sd),Operand(qu,su)
+                prepared=(fx,fd)
             if getattr(ctx,'input_blas',False):
                 h,hs,coords,mean=project_features_blas(qx,sx,qd,sd,p,ps,scale,shift,lut,
                                                       subspace_rank,nonlinear,unpack,
                                                       dynamic_rows=getattr(ctx,'dynamic_rows',False),
-                                                      bf16_products=getattr(ctx,'bf16_products',False))
+                                                      bf16_products=getattr(ctx,'bf16_products',False),
+                                                      fp8_products=getattr(ctx,'fp8_products',False),prepared=prepared)
             else:
                 h,hs,coords,mean=original._project_features(qx,sx,qd,sd,p,ps,scale,shift,lut,
                                                           subspace_rank,nonlinear,save=True)
             with torch.autocast('cuda',enabled=False):
-                y=matrix_product(unpack(h,hs),unpack(qu,su).T,getattr(ctx,'bf16_products',False))
+                if getattr(ctx,'fp8_products',False):
+                    fh=Operand(h,hs)
+                    y=product(fh,fu,transpose_b=True)
+                    ctx.fp8_operands=(fx,fd,fu,fh)
+                else:
+                    y=matrix_product(unpack(h,hs),unpack(qu,su).T,getattr(ctx,'bf16_products',False))
             ctx.save_for_backward(qx,sx,qd,sd,qu,su,h,hs,coords,p,ps,scale,shift,
                                   raw_scale,raw_shift,mean)
         if world>1 and y.numel():
@@ -226,9 +258,16 @@ class _BF16DynamicRowsKS3Train(_DynamicRowsKS3Train):
         return _DynamicRowsKS3Train.forward(ctx,*args)
 
 
+class _FP8DynamicRowsKS3Train(_DynamicRowsKS3Train):
+    @staticmethod
+    def forward(ctx,*args):
+        ctx.fp8_products=True
+        return _DynamicRowsKS3Train.forward(ctx,*args)
+
+
 def ks3_blas(inputs,down,up,coefficients,raw_scale,raw_shift,*,subspace_rank=1,
              nonlinear='fp16',tanh_lut=None,all_products=False,output_blas=False,input_blas=False,
-             fused_unpack=False,dynamic_rows=False,bf16_products=False):
+             fused_unpack=False,dynamic_rows=False,bf16_products=False,fp8_products=False):
     modes={'fp32':0,'fp16':1,'int8':2}
     if nonlinear not in modes:
         raise ValueError('Unknown KS3 nonlinearity')
@@ -262,6 +301,9 @@ def ks3_blas(inputs,down,up,coefficients,raw_scale,raw_shift,*,subspace_rank=1,
         if not dynamic_rows:
             raise ValueError('BF16 operands require the verified runtime-row rank1 path')
         implementation=_BF16DynamicRowsKS3Train
+    if fp8_products:
+        if not dynamic_rows or bf16_products:raise ValueError('FP8 products require runtime-row rank1 path without BF16 products')
+        implementation=_FP8DynamicRowsKS3Train
     return implementation.apply(inputs,down,up,coefficients,raw_scale,raw_shift,tanh_lut,
                                  modes[nonlinear],1,None,subspace_rank)
 

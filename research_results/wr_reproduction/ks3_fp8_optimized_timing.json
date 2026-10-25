@@ -1,0 +1,278 @@
+{
+  "utc": "2026-10-25T01:26:25.138131+00:00",
+  "run_id": "pr393-ks3-fp8-optimized-timing-20261025T012214Z",
+  "status": "timing_complete",
+  "steps": 100,
+  "first_100_seconds": 56.48807423899416,
+  "steady_seconds_per_update": 0.562035481093335,
+  "comparison": {
+    "bf16": {
+      "first_100_seconds": 59.95450335800706,
+      "time_reduction_fraction": 0.05781766047353887,
+      "steady_seconds_per_update": 0.5989437466268039,
+      "steady_time_reduction_fraction": 0.06162225708396307
+    },
+    "fp8": {
+      "first_100_seconds": 59.55930390799767,
+      "time_reduction_fraction": 0.05156590939591399,
+      "steady_seconds_per_update": 0.5935849982800816,
+      "steady_time_reduction_fraction": 0.053150799427481576
+    }
+  },
+  "core_benchmark": {
+    "tokens": 16384,
+    "experts": 8,
+    "charts": 1024,
+    "block_ms": {
+      "bf16_forward": 0.8994212019334146,
+      "bf16_backward": 1.7932937334168633,
+      "fp8_forward": 0.5886690470986737,
+      "fp8_backward": 1.2612563096083604
+    },
+    "matrix_products": [
+      {
+        "name": "input_projection",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e4m3fn",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.26533541152565066,
+        "fp8_ms": 0.17687396218397108
+      },
+      {
+        "name": "output_projection",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e4m3fn",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.2793093538569833,
+        "fp8_ms": 0.16259242117304423
+      },
+      {
+        "name": "feature_gradient",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e5m2",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.29389570559597344,
+        "fp8_ms": 0.17648637654395077
+      },
+      {
+        "name": "input_gradient",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e5m2",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.28582886799727336,
+        "fp8_ms": 0.16450997625308997
+      },
+      {
+        "name": "output_weight_gradient",
+        "fp8_operands": [
+          "torch.float8_e4m3fn",
+          "torch.float8_e5m2"
+        ],
+        "fp8_ms": 0.22854829204681257
+      },
+      {
+        "name": "input_weight_gradient",
+        "fp8_operands": [
+          "torch.float8_e5m2",
+          "torch.float8_e4m3fn"
+        ],
+        "fp8_ms": 0.229814453125
+      }
+    ],
+    "producer_ms": {
+      "bf16_input_gather_pack": 0.07774723991018827,
+      "fp8_input_gather_pack_dual": 0.06354616723379325,
+      "bf16_geometry_pack": 0.27401314745045674,
+      "fp8_geometry_pack_dual_legacy_atomic": 1.0710032236008418
+    }
+  },
+  "previous_core_benchmark": {
+    "tokens": 16384,
+    "experts": 8,
+    "charts": 1024,
+    "block_ms": {
+      "bf16_forward": 0.8961035068218525,
+      "bf16_backward": 1.8028538541973762,
+      "fp8_forward": 0.8917150775205742,
+      "fp8_backward": 1.734846224103655
+    },
+    "matrix_products": [
+      {
+        "name": "input_projection",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e4m3fn",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.26648802107030695,
+        "fp8_ms": 0.2695290068275908
+      },
+      {
+        "name": "output_projection",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e4m3fn",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.2695809266061494,
+        "fp8_ms": 0.2672079746742988
+      },
+      {
+        "name": "feature_gradient",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e5m2",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.29360477035469296,
+        "fp8_ms": 0.27280023607904513
+      },
+      {
+        "name": "input_gradient",
+        "bf16_operands": [
+          "torch.bfloat16",
+          "torch.bfloat16"
+        ],
+        "fp8_operands": [
+          "torch.float8_e5m2",
+          "torch.float8_e4m3fn"
+        ],
+        "bf16_ms": 0.28579513549804686,
+        "fp8_ms": 0.26575267288711046
+      },
+      {
+        "name": "output_weight_gradient",
+        "fp8_operands": [
+          "torch.float8_e4m3fn",
+          "torch.float8_e5m2"
+        ],
+        "fp8_ms": 0.36771612385757096
+      },
+      {
+        "name": "input_weight_gradient",
+        "fp8_operands": [
+          "torch.float8_e5m2",
+          "torch.float8_e4m3fn"
+        ],
+        "fp8_ms": 0.3691954645120873
+      }
+    ],
+    "producer_ms": {
+      "bf16_input_gather_pack": 0.07800080107864862,
+      "fp8_input_gather_pack_dual": 0.06036181516538278,
+      "bf16_geometry_pack": 0.27410097694396973,
+      "fp8_geometry_pack_dual": 1.0795870656552522
+    }
+  },
+  "oracle": {
+    "passed": true,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "bank": 0.0,
+          "geometry": 1.2434067997446618e-08
+        },
+        "post_amax": 7.158477783203125,
+        "dpre_amax": 0.07970885932445526
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 4.877150905358008e-10,
+          "bank": 6.967591303919107e-08,
+          "geometry": 1.626491865636126e-07
+        },
+        "post_amax": 10.06915283203125,
+        "dpre_amax": 0.18012376129627228
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 3.6353617338669153e-10,
+          "dx": 5.101589067635359e-06,
+          "bank": 2.9003078907408053e-06,
+          "geometry": 1.1886421447115936e-07
+        },
+        "post_amax": 14.3402099609375,
+        "dpre_amax": 0.249906525015831
+      }
+    ]
+  },
+  "source_sha256": {
+    "wr_reproduction/accumulation.py": "f4faf897f77ed28cf61150f4e17f51985983d754587218e0c6fe60b155ce15b8",
+    "wr_reproduction/train.py": "839fdb9850314f953b5509dd7d44e9226c8cae1e6d4a5555eeeceb4880d5d023",
+    "wr_reproduction/check_model.py": "0a4efc4b286db3ac7852837fcd4a48ccca0310631138d1a770e5addcf36a3140",
+    "wr_reproduction/contracts.py": "35f97f05d4a9d1d7cf2d5753e9e60866685b786f656aa30ee4ed2cc4d880cca5",
+    "wr_reproduction/backend.py": "372d89f0d4a7d096598ece0c53fb01325d0df6c337b275229945d50da67a3fa9",
+    "wr_reproduction/check_ks3_moe.py": "9ee4bb0ef05013b3153d56f0d990c9b4214cfdcb463bc4ec610131a70772f800",
+    "wr_reproduction/virtual_tables.py": "9f265abf4009a9e2495abc191c6806cd7ab6770c8e17475d9d6ac936c12314a9",
+    "wr_reproduction/check_moe.py": "7d8ee016c424cd700167193059b01f56a6767398a10a105da8fdbbebffdec828",
+    "wr_reproduction/check_attention.py": "c396bed51c5ca32467b077765c984a39d912f47ca5277a843fc8e7abe603935e",
+    "wr_reproduction/mlp_kernels.py": "13e4312e3f0d934a2fb02319213d9ec1158eb512a16285c0de7f20a0fe5ee385",
+    "wr_reproduction/bench_updates.py": "58a7e0cef84c22f173332ab34ea447b51fced253604e8aba94209fe2e2abb8af",
+    "wr_reproduction/tune_ks3_fp8_gemm.py": "d3892f6aec65802a2b7593520d78a13185715eb714c4346777e9fecb4281d483",
+    "wr_reproduction/fp8.py": "069bbc9e632bba8ff458246eb38fd0369096c3d751b5dcfebd7fc0901435c12e",
+    "wr_reproduction/check_validation_kernels.py": "90ee67259b0ed5bd0cb08e472a54ba604b5c1bfc9f5103e0f5a2394762941c67",
+    "wr_reproduction/check_sparse_accumulation.py": "0bdd65d0a7a13ceff6beb251a89c44bfae0265afccd2984085a44182e302b87f",
+    "wr_reproduction/check_ks3.py": "622f5688bacd5c42951f1b54211cb7cf6081ae6b5c2582cfda47ba57ddb96222",
+    "wr_reproduction/tune_ks3_fp8_producers.py": "5c04040adea504a00eac8fb709dd23d91ef16317aa479a04aaafcd2f91b928e4",
+    "wr_reproduction/optimizer_kernel.py": "28372b054a91539352223b1cee56bffeb6de37ea382fc1910ca1ac6098f4df3c",
+    "wr_reproduction/check_ce.py": "6d8e86c9f818e276fbb6f78bd3f9bc6488bac69e92958c87e2b8a691a102ffa1",
+    "wr_reproduction/ks3_fp8_gemm.py": "2f630a58eb5a2950ef8c2a6f0671683975b2018527e317135178b23a1cd900e6",
+    "wr_reproduction/rank_state.py": "59fa77a626cebc93c03ae426543b6fdddff352ff64b5808d5a0968037afb8dfe",
+    "wr_reproduction/attention_quant.py": "623ffbb6cba52b36defefcee7db61c3e5c447e45558d801d5189c56054645f04",
+    "wr_reproduction/__init__.py": "6260c9a6f46e98e082a6836441c3696f51f550d62b8165de1d029189d41c1fd4",
+    "wr_reproduction/ks3_moe.py": "65f1c310bc275707bc6dcc794ebc6d6a037a474126ae6ee51ac0525f5edfe6e2",
+    "wr_reproduction/ks3_kernel.py": "23e230bd4c7b6dc2311f2a85dd8e5e56fb2ce653149228a6360dfc78ad3e7273",
+    "wr_reproduction/moe_kernels.py": "9a72ef17fd57c93fcba7e0d9cbb3e1c24ce481967f9d9d5a1daa30b9ec1e5c61",
+    "wr_reproduction/profile_ks3_precision.py": "f2410a0b0d3634f0ae3c8a91ed5063883f5c0fefbced8a35dc8add6921932085",
+    "wr_reproduction/ce_kernel.py": "e21bd250f035f0121c9d3a6ff8bdbf67c777441592abc8150c73af9ac49565bd",
+    "wr_reproduction/fused_fp8.py": "d617ea240890fe86a92e386ab278c71e6866f403245a6b6a915d066a82ce88e4",
+    "wr_reproduction/attention_kernel.py": "21338e7fc869a801d2d916d4ec6ca85c8c10530c488991d258717fe8b159d58f",
+    "wr_reproduction/ks3_moe_fp8.py": "3922626a1bb712422d47902bace3b92e9c6910ffbeaf1a0e4ba1682090e28401",
+    "wr_reproduction/bench_ks3_backends.py": "777ec953dbf228c23a80c50611c9e3e745e833fb48d8276938da31688ae8c45a",
+    "wr_reproduction/check_ks3_fp8_moe.py": "6d182d62bbd455a830f1ae34f13de58af0bf59db94e0e93fa038ef9ff6e3de97",
+    "wr_reproduction/local_collectives.py": "873c92d94f5bf30802204fccd6232b03672f10b443a9425cff9566e959c07767",
+    "wr_reproduction/check_mlp.py": "3adda319be8af08c8aa8da8d896ab4bc5842a5d59bf51ddc780903d0dbbfd93a"
+  },
+  "changes": [
+    "KS3-only GEMM tiles: input 64x128x128/4 warps/MFMA16; output 128x128x128/8 warps/MFMA32; weight gradients 64x128x64/4 warps/MFMA16",
+    "FP8 input producer 128 rows; geometry producer 64 rows; four warps; unchanged GS32/FP8 arithmetic, scales and dual layouts"
+  ],
+  "validation_performed": false,
+  "limitation": "One first-stage timing screen against saved references. No full-validation or time-to-loss conclusion. Expert-core microbench excludes routing and weight refresh.",
+  "events": "/root/modded-nanogpt/logs/wr-reproduction/pr393-ks3-fp8-optimized-timing-20261025T012214Z/events.jsonl"
+}

@@ -1,0 +1,308 @@
+{
+  "run_id": "ks3-shared-fp8-expanded-sweep-20261025T100101-631bcf",
+  "code_commit": "a3491f3d119c84a9dda640287affeddded380137",
+  "source_sha256": "ff06490d6897418b634fce141239f6c8f103366a758e68c2ff5f682f361a8199",
+  "note": "Use variant paired_baseline_ms with paired_speedup; case baseline_ms was a separate initial measurement. Producer cases and small dense dW stay on verified v1 tiles.",
+  "cases": [
+    {
+      "name": "attention_narrow",
+      "config": [
+        128,
+        256,
+        128,
+        4,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 0.06281690436982948,
+      "candidate_ms": 0.05805844393643466,
+      "paired_speedup": 1.0819598341044865,
+      "retain_v1": false
+    },
+    {
+      "name": "attention_wide",
+      "config": [
+        256,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 0.26819277150290355,
+      "candidate_ms": 0.21999326003225225,
+      "paired_speedup": 1.2190954007572095,
+      "retain_v1": false
+    },
+    {
+      "name": "attention_dx",
+      "config": [
+        256,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 0.2333253554715455,
+      "candidate_ms": 0.17693910326276507,
+      "paired_speedup": 1.3186760369472625,
+      "retain_v1": false
+    },
+    {
+      "name": "attention_dw",
+      "config": [
+        64,
+        64,
+        256,
+        4,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 0.35713097832419655,
+      "candidate_ms": 0.3366798300492136,
+      "paired_speedup": 1.0607436099513106,
+      "retain_v1": false
+    },
+    {
+      "name": "dense_up_producer",
+      "config": [
+        256,
+        128,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 0.4980929132235252,
+      "candidate_ms": 0.4905006877711562,
+      "paired_speedup": 1.0154785215223006,
+      "retain_v1": true
+    },
+    {
+      "name": "dense_dpre_producer",
+      "config": [
+        256,
+        128,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 0.507771718299995,
+      "candidate_ms": 0.521669079964621,
+      "paired_speedup": 0.9733598133407323,
+      "retain_v1": true
+    },
+    {
+      "name": "dense_down",
+      "config": [
+        256,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 0.4190465600149972,
+      "candidate_ms": 0.3078369731903076,
+      "paired_speedup": 1.3612613055285558,
+      "retain_v1": false
+    },
+    {
+      "name": "dense_dw",
+      "config": [
+        64,
+        128,
+        256,
+        4,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 0.50500705281242,
+      "candidate_ms": 0.48125414334810696,
+      "paired_speedup": 1.049356270055283,
+      "retain_v1": true
+    },
+    {
+      "name": "head_logits",
+      "config": [
+        256,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 1.2805675838304602,
+      "candidate_ms": 1.1205424382136417,
+      "paired_speedup": 1.1428104283778213,
+      "retain_v1": false
+    },
+    {
+      "name": "head_dx",
+      "config": [
+        256,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 1.4629255580902099,
+      "candidate_ms": 1.073772076198033,
+      "paired_speedup": 1.3624172117327498,
+      "retain_v1": false
+    },
+    {
+      "name": "head_sampled_dw",
+      "config": [
+        128,
+        256,
+        128,
+        4,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 0.3143721351623535,
+      "candidate_ms": 0.28721314384823754,
+      "paired_speedup": 1.0945604053847435,
+      "retain_v1": false
+    },
+    {
+      "name": "large_dense_up",
+      "config": [
+        256,
+        128,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 1.453728151321411,
+      "candidate_ms": 1.4339710998535156,
+      "paired_speedup": 1.0137778588912383,
+      "retain_v1": true
+    },
+    {
+      "name": "large_dense_dw",
+      "config": [
+        64,
+        128,
+        256,
+        4,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 1.5668629294947574,
+      "candidate_ms": 1.4543468952178955,
+      "paired_speedup": 1.0773653346714123,
+      "retain_v1": false
+    },
+    {
+      "name": "large_head_logits",
+      "config": [
+        256,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 5.413051300048828,
+      "candidate_ms": 4.608832804361979,
+      "paired_speedup": 1.1744950467558086,
+      "retain_v1": false
+    },
+    {
+      "name": "large_head_dx",
+      "config": [
+        256,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 4.757007884979248,
+      "candidate_ms": 3.553856706619263,
+      "paired_speedup": 1.3385480275890265,
+      "retain_v1": false
+    },
+    {
+      "name": "late_head_logits",
+      "config": [
+        256,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 9.304556719462077,
+      "candidate_ms": 7.875556055704752,
+      "paired_speedup": 1.1814475896876147,
+      "retain_v1": false
+    },
+    {
+      "name": "late_head_dx",
+      "config": [
+        256,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 8.168813769022623,
+      "candidate_ms": 6.065137243270874,
+      "paired_speedup": 1.346847308044963,
+      "retain_v1": false
+    },
+    {
+      "name": "taper_head_logits",
+      "config": [
+        256,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 15.052580738067627,
+      "candidate_ms": 12.659452724456788,
+      "paired_speedup": 1.189038820689899,
+      "retain_v1": false
+    },
+    {
+      "name": "taper_head_dx",
+      "config": [
+        256,
+        256,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 16.320703125,
+      "candidate_ms": 11.739782047271728,
+      "paired_speedup": 1.3902049509337235,
+      "retain_v1": false
+    },
+    {
+      "name": "large_dense_dpre_producer",
+      "config": [
+        256,
+        128,
+        128,
+        8,
+        1,
+        32
+      ],
+      "paired_baseline_ms": 1.4940103721618652,
+      "candidate_ms": 1.5442048323781867,
+      "paired_speedup": 0.9674949468076599,
+      "retain_v1": true
+    }
+  ]
+}

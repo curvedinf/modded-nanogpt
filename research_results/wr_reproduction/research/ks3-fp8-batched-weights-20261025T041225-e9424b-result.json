@@ -1,0 +1,190 @@
+{
+  "run_id": "ks3-fp8-batched-weights-20261025T041225-e9424b",
+  "status": "correctness_passed",
+  "seed": 169,
+  "code_commit": "b61da26eba80c3ac98bae9a5676ea8570098c489",
+  "recipe": {
+    "name": "fp8-batched-weights",
+    "hypothesis": "Batch the 80 KS3 weight-matrix producers into two grouped kernels with per-tile maxima, then reduce maxima per expert. Preserve exact GS32 rounding, FP8 bytes, both cached layouts, early exact scales and delayed per-expert scales. Restore default geometry Adam 0.125 and zero/0.75/zero initialization to isolate a hardware-kernel change. Verify bitwise equality over multiple refreshes, measure weight refresh, then a 100-update whole-model timing screen before a continuous convergence candidate.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "weight_packing": "batched"
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "training_projection_gs32": true,
+    "coefficient_gs32": true,
+    "charts": 1024,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "bank": 0.0,
+          "geometry": 1.2434067997446618e-08
+        },
+        "post_amax": 7.158477783203125,
+        "dpre_amax": 0.07970885932445526
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 4.877150905358008e-10,
+          "bank": 6.967591303919107e-08,
+          "geometry": 1.626491865636126e-07
+        },
+        "post_amax": 10.06915283203125,
+        "dpre_amax": 0.18012376129627228
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 3.6353617338669153e-10,
+          "dx": 5.101589067635359e-06,
+          "bank": 2.9003078907408053e-06,
+          "geometry": 1.1886421447115936e-07
+        },
+        "post_amax": 14.3402099609375,
+        "dpre_amax": 0.249906525015831
+      }
+    ],
+    "full_convergence_verified": false,
+    "weight_packing": {
+      "charts": 1024,
+      "gs32": true,
+      "checks": [
+        {
+          "iteration": 0,
+          "exact_scale": true,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 1,
+          "exact_scale": false,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 2,
+          "exact_scale": false,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 3,
+          "exact_scale": true,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 0,
+          "captured_replay": true,
+          "exact_scale": false,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        },
+        {
+          "iteration": 1,
+          "captured_replay": true,
+          "exact_scale": false,
+          "bitwise_equal": [
+            "ks3_f8_up",
+            "ks3_f8_up_t",
+            "ks3_f8_down",
+            "ks3_f8_down_t",
+            "ks3_weight_scales",
+            "ks3_weight_amax"
+          ]
+        }
+      ],
+      "delayed_refresh_ms": {
+        "loop": [
+          7.166957092285156,
+          7.1661933898925785,
+          7.174235065166767
+        ],
+        "batched": [
+          0.19674819126602047,
+          0.19743167332240513,
+          0.1978432208175976
+        ]
+      },
+      "median_ms": {
+        "loop": 7.166957092285156,
+        "batched": 0.19743167332240513
+      },
+      "scope": "Weight refresh only; whole-model speed not established"
+    },
+    "utc": "2026-10-25T04:12:42.366384+00:00"
+  },
+  "terminal_geometry": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T04:12:43.335911+00:00",
+  "events_sha256": "8c90f805fab2b5a541a6157634d55181f441ce990ca3ceb7105b3a35cca4ac6a",
+  "previous_result_commit": "b61da26eba80c3ac98bae9a5676ea8570098c489"
+}

@@ -1,0 +1,64 @@
+{
+  "run_id": "ks3-fp8-batched-weights-20261025T040727-a45604",
+  "status": "timing_complete",
+  "seed": 168,
+  "code_commit": "2e1afb279b35b46af2b494e6a3bc6072546993fc",
+  "recipe": {
+    "name": "fp8-batched-weights",
+    "hypothesis": "Batch the 80 KS3 weight-matrix producers into two grouped kernels with per-tile maxima, then reduce maxima per expert. Preserve exact GS32 rounding, FP8 bytes, both cached layouts, early exact scales and delayed per-expert scales. Restore default geometry Adam 0.125 and zero/0.75/zero initialization to isolate a hardware-kernel change. Verify bitwise equality over multiple refreshes, measure weight refresh, then a 100-update whole-model timing screen before a continuous convergence candidate.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "weight_packing": "batched"
+  },
+  "validation": null,
+  "timing": {
+    "event": "timing_complete",
+    "steps": 100,
+    "train_seconds": 55.685749451004085,
+    "full_schedule_complete": false,
+    "validation_performed": false,
+    "utc": "2026-10-25T04:10:43.149685+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-fp8-c1024-r1",
+    "run_id": "ks3-fp8-batched-weights-20261025T040727-a45604",
+    "seed": 168,
+    "code_commit": "2e1afb279b35b46af2b494e6a3bc6072546993fc",
+    "training_projection_gs32": true
+  },
+  "kernel_check": null,
+  "terminal_geometry": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T04:10:44.913944+00:00",
+  "events_sha256": "a557ac708be2689aca84c097eda575599d25611c66831fba8560612c196485aa",
+  "previous_result_commit": "2e1afb279b35b46af2b494e6a3bc6072546993fc"
+}

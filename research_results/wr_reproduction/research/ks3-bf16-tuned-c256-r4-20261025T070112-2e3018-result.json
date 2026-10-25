@@ -1,0 +1,205 @@
+{
+  "run_id": "ks3-bf16-tuned-c256-r4-20261025T070112-2e3018",
+  "status": "correctness_passed",
+  "seed": 169,
+  "code_commit": "83d6bcc68ba343dea7d41576c414d8f52bd6f156",
+  "recipe": {
+    "name": "bf16-tuned-c256-r4",
+    "hypothesis": "Use256 rank-four KS3 charts with the same1024 projection features. Extend the independently checked pinned upstream chart-mean equations to four coordinates per chart, each with its own six polynomial coefficients and one chart-shared warp scale/shift. This tests broader learned cross-coordinate coupling while preserving original expert matrices, initialization, ANVIL scaling and dominant GEMM cost. Geometry has266240 parameters,61440 fewer than rank one. Initial zero coefficients retain the same initial function. Preserve geometry Adam0.125, original projection LR, GS32/FP16 nonlinearities/BF16 products, all non-KS3 settings, global updates and raw full evaluation. Require independent pinned-forward/autograd-VJP checks, full expert checks and100-update timing before convergence.",
+    "precision": "bf16",
+    "charts": 256,
+    "rank": 4,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "kernel_evidence": {
+      "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+      "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+      "matrix_max_relative_rms": 4.411854752106592e-05
+    },
+    "block_correctness_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+      "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+      "max_relative_rms": 0.0,
+      "evaluation_original_kernels": true,
+      "bitwise_input_and_weight_producers": true
+    },
+    "timing_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+      "first100_seconds": 54.066861718994915,
+      "updates25_to100_seconds": 40.427348073004396,
+      "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+      "reference_first100": 55.488501123007154,
+      "reference_25to100": 41.43367328601016,
+      "validation": false,
+      "first100_time_reduction": 0.025620432616493716,
+      "steady_time_reduction": 0.024287617611387313,
+      "timing_gate_passed": true
+    },
+    "projection_lr_multiplier": 1.0,
+    "parameter_budget_change": {
+      "original_expert_projection_parameters": 62914560,
+      "new_expert_projection_parameters": 62914560,
+      "original_geometry_parameters": 327680,
+      "new_geometry_parameters": 266240,
+      "added_parameters": -61440
+    },
+    "initialization_preservation": "Projection feature width remains1024, so original expert/router/subsequent CPU RNG draws are unchanged.",
+    "optimizer_shape_scaling": "Original ANVIL formula uses1024 projection features, not256 charts; shape multiplier sqrt(1024/768), no hyperparameter changes.",
+    "geometry_layout": "Per chart: four separate six-coefficient polynomial rows followed by one shared raw scale and raw shift;26 scalars per chart."
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "precision": "bf16",
+    "charts": 256,
+    "rank": 4,
+    "features": 1024,
+    "geometry_reference": {
+      "rank": 4,
+      "features": 1024,
+      "charts": 256,
+      "relative_rms": {
+        "forward_vs_pinned_upstream": 0.0,
+        "coordinate_vjp_vs_autograd": 3.8474945540656336e-07,
+        "geometry_vjp_vs_autograd": 3.4856375918934646e-07
+      },
+      "padding_gradient_zero": true,
+      "reference": "Byte-identical pinned upstream _geometry_quant and independent FP32 STE autograd"
+    },
+    "validation_uses_original_kernels": true,
+    "weight_packing_bitwise_equal": true,
+    "weight_refresh_ms": {
+      "legacy": 0.4390705362955729,
+      "batched": 0.09911305371023729
+    },
+    "checks": [
+      {
+        "tokens": 1,
+        "input_pack_bitwise_equal": true,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "dgate": 0.0,
+          "geometry": 0.0,
+          "weight_gradient": 0.0
+        },
+        "core_samples_ms": {
+          "legacy": [],
+          "tuned": []
+        },
+        "median_ms": {}
+      },
+      {
+        "tokens": 257,
+        "input_pack_bitwise_equal": true,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "dgate": 0.0,
+          "geometry": 0.0,
+          "weight_gradient": 0.0
+        },
+        "core_samples_ms": {
+          "legacy": [],
+          "tuned": []
+        },
+        "median_ms": {}
+      },
+      {
+        "tokens": 16384,
+        "input_pack_bitwise_equal": true,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.0,
+          "dgate": 0.0,
+          "geometry": 0.0,
+          "weight_gradient": 0.0
+        },
+        "core_samples_ms": {
+          "legacy": [
+            2.518718839946546,
+            2.45459952721229,
+            2.4752117841671675
+          ],
+          "tuned": [
+            1.2515825682048556,
+            1.247682875621168,
+            1.2531027395513994
+          ]
+        },
+        "median_ms": {
+          "legacy": 2.4752117841671675,
+          "tuned": 1.2515825682048556
+        }
+      },
+      {
+        "tokens": 49152,
+        "input_pack_bitwise_equal": true,
+        "relative_rms": {
+          "output": 3.624186092565651e-06,
+          "dx": 0.0,
+          "dgate": 9.127082876148052e-07,
+          "geometry": 0.0,
+          "weight_gradient": 4.315546902944334e-06
+        },
+        "core_samples_ms": {
+          "legacy": [
+            6.992114312308175,
+            7.0681898934500555,
+            7.074554170880999
+          ],
+          "tuned": [
+            3.438112166832233,
+            3.444709593674232,
+            3.4552581260944235
+          ]
+        },
+        "median_ms": {
+          "legacy": 7.0681898934500555,
+          "tuned": 3.444709593674232
+        }
+      }
+    ],
+    "scope": "Complete expert forward/backward, excluding router and optimizer; no whole-update speed claim",
+    "full_convergence_verified": false,
+    "utc": "2026-10-25T07:01:35.012465+00:00"
+  },
+  "terminal_geometry": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T07:01:35.987502+00:00",
+  "events_sha256": "c748b949dce58df898a2efa01ccf0441426d839c6ae293c54f4f8442c34541b5",
+  "previous_result_commit": "f87b31521fa297bc5935dc0262caf920b1462891"
+}

@@ -1,0 +1,342 @@
+{
+  "run_id": "ks3-bf16-shared-fp8-projlr0875-20261025T143653-1d1a56",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "c66da6c9d0bf42a1c87a71ebd2c332b87b8f3de3",
+  "recipe": {
+    "name": "bf16-shared-fp8-projlr0875",
+    "hypothesis": "Reduce only KS3 expert projection ANVIL learning-rate multiplier from1 to0.875 on the three-seed-verified BF16/sharedFP8-v1 recipe. Test a modest12.5% reduction in expert update magnitude while preserving all other optimizer fields, original shape-dependent scaling and c_proj2x relative rate. The same baseline with1.25 multiplier was pruned near the below5 gate; this lower-rate hypothesis is distinct. Keep geometryAdam.125, zero/.75/zero initialization,1024/rank1/GS32/FP16 spine, nonexpert/router initialization/configuration, global update sizes/objective/schedule and accepted raw BF16 validation. Scalar-only ablation uses identical kernels/shapes, so no redundant timing screen. First compatible+.01 failure after below5 prunes; immediate three fresh seeds if qualified.",
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 2.0,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "kernel_evidence": {
+      "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+      "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+      "matrix_max_relative_rms": 4.411854752106592e-05
+    },
+    "block_correctness_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+      "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+      "max_relative_rms": 0.0,
+      "evaluation_original_kernels": true,
+      "bitwise_input_and_weight_producers": true
+    },
+    "timing_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+      "first100_seconds": 54.066861718994915,
+      "updates25_to100_seconds": 40.427348073004396,
+      "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+      "reference_first100": 55.488501123007154,
+      "reference_25to100": 41.43367328601016,
+      "validation": false,
+      "first100_time_reduction": 0.025620432616493716,
+      "steady_time_reduction": 0.024287617611387313,
+      "timing_gate_passed": true
+    },
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "hardware_change_scope": "Opt-in shared nongrouped FP8 GEMM tiles across attention, dense MLP and output head; default MLP dispatch remains legacy.",
+    "shared_fp8_correctness_evidence": {
+      "run_id": "ks3-shared-fp8-dispatch-check-20261025T075607-ff0ab5",
+      "code_commit": "bcb2f5f79d96c9d82c4b0ccfcbbf0b75253fa4e1",
+      "source_format_pairs": 4,
+      "independent_shape_cases": 15,
+      "all_stored_byte_patterns": true,
+      "original_dense_mlp_autograd": true,
+      "validation": false
+    },
+    "validation_window_policy": "accepted-control",
+    "evaluation_protocol": "Capture live stage-two YaRN frequencies/attention scales on first reach of640/1408 windows. For terminal stage four or full-schedule completion only, restore those nonlearned buffers and use640/1408 evaluation arguments. Preserve raw learned weights, training schedule and all updates; no canonical mask, tail shipping or final window extension. Early-stage evaluation remains incompatible. All restoration/rebuild/readback/setup is inside original training timer; no strict qualification if actual elapsed exceeds902.3592145430011.",
+    "shared_fp8_timing_evidence": {
+      "run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+      "code_commit": "2959f2a2250c36cb7dd10f28c02cdcfcc86fd729",
+      "first100_seconds": 39.57759546399757,
+      "after25_through100_seconds": 29.55288318300154,
+      "baseline_run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "baseline_first100_seconds": 54.06715966599586,
+      "baseline_after25_through100_seconds": 40.427348073004396,
+      "first100_time_reduction": 0.26799196206178977,
+      "steady_time_reduction": 0.2689878364112719,
+      "validation": false,
+      "gate_passed": true
+    },
+    "projection_lr_multiplier": 0.875,
+    "projection_lr_change": {
+      "parent_run_id": "ks3-bf16-tuned-shared-fp8-20261025T081042-bb500f",
+      "parent_code_commit": "f1366345fcdbde52d06711b33300e481db855c34",
+      "parent_recipe_sha256": "a796b1cf87d7666389d40e7a539be24739c7fc01c8e2df9179c77c80aec7b99e",
+      "before": 1.0,
+      "after": 0.875,
+      "scope": "moe_bank ANVIL lr_mul only",
+      "geometry_lr_mul": 0.125,
+      "nonexpert_configs_unchanged": true,
+      "c_proj_relative_multiplier": 2.0,
+      "larger_rate_run": "ks3-bf16-shared-fp8-projlr125-20261025T124309-f9d231",
+      "comparison_note": "Larger-rate run was pruned; no causal or final-validation claim from its proxy result.",
+      "pinned_optimizer_builder_checks": [
+        {
+          "world_size": 1,
+          "rank": 0,
+          "only_expert_lr_changed": true
+        },
+        {
+          "world_size": 8,
+          "rank": 0,
+          "only_expert_lr_changed": true
+        },
+        {
+          "world_size": 8,
+          "rank": 3,
+          "only_expert_lr_changed": true
+        },
+        {
+          "world_size": 8,
+          "rank": 7,
+          "only_expert_lr_changed": true
+        }
+      ]
+    }
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": null,
+  "profile": null,
+  "terminal_geometry": {
+    "terminal_condition": "dynamic_best_training_proxy",
+    "event": "terminal_geometry",
+    "shape": [
+      5,
+      8,
+      1024,
+      8
+    ],
+    "all_finite": true,
+    "components": {
+      "c0": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.006061739001702748,
+        "rms": 0.012293209583614427,
+        "minimum": -0.047829266637563705,
+        "maximum": 0.0574769526720047,
+        "abs_p95": 0.02385799689218401,
+        "delta_rms": 0.012293209583614427
+      },
+      "c1": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": -0.004693388706870349,
+        "rms": 0.012002194405935742,
+        "minimum": -0.07834278047084808,
+        "maximum": 0.043590229004621506,
+        "abs_p95": 0.02388970032334327,
+        "delta_rms": 0.012002194405935742
+      },
+      "c2": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.00790809327198141,
+        "rms": 0.013769536820680004,
+        "minimum": -0.04961719363927841,
+        "maximum": 0.06081085652112961,
+        "abs_p95": 0.0263083191588521,
+        "delta_rms": 0.013769536820680004
+      },
+      "c3": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.00985519311060436,
+        "rms": 0.014848556974611642,
+        "minimum": -0.04315342754125595,
+        "maximum": 0.07665067166090012,
+        "abs_p95": 0.02754665054380893,
+        "delta_rms": 0.014848556974611642
+      },
+      "c4": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.011778601104210917,
+        "rms": 0.01708742907499191,
+        "minimum": -0.05480401590466499,
+        "maximum": 0.2019941359758377,
+        "abs_p95": 0.031826781295239914,
+        "delta_rms": 0.01708742907499191
+      },
+      "c5": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.013020567411467666,
+        "rms": 0.018591618977225655,
+        "minimum": -0.045376524329185486,
+        "maximum": 0.20425795018672943,
+        "abs_p95": 0.03504592329263687,
+        "delta_rms": 0.018591618977225655
+      },
+      "raw_scale": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": 0.7385048191950773,
+        "rms": 0.738636191268393,
+        "minimum": 0.6155710816383362,
+        "maximum": 0.9218944311141968,
+        "abs_p95": 0.7598749339580536,
+        "delta_rms": 0.018060848785758105
+      },
+      "raw_shift": {
+        "finite_count": 40960,
+        "total_count": 40960,
+        "mean": -0.013925262879919697,
+        "rms": 0.02037452769737298,
+        "minimum": -0.14397020637989044,
+        "maximum": 0.09637241065502167,
+        "abs_p95": 0.03895856328308581,
+        "delta_rms": 0.02037452769737298
+      }
+    },
+    "artifact": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-bf16-shared-fp8-projlr0875-20261025T143653-1d1a56/terminal-geometry.pt",
+    "artifact_sha256": "e3938534908eac201bfc1f4d5de70ffb7ebffc6c09ebc9099d9e23e3d2ad0fe6",
+    "diagnostic_seconds": 0.12279077700804919,
+    "outside_timed_training": true,
+    "used_for_screening": false,
+    "utc": "2026-10-25T14:46:09.645584+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "run_id": "ks3-bf16-shared-fp8-projlr0875-20261025T143653-1d1a56",
+    "seed": 168,
+    "code_commit": "c66da6c9d0bf42a1c87a71ebd2c332b87b8f3de3",
+    "training_projection_gs32": true
+  },
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.494544506072998,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.0602951049804687,
+    "reference_run_id": "ks3-bf16-shared-fp8-v2-20261025T104406-a2fddf",
+    "reference_wall_seconds": 359.0524653360044,
+    "reference_age_seconds": 1.0197554909827886,
+    "reference_objective": 3.4342494010925293,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61"
+    },
+    "reference_source_step": 610,
+    "comparable_runs": 7,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/research/runs/ks3-bf16-shared-fp8-v2-20261025T104406-a2fddf/events.jsonl",
+      "sha256": "20c6ba34b5d0eaf69fa382e94e0ab856cd263fac35319d038df9b16ad1f0f324",
+      "line": 640,
+      "row_sha256": "5b86f528a5c5571b8e450a13e3430143812d95df0ef0786d765981bc32232d49"
+    },
+    "step": 596,
+    "train_seconds": 360.0722208269872,
+    "reference_snapshot_sha256": "ce46c47f000a2c4c21ed858db0dbef717b05ffb33cad3f090e417b56c99e5f0b",
+    "utc": "2026-10-25T14:46:09.483095+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "run_id": "ks3-bf16-shared-fp8-projlr0875-20261025T143653-1d1a56",
+    "seed": 168,
+    "code_commit": "c66da6c9d0bf42a1c87a71ebd2c332b87b8f3de3",
+    "training_projection_gs32": true
+  },
+  "completed_utc": "2026-10-25T14:46:11.493429+00:00",
+  "events_sha256": "cb5ecb69d32be9a242499d9bc9c878db5bfc912f3e1131db5997f44471131cfa",
+  "previous_result_commit": "747ecac1377f98f464f3b3f1210e6c5196f9ccf5"
+}

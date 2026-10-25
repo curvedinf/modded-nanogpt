@@ -1,0 +1,100 @@
+{
+  "run_id": "ks3-fp8-c1536-20261025T025153-2e72ef",
+  "status": "correctness_passed",
+  "seed": 169,
+  "code_commit": "0a6821ff418ab662ae8b960cb15f82db606d39b4",
+  "recipe": {
+    "name": "fp8-c1536",
+    "hypothesis": "Increase only KS3 expert charts from 1024 to 1536 (rank one, eight top1 experts) to test whether extra expert capacity lowers loss enough to offset its measured update cost. Keep optimized GS32/FP8 kernels, geometry initialization 0/0.75/0, geometry Adam lr_mul 0.125, all original non-KS3 settings and full GS32/BF16 evaluation. Preserve the original CPU RNG stream after expert initialization and exactly restore original router draws, so all non-expert initialization is unchanged. Run width-specific numerical checks and a 100-update cost measurement before a full-budget candidate.",
+    "precision": "fp8",
+    "charts": 1536,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "parameter_budget_change": {
+      "original_expert_projection_parameters": 62914560,
+      "new_expert_projection_parameters": 94371840,
+      "original_geometry_parameters": 327680,
+      "new_geometry_parameters": 491520,
+      "added_parameters": 31621120
+    },
+    "initialization_preservation": "Replay only original 1024-chart expert draws after wider expert initialization; restore original router and subsequent CPU RNG state. Actual pinned init_moe body verified in CPU test."
+  },
+  "validation": null,
+  "timing": null,
+  "kernel_check": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "training_projection_gs32": true,
+    "coefficient_gs32": true,
+    "charts": 1536,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 0.00010626638686517254,
+          "bank": 0.0,
+          "geometry": 1.9715699905997752e-10
+        },
+        "post_amax": 7.7049560546875,
+        "dpre_amax": 0.10357865691184998
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 0.0,
+          "dx": 5.06529893584684e-08,
+          "bank": 7.124214334908174e-06,
+          "geometry": 1.1526277177154043e-07
+        },
+        "post_amax": 11.15435791015625,
+        "dpre_amax": 0.24750640988349915
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 5.046661499363836e-06,
+          "dx": 9.117241461353842e-06,
+          "bank": 1.8143869056075346e-06,
+          "geometry": 1.168848626775798e-07
+        },
+        "post_amax": 18.0919189453125,
+        "dpre_amax": 0.26598021388053894
+      }
+    ],
+    "full_convergence_verified": false,
+    "utc": "2026-10-25T02:52:16.783991+00:00"
+  },
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T02:52:17.914631+00:00",
+  "events_sha256": "06f107361fec05dd08673969fb06aad753a60d980394a434ba26e81aeba67dc2",
+  "previous_result_commit": "2fe6d414a5b45f40f159ff01b4e97666bf15131a"
+}

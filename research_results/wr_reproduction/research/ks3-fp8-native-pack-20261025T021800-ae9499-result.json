@@ -1,0 +1,63 @@
+{
+  "run_id": "ks3-fp8-native-pack-20261025T021800-ae9499",
+  "status": "timing_complete",
+  "seed": 168,
+  "code_commit": "8cdf4ba9f5e3d54fa26373514b306cac81388b45",
+  "recipe": {
+    "name": "fp8-native-pack",
+    "hypothesis": "Remove only the extra GS32 round/decode of FP8 training projection operands (inputs, weights and nonlinear features), keeping native E4M3/E5M2 products, FP32 accumulation, GS32 geometry coefficients, FP16 nonlinearities, geometry Adam lr_mul 0.125, delayed scales, reusable dual layouts and BF16/GS32 validation. Avoiding double rounding may improve convergence and packing throughput. Run numerical checks and a 100-update whole-model timing screen before a convergence trial.",
+    "precision": "fp8",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 902.3592145430011,
+    "validation_setup_reserve_seconds": 1.25,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping. Native packing applies only to FP8 training operands; coefficient quantization and the complete accepted GS32/BF16 evaluation path remain fixed.",
+    "training_gs32": false
+  },
+  "validation": null,
+  "timing": {
+    "event": "timing_complete",
+    "steps": 100,
+    "train_seconds": 56.54369610999129,
+    "full_schedule_complete": false,
+    "validation_performed": false,
+    "utc": "2026-10-25T02:22:32.820636+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-native-fp8-projections-gs32-coeff-c1024-r1",
+    "run_id": "ks3-fp8-native-pack-20261025T021800-ae9499",
+    "seed": 168,
+    "code_commit": "8cdf4ba9f5e3d54fa26373514b306cac81388b45",
+    "training_projection_gs32": false
+  },
+  "kernel_check": null,
+  "qualifies": false,
+  "exit_code": 0,
+  "pruning": null,
+  "completed_utc": "2026-10-25T02:22:34.795520+00:00",
+  "events_sha256": "2203d6e8ff59f684d099a1b72e11b29add8790bcbe7e6757761e949824d6859a",
+  "previous_result_commit": "8cdf4ba9f5e3d54fa26373514b306cac81388b45"
+}
