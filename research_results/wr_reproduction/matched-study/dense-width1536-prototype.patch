@@ -1,0 +1,129 @@
+--- a/wr_reproduction/ks3_feedforward.py
++++ b/wr_reproduction/ks3_feedforward.py
+@@ -61,7 +61,8 @@
+     from track_1_short.optim import anvil
+     arch=recipe['architecture'];keep=tuple(sorted(DENSE[l] for l in RETAIN[arch]))
+     mapping={slot:i for i,slot in enumerate(keep)}
+-    charts,rank=recipe['charts'],recipe['rank'];features=charts*rank
++    charts,rank=recipe.get('dense_charts',recipe['charts']),recipe['rank'];features=charts*rank
++    if features not in (512,768,1024,1280,1536):raise ValueError('Unsupported dense KS3 width')
+     geometry=recipe['geometry'];multiplier=recipe.get('projection_lr_multiplier',1.)
+     transformed_forward,forward_sha=compile_method(forward_tree(),gpt.__dict__)
+     refresh,_=compile_method(refresh_tree(len(keep)),gpt.__dict__)
+--- a/wr_reproduction/matched_architecture.py
++++ b/wr_reproduction/matched_architecture.py
+@@ -9,14 +9,15 @@
+ RETAIN={'mlp':tuple(range(11)), 'ks3_all':(), 'ks3_first_mlp':(0,),
+         'ks3_last_mlp':(10,), 'ks3_both_mlp':(0,10), 'ks3_experts':(0,2,4,8,10)}
+ 
+-def layer_map(architecture,features=1024):
++def layer_map(architecture,features=1024,dense_features=None):
++    dense_features=features if dense_features is None else dense_features
+     retained=RETAIN[architecture]
+     rows=[]
+     for layer in range(11):
+         branches=[]
+         if layer in DENSE:
+             kind='mlp' if layer in retained else 'ks3'
+-            h=2816 if kind=='mlp' else features
++            h=2816 if kind=='mlp' else dense_features
+             branches.append(dict(branch='parallel_dense' if layer==8 else 'dense',slot=DENSE[layer],
+                                  type=kind,instances=1,projection_shape=[2,h,768],
+                                  projection_parameters=2*h*768))
+@@ -42,7 +43,7 @@
+         assert tuple(model.mlp_bank.shape)==(8,2,2816,768)
+         assert tuple(model.moe_bank.shape)==(80,1024,768)
+     features=model.moe_bank.shape[1]
+-    rows=layer_map(architecture,features)
++    rows=layer_map(architecture,features,model.mlp_bank.shape[2])
+     if architecture not in ('mlp','ks3_experts'):
+         model.assert_feedforward_inventory(rows)
+     branches=[b for row in rows for b in row['feedforward']]
+--- a/wr_reproduction/check_ks3_feedforward_cpu.py
++++ b/wr_reproduction/check_ks3_feedforward_cpu.py
+@@ -24,6 +24,7 @@
+     before=fingerprint(baseline)
+     baseline_mlp=baseline.mlp_bank.detach().clone()
+     baseline_router=baseline.moe_router.detach().clone()
++    baseline_moe_sha=hashlib.sha256(baseline.moe_bank.detach().numpy().tobytes()).hexdigest()
+     del baseline;gc.collect()
+     from wr_reproduction.ks3_moe import install as install_moe
+     from wr_reproduction.ks3_feedforward import install as install_dense
+@@ -33,7 +34,10 @@
+     model=cls(50257,11,6,128,768,128,ngram_dim=768,world_size=8,device=torch.device('cpu'),rank=0)
+     assert before==fingerprint(model),'Nonfeedforward parameter initialization changed'
+     assert torch.equal(model.moe_router,baseline_router)
+-    features=recipe['charts']*recipe['rank']
++    features=recipe.get('dense_charts',recipe['charts'])*recipe['rank']
++    original_expert_width=recipe['charts']*recipe['rank']==1024
++    if original_expert_width:
++        assert hashlib.sha256(model.moe_bank.detach().numpy().tobytes()).hexdigest()==baseline_moe_sha,'Routed projection initialization changed'
+     for slot in range(5):
+         if slot in model.retained_slots:
+             index=model.retained_slots.index(slot)
+@@ -61,6 +65,8 @@
+     result=dict(passed=True,gpu_initialized=False,architecture=recipe['architecture'],
+                 nonfeedforward_initialization_identical=True,router_identical=True,
+                 original_retained_initialization_identical=True,anvil_shape_and_output_lr_and_padding_verified=True,
++                routed_projection_initialization_identical=original_expert_width,
++                dense_features=features,routed_features=recipe['charts']*recipe['rank'],
+                 inventory=inventory)
+     open(a.out,'w').write(json.dumps(result,indent=2)+'\n')
+     print(json.dumps({k:v for k,v in result.items() if k!='inventory'}))
+--- a/wr_reproduction/check_ks3_feedforward.py
++++ b/wr_reproduction/check_ks3_feedforward.py
+@@ -15,11 +15,12 @@
+     return ((a.float()-b.float()).square().mean().sqrt()/b.float().square().mean().sqrt().clamp_min(1e-12)).item()
+ 
+ def main():
+-    p=argparse.ArgumentParser();p.add_argument('--out',required=True);a=p.parse_args()
++    p=argparse.ArgumentParser();p.add_argument('--out',required=True)
++    p.add_argument('--features',type=int,choices=(512,768,1024,1280,1536),default=1024);a=p.parse_args()
+     torch.set_num_threads(1);torch.manual_seed(172);core.BF16_TUNED_KERNELS=True
+     checks=[]
+     for tokens in (1,257,4096):
+-        d,n=768,1024
++        d,n=768,a.features
+         x=torch.randn(tokens,d,device='cuda',dtype=torch.bfloat16).requires_grad_()
+         u=(torch.randn(n,d,device='cuda')*.025).bfloat16().requires_grad_()
+         w=(torch.randn(n,d,device='cuda')*.02).bfloat16().requires_grad_()
+@@ -41,7 +42,7 @@
+                     geometry_gradient=error(actual[3],gr),post_gradient=error(actual[4],ref[6]))
+         assert max(values.values())<.015,(tokens,values)
+         checks.append(dict(tokens=tokens,relative_rms=values))
+-    result=dict(event='kernel_correctness',passed=True,checks=checks,
++    result=dict(event='kernel_correctness',passed=True,checks=checks,features=a.features,
+                 oracle='Independent ks3_blas_fused_unpack autograd; all gradients, nonzero geometry and output post factor',
+                 shared_backend_modified=False,validation=False)
+     open(a.out,'w').write(json.dumps(result)+'\n');print(json.dumps(result))
+--- a/wr_reproduction/matched_controller.py
++++ b/wr_reproduction/matched_controller.py
+@@ -43,7 +43,10 @@
+              '--research-run',str(directory),'--out',str(directory/'events.jsonl')]
+     if recipe['architecture']!='mlp':command+=['--ks3-precision',recipe['precision']]
+     if kind=='timing':command+=['--timing-updates','100']
+-    if kind=='correctness':command=[str(PYTHON),'-m','wr_reproduction.check_ks3_feedforward','--out',str(directory/'events.jsonl')]
++    if kind=='correctness':
++        if recipe['rank']!=1:raise ValueError('Dense GPU oracle currently covers rank one only')
++        command=[str(PYTHON),'-m','wr_reproduction.check_ks3_feedforward','--out',str(directory/'events.jsonl'),
++                 '--features',str(recipe.get('dense_charts',recipe['charts'])*recipe['rank'])]
+     dirty=git('status','--porcelain','--','wr_reproduction','configs/wr_reproduction','ks3_research/vendor')
+     if dirty:raise RuntimeError('Commit owned code/config before launch: '+dirty)
+     run=dict(study='matched-study',run_id=rid,directory=str(directory),created_utc=now(),kind=kind,
+--- a/test_wr_matched_study.py
++++ b/test_wr_matched_study.py
+@@ -32,6 +32,14 @@
+             self.assertEqual(sum(len(r['feedforward']) for r in rows),10)
+             self.assertEqual(len(rows[8]['feedforward']),2)
+             self.assertEqual(rows[7]['feedforward'],[]);self.assertEqual(rows[9]['feedforward'],[])
++    def test_dense_width_is_independent_of_expert_width(self):
++        rows=layer_map('ks3_all',features=1024,dense_features=1536)
++        for row in rows:
++            for branch in row['feedforward']:
++                expected=1024 if branch['branch']=='routed_experts' else 1536
++                self.assertEqual(branch['projection_shape'][-2],expected)
++        self.assertEqual(sum(b['instances'] for r in rows for b in r['feedforward']),45)
++
+     def test_old_study_not_a_new_stop(self):
+         self.assertNotIn(study.ROOT/'logs/wr-reproduction/research/STOP',study.STOP_FILES)
+         self.assertEqual(len(study.STOP_FILES),2)

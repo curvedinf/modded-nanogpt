@@ -1,0 +1,90 @@
+{
+  "utc": "2026-10-25T21:16:25.573321+00:00",
+  "source_run": "matched-ks3-all-20261025T173936-bf006b",
+  "source_run_status": "pruned",
+  "used_training_evidence_only": true,
+  "full_validation_measured": false,
+  "gpu_initialized": false,
+  "artifacts": [
+    {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-20261025T173936-bf006b/terminal-geometry.pt",
+      "sha256": "df48b009654870b2a275dd141f0d91f2bb18738ae12ba58353ab6fcf24f19a5d"
+    },
+    {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-20261025T173936-bf006b/terminal-dense-geometry.pt",
+      "sha256": "21f25f7a7c9f1f3c45b92d667acb789e087b30f5238afebc49de334eeacca4ca"
+    }
+  ],
+  "components": {
+    "routed": {
+      "c0": {
+        "mean": 0.005478587055812967,
+        "sample_std": 0.010012465846876322
+      },
+      "c1": {
+        "mean": -0.003951222179629376,
+        "sample_std": 0.010247018789811038
+      },
+      "c2": {
+        "mean": 0.006936291337673306,
+        "sample_std": 0.010663574489944422
+      },
+      "c3": {
+        "mean": 0.007165506966577545,
+        "sample_std": 0.01047557626216083
+      },
+      "c4": {
+        "mean": 0.007740296058018325,
+        "sample_std": 0.011697092752441586
+      },
+      "c5": {
+        "mean": 0.009657346560311874,
+        "sample_std": 0.012151955029343757
+      },
+      "raw_scale": {
+        "mean": 0.7368034595710924,
+        "sample_std": 0.01432725029510941
+      },
+      "raw_shift": {
+        "mean": -0.014543267779615898,
+        "sample_std": 0.015417572882535823
+      }
+    },
+    "dense": {
+      "c0": {
+        "mean": -0.0012446468471775773,
+        "sample_std": 0.007523110908014566
+      },
+      "c1": {
+        "mean": 0.0033478699699493577,
+        "sample_std": 0.009109771184479316
+      },
+      "c2": {
+        "mean": 1.243625784042024e-05,
+        "sample_std": 0.008093389375536813
+      },
+      "c3": {
+        "mean": 0.0014660275353282515,
+        "sample_std": 0.007677124135989943
+      },
+      "c4": {
+        "mean": 0.007708879524371426,
+        "sample_std": 0.014147969395927017
+      },
+      "c5": {
+        "mean": 0.010500523063723488,
+        "sample_std": 0.018613006503024783
+      },
+      "raw_scale": {
+        "mean": 0.7317001553252339,
+        "sample_std": 0.016322984841121792
+      },
+      "raw_shift": {
+        "mean": -0.020484236123482092,
+        "sample_std": 0.018234810616447446
+      }
+    }
+  },
+  "observation": "Dense and routed branches learn opposite mean c0/c1 signs; both learn positive c4/c5 means near0.0077/0.010. These are descriptive statistics at this pruned checkpoint, not a quality ranking or evidence that copying their means improves initialization.",
+  "hypothesis_for_later": "After the current rate and direct-FP8 experiments, consider a modest coupled warp initialization while leaving Hermite coefficients zero, or separate dense/routed geometry adaptation. No extra experiment is scheduled by this diagnostic."
+}

@@ -1,0 +1,8 @@
+{
+  "utc": "2026-10-25T20:53:10.875599+00:00",
+  "passed": true,
+  "cpu_tests": 12,
+  "queue_sha256": "edf3628816191e70931e00a27a52acbb2ca11fe983a727e50b5f6277e07a2dde",
+  "test_sha256": "ff0cb8be3d8c13145d20f39ee34dec39a87fa8b68d8cb3326e484bbfb20aa6f5",
+  "scope": "Existing queue safeguards plus completion/verification prerequisite for an entire precision study; no GPU work or model changes."
+}

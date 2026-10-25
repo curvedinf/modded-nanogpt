@@ -27,8 +27,17 @@ def collect(model, recipe, directory):
                          abs_p95=x.abs().quantile(.95).item(),
                          delta_rms=(x-initial[i]).square().mean().sqrt().item())
         components[name]=stats
-    return dict(event='terminal_geometry',shape=list(value.shape),
-                all_finite=bool(torch.isfinite(value).all()),components=components,
+    dense={}
+    if hasattr(model,'ks3_dense_geometry'):
+        d=model.ks3_dense_geometry.detach().float().cpu()
+        dp=directory/'terminal-dense-geometry.pt'
+        with dp.open('xb') as out:torch.save(d,out)
+        dense=dict(shape=list(d.shape),all_finite=bool(torch.isfinite(d).all()),
+                   coefficient_rms=d[...,:6*rank].square().mean().sqrt().item(),
+                   raw_scale_delta_rms=(d[...,6*rank]-initial[6]).square().mean().sqrt().item(),
+                   artifact=str(dp),artifact_sha256=sha(dp))
+    return dict(event='terminal_geometry',shape=list(value.shape),dense_feedforward=dense,
+                all_finite=bool(torch.isfinite(value).all()) and dense.get('all_finite',True),components=components,
                 artifact=str(path),artifact_sha256=sha(path),
                 diagnostic_seconds=time.perf_counter()-started,
                 outside_timed_training=True,used_for_screening=False)

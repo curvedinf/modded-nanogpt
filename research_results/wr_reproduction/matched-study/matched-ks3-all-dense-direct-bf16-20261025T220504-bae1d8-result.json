@@ -1,0 +1,129 @@
+{
+  "run_id": "matched-ks3-all-dense-direct-bf16-20261025T220504-bae1d8",
+  "status": "correctness_passed",
+  "seed": 172,
+  "code_commit": "a55d52b446143cd8f7821a2de7d6ba87644d46ec",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-dense-direct-bf16",
+    "hypothesis": "Remove GS32 rounding only from dense KS3 BF16 training projection inputs, weights and nonlinear outputs. Preserve geometry coefficient GS32, FP16 nonlinearities, all routed KS3, original optimizer/cache semantics and GS32 BF16 validation. Correctness and paired whole-model timing must pass before one discovery; shared components remain frozen.",
+    "dense_training_gs32": false
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": null,
+  "timing": null,
+  "correctness": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "features": 1024,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "input_gradient": 0.0,
+          "up_gradient": 5.204013331372437e-10,
+          "down_gradient": 0.0,
+          "geometry_gradient": 1.6708910379747977e-06,
+          "post_gradient": 0.0
+        },
+        "additive_backward": true
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 0.00019462314958218485,
+          "input_gradient": 0.00013395211135502905,
+          "up_gradient": 0.00010061020293505862,
+          "down_gradient": 0.00011291788541711867,
+          "geometry_gradient": 1.0068947631225456e-06,
+          "post_gradient": 0.0
+        },
+        "additive_backward": true
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 0.00017615580873098224,
+          "input_gradient": 0.00013131150626577437,
+          "up_gradient": 0.00018162591732107103,
+          "down_gradient": 0.0002204458141932264,
+          "geometry_gradient": 1.4426769894271274e-06,
+          "post_gradient": 0.0
+        },
+        "additive_backward": true
+      }
+    ],
+    "cache_checks": [
+      {
+        "training": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "training": false,
+        "cache_bytes_exact": true
+      },
+      {
+        "training": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "captured_replay": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "captured_replay": true,
+        "cache_bytes_exact": true
+      }
+    ],
+    "dense_training_projection_gs32": false,
+    "dense_validation_projection_gs32": true,
+    "geometry_coefficient_gs32": true,
+    "oracle": "Independent FP32 products of BF16 operands; pinned FP16 nonlinear forward and independent smooth STE with BF16 coordinate gradients",
+    "shared_backend_modified": false,
+    "validation": false
+  },
+  "exit_code": 0,
+  "events_sha256": "796317d6ea07ee23df1201a59800f88cc4e18b9ba55772b3cfd050ffa3f32be9",
+  "completed_utc": "2026-10-25T22:05:20.713558+00:00",
+  "qualifies": false
+}

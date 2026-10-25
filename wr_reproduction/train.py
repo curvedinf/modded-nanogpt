@@ -26,9 +26,13 @@ class Runner:
         if research_run:
             from wr_reproduction.research import read,Metadata
             self.research_config=read(research_run/'run.json')
+            if self.research_config.get('study')=='matched-study':
+                from wr_reproduction.matched_study import Metadata,assert_fence
+                assert_fence(self.research_config['recipe'])
             self.metadata=Metadata(data=self.research_config['validation_data'])
         self.ks3=ks3
         self.ks3_precision=ks3_precision
+        self.architecture=self.research_config['recipe'].get('architecture','ks3_experts' if ks3 else 'mlp') if research_run else ('ks3_experts' if ks3 else 'mlp')
         install(version)
         from wr_reproduction import fused_fp8
         fused_fp8.TILE_MODE=self.research_config['recipe'].get('shared_fp8_gemm_tuning','legacy') if self.research_config else 'legacy'
@@ -66,6 +70,9 @@ class Runner:
                             self.research_config['recipe'].get('fp8_prepared_native_activations',False) if research_run else False,
                             self.research_config['recipe'].get('fp8_prepared_native_dual',False) if research_run else False,
                             self.research_config['recipe'].get('fp8_prepared_native_gather',False) if research_run else False)
+            if self.architecture!='ks3_experts':
+                from wr_reproduction.ks3_feedforward import install as install_feedforward
+                GPT=install_feedforward(GPT,self.research_config['recipe'])
         from track_1_short.config import Hyperparameters,TRAINING_STAGES,LR_COOLDOWN_FRAC,SPLIT_EMBED_STAGE,WS_POST_YARN_EXT
         from track_1_short.schedule import TrainingSchedule
         from track_1_short.training import TrainingManager
@@ -96,7 +103,7 @@ class Runner:
         if version=='pr393':kwargs['rank']=0
         self.model=m=GPT(50257,11,6,128,768,hp.val_batch_size//8,**kwargs).cuda()
         m.cast_matrix_weights_bf16()
-        if self.research_config:
+        if self.research_config and self.ks3:
             charts=self.research_config['recipe']['charts'];rank=self.research_config['recipe']['rank']
             features=charts*rank
             assert tuple(m.moe_bank.shape)==(80,features,768)
@@ -106,6 +113,9 @@ class Runner:
                      expert_projection_parameters=m.moe_bank.numel(),geometry_parameters=m.ks3_geometry.numel(),
                      total_parameters=sum(p.numel() for p in m.parameters()),
                      original_non_expert_initialization_preserved=True)
+        if self.research_config and self.research_config.get('study')=='matched-study':
+            from wr_reproduction.matched_architecture import audit_model
+            self.log(event='feedforward_inventory',**audit_model(m,self.architecture))
         if version=='pr393':
             # All eight optimizer shards reside on the one physical owner. The
             # model/router and logical-rank data still retain world_size=8.
@@ -116,7 +126,7 @@ class Runner:
         self.optimizer_graphs=AnvilBankGraphs(dev)
         self.tm=TrainingManager(m,schedule,bank_update=self.optimizer_graphs.update,
             **({'moe_publish':self.refresh.publish_moe} if version=='pr393' else {}))
-        if self.research_config:
+        if self.research_config and self.ks3:
             multiplier=self.research_config['recipe'].get('projection_lr_multiplier',1.)
             cfg=self.tm.optimizer.param_cfgs[m.moe_bank]
             shape_scale=max(1.,features/768)**.5
@@ -244,13 +254,15 @@ class Runner:
         self.rank_states=RankStates(m)
         self.gradients=OriginalGradientAccumulator(p for p,c in self.tm.optimizer.param_cfgs.items() if c.optim=='adam')
         self.has_previous=False;self.previous_adam=False
-        if self.research_run and self.ks3_precision=='fp8':
+        if self.research_run and self.ks3 and self.ks3_precision=='fp8':
             # Compile the accepted BF16/GS32 evaluation weight packer before the
             # clock, just like the training graph kernels. evaluate() still
             # repeats this packing on the live weights inside timed setup.
             m.prepare_ks3_eval()
             self.log(event='evaluation_packing_warmup',weights='restored-initial',
                      evaluation_packing_remains_in_timed_setup=True)
+        if hasattr(m,'feedforward_execution_report'):
+            self.log(event='feedforward_execution_coverage',**m.feedforward_execution_report())
         torch.cuda.synchronize();self.log(event='preflight_passed',step_graphs=len(self.graphs.captured),
             optimizer_graphs=len(self.optimizer_graphs.graphs),fp8_refresh_graphs=len(self.refresh.captured))
 
@@ -299,12 +311,12 @@ class Runner:
         loss=torch.stack(values).mean().item();m.train();torch.cuda.synchronize();gc.collect()
         extra={}
         if self.research_run:
-            from wr_reproduction.research import CONTROL_SECONDS
+            budget=self.research_config['recipe']['max_train_seconds']
             signature=self.metadata.validation(self.eval_step)
             signature['attention_windows']=[evaluation_args.ws_short,evaluation_args.ws_long]
             extra=dict(evaluation_signature=signature,step=self.eval_step,
-                       budget_seconds=CONTROL_SECONDS,budget_overrun_seconds=max(0.,elapsed-CONTROL_SECONDS),
-                       within_control_budget=elapsed<=CONTROL_SECONDS)
+                       budget_seconds=budget,budget_overrun_seconds=max(0.,elapsed-budget),
+                       within_control_budget=elapsed<=budget)
             if evaluation_protocol is not None:extra['evaluation_protocol']=evaluation_protocol
         self.log(event='validation',final=final,loss=loss,train_seconds=elapsed,val_tokens=self.hp.val_tokens,**extra)
         if self.version=='pr393':
@@ -362,11 +374,10 @@ class Runner:
 
     def train_research(self,max_train_seconds):
         """Opt-in study path; default reproduction/control execution is unchanged."""
-        from wr_reproduction.research import CONTROL_SECONDS
         from wr_reproduction.research_observer import Observations,ResearchStopped
         from track_1_short.model.prefix_prediction import build_prefix_table_bucket
         from track_1_short.canonical_mask import BackgroundCanonicalMask
-        if max_train_seconds!=CONTROL_SECONDS:
+        if max_train_seconds!=self.research_config['recipe']['max_train_seconds']:
             raise ValueError('Research uses the exact accepted timed-training budget')
         m=self.model;batches=self.loaders(list(range(self.schedule.total_steps)))
         m.limit_yarn_rebuild(self.max_tokens)
@@ -380,7 +391,8 @@ class Runner:
                  evaluation='raw-no-canonical-no-tail-no-final-extension-bf16',
                  cap_setup_reserve_seconds=self.research_config['recipe']['validation_setup_reserve_seconds'])
         torch.cuda.synchronize();clock_start=time.perf_counter();elapsed=0.
-        self.observations=Observations(self.research_run,self.log,lambda timestamp:elapsed+timestamp-clock_start)
+        self.observations=Observations(self.research_run,self.log,lambda timestamp:elapsed+timestamp-clock_start,
+                                       state=self.research_run.parent.parent)
         self.canonical.start()
         m.prefix_table.copy_(build_prefix_table_bucket(m.vocab_size,0,1))
         for sampler in self.samplers:sampler.set_prefix_table(m.prefix_table.cpu().numpy())
@@ -422,7 +434,7 @@ class Runner:
         finally:
             self.observations.close();self.observations=None
             gc.enable()
-        if terminal_condition and not (self.research_run.parent.parent/'STOP').exists():
+        if self.ks3 and terminal_condition and not (self.research_run.parent.parent/'STOP').exists():
             from wr_reproduction.geometry_diagnostics import collect
             self.log(terminal_condition=terminal_condition,
                      **collect(self.model,self.research_config['recipe'],self.research_run))
@@ -447,14 +459,15 @@ class Runner:
 
     def log(self,**record):
         from datetime import datetime,timezone
-        charts=self.research_config['recipe']['charts'] if self.research_config else 1024
-        rank=self.research_config['recipe']['rank'] if self.research_config else 1
+        charts=self.research_config['recipe'].get('charts',1024) if self.research_config else 1024
+        rank=self.research_config['recipe'].get('rank',1) if self.research_config else 1
         record.update(utc=datetime.now(timezone.utc).isoformat(),version=self.version,source_commit=self.manifest['commit'],
             expert_block=f'ks3-gs32-{self.ks3_precision}-c{charts}-r{rank}' if self.ks3 else 'mlp-fp8')
         if self.research_config:
+            record['architecture']=self.architecture
             record.update(run_id=self.research_config['run_id'],seed=self.research_config['seed'],code_commit=self.research_config['code_commit'])
-            record['training_projection_gs32']=self.research_config['recipe'].get('training_gs32',True)
-            if not record['training_projection_gs32']:
+            record['training_projection_gs32']=self.ks3 and self.research_config['recipe'].get('training_gs32',True)
+            if self.ks3 and not record['training_projection_gs32']:
                 record['expert_block']=f'ks3-native-fp8-projections-gs32-coeff-c{charts}-r{rank}'
         line=json.dumps(record)
         with self.log_lock:
@@ -469,6 +482,7 @@ def main():
     parser.add_argument('--max-train-seconds',type=float,
         help='Stop after this timed-training budget and evaluate the current iterate; do not compress the original schedule')
     parser.add_argument('--ks3',action='store_true',help='Replace only PR393 MoE experts with GS32/BF16 rank-one KS3')
+    parser.add_argument('--architecture',choices=['mlp','ks3_all','ks3_first_mlp','ks3_last_mlp','ks3_both_mlp'])
     parser.add_argument('--ks3-precision',choices=['bf16','fp8'],default='bf16')
     parser.add_argument('--timing-updates',type=int,help='Stop after this many actual training updates for timing; skip validation and preserve the original schedule')
     parser.add_argument('--profile-updates',type=int,default=0,choices=range(0,9),help='Isolated GPU trace of1-8 original prefix updates; never convergence or speed evidence')
@@ -479,16 +493,21 @@ def main():
     if args.out.exists():raise FileExistsError('Use a new output file; preserve prior run evidence')
     if args.profile_updates and not args.research_run:parser.error('Profiling requires an independent study registry entry')
     if args.research_run:
-        from wr_reproduction.research import read,STATE,CONTROL_SECONDS
-        if not args.ks3 or args.version!='pr393' or args.preflight or args.check_updates:
-            parser.error('Research requires continuous PR393 KS3 training from initialization')
-        if (STATE/'STOP').exists():raise RuntimeError('Explicit study STOP')
+        from wr_reproduction.research import read
         cfg=read(args.research_run/'run.json')
+        if args.version!='pr393' or args.preflight or args.check_updates:
+            parser.error('Research requires continuous PR393 training from initialization')
+        if args.architecture:
+            if args.architecture!=cfg['recipe'].get('architecture'):parser.error('Architecture does not match registered recipe')
+            args.ks3=args.architecture!='mlp'
+        elif not args.ks3:parser.error('Explicit --architecture=mlp is required for a control')
+        stop_files=cfg.get('stop_files',[str(args.research_run.parent.parent/'STOP')])
+        if any(Path(p).exists() for p in stop_files):raise RuntimeError('Explicit study STOP')
         if bool(args.profile_updates)!=(cfg['kind']=='profile'):parser.error('Profiling requires a distinct noncontinuous registry kind')
         if bool(args.timing_updates)!=(cfg['kind']=='timing'):
             parser.error('Timing diagnostics and continuous research trials must have distinct registry kinds')
         os.environ['TRAIN_SEED']=str(cfg['seed'])  # before immutable config import/model initialization
-        if args.max_train_seconds!=CONTROL_SECONDS:parser.error('Exact control time budget required')
+        if args.max_train_seconds!=cfg['recipe']['max_train_seconds']:parser.error('Registered time budget required')
     torch.set_num_threads(int(os.environ.get("OMP_NUM_THREADS","1")))
     with LocalCollectives():
         runner=Runner(args.version,args.out,args.ks3,args.ks3_precision,args.research_run);runner.warmup()

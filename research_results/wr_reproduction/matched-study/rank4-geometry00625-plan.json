@@ -1,0 +1,82 @@
+{
+  "utc": "2026-10-25T19:13:06.339067+00:00",
+  "status": "prepared",
+  "wait_for_run": "matched-ks3-all-scale050-20261025T190901-7d99df",
+  "results_name": "ks3-rank4-geometry00625-ablation-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_rank4.json",
+      "recipe_sha256": "7f4c384af22b5b4b6a8b123753283cb51a9a5c392b2064e12a016419be45ba36",
+      "seed": 168,
+      "status": "queued",
+      "changes": {
+        "charts": {
+          "before": 1024,
+          "after": 256
+        },
+        "dense_charts": {
+          "before": null,
+          "after": 256
+        },
+        "rank": {
+          "before": 1,
+          "after": 4
+        }
+      },
+      "hypothesis": "Use 256 rank-four charts and 1024 projection features at all five dense and forty routed KS3 sites. Test learned coupling across four coordinates with unchanged projection dimensions and initialization, original ANVIL shape scaling, and geometry Adam multiplier 0.125. Require the independent full dense rank-four output/gradient oracle and actual model graph warmup before training. Shared backend and all model-wide settings remain frozen.",
+      "correctness_required": true,
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/rank4-cpu-audit.json",
+        "sha256": "7d9dc8352fca0ce0b282c68e96572190ea74be2eb83e0f0c2e339a82e396deb3"
+      }
+    },
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_geometry00625.json",
+      "recipe_sha256": "0982bc70158a481d7f69a7041b264bac06cb3b21a915e10890ed8fc45903e816",
+      "seed": 168,
+      "status": "queued",
+      "changes": {
+        "geometry": {
+          "before": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "after": {
+            "lr_mul": 0.0625,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      "hypothesis": "Halve only the geometry Adam multiplier from 0.125 to 0.0625 at every dense and routed KS3 site. The separately tested 0.25 multiplier was proxy-pruned; test whether slower spline coefficient and warp updates improve loss at comparable elapsed time. Keep rank one, width 1024, projection multiplier 1.0, initialization and all shared/model-wide settings unchanged."
+    }
+  ],
+  "decision": "After the current warp-scale discovery and any frozen three-seed verification, require the independent rank-four GPU oracle before its discovery, then test the separate lower geometry learning rate. No shared source changes."
+}

@@ -1,0 +1,49 @@
+{
+  "utc": "2026-10-25T19:56:21.181969+00:00",
+  "status": "prepared",
+  "wait_for_run": "matched-ks3-all-denselr150-20261025T195145-d4a658",
+  "results_name": "ks3-dense-rate-capacity-ablation-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_denselr075.json",
+      "recipe_sha256": "174c34cd5989aaec7b30e3b062674ba09c8b6cf1db7253c66864bac5565775c8",
+      "seed": 168,
+      "status": "queued",
+      "changes": {
+        "dense_projection_lr_multiplier": {
+          "before": null,
+          "after": 0.75
+        }
+      },
+      "hypothesis": "Reduce only the five dense KS3 projection ANVIL multipliers to 0.75 while retaining routed experts at 1.0. Test smaller dense updates independently of the earlier global 0.875 rate, which changed both dense and routed banks. Keep dense and expert width 1024, rank one, geometry Adam 0.125, original shape-dependent scaling/output 2x/padding/master semantics, and all shared/model-wide settings.",
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/denselr075-cpu-audit.json",
+        "sha256": "3e061a1c2c375e63bf9ae993be57b26e402ecb0382b53c12dc786cdaa25d06ea"
+      }
+    },
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_dense1536_normlr.json",
+      "recipe_sha256": "105c510fdd4d673c99a4a1ab1af8ff998f7f3cdcdb9838cc984fe07d06ed6624",
+      "seed": 168,
+      "status": "queued",
+      "changes": {
+        "dense_charts": {
+          "before": null,
+          "after": 1536
+        },
+        "dense_projection_lr_multiplier": {
+          "before": null,
+          "after": 0.816496580927726
+        }
+      },
+      "hypothesis": "Revisit dense width 1536 with one explicit KS3-only optimizer change from its earlier trial: set dense projection multiplier sqrt(1024/1536), keeping the effective dense rate equal to the width1024 baseline after the unchanged original ANVIL shape rule. The previous 1536 trial was proxy-pruned with a larger effective rate; test added dense capacity without that rate increase. Routed width/rate, geometry Adam 0.125, and all shared/model-wide settings stay fixed. Use existing verified 1536 numerical kernels; this changes only scalar optimizer configuration.",
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/dense1536-normalized-lr-cpu-audit.json",
+        "sha256": "9009e99488e3a46280a2559fa0d3dd1747ba634d798d6c02dd5c51d8ce2c7a5c"
+      }
+    }
+  ],
+  "decision": "Wait for the current dense-only rate1.5 trial and all required verification. Test two distinct KS3 scalar hypotheses once each. Numerical kernels and all non-KS3 settings remain unchanged; full graph warmup is required on each discovery.",
+  "existing_dense1536_oracle_run_id": "matched-ks3-all-dense1536-20261025T184018-f9df13",
+  "kernel_equivalence_evidence": "research_results/wr_reproduction/matched-study/dense-projection-lr150-prototype.json"
+}

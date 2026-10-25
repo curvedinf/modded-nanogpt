@@ -1,0 +1,14 @@
+{
+  "utc": "2026-10-25T21:10:26.233554+00:00",
+  "passed": true,
+  "gpu_initialized": false,
+  "tests": 9,
+  "command": ".venv-mi300/bin/python -m unittest test_wr_matched_dense_direct_fp8 -v",
+  "source_hashes": {
+    "run_wr_matched_dense_direct_fp8.py": "58e3d7e1ff517d361aff376df786591a59d4855344d1a4b60d2c5ac20cac5183",
+    "test_wr_matched_dense_direct_fp8.py": "7df9e237659369beb7fa20f9eddb10d4499ae69c72ae20d2fd0a7e99b4b5b7be",
+    "check_wr_dense_fp8.py": "f7c5bc4f8321cd152593d49b3ea36ddd767ef7388aff44f081c540c890e0b43c"
+  },
+  "prototype_sha256": "0d7ac5bbb7132d645958e88620e0395104927f4f0bd711e8ccaecaff2dbb7b2c",
+  "scope": "STOP, predecessor completion, restricted patch scope, unchanged shared/routed dependencies, audit and recipe hashes, encoding-specific oracle, and verification barrier before mutation. Numerical GPU and whole-model timing gates remain pending."
+}

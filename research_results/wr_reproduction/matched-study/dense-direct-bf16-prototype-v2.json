@@ -1,0 +1,117 @@
+{
+  "utc": "2026-10-25T22:04:12.773203+00:00",
+  "not_deployed": true,
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-dense-direct-bf16",
+    "hypothesis": "Remove GS32 rounding only from dense KS3 BF16 training projection inputs, weights and nonlinear outputs. Preserve geometry coefficient GS32, FP16 nonlinearities, all routed KS3, original optimizer/cache semantics and GS32 BF16 validation. Correctness and paired whole-model timing must pass before one discovery; shared components remain frozen.",
+    "dense_training_gs32": false
+  },
+  "staged_sources": [
+    {
+      "path": "wr_reproduction/check_ks3_feedforward_bf16_direct.py",
+      "base_sha256": null,
+      "staged_sha256": "5cdef83847079e9c0bdca9b2ab2d9f07cb36eceb5762c3fcce2f5c8206ca1cc9"
+    },
+    {
+      "path": "wr_reproduction/ks3_feedforward.py",
+      "base_sha256": "d87e88664fa24e1847d9eaa92c3b21d5cc906d4d3113eda36013f318695ee4a4",
+      "staged_sha256": "45da3db845e364fa7accff1e6f2fb2ab7305991bd4a0f13d253e8bf4b4561102"
+    },
+    {
+      "path": "wr_reproduction/ks3_moe.py",
+      "base_sha256": "0aaa07c7874fa8e5992b5eda649eddaa577f014745f9d9d3289da6a11119c27c",
+      "staged_sha256": "73fa973c8d0c8f7213c42431dbd1aafedcb1a6e75f960040c0f303d73c37d1a3"
+    },
+    {
+      "path": "wr_reproduction/matched_controller.py",
+      "base_sha256": "5cfa4c97c3d784b80b8cf7f950a0bad3ce26308f7fc7a2dbcb690990775a6fd4",
+      "staged_sha256": "3964532737a88f9399c14d6666bc16262dd2d1b17ec9f93f3cca35976f0742f5"
+    }
+  ],
+  "patch": "research_results/wr_reproduction/matched-study/dense-direct-bf16-prototype-v2.patch",
+  "patch_sha256": "f6ac87052264f0c95eb0ea75bea5cf71e1a613a48bb5dd7bacd9891c899bd147",
+  "cpu_auditor": {
+    "path": "check_wr_dense_direct_bf16.py",
+    "sha256": "bd827cf6392a5695c7e12901877c4be2e97cb9b2d8eea6b9e94d3ea221975585"
+  },
+  "cpu_audits": [
+    {
+      "path": "research_results/wr_reproduction/matched-study/dense-direct-bf16-cpu-all-v2.json",
+      "sha256": "d4afb5ad4f0d56fcaf8af18fd7ef785c8d9e3041f3fb2790c31b0d5c5bd06a48"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/dense-direct-bf16-cpu-first-v2.json",
+      "sha256": "20397d40259b7dfd8b4a37eb8ff06c5633afbba7f208b89a2668e150ba2ad30f"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/dense-direct-bf16-cpu-last-v2.json",
+      "sha256": "cfb8e87e1d90b6a75b670af48fbf47b00fc3b8578e4947b82857113d6e417bfe"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/dense-direct-bf16-cpu-both-v2.json",
+      "sha256": "2b3d42e2d69678dd0b513495363d79bb5704daaaeb57438a16a14f3e423de62a"
+    }
+  ],
+  "unchanged_sources": {
+    "wr_reproduction/ks3_feedforward_source.py": "388467e576f93d189e2cc31fce19c11377df3f6a60de68a22fdb9db186634106",
+    "wr_reproduction/ks3_dense_fp8.py": "23f66add17c6f75113cc9789e427a3a349ecafb362d702d80c6c4f6ee4401ecb",
+    "wr_reproduction/ks3_bf16_gemm.py": "c6342dab76dc1ebb18365b1270f67f27d7eba32433ec75fac39d12b7ebc55ef7",
+    "wr_reproduction/check_ks3_rank_geometry.py": "0275c483f3482bc00ac2f974bdd3cdc720ca47436a58f6c1e7d670ae34d9a9f3",
+    "wr_reproduction/check_ks3_feedforward_rank.py": "41a04c5c535672dac8036befb0a88be1ddce0ca0cc6473a58ab582c5297d1f63",
+    "wr_reproduction/check_ks3_fp8_moe.py": "3dfcd62c331d4e3a13c61d2dfad39366439c1e215ff60cf2c1aa5410243c2f85",
+    "ks3_research/vendor/ks3_int8.py": "becdb04749963afa8adc39812a61ec3bb14b0ad966c2fc04e1e4edd4ec1ed501",
+    "run_wr_matched_dense_fp8.py": "f0fd9bdfc1c0ef7f0cd728e7f51f0478a646303e922119c695b566645f22c0bc",
+    "run_wr_matched_dense2816.py": "b9b55ac877273cf625a15b68bba3f5ae9265c06d938055e387a834b6492dd833"
+  },
+  "baseline_recipe": {
+    "path": "configs/wr_reproduction/matched_ks3_all.json",
+    "sha256": "a84eb1c0ccffd8e009de25c8ea3e68333d4b8e35cee82d3c9b4f80769df55df3"
+  },
+  "prerequisite_manifest": "logs/wr-reproduction/matched-study/pending-width1280-normalized-rate.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "original_ks3_kernel_ast_unchanged_except_removing_fp8_only_native_guard": true,
+  "routed_forward_backward_optimizer_unchanged": true,
+  "shared_backend_unchanged": true,
+  "decision": "Deploy only under exclusive leases after width1280 and any complete verification. Require direct and default GPU oracles and a faster paired100-update whole-model result before one discovery.",
+  "supersedes_sha256": "49e23bd8888ab6d567d647ef4ea2d5e74399f7be7b3daaa4c5a71edc63049bad",
+  "correction": "Corrected the independent oracle output-projection transpose before any GPU execution; added a FakeTensor reference-shape/backward test. Original prototype remains preserved and was never deployed."
+}

@@ -1,0 +1,463 @@
+--- a/wr_reproduction/ks3_feedforward.py
++++ b/wr_reproduction/ks3_feedforward.py
+@@ -57,11 +57,15 @@
+ 
+ def install(base,recipe):
+     if recipe['precision']!='bf16':raise ValueError('Full-feedforward implementation currently verified for BF16 KS3 only')
++    dense_precision=recipe.get('dense_precision','bf16')
++    if dense_precision not in ('bf16','fp8'):raise ValueError('Unknown dense KS3 precision')
++    if dense_precision=='fp8' and recipe['rank']!=1:raise ValueError('Dense FP8 requires rank one')
+     from track_1_short.model import gpt
+     from track_1_short import training
+     from track_1_short.optim import anvil
+     arch=recipe['architecture'];keep=tuple(sorted(DENSE[l] for l in RETAIN[arch]))
+     mapping={slot:i for i,slot in enumerate(keep)}
++    scale_mapping={slot:i for i,slot in enumerate((*keep,*(s for s in range(5) if s not in keep)))}
+     charts,rank=recipe.get('dense_charts',recipe['charts']),recipe['rank'];features=charts*rank
+     if features not in (512,768,1024,1280,1536,2816):raise ValueError('Unsupported dense KS3 width')
+     geometry=recipe['geometry']
+@@ -70,7 +74,7 @@
+         raise ValueError('Dense KS3 projection LR multiplier must be finite and positive')
+     optimizer_policy={}
+     transformed_forward,forward_sha=compile_method(forward_tree(),gpt.__dict__)
+-    refresh,_=compile_method(refresh_tree(len(keep)),gpt.__dict__)
++    refresh,_=compile_method(refresh_tree(len(keep),dense_precision=='fp8'),gpt.__dict__)
+     # Reuse the exact original allocation/layout definitions, only with fewer
+     # retained dense slots and remapped fold-lambda source indices.
+     namespace=dict(gpt.__dict__,NUM_USED_MLP_SLOTS=len(keep),
+@@ -102,6 +106,9 @@
+             for coordinate in range(rank):geo[...,6*coordinate:6*coordinate+6]=torch.tensor(geometry['coefficients'],device=self.device)
+             geo[...,6*rank]=geometry['raw_scale'];geo[...,6*rank+1]=geometry['raw_shift']
+             self.ks3_dense_geometry=torch.nn.Parameter(geo);self.ks3_dense_geometry.label='ks3_dense_geometry'
++            if dense_precision=='fp8':
++                from wr_reproduction.ks3_dense_fp8 import init_buffers
++                init_buffers(self,features)
+         def cast_matrix_weights_bf16(self):
+             super().cast_matrix_weights_bf16()
+             if keep:self.retained_mlp_bank.data=self.retained_mlp_bank.data.bfloat16()
+@@ -113,6 +120,9 @@
+                 for source,out in ((up,self._mlp_ks3_up[slot]),(down,self._mlp_ks3_down[slot])):
+                     r,c=source.shape
+                     core._pack[(tr.cdiv(r,128),tr.cdiv(c,32))](source,out,r,c,*source.stride(),ROWS_PER_TILE=128,num_warps=4)
++            if dense_precision=='fp8':
++                from wr_reproduction.ks3_dense_fp8 import refresh_weights
++                refresh_weights(self,self.mlp_quantize_calls<=gpt.FP8_EXACT_SCALE_CALLS)
+         def _matched_dense(self,slot,normed,w1,w2,post,use_fp8,retained_all):
+             if slot in mapping:
+                 k=mapping[slot];a,b=retained_all[2*k:2*k+2]
+@@ -122,7 +132,11 @@
+                 else:args=None
+                 return gpt.GPT._mlp(self,normed,a,b,args)
+             rows=normed.reshape(-1,normed.shape[-1])
+-            y=DenseKS3.apply(rows,w1,w2,self._mlp_ks3_up[slot],self._mlp_ks3_down[slot],self.ks3_dense_geometry[slot],slot)
++            if self.training and dense_precision=='fp8':
++                from wr_reproduction.ks3_dense_fp8 import apply
++                y=apply(self,slot,scale_mapping[slot],rows,w1,w2)
++            else:
++                y=DenseKS3.apply(rows,w1,w2,self._mlp_ks3_up[slot],self._mlp_ks3_down[slot],self.ks3_dense_geometry[slot],slot)
+             if post is not None:y=y*post
+             return y.reshape(normed.shape)
+         def _mlp(self,*a,**kw):
+@@ -141,7 +155,9 @@
+                         routed_ks3_backward_layers=[1,3,5,6,8],
+                         retained_original_mlp_slots=list(keep),all_feedforward_paths_mapped=True,
+                         original_mlp_fallback_is_fatal=True,transformed_forward_sha256=forward_sha,
+-                        actual_graph_warmup=True,dense_projection_optimizer=dict(optimizer_policy))
++                        actual_graph_warmup=True,dense_projection_optimizer=dict(optimizer_policy),
++                        dense_training_precision=dense_precision,dense_validation_precision='bf16',
++                        dense_fp8_activation_scale_slots=scale_mapping if dense_precision=='fp8' else None)
+     # Extend the original per-matrix output-LR/padding policy to the retained
+     # bank. All existing labels execute the byte-for-byte original method.
+     original_build=anvil.AnvilAndAdam._build_param_cfg
+--- a/wr_reproduction/ks3_feedforward_source.py
++++ b/wr_reproduction/ks3_feedforward_source.py
+@@ -44,7 +44,7 @@
+     assert not any(isinstance(n,ast.Attribute) and n.attr=='_mlp' for n in ast.walk(tree))
+     return ast.fix_missing_locations(tree)
+ 
+-def refresh_tree(retained_count):
++def refresh_tree(retained_count,dense_fp8=False):
+     tree=method('_quantize_mlp_weights_and_scales')
+     if retained_count:
+         class Replace(ast.NodeTransformer):
+@@ -58,9 +58,10 @@
+         # Keep precisely the host counter and routed-expert delayed scales.
+         tree.body=[n for n in tree.body if isinstance(n,ast.AugAssign) or
+                    (isinstance(n,ast.Expr) and isinstance(n.value,ast.Call) and
+-                    any(isinstance(x,ast.Attribute) and x.attr.startswith('_moe_') for x in ast.walk(n)))]
++                    any(isinstance(x,ast.Attribute) and (x.attr.startswith('_moe_') or
++                        (dense_fp8 and x.attr in ('_mlp_post_amax','_mlp_dpre_amax'))) for x in ast.walk(n)))]
+         tree.body=ast.parse('e4m3_max=448.\ne5m2_max=57344.').body+tree.body
+-        assert len(tree.body)==5
++        assert len(tree.body)==(7 if dense_fp8 else 5)
+     tree.body.append(ast.parse('self._refresh_dense_ks3()').body[0])
+     return ast.fix_missing_locations(tree)
+ 
+--- /dev/null
++++ b/wr_reproduction/ks3_dense_fp8.py
+@@ -0,0 +1,147 @@
++"""Optional FP8 products for dense KS3, reusing the verified routed kernels.
++
++Dense and routed precision may differ. This module changes only KS3 dense
++projections. E4M3/E5M2 originals and reusable native dual layouts share scales;
++the frozen eight-rank activation-state implementation owns delayed statistics.
++"""
++import torch
++import triton as tr
++
++from wr_reproduction import ks3_moe_fp8 as fp
++from wr_reproduction.ks3_moe import _pack
++
++
++def configure():
++    # The optional dense path currently requires BF16 routed KS3, so these
++    # existing FP8 dispatch flags have no effect on the routed experts.
++    fp.PREPARED_ACTIVATIONS = True
++    fp.PREPARED_DUAL = True
++    fp.PREPARED_GATHER = True
++
++
++def init_buffers(model, features):
++    configure()
++    for name, shape in [('up', (5, 1, features, 768)), ('up_t', (5, 1, 768, features)),
++                        ('down', (5, 1, 768, features)), ('down_t', (5, 1, features, 768))]:
++        for prefix, dtype in [('f8', torch.float8_e4m3fn), ('native', torch.float8_e4m3fnuz)]:
++            model.register_buffer('ks3_dense_' + prefix + '_' + name,
++                                  torch.empty(shape, device=model.device, dtype=dtype), persistent=False)
++    for name in ('scales', 'amax'):
++        model.register_buffer('ks3_dense_weight_' + name,
++                              torch.ones((5, 2, 1), device=model.device), persistent=False)
++    # Retained MLPs occupy the first entries; dense KS3 gets the remaining
++    # entries. Frozen RankStates already clones and refreshes these four exact
++    # buffer names for each original logical rank, including hybrid mixtures.
++    from track_1_short.model.gpt import FP8_GRAD_SCALE
++    for name, shape, initial in [('post_scales', (5,), 1.), ('post_amax', (5, 1), 0.),
++                                 ('dpre_scales', (5,), FP8_GRAD_SCALE), ('dpre_amax', (5, 1), 0.)]:
++        model.register_buffer('_mlp_' + name,
++                              torch.full(shape, initial, device=model.device, dtype=torch.float32), persistent=False)
++
++
++@torch.no_grad()
++def refresh_weights(model, exact):
++    for slot in range(5):
++        if slot in model.retained_slots:
++            continue
++        for projection, suffix in ((0, 'up'), (1, 'down')):
++            source = model.mlp_bank[slot, projection]
++            if projection:
++                source = source.T
++            scale = model.ks3_dense_weight_scales[slot, projection]
++            amax = model.ks3_dense_weight_amax[slot, projection]
++            largest = source.float().abs().amax() if exact else amax
++            scale.copy_(largest.clamp_min(1e-12) / 448.)
++            amax.zero_()
++            row = getattr(model, 'ks3_dense_f8_' + suffix)[slot, 0]
++            col = getattr(model, 'ks3_dense_f8_' + suffix + '_t')[slot, 0]
++            native = getattr(model, 'ks3_dense_native_' + suffix)[slot, 0]
++            native_t = getattr(model, 'ks3_dense_native_' + suffix + '_t')[slot, 0]
++            r, c = source.shape
++            _pack[(tr.cdiv(r, 128), tr.cdiv(c, 32))](
++                source, row, r, c, *source.stride(), SCALE=scale, OT=col, AMAX=amax,
++                FP8=True, GS32=True, NATIVE_OUT=native, NATIVE_T=native_t,
++                ROWS_PER_TILE=128, num_warps=4)
++
++
++@torch.library.custom_op('wr_ks3_dense_fp8::forward', mutates_args={'pa'})
++def dense_forward(rows: torch.Tensor, up: torch.Tensor, down: torch.Tensor,
++                  us: torch.Tensor, ws: torch.Tensor, xs: torch.Tensor, ps: torch.Tensor,
++                  pa: torch.Tensor, geometry: torch.Tensor, slot: int
++                  ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor,
++                             torch.Tensor, torch.Tensor, torch.Tensor]:
++    from wr_reproduction.ks3_feedforward import COVERAGE
++    COVERAGE['forward'].add(slot)
++    m = tr.cdiv(rows.shape[0], 128) * 128
++    src = torch.arange(m, device=rows.device, dtype=torch.int32)
++    tiles = torch.zeros(m // 128, device=rows.device, dtype=torch.int32)
++    offsets = torch.full((1,), m, device=rows.device, dtype=torch.int32)
++    y, c, xt, ht = fp.forward(rows, src, tiles, up, down, us, ws, xs, ps, pa,
++                               geometry.unsqueeze(0), True)
++    return y, c, xt, ht, src, tiles, offsets
++
++
++@dense_forward.register_fake
++def _(rows, up, down, us, ws, xs, ps, pa, geometry, slot):
++    m, d, n = tr.cdiv(rows.shape[0], 128) * 128, rows.shape[1], up.shape[1]
++    return (rows.new_empty((m, d)), rows.new_empty((m, n), dtype=torch.float32),
++            rows.new_empty((d, m), dtype=torch.float8_e4m3fnuz),
++            rows.new_empty((n, m), dtype=torch.float8_e4m3fnuz),
++            rows.new_empty((m,), dtype=torch.int32), rows.new_empty((m // 128,), dtype=torch.int32),
++            rows.new_empty((1,), dtype=torch.int32))
++
++
++@torch.library.custom_op('wr_ks3_dense_fp8::backward', mutates_args={'da'})
++def dense_backward(grad: torch.Tensor, y: torch.Tensor, c: torch.Tensor, xt: torch.Tensor,
++                   ht: torch.Tensor, src: torch.Tensor, tiles: torch.Tensor, offsets: torch.Tensor,
++                   upt: torch.Tensor, downt: torch.Tensor, us: torch.Tensor, ws: torch.Tensor,
++                   xs: torch.Tensor, gs: torch.Tensor, ps: torch.Tensor, ds: torch.Tensor,
++                   da: torch.Tensor, geometry: torch.Tensor, slot: int
++                   ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
++    from wr_reproduction.ks3_feedforward import COVERAGE
++    COVERAGE['backward'].add(slot)
++    bank = grad.new_empty((2, c.shape[1], grad.shape[1]))
++    flag = torch.zeros((1,), device=grad.device, dtype=torch.int32)
++    gate = torch.ones(grad.shape[0], device=grad.device, dtype=torch.float32)
++    dx, _, dg = fp.backward(grad.contiguous(), y, c, xt, ht, gate, src, offsets, tiles,
++                            upt, downt, us, ws, xs, gs, ps, ds, da, bank, flag,
++                            geometry.unsqueeze(0), 0)
++    return dx[:grad.shape[0]].contiguous(), bank, dg.squeeze(0)
++
++
++@dense_backward.register_fake
++def _(grad, y, c, xt, ht, src, tiles, offsets, upt, downt, us, ws, xs, gs, ps, ds, da, geometry, slot):
++    return torch.empty_like(grad), grad.new_empty((2, c.shape[1], grad.shape[1])), torch.empty_like(geometry)
++
++
++class DenseFP8(torch.autograd.Function):
++    @staticmethod
++    def forward(ctx, rows, w1, w2, geometry, caches, scales, slot):
++        up, upt, down, downt = caches
++        us, ws, xs, gs, ps, pa, ds, da = scales
++        y, c, xt, ht, src, tiles, offsets = dense_forward(rows, up, down, us, ws, xs, ps, pa, geometry, slot)
++        ctx.save_for_backward(y, c, xt, ht, src, tiles, offsets, upt, downt, geometry)
++        # Delayed amax buffers mutate during every site's backward. Keep them
++        # outside save_for_backward, as the existing routed FP8 path does, so
++        # another slot sharing the same base buffer cannot invalidate autograd.
++        ctx.scales = scales
++        ctx.slot = slot
++        return y[:rows.shape[0]]
++
++    @staticmethod
++    def backward(ctx, grad):
++        y, c, xt, ht, src, tiles, offsets, upt, downt, geometry = ctx.saved_tensors
++        us, ws, xs, gs, ps, pa, ds, da = ctx.scales
++        dx, bank, dg = dense_backward(grad, y, c, xt, ht, src, tiles, offsets,
++                                      upt, downt, us, ws, xs, gs, ps, ds, da, geometry, ctx.slot)
++        return dx, bank[0], bank[1], dg, None, None, None
++
++
++def apply(model, slot, scale_slot, rows, w1, w2):
++    caches = tuple(getattr(model, 'ks3_dense_native_' + name)[slot]
++                   for name in ('up', 'up_t', 'down', 'down_t'))
++    scales = (model.ks3_dense_weight_scales[slot, 0], model.ks3_dense_weight_scales[slot, 1],
++              model._mlp_x_scale, model._mlp_grad_scale,
++              model._mlp_post_scales[scale_slot:scale_slot+1], model._mlp_post_amax[scale_slot],
++              model._mlp_dpre_scales[scale_slot:scale_slot+1], model._mlp_dpre_amax[scale_slot])
++    return DenseFP8.apply(rows, w1, w2, model.ks3_dense_geometry[slot], caches, scales, slot)
+--- /dev/null
++++ b/wr_reproduction/check_ks3_feedforward_fp8.py
+@@ -0,0 +1,203 @@
++"""Independent dense FP8 KS3 arithmetic, autograd, and cache-replay oracle.
++
++No timing sweep. References use Torch encoding/decoded matrix products, the
++pinned upstream nonlinear forward, and independent smooth STE autograd.
++"""
++import argparse
++import json
++import torch
++import triton as tr
++from wr_reproduction.backend import install
++
++
++def gs32(value):
++    shape = value.shape
++    grouped = torch.nn.functional.pad(value.detach().float(), (0, (-shape[-1]) % 32)).reshape(shape[0], -1, 32)
++    scale = (grouped.abs().amax(-1, keepdim=True) / 127).clamp(2**-24, 65504).half().float()
++    decoded = (grouped / scale).round().clamp(-127, 127) * scale
++    return decoded.reshape(shape[0], -1)[:, :shape[-1]]
++
++
++def encode(value, scale, dtype):
++    limit = torch.finfo(dtype).max
++    return (value / scale).clamp(-limit, limit).to(dtype)
++
++
++def raw_ste(value, scale):
++    raw = value.float() / scale
++    codes = encode(gs32(value), scale, torch.float8_e4m3fn)
++    return raw + (codes.float() - raw).detach()
++
++
++def reference(x, up, down, geometry, us, ws, xs, gs, ps, ds):
++    from ks3_research.vendor.ks3_int8 import pack_spine, _geometry_quant
++    from wr_reproduction.check_ks3_rank_geometry import surrogate
++    tokens, features = x.shape[0], up.shape[0]
++    xr, ur, wr = raw_ste(x, xs), raw_ste(up, us), raw_ste(down.T, ws)
++    coords = (xr @ ur.T) * (xs * us)
++    coords.register_hook(lambda grad: encode(grad, ds, torch.float8_e5m2).float() * ds)
++    with torch.no_grad():
++        p, pscale = pack_spine(geometry[:, :6].contiguous())
++        scale = torch.nn.functional.softplus(geometry[:, 6]) + 1e-4
++        shift = .5 * geometry[:, 7].tanh()
++        codes = torch.empty_like(coords, dtype=torch.int8)
++        scales = torch.empty(tokens, features // 32, device=x.device, dtype=torch.float16)
++        _geometry_quant[(tr.cdiv(tokens, 16), tr.cdiv(features, 32))](
++            coords.detach(), coords.detach(), p, pscale, scale, shift, None, codes, scales,
++            tokens, features, 1, 1, BM=16, BN=32, num_warps=4)
++        encoded = encode(codes.float() * scales.float().repeat_interleave(32, -1), ps, torch.float8_e4m3fn)
++    smooth = surrogate(coords, geometry, 1) / ps
++    hidden = smooth + (encoded.float() - smooth).detach()
++    y = (hidden @ wr.T) * (ps * ws)
++    y.register_hook(lambda grad: encode(grad, gs, torch.float8_e5m2).float() * gs)
++    return y.bfloat16()
++
++
++def relative_rms(actual, expected):
++    assert torch.isfinite(actual).all() and torch.isfinite(expected).all()
++    return ((actual.float() - expected.float()).square().mean().sqrt()
++            / expected.float().square().mean().sqrt().clamp_min(1e-12)).item()
++
++
++def model(features):
++    from wr_reproduction.ks3_dense_fp8 import init_buffers
++    from track_1_short.model.gpt import FP8_MLP_X_SCALE, FP8_GRAD_SCALE
++    m = torch.nn.Module()
++    m.device = torch.device('cuda')
++    m.retained_slots = ()
++    m.mlp_bank = torch.nn.Parameter((torch.randn(8, 2, features, 768, device='cuda') * .025).bfloat16())
++    m.ks3_dense_geometry = torch.nn.Parameter(torch.randn(5, features, 8, device='cuda') * .01)
++    with torch.no_grad():
++        m.ks3_dense_geometry[..., 6] = .75
++    m.register_buffer('_mlp_x_scale', torch.tensor(FP8_MLP_X_SCALE, device='cuda'))
++    m.register_buffer('_mlp_grad_scale', torch.tensor(FP8_GRAD_SCALE, device='cuda'))
++    init_buffers(m, features)
++    return m
++
++
++@torch.no_grad()
++def compare_cache(m, previous, exact):
++    from wr_reproduction.check_ks3_prepared_native import native_copy
++    for slot in range(5):
++        for projection, suffix in ((0, 'up'), (1, 'down')):
++            value = m.mlp_bank[slot, projection]
++            if projection:
++                value = value.T
++            largest = value.float().abs().amax() if exact else previous[slot, projection]
++            scale = largest.clamp_min(1e-12) / 448.
++            decoded = gs32(value)
++            expected = encode(decoded, scale, torch.float8_e4m3fn)
++            torch.testing.assert_close(m.ks3_dense_weight_scales[slot, projection], scale.reshape(1), rtol=0, atol=0)
++            torch.testing.assert_close(m.ks3_dense_weight_amax[slot, projection], decoded.abs().amax().reshape(1), rtol=0, atol=0)
++            for prefix in ('f8', 'native'):
++                wanted = native_copy(expected) if prefix == 'native' else expected
++                for tail, result in [('', wanted), ('_t', wanted.T.contiguous())]:
++                    got = getattr(m, 'ks3_dense_' + prefix + '_' + suffix + tail)[slot, 0]
++                    assert torch.equal(got.view(torch.uint8), result.view(torch.uint8))
++
++
++def cache_checks(m):
++    from wr_reproduction.ks3_dense_fp8 import refresh_weights
++    pointers = {name: value.data_ptr() for name, value in m.named_buffers()}
++    checks = []
++    for index, exact in enumerate((True, False, False, True)):
++        if index:
++            with torch.no_grad():
++                m.mlp_bank.add_(torch.randn_like(m.mlp_bank) * .001)
++        previous = m.ks3_dense_weight_amax.clone()
++        refresh_weights(m, exact)
++        compare_cache(m, previous, exact)
++        checks.append(dict(exact=exact, original_and_native_bytes_exact=True, delayed_scale_exact=True))
++    torch.cuda.synchronize()
++    graph = torch.cuda.CUDAGraph()
++    with torch.cuda.graph(graph):
++        refresh_weights(m, False)
++    for _ in range(2):
++        with torch.no_grad():
++            m.mlp_bank.add_(torch.randn_like(m.mlp_bank) * .001)
++        previous = m.ks3_dense_weight_amax.clone()
++        graph.replay()
++        compare_cache(m, previous, False)
++        checks.append(dict(captured_replay=True, original_and_native_bytes_exact=True, delayed_scale_exact=True))
++    assert pointers == {name: value.data_ptr() for name, value in m.named_buffers()}
++    return checks
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument('--out', required=True)
++    parser.add_argument('--features', type=int, choices=(1024, 2816), required=True)
++    args = parser.parse_args()
++    torch.set_num_threads(1)
++    torch.set_float32_matmul_precision('highest')
++    torch.manual_seed(172)
++    install('pr393')
++    from wr_reproduction import ks3_fp8_gemm
++    from wr_reproduction.ks3_dense_fp8 import DenseFP8, refresh_weights
++    ks3_fp8_gemm.TILE_MODE = 'mi300-v2'
++    m = model(args.features)
++    caches_checked = cache_checks(m)
++    refresh_weights(m, True)
++    # These representative post/coordinate-gradient scales exercise nonzero
++    # geometry without clipping most products. Bootstrap and rank-local
++    # refresh use the immutable model constants and are checked separately.
++    m._mlp_post_scales.fill_(.01)
++    m._mlp_dpre_scales.fill_(.0001)
++    checks = []
++    for tokens in (1, 257, 4096):
++        x = torch.randn(tokens, 768, device='cuda', dtype=torch.bfloat16).requires_grad_()
++        up = m.mlp_bank[0, 0].detach().requires_grad_()
++        down = m.mlp_bank[0, 1].detach().requires_grad_()
++        geometry = m.ks3_dense_geometry[0].detach().requires_grad_()
++        post = torch.tensor(.7, device='cuda', dtype=torch.bfloat16, requires_grad=True)
++        caches = tuple(getattr(m, 'ks3_dense_native_' + name)[0] for name in ('up', 'up_t', 'down', 'down_t'))
++        us, ws = m.ks3_dense_weight_scales[0]
++        xs, gs = m._mlp_x_scale, m._mlp_grad_scale
++        ps, ds = m._mlp_post_scales[:1], m._mlp_dpre_scales[:1]
++        scales = (us, ws, xs, gs, ps, m._mlp_post_amax[0], ds, m._mlp_dpre_amax[0])
++        y = DenseFP8.apply(x, up, down, geometry, caches, scales, 0) * post
++        gradient = torch.randn_like(y) * .02
++        actual = torch.autograd.grad(y, (x, up, down, geometry, post), gradient)
++        xr, ur, dr, gr, pr = [value.detach().clone().requires_grad_() for value in (x, up, down, geometry, post)]
++        yr = reference(xr, ur, dr, gr, us, ws, xs, gs, ps, ds) * pr
++        expected = torch.autograd.grad(yr, (xr, ur, dr, gr, pr), gradient)
++        errors = dict(output=relative_rms(y, yr))
++        for name, a, b in zip(('input_gradient', 'up_gradient', 'down_gradient', 'geometry_gradient', 'post_gradient'), actual, expected):
++            errors[name] = relative_rms(a, b)
++        assert max(errors.values()) < .015, (tokens, errors)
++        # A fresh autograd invocation must overwrite its temporary projection
++        # bank, while normal PyTorch leaf accumulation remains additive.
++        leaves = (x, up, down, geometry, post)
++        for leaf in leaves:
++            leaf.grad = None
++        for _ in range(2):
++            (DenseFP8.apply(x, up, down, geometry, caches, scales, 0) * post).backward(gradient)
++        for leaf, expected_grad in zip(leaves, actual):
++            torch.testing.assert_close(leaf.grad, expected_grad * 2, rtol=0, atol=0)
++        checks.append(dict(tokens=tokens, relative_rms=errors, repeated_backward_additive=True))
++    # Two live sites share rank-local amax base tensors and the original
++    # projection bank. This catches illegal autograd saved-buffer versions
++    # and verifies that ordinary bank accumulation leaves padding untouched.
++    from wr_reproduction.ks3_dense_fp8 import apply
++    x = torch.randn(257, 768, device='cuda', dtype=torch.bfloat16).requires_grad_()
++    m.mlp_bank.grad = None
++    m.ks3_dense_geometry.grad = None
++    outputs = [apply(m, slot, slot, x, m.mlp_bank[slot, 0], m.mlp_bank[slot, 1]) for slot in (0, 1)]
++    (outputs[0] + outputs[1]).backward(torch.randn_like(outputs[0]) * .02)
++    assert torch.isfinite(x.grad).all()
++    for value in (m.mlp_bank.grad, m.ks3_dense_geometry.grad):
++        assert torch.isfinite(value).all()
++        assert torch.count_nonzero(value[0]) and torch.count_nonzero(value[1])
++        assert not torch.count_nonzero(value[2:])
++    result = dict(event='kernel_correctness', passed=True, features=args.features,
++                  multiple_live_sites_and_padded_bank_verified=True,
++                  dense_precision='fp8', routed_precision='bf16', checks=checks, cache_checks=caches_checked,
++                  oracle='Independent Torch GS32/FP8 encoding and decoded products, pinned nonlinear forward, smooth STE with explicit FP8 gradient boundaries',
++                  shared_backend_modified=False, validation=False, timing=False)
++    with open(args.out, 'w') as out:
++        out.write(json.dumps(result) + '\n')
++    print(json.dumps(result))
++
++
++if __name__ == '__main__':
++    main()
+--- a/wr_reproduction/matched_controller.py
++++ b/wr_reproduction/matched_controller.py
+@@ -44,7 +44,8 @@
+     if recipe['architecture']!='mlp':command+=['--ks3-precision',recipe['precision']]
+     if kind=='timing':command+=['--timing-updates','100']
+     if kind=='correctness':
+-        oracle='wr_reproduction.check_ks3_feedforward' if recipe['rank']==1 else 'wr_reproduction.check_ks3_feedforward_rank'
++        oracle=('wr_reproduction.check_ks3_feedforward_fp8' if recipe.get('dense_precision')=='fp8' else
++                'wr_reproduction.check_ks3_feedforward' if recipe['rank']==1 else 'wr_reproduction.check_ks3_feedforward_rank')
+         command=[str(PYTHON),'-m',oracle,'--out',str(directory/'events.jsonl'),
+                  '--features',str(recipe.get('dense_charts',recipe['charts'])*recipe['rank'])]
+         if recipe['rank']!=1:command+=['--rank',str(recipe['rank'])]

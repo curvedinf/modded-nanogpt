@@ -1,0 +1,142 @@
+{
+  "run_id": "matched-ks3-all-dense2816-fp8-20261025T204113-c3cd69",
+  "status": "correctness_passed",
+  "seed": 172,
+  "code_commit": "383e205b9f3b4f707fabefa6b3b4ae2e4dfd0705",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-dense2816-fp8",
+    "hypothesis": "Change only dense KS3 training projection products from BF16 to native FP8 at the original dense width2816. Keep routed KS3 at the measured BF16 path, rank1, geometry Adam0.125, all projection rates and shared/model-wide configuration. Reuse existing prepared-native KS3 products, fused GS32 producer packing and original logical-rank delayed-scale policy. Retain BF16 dense caches for unchanged validation. Require an independent numerical/cache oracle, actual graph warmup and paired100-update whole-model timing before convergence; skip the precision candidate if slower.",
+    "dense_charts": 2816,
+    "dense_precision": "fp8",
+    "fp8_native_gemm_tuning": "mi300-v2"
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": null,
+  "timing": null,
+  "correctness": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "features": 2816,
+    "multiple_live_sites_and_padded_bank_verified": true,
+    "dense_precision": "fp8",
+    "routed_precision": "bf16",
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "input_gradient": 0.0,
+          "up_gradient": 0.0,
+          "down_gradient": 0.0,
+          "geometry_gradient": 3.0661212235827406e-07,
+          "post_gradient": 0.0
+        },
+        "repeated_backward_additive": true
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 3.963549044527781e-09,
+          "input_gradient": 8.182948658941314e-05,
+          "up_gradient": 6.803996802773327e-05,
+          "down_gradient": 6.58733188174665e-05,
+          "geometry_gradient": 6.132944463388412e-07,
+          "post_gradient": 0.0
+        },
+        "repeated_backward_additive": true
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 1.0067719813378062e-05,
+          "input_gradient": 0.00017628523346502334,
+          "up_gradient": 0.0001878504263004288,
+          "down_gradient": 5.257593875285238e-05,
+          "geometry_gradient": 7.858521939851926e-07,
+          "post_gradient": 0.0
+        },
+        "repeated_backward_additive": true
+      }
+    ],
+    "cache_checks": [
+      {
+        "exact": true,
+        "original_and_native_bytes_exact": true,
+        "delayed_scale_exact": true
+      },
+      {
+        "exact": false,
+        "original_and_native_bytes_exact": true,
+        "delayed_scale_exact": true
+      },
+      {
+        "exact": false,
+        "original_and_native_bytes_exact": true,
+        "delayed_scale_exact": true
+      },
+      {
+        "exact": true,
+        "original_and_native_bytes_exact": true,
+        "delayed_scale_exact": true
+      },
+      {
+        "captured_replay": true,
+        "original_and_native_bytes_exact": true,
+        "delayed_scale_exact": true
+      },
+      {
+        "captured_replay": true,
+        "original_and_native_bytes_exact": true,
+        "delayed_scale_exact": true
+      }
+    ],
+    "oracle": "Independent Torch GS32/FP8 encoding and decoded products, pinned nonlinear forward, smooth STE with explicit FP8 gradient boundaries",
+    "shared_backend_modified": false,
+    "validation": false,
+    "timing": false
+  },
+  "exit_code": 0,
+  "events_sha256": "566da50bd512871708c343a06ace6ae0a27ad1db09f31cbb3b2409014b691325",
+  "completed_utc": "2026-10-25T20:41:54.755428+00:00",
+  "qualifies": false
+}

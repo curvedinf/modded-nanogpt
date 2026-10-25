@@ -1,0 +1,70 @@
+{
+  "utc": "2026-10-25T18:58:53.211601+00:00",
+  "status": "prepared",
+  "wait_for_run": "matched-ks3-all-rank2-20261025T185248-cc3fd2",
+  "results_name": "ks3-lower-rate-warp-ablation-results.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_projection0875.json",
+      "recipe_sha256": "ae4996b98b83b3e2a1ce0040e0eac38ea8f7ff33aa4021e8187559b6fe5a8686",
+      "seed": 168,
+      "status": "prepared",
+      "changes": {
+        "projection_lr_multiplier": {
+          "before": null,
+          "after": 0.875
+        }
+      },
+      "hypothesis": "Lower only KS3 dense and routed projection ANVIL multipliers from1.0 to0.875. The separate1.25 increase was proxy-pruned; test whether smaller KS3 projection updates improve loss at comparable elapsed time, keeping geometry0.125 and all model-wide settings unchanged."
+    },
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_scale050.json",
+      "recipe_sha256": "f2fa7f33235626cfd4c637d026b98f648a802dff360a155b4add7aa02ca672e9",
+      "seed": 168,
+      "status": "prepared",
+      "changes": {
+        "geometry": {
+          "before": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "after": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.5,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      "hypothesis": "Change only the initial KS3 raw warp scale from0.75 to0.5. With zero initial spline coefficients the initial function is unchanged; test a different learned nonlinear basis response at the same width, projection LR, geometry Adam0.125 and shared backend."
+    }
+  ],
+  "decision": "Wait for rank-two discovery and any triggered three-seed verification. Screen these two distinct KS3 hypotheses once each; keep prior queue results immutable."
+}

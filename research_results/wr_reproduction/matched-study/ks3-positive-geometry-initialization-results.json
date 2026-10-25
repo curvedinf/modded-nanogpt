@@ -1,0 +1,368 @@
+{
+  "utc": "2026-10-25T20:52:54.697367+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_study": "dense-fp8-study.json",
+  "results_name": "ks3-positive-geometry-initialization-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_warpplus0025.json",
+      "recipe_sha256": "677890b6d6b802ef90974b9b9709442e31a1e7cfefa2d4603f09c1c13d70e0bf",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Initialize only the even warp coefficient c4 to+0.025 at every dense and routed KS3 site. The separately tested-0.025 initialization was proxy-pruned; test the opposite initial curvature while preserving rank1/width1024, BF16 products, geometry Adam0.125, other zero coefficients and raw scale0.75. This is a distinct geometry prior, with no shared/model-wide change.",
+      "changes": {
+        "geometry.coefficients[4]": {
+          "before": 0,
+          "after": 0.025
+        }
+      },
+      "numerical_oracle_reused": "matched-ks3-all-20261025T173921-f97d3e",
+      "kernel_source_unchanged": true,
+      "actual_full_graph_warmup_required": true,
+      "run_id": "matched-ks3-all-warpplus0025-20261025T205832-ce3439",
+      "result": {
+        "run_id": "matched-ks3-all-warpplus0025-20261025T205832-ce3439",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "a7edbb6dfe788eb82bcfd3f5ecc48e9443ea874a",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0.025,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-warpplus0025",
+          "hypothesis": "Initialize only the even warp coefficient c4 to+0.025 at every dense and routed KS3 site. The separately tested-0.025 initialization was proxy-pruned; test the opposite initial curvature while preserving rank1/width1024, BF16 products, geometry Adam0.125, other zero coefficients and raw scale0.75. This is a distinct geometry prior, with no shared/model-wide change."
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 3.5159225463867188,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.0100889205932618,
+          "reference_run_id": "matched-ks3-all-20261025T173936-bf006b",
+          "reference_wall_seconds": 323.649033780006,
+          "reference_age_seconds": 1.0631652489828411,
+          "reference_objective": 3.505833625793457,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 598,
+          "comparable_runs": 11,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-20261025T173936-bf006b/events.jsonl",
+            "sha256": "a858ba1b043d893a6bbecd996af4d027f02815575628a41a82b0b664b2b505a9",
+            "line": 632,
+            "row_sha256": "5cb4e7cc8ec21c2833e2a246eff7558fa7ecd221ecb7149e4afed923eaa6be8a"
+          },
+          "step": 596,
+          "train_seconds": 324.71219902898883,
+          "reference_snapshot_sha256": "c70034d21718b230980b8bc6818066b94bdadc27baf8457cc95344a468956525",
+          "utc": "2026-10-25T21:06:07.308792+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-warpplus0025-20261025T205832-ce3439",
+          "seed": 168,
+          "code_commit": "a7edbb6dfe788eb82bcfd3f5ecc48e9443ea874a",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "0440c1a9dfd80ddc31ce12989099301597289d76c8b09bcf87bbc371fb4f326c",
+        "completed_utc": "2026-10-25T21:06:09.582955+00:00",
+        "qualifies": false
+      }
+    },
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_cubicplus0025.json",
+      "recipe_sha256": "4ab1ace117b8d116e5d9d9c4a3db645a98228ea7461df11d7d7fed58211f95ba",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Initialize only the odd cubic warp coefficient c5 to+0.025 at every dense and routed KS3 site. Test a small nonzero cubic response at initialization instead of waiting for geometry Adam to learn it from zero. Keep rank1/width1024, BF16 products, geometry Adam0.125, all other coefficients zero, raw scale0.75 and every shared/model-wide setting fixed.",
+      "changes": {
+        "geometry.coefficients[5]": {
+          "before": 0,
+          "after": 0.025
+        }
+      },
+      "numerical_oracle_reused": "matched-ks3-all-20261025T173921-f97d3e",
+      "kernel_source_unchanged": true,
+      "actual_full_graph_warmup_required": true,
+      "run_id": "matched-ks3-all-cubicplus0025-20261025T210609-b26898",
+      "result": {
+        "run_id": "matched-ks3-all-cubicplus0025-20261025T210609-b26898",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "5963c80e88e91dad643a5bb8e40d5b59aa0e7cbf",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0.025
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-cubicplus0025",
+          "hypothesis": "Initialize only the odd cubic warp coefficient c5 to+0.025 at every dense and routed KS3 site. Test a small nonzero cubic response at initialization instead of waiting for geometry Adam to learn it from zero. Keep rank1/width1024, BF16 products, geometry Adam0.125, all other coefficients zero, raw scale0.75 and every shared/model-wide setting fixed."
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 3.5189828872680664,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.0131492614746094,
+          "reference_run_id": "matched-ks3-all-20261025T173936-bf006b",
+          "reference_wall_seconds": 323.649033780006,
+          "reference_age_seconds": 0.25448099797358736,
+          "reference_objective": 3.505833625793457,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 598,
+          "comparable_runs": 11,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-20261025T173936-bf006b/events.jsonl",
+            "sha256": "a858ba1b043d893a6bbecd996af4d027f02815575628a41a82b0b664b2b505a9",
+            "line": 632,
+            "row_sha256": "5cb4e7cc8ec21c2833e2a246eff7558fa7ecd221ecb7149e4afed923eaa6be8a"
+          },
+          "step": 596,
+          "train_seconds": 323.9035147779796,
+          "reference_snapshot_sha256": "9c0ed3d3d51ed1e3fa55e02853aca506d4b931c2e19bb1f59e9ba67fea09dd18",
+          "utc": "2026-10-25T21:13:43.227186+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-cubicplus0025-20261025T210609-b26898",
+          "seed": 168,
+          "code_commit": "5963c80e88e91dad643a5bb8e40d5b59aa0e7cbf",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "8859ce5993e88bfb9c1eef00ad33289b83de9b4344d28348aa1fc915849bc30d",
+        "completed_utc": "2026-10-25T21:13:45.409716+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "decision": "Wait for the complete denseFP8 precision study, including its900s discovery and any mandatory frozen three-seed verification. Then test these two KS3-only initialization hypotheses once each under the established pruning rule.",
+  "unit": "wr-matched-positive-geometry-a7edbb6",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "edf3628816191e70931e00a27a52acbb2ca11fe983a727e50b5f6277e07a2dde",
+    "code_commit": "a7edbb6dfe788eb82bcfd3f5ecc48e9443ea874a"
+  },
+  "completed_utc": "2026-10-25T21:13:45.413116+00:00"
+}

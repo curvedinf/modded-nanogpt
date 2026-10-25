@@ -14,6 +14,7 @@ from wr_reproduction.fused_fp8 import _native
 
 BF16_TUNED_KERNELS=False
 KS3_RANK=1
+EXECUTED_MOE_BACKWARDS=set()  # CPU evidence from actual custom-op capture/eager execution.
 
 @tr.jit
 def _pack(A,O,R:tl.constexpr,C:tl.constexpr,A0:tl.constexpr,A1:tl.constexpr,
@@ -31,7 +32,7 @@ def _pack(A,O,R:tl.constexpr,C:tl.constexpr,A0:tl.constexpr,A1:tl.constexpr,
         q=tl.minimum(tl.maximum(libdevice.nearbyint(a/s[:,None]),-127.),127.)
         values=q*s[:,None]
     else:
-        tl.static_assert(FP8, 'Native packing is a training FP8-only ablation')
+        # Opt-in dense BF16/FP8 training may retain unquantized projection values.
         values=a
     if FP8:
         mask=(row[:,None]<R)&(col[None,:]<C)
@@ -125,7 +126,7 @@ def _geometry(C,G,H,TILES,M:tl.constexpr,N:tl.constexpr,HT=None,SCALE=None,AMAX=
         hs=_half_scale(tl.max(tl.abs(h),1));q=tl.minimum(tl.maximum(libdevice.nearbyint(h/hs[:,None]),-127.),127.)
         values=q*hs[:,None]
     else:
-        tl.static_assert(FP8, 'Native packing is a training FP8-only ablation')
+        # Opt-in dense BF16/FP8 training may retain unquantized projection values.
         values=h
     if FP8:
         out=tl.minimum(tl.maximum(values/tl.load(SCALE),-448.),448.).to(tl.float8e4nv)
@@ -241,6 +242,7 @@ def _(rows,src,tiles,up,down,g):
 def backward(grad:torch.Tensor,y:torch.Tensor,x:torch.Tensor,c:torch.Tensor,h:torch.Tensor,gate:torch.Tensor,
              src:torch.Tensor,offs:torch.Tensor,tiles:torch.Tensor,up:torch.Tensor,down:torch.Tensor,g:torch.Tensor,
              bank:torch.Tensor,layer:int)->tuple[torch.Tensor,torch.Tensor,torch.Tensor]:
+    if up.shape[0]==8:EXECUTED_MOE_BACKWARDS.add(layer)
     valid=(src<grad.shape[0])[:,None];idx=src.clamp(0,grad.shape[0]-1).long()
     gathered=grad[idx].float();gg=torch.where(valid,gathered*gate[idx,None].to(torch.bfloat16).float(),0).to(torch.bfloat16)
     ds=torch.where(valid,gathered*y.float(),0).sum(1)

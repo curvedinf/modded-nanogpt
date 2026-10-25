@@ -1,0 +1,22 @@
+--- a/wr_reproduction/ks3_feedforward.py
++++ b/wr_reproduction/ks3_feedforward.py
+@@ -63,7 +63,7 @@
+     arch=recipe['architecture'];keep=tuple(sorted(DENSE[l] for l in RETAIN[arch]))
+     mapping={slot:i for i,slot in enumerate(keep)}
+     charts,rank=recipe.get('dense_charts',recipe['charts']),recipe['rank'];features=charts*rank
+-    if features not in (512,768,1024,1280,1536):raise ValueError('Unsupported dense KS3 width')
++    if features not in (512,768,1024,1280,1536,2816):raise ValueError('Unsupported dense KS3 width')
+     geometry=recipe['geometry']
+     multiplier=recipe.get('dense_projection_lr_multiplier',recipe.get('projection_lr_multiplier',1.))
+     if not math.isfinite(multiplier) or multiplier<=0:
+--- a/wr_reproduction/check_ks3_feedforward.py
++++ b/wr_reproduction/check_ks3_feedforward.py
+@@ -16,7 +16,7 @@
+ 
+ def main():
+     p=argparse.ArgumentParser();p.add_argument('--out',required=True)
+-    p.add_argument('--features',type=int,choices=(512,768,1024,1280,1536),default=1024);a=p.parse_args()
++    p.add_argument('--features',type=int,choices=(512,768,1024,1280,1536,2816),default=1024);a=p.parse_args()
+     torch.set_num_threads(1);torch.manual_seed(172);core.BF16_TUNED_KERNELS=True
+     checks=[]
+     for tokens in (1,257,4096):

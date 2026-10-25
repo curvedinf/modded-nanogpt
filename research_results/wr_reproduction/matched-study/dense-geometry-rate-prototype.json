@@ -1,0 +1,74 @@
+{
+  "utc": "2026-10-25T21:46:28.601674+00:00",
+  "not_deployed": true,
+  "hypothesis": "Halve geometry Adam only for the five dense KS3 branches while retaining routed geometry Adam0.125. This isolates dense adaptation from the previously screened global0.0625 change. Keep all1024/rank1 BF16 GS32 blocks, projection rates, initialization, topology and frozen shared/model-wide settings identical. Test whether slower dense geometry adaptation improves compatible training loss versus elapsed time; a proxy prune is not a validation result.",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-densegeom00625",
+    "hypothesis": "Halve geometry Adam only for the five dense KS3 branches while retaining routed geometry Adam0.125. This isolates dense adaptation from the previously screened global0.0625 change. Keep all1024/rank1 BF16 GS32 blocks, projection rates, initialization, topology and frozen shared/model-wide settings identical. Test whether slower dense geometry adaptation improves compatible training loss versus elapsed time; a proxy prune is not a validation result.",
+    "dense_geometry_lr_multiplier": 0.0625
+  },
+  "recipe_sha256": "321107d374f7fd15e12983edc0a92adaa4baae4c2af96baaa25e771e378d5890",
+  "patch": "research_results/wr_reproduction/matched-study/dense-geometry-rate-prototype.patch",
+  "patch_sha256": "3474f781b030497e2a8f1d0772638b792e3835d04270dd3b475ebcdfb9eade10",
+  "staged_sources": [
+    {
+      "path": "wr_reproduction/ks3_feedforward.py",
+      "base_sha256": "f38c85f4219766c73072293a4ac43899bf65da5e83850036fd8835b6bb4fa2a2",
+      "staged_sha256": "d87e88664fa24e1847d9eaa92c3b21d5cc906d4d3113eda36013f318695ee4a4",
+      "stage_path": "logs/wr-reproduction/matched-study/staging/dense-geometry-rate/ks3_feedforward.py"
+    }
+  ],
+  "prerequisite_manifest": "logs/wr-reproduction/matched-study/pending-width768-normalized-rate.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "unchanged_model_methods_verified": true,
+  "kernel_arithmetic_unchanged": true,
+  "shared_backend_unchanged": true,
+  "required_deployment_gate": "Wait for width768 queue and any qualifying verification, hold both ablation and GPU leases, assert STOP/fence/source hashes, commit owned source+recipe before discovery.",
+  "cpu_optimizer_audit": {
+    "path": "research_results/wr_reproduction/matched-study/dense-geometry-rate-cpu-optimizer-audit.json",
+    "sha256": "2cde6c18f16ead0e101417be83bc8ee26ba9a5b13eea16c20801bacfe577f029"
+  },
+  "cpu_model_audit": {
+    "path": "research_results/wr_reproduction/matched-study/dense-geometry-rate-cpu-model-audit.json",
+    "sha256": "591adfb8f3378b7e4c29be8556fd8cb066b876c26922e6e27b395fba27278fa5"
+  }
+}

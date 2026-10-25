@@ -1,0 +1,45 @@
+--- a/wr_reproduction/ks3_feedforward.py
++++ b/wr_reproduction/ks3_feedforward.py
+@@ -75,7 +75,11 @@
+     multiplier=recipe.get('dense_projection_lr_multiplier',recipe.get('projection_lr_multiplier',1.))
+     if not math.isfinite(multiplier) or multiplier<=0:
+         raise ValueError('Dense KS3 projection LR multiplier must be finite and positive')
++    geometry_multiplier=recipe.get('dense_geometry_lr_multiplier',geometry['lr_mul'])
++    if not math.isfinite(geometry_multiplier) or geometry_multiplier<0:
++        raise ValueError('Dense KS3 geometry LR multiplier must be finite and nonnegative')
+     optimizer_policy={}
++    geometry_policy={}
+     transformed_forward,forward_sha=compile_method(forward_tree(),gpt.__dict__)
+     refresh,_=compile_method(refresh_tree(len(keep),dense_precision=='fp8'),gpt.__dict__)
+     # Reuse the exact original allocation/layout definitions, only with fewer
+@@ -159,6 +163,7 @@
+                         retained_original_mlp_slots=list(keep),all_feedforward_paths_mapped=True,
+                         original_mlp_fallback_is_fatal=True,transformed_forward_sha256=forward_sha,
+                         actual_graph_warmup=True,dense_projection_optimizer=dict(optimizer_policy),
++                        dense_geometry_optimizer=dict(geometry_policy),
+                         dense_training_precision=dense_precision,dense_validation_precision='bf16',
+                         dense_training_projection_gs32=dense_gs32,dense_validation_projection_gs32=True,
+                         dense_geometry_coefficient_gs32=True,
+@@ -178,7 +183,7 @@
+     original_optimizer=training.AnvilAndAdam
+     def optimizer(*a,**kw):
+         table=kw['param_table']
+-        table['ks3_dense_geometry']=dict(optim='adam',comms='replicated',adam_betas=[.9,.99],lr_mul=geometry['lr_mul'],wd_mul=0.)
++        table['ks3_dense_geometry']=dict(optim='adam',comms='replicated',adam_betas=[.9,.99],lr_mul=geometry_multiplier,wd_mul=0.)
+         if keep:table['retained_mlp_bank']=dict(table['mlp_bank'])
+         table['mlp_bank']=dict(table['mlp_bank'],lr_mul=multiplier)
+         for key in ('scatter_order','work_order'):
+@@ -191,6 +196,13 @@
+         assert cfg.lr_mul==shape_scale*multiplier
+         optimizer_policy.update(multiplier=multiplier,effective_multiplier=cfg.lr_mul,
+                                 shape_scale=shape_scale,base_lr=cfg.lr,weight_decay=cfg.weight_decay)
++        dense_geometry=[cfg for cfg in result.param_cfgs.values() if cfg.label=='ks3_dense_geometry']
++        assert len(dense_geometry)==1
++        geom=dense_geometry[0]
++        assert geom.lr_mul==geometry_multiplier
++        geometry_policy.update(multiplier=geom.lr_mul,base_lr=geom.lr,
++                               adam_betas=list(geom.adam_betas),weight_decay_multiplier=geom.wd_mul,
++                               eps=geom.eps,routed_geometry_multiplier=geometry['lr_mul'])
+         return result
+     training.AnvilAndAdam=optimizer
+     return FullKS3GPT

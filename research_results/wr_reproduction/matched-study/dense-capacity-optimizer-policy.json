@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-25T18:34:37.657402+00:00",
+  "gpu_initialized": false,
+  "rows": [
+    {
+      "features": 1024,
+      "base_lr": 0.023,
+      "shape_lr_multiplier": 1.1547005383792515,
+      "output_projection_multiplier": 2.0,
+      "padding_frozen": true
+    },
+    {
+      "features": 1536,
+      "base_lr": 0.023,
+      "shape_lr_multiplier": 1.4142135623730951,
+      "output_projection_multiplier": 2.0,
+      "padding_frozen": true
+    },
+    {
+      "features": 2816,
+      "base_lr": 0.023,
+      "shape_lr_multiplier": 1.9148542155126762,
+      "output_projection_multiplier": 2.0,
+      "padding_frozen": true
+    }
+  ],
+  "interpretation": "The1536-feature dense capacity recipe preserves the original ANVIL shape rule. Its effective dense LR therefore increases from sqrt(1024/768) to sqrt(1536/768); this is recorded as a shape-dependent consequence, not a separately tuned model-wide hyperparameter. Routed width and its LR remain unchanged."
+}

@@ -23,7 +23,7 @@ class Observations:
         self.thread.start()
 
     def check(self):
-        if (self.screen.state / 'STOP').exists():
+        if any(p.exists() for p in self.screen.stop_files):
             raise ResearchStopped('explicit_study_stop')
         if self.failure is not None:
             raise RuntimeError('Research observation worker failed') from self.failure
@@ -53,6 +53,7 @@ class Observations:
                 completed = time.perf_counter()
                 wall = self.clock(completed)
                 row = dict(event='train', step=step, objective=host.item(), train_seconds=wall,
+                           measurement='training_objective_proxy_not_full_validation',
                            objective_signature=signature, observation_method='pinned-scalar-event-wait-worker',
                            submitted_to_observed_seconds=completed-submitted)
                 if self.last_wall:

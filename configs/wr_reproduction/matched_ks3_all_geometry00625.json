@@ -1,0 +1,43 @@
+{
+  "precision": "bf16",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.0625,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "training_gs32": true,
+  "weight_packing": "loop",
+  "geometry_backward_rows": 64,
+  "bf16_kernel_mode": "tuned",
+  "shared_fp8_gemm_tuning": "mi300-v1",
+  "shared_fp8_amax": "atomic",
+  "shared_fp8_decode": "scalar",
+  "shared_fp8_head_tuning": "legacy",
+  "shared_fp8_pipeline_tuning": "legacy",
+  "validation_window_policy": "accepted-control",
+  "validation_precision": "bf16",
+  "max_train_seconds": 900.0,
+  "validation_setup_reserve_seconds": 2.0,
+  "model_wide_hyperparameters": "original-pr393",
+  "architecture": "ks3_all",
+  "name": "matched-ks3-all-geometry00625",
+  "hypothesis": "Halve only the geometry Adam multiplier from 0.125 to 0.0625 at every dense and routed KS3 site. The separately tested 0.25 multiplier was proxy-pruned; test whether slower spline coefficient and warp updates improve loss at comparable elapsed time. Keep rank one, width 1024, projection multiplier 1.0, initialization and all shared/model-wide settings unchanged."
+}

@@ -1,0 +1,204 @@
+{
+  "utc": "2026-10-25T21:00:53.936516+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_study": "pending-positive-geometry-initialization.json",
+  "results_name": "ks3-dense2816-fp8-normalized-lr-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_dense2816_fp8_normlr.json",
+      "recipe_sha256": "c862538fc18d71acaad8df935b90c72077a33e7c94d0f92e45adb0443a7cfff2",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Normalize only dense KS3 projection learning rate by sqrt(1024/2816), canceling the larger ANVIL shape factor at dense width2816. The effective dense multiplier becomes sqrt(1024/768), matching the original all-KS3 width1024 arm while retaining the original MLP dense capacity. Keep the correctness-validated, whole-model faster dense FP8 path, BF16 routed KS3, geometry Adam0.125, rank1, and all shared/model-wide settings. Earlier width1536 normalized-rate and default-rate trials were both proxy-pruned and provide no validation ranking; this is the corresponding untested width2816 rate hypothesis.",
+      "changes": {
+        "dense_projection_lr_multiplier": {
+          "before": 1.0,
+          "after": 0.6030226891555273
+        }
+      },
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/dense2816-normalized-lr-cpu-optimizer-audit.json",
+        "sha256": "80c13ec3751049482491f42477a6f7477590b6cd113a5fa1008e1e2e63928e38"
+      },
+      "numerical_oracle_reused": "matched-ks3-all-dense2816-fp8-20261025T204113-c3cd69",
+      "paired_timing_gate_reused": {
+        "path": "research_results/wr_reproduction/matched-study/dense-fp8-paired-timing.json",
+        "sha256": "5900be9b62b04b21c89728ea448a22e938154176b6555ad0ac0fa8f592c0b3df"
+      },
+      "kernel_source_unchanged": true,
+      "actual_full_graph_warmup_required": true,
+      "run_id": "matched-ks3-all-dense2816-fp8-normlr-20261025T211345-c9af30",
+      "result": {
+        "run_id": "matched-ks3-all-dense2816-fp8-normlr-20261025T211345-c9af30",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "ea8dd2c74394f45041f4e49d7bdbf096323ef428",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-dense2816-fp8-normlr",
+          "hypothesis": "Normalize only dense KS3 projection learning rate by sqrt(1024/2816), canceling the larger ANVIL shape factor at dense width2816. The effective dense multiplier becomes sqrt(1024/768), matching the original all-KS3 width1024 arm while retaining the original MLP dense capacity. Keep the correctness-validated, whole-model faster dense FP8 path, BF16 routed KS3, geometry Adam0.125, rank1, and all shared/model-wide settings. Earlier width1536 normalized-rate and default-rate trials were both proxy-pruned and provide no validation ranking; this is the corresponding untested width2816 rate hypothesis.",
+          "dense_charts": 2816,
+          "dense_precision": "fp8",
+          "fp8_native_gemm_tuning": "mi300-v2",
+          "dense_projection_lr_multiplier": 0.6030226891555273
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 3.496716260910034,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.050967454910278,
+          "reference_run_id": "matched-ks3-all-20261025T173936-bf006b",
+          "reference_wall_seconds": 368.0772668879945,
+          "reference_age_seconds": 0.8246145830198657,
+          "reference_objective": 3.445748805999756,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 638,
+          "comparable_runs": 2,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-20261025T173936-bf006b/events.jsonl",
+            "sha256": "a858ba1b043d893a6bbecd996af4d027f02815575628a41a82b0b664b2b505a9",
+            "line": 672,
+            "row_sha256": "3dec5815efbb2f66c29628c64cd3b6428373f7fb308a0a90f1ba5256327aa7c8"
+          },
+          "step": 596,
+          "train_seconds": 368.90188147101435,
+          "reference_snapshot_sha256": "a7e511caa30f00f9b4e5bc1f5bdd00e0050bab35689420d35c32bf7f46d37f6c",
+          "utc": "2026-10-25T21:22:09.980210+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-dense2816-fp8-normlr-20261025T211345-c9af30",
+          "seed": 168,
+          "code_commit": "ea8dd2c74394f45041f4e49d7bdbf096323ef428",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "4c572723528d396e91dd1d82be478f67d3ef1ef1264244e42358feb4f52a0508",
+        "completed_utc": "2026-10-25T21:22:12.095639+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "decision": "After both geometry initialization ablations and any mandatory verification finish, test the untried wider-dense normalized-rate recipe once. Keep the same frozen shared backend, model-wide settings, clock, evaluation and strict training-proxy screening.",
+  "unit": "wr-matched-dense2816-normlr-5963c80",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "edf3628816191e70931e00a27a52acbb2ca11fe983a727e50b5f6277e07a2dde",
+    "code_commit": "5963c80e88e91dad643a5bb8e40d5b59aa0e7cbf"
+  },
+  "completed_utc": "2026-10-25T21:22:12.098926+00:00"
+}

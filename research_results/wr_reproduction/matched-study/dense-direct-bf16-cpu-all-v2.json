@@ -1,0 +1,505 @@
+{
+  "passed": true,
+  "gpu_initialized": false,
+  "architecture": "ks3_all",
+  "nonfeedforward_initialization_identical": true,
+  "router_identical": true,
+  "original_retained_initialization_identical": true,
+  "anvil_shape_and_output_lr_and_padding_verified": true,
+  "routed_projection_initialization_identical": true,
+  "dense_features": 1024,
+  "routed_features": 1024,
+  "inventory": {
+    "architecture": "ks3_all",
+    "layers": [
+      {
+        "layer": 0,
+        "feedforward": [
+          {
+            "branch": "dense",
+            "slot": 0,
+            "type": "ks3",
+            "instances": 1,
+            "projection_shape": [
+              2,
+              1024,
+              768
+            ],
+            "projection_parameters": 1572864
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 1,
+        "feedforward": [
+          {
+            "branch": "routed_experts",
+            "slot": 0,
+            "type": "ks3",
+            "instances": 8,
+            "topk": 1,
+            "projection_shape": [
+              2,
+              8,
+              1024,
+              768
+            ],
+            "projection_parameters": 12582912
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 2,
+        "feedforward": [
+          {
+            "branch": "dense",
+            "slot": 1,
+            "type": "ks3",
+            "instances": 1,
+            "projection_shape": [
+              2,
+              1024,
+              768
+            ],
+            "projection_parameters": 1572864
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 3,
+        "feedforward": [
+          {
+            "branch": "routed_experts",
+            "slot": 1,
+            "type": "ks3",
+            "instances": 8,
+            "topk": 1,
+            "projection_shape": [
+              2,
+              8,
+              1024,
+              768
+            ],
+            "projection_parameters": 12582912
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 4,
+        "feedforward": [
+          {
+            "branch": "dense",
+            "slot": 2,
+            "type": "ks3",
+            "instances": 1,
+            "projection_shape": [
+              2,
+              1024,
+              768
+            ],
+            "projection_parameters": 1572864
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 5,
+        "feedforward": [
+          {
+            "branch": "routed_experts",
+            "slot": 2,
+            "type": "ks3",
+            "instances": 8,
+            "topk": 1,
+            "projection_shape": [
+              2,
+              8,
+              1024,
+              768
+            ],
+            "projection_parameters": 12582912
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 6,
+        "feedforward": [
+          {
+            "branch": "routed_experts",
+            "slot": 3,
+            "type": "ks3",
+            "instances": 8,
+            "topk": 1,
+            "projection_shape": [
+              2,
+              8,
+              1024,
+              768
+            ],
+            "projection_parameters": 12582912
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 7,
+        "feedforward": [],
+        "removed_feedforward": true
+      },
+      {
+        "layer": 8,
+        "feedforward": [
+          {
+            "branch": "parallel_dense",
+            "slot": 4,
+            "type": "ks3",
+            "instances": 1,
+            "projection_shape": [
+              2,
+              1024,
+              768
+            ],
+            "projection_parameters": 1572864
+          },
+          {
+            "branch": "routed_experts",
+            "slot": 4,
+            "type": "ks3",
+            "instances": 8,
+            "topk": 1,
+            "projection_shape": [
+              2,
+              8,
+              1024,
+              768
+            ],
+            "projection_parameters": 12582912
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 9,
+        "feedforward": [],
+        "removed_feedforward": true
+      },
+      {
+        "layer": 10,
+        "feedforward": [
+          {
+            "branch": "dense",
+            "slot": 3,
+            "type": "ks3",
+            "instances": 1,
+            "projection_shape": [
+              2,
+              1024,
+              768
+            ],
+            "projection_parameters": 1572864
+          }
+        ],
+        "removed_feedforward": false
+      }
+    ],
+    "dense_sites": 5,
+    "moe_sites": 5,
+    "routed_expert_instances": 40,
+    "active_conventional_mlp_instances": 0,
+    "total_parameters": 326980456,
+    "parameter_inventory": {
+      "value_embeds": {
+        "shape": [
+          201216,
+          768
+        ],
+        "parameters": 154533888
+      },
+      "ve_gate_bank": {
+        "shape": [
+          3,
+          6,
+          12
+        ],
+        "parameters": 216
+      },
+      "qk_bank": {
+        "shape": [
+          48,
+          256,
+          768
+        ],
+        "parameters": 9437184
+      },
+      "vo_bank": {
+        "shape": [
+          16,
+          768,
+          768
+        ],
+        "parameters": 9437184
+      },
+      "mlp_bank": {
+        "shape": [
+          8,
+          2,
+          1024,
+          768
+        ],
+        "parameters": 12582912
+      },
+      "moe_bank": {
+        "shape": [
+          80,
+          1024,
+          768
+        ],
+        "parameters": 62914560
+      },
+      "moe_router": {
+        "shape": [
+          5,
+          8,
+          768
+        ],
+        "parameters": 30720
+      },
+      "post_lambdas": {
+        "shape": [
+          11,
+          2
+        ],
+        "parameters": 22
+      },
+      "resid_lambdas": {
+        "shape": [
+          11,
+          2
+        ],
+        "parameters": 22
+      },
+      "scalars": {
+        "shape": [
+          24
+        ],
+        "parameters": 24
+      },
+      "mudd_w1": {
+        "shape": [
+          2,
+          64,
+          768
+        ],
+        "parameters": 98304
+      },
+      "mudd_w2": {
+        "shape": [
+          2,
+          14,
+          64
+        ],
+        "parameters": 1792
+      },
+      "mudd_b2": {
+        "shape": [
+          2,
+          14
+        ],
+        "parameters": 28
+      },
+      "mudd_w2g": {
+        "shape": [
+          14,
+          12,
+          64
+        ],
+        "parameters": 10752
+      },
+      "_mudd_gate_scale": {
+        "shape": [],
+        "parameters": 1
+      },
+      "mudd_gate_w1": {
+        "shape": [
+          2,
+          64,
+          768
+        ],
+        "parameters": 98304
+      },
+      "mudd_gate_w2": {
+        "shape": [
+          2,
+          17,
+          64
+        ],
+        "parameters": 2176
+      },
+      "mudd_gate_b2": {
+        "shape": [
+          2,
+          17
+        ],
+        "parameters": 34
+      },
+      "copy_qk_bank": {
+        "shape": [
+          2,
+          128,
+          768
+        ],
+        "parameters": 196608
+      },
+      "copy_k_sink": {
+        "shape": [
+          128
+        ],
+        "parameters": 128
+      },
+      "copy_qk_gain": {
+        "shape": [
+          1
+        ],
+        "parameters": 1
+      },
+      "ks3_geometry": {
+        "shape": [
+          5,
+          8,
+          1024,
+          8
+        ],
+        "parameters": 327680
+      },
+      "ks3_dense_geometry": {
+        "shape": [
+          5,
+          1024,
+          8
+        ],
+        "parameters": 40960
+      },
+      "lm_head.weight": {
+        "shape": [
+          768,
+          50304
+        ],
+        "parameters": 38633472
+      },
+      "embed.weight": {
+        "shape": [
+          50304,
+          768
+        ],
+        "parameters": 38633472
+      },
+      "smear_gate.weight": {
+        "shape": [
+          1,
+          12
+        ],
+        "parameters": 12
+      }
+    },
+    "upstream_forward_sha256": "80a84072b3617cf50a33968a043e1768a29a39a0455b6b1d8fa14aed0a50bf41",
+    "forward_transform_sha256": "902100e3411a976eadf0316a455356c8e780ddc512cb4baf13ed6a43611a70ba",
+    "coverage": "Static forward call-site audit; real full-graph capture is required before training",
+    "excluded": [
+      "attention projections",
+      "head",
+      "embedding",
+      "router",
+      "MUDD gates"
+    ]
+  },
+  "cache_policy_checks": [
+    {
+      "precision": "bf16",
+      "dense_training_gs32": true,
+      "training": true,
+      "bf16_cache_gs32": true,
+      "active_dense_slots": 5,
+      "fp8_refresh_preserved": true
+    },
+    {
+      "precision": "bf16",
+      "dense_training_gs32": true,
+      "training": false,
+      "bf16_cache_gs32": true,
+      "active_dense_slots": 5,
+      "fp8_refresh_preserved": true
+    },
+    {
+      "precision": "bf16",
+      "dense_training_gs32": false,
+      "training": true,
+      "bf16_cache_gs32": false,
+      "active_dense_slots": 5,
+      "fp8_refresh_preserved": true
+    },
+    {
+      "precision": "bf16",
+      "dense_training_gs32": false,
+      "training": false,
+      "bf16_cache_gs32": true,
+      "active_dense_slots": 5,
+      "fp8_refresh_preserved": true
+    },
+    {
+      "precision": "fp8",
+      "dense_training_gs32": true,
+      "training": true,
+      "bf16_cache_gs32": true,
+      "active_dense_slots": 5,
+      "fp8_refresh_preserved": true
+    },
+    {
+      "precision": "fp8",
+      "dense_training_gs32": true,
+      "training": false,
+      "bf16_cache_gs32": true,
+      "active_dense_slots": 5,
+      "fp8_refresh_preserved": true
+    },
+    {
+      "precision": "fp8",
+      "dense_training_gs32": false,
+      "training": true,
+      "bf16_cache_gs32": true,
+      "active_dense_slots": 5,
+      "fp8_refresh_preserved": true
+    },
+    {
+      "precision": "fp8",
+      "dense_training_gs32": false,
+      "training": false,
+      "bf16_cache_gs32": true,
+      "active_dense_slots": 5,
+      "fp8_refresh_preserved": true
+    }
+  ],
+  "autograd_arity_checks": [
+    {
+      "explicit_direct_flag": false,
+      "fake_forward_backward_passed": true
+    },
+    {
+      "explicit_direct_flag": true,
+      "fake_forward_backward_passed": true
+    }
+  ],
+  "oracle_projection_shape_check": true,
+  "oracle_numerical_check_requires_gpu": true,
+  "staged_source_hashes": {
+    "matched_controller.py": "3964532737a88f9399c14d6666bc16262dd2d1b17ec9f93f3cca35976f0742f5",
+    "check_ks3_feedforward_bf16_direct.py": "5cdef83847079e9c0bdca9b2ab2d9f07cb36eceb5762c3fcce2f5c8206ca1cc9",
+    "ks3_moe.py": "73fa973c8d0c8f7213c42431dbd1aafedcb1a6e75f960040c0f303d73c37d1a3",
+    "ks3_feedforward.py": "45da3db845e364fa7accff1e6f2fb2ab7305991bd4a0f13d253e8bf4b4561102"
+  },
+  "cpu_auditor_sha256": "bd827cf6392a5695c7e12901877c4be2e97cb9b2d8eea6b9e94d3ea221975585"
+}

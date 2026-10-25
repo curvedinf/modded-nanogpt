@@ -238,7 +238,7 @@ class References:
         for rid in sorted(registered - {self.run_id}):
             directory = self.state / 'runs' / rid
             config = read(directory / 'run.json', {})
-            if config.get('continuous_from_initialization') is not True or config.get('kind') not in ('discovery', 'verification'):
+            if config.get('continuous_from_initialization') is not True or config.get('kind') not in ('control', 'discovery', 'verification'):
                 continue
             path = directory / 'events.jsonl'
             if not path.exists():
@@ -261,6 +261,7 @@ class Screen:
     def __init__(self, run, state=STATE):
         self.run, self.state = Path(run), Path(state)
         self.config = read(self.run / 'run.json')
+        self.stop_files = [Path(p) for p in self.config.get('stop_files',[str(self.state/'STOP')])]
         self.run_id = self.config['run_id']
         self.refs = References(state, self.run_id)
         self.policy = load_policy(ROOT / 'configs/ks3/screening_policy.json')
@@ -290,7 +291,9 @@ class Screen:
         if candidate is None:
             raise ValueError('Research observation has incomplete or incompatible metadata')
         result = decision(candidate, self.references, self.latched, self.policy,
-                          stop=(self.state / 'STOP').exists(), verification=self.config['kind'] == 'verification')
+                          stop=any(p.exists() for p in self.stop_files), verification=self.config['kind'] in ('control','verification'))
+        if self.config['kind']=='control' and result.get('comparative_pruning_exempt'):
+            result['reason']='user_authorized_matched_mlp_control'
         self.latched = result['warmup_reached']
         result.update(step=row.get('step'), train_seconds=row['train_seconds'], reference_snapshot_sha256=self.reference_hash)
         append(self.run / 'pruning.jsonl', result)

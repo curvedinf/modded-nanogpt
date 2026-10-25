@@ -1,0 +1,162 @@
+{
+  "run_id": "matched-ks3-all-dense2816-fp8-20261025T205008-b7d17a",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "7ec279c5477288e2162f8af7b32f907b43f17ac3",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-dense2816-fp8",
+    "hypothesis": "Change only dense KS3 training projection products from BF16 to native FP8 at the original dense width2816. Keep routed KS3 at the measured BF16 path, rank1, geometry Adam0.125, all projection rates and shared/model-wide configuration. Reuse existing prepared-native KS3 products, fused GS32 producer packing and original logical-rank delayed-scale policy. Retain BF16 dense caches for unchanged validation. Require an independent numerical/cache oracle, actual graph warmup and paired100-update whole-model timing before convergence; skip the precision candidate if slower.",
+    "dense_charts": 2816,
+    "dense_precision": "fp8",
+    "fp8_native_gemm_tuning": "mi300-v2"
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.4962408542633057,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.0504920482635497,
+    "reference_run_id": "matched-ks3-all-20261025T173936-bf006b",
+    "reference_wall_seconds": 368.0772668879945,
+    "reference_age_seconds": 0.4012914129998535,
+    "reference_objective": 3.445748805999756,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "reference_source_step": 638,
+    "comparable_runs": 1,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-20261025T173936-bf006b/events.jsonl",
+      "sha256": "a858ba1b043d893a6bbecd996af4d027f02815575628a41a82b0b664b2b505a9",
+      "line": 672,
+      "row_sha256": "3dec5815efbb2f66c29628c64cd3b6428373f7fb308a0a90f1ba5256327aa7c8"
+    },
+    "step": 596,
+    "train_seconds": 368.47855830099434,
+    "reference_snapshot_sha256": "7415dd7bc4938329f1394ed069daebe962bd68c090b24be5648e6e8689f63d25",
+    "utc": "2026-10-25T20:58:30.488211+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_all",
+    "run_id": "matched-ks3-all-dense2816-fp8-20261025T205008-b7d17a",
+    "seed": 168,
+    "code_commit": "7ec279c5477288e2162f8af7b32f907b43f17ac3",
+    "training_projection_gs32": true
+  },
+  "timing": null,
+  "correctness": null,
+  "exit_code": 0,
+  "events_sha256": "6315ed37ffc3da58870991836aeb538225179bb6740f8cfc0ced5c8045864303",
+  "completed_utc": "2026-10-25T20:58:32.604260+00:00",
+  "qualifies": false
+}

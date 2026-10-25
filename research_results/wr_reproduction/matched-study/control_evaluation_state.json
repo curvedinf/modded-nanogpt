@@ -1,0 +1,67 @@
+{
+  "utc": "2026-10-25T17:40:05.993578+00:00",
+  "control_set_sha256": "59746335a66614f8f4fa3e903601d4d7ba57cc591a27f31e48517189d09e8413",
+  "identical_yarn_state": true,
+  "controls": [
+    {
+      "seed": 169,
+      "run_id": "matched-mlp-original-20261025T164517-c73490",
+      "evaluation_protocol": {
+        "policy": "accepted-control",
+        "training_windows": [
+          640,
+          1408
+        ],
+        "attention_windows": [
+          640,
+          1408
+        ],
+        "yarn_snapshot_step": 595,
+        "restored": false,
+        "compatible": true,
+        "setup_on_training_clock": true,
+        "yarn_snapshot_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612"
+      }
+    },
+    {
+      "seed": 170,
+      "run_id": "matched-mlp-original-20261025T170410-93b015",
+      "evaluation_protocol": {
+        "policy": "accepted-control",
+        "training_windows": [
+          640,
+          1408
+        ],
+        "attention_windows": [
+          640,
+          1408
+        ],
+        "yarn_snapshot_step": 595,
+        "restored": false,
+        "compatible": true,
+        "setup_on_training_clock": true,
+        "yarn_snapshot_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612"
+      }
+    },
+    {
+      "seed": 171,
+      "run_id": "matched-mlp-original-20261025T172145-e70513",
+      "evaluation_protocol": {
+        "policy": "accepted-control",
+        "training_windows": [
+          640,
+          1408
+        ],
+        "attention_windows": [
+          640,
+          1408
+        ],
+        "yarn_snapshot_step": 595,
+        "restored": false,
+        "compatible": true,
+        "setup_on_training_clock": true,
+        "yarn_snapshot_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612"
+      }
+    }
+  ]
+}

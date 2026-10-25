@@ -1,0 +1,160 @@
+{
+  "run_id": "matched-ks3-all-projection125-20261025T183239-04cc8c",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "52a84727e51e9cc85ad46f8e74d07ac32658395a",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-projection125",
+    "hypothesis": "Increase only KS3 projection ANVIL multiplier from 1.0 to 1.25 for dense and routed KS3 banks. Keep geometry at 0.125 and all shared parameters at original WR settings; test faster representation adaptation under the nominal900-second budget.",
+    "projection_lr_multiplier": 1.25
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.5770792961120605,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.0567488670349121,
+    "reference_run_id": "matched-ks3-all-geometry025-20261025T182458-d37cf6",
+    "reference_wall_seconds": 322.3855646830052,
+    "reference_age_seconds": 1.0879111209942494,
+    "reference_objective": 3.5203304290771484,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "reference_source_step": 596,
+    "comparable_runs": 2,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-geometry025-20261025T182458-d37cf6/events.jsonl",
+      "sha256": "e67169f6bfd444614d0c6a2a4c9bdeb1585a91385bf24e88d3433905508cafea",
+      "line": 630,
+      "row_sha256": "d70e245233ffe420fa6bcfb76f87d5749447b6d269ab5ac4c31923fa572ee468"
+    },
+    "step": 597,
+    "train_seconds": 323.47347580399946,
+    "reference_snapshot_sha256": "cd76e4ad4bb8aafba1247c8a146fb57a984ee6558fa8e1179fec82af5114dde4",
+    "utc": "2026-10-25T18:40:14.696992+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_all",
+    "run_id": "matched-ks3-all-projection125-20261025T183239-04cc8c",
+    "seed": 168,
+    "code_commit": "52a84727e51e9cc85ad46f8e74d07ac32658395a",
+    "training_projection_gs32": true
+  },
+  "timing": null,
+  "correctness": null,
+  "exit_code": 0,
+  "events_sha256": "9f6ee378d5ab437d33d5b8bc729989382bf2b21480943058ed9cd1c4dc61b410",
+  "completed_utc": "2026-10-25T18:40:16.638676+00:00",
+  "qualifies": false
+}

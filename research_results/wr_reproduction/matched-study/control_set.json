@@ -1,0 +1,78 @@
+{
+  "utc": "2026-10-25T17:39:21.182624+00:00",
+  "immutable": true,
+  "nominal_training_seconds": 900.0,
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "controls": [
+    {
+      "run_id": "matched-mlp-original-20261025T164517-c73490",
+      "seed": 169,
+      "loss": 3.314108371734619,
+      "train_seconds": 898.3185239879822,
+      "code_commit": "5daf66f6eb474a0e0e18871a9406e41bf8367bff",
+      "events_sha256": "0634e4191c20b26ffa728b608424faf65afb65c2c1551e3331bb01e09f036b6b"
+    },
+    {
+      "run_id": "matched-mlp-original-20261025T170410-93b015",
+      "seed": 170,
+      "loss": 3.3152177333831787,
+      "train_seconds": 897.5051171040104,
+      "code_commit": "e840a228a5ae8ed783a86c2845cdaca20527ba99",
+      "events_sha256": "f734a14d70e150617a6d4a4965b30b311137370beab19020dae3707d95842fcd"
+    },
+    {
+      "run_id": "matched-mlp-original-20261025T172145-e70513",
+      "seed": 171,
+      "loss": 3.316371202468872,
+      "train_seconds": 897.8457067889976,
+      "code_commit": "d3b3e9b30e190999d46303c6661de3363e952903",
+      "events_sha256": "8eb78c59b8f6ce0085a2a496193e3561fb8411352d1868f335d5c18de3184dcd"
+    }
+  ],
+  "best": {
+    "run_id": "matched-mlp-original-20261025T164517-c73490",
+    "seed": 169,
+    "loss": 3.314108371734619,
+    "train_seconds": 898.3185239879822,
+    "code_commit": "5daf66f6eb474a0e0e18871a9406e41bf8367bff",
+    "events_sha256": "0634e4191c20b26ffa728b608424faf65afb65c2c1551e3331bb01e09f036b6b"
+  },
+  "evaluation_signature": {
+    "loss_definition": "pr393-cplm-full10485760-raw-no-canonical-no-tail-bf16-v1",
+    "val_tokens": 10485760,
+    "val_data": [
+      {
+        "name": "fineweb_val_000000.bin",
+        "bytes": 200001024,
+        "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+      }
+    ],
+    "cplm": true,
+    "softcap": [
+      23.0,
+      5.0,
+      7.5
+    ],
+    "attention_windows": [
+      640,
+      1408
+    ],
+    "attention_segment_cap": 2560,
+    "align_to_bos": false,
+    "val_global_batch_tokens": 2097152,
+    "logical_ranks": 8,
+    "weights": "raw",
+    "canonical_mask": false,
+    "tail_shipping": false,
+    "final_window_extension": false,
+    "expert_evaluation": "bf16",
+    "mtp": false,
+    "prefix": false,
+    "moe_aux": false,
+    "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+    "model_wide_hyperparameters": "original-pr393"
+  },
+  "mean": 3.315232435862223,
+  "sample_std": 0.0011314870105915737,
+  "objective": "Strictly lower full-validation loss than the best measured matched MLP within nominal900 timed seconds"
+}

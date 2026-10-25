@@ -1,0 +1,77 @@
+{
+  "utc": "2026-10-25T19:36:13.584326+00:00",
+  "prototype_only": true,
+  "not_deployed": true,
+  "base_code_commit": "f21ca4362d31fb5179e57cc0c9c34cbc62123292",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "patch": "research_results/wr_reproduction/matched-study/dense-projection-lr150-prototype.patch",
+  "patch_sha256": "ae8b969e7425da422363563c59d8f82a82facdba3e028a564e4c977318b794a6",
+  "staged_sources": [
+    {
+      "path": "wr_reproduction/ks3_feedforward.py",
+      "base_sha256": "f0d6231f0756a4ea735a209ba242ac4bc0e590814dfe99dc8d51b37ea13bdce5",
+      "staged_sha256": "f00187eecc78ec7d62ee4d506da3f4e79b6b03f0ec840cb7bb94b1b87c62bbc6"
+    }
+  ],
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-denselr150",
+    "hypothesis": "Raise only the five dense KS3 projection ANVIL multipliers to 1.5, preserving routed experts at 1.0. Replacing dense width 2816 by 1024 reduced its original shape factor from 1.9148542 to 1.1547005; this tests a partial restoration to effective factor 1.7320508 without disturbing the routed-expert setting. Retain original output-projection 2x, master/mantissa, decay and padding semantics, geometry Adam 0.125, and all shared/model-wide settings. Distinct from the already-pruned global projection-rate trials.",
+    "dense_projection_lr_multiplier": 1.5
+  },
+  "cpu_optimizer_audit": {
+    "path": "research_results/wr_reproduction/matched-study/dense-projection-lr-cpu-audit.json",
+    "sha256": "b38f6c8811c6520b32785e3626b2157e5a22e1fd74f0b85914d8d3f68c336efb",
+    "passed": true
+  },
+  "cpu_model_audit": {
+    "path": "research_results/wr_reproduction/matched-study/dense-projection-lr-model-audit.json",
+    "sha256": "591adfb8f3378b7e4c29be8556fd8cb066b876c26922e6e27b395fba27278fa5",
+    "passed": true
+  },
+  "arithmetic_audit": {
+    "all_kernel_autograd_definitions_ast_identical": true,
+    "all_model_forward_backward_refresh_methods_ast_identical": true,
+    "change_scope": "Independent dense-only KS3 projection LR setting; original routed multiplier remains separate, retained MLP policy preserved; CPU initialization-time actual optimizer assertion and graph-coverage metadata."
+  },
+  "prerequisite_manifest": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/pending-warpinit-dense1280.json",
+  "decision": "Keep staged until both warp-initialization and dense1280 discoveries plus all required three-seed verification complete. Acquire exclusive GPU lease; verify exact base hash, patch hash and shared fence; apply only this KS3 source patch, rerun CPU optimizer audit, commit source and recipe, then a new discovery with mandatory full graph warmup. Existing output/gradient oracle applies because numerical kernels are AST-identical; no redundant timing or GPU oracle sweep."
+}

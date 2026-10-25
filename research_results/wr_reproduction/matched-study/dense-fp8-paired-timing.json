@@ -1,0 +1,37 @@
+{
+  "utc": "2026-10-25T20:52:54.698166+00:00",
+  "timing_only": true,
+  "passed": true,
+  "baseline": {
+    "first100_seconds": 41.947199585993076,
+    "updates25_to100_seconds": 31.35612874000799
+  },
+  "candidate": {
+    "first100_seconds": 40.54516802201397,
+    "updates25_to100_seconds": 30.305144591984572
+  },
+  "candidate_over_baseline": {
+    "first100_seconds": 0.9665762773721068,
+    "updates25_to100_seconds": 0.9664823372573272
+  },
+  "validation": false,
+  "objective_losses_not_compared": true,
+  "protocol": "Both use the same existing100-update timing loop, seed168 and source, outside the900s discovery/reference set",
+  "decision": "Proceed to fenced900s discovery",
+  "runs": {
+    "bf16_timing": {
+      "run_id": "matched-ks3-all-dense2816-20261025T204154-97c509",
+      "code_commit": "383e205b9f3b4f707fabefa6b3b4ae2e4dfd0705",
+      "seed": 168,
+      "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "result_sha256": "8e45cbd54339c433b62bff3da0dff42e57bec85d51e418a6555678ab6ed223cf"
+    },
+    "fp8_timing": {
+      "run_id": "matched-ks3-all-dense2816-fp8-20261025T204447-e0530c",
+      "code_commit": "383e205b9f3b4f707fabefa6b3b4ae2e4dfd0705",
+      "seed": 168,
+      "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "result_sha256": "86d5d1243c5892f9539f84bfe70104cc86ba954fcb119d1c57688dec66583c85"
+    }
+  }
+}

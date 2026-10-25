@@ -1,0 +1,127 @@
+{
+  "utc": "2026-10-25T21:09:26.210928+00:00",
+  "not_deployed": true,
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-dense2816-direct-fp8",
+    "hypothesis": "Encode only dense KS3 training inputs, projection weights and nonlinear outputs directly to FP8, omitting the preceding GS32 INT8 quantization. Keep coefficients GS32, FP16 nonlinearities, routed KS3 BF16/GS32, ANVIL and geometry learning rates, original delayed scales, cached dual layouts and all shared/model-wide settings. Validation remains the unchanged BF16/GS32 dense path; this intentional training-only precision ablation may reduce compounded quantization error. Require an independent direct-encoding output/gradient/cache oracle, original-mode regression oracle and paired100-update whole-model timing before convergence; do not claim isolated speed or validation improvement.",
+    "dense_charts": 2816,
+    "dense_precision": "fp8",
+    "fp8_native_gemm_tuning": "mi300-v2",
+    "dense_training_gs32": false
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "staged_sources": [
+    {
+      "path": "wr_reproduction/ks3_feedforward.py",
+      "base_sha256": "dad188d0b6aa7d95b45741b68001b8a864b3550c908c91f81856f43e571140d7",
+      "staged_sha256": "f38c85f4219766c73072293a4ac43899bf65da5e83850036fd8835b6bb4fa2a2"
+    },
+    {
+      "path": "wr_reproduction/ks3_dense_fp8.py",
+      "base_sha256": "63b69b92a31d096e9d946eaebfe24dddb7cb979419b6ca29d873ed064a89c6e4",
+      "staged_sha256": "23f66add17c6f75113cc9789e427a3a349ecafb362d702d80c6c4f6ee4401ecb"
+    },
+    {
+      "path": "wr_reproduction/check_ks3_feedforward_fp8.py",
+      "base_sha256": "2066515819672b4fda43731e05c46ac80be424a83f9e04564a8c86dbde8a3b43",
+      "staged_sha256": "5f517618d6d6ab04c330f86bf0a31c6536b8c7797810f7616a83fa2ebe9afb7a"
+    },
+    {
+      "path": "wr_reproduction/matched_controller.py",
+      "base_sha256": "8c112b41aca1db03be795e886a1b54618be7214a92145cf06c50af35394b9574",
+      "staged_sha256": "5cfa4c97c3d784b80b8cf7f950a0bad3ce26308f7fc7a2dbcb690990775a6fd4"
+    }
+  ],
+  "patch": "research_results/wr_reproduction/matched-study/dense-direct-fp8-prototype.patch",
+  "patch_sha256": "b226ea0fe2939f70bb6bf033642ba01f3b5738b650f2ac2b30e0753e93b36186",
+  "cpu_audits": [
+    {
+      "path": "research_results/wr_reproduction/matched-study/dense-direct-fp8-all-cpu-model-audit-v2.json",
+      "sha256": "21cb003adb92c24cb5020235a7afe53c37b7ccd3127fcde2e3c9484e5555462e"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/dense-direct-fp8-first-mlp-cpu-model-audit-v2.json",
+      "sha256": "7c44b62f38621f42f51cd01c9e8c5ea34fa86ba8cfaf265448a9f6cd57b8ff46"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/dense-direct-fp8-last-mlp-cpu-model-audit-v2.json",
+      "sha256": "5f73ac5eeabfefa39a026037282265bf7d1fc6585d35b98b466d481dd6a86ae4"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/dense-direct-fp8-both-mlp-cpu-model-audit-v2.json",
+      "sha256": "ff2936efa74d3fab480af932de316f5c9eb87bb5ce11a14805db91f8f5061ff6"
+    }
+  ],
+  "cpu_auditor": {
+    "path": "check_wr_dense_fp8.py",
+    "sha256": "f7c5bc4f8321cd152593d49b3ea36ddd767ef7388aff44f081c540c890e0b43c"
+  },
+  "unchanged_sources": {
+    "wr_reproduction/ks3_feedforward_source.py": "388467e576f93d189e2cc31fce19c11377df3f6a60de68a22fdb9db186634106",
+    "wr_reproduction/ks3_moe.py": "0aaa07c7874fa8e5992b5eda649eddaa577f014745f9d9d3289da6a11119c27c",
+    "wr_reproduction/ks3_moe_fp8.py": "e30690d2c44d8d96c06d72973eb82faca3042b2aef8276a5bd7552284e658440",
+    "wr_reproduction/ks3_fp8_gemm.py": "122847aca6407e07c170253f383321186d5c8174e85150d16f57e535dc03f8bb",
+    "wr_reproduction/ks3_bf16_gemm.py": "c6342dab76dc1ebb18365b1270f67f27d7eba32433ec75fac39d12b7ebc55ef7",
+    "wr_reproduction/check_ks3_fp8_moe.py": "3dfcd62c331d4e3a13c61d2dfad39366439c1e215ff60cf2c1aa5410243c2f85",
+    "wr_reproduction/check_ks3_rank_geometry.py": "0275c483f3482bc00ac2f974bdd3cdc720ca47436a58f6c1e7d670ae34d9a9f3",
+    "wr_reproduction/rank_state.py": "59fa77a626cebc93c03ae426543b6fdddff352ff64b5808d5a0968037afb8dfe"
+  },
+  "baseline_recipe": {
+    "path": "configs/wr_reproduction/matched_ks3_all_dense2816_fp8.json",
+    "sha256": "40e597d6102b79ed092818d26cadf94311c4cdd91e79ef4b31b815611359a977"
+  },
+  "prerequisite_manifest": "logs/wr-reproduction/matched-study/pending-dense2816-fp8-normalized-lr.json",
+  "shared_and_routed_kernels_unchanged": true,
+  "default_dense_encoding_unchanged": true,
+  "validation_unchanged": {
+    "dense_precision": "bf16",
+    "projection_gs32": true,
+    "geometry_coefficient_gs32": true
+  },
+  "gpu_checks_pending": [
+    "direct FP8 independent output/gradient/cache oracle",
+    "default GS32 FP8 oracle regression",
+    "paired100-update full-model timing",
+    "actual full graph warmup"
+  ],
+  "decision": "Deploy only after the prepared queue and any required verification complete, while holding the exclusive GPU and ablation leases. Require direct/default correctness and faster whole-model timing before discovery."
+}

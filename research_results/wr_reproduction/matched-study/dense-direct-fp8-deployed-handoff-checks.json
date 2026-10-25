@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-25T21:24:40.367960+00:00",
+  "passed": true,
+  "tests": 9,
+  "gpu_initialized": false,
+  "command": ".venv-mi300/bin/python -m unittest test_wr_matched_dense_direct_fp8 -v",
+  "deployed_commit": "52bdd1014d59829abb341475effc5360350cc577",
+  "test_sha256": "8643288f62589d708b4778dbb61ec3da3fc6649181641c0733f4a3c75c47ad3f",
+  "scope": "The same deployment barriers verified against the deployed source; negative tests remain valid before and after deployment. GPU oracles are separately recorded."
+}

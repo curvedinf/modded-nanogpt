@@ -1,0 +1,160 @@
+{
+  "run_id": "matched-ks3-all-rank2-20261025T185248-cc3fd2",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "6f116e872547e926e3e230586f4f35aa0459aa2a",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 512,
+    "rank": 2,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-rank2",
+    "hypothesis": "Use512 rank-two charts and1024 projection features at every dense and routed KS3 site. Introduce learned coupling between paired coordinates while preserving projection dimensions, seeded matrices, original ANVIL shape scaling, geometry Adam0.125, and shared model-wide settings. Zero coefficients retain the initial rank-one function; the geometry parameter count decreases by46080. Require independent full dense rank-two output/gradient oracle and actual full-model graph warmup before convergence.",
+    "dense_charts": 512
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.5560154914855957,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.037398099899292,
+    "reference_run_id": "matched-ks3-all-20261025T173936-bf006b",
+    "reference_wall_seconds": 321.4410185389861,
+    "reference_age_seconds": 0.6859979380096775,
+    "reference_objective": 3.5186173915863037,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "reference_source_step": 596,
+    "comparable_runs": 1,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-20261025T173936-bf006b/events.jsonl",
+      "sha256": "a858ba1b043d893a6bbecd996af4d027f02815575628a41a82b0b664b2b505a9",
+      "line": 630,
+      "row_sha256": "a096b3fa950acf0489bbee28b6243b2470f9cc4af6c963a62474a91fef00bff0"
+    },
+    "step": 605,
+    "train_seconds": 322.1270164769958,
+    "reference_snapshot_sha256": "9999e20b97a27a18eb15e5bfeb4a904ec12fc8edc62ada3d40934de1345b690d",
+    "utc": "2026-10-25T19:02:20.708056+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c512-r2",
+    "architecture": "ks3_all",
+    "run_id": "matched-ks3-all-rank2-20261025T185248-cc3fd2",
+    "seed": 168,
+    "code_commit": "6f116e872547e926e3e230586f4f35aa0459aa2a",
+    "training_projection_gs32": true
+  },
+  "timing": null,
+  "correctness": null,
+  "exit_code": 0,
+  "events_sha256": "bf0694ddc54df8b883129a7e413379d6c391a04d7bcd8052c93b9db0233bc0e8",
+  "completed_utc": "2026-10-25T19:02:22.612992+00:00",
+  "qualifies": false
+}

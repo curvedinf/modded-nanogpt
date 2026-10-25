@@ -1,0 +1,161 @@
+{
+  "run_id": "matched-ks3-all-dense1536-normlr-20261025T200654-686a48",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "54e0782aaca666008f768a49b074930e0661c9f9",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-dense1536-normlr",
+    "hypothesis": "Revisit dense width 1536 with one explicit KS3-only optimizer change from its earlier trial: set dense projection multiplier sqrt(1024/1536), keeping the effective dense rate equal to the width1024 baseline after the unchanged original ANVIL shape rule. The previous 1536 trial was proxy-pruned with a larger effective rate; test added dense capacity without that rate increase. Routed width/rate, geometry Adam 0.125, and all shared/model-wide settings stay fixed. Use existing verified 1536 numerical kernels; this changes only scalar optimizer configuration.",
+    "dense_charts": 1536,
+    "dense_projection_lr_multiplier": 0.816496580927726
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.507660388946533,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.0134015083312986,
+    "reference_run_id": "matched-ks3-all-20261025T173936-bf006b",
+    "reference_wall_seconds": 339.21541868700297,
+    "reference_age_seconds": 0.41881099101738073,
+    "reference_objective": 3.4942588806152344,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "reference_source_step": 612,
+    "comparable_runs": 6,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-20261025T173936-bf006b/events.jsonl",
+      "sha256": "a858ba1b043d893a6bbecd996af4d027f02815575628a41a82b0b664b2b505a9",
+      "line": 646,
+      "row_sha256": "620a1d79966aefed3099f642ef083580c71bd57dcc2c2dfbd86d99144fdd2b75"
+    },
+    "step": 596,
+    "train_seconds": 339.63422967802035,
+    "reference_snapshot_sha256": "26be265af09c00fb18b3631c2841d1edff7488f6517ba1f497734b5accd6d796",
+    "utc": "2026-10-25T20:14:44.041635+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_all",
+    "run_id": "matched-ks3-all-dense1536-normlr-20261025T200654-686a48",
+    "seed": 168,
+    "code_commit": "54e0782aaca666008f768a49b074930e0661c9f9",
+    "training_projection_gs32": true
+  },
+  "timing": null,
+  "correctness": null,
+  "exit_code": 0,
+  "events_sha256": "8fc5cf55eb90c20b1bd703b117f8782b5670f16d559c3a41f1fa49858376b704",
+  "completed_utc": "2026-10-25T20:14:46.355824+00:00",
+  "qualifies": false
+}

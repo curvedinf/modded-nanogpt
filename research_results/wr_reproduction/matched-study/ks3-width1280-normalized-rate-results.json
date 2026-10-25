@@ -1,0 +1,314 @@
+{
+  "utc": "2026-10-25T21:50:22.999370+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_study": "pending-dense-geometry00625.json",
+  "results_name": "ks3-width1280-normalized-rate-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_width1280_normlr.json",
+      "recipe_sha256": "baf91960e118409214d47f5f24ceb092e0350cbd47529feadb69ceaefcdcba18",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Increase both dense and routed rank-one KS3 widths from1024 to1280 after the width768 normalized-rate candidate was proxy-pruned. Unlike the earlier dense-only1280 trial, this expands routed capacity too. Set projection multiplier sqrt(1024/1280) so original ANVIL shape scaling leaves the effective rate unchanged. Keep geometry Adam0.125, zero coefficients, BF16 GS32, topology and frozen shared/model-wide settings. Gate on CPU architecture/optimizer checks, a width1280 numerical oracle and actual full-graph warmup.",
+      "changes": {
+        "charts": {
+          "before": 1024,
+          "after": 1280
+        },
+        "dense_charts": {
+          "before": 1024,
+          "after": 1280
+        },
+        "projection_lr_multiplier": {
+          "before": 1.0,
+          "after": 0.8944271909999159
+        }
+      },
+      "correctness_required": true,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "Width1280 independent output/input/projection/geometry/post-gradient oracle exercises the shared expert arithmetic; the unchanged eight-expert dispatch and all feedforward sites must pass actual full-model graph warmup.",
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/width1280-normalized-cpu-model-audit.json",
+        "sha256": "79fef3bfea2354dd21c3fc0ae8a3ba9109407c9851685174dab9ca2046715860"
+      },
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/width1280-normalized-cpu-optimizer-audit.json",
+        "sha256": "72c1b1f9ae898510ed925e484c0f773de8df0f45189c9859a4085d6bdad27a99"
+      },
+      "correctness_run_id": "matched-ks3-all-width1280-normlr-20261025T215453-a6fd92",
+      "correctness_result": {
+        "run_id": "matched-ks3-all-width1280-normlr-20261025T215453-a6fd92",
+        "status": "correctness_passed",
+        "seed": 172,
+        "code_commit": "e039602f9be69594bc04e43693dc897115dd2664",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1280,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-width1280-normlr",
+          "hypothesis": "Increase both dense and routed rank-one KS3 widths from1024 to1280 after the width768 normalized-rate candidate was proxy-pruned. Unlike the earlier dense-only1280 trial, this expands routed capacity too. Set projection multiplier sqrt(1024/1280) so original ANVIL shape scaling leaves the effective rate unchanged. Keep geometry Adam0.125, zero coefficients, BF16 GS32, topology and frozen shared/model-wide settings. Gate on CPU architecture/optimizer checks, a width1280 numerical oracle and actual full-graph warmup.",
+          "dense_charts": 1280,
+          "projection_lr_multiplier": 0.8944271909999159
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": null,
+        "timing": null,
+        "correctness": {
+          "event": "kernel_correctness",
+          "passed": true,
+          "checks": [
+            {
+              "tokens": 1,
+              "relative_rms": {
+                "output": 0.0,
+                "input_gradient": 0.0,
+                "up_gradient": 0.0016664585564285517,
+                "down_gradient": 0.0016774055548012257,
+                "geometry_gradient": 4.850521122534701e-07,
+                "post_gradient": 0.0
+              }
+            },
+            {
+              "tokens": 257,
+              "relative_rms": {
+                "output": 2.2631049432675354e-05,
+                "input_gradient": 0.00014034924970474094,
+                "up_gradient": 0.0016636948566883802,
+                "down_gradient": 0.0016609072918072343,
+                "geometry_gradient": 7.805106179148424e-07,
+                "post_gradient": 0.0
+              }
+            },
+            {
+              "tokens": 4096,
+              "relative_rms": {
+                "output": 0.00020907027646899223,
+                "input_gradient": 0.00011023729166481644,
+                "up_gradient": 0.001661105314269662,
+                "down_gradient": 0.001665015472099185,
+                "geometry_gradient": 9.900689974529087e-07,
+                "post_gradient": 0.0
+              }
+            }
+          ],
+          "features": 1280,
+          "oracle": "Independent ks3_blas_fused_unpack autograd; all gradients, nonzero geometry and output post factor",
+          "shared_backend_modified": false,
+          "validation": false
+        },
+        "exit_code": 0,
+        "events_sha256": "1043651f65b226b197ec78e8b91062a75d7e7d708cb0effcfd7502e201e6f83a",
+        "completed_utc": "2026-10-25T21:55:01.704975+00:00",
+        "qualifies": false
+      },
+      "run_id": "matched-ks3-all-width1280-normlr-20261025T215501-6bd068",
+      "result": {
+        "run_id": "matched-ks3-all-width1280-normlr-20261025T215501-6bd068",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "e039602f9be69594bc04e43693dc897115dd2664",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1280,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-width1280-normlr",
+          "hypothesis": "Increase both dense and routed rank-one KS3 widths from1024 to1280 after the width768 normalized-rate candidate was proxy-pruned. Unlike the earlier dense-only1280 trial, this expands routed capacity too. Set projection multiplier sqrt(1024/1280) so original ANVIL shape scaling leaves the effective rate unchanged. Keep geometry Adam0.125, zero coefficients, BF16 GS32, topology and frozen shared/model-wide settings. Gate on CPU architecture/optimizer checks, a width1280 numerical oracle and actual full-graph warmup.",
+          "dense_charts": 1280,
+          "projection_lr_multiplier": 0.8944271909999159
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 3.5697600841522217,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.0889766216278077,
+          "reference_run_id": "matched-ks3-all-20261025T173936-bf006b",
+          "reference_wall_seconds": 344.76065531600034,
+          "reference_age_seconds": 0.4719098329951521,
+          "reference_objective": 3.480783462524414,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 617,
+          "comparable_runs": 6,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-20261025T173936-bf006b/events.jsonl",
+            "sha256": "a858ba1b043d893a6bbecd996af4d027f02815575628a41a82b0b664b2b505a9",
+            "line": 651,
+            "row_sha256": "b36c55e8f5bca266c94e97274f23d4f6ffc4d8bfbd3709e404dc693d238574a6"
+          },
+          "step": 597,
+          "train_seconds": 345.2325651489955,
+          "reference_snapshot_sha256": "3eafb7ffa1d3d6913467e53443d77a9c664c112617e6ee8cb51c0250865979d1",
+          "utc": "2026-10-25T22:05:00.747735+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1280-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-width1280-normlr-20261025T215501-6bd068",
+          "seed": 168,
+          "code_commit": "e039602f9be69594bc04e43693dc897115dd2664",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "b77ad4d031b88b9b42fd97cf1ce3eade91074da04983caa9c3b9e5709681bb8d",
+        "completed_utc": "2026-10-25T22:05:03.093087+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "decision": "After dense-only geometry rate and any required three-seed verification, test the wider1280 dense+routed capacity hypothesis with an identical effective projection rate.",
+  "unit": "wr-matched-width1280-e039602",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "a51be7013b4393887109a76c836bd2da6b336d09877160f27b9419ade5fbe955",
+    "code_commit": "e039602f9be69594bc04e43693dc897115dd2664"
+  },
+  "completed_utc": "2026-10-25T22:05:03.096429+00:00"
+}

@@ -1,0 +1,242 @@
+--- a/wr_reproduction/ks3_feedforward.py
++++ b/wr_reproduction/ks3_feedforward.py
+@@ -59,6 +59,9 @@
+     if recipe['precision']!='bf16':raise ValueError('Full-feedforward implementation currently verified for BF16 KS3 only')
+     dense_precision=recipe.get('dense_precision','bf16')
+     if dense_precision not in ('bf16','fp8'):raise ValueError('Unknown dense KS3 precision')
++    dense_gs32=recipe.get('dense_training_gs32',True)
++    if type(dense_gs32) is not bool:raise ValueError('Dense GS32 selection must be boolean')
++    if not dense_gs32 and dense_precision!='fp8':raise ValueError('Direct dense encoding requires FP8 training')
+     if dense_precision=='fp8' and recipe['rank']!=1:raise ValueError('Dense FP8 requires rank one')
+     from track_1_short.model import gpt
+     from track_1_short import training
+@@ -108,7 +111,7 @@
+             self.ks3_dense_geometry=torch.nn.Parameter(geo);self.ks3_dense_geometry.label='ks3_dense_geometry'
+             if dense_precision=='fp8':
+                 from wr_reproduction.ks3_dense_fp8 import init_buffers
+-                init_buffers(self,features)
++                init_buffers(self,features,training_gs32=dense_gs32)
+         def cast_matrix_weights_bf16(self):
+             super().cast_matrix_weights_bf16()
+             if keep:self.retained_mlp_bank.data=self.retained_mlp_bank.data.bfloat16()
+@@ -157,6 +160,8 @@
+                         original_mlp_fallback_is_fatal=True,transformed_forward_sha256=forward_sha,
+                         actual_graph_warmup=True,dense_projection_optimizer=dict(optimizer_policy),
+                         dense_training_precision=dense_precision,dense_validation_precision='bf16',
++                        dense_training_projection_gs32=dense_gs32,dense_validation_projection_gs32=True,
++                        dense_geometry_coefficient_gs32=True,
+                         dense_fp8_activation_scale_slots=scale_mapping if dense_precision=='fp8' else None)
+     # Extend the original per-matrix output-LR/padding policy to the retained
+     # bank. All existing labels execute the byte-for-byte original method.
+--- a/wr_reproduction/ks3_dense_fp8.py
++++ b/wr_reproduction/ks3_dense_fp8.py
+@@ -19,7 +19,10 @@
+     fp.PREPARED_GATHER = True
+ 
+ 
+-def init_buffers(model, features):
++def init_buffers(model, features, *, training_gs32=True):
++    if type(training_gs32) is not bool:
++        raise ValueError('Dense GS32 selection must be boolean')
++    model.ks3_dense_training_gs32 = training_gs32
+     configure()
+     for name, shape in [('up', (5, 1, features, 768)), ('up_t', (5, 1, 768, features)),
+                         ('down', (5, 1, 768, features)), ('down_t', (5, 1, features, 768))]:
+@@ -60,14 +63,14 @@
+             r, c = source.shape
+             _pack[(tr.cdiv(r, 128), tr.cdiv(c, 32))](
+                 source, row, r, c, *source.stride(), SCALE=scale, OT=col, AMAX=amax,
+-                FP8=True, GS32=True, NATIVE_OUT=native, NATIVE_T=native_t,
++                FP8=True, GS32=model.ks3_dense_training_gs32, NATIVE_OUT=native, NATIVE_T=native_t,
+                 ROWS_PER_TILE=128, num_warps=4)
+ 
+ 
+ @torch.library.custom_op('wr_ks3_dense_fp8::forward', mutates_args={'pa'})
+ def dense_forward(rows: torch.Tensor, up: torch.Tensor, down: torch.Tensor,
+                   us: torch.Tensor, ws: torch.Tensor, xs: torch.Tensor, ps: torch.Tensor,
+-                  pa: torch.Tensor, geometry: torch.Tensor, slot: int
++                  pa: torch.Tensor, geometry: torch.Tensor, slot: int, training_gs32: bool
+                   ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor,
+                              torch.Tensor, torch.Tensor, torch.Tensor]:
+     from wr_reproduction.ks3_feedforward import COVERAGE
+@@ -77,12 +80,12 @@
+     tiles = torch.zeros(m // 128, device=rows.device, dtype=torch.int32)
+     offsets = torch.full((1,), m, device=rows.device, dtype=torch.int32)
+     y, c, xt, ht = fp.forward(rows, src, tiles, up, down, us, ws, xs, ps, pa,
+-                               geometry.unsqueeze(0), True)
++                               geometry.unsqueeze(0), training_gs32)
+     return y, c, xt, ht, src, tiles, offsets
+ 
+ 
+ @dense_forward.register_fake
+-def _(rows, up, down, us, ws, xs, ps, pa, geometry, slot):
++def _(rows, up, down, us, ws, xs, ps, pa, geometry, slot, training_gs32):
+     m, d, n = tr.cdiv(rows.shape[0], 128) * 128, rows.shape[1], up.shape[1]
+     return (rows.new_empty((m, d)), rows.new_empty((m, n), dtype=torch.float32),
+             rows.new_empty((d, m), dtype=torch.float8_e4m3fnuz),
+@@ -116,10 +119,10 @@
+ 
+ class DenseFP8(torch.autograd.Function):
+     @staticmethod
+-    def forward(ctx, rows, w1, w2, geometry, caches, scales, slot):
++    def forward(ctx, rows, w1, w2, geometry, caches, scales, slot, training_gs32):
+         up, upt, down, downt = caches
+         us, ws, xs, gs, ps, pa, ds, da = scales
+-        y, c, xt, ht, src, tiles, offsets = dense_forward(rows, up, down, us, ws, xs, ps, pa, geometry, slot)
++        y, c, xt, ht, src, tiles, offsets = dense_forward(rows, up, down, us, ws, xs, ps, pa, geometry, slot, training_gs32)
+         ctx.save_for_backward(y, c, xt, ht, src, tiles, offsets, upt, downt, geometry)
+         # Delayed amax buffers mutate during every site's backward. Keep them
+         # outside save_for_backward, as the existing routed FP8 path does, so
+@@ -134,7 +137,7 @@
+         us, ws, xs, gs, ps, pa, ds, da = ctx.scales
+         dx, bank, dg = dense_backward(grad, y, c, xt, ht, src, tiles, offsets,
+                                       upt, downt, us, ws, xs, gs, ps, ds, da, geometry, ctx.slot)
+-        return dx, bank[0], bank[1], dg, None, None, None
++        return dx, bank[0], bank[1], dg, None, None, None, None
+ 
+ 
+ def apply(model, slot, scale_slot, rows, w1, w2):
+@@ -144,4 +147,5 @@
+               model._mlp_x_scale, model._mlp_grad_scale,
+               model._mlp_post_scales[scale_slot:scale_slot+1], model._mlp_post_amax[scale_slot],
+               model._mlp_dpre_scales[scale_slot:scale_slot+1], model._mlp_dpre_amax[scale_slot])
+-    return DenseFP8.apply(rows, w1, w2, model.ks3_dense_geometry[slot], caches, scales, slot)
++    return DenseFP8.apply(rows, w1, w2, model.ks3_dense_geometry[slot], caches, scales, slot,
++                          model.ks3_dense_training_gs32)
+--- a/wr_reproduction/check_ks3_feedforward_fp8.py
++++ b/wr_reproduction/check_ks3_feedforward_fp8.py
+@@ -23,29 +23,37 @@
+     return (value / scale).clamp(-limit, limit).to(dtype)
+ 
+ 
+-def raw_ste(value, scale):
++def raw_ste(value, scale, training_gs32):
+     raw = value.float() / scale
+-    codes = encode(gs32(value), scale, torch.float8_e4m3fn)
++    decoded = gs32(value) if training_gs32 else value.detach().float()
++    codes = encode(decoded, scale, torch.float8_e4m3fn)
+     return raw + (codes.float() - raw).detach()
+ 
+ 
+-def reference(x, up, down, geometry, us, ws, xs, gs, ps, ds):
++def reference(x, up, down, geometry, us, ws, xs, gs, ps, ds, training_gs32):
+     from ks3_research.vendor.ks3_int8 import pack_spine, _geometry_quant
+     from wr_reproduction.check_ks3_rank_geometry import surrogate
+     tokens, features = x.shape[0], up.shape[0]
+-    xr, ur, wr = raw_ste(x, xs), raw_ste(up, us), raw_ste(down.T, ws)
++    xr, ur, wr = (raw_ste(v, s, training_gs32) for v, s in ((x, xs), (up, us), (down.T, ws)))
+     coords = (xr @ ur.T) * (xs * us)
+     coords.register_hook(lambda grad: encode(grad, ds, torch.float8_e5m2).float() * ds)
+     with torch.no_grad():
+         p, pscale = pack_spine(geometry[:, :6].contiguous())
+         scale = torch.nn.functional.softplus(geometry[:, 6]) + 1e-4
+         shift = .5 * geometry[:, 7].tanh()
+-        codes = torch.empty_like(coords, dtype=torch.int8)
+-        scales = torch.empty(tokens, features // 32, device=x.device, dtype=torch.float16)
+-        _geometry_quant[(tr.cdiv(tokens, 16), tr.cdiv(features, 32))](
+-            coords.detach(), coords.detach(), p, pscale, scale, shift, None, codes, scales,
+-            tokens, features, 1, 1, BM=16, BN=32, num_warps=4)
+-        encoded = encode(codes.float() * scales.float().repeat_interleave(32, -1), ps, torch.float8_e4m3fn)
++        if training_gs32:
++            codes = torch.empty_like(coords, dtype=torch.int8)
++            scales = torch.empty(tokens, features // 32, device=x.device, dtype=torch.float16)
++            _geometry_quant[(tr.cdiv(tokens, 16), tr.cdiv(features, 32))](
++                coords.detach(), coords.detach(), p, pscale, scale, shift, None, codes, scales,
++                tokens, features, 1, 1, BM=16, BN=32, num_warps=4)
++            hidden = codes.float() * scales.float().repeat_interleave(32, -1)
++        else:
++            from wr_reproduction.check_ks3_fp8_moe import _raw_upstream_spine
++            hidden = torch.empty_like(coords, dtype=torch.float32)
++            _raw_upstream_spine[(tr.cdiv(tokens, 16), tr.cdiv(features, 32))](
++                coords.detach(), p, pscale, scale, shift, hidden, tokens, features, num_warps=4)
++        encoded = encode(hidden, ps, torch.float8_e4m3fn)
+     smooth = surrogate(coords, geometry, 1) / ps
+     hidden = smooth + (encoded.float() - smooth).detach()
+     y = (hidden @ wr.T) * (ps * ws)
+@@ -59,7 +67,7 @@
+             / expected.float().square().mean().sqrt().clamp_min(1e-12)).item()
+ 
+ 
+-def model(features):
++def model(features, training_gs32=True):
+     from wr_reproduction.ks3_dense_fp8 import init_buffers
+     from track_1_short.model.gpt import FP8_MLP_X_SCALE, FP8_GRAD_SCALE
+     m = torch.nn.Module()
+@@ -71,7 +79,7 @@
+         m.ks3_dense_geometry[..., 6] = .75
+     m.register_buffer('_mlp_x_scale', torch.tensor(FP8_MLP_X_SCALE, device='cuda'))
+     m.register_buffer('_mlp_grad_scale', torch.tensor(FP8_GRAD_SCALE, device='cuda'))
+-    init_buffers(m, features)
++    init_buffers(m, features, training_gs32=training_gs32)
+     return m
+ 
+ 
+@@ -85,7 +93,7 @@
+                 value = value.T
+             largest = value.float().abs().amax() if exact else previous[slot, projection]
+             scale = largest.clamp_min(1e-12) / 448.
+-            decoded = gs32(value)
++            decoded = gs32(value) if m.ks3_dense_training_gs32 else value.detach().float()
+             expected = encode(decoded, scale, torch.float8_e4m3fn)
+             torch.testing.assert_close(m.ks3_dense_weight_scales[slot, projection], scale.reshape(1), rtol=0, atol=0)
+             torch.testing.assert_close(m.ks3_dense_weight_amax[slot, projection], decoded.abs().amax().reshape(1), rtol=0, atol=0)
+@@ -127,6 +135,7 @@
+     parser = argparse.ArgumentParser()
+     parser.add_argument('--out', required=True)
+     parser.add_argument('--features', type=int, choices=(1024, 2816), required=True)
++    parser.add_argument('--dense-native-pack', action='store_true')
+     args = parser.parse_args()
+     torch.set_num_threads(1)
+     torch.set_float32_matmul_precision('highest')
+@@ -135,7 +144,8 @@
+     from wr_reproduction import ks3_fp8_gemm
+     from wr_reproduction.ks3_dense_fp8 import DenseFP8, refresh_weights
+     ks3_fp8_gemm.TILE_MODE = 'mi300-v2'
+-    m = model(args.features)
++    training_gs32 = not args.dense_native_pack
++    m = model(args.features, training_gs32)
+     caches_checked = cache_checks(m)
+     refresh_weights(m, True)
+     # These representative post/coordinate-gradient scales exercise nonzero
+@@ -155,11 +165,11 @@
+         xs, gs = m._mlp_x_scale, m._mlp_grad_scale
+         ps, ds = m._mlp_post_scales[:1], m._mlp_dpre_scales[:1]
+         scales = (us, ws, xs, gs, ps, m._mlp_post_amax[0], ds, m._mlp_dpre_amax[0])
+-        y = DenseFP8.apply(x, up, down, geometry, caches, scales, 0) * post
++        y = DenseFP8.apply(x, up, down, geometry, caches, scales, 0, training_gs32) * post
+         gradient = torch.randn_like(y) * .02
+         actual = torch.autograd.grad(y, (x, up, down, geometry, post), gradient)
+         xr, ur, dr, gr, pr = [value.detach().clone().requires_grad_() for value in (x, up, down, geometry, post)]
+-        yr = reference(xr, ur, dr, gr, us, ws, xs, gs, ps, ds) * pr
++        yr = reference(xr, ur, dr, gr, us, ws, xs, gs, ps, ds, training_gs32) * pr
+         expected = torch.autograd.grad(yr, (xr, ur, dr, gr, pr), gradient)
+         errors = dict(output=relative_rms(y, yr))
+         for name, a, b in zip(('input_gradient', 'up_gradient', 'down_gradient', 'geometry_gradient', 'post_gradient'), actual, expected):
+@@ -171,7 +181,7 @@
+         for leaf in leaves:
+             leaf.grad = None
+         for _ in range(2):
+-            (DenseFP8.apply(x, up, down, geometry, caches, scales, 0) * post).backward(gradient)
++            (DenseFP8.apply(x, up, down, geometry, caches, scales, 0, training_gs32) * post).backward(gradient)
+         for leaf, expected_grad in zip(leaves, actual):
+             torch.testing.assert_close(leaf.grad, expected_grad * 2, rtol=0, atol=0)
+         checks.append(dict(tokens=tokens, relative_rms=errors, repeated_backward_additive=True))
+@@ -192,6 +202,7 @@
+     result = dict(event='kernel_correctness', passed=True, features=args.features,
+                   multiple_live_sites_and_padded_bank_verified=True,
+                   dense_precision='fp8', routed_precision='bf16', checks=checks, cache_checks=caches_checked,
++                  dense_training_projection_gs32=training_gs32, geometry_coefficient_gs32=True,
+                   oracle='Independent Torch GS32/FP8 encoding and decoded products, pinned nonlinear forward, smooth STE with explicit FP8 gradient boundaries',
+                   shared_backend_modified=False, validation=False, timing=False)
+     with open(args.out, 'w') as out:
+--- a/wr_reproduction/matched_controller.py
++++ b/wr_reproduction/matched_controller.py
+@@ -49,6 +49,8 @@
+         command=[str(PYTHON),'-m',oracle,'--out',str(directory/'events.jsonl'),
+                  '--features',str(recipe.get('dense_charts',recipe['charts'])*recipe['rank'])]
+         if recipe['rank']!=1:command+=['--rank',str(recipe['rank'])]
++        if recipe.get('dense_precision')=='fp8' and recipe.get('dense_training_gs32',True) is False:
++            command+=['--dense-native-pack']
+     dirty=git('status','--porcelain','--','wr_reproduction','configs/wr_reproduction','ks3_research/vendor')
+     if dirty:raise RuntimeError('Commit owned code/config before launch: '+dirty)
+     run=dict(study='matched-study',run_id=rid,directory=str(directory),created_utc=now(),kind=kind,

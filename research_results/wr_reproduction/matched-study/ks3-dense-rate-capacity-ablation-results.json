@@ -1,0 +1,379 @@
+{
+  "utc": "2026-10-25T19:56:21.181969+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_run": "matched-ks3-all-denselr150-20261025T195145-d4a658",
+  "results_name": "ks3-dense-rate-capacity-ablation-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_denselr075.json",
+      "recipe_sha256": "174c34cd5989aaec7b30e3b062674ba09c8b6cf1db7253c66864bac5565775c8",
+      "seed": 168,
+      "status": "pruned",
+      "changes": {
+        "dense_projection_lr_multiplier": {
+          "before": null,
+          "after": 0.75
+        }
+      },
+      "hypothesis": "Reduce only the five dense KS3 projection ANVIL multipliers to 0.75 while retaining routed experts at 1.0. Test smaller dense updates independently of the earlier global 0.875 rate, which changed both dense and routed banks. Keep dense and expert width 1024, rank one, geometry Adam 0.125, original shape-dependent scaling/output 2x/padding/master semantics, and all shared/model-wide settings.",
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/denselr075-cpu-audit.json",
+        "sha256": "3e061a1c2c375e63bf9ae993be57b26e402ecb0382b53c12dc786cdaa25d06ea"
+      },
+      "run_id": "matched-ks3-all-denselr075-20261025T195919-421b84",
+      "result": {
+        "run_id": "matched-ks3-all-denselr075-20261025T195919-421b84",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "978e48fd1883c8a35637f4ff5e430015500062c3",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-denselr075",
+          "hypothesis": "Reduce only the five dense KS3 projection ANVIL multipliers to 0.75 while retaining routed experts at 1.0. Test smaller dense updates independently of the earlier global 0.875 rate, which changed both dense and routed banks. Keep dense and expert width 1024, rank one, geometry Adam 0.125, original shape-dependent scaling/output 2x/padding/master semantics, and all shared/model-wide settings.",
+          "dense_projection_lr_multiplier": 0.75
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 3.5812273025512695,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.0753936767578125,
+          "reference_run_id": "matched-ks3-all-20261025T173936-bf006b",
+          "reference_wall_seconds": 323.649033780006,
+          "reference_age_seconds": 0.5326220199931413,
+          "reference_objective": 3.505833625793457,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 598,
+          "comparable_runs": 9,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-20261025T173936-bf006b/events.jsonl",
+            "sha256": "a858ba1b043d893a6bbecd996af4d027f02815575628a41a82b0b664b2b505a9",
+            "line": 632,
+            "row_sha256": "5cb4e7cc8ec21c2833e2a246eff7558fa7ecd221ecb7149e4afed923eaa6be8a"
+          },
+          "step": 597,
+          "train_seconds": 324.18165579999913,
+          "reference_snapshot_sha256": "b7f6f2af245a29fd536f04b10bf81454f27d040f6c6d5a949ac410243d6b2591",
+          "utc": "2026-10-25T20:06:52.363765+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-denselr075-20261025T195919-421b84",
+          "seed": 168,
+          "code_commit": "978e48fd1883c8a35637f4ff5e430015500062c3",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "adeee19d6084b591ca44a95e484c5ee3ca8eeadf58bf691692dede775d7efcbb",
+        "completed_utc": "2026-10-25T20:06:54.523683+00:00",
+        "qualifies": false
+      }
+    },
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_dense1536_normlr.json",
+      "recipe_sha256": "105c510fdd4d673c99a4a1ab1af8ff998f7f3cdcdb9838cc984fe07d06ed6624",
+      "seed": 168,
+      "status": "pruned",
+      "changes": {
+        "dense_charts": {
+          "before": null,
+          "after": 1536
+        },
+        "dense_projection_lr_multiplier": {
+          "before": null,
+          "after": 0.816496580927726
+        }
+      },
+      "hypothesis": "Revisit dense width 1536 with one explicit KS3-only optimizer change from its earlier trial: set dense projection multiplier sqrt(1024/1536), keeping the effective dense rate equal to the width1024 baseline after the unchanged original ANVIL shape rule. The previous 1536 trial was proxy-pruned with a larger effective rate; test added dense capacity without that rate increase. Routed width/rate, geometry Adam 0.125, and all shared/model-wide settings stay fixed. Use existing verified 1536 numerical kernels; this changes only scalar optimizer configuration.",
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/dense1536-normalized-lr-cpu-audit.json",
+        "sha256": "9009e99488e3a46280a2559fa0d3dd1747ba634d798d6c02dd5c51d8ce2c7a5c"
+      },
+      "run_id": "matched-ks3-all-dense1536-normlr-20261025T200654-686a48",
+      "result": {
+        "run_id": "matched-ks3-all-dense1536-normlr-20261025T200654-686a48",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "54e0782aaca666008f768a49b074930e0661c9f9",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-dense1536-normlr",
+          "hypothesis": "Revisit dense width 1536 with one explicit KS3-only optimizer change from its earlier trial: set dense projection multiplier sqrt(1024/1536), keeping the effective dense rate equal to the width1024 baseline after the unchanged original ANVIL shape rule. The previous 1536 trial was proxy-pruned with a larger effective rate; test added dense capacity without that rate increase. Routed width/rate, geometry Adam 0.125, and all shared/model-wide settings stay fixed. Use existing verified 1536 numerical kernels; this changes only scalar optimizer configuration.",
+          "dense_charts": 1536,
+          "dense_projection_lr_multiplier": 0.816496580927726
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 3.507660388946533,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.0134015083312986,
+          "reference_run_id": "matched-ks3-all-20261025T173936-bf006b",
+          "reference_wall_seconds": 339.21541868700297,
+          "reference_age_seconds": 0.41881099101738073,
+          "reference_objective": 3.4942588806152344,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 612,
+          "comparable_runs": 6,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-20261025T173936-bf006b/events.jsonl",
+            "sha256": "a858ba1b043d893a6bbecd996af4d027f02815575628a41a82b0b664b2b505a9",
+            "line": 646,
+            "row_sha256": "620a1d79966aefed3099f642ef083580c71bd57dcc2c2dfbd86d99144fdd2b75"
+          },
+          "step": 596,
+          "train_seconds": 339.63422967802035,
+          "reference_snapshot_sha256": "26be265af09c00fb18b3631c2841d1edff7488f6517ba1f497734b5accd6d796",
+          "utc": "2026-10-25T20:14:44.041635+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-dense1536-normlr-20261025T200654-686a48",
+          "seed": 168,
+          "code_commit": "54e0782aaca666008f768a49b074930e0661c9f9",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "8fc5cf55eb90c20b1bd703b117f8782b5670f16d559c3a41f1fa49858376b704",
+        "completed_utc": "2026-10-25T20:14:46.355824+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "decision": "Wait for the current dense-only rate1.5 trial and all required verification. Test two distinct KS3 scalar hypotheses once each. Numerical kernels and all non-KS3 settings remain unchanged; full graph warmup is required on each discovery.",
+  "existing_dense1536_oracle_run_id": "matched-ks3-all-dense1536-20261025T184018-f9df13",
+  "kernel_equivalence_evidence": "research_results/wr_reproduction/matched-study/dense-projection-lr150-prototype.json",
+  "unit": "wr-matched-dense-rate-capacity-978e48f",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "0b3d1f36b90e87cbf7080700cfea6f56ec60fe35cb4f1933b34a20a9e044c8d1",
+    "code_commit": "978e48fd1883c8a35637f4ff5e430015500062c3"
+  },
+  "completed_utc": "2026-10-25T20:14:46.359353+00:00"
+}

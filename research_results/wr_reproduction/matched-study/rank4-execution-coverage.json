@@ -1,0 +1,44 @@
+{
+  "run_id": "matched-ks3-all-rank4-20261025T191655-2f6519",
+  "code_commit": "e058bc630fcadd71d0adb8d43d8d9d1cd4e8ecb1",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "coverage": {
+    "event": "feedforward_execution_coverage",
+    "dense_ks3_forward_slots": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "dense_ks3_backward_slots": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "routed_ks3_backward_layers": [
+      1,
+      3,
+      5,
+      6,
+      8
+    ],
+    "retained_original_mlp_slots": [],
+    "all_feedforward_paths_mapped": true,
+    "original_mlp_fallback_is_fatal": true,
+    "transformed_forward_sha256": "902100e3411a976eadf0316a455356c8e780ddc512cb4baf13ed6a43611a70ba",
+    "actual_graph_warmup": true,
+    "utc": "2026-10-25T19:21:04.684820+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c256-r4",
+    "architecture": "ks3_all",
+    "run_id": "matched-ks3-all-rank4-20261025T191655-2f6519",
+    "seed": 168,
+    "code_commit": "e058bc630fcadd71d0adb8d43d8d9d1cd4e8ecb1",
+    "training_projection_gs32": true
+  },
+  "cpu_audit_sha256": "7d9dc8352fca0ce0b282c68e96572190ea74be2eb83e0f0c2e339a82e396deb3"
+}

@@ -1,0 +1,42 @@
+{
+  "utc": "2026-10-25T21:34:41.579416+00:00",
+  "status": "queued",
+  "wait_for_study": "pending-coupled-warp-prior.json",
+  "results_name": "ks3-width768-normalized-rate-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_width768_normlr.json",
+      "recipe_sha256": "f5e39f94039f5560ff459db215d75d3972ba2a7a353023c5ef0f89d9fbc1e36b",
+      "seed": 168,
+      "status": "queued",
+      "hypothesis": "Reduce both dense and routed KS3 projection widths from1024 to768 at rank1 to test a different capacity/elapsed-time tradeoff. Set the KS3 projection multiplier to sqrt(1024/768), preserving the original effective ANVIL multiplier after its shape factor falls to1. Retain zero geometry coefficients, geometry Adam0.125, BF16/GS32, MoE8top1 and all shared/model-wide settings. Require CPU architecture and optimizer audits plus the independent width768 output/gradient oracle and actual graph warmup before the nominal900s discovery.",
+      "changes": {
+        "charts": {
+          "before": 1024,
+          "after": 768
+        },
+        "dense_charts": {
+          "before": 1024,
+          "after": 768
+        },
+        "projection_lr_multiplier": {
+          "before": 1.0,
+          "after": 1.1547005383792515
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/width768-normalized-cpu-model-audit.json",
+        "sha256": "e56bde4f1687e792024d4f69a9d6869cd9befeb240bb50f52044d3efbba48c9b"
+      },
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/width768-normalized-cpu-optimizer-audit.json",
+        "sha256": "0ee730ed0e1ca8879c0b013802bc5e2228b7b5f538c2739cba413a19e285f800"
+      },
+      "correctness_required": true,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "Independent width768 dense output/input/projection/geometry/post-gradient oracle uses the same expert arithmetic. Original eight-expert dispatch is unchanged; actual full-model graph warmup must cover every dense and routed layer."
+    }
+  ],
+  "decision": "After coupled-warp initialization and any required verification, gate the width768 capacity ablation on its new-width numerical oracle, then screen one discovery with the frozen matched reference."
+}

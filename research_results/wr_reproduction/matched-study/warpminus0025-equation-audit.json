@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-25T19:24:00.180971+00:00",
+  "passed": true,
+  "gpu_initialized": false,
+  "baseline_zero_coefficients_exact_relu_squared": true,
+  "configured_c4": -0.025,
+  "pre_relu_warp_formula": "c4 * (2*z**2 - 1)",
+  "activation_at_zero": 0.0006247723358683288,
+  "baseline_activation_at_zero": 0.0,
+  "activation_at_four": 15.802216529846191,
+  "baseline_activation_at_four": 16.0,
+  "initial_raw_scale_gradient": -0.04614034667611122,
+  "initial_raw_shift_gradient": -0.041587408632040024,
+  "recipe_sha256": "48b99fcf7c2acdb65d6c555b244d29f2d04565d599e5c94017bc1f2d63a0b6b9",
+  "scope": "CPU equation check; existing rank-one independent GPU oracle covers the unchanged kernel at nonzero coefficients. No performance or validation claim."
+}

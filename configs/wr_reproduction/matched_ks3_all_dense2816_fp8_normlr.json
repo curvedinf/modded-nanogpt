@@ -1,0 +1,47 @@
+{
+  "precision": "bf16",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "training_gs32": true,
+  "weight_packing": "loop",
+  "geometry_backward_rows": 64,
+  "bf16_kernel_mode": "tuned",
+  "shared_fp8_gemm_tuning": "mi300-v1",
+  "shared_fp8_amax": "atomic",
+  "shared_fp8_decode": "scalar",
+  "shared_fp8_head_tuning": "legacy",
+  "shared_fp8_pipeline_tuning": "legacy",
+  "validation_window_policy": "accepted-control",
+  "validation_precision": "bf16",
+  "max_train_seconds": 900.0,
+  "validation_setup_reserve_seconds": 2.0,
+  "model_wide_hyperparameters": "original-pr393",
+  "architecture": "ks3_all",
+  "name": "matched-ks3-all-dense2816-fp8-normlr",
+  "hypothesis": "Normalize only dense KS3 projection learning rate by sqrt(1024/2816), canceling the larger ANVIL shape factor at dense width2816. The effective dense multiplier becomes sqrt(1024/768), matching the original all-KS3 width1024 arm while retaining the original MLP dense capacity. Keep the correctness-validated, whole-model faster dense FP8 path, BF16 routed KS3, geometry Adam0.125, rank1, and all shared/model-wide settings. Earlier width1536 normalized-rate and default-rate trials were both proxy-pruned and provide no validation ranking; this is the corresponding untested width2816 rate hypothesis.",
+  "dense_charts": 2816,
+  "dense_precision": "fp8",
+  "fp8_native_gemm_tuning": "mi300-v2",
+  "dense_projection_lr_multiplier": 0.6030226891555273
+}

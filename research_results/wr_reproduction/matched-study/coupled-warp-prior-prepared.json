@@ -1,0 +1,44 @@
+{
+  "utc": "2026-10-25T21:24:40.386506+00:00",
+  "status": "queued",
+  "wait_for_study": "dense-direct-fp8-study.json",
+  "results_name": "ks3-coupled-warp-prior-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_coupledwarp_prior.json",
+      "recipe_sha256": "20c6eefbd169f4b777468dcf30ee94f6f9bd5f76da155109caf4a72f2d13d647",
+      "seed": 168,
+      "status": "queued",
+      "hypothesis": "Initialize the two warp coefficients together at c4=0.0075 and c5=0.01, leaving Hermite coefficients zero. The original matched all-KS3 terminal training diagnostic shows positive mean c4/c5 near0.0077/0.010 in both dense and routed branches, whereas their Hermite means differ. Test this modest coupled prior after single-coefficient+0.025 trials were proxy-pruned. Keep BF16/GS32 width1024 rank1, geometry Adam0.125, raw scale0.75, projection rates and every shared/model-wide setting. The diagnostic motivates an untested initialization; it does not establish validation improvement.",
+      "changes": {
+        "geometry.coefficients": {
+          "before": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "after": [
+            0,
+            0,
+            0,
+            0,
+            0.0075,
+            0.01
+          ]
+        }
+      },
+      "initialization_evidence": {
+        "path": "research_results/wr_reproduction/matched-study/baseline-terminal-geometry-branch-summary.json",
+        "sha256": "6c92ca8e572621d0e77f899b48316a6ee086ca33849d50c248a02058a654b0c9",
+        "training_only": true
+      },
+      "numerical_oracle_reused": "matched-ks3-all-20261025T173921-f97d3e",
+      "kernel_source_unchanged": true,
+      "actual_full_graph_warmup_required": true
+    }
+  ],
+  "decision": "Wait behind the direct-FP8 study, which already owns the ablation and GPU leases; any discovery verification completes before this independent initialization trial. Use the existing strict training-proxy rule and frozen control set."
+}

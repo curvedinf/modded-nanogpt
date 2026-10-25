@@ -1,0 +1,495 @@
+{
+  "utc": "2026-10-25T18:48:37.573281+00:00",
+  "prototype_only": true,
+  "not_deployed": true,
+  "base_code_commit": "53b3ccea0edd52ea6f85968e8d0012d449610d11",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "patch": "research_results/wr_reproduction/matched-study/rank2-prototype.patch",
+  "patch_sha256": "a452891a4cb379cd81d14f96fdbb04ed1e608123fae2c82affa8c2963a905814",
+  "staged_sources": [
+    {
+      "path": "wr_reproduction/matched_controller.py",
+      "base_sha256": "cc2438cc50f77529edea87f9fe0d7f856a3639aeda31c6d30a896147bfcc9b17",
+      "staged_sha256": "7fa53d6f976776b657fe85bc05431267972f66dabe8d9a524b5d63326e3dd68d"
+    },
+    {
+      "path": "wr_reproduction/check_ks3_feedforward_rank.py",
+      "base_sha256": null,
+      "staged_sha256": "41a04c5c535672dac8036befb0a88be1ddce0ca0cc6473a58ab582c5297d1f63"
+    }
+  ],
+  "recipe": {
+    "precision": "bf16",
+    "charts": 512,
+    "rank": 2,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-rank2",
+    "hypothesis": "Use512 rank-two charts and1024 projection features at every dense and routed KS3 site. Introduce learned coupling between paired coordinates while preserving projection dimensions, seeded matrices, original ANVIL shape scaling, geometry Adam0.125, and shared model-wide settings. Zero coefficients retain the initial rank-one function; the geometry parameter count decreases by46080. Require independent full dense rank-two output/gradient oracle and actual full-model graph warmup before convergence.",
+    "dense_charts": 512
+  },
+  "cpu_audit": {
+    "passed": true,
+    "gpu_initialized": false,
+    "architecture": "ks3_all",
+    "nonfeedforward_initialization_identical": true,
+    "router_identical": true,
+    "original_retained_initialization_identical": true,
+    "anvil_shape_and_output_lr_and_padding_verified": true,
+    "routed_projection_initialization_identical": true,
+    "dense_features": 1024,
+    "routed_features": 1024,
+    "inventory": {
+      "architecture": "ks3_all",
+      "layers": [
+        {
+          "layer": 0,
+          "feedforward": [
+            {
+              "branch": "dense",
+              "slot": 0,
+              "type": "ks3",
+              "instances": 1,
+              "projection_shape": [
+                2,
+                1024,
+                768
+              ],
+              "projection_parameters": 1572864
+            }
+          ],
+          "removed_feedforward": false
+        },
+        {
+          "layer": 1,
+          "feedforward": [
+            {
+              "branch": "routed_experts",
+              "slot": 0,
+              "type": "ks3",
+              "instances": 8,
+              "topk": 1,
+              "projection_shape": [
+                2,
+                8,
+                1024,
+                768
+              ],
+              "projection_parameters": 12582912
+            }
+          ],
+          "removed_feedforward": false
+        },
+        {
+          "layer": 2,
+          "feedforward": [
+            {
+              "branch": "dense",
+              "slot": 1,
+              "type": "ks3",
+              "instances": 1,
+              "projection_shape": [
+                2,
+                1024,
+                768
+              ],
+              "projection_parameters": 1572864
+            }
+          ],
+          "removed_feedforward": false
+        },
+        {
+          "layer": 3,
+          "feedforward": [
+            {
+              "branch": "routed_experts",
+              "slot": 1,
+              "type": "ks3",
+              "instances": 8,
+              "topk": 1,
+              "projection_shape": [
+                2,
+                8,
+                1024,
+                768
+              ],
+              "projection_parameters": 12582912
+            }
+          ],
+          "removed_feedforward": false
+        },
+        {
+          "layer": 4,
+          "feedforward": [
+            {
+              "branch": "dense",
+              "slot": 2,
+              "type": "ks3",
+              "instances": 1,
+              "projection_shape": [
+                2,
+                1024,
+                768
+              ],
+              "projection_parameters": 1572864
+            }
+          ],
+          "removed_feedforward": false
+        },
+        {
+          "layer": 5,
+          "feedforward": [
+            {
+              "branch": "routed_experts",
+              "slot": 2,
+              "type": "ks3",
+              "instances": 8,
+              "topk": 1,
+              "projection_shape": [
+                2,
+                8,
+                1024,
+                768
+              ],
+              "projection_parameters": 12582912
+            }
+          ],
+          "removed_feedforward": false
+        },
+        {
+          "layer": 6,
+          "feedforward": [
+            {
+              "branch": "routed_experts",
+              "slot": 3,
+              "type": "ks3",
+              "instances": 8,
+              "topk": 1,
+              "projection_shape": [
+                2,
+                8,
+                1024,
+                768
+              ],
+              "projection_parameters": 12582912
+            }
+          ],
+          "removed_feedforward": false
+        },
+        {
+          "layer": 7,
+          "feedforward": [],
+          "removed_feedforward": true
+        },
+        {
+          "layer": 8,
+          "feedforward": [
+            {
+              "branch": "parallel_dense",
+              "slot": 4,
+              "type": "ks3",
+              "instances": 1,
+              "projection_shape": [
+                2,
+                1024,
+                768
+              ],
+              "projection_parameters": 1572864
+            },
+            {
+              "branch": "routed_experts",
+              "slot": 4,
+              "type": "ks3",
+              "instances": 8,
+              "topk": 1,
+              "projection_shape": [
+                2,
+                8,
+                1024,
+                768
+              ],
+              "projection_parameters": 12582912
+            }
+          ],
+          "removed_feedforward": false
+        },
+        {
+          "layer": 9,
+          "feedforward": [],
+          "removed_feedforward": true
+        },
+        {
+          "layer": 10,
+          "feedforward": [
+            {
+              "branch": "dense",
+              "slot": 3,
+              "type": "ks3",
+              "instances": 1,
+              "projection_shape": [
+                2,
+                1024,
+                768
+              ],
+              "projection_parameters": 1572864
+            }
+          ],
+          "removed_feedforward": false
+        }
+      ],
+      "dense_sites": 5,
+      "moe_sites": 5,
+      "routed_expert_instances": 40,
+      "active_conventional_mlp_instances": 0,
+      "total_parameters": 326934376,
+      "parameter_inventory": {
+        "value_embeds": {
+          "shape": [
+            201216,
+            768
+          ],
+          "parameters": 154533888
+        },
+        "ve_gate_bank": {
+          "shape": [
+            3,
+            6,
+            12
+          ],
+          "parameters": 216
+        },
+        "qk_bank": {
+          "shape": [
+            48,
+            256,
+            768
+          ],
+          "parameters": 9437184
+        },
+        "vo_bank": {
+          "shape": [
+            16,
+            768,
+            768
+          ],
+          "parameters": 9437184
+        },
+        "mlp_bank": {
+          "shape": [
+            8,
+            2,
+            1024,
+            768
+          ],
+          "parameters": 12582912
+        },
+        "moe_bank": {
+          "shape": [
+            80,
+            1024,
+            768
+          ],
+          "parameters": 62914560
+        },
+        "moe_router": {
+          "shape": [
+            5,
+            8,
+            768
+          ],
+          "parameters": 30720
+        },
+        "post_lambdas": {
+          "shape": [
+            11,
+            2
+          ],
+          "parameters": 22
+        },
+        "resid_lambdas": {
+          "shape": [
+            11,
+            2
+          ],
+          "parameters": 22
+        },
+        "scalars": {
+          "shape": [
+            24
+          ],
+          "parameters": 24
+        },
+        "mudd_w1": {
+          "shape": [
+            2,
+            64,
+            768
+          ],
+          "parameters": 98304
+        },
+        "mudd_w2": {
+          "shape": [
+            2,
+            14,
+            64
+          ],
+          "parameters": 1792
+        },
+        "mudd_b2": {
+          "shape": [
+            2,
+            14
+          ],
+          "parameters": 28
+        },
+        "mudd_w2g": {
+          "shape": [
+            14,
+            12,
+            64
+          ],
+          "parameters": 10752
+        },
+        "_mudd_gate_scale": {
+          "shape": [],
+          "parameters": 1
+        },
+        "mudd_gate_w1": {
+          "shape": [
+            2,
+            64,
+            768
+          ],
+          "parameters": 98304
+        },
+        "mudd_gate_w2": {
+          "shape": [
+            2,
+            17,
+            64
+          ],
+          "parameters": 2176
+        },
+        "mudd_gate_b2": {
+          "shape": [
+            2,
+            17
+          ],
+          "parameters": 34
+        },
+        "copy_qk_bank": {
+          "shape": [
+            2,
+            128,
+            768
+          ],
+          "parameters": 196608
+        },
+        "copy_k_sink": {
+          "shape": [
+            128
+          ],
+          "parameters": 128
+        },
+        "copy_qk_gain": {
+          "shape": [
+            1
+          ],
+          "parameters": 1
+        },
+        "ks3_geometry": {
+          "shape": [
+            5,
+            8,
+            512,
+            14
+          ],
+          "parameters": 286720
+        },
+        "ks3_dense_geometry": {
+          "shape": [
+            5,
+            512,
+            14
+          ],
+          "parameters": 35840
+        },
+        "lm_head.weight": {
+          "shape": [
+            768,
+            50304
+          ],
+          "parameters": 38633472
+        },
+        "embed.weight": {
+          "shape": [
+            50304,
+            768
+          ],
+          "parameters": 38633472
+        },
+        "smear_gate.weight": {
+          "shape": [
+            1,
+            12
+          ],
+          "parameters": 12
+        }
+      },
+      "upstream_forward_sha256": "80a84072b3617cf50a33968a043e1768a29a39a0455b6b1d8fa14aed0a50bf41",
+      "forward_transform_sha256": "902100e3411a976eadf0316a455356c8e780ddc512cb4baf13ed6a43611a70ba",
+      "coverage": "Static forward call-site audit; real full-graph capture is required before training",
+      "excluded": [
+        "attention projections",
+        "head",
+        "embedding",
+        "router",
+        "MUDD gates"
+      ]
+    }
+  },
+  "equation_audit": {
+    "gpu_initialized": false,
+    "zero_coefficients_same_initial_function": true,
+    "rank_one_cross_coordinate_gradient": 0.0,
+    "rank_two_cross_coordinate_gradient": -0.06521078199148178,
+    "scope": "CPU equation check of meaningful learned paired-coordinate coupling; GPU implementation correctness remains pending"
+  },
+  "gpu_validation": null,
+  "convergence_claim": false,
+  "decision": "Keep isolated until dense1536 discovery and any triggered three-seed verification finish. Apply only against matching base source hashes, run independent full dense rank-two GPU output/gradient oracle under the exclusive lease, then full-model graph warmup before the new fixed-width rank-two trial."
+}

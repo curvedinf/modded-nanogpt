@@ -1,0 +1,41 @@
+{
+  "utc": "2026-10-25T20:52:54.697367+00:00",
+  "status": "queued",
+  "wait_for_study": "dense-fp8-study.json",
+  "results_name": "ks3-positive-geometry-initialization-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_warpplus0025.json",
+      "recipe_sha256": "677890b6d6b802ef90974b9b9709442e31a1e7cfefa2d4603f09c1c13d70e0bf",
+      "seed": 168,
+      "status": "queued",
+      "hypothesis": "Initialize only the even warp coefficient c4 to+0.025 at every dense and routed KS3 site. The separately tested-0.025 initialization was proxy-pruned; test the opposite initial curvature while preserving rank1/width1024, BF16 products, geometry Adam0.125, other zero coefficients and raw scale0.75. This is a distinct geometry prior, with no shared/model-wide change.",
+      "changes": {
+        "geometry.coefficients[4]": {
+          "before": 0,
+          "after": 0.025
+        }
+      },
+      "numerical_oracle_reused": "matched-ks3-all-20261025T173921-f97d3e",
+      "kernel_source_unchanged": true,
+      "actual_full_graph_warmup_required": true
+    },
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_cubicplus0025.json",
+      "recipe_sha256": "4ab1ace117b8d116e5d9d9c4a3db645a98228ea7461df11d7d7fed58211f95ba",
+      "seed": 168,
+      "status": "queued",
+      "hypothesis": "Initialize only the odd cubic warp coefficient c5 to+0.025 at every dense and routed KS3 site. Test a small nonzero cubic response at initialization instead of waiting for geometry Adam to learn it from zero. Keep rank1/width1024, BF16 products, geometry Adam0.125, all other coefficients zero, raw scale0.75 and every shared/model-wide setting fixed.",
+      "changes": {
+        "geometry.coefficients[5]": {
+          "before": 0,
+          "after": 0.025
+        }
+      },
+      "numerical_oracle_reused": "matched-ks3-all-20261025T173921-f97d3e",
+      "kernel_source_unchanged": true,
+      "actual_full_graph_warmup_required": true
+    }
+  ],
+  "decision": "Wait for the complete denseFP8 precision study, including its900s discovery and any mandatory frozen three-seed verification. Then test these two KS3-only initialization hypotheses once each under the established pruning rule."
+}

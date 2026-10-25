@@ -1,0 +1,44 @@
+{
+  "precision": "bf16",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "training_gs32": true,
+  "weight_packing": "loop",
+  "geometry_backward_rows": 64,
+  "bf16_kernel_mode": "tuned",
+  "shared_fp8_gemm_tuning": "mi300-v1",
+  "shared_fp8_amax": "atomic",
+  "shared_fp8_decode": "scalar",
+  "shared_fp8_head_tuning": "legacy",
+  "shared_fp8_pipeline_tuning": "legacy",
+  "validation_window_policy": "accepted-control",
+  "validation_precision": "bf16",
+  "max_train_seconds": 900.0,
+  "validation_setup_reserve_seconds": 2.0,
+  "model_wide_hyperparameters": "original-pr393",
+  "architecture": "ks3_all",
+  "name": "matched-ks3-all-denselr150",
+  "hypothesis": "Raise only the five dense KS3 projection ANVIL multipliers to 1.5, preserving routed experts at 1.0. Replacing dense width 2816 by 1024 reduced its original shape factor from 1.9148542 to 1.1547005; this tests a partial restoration to effective factor 1.7320508 without disturbing the routed-expert setting. Retain original output-projection 2x, master/mantissa, decay and padding semantics, geometry Adam 0.125, and all shared/model-wide settings. Distinct from the already-pruned global projection-rate trials.",
+  "dense_projection_lr_multiplier": 1.5
+}

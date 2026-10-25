@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-25T22:10:15.798119+00:00",
+  "passed": true,
+  "gpu_initialized": false,
+  "reused_audit": {
+    "path": "research_results/wr_reproduction/matched-study/dense-geometry-rate-cpu-model-audit.json",
+    "sha256": "591adfb8f3378b7e4c29be8556fd8cb066b876c26922e6e27b395fba27278fa5"
+  },
+  "current_overlay_sha256": "45da3db845e364fa7accff1e6f2fb2ab7305991bd4a0f13d253e8bf4b4561102",
+  "prior_overlay_sha256": "d87e88664fa24e1847d9eaa92c3b21d5cc906d4d3113eda36013f318695ee4a4",
+  "model_constructor_ast_identical": true,
+  "parameter_initialization_unchanged": true,
+  "architecture": "ks3_all",
+  "dense_features": 1024,
+  "routed_features": 1024,
+  "scope": "Reuse the full CPU architecture audit because the only new recipe setting is dense geometry optimizer rate. Current and audited constructors are AST-identical; new rate checked separately through the original optimizer builder."
+}

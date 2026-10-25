@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-25T20:40:57.227284+00:00",
+  "passed": true,
+  "gpu_initialized": false,
+  "cpu_tests": 6,
+  "scheduler_sha256": "f0fd9bdfc1c0ef7f0cd728e7f51f0478a646303e922119c695b566645f22c0bc",
+  "test_sha256": "b56bd578b3e31c7e0612a84c1e1b3bb61957f2bf3096a7dfc35149a1aa633cde",
+  "prototype_sha256": "3b744ed9596f0e6b2ab35de36afd9ca8c94706d195142928a6cce0ca87f0fe61",
+  "decision": "GPU oracle, then paired100-update whole-model BF16/denseFP8 timing under one lease; no convergence if either timing window is slower."
+}

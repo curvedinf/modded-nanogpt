@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-25T22:04:13.016150+00:00",
+  "passed": true,
+  "tests": 9,
+  "command": ".venv-mi300/bin/python -m unittest test_wr_matched_dense_direct_bf16 -v",
+  "test_sha256": "39a7690dfb5211390807269523736f4cdcc65df3e4699ed81f22dc476f9b42c2",
+  "controller_sha256": "c9d7b7c0a6ec8e3e443d2781b4ba01f1fbc9b539f48bf76386d9896d0abd2fc7",
+  "prototype_sha256": "0f28efd24210c8a52300ea16955179784f18586791c0c6b96eeed743529e542e",
+  "scope": "CPU STOP, dependency, frozen verification, scope/hash/audit/recipe/oracle guards; patch applies; GPU numerical and whole-model timing gates still required."
+}

@@ -1,0 +1,160 @@
+{
+  "run_id": "matched-ks3-all-dense1280-20261025T194152-d22ad9",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "ae8117c8c295bccacf326d4f69128756ce058c31",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-dense1280",
+    "hypothesis": "Increase only the five dense KS3 branches from 1024 to 1280 features, retaining routed expert width 1024 and rank one. Test an intermediate capacity and runtime tradeoff after the 1536-width trial was training-proxy-pruned; that earlier prune is not validation evidence. Keep original ANVIL shape-dependent scaling, geometry Adam multiplier 0.125, projection multiplier 1.0 and all shared/model-wide settings. Require the independent 1280-feature dense output/gradient oracle before training.",
+    "dense_charts": 1280
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.582387924194336,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.0263724327087403,
+    "reference_run_id": "matched-ks3-all-rank2-20261025T185248-cc3fd2",
+    "reference_wall_seconds": 322.1270164769958,
+    "reference_age_seconds": 10.263714083004743,
+    "reference_objective": 3.5560154914855957,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "reference_source_step": 605,
+    "comparable_runs": 9,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-rank2-20261025T185248-cc3fd2/events.jsonl",
+      "sha256": "bf0694ddc54df8b883129a7e413379d6c391a04d7bcd8052c93b9db0233bc0e8",
+      "line": 639,
+      "row_sha256": "84d4441594f1df5a70e5b02caa8fed17a49d42e2d0c9668016ee64fc4fa2c354"
+    },
+    "step": 597,
+    "train_seconds": 332.3907305600005,
+    "reference_snapshot_sha256": "a3e7cb77509ec25e21ebb9b28c86cd20f0dbffdc943430ed8ae8bc56d6ef20e3",
+    "utc": "2026-10-25T19:51:40.279583+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_all",
+    "run_id": "matched-ks3-all-dense1280-20261025T194152-d22ad9",
+    "seed": 168,
+    "code_commit": "ae8117c8c295bccacf326d4f69128756ce058c31",
+    "training_projection_gs32": true
+  },
+  "timing": null,
+  "correctness": null,
+  "exit_code": 0,
+  "events_sha256": "59129bcd6b33e21b407fe3354f61fdde3c5ed6cb1a86d697f10c03f4a27d1485",
+  "completed_utc": "2026-10-25T19:51:42.631825+00:00",
+  "qualifies": false
+}

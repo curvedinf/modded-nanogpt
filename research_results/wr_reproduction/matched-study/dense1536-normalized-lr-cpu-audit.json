@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "gpu_initialized": false,
+  "checks": [
+    {
+      "architecture": "ks3_all",
+      "dense_features": 1536,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.4142135623730951,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": null,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_all",
+      "dense_features": 1536,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": 0.816496580927726,
+      "effective_dense_multiplier": 1.1547005383792517,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": null,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_first_mlp",
+      "dense_features": 1536,
+      "requested_routed_multiplier": 1.25,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.7677669529663689,
+      "effective_routed_multiplier": 1.4433756729740643,
+      "retained_effective_multiplier": 1.9148542155126762,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_first_mlp",
+      "dense_features": 1536,
+      "requested_routed_multiplier": 1.25,
+      "requested_dense_multiplier": 0.816496580927726,
+      "effective_dense_multiplier": 1.1547005383792517,
+      "effective_routed_multiplier": 1.4433756729740643,
+      "retained_effective_multiplier": 1.9148542155126762,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    }
+  ],
+  "invalid_multipliers_rejected": 4,
+  "scope": "Both KS3 optimizer wrappers plus immutable original ANVIL parameter-config builder; meta tensors only, no optimizer updates or convergence claims."
+}

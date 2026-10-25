@@ -1,0 +1,36 @@
+{
+  "utc": "2026-10-25T16:45:08.932464+00:00",
+  "original_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+  "winner_commit": "f1366345fcdbde52d06711b33300e481db855c34",
+  "winner_recipe_sha256": "a796b1cf87d7666389d40e7a539be24739c7fc01c8e2df9179c77c80aec7b99e",
+  "model_wide_differences": {},
+  "collapsed_duplicate_arms": true,
+  "decision": "One frozen original-PR393 matched MLP recipe; independent seeds169,170,171",
+  "excluded_ks3_settings": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "training_gs32": true,
+    "bf16_kernel_mode": "tuned"
+  },
+  "evidence": "Winner imports immutable original config, schedule, optimizer and data; recipe has no model-wide overrides. KS3 geometry/projection hardware is architecture-specific.",
+  "old_results_not_architecture_advantage": true
+}

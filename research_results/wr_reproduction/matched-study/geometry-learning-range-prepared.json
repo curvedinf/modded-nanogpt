@@ -1,0 +1,31 @@
+{
+  "utc": "2026-10-25T20:14:44.822620+00:00",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_geometry100.json",
+      "recipe_sha256": "c1d850aa0123e0ea232c347ad420bf0bffb601220f50ca07255e9f53df53a0cc",
+      "seed": 168,
+      "status": "prepared_not_launched",
+      "geometry_lr_multiplier": 1.0,
+      "hypothesis": "Increase only geometry Adam multiplier from0.125 to1.0 for dense and routed KS3. Existing terminal diagnostics show coefficient RMS near0.01 at the baseline and proportional changes for0.0625/0.25; test substantially faster geometry adaptation. Keep zero coefficient initialization, raw scale0.75, rank1/width1024, projection rates1.0 and all shared/model-wide settings. This is a learning-rate ablation, not a validation claim from the diagnostic statistics.",
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/geometry100-cpu-optimizer-audit.json",
+        "sha256": "5c0b3e167b516d7d365b6bc94ed68bf0de233775d1482c6ef3ff3aeb1025fae0"
+      }
+    },
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_geometry000.json",
+      "recipe_sha256": "ab75d5ca9e1e38e8f52adac5167385c524c88fa8f380d80550b5804874ec169b",
+      "seed": 168,
+      "status": "prepared_not_launched",
+      "geometry_lr_multiplier": 0.0,
+      "hypothesis": "Set only geometry Adam multiplier to0.0 so zero spline/warp coefficients remain at initialization while both projection banks learn normally. This isolates the benefit or cost of learned geometry within the same all-KS3 GS32/BF16 implementation, width1024 and fixed backend. It is a fixed-geometry mechanism ablation; even a win would not establish an advantage from learned spline deformation. Retain all KS3 modules, gradients and optimizer state, projection rates1.0 and all shared/model-wide settings.",
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/geometry000-cpu-optimizer-audit.json",
+        "sha256": "b2cb151da380849932b9eb81d5d093da7dc8476ebfe4c831a89db9fe52463a39"
+      }
+    }
+  ],
+  "prerequisite": "Complete original-width2816 trial and any frozen three-seed verification first",
+  "decision": "Distinct configuration-only KS3 ablations using existing numerical kernels; graph warmup and strict training-proxy pruning remain mandatory. No model-wide recipe changes."
+}

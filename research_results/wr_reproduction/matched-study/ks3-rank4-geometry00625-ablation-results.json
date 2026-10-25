@@ -1,0 +1,513 @@
+{
+  "utc": "2026-10-25T19:13:06.339067+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_run": "matched-ks3-all-scale050-20261025T190901-7d99df",
+  "results_name": "ks3-rank4-geometry00625-ablation-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_rank4.json",
+      "recipe_sha256": "7f4c384af22b5b4b6a8b123753283cb51a9a5c392b2064e12a016419be45ba36",
+      "seed": 168,
+      "status": "pruned",
+      "changes": {
+        "charts": {
+          "before": 1024,
+          "after": 256
+        },
+        "dense_charts": {
+          "before": null,
+          "after": 256
+        },
+        "rank": {
+          "before": 1,
+          "after": 4
+        }
+      },
+      "hypothesis": "Use 256 rank-four charts and 1024 projection features at all five dense and forty routed KS3 sites. Test learned coupling across four coordinates with unchanged projection dimensions and initialization, original ANVIL shape scaling, and geometry Adam multiplier 0.125. Require the independent full dense rank-four output/gradient oracle and actual model graph warmup before training. Shared backend and all model-wide settings remain frozen.",
+      "correctness_required": true,
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/rank4-cpu-audit.json",
+        "sha256": "7d9dc8352fca0ce0b282c68e96572190ea74be2eb83e0f0c2e339a82e396deb3"
+      },
+      "correctness_run_id": "matched-ks3-all-rank4-20261025T191637-4583c5",
+      "correctness_result": {
+        "run_id": "matched-ks3-all-rank4-20261025T191637-4583c5",
+        "status": "correctness_passed",
+        "seed": 172,
+        "code_commit": "e058bc630fcadd71d0adb8d43d8d9d1cd4e8ecb1",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 256,
+          "rank": 4,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-rank4",
+          "hypothesis": "Use 256 rank-four charts and 1024 projection features at all five dense and forty routed KS3 sites. Test learned coupling across four coordinates with unchanged projection dimensions and initialization, original ANVIL shape scaling, and geometry Adam multiplier 0.125. Require the independent full dense rank-four output/gradient oracle and actual model graph warmup before training. Shared backend and all model-wide settings remain frozen.",
+          "dense_charts": 256
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": null,
+        "timing": null,
+        "correctness": {
+          "event": "kernel_correctness",
+          "passed": true,
+          "rank": 4,
+          "features": 1024,
+          "checks": [
+            {
+              "tokens": 1,
+              "relative_rms": {
+                "output": 0.0,
+                "input_gradient": 0.0,
+                "up_gradient": 0.0,
+                "down_gradient": 0.0,
+                "geometry_gradient": 3.360064226853865e-07,
+                "post_gradient": 0.0
+              }
+            },
+            {
+              "tokens": 257,
+              "relative_rms": {
+                "output": 0.00019638602680061013,
+                "input_gradient": 0.0001900421775644645,
+                "up_gradient": 0.0001483547530369833,
+                "down_gradient": 0.00015902869927231222,
+                "geometry_gradient": 3.6958658711228054e-07,
+                "post_gradient": 0.0
+              }
+            },
+            {
+              "tokens": 4096,
+              "relative_rms": {
+                "output": 0.00019825753406621516,
+                "input_gradient": 0.00013115702313371003,
+                "up_gradient": 0.00016654263890814036,
+                "down_gradient": 0.00028287587338127196,
+                "geometry_gradient": 5.541634209293989e-07,
+                "post_gradient": 0.0
+              }
+            }
+          ],
+          "oracle": "Pinned upstream nonlinear forward, independent Torch GS32 and matrix products, independent smooth STE autograd with specified BF16 gradient storage",
+          "shared_backend_modified": false,
+          "validation": false
+        },
+        "exit_code": 0,
+        "events_sha256": "9598e631e2b08791297e894f79586336ed040d37ddebedae51d2829b320bd87c",
+        "completed_utc": "2026-10-25T19:16:55.210158+00:00",
+        "qualifies": false
+      },
+      "run_id": "matched-ks3-all-rank4-20261025T191655-2f6519",
+      "result": {
+        "run_id": "matched-ks3-all-rank4-20261025T191655-2f6519",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "e058bc630fcadd71d0adb8d43d8d9d1cd4e8ecb1",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 256,
+          "rank": 4,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-rank4",
+          "hypothesis": "Use 256 rank-four charts and 1024 projection features at all five dense and forty routed KS3 sites. Test learned coupling across four coordinates with unchanged projection dimensions and initialization, original ANVIL shape scaling, and geometry Adam multiplier 0.125. Require the independent full dense rank-four output/gradient oracle and actual model graph warmup before training. Shared backend and all model-wide settings remain frozen.",
+          "dense_charts": 256
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 3.6025779247283936,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.0849864482879639,
+          "reference_run_id": "matched-ks3-all-rank2-20261025T185248-cc3fd2",
+          "reference_wall_seconds": 312.41625392998685,
+          "reference_age_seconds": 0.8090770360140596,
+          "reference_objective": 3.5175914764404297,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 596,
+          "comparable_runs": 1,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-rank2-20261025T185248-cc3fd2/events.jsonl",
+            "sha256": "bf0694ddc54df8b883129a7e413379d6c391a04d7bcd8052c93b9db0233bc0e8",
+            "line": 630,
+            "row_sha256": "9c92ad524079fda2a6d96d943c85ecb19d5ee82557d1db8328cbb88fbd8ebbd4"
+          },
+          "step": 599,
+          "train_seconds": 313.2253309660009,
+          "reference_snapshot_sha256": "2414c59e3bf9f1c4c645b8a91cdb8efaf076c700dce0a6fa91ac51c3b34b9dd5",
+          "utc": "2026-10-25T19:26:19.306820+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c256-r4",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-rank4-20261025T191655-2f6519",
+          "seed": 168,
+          "code_commit": "e058bc630fcadd71d0adb8d43d8d9d1cd4e8ecb1",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "619d94cbb677bdca8346ec2f02cb806b01f02e3b9515f49ed4a6c4a1a26d6ece",
+        "completed_utc": "2026-10-25T19:26:21.555786+00:00",
+        "qualifies": false
+      }
+    },
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_geometry00625.json",
+      "recipe_sha256": "0982bc70158a481d7f69a7041b264bac06cb3b21a915e10890ed8fc45903e816",
+      "seed": 168,
+      "status": "pruned",
+      "changes": {
+        "geometry": {
+          "before": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "after": {
+            "lr_mul": 0.0625,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      "hypothesis": "Halve only the geometry Adam multiplier from 0.125 to 0.0625 at every dense and routed KS3 site. The separately tested 0.25 multiplier was proxy-pruned; test whether slower spline coefficient and warp updates improve loss at comparable elapsed time. Keep rank one, width 1024, projection multiplier 1.0, initialization and all shared/model-wide settings unchanged.",
+      "run_id": "matched-ks3-all-geometry00625-20261025T192621-0bf0aa",
+      "result": {
+        "run_id": "matched-ks3-all-geometry00625-20261025T192621-0bf0aa",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "afe5d82aac7a40d42d4f6175194319bee8ca31f7",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.0625,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-geometry00625",
+          "hypothesis": "Halve only the geometry Adam multiplier from 0.125 to 0.0625 at every dense and routed KS3 site. The separately tested 0.25 multiplier was proxy-pruned; test whether slower spline coefficient and warp updates improve loss at comparable elapsed time. Keep rank one, width 1024, projection multiplier 1.0, initialization and all shared/model-wide settings unchanged."
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 3.577558755874634,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.071725130081177,
+          "reference_run_id": "matched-ks3-all-20261025T173936-bf006b",
+          "reference_wall_seconds": 323.649033780006,
+          "reference_age_seconds": 0.13767831498989835,
+          "reference_objective": 3.505833625793457,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 598,
+          "comparable_runs": 6,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-20261025T173936-bf006b/events.jsonl",
+            "sha256": "a858ba1b043d893a6bbecd996af4d027f02815575628a41a82b0b664b2b505a9",
+            "line": 632,
+            "row_sha256": "5cb4e7cc8ec21c2833e2a246eff7558fa7ecd221ecb7149e4afed923eaa6be8a"
+          },
+          "step": 597,
+          "train_seconds": 323.7867120949959,
+          "reference_snapshot_sha256": "40e764d1055d3e7c0acdcbc4d43a5bea8b876af129b5854fddc140189d706f33",
+          "utc": "2026-10-25T19:33:54.445512+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-geometry00625-20261025T192621-0bf0aa",
+          "seed": 168,
+          "code_commit": "afe5d82aac7a40d42d4f6175194319bee8ca31f7",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "596988559ecd6857cb12f4f57a51454fd6b92559d8803eeacf3b895f9fc2f5db",
+        "completed_utc": "2026-10-25T19:33:56.380511+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "decision": "After the current warp-scale discovery and any frozen three-seed verification, require the independent rank-four GPU oracle before its discovery, then test the separate lower geometry learning rate. No shared source changes.",
+  "unit": "wr-matched-rank4-geometry00625-e058bc6",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "0b3d1f36b90e87cbf7080700cfea6f56ec60fe35cb4f1933b34a20a9e044c8d1",
+    "code_commit": "e058bc630fcadd71d0adb8d43d8d9d1cd4e8ecb1"
+  },
+  "completed_utc": "2026-10-25T19:33:56.383992+00:00"
+}

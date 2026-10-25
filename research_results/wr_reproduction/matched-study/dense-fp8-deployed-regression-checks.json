@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-25T20:44:28.535123+00:00",
+  "passed": true,
+  "cpu_tests": 7,
+  "test_module": "test_wr_matched_study",
+  "gpu_visible": false,
+  "code_commit": "383e205b9f3b4f707fabefa6b3b4ae2e4dfd0705",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "control_set_sha256": "59746335a66614f8f4fa3e903601d4d7ba57cc591a27f31e48517189d09e8413",
+  "scope": "Default matched-study contracts and static feedforward transforms after opt-in dense FP8 deployment. Numerical FP8 correctness is recorded by the separate registered GPU oracle."
+}

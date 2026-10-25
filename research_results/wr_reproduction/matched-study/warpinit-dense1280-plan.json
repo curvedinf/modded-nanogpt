@@ -1,0 +1,79 @@
+{
+  "utc": "2026-10-25T19:24:00.181766+00:00",
+  "status": "prepared_not_launched",
+  "predecessor_manifest": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/pending-rank4-geometry00625.json",
+  "results_name": "ks3-warpinit-dense1280-ablation-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_warpminus0025.json",
+      "recipe_sha256": "48b99fcf7c2acdb65d6c555b244d29f2d04565d599e5c94017bc1f2d63a0b6b9",
+      "seed": 168,
+      "status": "queued",
+      "changes": {
+        "geometry": {
+          "before": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "after": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              -0.025,
+              0
+            ]
+          }
+        }
+      },
+      "hypothesis": "Initialize only KS3 warp coefficient c4 to -0.025 instead of zero at every dense and routed site. This adds 0.025 - 0.05*z^2 before squared ReLU, opening small activations and damping saturated ones while enabling warp gradients immediately. Test a modest learned-basis initialization change at unchanged width 1024, rank one, projection multiplier 1.0 and geometry Adam multiplier 0.125. Shared/model-wide settings stay frozen.",
+      "correctness_required": false,
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/warpminus0025-cpu-audit.json",
+        "sha256": "591adfb8f3378b7e4c29be8556fd8cb066b876c26922e6e27b395fba27278fa5"
+      }
+    },
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_dense1280.json",
+      "recipe_sha256": "314129fe56e3e88d2d229788799ecdbf4408ff0942a7322b080d4caef5ba5c03",
+      "seed": 168,
+      "status": "queued",
+      "changes": {
+        "dense_charts": {
+          "before": null,
+          "after": 1280
+        }
+      },
+      "hypothesis": "Increase only the five dense KS3 branches from 1024 to 1280 features, retaining routed expert width 1024 and rank one. Test an intermediate capacity and runtime tradeoff after the 1536-width trial was training-proxy-pruned; that earlier prune is not validation evidence. Keep original ANVIL shape-dependent scaling, geometry Adam multiplier 0.125, projection multiplier 1.0 and all shared/model-wide settings. Require the independent 1280-feature dense output/gradient oracle before training.",
+      "correctness_required": true,
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/dense1280-cpu-audit.json",
+        "sha256": "6bd4c18db062ff3611c908c062904cb0631e0b0961c90faf1220210b1bac16b0"
+      }
+    }
+  ],
+  "decision": "Preserve the rank-four and geometry0.0625 queue and any required verification. Once the last predecessor run ID is available, create a queue that depends on its completed result. The new 1280-feature dense GPU oracle must pass before that discovery."
+}

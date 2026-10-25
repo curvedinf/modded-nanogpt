@@ -1,0 +1,117 @@
+{
+  "utc": "2026-10-25T20:39:45.837957+00:00",
+  "prototype_only": true,
+  "not_deployed": true,
+  "base_code_commit": "3fade8de34bbbb7e9d8b8d33b2cca4a1af72a8e2",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "patch": "research_results/wr_reproduction/matched-study/dense-fp8-prototype.patch",
+  "patch_sha256": "9b51c388c2dc92f181bb17bbd9d2b7099ab357b1f40f514c40f25fb3a6893fd6",
+  "staged_sources": [
+    {
+      "path": "wr_reproduction/ks3_feedforward.py",
+      "base_sha256": "31a82c63a74adfef1970ea1804a49f7051d2701418fed744fe128993c5227e7b",
+      "staged_sha256": "dad188d0b6aa7d95b45741b68001b8a864b3550c908c91f81856f43e571140d7"
+    },
+    {
+      "path": "wr_reproduction/ks3_feedforward_source.py",
+      "base_sha256": "faf3457c0bb8c01ca6a34951609056118e3e077c373ee47c925e25dc66ee03e0",
+      "staged_sha256": "388467e576f93d189e2cc31fce19c11377df3f6a60de68a22fdb9db186634106"
+    },
+    {
+      "path": "wr_reproduction/ks3_dense_fp8.py",
+      "base_sha256": null,
+      "staged_sha256": "63b69b92a31d096e9d946eaebfe24dddb7cb979419b6ca29d873ed064a89c6e4"
+    },
+    {
+      "path": "wr_reproduction/check_ks3_feedforward_fp8.py",
+      "base_sha256": null,
+      "staged_sha256": "2066515819672b4fda43731e05c46ac80be424a83f9e04564a8c86dbde8a3b43"
+    },
+    {
+      "path": "wr_reproduction/matched_controller.py",
+      "base_sha256": "7fa53d6f976776b657fe85bc05431267972f66dabe8d9a524b5d63326e3dd68d",
+      "staged_sha256": "8c112b41aca1db03be795e886a1b54618be7214a92145cf06c50af35394b9574"
+    }
+  ],
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-dense2816-fp8",
+    "hypothesis": "Change only dense KS3 training projection products from BF16 to native FP8 at the original dense width2816. Keep routed KS3 at the measured BF16 path, rank1, geometry Adam0.125, all projection rates and shared/model-wide configuration. Reuse existing prepared-native KS3 products, fused GS32 producer packing and original logical-rank delayed-scale policy. Retain BF16 dense caches for unchanged validation. Require an independent numerical/cache oracle, actual graph warmup and paired100-update whole-model timing before convergence; skip the precision candidate if slower.",
+    "dense_charts": 2816,
+    "dense_precision": "fp8",
+    "fp8_native_gemm_tuning": "mi300-v2"
+  },
+  "cpu_audits": [
+    {
+      "path": "research_results/wr_reproduction/matched-study/dense-fp8-all-cpu-model-audit-v2.json",
+      "sha256": "aee8b81b460acc538acb31320af970a5c3a7ba752df49efe8fa5ea656b0ca326",
+      "passed": true
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/dense-fp8-first-mlp-cpu-model-audit-v2.json",
+      "sha256": "da54d867f3df0431d5bdc9c840926ae37ce73a0b30f8a5342286a0f54fe2db41",
+      "passed": true
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/dense-fp8-last-mlp-cpu-model-audit-v2.json",
+      "sha256": "ef176857841ac3a74731a7fc11197a01348e9b786adbea57d53c1a688e2e50bd",
+      "passed": true
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/dense-fp8-both-mlp-cpu-model-audit-v2.json",
+      "sha256": "485c34e2f4f8731bbe46411f8dc74e61c07dcddc8ddfb665c374d99c7fe07ba3",
+      "passed": true
+    }
+  ],
+  "cpu_checker": {
+    "path": "check_wr_dense_fp8.py",
+    "sha256": "2452a9edb5da2f44156b28449bb19ec0a99918c573942c7da4efada385230320"
+  },
+  "optimizer_and_retained_mlp_ast_identical": true,
+  "default_bf16_refresh_ast_identical": true,
+  "prerequisite_manifest": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/pending-geometry-learning-range.json",
+  "baseline_recipe": {
+    "path": "configs/wr_reproduction/matched_ks3_all_dense2816.json",
+    "sha256": "f1833788c008f1cd1283805e5091919d5633cdab73299a05386bd411eecc918e"
+  },
+  "gpu_oracle_passed": false,
+  "decision": "Wait for geometry1.0/0.0 and any full frozen verification. Deploy under exclusive GPU lease, commit, require independent dense FP8 numerical/cache/multisite oracle, then one paired100-update BF16-vs-denseFP8 timing check. Run900s discovery only if the new precision is faster for both first100 and updates25-100. Shared backend and matched MLP remain fixed."
+}

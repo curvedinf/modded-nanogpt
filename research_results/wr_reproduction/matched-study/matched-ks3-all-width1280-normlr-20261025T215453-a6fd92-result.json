@@ -1,0 +1,102 @@
+{
+  "run_id": "matched-ks3-all-width1280-normlr-20261025T215453-a6fd92",
+  "status": "correctness_passed",
+  "seed": 172,
+  "code_commit": "e039602f9be69594bc04e43693dc897115dd2664",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1280,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-width1280-normlr",
+    "hypothesis": "Increase both dense and routed rank-one KS3 widths from1024 to1280 after the width768 normalized-rate candidate was proxy-pruned. Unlike the earlier dense-only1280 trial, this expands routed capacity too. Set projection multiplier sqrt(1024/1280) so original ANVIL shape scaling leaves the effective rate unchanged. Keep geometry Adam0.125, zero coefficients, BF16 GS32, topology and frozen shared/model-wide settings. Gate on CPU architecture/optimizer checks, a width1280 numerical oracle and actual full-graph warmup.",
+    "dense_charts": 1280,
+    "projection_lr_multiplier": 0.8944271909999159
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": null,
+  "timing": null,
+  "correctness": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "input_gradient": 0.0,
+          "up_gradient": 0.0016664585564285517,
+          "down_gradient": 0.0016774055548012257,
+          "geometry_gradient": 4.850521122534701e-07,
+          "post_gradient": 0.0
+        }
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 2.2631049432675354e-05,
+          "input_gradient": 0.00014034924970474094,
+          "up_gradient": 0.0016636948566883802,
+          "down_gradient": 0.0016609072918072343,
+          "geometry_gradient": 7.805106179148424e-07,
+          "post_gradient": 0.0
+        }
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 0.00020907027646899223,
+          "input_gradient": 0.00011023729166481644,
+          "up_gradient": 0.001661105314269662,
+          "down_gradient": 0.001665015472099185,
+          "geometry_gradient": 9.900689974529087e-07,
+          "post_gradient": 0.0
+        }
+      }
+    ],
+    "features": 1280,
+    "oracle": "Independent ks3_blas_fused_unpack autograd; all gradients, nonzero geometry and output post factor",
+    "shared_backend_modified": false,
+    "validation": false
+  },
+  "exit_code": 0,
+  "events_sha256": "1043651f65b226b197ec78e8b91062a75d7e7d708cb0effcfd7502e201e6f83a",
+  "completed_utc": "2026-10-25T21:55:01.704975+00:00",
+  "qualifies": false
+}

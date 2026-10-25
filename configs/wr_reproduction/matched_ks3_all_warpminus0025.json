@@ -1,0 +1,43 @@
+{
+  "precision": "bf16",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      -0.025,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "training_gs32": true,
+  "weight_packing": "loop",
+  "geometry_backward_rows": 64,
+  "bf16_kernel_mode": "tuned",
+  "shared_fp8_gemm_tuning": "mi300-v1",
+  "shared_fp8_amax": "atomic",
+  "shared_fp8_decode": "scalar",
+  "shared_fp8_head_tuning": "legacy",
+  "shared_fp8_pipeline_tuning": "legacy",
+  "validation_window_policy": "accepted-control",
+  "validation_precision": "bf16",
+  "max_train_seconds": 900.0,
+  "validation_setup_reserve_seconds": 2.0,
+  "model_wide_hyperparameters": "original-pr393",
+  "architecture": "ks3_all",
+  "name": "matched-ks3-all-warpminus0025",
+  "hypothesis": "Initialize only KS3 warp coefficient c4 to -0.025 instead of zero at every dense and routed site. This adds 0.025 - 0.05*z^2 before squared ReLU, opening small activations and damping saturated ones while enabling warp gradients immediately. Test a modest learned-basis initialization change at unchanged width 1024, rank one, projection multiplier 1.0 and geometry Adam multiplier 0.125. Shared/model-wide settings stay frozen."
+}

@@ -1,0 +1,47 @@
+--- a/wr_reproduction/ks3_feedforward.py
++++ b/wr_reproduction/ks3_feedforward.py
+@@ -4,6 +4,7 @@
+ mantissas, alternating2x output LR, sharding/padding, and gradient accumulation.
+ Hybrid MLPs use a separately padded original-width bank with identical policy.
+ """
++import math
+ import torch
+ import triton as tr
+ from wr_reproduction import ks3_moe as core
+@@ -63,7 +64,11 @@
+     mapping={slot:i for i,slot in enumerate(keep)}
+     charts,rank=recipe.get('dense_charts',recipe['charts']),recipe['rank'];features=charts*rank
+     if features not in (512,768,1024,1280,1536):raise ValueError('Unsupported dense KS3 width')
+-    geometry=recipe['geometry'];multiplier=recipe.get('projection_lr_multiplier',1.)
++    geometry=recipe['geometry']
++    multiplier=recipe.get('dense_projection_lr_multiplier',recipe.get('projection_lr_multiplier',1.))
++    if not math.isfinite(multiplier) or multiplier<=0:
++        raise ValueError('Dense KS3 projection LR multiplier must be finite and positive')
++    optimizer_policy={}
+     transformed_forward,forward_sha=compile_method(forward_tree(),gpt.__dict__)
+     refresh,_=compile_method(refresh_tree(len(keep)),gpt.__dict__)
+     # Reuse the exact original allocation/layout definitions, only with fewer
+@@ -136,7 +141,7 @@
+                         routed_ks3_backward_layers=[1,3,5,6,8],
+                         retained_original_mlp_slots=list(keep),all_feedforward_paths_mapped=True,
+                         original_mlp_fallback_is_fatal=True,transformed_forward_sha256=forward_sha,
+-                        actual_graph_warmup=True)
++                        actual_graph_warmup=True,dense_projection_optimizer=dict(optimizer_policy))
+     # Extend the original per-matrix output-LR/padding policy to the retained
+     # bank. All existing labels execute the byte-for-byte original method.
+     original_build=anvil.AnvilAndAdam._build_param_cfg
+@@ -158,6 +163,13 @@
+         for key in ('scatter_order','work_order'):
+             kw[key].append('ks3_dense_geometry')
+             if keep:kw[key].insert(kw[key].index('mlp_bank')+1,'retained_mlp_bank')
+-        return original_optimizer(*a,**kw)
++        result=original_optimizer(*a,**kw)
++        dense=[cfg for cfg in result.param_cfgs.values() if cfg.label=='mlp_bank']
++        assert len(dense)==1
++        cfg=dense[0];shape_scale=max(1.,features/768)**.5
++        assert cfg.lr_mul==shape_scale*multiplier
++        optimizer_policy.update(multiplier=multiplier,effective_multiplier=cfg.lr_mul,
++                                shape_scale=shape_scale,base_lr=cfg.lr,weight_decay=cfg.weight_decay)
++        return result
+     training.AnvilAndAdam=optimizer
+     return FullKS3GPT

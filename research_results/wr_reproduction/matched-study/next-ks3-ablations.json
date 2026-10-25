@@ -1,0 +1,70 @@
+{
+  "utc": "2026-10-25T18:09:40.528457+00:00",
+  "initial_sequence_must_finish_first": true,
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "shared_source_unchanged": true,
+  "model_wide_hyperparameters": "original-pr393",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_geometry025.json",
+      "recipe_sha256": "10d31d76af81d21f96aa9b153a8b00121873be62ddcb7eeb32088a40c5302c42",
+      "seed": 168,
+      "changes": {
+        "geometry": {
+          "before": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "after": {
+            "lr_mul": 0.25,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      "hypothesis": "Double only KS3 geometry Adam multiplier from 0.125 to 0.25 at every KS3 feedforward site. The baseline pruned with finite, small geometry changes; test whether faster basis adaptation improves elapsed-time training loss.",
+      "status": "prepared"
+    },
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_projection125.json",
+      "recipe_sha256": "68dcfe068cf899103cf9941e8942cfd03a570e1ec378cfd13ea8c90548a2f80b",
+      "seed": 168,
+      "changes": {
+        "projection_lr_multiplier": {
+          "before": null,
+          "after": 1.25
+        }
+      },
+      "hypothesis": "Increase only KS3 projection ANVIL multiplier from 1.0 to 1.25 for dense and routed KS3 banks. Keep geometry at 0.125 and all shared parameters at original WR settings; test faster representation adaptation under the nominal900-second budget.",
+      "status": "prepared"
+    }
+  ],
+  "decision": "After the last-layer and both-edge hybrids, screen these distinct KS3-specific learning hypotheses once each. Any qualifying full-validation win triggers frozen three-seed verification before continuing."
+}

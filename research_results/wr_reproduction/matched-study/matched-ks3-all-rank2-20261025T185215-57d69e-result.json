@@ -1,0 +1,102 @@
+{
+  "run_id": "matched-ks3-all-rank2-20261025T185215-57d69e",
+  "status": "correctness_passed",
+  "seed": 172,
+  "code_commit": "fb4b93ff236f534c3236613bff610348b7bc818d",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 512,
+    "rank": 2,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-rank2",
+    "hypothesis": "Use512 rank-two charts and1024 projection features at every dense and routed KS3 site. Introduce learned coupling between paired coordinates while preserving projection dimensions, seeded matrices, original ANVIL shape scaling, geometry Adam0.125, and shared model-wide settings. Zero coefficients retain the initial rank-one function; the geometry parameter count decreases by46080. Require independent full dense rank-two output/gradient oracle and actual full-model graph warmup before convergence.",
+    "dense_charts": 512
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": null,
+  "timing": null,
+  "correctness": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "rank": 2,
+    "features": 1024,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "input_gradient": 0.0,
+          "up_gradient": 0.0,
+          "down_gradient": 0.0,
+          "geometry_gradient": 3.769815748455585e-07,
+          "post_gradient": 0.0
+        }
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 9.629232226870954e-05,
+          "input_gradient": 7.439210457960144e-05,
+          "up_gradient": 5.091925777378492e-05,
+          "down_gradient": 7.438476313836873e-05,
+          "geometry_gradient": 5.73888200960937e-07,
+          "post_gradient": 0.0
+        }
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 0.00018439683481119573,
+          "input_gradient": 0.00012575133587233722,
+          "up_gradient": 0.00017698270676191896,
+          "down_gradient": 0.00026058556977659464,
+          "geometry_gradient": 8.725861562197679e-07,
+          "post_gradient": 0.0
+        }
+      }
+    ],
+    "oracle": "Pinned upstream nonlinear forward, independent Torch GS32 and matrix products, independent smooth STE autograd with specified BF16 gradient storage",
+    "shared_backend_modified": false,
+    "validation": false
+  },
+  "exit_code": 0,
+  "events_sha256": "061ae194bce7bfdc3e37bbac9552cb4801ae67ccb8fc2d6beaef76bbf481eec8",
+  "completed_utc": "2026-10-25T18:52:30.085543+00:00",
+  "qualifies": false
+}

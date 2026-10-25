@@ -1,0 +1,88 @@
+{
+  "utc": "2026-10-25T20:00:43.884557+00:00",
+  "prototype_only": true,
+  "not_deployed": true,
+  "base_code_commit": "978e48fd1883c8a35637f4ff5e430015500062c3",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "patch": "research_results/wr_reproduction/matched-study/dense-width2816-prototype.patch",
+  "patch_sha256": "58fcb9349321f558f4dc2e2e7851b8f7452926749483bc6e03367338ddbed536",
+  "staged_sources": [
+    {
+      "path": "wr_reproduction/ks3_feedforward.py",
+      "base_sha256": "f00187eecc78ec7d62ee4d506da3f4e79b6b03f0ec840cb7bb94b1b87c62bbc6",
+      "staged_sha256": "31a82c63a74adfef1970ea1804a49f7051d2701418fed744fe128993c5227e7b"
+    },
+    {
+      "path": "wr_reproduction/check_ks3_feedforward.py",
+      "base_sha256": "74c7c6c730e7924f9a05a4b7e27472cd9e08e4a4ac7586e4fca28210b96457a6",
+      "staged_sha256": "8035001ddcb918a5016fe6f2e6d430ba61073c2609148c2e1f52114b92cebc5a"
+    }
+  ],
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-dense2816",
+    "hypothesis": "Use the original PR393 dense projection width 2816 at all five dense KS3 sites, retaining routed expert width1024 and MoE8 top1. This exactly matches the original MLP projection dimensions and initialization, removing the dense capacity reduction in earlier full-KS3 candidates. Only KS3 geometry adds parameters. Preserve original shape-dependent ANVIL scaling, projection multiplier1.0, geometry Adam0.125 and the frozen shared/model-wide recipe. Reuse existing numerical kernels without hardware tuning; require an independent 2816-feature output/gradient oracle and actual model graph warmup before convergence.",
+    "dense_charts": 2816
+  },
+  "cpu_model_audit": {
+    "path": "research_results/wr_reproduction/matched-study/dense2816-cpu-model-audit.json",
+    "sha256": "8b1ec10b70c70e698f25cea2c8bab76e6cbe5598504ba40254e30707ed3665bc",
+    "passed": true
+  },
+  "cpu_optimizer_audit": {
+    "path": "research_results/wr_reproduction/matched-study/dense2816-cpu-optimizer-audit.json",
+    "sha256": "2cac713815d5059b70bda234d9f79278f71fcca93510c86ed181374fabfe5567",
+    "passed": true
+  },
+  "projection_capacity_comparison": {
+    "control_run_id": "matched-mlp-original-20261025T164517-c73490",
+    "all_projection_shapes_and_counts_identical": true,
+    "projection_initialization_identical": true,
+    "matched_mlp_parameters": 348631912,
+    "ks3_parameters": 349072232,
+    "extra_ks3_geometry_parameters": 440320
+  },
+  "kernel_arithmetic_unchanged": true,
+  "only_source_changes": "Accept width2816 in the dense architecture guard and existing independent GPU oracle CLI; no numerical kernel or shared source changes.",
+  "gpu_oracle_passed": false,
+  "prerequisite_manifest": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/pending-dense-rate-capacity.json",
+  "decision": "Keep staged until lower dense-rate and normalized-rate width1536 trials plus any required verification finish. Under the exclusive GPU lease validate source/patch/audit hashes and shared fence, deploy only these two KS3 files, commit the recipe and code, then run the independent2816-feature GPU output/gradient oracle. Only on pass begin the discovery with mandatory full model graph warmup."
+}

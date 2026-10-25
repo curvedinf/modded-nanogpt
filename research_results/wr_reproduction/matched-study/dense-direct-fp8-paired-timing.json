@@ -1,0 +1,48 @@
+{
+  "utc": "2026-10-25T21:34:41.553837+00:00",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "result": {
+    "passed": false,
+    "baseline": {
+      "first100_seconds": 40.53144759699353,
+      "updates25_to100_seconds": 30.292635883000912
+    },
+    "candidate": {
+      "first100_seconds": 40.64820518399938,
+      "updates25_to100_seconds": 30.363835991011
+    },
+    "candidate_over_baseline": {
+      "first100_seconds": 1.0028806665916987,
+      "updates25_to100_seconds": 1.0023504097921714
+    },
+    "validation": false,
+    "objective_losses_not_compared": true,
+    "protocol": "Both use the same existing100-update timing loop, seed168 and source, outside the900s discovery/reference set",
+    "decision": "Skip slower precision candidate; no convergence result"
+  },
+  "runs": {
+    "direct_correctness": {
+      "run_id": "matched-ks3-all-dense2816-direct-fp8-20261025T212213-9b4f9e",
+      "code_commit": "52bdd1014d59829abb341475effc5360350cc577",
+      "events_sha256": "3b7f6d138091bca324a64c0b805866efc0fb391543c597052559cba83e588483"
+    },
+    "original_correctness": {
+      "run_id": "matched-ks3-all-dense2816-fp8-20261025T212231-017650",
+      "code_commit": "52bdd1014d59829abb341475effc5360350cc577",
+      "events_sha256": "04672164a8afc82a1dfee7ca7382a51065839b272ef3f19d5225006ce86cf151"
+    },
+    "gs32_timing": {
+      "run_id": "matched-ks3-all-dense2816-fp8-20261025T212244-7fe6c4",
+      "code_commit": "52bdd1014d59829abb341475effc5360350cc577",
+      "events_sha256": "8742fd867c733eed7f047a87657209af5ef413e55965d36852d12281999b385e"
+    },
+    "direct_timing": {
+      "run_id": "matched-ks3-all-dense2816-direct-fp8-20261025T212640-208242",
+      "code_commit": "0ef647a8cab6b2260a4c90f41f3ba54517d30a15",
+      "events_sha256": "32b613ff53d2705cceee4c250df73051eef5ee84e57a7ef4b0447cafa672f431"
+    }
+  },
+  "convergence_launched": false,
+  "validation_measured": false,
+  "interpretation": "This single paired100-update observation failed the predeclared faster-in-both-windows gate. The small timing difference is not a statistical claim of an intrinsic slowdown. No unchanged timing recipe will be repeated merely to reverse the gate."
+}

@@ -1,0 +1,314 @@
+{
+  "utc": "2026-10-25T21:34:41.579416+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_study": "pending-coupled-warp-prior.json",
+  "results_name": "ks3-width768-normalized-rate-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_width768_normlr.json",
+      "recipe_sha256": "f5e39f94039f5560ff459db215d75d3972ba2a7a353023c5ef0f89d9fbc1e36b",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Reduce both dense and routed KS3 projection widths from1024 to768 at rank1 to test a different capacity/elapsed-time tradeoff. Set the KS3 projection multiplier to sqrt(1024/768), preserving the original effective ANVIL multiplier after its shape factor falls to1. Retain zero geometry coefficients, geometry Adam0.125, BF16/GS32, MoE8top1 and all shared/model-wide settings. Require CPU architecture and optimizer audits plus the independent width768 output/gradient oracle and actual graph warmup before the nominal900s discovery.",
+      "changes": {
+        "charts": {
+          "before": 1024,
+          "after": 768
+        },
+        "dense_charts": {
+          "before": 1024,
+          "after": 768
+        },
+        "projection_lr_multiplier": {
+          "before": 1.0,
+          "after": 1.1547005383792515
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/width768-normalized-cpu-model-audit.json",
+        "sha256": "e56bde4f1687e792024d4f69a9d6869cd9befeb240bb50f52044d3efbba48c9b"
+      },
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/width768-normalized-cpu-optimizer-audit.json",
+        "sha256": "0ee730ed0e1ca8879c0b013802bc5e2228b7b5f538c2739cba413a19e285f800"
+      },
+      "correctness_required": true,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "Independent width768 dense output/input/projection/geometry/post-gradient oracle uses the same expert arithmetic. Original eight-expert dispatch is unchanged; actual full-model graph warmup must cover every dense and routed layer.",
+      "correctness_run_id": "matched-ks3-all-width768-normlr-20261025T213722-4da55b",
+      "correctness_result": {
+        "run_id": "matched-ks3-all-width768-normlr-20261025T213722-4da55b",
+        "status": "correctness_passed",
+        "seed": 172,
+        "code_commit": "ec11746be45585ca7dedb60e314b1e9303e8b8b7",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 768,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-width768-normlr",
+          "hypothesis": "Reduce both dense and routed KS3 projection widths from1024 to768 at rank1 to test a different capacity/elapsed-time tradeoff. Set the KS3 projection multiplier to sqrt(1024/768), preserving the original effective ANVIL multiplier after its shape factor falls to1. Retain zero geometry coefficients, geometry Adam0.125, BF16/GS32, MoE8top1 and all shared/model-wide settings. Require CPU architecture and optimizer audits plus the independent width768 output/gradient oracle and actual graph warmup before the nominal900s discovery.",
+          "dense_charts": 768,
+          "projection_lr_multiplier": 1.1547005383792515
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": null,
+        "timing": null,
+        "correctness": {
+          "event": "kernel_correctness",
+          "passed": true,
+          "checks": [
+            {
+              "tokens": 1,
+              "relative_rms": {
+                "output": 0.0,
+                "input_gradient": 0.0,
+                "up_gradient": 0.0016669339966028929,
+                "down_gradient": 0.0016830029198899865,
+                "geometry_gradient": 6.520330657622253e-07,
+                "post_gradient": 0.0
+              }
+            },
+            {
+              "tokens": 257,
+              "relative_rms": {
+                "output": 2.9446415283018723e-05,
+                "input_gradient": 0.00013820869207847863,
+                "up_gradient": 0.0016642448026686907,
+                "down_gradient": 0.0016599922673776746,
+                "geometry_gradient": 8.046556558838347e-07,
+                "post_gradient": 0.0
+              }
+            },
+            {
+              "tokens": 4096,
+              "relative_rms": {
+                "output": 0.0002014129131566733,
+                "input_gradient": 9.232424781657755e-05,
+                "up_gradient": 0.001660698326304555,
+                "down_gradient": 0.0016647320007905364,
+                "geometry_gradient": 9.58146870289056e-07,
+                "post_gradient": 0.0
+              }
+            }
+          ],
+          "features": 768,
+          "oracle": "Independent ks3_blas_fused_unpack autograd; all gradients, nonzero geometry and output post factor",
+          "shared_backend_modified": false,
+          "validation": false
+        },
+        "exit_code": 0,
+        "events_sha256": "5362674182d1f8a42fbb5408c77d303415313430d73c594c463ba0f9b7ca1c73",
+        "completed_utc": "2026-10-25T21:37:36.310210+00:00",
+        "qualifies": false
+      },
+      "run_id": "matched-ks3-all-width768-normlr-20261025T213736-27cd6a",
+      "result": {
+        "run_id": "matched-ks3-all-width768-normlr-20261025T213736-27cd6a",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "ec11746be45585ca7dedb60e314b1e9303e8b8b7",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 768,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-width768-normlr",
+          "hypothesis": "Reduce both dense and routed KS3 projection widths from1024 to768 at rank1 to test a different capacity/elapsed-time tradeoff. Set the KS3 projection multiplier to sqrt(1024/768), preserving the original effective ANVIL multiplier after its shape factor falls to1. Retain zero geometry coefficients, geometry Adam0.125, BF16/GS32, MoE8top1 and all shared/model-wide settings. Require CPU architecture and optimizer audits plus the independent width768 output/gradient oracle and actual graph warmup before the nominal900s discovery.",
+          "dense_charts": 768,
+          "projection_lr_multiplier": 1.1547005383792515
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 3.6041877269744873,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.0331676006317139,
+          "reference_run_id": "matched-ks3-all-rank4-20261025T191655-2f6519",
+          "reference_wall_seconds": 311.0973018260265,
+          "reference_age_seconds": 0.10631818798719905,
+          "reference_objective": 3.5710201263427734,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 597,
+          "comparable_runs": 1,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-rank4-20261025T191655-2f6519/events.jsonl",
+            "sha256": "619d94cbb677bdca8346ec2f02cb806b01f02e3b9515f49ed4a6c4a1a26d6ece",
+            "line": 631,
+            "row_sha256": "61eb0553efe0fba8b0ebc5e732db0a266819cffd8586581eb97859cbe763d394"
+          },
+          "step": 601,
+          "train_seconds": 311.2036200140137,
+          "reference_snapshot_sha256": "c1e53341a27ed3b7f5ebabca9510464797c8a4405d7973c2a7abad7ae38fe05b",
+          "utc": "2026-10-25T21:47:02.285347+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c768-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-width768-normlr-20261025T213736-27cd6a",
+          "seed": 168,
+          "code_commit": "ec11746be45585ca7dedb60e314b1e9303e8b8b7",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "1fe3f12cac74d9de42e75e52199b4c31782e891e5ce98245ad11b064e2e3144f",
+        "completed_utc": "2026-10-25T21:47:04.163176+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "decision": "After coupled-warp initialization and any required verification, gate the width768 capacity ablation on its new-width numerical oracle, then screen one discovery with the frozen matched reference.",
+  "unit": "wr-matched-width768-ec11746",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "a51be7013b4393887109a76c836bd2da6b336d09877160f27b9419ade5fbe955",
+    "code_commit": "ec11746be45585ca7dedb60e314b1e9303e8b8b7"
+  },
+  "completed_utc": "2026-10-25T21:47:04.166325+00:00"
+}

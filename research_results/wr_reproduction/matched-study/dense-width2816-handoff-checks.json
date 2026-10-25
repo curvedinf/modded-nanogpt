@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-25T20:07:27.023555+00:00",
+  "passed": true,
+  "gpu_initialized": false,
+  "cpu_tests": 7,
+  "scheduler_sha256": "b9b55ac877273cf625a15b68bba3f5ae9265c06d938055e387a834b6492dd833",
+  "test_sha256": "ac7f98a46f803cfb31be1d9ed670193a199b32d1705d2ded230e4b697a22a978",
+  "prototype_sha256": "83e5c915018ad1dffa00c182b8ae9c9d83d37d76160fbbc0e2b4e48a6f43d450",
+  "decision": "Wait for active normalized-rate width1536 discovery and any frozen verification. Deploy only the two audited KS3 width allowlists under the GPU lease, commit, then require independent output/gradient correctness before original-width discovery."
+}

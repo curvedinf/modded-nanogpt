@@ -1,0 +1,101 @@
+{
+  "run_id": "matched-ks3-all-dense1536-20261025T184018-f9df13",
+  "status": "correctness_passed",
+  "seed": 172,
+  "code_commit": "53b3ccea0edd52ea6f85968e8d0012d449610d11",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-dense1536",
+    "hypothesis": "Widen only the five dense KS3 branches from1024 to1536 features while all40 routed KS3 experts stay1024. Test dense capacity at fixed shared backend, original model-wide settings, and nominal900-second budget.",
+    "dense_charts": 1536
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": null,
+  "timing": null,
+  "correctness": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "checks": [
+      {
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "input_gradient": 0.0,
+          "up_gradient": 0.0016655437648296356,
+          "down_gradient": 0.0016735552344471216,
+          "geometry_gradient": 3.7124280538591847e-07,
+          "post_gradient": 0.0
+        }
+      },
+      {
+        "tokens": 257,
+        "relative_rms": {
+          "output": 7.286762411240488e-05,
+          "input_gradient": 0.0001368959347018972,
+          "up_gradient": 0.0016625318676233292,
+          "down_gradient": 0.001661027898080647,
+          "geometry_gradient": 7.7247466379049e-07,
+          "post_gradient": 0.0
+        }
+      },
+      {
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 0.00021259130153339356,
+          "input_gradient": 0.00012142388004576787,
+          "up_gradient": 0.0016617925139144063,
+          "down_gradient": 0.0016648744931444526,
+          "geometry_gradient": 9.953804465112626e-07,
+          "post_gradient": 0.0
+        }
+      }
+    ],
+    "features": 1536,
+    "oracle": "Independent ks3_blas_fused_unpack autograd; all gradients, nonzero geometry and output post factor",
+    "shared_backend_modified": false,
+    "validation": false
+  },
+  "exit_code": 0,
+  "events_sha256": "ee5e5a9acbcc95507cb55bbf2028866efdea95a0e34e74f7af45441464475273",
+  "completed_utc": "2026-10-25T18:40:31.317236+00:00",
+  "qualifies": false
+}

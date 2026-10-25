@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-25T21:25:52.072265+00:00",
+  "passed": true,
+  "gpu_initialized": false,
+  "tests": 13,
+  "command": ".venv-mi300/bin/python -m unittest test_wr_matched_queue -v",
+  "source_hashes": {
+    "run_wr_matched_ablations.py": "a51be7013b4393887109a76c836bd2da6b336d09877160f27b9419ade5fbe955",
+    "test_wr_matched_queue.py": "4b5c2126a3ec76a46aba1e9a94827bca6cf70ed8e5ec66fcfb7f2998561cc80f"
+  },
+  "scope": "A downstream queue waits for prerequisites before opening the ablation lease, then rechecks after acquisition. This prevents blocking an upstream deployment or recovery; model source, shared fence and screening are unchanged."
+}
