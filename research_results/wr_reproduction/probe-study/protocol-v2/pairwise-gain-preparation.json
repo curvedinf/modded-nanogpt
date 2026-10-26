@@ -1,0 +1,87 @@
+{
+  "utc": "2026-10-26T14:27:59.472224+00:00",
+  "phase": "cycle4_exploratory_pairwise_gain_preparation",
+  "status": "implemented_cpu_passed",
+  "recipe": "configs/wr_reproduction/probe_experts_pairwise_gain_b05.json",
+  "settings": {
+    "kind": "bounded-multiplicative-adjacent-feature-gain-v1",
+    "bound": 0.5,
+    "partner_scale": 4.0,
+    "lr_mul": 0.125,
+    "initial_raw_coefficient": 0.0,
+    "placement": "after-independent-GS32"
+  },
+  "scope_checks": [
+    {
+      "case": "geometry_rate",
+      "rejected": true
+    },
+    {
+      "case": "projection_rate",
+      "rejected": true
+    },
+    {
+      "case": "shared_backend",
+      "rejected": true
+    },
+    {
+      "case": "zero_initialization",
+      "rejected": true
+    },
+    {
+      "case": "gain_bound",
+      "rejected": true
+    },
+    {
+      "case": "partner_scale",
+      "rejected": true
+    },
+    {
+      "case": "row_tile",
+      "rejected": true
+    },
+    {
+      "case": "exact_gather",
+      "rejected": true
+    },
+    {
+      "case": "new_residual",
+      "rejected": true
+    }
+  ],
+  "cpu_derivative_checks": {
+    "passed": true,
+    "gradcheck": true,
+    "gradgradcheck": true,
+    "initial_function_and_original_gradients_exact": true,
+    "zero_coefficients_have_learning_signal": true,
+    "cross_derivative": 0.048483528621838905,
+    "analytic_cross_derivative": 0.048483528621838905,
+    "gain_range": [
+      0.5,
+      1.5
+    ],
+    "relative_interaction_bound": ".5*abs(independent_feature)",
+    "global_absolute_activation_bound": false,
+    "independent_rank_one_paths_retained": true,
+    "new_parameters": 40960
+  },
+  "syntax_files": [
+    "wr_reproduction/ks3_pairwise_gain.py",
+    "wr_reproduction/probe_pairwise_gain_train.py",
+    "wr_reproduction/probe_pairwise_gain_trial.py",
+    "wr_reproduction/check_ks3_pairwise_gain.py"
+  ],
+  "shared_backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "original_ingredient_sources_unchanged": true,
+  "gpu_numerical_passed": false,
+  "actual_model_graph_state_passed": false,
+  "verification_seeds": [
+    2069,
+    2070,
+    2071
+  ],
+  "decision": "Commit isolated modules/config and launch bounded GPU numerical gate. Then full24graph warmup and8actual all-rank updates with oracle, normal/pending state restoration and bitwise next-update parity. This is nonlinear capacity, not a precision timing sweep. If gates pass launch one900s seed169 discovery; qualifying full result triggers2069/2070/2071 frozen unpruned seeds.",
+  "graph_gate_requires_all_five_gain_banks_learn": true,
+  "reuses_existing_routed_parameter_optimizer_code": true
+}

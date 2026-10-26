@@ -1,0 +1,196 @@
+{
+  "utc": "2026-10-26T18:58:00.607605+00:00",
+  "run_id": "probe-experts-fused-up-geometry-calibration-20261026T185424-7eac2e",
+  "code_commit": "adddde5f1debc293d6449f7440ec85c1a7447dc1",
+  "seed": 169,
+  "cycle": 7,
+  "position": "local1",
+  "status": "rejected_numerical",
+  "numeric_attempts": 1,
+  "passed_cases": [
+    {
+      "tuned": true,
+      "tokens": 1,
+      "zero_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1024,
+      "forward": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "gradients": {
+        "input": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    },
+    {
+      "tuned": true,
+      "tokens": 1,
+      "zero_coefficients": false,
+      "active_experts": 1,
+      "padded_rows": 1024,
+      "forward": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "gradients": {
+        "input": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    },
+    {
+      "tuned": true,
+      "tokens": 257,
+      "zero_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "forward": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "gradients": {
+        "input": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    }
+  ],
+  "first_failure": {
+    "tokens": 257,
+    "padded_rows": 1280,
+    "active_experts": 1,
+    "zero_coefficients": false,
+    "input_pack_bitwise": true,
+    "coordinates_bitwise": true,
+    "features_relative_rms": 0.0004113311879336834,
+    "output_relative_rms": 0.0007955126347951591,
+    "assertion": "(True, 257, False, {'output': {'bitwise': False, 'relative_rms': 0.0007955126347951591}, 'input_pack': {'bitwise': True, 'relative_rms': 0.0}, 'coordinates': {'bitwise': True, 'relative_rms': 0.0}, 'features': {'bitwise': False, 'relative_rms': 0.0004113311879336834}})"
+  },
+  "expected": "All stored coordinates/features/outputs and original input/router/post/geometry/weight gradients bitwise equal",
+  "compiler": {
+    "kernel": "_up_geometry",
+    "padded_rows": 1280,
+    "columns": 1024,
+    "input_width": 768,
+    "original_tile": [
+      128,
+      128,
+      64
+    ],
+    "num_warps": 8,
+    "shared_bytes": 32768,
+    "resource_metadata": {
+      "vgpr_count": 256,
+      "sgpr_count": 38,
+      "private_segment_fixed_size": 108,
+      "group_segment_fixed_size": 0
+    },
+    "artifact_sha256": {
+      "ttir": "eff61c09a2c50d5550db1841afe1bf4b20c376f6c4d2274adb81896449f02454",
+      "ttgir": "2fb16233bd4df6754d09a3351bd116a77995f032c0863fbe1a3d6c8e2ae0e673",
+      "llir": "0b3c9a12d03de93668df3a15d21054d0a5d63f7a42aee813f9c12cc29a1d1948",
+      "amdgcn": "5236f9ea65d9033e75fba291cb249e31484c239b647d85e5461e9ff628dc5cf1"
+    },
+    "interpretation": "The fused artifact uses256 VGPRs and reports108 bytes of private segment. This establishes register/scratch pressure in this compiled variant, not measured latency or the cause of the feature mismatch. No block timing completed."
+  },
+  "diagnosis": "Mismatch localized after the identical FP32 projection coordinates, in fused geometry/GS32 feature production. Exact intermediate arithmetic responsible was not isolated; do not attribute it to a specific compiler instruction.",
+  "decision": "Reject this fusion attempt without relaxing bitwise criteria. No actual-model timing, loss/time, full validation, reserved-text or3169/3170/3171 verification launched. Preserve the failed implementation/run; do not repeat unchanged.",
+  "actual_model_training_tested": false,
+  "full_validation": null,
+  "reserved_confirmation": null,
+  "qualifies": false,
+  "source_files_changed_only": [
+    "wr_reproduction/ks3_fused_geometry_forward.py",
+    "wr_reproduction/check_ks3_fused_geometry_forward.py",
+    "wr_reproduction/probe_fused_geometry_trial.py"
+  ],
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "shared_backend_and_original_evaluation_unchanged": true,
+  "next": "Cycle7local2 selection: choose a distinct KS3 hypothesis from recorded mechanism/gradient or measured actual-model bottleneck evidence. No scalar-grid replay and no change to frozenV2 screening or original shared atomic kernels."
+}

@@ -1,0 +1,62 @@
+{
+  "utc": "2026-10-26T07:37:47.358858+00:00",
+  "status": "four_local_hypotheses_complete_no_win",
+  "local_hypotheses": [
+    {
+      "summary": "/root/modded-nanogpt/research_results/wr_reproduction/probe-study/protocol-v2/local1-joint-damp-summary.json",
+      "run_id": "probe-local-dense8-joint-damp-discovery-20261026T070301-e00e7e",
+      "code_commit": "0330209219cc774b364c686cc015a1912a950d6e",
+      "status": "pruned",
+      "changes": {
+        "dense_geometry_lr_multiplier": 0.109375,
+        "dense_projection_lr_multiplier": 0.9375
+      },
+      "loss": 4.65640926361084,
+      "elapsed": 120.5892198359943,
+      "gap": 0.019350772723555565
+    },
+    {
+      "summary": "/root/modded-nanogpt/research_results/wr_reproduction/probe-study/protocol-v2/local2-linear-catchup-summary.json",
+      "run_id": "probe-local-dense8-linear-catchup-discovery-20261026T070926-a2faff",
+      "code_commit": "798f2ab11d7363f9e1bfd97b37eb5bf70043f20a",
+      "status": "pruned",
+      "changes": {
+        "dense_geometry_lr_multiplier": 0.109375,
+        "dense_projection_lr_multiplier": 1.0625
+      },
+      "loss": 4.668558018282056,
+      "elapsed": 120.47134202500456,
+      "gap": 0.031499527394771576
+    },
+    {
+      "summary": "/root/modded-nanogpt/research_results/wr_reproduction/probe-study/protocol-v2/local3-expert-geometry-tilt-summary.json",
+      "run_id": "probe-local-experts-geometry-tilt-discovery-20261026T071500-c58574",
+      "code_commit": "d410796311cc4a343db01cb26ede0d3e2c0ee3d1",
+      "status": "pruned",
+      "changes": {
+        "geometry_lr_multiplier": 0.140625,
+        "projection_lr_multiplier": 0.9375
+      },
+      "loss": 3.6911817397922277,
+      "elapsed": 360.2658885270066,
+      "gap": 0.012040022760629654
+    },
+    {
+      "summary": "/root/modded-nanogpt/research_results/wr_reproduction/probe-study/protocol-v2/local4-expert-joint-damp-summary.json",
+      "run_id": "probe-local-experts-joint-damp-discovery-20261026T073212-6202b9",
+      "code_commit": "09e2b97e8b670301ca459e98713fd62c6135cea4",
+      "status": "pruned",
+      "changes": {
+        "geometry_lr_multiplier": 0.109375,
+        "projection_lr_multiplier": 0.9375
+      },
+      "loss": 4.670374367386103,
+      "elapsed": 120.55754741799319,
+      "gap": 0.0333158764988184
+    }
+  ],
+  "exploratory_hypotheses_complete": 0,
+  "shared_backend_unchanged": true,
+  "decision": "No scalar followup queue and no dense combination. Preserve incumbent independently verified expert-only geometry0.125/projection1.0. One exploratory independent-rank1 plus bounded zero-initialized pairwise term is now next, contingent on low-precision output/all-gradient/initialization and graph/probe restoration gates.",
+  "interpretation": "These screened local-rate directions fail at measured comparable wall time; this does not establish a global optimizer optimum. Sparse diagnostics remain finite. Dense substitutions did not improve fixed-time loss; they are not prerequisites for expert-only coupling."
+}

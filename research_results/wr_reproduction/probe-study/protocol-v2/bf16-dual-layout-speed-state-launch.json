@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-26T15:25:25.898651+00:00",
+  "run_id": "probe-experts-bf16-dual-layout-calibration-20261026T151958-30f106",
+  "unit": "wr-probe-bf16-dual-layout-b3b29702",
+  "code_commit": "a1e38420e0efcd164d84e6f6e1e3f938360d93c9",
+  "seed": 169,
+  "mode": "speed_state",
+  "numerical_gate_run_id": "probe-experts-bf16-dual-layout-calibration-20261026T151843-0c16f4",
+  "numerical_gate_passed": true,
+  "status": "running",
+  "actual_model_prefix_seconds": 120,
+  "all_rank_graph_warmup_required": true,
+  "speed_reference": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "speed_criteria": "Both first100 and updates26\u2013100 strictly faster than original incumbent169; identical original schedule and objective signatures.",
+  "state_gate": "Original evaluation oracle, all state addresses/values, next-update parity, all five backwards and ten cached projection paths.",
+  "pending_verification_seeds": [
+    2269,
+    2270,
+    2271
+  ],
+  "loss_time_trial_launched": false
+}

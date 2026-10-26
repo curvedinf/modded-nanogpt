@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-26T14:57:32.805718+00:00",
+  "run_id": "probe-experts-pairwise-gain-fused-calibration-20261026T145558-225940",
+  "code_commit": "c088af27ca91ae1583f522a1c04e7d22768c98c1",
+  "status": "compiler_error",
+  "reason": "HIP libdevice has no add_rn/mul_rn/sub_rn even though the generic libdevice namespace lists them.",
+  "numerical_gate_passed": false,
+  "decision": "Replace unavailable generic rounding intrinsics with explicit AMD scalar-operation instructions inside the new producer module. Preserve the exact no-FMA arithmetic contract and all numerical tolerances. Rerun the bounded numerical gate from a new directory.",
+  "training_launched": false,
+  "shared_backend_unchanged": true
+}

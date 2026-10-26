@@ -1,0 +1,466 @@
+{
+  "utc": "2026-10-26T15:19:46.820362+00:00",
+  "run_id": "probe-experts-bf16-dual-layout-calibration-20261026T151843-0c16f4",
+  "code_commit": "babf1291d96915f40593adf9609773e63f08a97f",
+  "seed": 169,
+  "numerical_seed": 2269,
+  "passed": true,
+  "checks": [
+    {
+      "tuned": true,
+      "tokens": 1,
+      "site": 0,
+      "zero_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1024,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    },
+    {
+      "tuned": true,
+      "tokens": 1,
+      "site": 0,
+      "zero_coefficients": false,
+      "active_experts": 1,
+      "padded_rows": 1024,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    },
+    {
+      "tuned": true,
+      "tokens": 257,
+      "site": 1,
+      "zero_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    },
+    {
+      "tuned": true,
+      "tokens": 257,
+      "site": 1,
+      "zero_coefficients": false,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    },
+    {
+      "tuned": true,
+      "tokens": 16384,
+      "site": 2,
+      "zero_coefficients": true,
+      "active_experts": 8,
+      "padded_rows": 17280,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    },
+    {
+      "tuned": true,
+      "tokens": 16384,
+      "site": 2,
+      "zero_coefficients": false,
+      "active_experts": 8,
+      "padded_rows": 17280,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    },
+    {
+      "tuned": true,
+      "tokens": 49152,
+      "site": 3,
+      "zero_coefficients": true,
+      "active_experts": 8,
+      "padded_rows": 50048,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    },
+    {
+      "tuned": true,
+      "tokens": 49152,
+      "site": 3,
+      "zero_coefficients": false,
+      "active_experts": 8,
+      "padded_rows": 50048,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    },
+    {
+      "tuned": false,
+      "tokens": 257,
+      "site": 4,
+      "zero_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    },
+    {
+      "tuned": false,
+      "tokens": 257,
+      "site": 4,
+      "zero_coefficients": false,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true
+    }
+  ],
+  "cache_refresh_checks": [
+    {
+      "refresh_index": 0,
+      "both_original_values_bitwise": true,
+      "both_transposes_bitwise": true,
+      "all_buffer_pointers_preserved": true
+    },
+    {
+      "refresh_index": 1,
+      "both_original_values_bitwise": true,
+      "both_transposes_bitwise": true,
+      "all_buffer_pointers_preserved": true
+    }
+  ],
+  "all_original_outputs_and_gradients_bitwise_equal": true,
+  "original_GS32_and_selected_tiles_retained": true,
+  "extra_buffer_bytes": 125829120,
+  "new_parameters": 0,
+  "allocation_consumes_no_RNG": true,
+  "original_untuned_evaluation_bitwise": true,
+  "install_idempotent": true,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "events_sha256": "f98bf784cce63fa2220a2a77e59ba948e99c8d0b27da56cf716566c0a83c4dfc",
+  "full_graph_training_tested": false,
+  "full_convergence_verified": false,
+  "decision": "Launch the original all24graphwarmup plus120s actual-eight-rank prefix/state gate. Require both first100 and updates26-100 strictly faster than the saved original incumbent, bitwise same-next-update probe continuation, pointer/state restoration and projected probe overhead<=3%. No loss/time discovery unless all gates pass."
+}

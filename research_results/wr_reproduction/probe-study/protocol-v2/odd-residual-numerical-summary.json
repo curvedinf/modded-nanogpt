@@ -1,0 +1,40 @@
+{
+  "utc": "2026-10-26T17:38:14.793978+00:00",
+  "run_id": "probe-experts-odd-residual-calibration-20261026T173731-b764e7",
+  "code_commit": "3131e992f420b941a536ad64b5612a9d08de0d72",
+  "passed": true,
+  "shape_cases": 5,
+  "cpu": {
+    "passed": true,
+    "gradcheck": true,
+    "gradgradcheck": true,
+    "initial_function_and_original_gradients_exact": true,
+    "zero_init_learning_signal_on_both_signs": true,
+    "cross_coordinate_derivatives_exact_zero": true,
+    "diagonal_second_derivative": 0.02447554647924591,
+    "analytic_diagonal_second_derivative": 0.02447554647924591,
+    "absolute_residual_bound": 4.0,
+    "odd_function": true,
+    "coordinate_clamp_derivative_checked": true,
+    "can_activate_zero_independent_features": true,
+    "independent_rank_one_paths_retained": true,
+    "new_parameters": 40960
+  },
+  "all_zero_init_outputs_and_existing_gradients_bitwise": true,
+  "maximum_nonzero_relative_rms": {
+    "features": 7.308700787689304e-06,
+    "output": 4.4493735913420096e-05,
+    "input_gradient": 0.00011770100536523387,
+    "geometry_gradient": 2.1929388083208323e-07,
+    "odd_residual_gradient": 8.415814818363287e-07,
+    "weight_gradient": 9.120232425630093e-05
+  },
+  "maximum_new_smooth_relative_rms": {
+    "coordinate": 3.8208021635455225e-08,
+    "coefficient": 8.244485911745869e-07
+  },
+  "hypothesis_class": "local",
+  "cycle": 6,
+  "local_index": 3,
+  "decision": "Launch full24warmup+8actual-update graph/state/probe gate. No speed or convergence conclusion."
+}

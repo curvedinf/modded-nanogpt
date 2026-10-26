@@ -1,0 +1,54 @@
+{
+  "utc": "2026-10-26T16:17:40.189718+00:00",
+  "cycle": 5,
+  "completed_local_hypotheses": 4,
+  "completed_exploratory_hypotheses": 0,
+  "local_results": [
+    {
+      "hypothesis": "Producer fusion for bounded feature gain",
+      "run_id": "probe-experts-pairwise-gain-fused-calibration-20261026T150233-dba724",
+      "code_commit": "2c0ca04ef989243d116a4c38a92aa91f4b2a5e30",
+      "status": "rejected_at_numerical_gate",
+      "decision": "Close this bounded producer-fusion attempt. No tolerance relaxation, no further fix iterations and no speed/convergence trial. Preserve the original expert-only verified incumbent and unfused-gain rejection.",
+      "full_validation": null
+    },
+    {
+      "run_id": "probe-experts-bf16-dual-layout-discovery-20261026T152627-028606",
+      "code_commit": "e6e6349482f7f059a23fc590845bfb95da8675a3",
+      "status": "pruned",
+      "probe_loss": 4.660535205155611,
+      "elapsed_seconds": 120.64059366501169,
+      "gap": 0.14197705499827862,
+      "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+      "reference_age_seconds": 0.42965973302489147,
+      "full_validation": null
+    },
+    {
+      "run_id": "probe-experts-prepared-geometry-discovery-20261026T155013-becd49",
+      "code_commit": "b31b536eb634e6a89d8216d1d6bdbd6ec8b443b2",
+      "status": "pruned",
+      "probe_loss": 4.629510302096605,
+      "elapsed_seconds": 120.55282551099663,
+      "gap": 0.11095215193927288,
+      "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+      "reference_age_seconds": 0.34189157900982536,
+      "full_validation": null
+    },
+    {
+      "run_id": "probe-experts-prepared-gather-vjp32-discovery-20261026T161049-9afa99",
+      "code_commit": "93bec17964e195c4fd82f599b278e0becee13842",
+      "status": "pruned",
+      "probe_loss": 4.572703260928392,
+      "elapsed_seconds": 120.85372768499656,
+      "gap": 0.05414511077105999,
+      "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+      "reference_age_seconds": 0.6427937530097552,
+      "full_validation": null
+    }
+  ],
+  "new_qualifying_results": 0,
+  "original_expert_only_incumbent_remains_best_full_validation": true,
+  "decision": "All four local hypotheses closed without a qualifying result. Fusion failed numerical equivalence; the three valid kernel trials failed fixed-probe loss/time screening. Preserve every record and do not combine or repeat rejected kernel recipes.",
+  "limiting_evidence": "Combined discovery features are nonzero in only26.37%-32.03% of the first-probe coordinate sample, with coordinate RMS1.29-1.36 and positive independent squared-ReLU features. Previous multiplicative gain cannot activate an exactly zero independent feature. Earlier odd tanh-product and one-dimensional compact residual experiments also failed; these results do not prove a useful interaction exists.",
+  "next": "One distinct exploratory negative-coordinate coactivation residual: keep every original independent rank1 feature and add a bounded, zero-initialized product of smooth negative-coordinate responses after original GS32. This changes the interaction basis/support, not the rank1 paths, mean spine, shared backend or optimizer rates. Require initial function/gradient parity, independent nonzero/cross-derivative checks and full graph/state gates before convergence."
+}

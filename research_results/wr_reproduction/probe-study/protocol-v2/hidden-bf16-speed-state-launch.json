@@ -1,0 +1,32 @@
+{
+  "utc": "2026-10-26T13:05:45.283387+00:00",
+  "phase": "cycle4_local2_hidden_bf16_speed_state_gate",
+  "status": "running",
+  "run_id": "probe-experts-hidden-bf16-calibration-20261026T130512-5af700",
+  "unit": "wr-probe-hidden-bf16-6fb8a7c1",
+  "code_commit": "73741ac73f6b91682ac198883ad06d0a64876427",
+  "trainer_pid": 1569018,
+  "controller_pid": 1569007,
+  "recipe": "configs/wr_reproduction/probe_experts_hidden_bf16.json",
+  "numerical_gate": "hidden-bf16-numerical-summary.json",
+  "source_hashes_match": true,
+  "new_stop": false,
+  "source_freeze": true,
+  "gpu_lease": "1569007 python          /root/modded-nanogpt/logs/wr-reproduction/gpu.lock",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true,
+  "original_evaluation_bitwise": true,
+  "training_scope": "BF16 hidden-feature storage instead of GS32 rounding after original FP16 nonlinearity; original input/weight/coefficient packing and rates retained.",
+  "strict_prefix_limits_seconds": {
+    "first100": 39.55393554098555,
+    "updates26_to100": 29.54044010999496
+  },
+  "verification_seeds": [
+    1769,
+    1770,
+    1771
+  ],
+  "full_convergence_verified": false,
+  "next": "Finish full24graphwarmup and bounded120s original all-eight-rank speed/state gate. Both prefixes must be strictly faster and state/probe checks must pass before new900s discovery; slower means no convergence launch. A qualifying full result then triggers1769/1770/1771 frozen unpruned seeds."
+}

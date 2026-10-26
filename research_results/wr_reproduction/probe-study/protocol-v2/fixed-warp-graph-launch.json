@@ -1,0 +1,14 @@
+{
+  "utc": "2026-10-26T11:15:35.712087+00:00",
+  "phase": "cycle3_local3_fixed_warp_graph_gate",
+  "status": "running",
+  "run_id": "probe-experts-fixed-warp-calibration-20261026T111348-1df387",
+  "unit": "wr-probe-fixed-warp-4f036957",
+  "code_commit": "17b5f0f6eee2a516cd828db868b8327a8ed1c9b3",
+  "source_hashes_match": true,
+  "new_stop": false,
+  "next": "Inspect graph/state gate; only on pass launch one900s-cap fixed-warp discovery with fresh frozen verification seeds1369/1370/1371 on qualification. Preserve all original cubic/projection/shared settings.",
+  "kernel_math_unchanged": true,
+  "diagnostic_summary": "geometry-effect-diagnostic-summary.json",
+  "source_freeze": true
+}

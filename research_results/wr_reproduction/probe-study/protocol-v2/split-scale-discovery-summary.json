@@ -1,0 +1,54 @@
+{
+  "utc": "2026-10-26T12:02:48.472550+00:00",
+  "run_id": "probe-experts-split-coefficient-scale-discovery-20261026T115459-bcdc89",
+  "code_commit": "85f61947f64ab6a45af906760beede31a13937e1",
+  "status": "pruned",
+  "qualifies": false,
+  "full_validation": null,
+  "checkpoint_elapsed_seconds": 120.71839239101973,
+  "probe_loss": 4.664850797504187,
+  "probe_seconds": 2.991431526024826,
+  "cumulative_probe_seconds": 2.991431526024826,
+  "elapsed_at_prune": 123.87654039001791,
+  "reference": {
+    "reference_run_id": "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8",
+    "reference_elapsed_seconds": 120.58665766299237,
+    "reference_age_seconds": 0.13173472802736796,
+    "reference_utc": "2026-10-26T09:39:52.705870+00:00",
+    "reference_loss": 4.541412910446525,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8/events.jsonl",
+      "line": 330,
+      "row_sha256": "bff03fbc7d74779cad6588f2881ed5cb227166cf0b7543ab68deee0ea6bea9dd"
+    }
+  },
+  "gap": 0.12343788705766201,
+  "reason": "first_one_sided_gap_at_least_001",
+  "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "paired_8192": {
+    "available": true,
+    "blocks": 128,
+    "mean_difference": 0.12343788705766201,
+    "standard_error": 0.001899527580195219,
+    "normal95_halfwidth": 0.003723074057182629,
+    "student95_halfwidth": 0.0037610646087865335,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "paired_32768": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.12343788705766201,
+    "standard_error": 0.0021834244342122866,
+    "normal95_halfwidth": 0.004279511891056082,
+    "student95_halfwidth": 0.004458552694661489,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "gradient_update_rows": 0,
+  "gradient_limitation": "First probe abort precedes the armed follow-up update window; no gradient/update measurements, not zero gradients.",
+  "events_sha256": "ee7374e7884fe977beffb4e55b6423814a564fca0f8d31d8e1b675e0ac91c741",
+  "interpretation": "Independent coefficient scales preserved numerical/state behavior but failed fixed-text elapsed-time screening. Lower coefficient representation error alone did not establish a loss/time improvement.",
+  "decision": "Reject this frozen recipe; no1469/1470/1471 verification, no unchanged repeat. Inspect cycle3 four-local batch before the next exploratory hypothesis."
+}

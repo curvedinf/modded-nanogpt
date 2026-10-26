@@ -1,0 +1,166 @@
+{
+  "utc": "2026-10-26T20:20:56.888498+00:00",
+  "cycle": 7,
+  "position": "exploratory",
+  "run_id": "probe-experts-difference-pair-calibration-20261026T202011-3e4056",
+  "code_commit": "8211f0ffee612d37723b1e0b080385f58d9ec4c3",
+  "passed": true,
+  "numerical_seed": 3569,
+  "case_count": 6,
+  "cases": [
+    {
+      "tuned": true,
+      "tokens": 1,
+      "zero_geometry": false,
+      "active_experts": 1,
+      "padded_rows": 1024,
+      "zero_initialization_bitwise": {
+        "output": true,
+        "input_pack": true,
+        "coordinates": true,
+        "packed_features": true,
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "weight_gradient": true
+      }
+    },
+    {
+      "tuned": true,
+      "tokens": 257,
+      "zero_geometry": true,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "zero_initialization_bitwise": {
+        "output": true,
+        "input_pack": true,
+        "coordinates": true,
+        "packed_features": true,
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "weight_gradient": true
+      }
+    },
+    {
+      "tuned": true,
+      "tokens": 257,
+      "zero_geometry": false,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "zero_initialization_bitwise": {
+        "output": true,
+        "input_pack": true,
+        "coordinates": true,
+        "packed_features": true,
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "weight_gradient": true
+      }
+    },
+    {
+      "tuned": true,
+      "tokens": 4096,
+      "zero_geometry": false,
+      "active_experts": 8,
+      "padded_rows": 4992,
+      "zero_initialization_bitwise": {
+        "output": true,
+        "input_pack": true,
+        "coordinates": true,
+        "packed_features": true,
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "weight_gradient": true
+      }
+    },
+    {
+      "tuned": true,
+      "tokens": 16384,
+      "zero_geometry": false,
+      "active_experts": 8,
+      "padded_rows": 17280,
+      "zero_initialization_bitwise": {
+        "output": true,
+        "input_pack": true,
+        "coordinates": true,
+        "packed_features": true,
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "weight_gradient": true
+      }
+    },
+    {
+      "tuned": false,
+      "tokens": 257,
+      "zero_geometry": false,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "zero_initialization_bitwise": {
+        "output": true,
+        "input_pack": true,
+        "coordinates": true,
+        "packed_features": true,
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "weight_gradient": true
+      }
+    }
+  ],
+  "cpu_checks": {
+    "passed": true,
+    "gradcheck": true,
+    "gradgradcheck_away_from_support_boundary": true,
+    "initial_function_and_original_gradients_exact": true,
+    "active_pairs_have_zero_init_learning_signal": true,
+    "inactive_pairs_have_exact_zero_signal": true,
+    "cross_derivative": 0.2825732340780432,
+    "analytic_cross_derivative": 0.2825732340780432,
+    "absolute_residual_bound": 1.0,
+    "difference_width": 2.0,
+    "C1_support_boundaries_checked": true,
+    "exact_outside_support_zero_value_coordinate_and_coefficient_gradient": true,
+    "equal_coordinates_same_basis_across_sign_quadrants": true,
+    "opposite_sign_nearby_coordinates_supported": true,
+    "nonseparable_basis_determinant": 0.3965019149122868,
+    "common_coordinate_translation_invariance": true,
+    "clamped_coordinates_zero_gradient_outside_clamp": true,
+    "can_activate_zero_independent_features": true,
+    "independent_rank_one_paths_retained": true,
+    "new_parameters": 40960
+  },
+  "gpu_boundary_checks": {
+    "passed": true,
+    "relative_rms": {
+      "output": 0.0,
+      "coordinate": 6.235637073359612e-08,
+      "coefficient": 1.032448011528686e-07
+    },
+    "exact_zero_gradients_at_support_edges_and_clamped_or_padded_rows": true
+  },
+  "maximum_nonzero_relative_rms": {
+    "features": 4.233149411447812e-06,
+    "output": 3.479144288576208e-05,
+    "input_gradient": 0.00010217924864264205,
+    "geometry_gradient": 2.1905300684466056e-07,
+    "difference_pair_gradient": 8.339205805896199e-07,
+    "weight_gradient": 8.368404087377712e-05
+  },
+  "maximum_smooth_added_derivative_relative_rms": {
+    "coordinate": 8.182428956615695e-08,
+    "coefficient": 8.154157171702536e-07
+  },
+  "original_geometry_gradient_bitwise_equal": true,
+  "routed_initial_output_input_router_post_weight_gradients_bitwise_equal": true,
+  "original_independent_rank_one_paths_retained": true,
+  "additional_parameters": 40960,
+  "oracle": "Original independent geometry and BF16 coordinate-VJP boundary plus independent Torch coordinate-difference/cross-coordinate autograd and groupedFP32 matrix products withBF16 storage. Padding follows original dispatch tiles andSRC validity.",
+  "frozen_backend_unchanged": true,
+  "full_graph_training_tested": false,
+  "full_convergence_verified": false,
+  "decision": "Proceed to one full graph warmup and eight-update all-rank probe/state/learning gate. No convergence claim; all original independent pathways and shared settings remain frozen."
+}

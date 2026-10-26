@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-26T09:26:28.384112+00:00",
+  "run_id": "probe-ks3-bf16-fused-gradient-gather-calibration-20261026T092332-77fc51",
+  "code_commit": "8ab684de62898fa71673486586dd76092501fcbf",
+  "status": "numerical_gate_failed",
+  "numerical_seed": 869,
+  "passed_cases": [
+    1,
+    257
+  ],
+  "failed_case": {
+    "tokens": 16384,
+    "component": "router_gradient",
+    "relative_rms": 0.00035298001603223383,
+    "required_relative_rms_below": 0.0001
+  },
+  "core_gradient_evidence": "Gated BF16 gradient and input/geometry/weight gradients were bitwise equal before the routed check. Gate derivative changed only by FP32 reduction reassociation; BF16 router rounding amplified the small change.",
+  "decision": "Retain exact original Torch gate row reduction. New producer stores the original FP32 dot-product terms alongside BF16 gated gradients. Require bitwise gate and all routed gradients; no tolerance relaxation. Repeat only failed implementation gate with new code/config, then actual-model speed/state gate if passed.",
+  "full_validation": false
+}

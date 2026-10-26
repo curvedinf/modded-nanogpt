@@ -1,0 +1,26 @@
+{
+  "utc": "2026-10-26T16:02:32.743086+00:00",
+  "run_id": "probe-experts-prepared-gather-vjp32-calibration-20261026T160137-e82a59",
+  "unit": "wr-probe-prepared-gather-vjp32-3e59a77e",
+  "code_commit": "b1d21e98501c859b7949e9433cd5ec183c88371d",
+  "seed": 169,
+  "mode": "speed_state",
+  "numerical_gate_run_id": "probe-experts-prepared-gather-vjp32-calibration-20261026T160046-396768",
+  "numerical_gate_passed": true,
+  "status": "running",
+  "first_actual_all_rank_warmup_updates_completed": true,
+  "actual_model_prefix_seconds": 120,
+  "all_rank_graph_warmup_required": true,
+  "speed_references": [
+    "probe-experts-prepared-geometry-discovery-20261026T155013-becd49",
+    "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785"
+  ],
+  "speed_criteria": "Both first100 and updates26\u2013100 must be strictly faster than BOTH component discovery runs; objective signatures and other recipe settings must match.",
+  "state_gate": "Original evaluation oracle, normal/pending state addresses/values, same-next-update parity and all ten cached geometry/VJP paths plus five routed backwards.",
+  "pending_verification_seeds": [
+    2469,
+    2470,
+    2471
+  ],
+  "loss_time_trial_launched": false
+}

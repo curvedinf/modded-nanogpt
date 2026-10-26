@@ -1,0 +1,133 @@
+{
+  "utc": "2026-10-26T14:04:39.289236+00:00",
+  "run_id": "probe-experts-bf16-gather-vjp32-calibration-20261026T135543-9a45d7",
+  "code_commit": "1dea9a657ba531a114e0bd25952d9970950ba978",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "passed": true,
+  "phase": "cycle4_local4_bf16_gather_vjp32_speed_state_passed",
+  "seed": 169,
+  "speed": {
+    "passed": true,
+    "comparisons": [
+      {
+        "passed": true,
+        "candidate": {
+          "first100_seconds": 38.57286817498971,
+          "after25_through100_seconds": 28.878318261995446,
+          "first100_steps": 100,
+          "all_logical_ranks": 8
+        },
+        "reference": {
+          "first100_seconds": 39.44006166100735,
+          "after25_through100_seconds": 29.463398780004354,
+          "first100_steps": 100,
+          "all_logical_ranks": 8
+        },
+        "ratios": {
+          "first100_seconds": 0.978012369922966,
+          "after25_through100_seconds": 0.9801421240510114
+        },
+        "criterion": "Both first100 and updates26-100 actual-model durations must be below the saved incumbent prefix.",
+        "limitation": "Single measured original prefix, not a sampling-error estimate or convergence result; loss pruning remains elapsed-time fixed-text only.",
+        "reference_run_id": "probe-experts-bf16-vjp32-discovery-20261026T133959-793d64",
+        "reference_code_commit": "92a9c9ddd221067ed26908c3817a148bad5ba2a1"
+      },
+      {
+        "passed": true,
+        "candidate": {
+          "first100_seconds": 38.57286817498971,
+          "after25_through100_seconds": 28.878318261995446,
+          "first100_steps": 100,
+          "all_logical_ranks": 8
+        },
+        "reference": {
+          "first100_seconds": 38.79183475099853,
+          "after25_through100_seconds": 28.973567784007173,
+          "first100_steps": 100,
+          "all_logical_ranks": 8
+        },
+        "ratios": {
+          "first100_seconds": 0.9943553436589336,
+          "after25_through100_seconds": 0.9967125373470814
+        },
+        "criterion": "Both first100 and updates26-100 actual-model durations must be below the saved incumbent prefix.",
+        "limitation": "Single measured original prefix, not a sampling-error estimate or convergence result; loss pruning remains elapsed-time fixed-text only.",
+        "reference_run_id": "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8",
+        "reference_code_commit": "233c152d6e2c9d0077e03d275f9414ebfeeb7126"
+      }
+    ],
+    "criterion": "Both first100 and updates26-100 must be strictly faster than BOTH individual ingredient discovery prefixes.",
+    "limitation": "Single measured prefixes; not speed uncertainty or convergence evidence."
+  },
+  "measured_prefix_reduction_percent": [
+    {
+      "reference_run_id": "probe-experts-bf16-vjp32-discovery-20261026T133959-793d64",
+      "reductions": {
+        "first100_seconds": 2.198763007703397,
+        "after25_through100_seconds": 1.985787594898858
+      }
+    },
+    {
+      "reference_run_id": "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8",
+      "reductions": {
+        "first100_seconds": 0.5644656341066367,
+        "after25_through100_seconds": 0.32874626529185713
+      }
+    }
+  ],
+  "speed_limitation": "Single measured original prefixes. The0.56%/0.33% reductions over exact gather alone meet the predeclared strict timing gate but do not establish a robust speed advantage or convergence gain.",
+  "state_calibration": {
+    "passed": true,
+    "step": 296,
+    "prefix_elapsed_seconds": 120.12310914698173,
+    "all_original_logical_ranks": 8,
+    "cold_probe_seconds": 2.8701747769955546,
+    "warm_probe_seconds": 2.603735795011744,
+    "pending_probe_seconds": 2.5885950829833746,
+    "oracle_max_abs": 0.0,
+    "repeat_max_abs": 0.0,
+    "state_restoration": {
+      "checked_entries": 1264,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "pending_state_restoration": {
+      "checked_entries": 1444,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "continuation_parity": {
+      "passed": true,
+      "same_checkpoint": true,
+      "same_eight_logical_microbatches": true,
+      "baseline_loss": 7.572302341461182,
+      "with_probe_loss": 7.572302341461182,
+      "maximum_parameter_relative_rms": 0.0,
+      "all_parameters_bitwise_equal": true
+    },
+    "post_probe_odd_update_loss": 7.497883319854736
+  },
+  "projected_seven_probe_seconds": 18.492589547066018,
+  "projected_fraction_of900": 0.02054732171896224,
+  "all_five_routed_backwards_executed": true,
+  "five_original_dense_MLPs": true,
+  "executed_precision_modes": [
+    "training_bf16_exact_gather_vjp32"
+  ],
+  "original_evaluation_forward": true,
+  "shared_backend_unchanged": true,
+  "source_hashes_match": true,
+  "not_a_screening_reference": true,
+  "full_convergence_verified": false,
+  "overhead_limitation": "Measured projection includes setup, scoring and restoration. Actual discovery counts policy and sparse diagnostics on its continuous900s clock. Calibration observations never enter screening.",
+  "decision": "Launch seed169 discovery with900s cap and first comparable one-sided fixed-text screening. A qualifying full result triggers three new frozen unpruned seeds1969/1970/1971.",
+  "verification_seeds": [
+    1969,
+    1970,
+    1971
+  ]
+}

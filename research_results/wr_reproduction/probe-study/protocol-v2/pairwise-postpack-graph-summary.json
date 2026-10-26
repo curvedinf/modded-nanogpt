@@ -1,0 +1,88 @@
+{
+  "utc": "2026-10-26T08:31:59.309240+00:00",
+  "run_id": "probe-experts-pairwise-postpack-b1-calibration-20261026T082749-350ece",
+  "code_commit": "e681c3b937ac104ca3d9385dbacf620282f22a29",
+  "passed": true,
+  "source_files": {
+    "wr_reproduction/ks3_pairwise.py": "bd2faa84edb19e3ee3f48a61282c2ea63b59488aa4bf1d8ba27dcc5d5778c8f5",
+    "wr_reproduction/probe_pairwise_train.py": "0f21d90df15335f6c2325cd5f6d53449b61524b7524e61367e9701349ae655e1",
+    "wr_reproduction/probe_pairwise_controller.py": "4a8659b0ad090435a4f94d2d5eec257080856dbf4e92d18430a211ea99a053a1",
+    "wr_reproduction/check_ks3_pairwise.py": "97abcb78437adc42707869a77a06d60be222e36641ea7aa70fb44d633b43745e"
+  },
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "probe_signature": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "calibration": {
+    "passed": true,
+    "mode": "pairwise-graph",
+    "full_graph_warmup": true,
+    "original_logical_ranks": 8,
+    "pair_placement": "after-independent-GS32",
+    "actual_prefix_updates": 8,
+    "actual_prefix_update_seconds": [
+      0.36960216201259755,
+      0.4008144740073476,
+      0.38887744399835356,
+      0.40696818102151155,
+      0.3981795090076048,
+      0.41389373000129126,
+      0.3976810629828833,
+      0.4148392239876557
+    ],
+    "not_a_speed_or_convergence_win": true,
+    "pair_parameters": [
+      5,
+      8,
+      1024
+    ],
+    "pair_raw_max_abs": 0.0046984730288386345,
+    "routed_backward_sites": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "five_original_dense_MLPs_retained": true,
+    "fixed_probe_oracle_max_abs": 0.0,
+    "state_restoration": {
+      "checked_entries": 1268,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "pending_state_restoration": {
+      "checked_entries": 1456,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "continuation_parity": {
+      "passed": true,
+      "same_checkpoint": true,
+      "same_eight_logical_microbatches": true,
+      "baseline_loss": 13.236366271972656,
+      "with_probe_loss": 13.236366271972656,
+      "maximum_parameter_relative_rms": 0.0,
+      "all_parameters_bitwise_equal": true
+    },
+    "odd_continuation_loss": 12.89725112915039,
+    "cold_probe_seconds": 3.1642984640202485,
+    "warm_probe_seconds": 2.604613725008676,
+    "pending_probe_seconds": 2.629197911999654,
+    "projected_seven_probe_and_sparse_diagnostic_seconds": 18.813130242779152,
+    "projected_fraction_of900": 0.02090347804753239,
+    "projection_limitation": "Screen/ordinary instrumentation costs also remain on clock; actual run overhead must be inspected.",
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "not_a_screening_reference": true,
+    "full_convergence_verified": false
+  },
+  "gradient_and_activation_evidence_path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-pairwise-postpack-b1-calibration-20261026T082749-350ece/calibration.json",
+  "decision": "Release one post-independent-GS32 pairwise local discovery, seed169, cap900 continuous seconds, same fixed V2 screen. If it qualifies, freeze source/config and automatically complete fresh669/670/671 unpruned. No other hypotheses queued.",
+  "limitations": [
+    "Projected seven-probe plus sparse diagnostics cost2.09%; actual screen/ordinary instrumentation remains on clock and must be inspected.",
+    "Sparse130GB table checked by readonly pointer/version and1024 sampled rows; no full content hash.",
+    "Numerical/state gates are not convergence evidence."
+  ]
+}

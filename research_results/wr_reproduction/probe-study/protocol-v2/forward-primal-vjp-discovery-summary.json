@@ -1,0 +1,191 @@
+{
+  "utc": "2026-10-26T19:56:51.484155+00:00",
+  "cycle": 7,
+  "position": "local3",
+  "run_id": "probe-experts-forward-primal-vjp-discovery-20261026T195201-e89275",
+  "code_commit": "9b8957caf35c34a23bc5dc5b166274eac0664051",
+  "status": "pruned",
+  "qualifies": false,
+  "checkpoint_elapsed_seconds": 120.41001594098634,
+  "probe_loss": 4.552957801148295,
+  "probe_seconds": 2.9846017840027343,
+  "pruned_elapsed_seconds": 123.64659632300027,
+  "screening_decision": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.41001594098634,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.03439965099096298,
+    "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+    "reference_elapsed_seconds": 120.2109339319868,
+    "reference_age_seconds": 0.19908200899953954,
+    "reference_utc": "2026-10-26T14:09:02.407891+00:00",
+    "reference_loss": 4.518558150157332,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785/events.jsonl",
+      "line": 331,
+      "row_sha256": "1ffcc96b3c26752568152e11db1ddd017e3b2a266fb8c34532843dbf921fc12c"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.03439965099096298,
+      "standard_error": 0.0019198449887077916,
+      "normal95_halfwidth": 0.0037628961778672716,
+      "student95_halfwidth": 0.0038012930776414274,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T19:56:10.474298+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-forward-primal-vjp-discovery-20261026T195201-e89275",
+    "seed": 169,
+    "code_commit": "9b8957caf35c34a23bc5dc5b166274eac0664051",
+    "training_projection_gs32": true
+  },
+  "paired_32768_token_block_uncertainty": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.03439965099096298,
+    "standard_error": 0.002124085647237067,
+    "normal95_halfwidth": 0.004163207868584651,
+    "student95_halfwidth": 0.00433738289165809,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "actual_timing_prefix": {
+    "first100_seconds": 39.715036969981156,
+    "after25_through100_seconds": 29.674960559990723
+  },
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.36006179451942444,
+        "rms": 1.27711021900177,
+        "max_abs": 7.551919460296631,
+        "nonzero_fraction": 0.904296875
+      },
+      "nonlinear_output": {
+        "mean": 0.5986192226409912,
+        "rms": 2.887176990509033,
+        "max_abs": 80.5,
+        "nonzero_fraction": 0.268310546875
+      },
+      "projected_output": {
+        "mean": 0.13808518648147583,
+        "rms": 8.19503402709961,
+        "max_abs": 52.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4014064073562622,
+        "rms": 1.3002856969833374,
+        "max_abs": 5.786882400512695,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.5385104417800903,
+        "rms": 2.550076484680176,
+        "max_abs": 64.0,
+        "nonzero_fraction": 0.2919921875
+      },
+      "projected_output": {
+        "mean": 0.017532628029584885,
+        "rms": 8.235325813293457,
+        "max_abs": 50.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3975660800933838,
+        "rms": 1.2882579565048218,
+        "max_abs": 5.2740654945373535,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5378392934799194,
+        "rms": 2.143051862716675,
+        "max_abs": 45.75,
+        "nonzero_fraction": 0.29541015625
+      },
+      "projected_output": {
+        "mean": 0.18758419156074524,
+        "rms": 8.0445556640625,
+        "max_abs": 45.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.39587944746017456,
+        "rms": 1.323085069656372,
+        "max_abs": 6.272297382354736,
+        "nonzero_fraction": 0.904296875
+      },
+      "nonlinear_output": {
+        "mean": 0.5901011228561401,
+        "rms": 2.4509377479553223,
+        "max_abs": 48.75,
+        "nonzero_fraction": 0.306884765625
+      },
+      "projected_output": {
+        "mean": 0.16543638706207275,
+        "rms": 8.021767616271973,
+        "max_abs": 55.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.2871083915233612,
+        "rms": 1.2828480005264282,
+        "max_abs": 5.112569332122803,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.6661709547042847,
+        "rms": 2.4337000846862793,
+        "max_abs": 41.5,
+        "nonzero_fraction": 0.341796875
+      },
+      "projected_output": {
+        "mean": -0.31069129705429077,
+        "rms": 10.214566230773926,
+        "max_abs": 89.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "gradient_diagnostics_available": false,
+  "gradient_missing_reason": "First probe rejected before post-probe optimizer observations; no gradient is inferred from missing data.",
+  "full_validation": null,
+  "reserved_confirmation": null,
+  "verification_seeds_launched": [],
+  "limitation": "Paired block uncertainty is conditional on observed weights; it does not measure training-run variance or current-best selection uncertainty. Calibration correctness and initial gradient changes did not establish convergence benefit.",
+  "decision": "Reject unchanged forward-primal VJP recipe. Cycle7local4 investigates skipping whole padded routing blocks in KS3 BF16 projection GEMMs, retaining identical valid-token products, original VJP and forward evaluation. Require routing-mask proof, exact numerical parity and actual-model speed gate before convergence."
+}

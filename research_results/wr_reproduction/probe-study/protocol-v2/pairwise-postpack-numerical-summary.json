@@ -1,0 +1,65 @@
+{
+  "utc": "2026-10-26T08:27:34.245524+00:00",
+  "run_id": "probe-experts-pairwise-postpack-b1-calibration-20261026T082618-5ba381",
+  "code_commit": "c97e53c1b3eefcbed9d56603d90bc8f37b1170f1",
+  "passed": true,
+  "pair_placement": "after-independent-GS32",
+  "all_initial_outputs_and_bf16_gradients_bitwise_equal": true,
+  "maximum_initial_geometry_gradient_relative_rms": 9.87438255606321e-08,
+  "maximum_nonzero_output_input_weight_geometry_pair_relative_rms": 0.00010312609083484858,
+  "gate_gradient_absolute_bounds": [
+    {
+      "actual_forward_derivative_bitwise_equal": true,
+      "independent_max_abs_error": 1.1980533599853516e-05,
+      "measured_output_error_bound_max": 1.889743361971341e-05,
+      "output_bound_satisfied": true,
+      "weighted_relative_error": 3.4641338970686775e-06,
+      "independent_relative_error": 0.07707054913043976,
+      "reason": "Gate sums may cancel; use exact actual-forward derivative and measured independent-output absolute error bound, not relative error of a near-zero sum."
+    },
+    {
+      "actual_forward_derivative_bitwise_equal": true,
+      "independent_max_abs_error": 5.054473876953125e-05,
+      "measured_output_error_bound_max": 5.707767195417546e-05,
+      "output_bound_satisfied": true,
+      "weighted_relative_error": 1.5473828170797788e-05,
+      "independent_relative_error": 1.600117320776917e-05,
+      "reason": "Gate sums may cancel; use exact actual-forward derivative and measured independent-output absolute error bound, not relative error of a near-zero sum."
+    },
+    {
+      "actual_forward_derivative_bitwise_equal": true,
+      "independent_max_abs_error": 0.0001554340124130249,
+      "measured_output_error_bound_max": 0.00016298900300171226,
+      "output_bound_satisfied": true,
+      "weighted_relative_error": 4.826864096685313e-05,
+      "independent_relative_error": 3.749832831090316e-05,
+      "reason": "Gate sums may cancel; use exact actual-forward derivative and measured independent-output absolute error bound, not relative error of a near-zero sum."
+    },
+    {
+      "actual_forward_derivative_bitwise_equal": true,
+      "independent_max_abs_error": 5.793571472167969e-05,
+      "measured_output_error_bound_max": 6.54073737678118e-05,
+      "output_bound_satisfied": true,
+      "weighted_relative_error": 1.5508127034991048e-05,
+      "independent_relative_error": 2.2448763047577813e-05,
+      "reason": "Gate sums may cancel; use exact actual-forward derivative and measured independent-output absolute error bound, not relative error of a near-zero sum."
+    }
+  ],
+  "cross_derivative": {
+    "observed": 0.012312462786212564,
+    "expected": 0.012312496080994606
+  },
+  "quantization_effect": [
+    {
+      "raw_pair": 0.02,
+      "independent_feature_rms": 0.5346894860267639,
+      "before_changed_fraction": 0.039398193359375,
+      "after_changed_fraction": 0.5241003036499023,
+      "before_delta_rms": 0.00179202388972044,
+      "after_delta_rms": 0.0004055942117702216,
+      "limitation": "Synthetic actual-width coordinates; measures surviving BF16 feature effect, not convergence."
+    }
+  ],
+  "decision": "Numerical gate passed. Next full24 graph warmup, actual8-rank updates, independent fixed-probe oracle and state/next-update parity. No convergence claim.",
+  "interpretation": "More feature entries receive smaller changes after independent packing; original before-pack GS32 concentrated perturbations into fewer larger jumps. This synthetic test does not identify the cause of the rejected trial or establish a gain."
+}

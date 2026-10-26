@@ -1,0 +1,30 @@
+{
+  "utc": "2026-10-26T14:06:08.113541+00:00",
+  "phase": "cycle4_local4_bf16_gather_vjp32_discovery",
+  "status": "running",
+  "run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+  "unit": "wr-probe-bf16-gather-vjp32-2a6065b7",
+  "code_commit": "72a449c54dae6a84ed2623b4987c0b0bd3d3aac1",
+  "trainer_pid": 1574269,
+  "controller_pid": 1574257,
+  "recipe": "configs/wr_reproduction/probe_experts_bf16_gather_vjp32.json",
+  "numerical_gate": "bf16-gather-vjp32-numerical-summary.json",
+  "speed_state_gate": "bf16-gather-vjp32-speed-state-summary.json",
+  "source_hashes_match": true,
+  "new_stop": false,
+  "source_freeze": true,
+  "gpu_lease": "1574257 python          /root/modded-nanogpt/logs/wr-reproduction/gpu.lock",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "probe_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true,
+  "original_forward_and_evaluation": true,
+  "change_scope": "Combine the separately validated exactBF16 gradient gather and32-row geometry VJP. Original Torch gate reduction, BF16 coordinate storage, GS32 packing, BF16 products, forward/evaluation, optimizer and shared settings retained.",
+  "verification_seeds": [
+    1969,
+    1970,
+    1971
+  ],
+  "full_convergence_verified": false,
+  "next": "Complete full24graphwarmup, then900s continuous-clock discovery with fixed1M heldout probes every120s. Strict below5 then first one-sided>=.01 compatible nonfuture<=3s observation prunes. If full validation qualifies, controller executes1969/1970/1971 frozen unpruned; no source changes during discovery or verification."
+}

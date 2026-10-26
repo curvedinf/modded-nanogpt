@@ -1,0 +1,29 @@
+{
+  "utc": "2026-10-26T13:12:47.625443+00:00",
+  "phase": "cycle4_local2_hidden_bf16_discovery",
+  "status": "running",
+  "run_id": "probe-experts-hidden-bf16-discovery-20261026T131217-a88268",
+  "unit": "wr-probe-hidden-bf16-e80c19a2",
+  "code_commit": "e5cdda46dd3260dac3ab9d21ffbf973187402da9",
+  "trainer_pid": 1569806,
+  "controller_pid": 1569795,
+  "recipe": "configs/wr_reproduction/probe_experts_hidden_bf16.json",
+  "numerical_gate": "hidden-bf16-numerical-summary.json",
+  "speed_state_gate": "hidden-bf16-speed-state-summary.json",
+  "source_hashes_match": true,
+  "new_stop": false,
+  "source_freeze": true,
+  "gpu_lease": "1569795 python          /root/modded-nanogpt/logs/wr-reproduction/gpu.lock",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true,
+  "original_evaluation_bitwise": true,
+  "training_scope": "BF16 hidden-feature storage instead of GS32 rounding after original FP16 nonlinearity; original input/weight/coefficient packing and rates retained.",
+  "verification_seeds": [
+    1769,
+    1770,
+    1771
+  ],
+  "full_convergence_verified": false,
+  "next": "Complete full24graphwarmup then fixed-text screened seed169 run under900s continuous cap. Atloss<5 prune firstgap>=0.01 versus best compatible latest-nonfuture reference within3s. A qualifying full validation triggers1769/1770/1771 frozen unpruned seeds; all STOP paths remain authoritative."
+}

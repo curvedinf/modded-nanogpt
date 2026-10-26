@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-26T11:55:55.012535+00:00",
+  "phase": "cycle3_local4_split_scale_discovery",
+  "status": "running",
+  "run_id": "probe-experts-split-coefficient-scale-discovery-20261026T115459-bcdc89",
+  "unit": "wr-probe-split-scale-aa949b1d",
+  "code_commit": "85f61947f64ab6a45af906760beede31a13937e1",
+  "trainer_pid": 1563895,
+  "source_hashes_match": true,
+  "new_stop": false,
+  "recipe": "configs/wr_reproduction/probe_experts_split_coefficient_scale.json",
+  "speed_state_gate": "split-scale-speed-state-summary.json",
+  "numerical_gate": "split-scale-numerical-summary.json",
+  "verification_seeds": [
+    1469,
+    1470,
+    1471
+  ],
+  "source_freeze": true,
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true,
+  "continuous_training_seconds_cap": 900,
+  "comparative_pruning_exempt": false,
+  "gpu_lease": "1563885 python          /root/modded-nanogpt/logs/wr-reproduction/gpu.lock",
+  "hypothesis": "Separate cubic4 and warp2 coefficient quantization scales while retaining both learned components, original rates and original independent rank1 pathways.",
+  "next": "Complete full24 graph warmup, then screen first below5 probe against best compatible nonfuture MLP/KS3 within3s. First gap >=+.01 prunes. If full validation qualifies, run1469/1470/1471 unpruned on frozen code/config. Inspect cycle3 four-local batch before any next exploratory hypothesis.",
+  "full_convergence_verified": false
+}

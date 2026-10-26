@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "training_delegation_args_and_return_unchanged": true,
+  "evaluation_does_not_call_unused_producer": true,
+  "utc": "2026-10-26T19:21:59.256319+00:00",
+  "gpu_initialized": false,
+  "all_prior_numerical_sources_unchanged": true,
+  "prior_numerical_run_id": "probe-dense8-fp8-width2816-calibration-20261026T190945-14ef08",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9"
+}

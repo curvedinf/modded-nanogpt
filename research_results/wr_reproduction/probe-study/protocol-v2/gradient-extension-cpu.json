@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-26T06:57:48.946320+00:00",
+  "passed": true,
+  "tests": 4,
+  "code_commit": "751ce8e1ed6079747e6f419aec2dc03560208e8a",
+  "command": "HIP_VISIBLE_DEVICES='' CUDA_VISIBLE_DEVICES='' OMP_NUM_THREADS=1 .venv-mi300/bin/python -m wr_reproduction.check_ks3_update_observer",
+  "source_hashes": {
+    "wr_reproduction/check_ks3_update_observer.py": "948bd745e7ac622b6eb4334b599a2b71a073445f685e3c5e9c639769909b7f25",
+    "wr_reproduction/ks3_update_observer.py": "e3145a73c6426f0559e27667629b9bbc1a71fe17aab92154a59ae40fc5b13634",
+    "wr_reproduction/probe_gradient_extension.py": "7b82ccdf075366758f28c4d3d078ab07615715c6c1152ba2f30624eca978a966"
+  },
+  "checks": [
+    "Inactive dense slots excluded; routed up/down correctly mapped; all geometry coefficient channels covered",
+    "Even/odd original optimizer clearing; exact parameter parity, RNG and storage identity; gradients retained in observations",
+    "Missing applied gradients terminate instead of becoming fabricated zero statistics",
+    "Reported extra instrumentation cost is added; elapsed training seconds are unchanged"
+  ],
+  "gpu_gate_pending": true
+}

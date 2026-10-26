@@ -1,0 +1,335 @@
+{
+  "utc": "2026-10-26T08:26:33.878908+00:00",
+  "run_id": "probe-experts-pairwise-postpack-b1-calibration-20261026T082618-5ba381",
+  "code_commit": "c97e53c1b3eefcbed9d56603d90bc8f37b1170f1",
+  "passed": true,
+  "source_files": {
+    "wr_reproduction/ks3_pairwise.py": "bd2faa84edb19e3ee3f48a61282c2ea63b59488aa4bf1d8ba27dcc5d5778c8f5",
+    "wr_reproduction/probe_pairwise_train.py": "0f21d90df15335f6c2325cd5f6d53449b61524b7524e61367e9701349ae655e1",
+    "wr_reproduction/probe_pairwise_controller.py": "4a8659b0ad090435a4f94d2d5eec257080856dbf4e92d18430a211ea99a053a1",
+    "wr_reproduction/check_ks3_pairwise.py": "97abcb78437adc42707869a77a06d60be222e36641ea7aa70fb44d633b43745e"
+  },
+  "result": {
+    "run_id": "probe-experts-pairwise-postpack-b1-calibration-20261026T082618-5ba381",
+    "status": "calibration_complete",
+    "seed": 169,
+    "code_commit": "c97e53c1b3eefcbed9d56603d90bc8f37b1170f1",
+    "recipe": {
+      "name": "probe-experts-pairwise-postpack-b1",
+      "hypothesis": "Local follow-up to measured GS32 attenuation in the rejected before-pack pair trial: preserve the original independent GS32/BF16 KS3 features, then add the same bounded zero-initialized adjacent-coordinate term before the original BF16 projection. Rates, bound, coordinate scale, width, independent pathways and all shared kernels/settings stay fixed. Test surviving activation effect and loss per continuous900 seconds; gain is unproven.",
+      "precision": "bf16",
+      "charts": 1024,
+      "rank": 1,
+      "group_size": 32,
+      "nonlinearity": "fp16",
+      "geometry": {
+        "lr_mul": 0.125,
+        "betas": [
+          0.9,
+          0.99
+        ],
+        "weight_decay": 0,
+        "raw_scale": 0.75,
+        "raw_shift": 0.0,
+        "coefficients": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "projection_accumulation": "fp32",
+      "validation_precision": "bf16",
+      "max_train_seconds": 900.0,
+      "validation_setup_reserve_seconds": 2.0,
+      "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+      "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+      "training_gs32": true,
+      "weight_packing": "loop",
+      "geometry_backward_rows": 64,
+      "bf16_kernel_mode": "tuned",
+      "kernel_evidence": {
+        "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+        "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+        "matrix_max_relative_rms": 4.411854752106592e-05
+      },
+      "block_correctness_evidence": {
+        "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+        "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+        "max_relative_rms": 0.0,
+        "evaluation_original_kernels": true,
+        "bitwise_input_and_weight_producers": true
+      },
+      "timing_evidence": {
+        "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+        "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+        "first100_seconds": 54.066861718994915,
+        "updates25_to100_seconds": 40.427348073004396,
+        "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+        "reference_first100": 55.488501123007154,
+        "reference_25to100": 41.43367328601016,
+        "validation": false,
+        "first100_time_reduction": 0.025620432616493716,
+        "steady_time_reduction": 0.024287617611387313,
+        "timing_gate_passed": true
+      },
+      "shared_fp8_gemm_tuning": "mi300-v1",
+      "hardware_change_scope": "Opt-in shared nongrouped FP8 GEMM tiles across attention, dense MLP and output head; default MLP dispatch remains legacy.",
+      "shared_fp8_correctness_evidence": {
+        "run_id": "ks3-shared-fp8-dispatch-check-20261025T075607-ff0ab5",
+        "code_commit": "bcb2f5f79d96c9d82c4b0ccfcbbf0b75253fa4e1",
+        "source_format_pairs": 4,
+        "independent_shape_cases": 15,
+        "all_stored_byte_patterns": true,
+        "original_dense_mlp_autograd": true,
+        "validation": false
+      },
+      "validation_window_policy": "accepted-control",
+      "evaluation_protocol": "Capture live stage-two YaRN frequencies/attention scales on first reach of640/1408 windows. For terminal stage four or full-schedule completion only, restore those nonlearned buffers and use640/1408 evaluation arguments. Preserve raw learned weights, training schedule and all updates; no canonical mask, tail shipping or final window extension. Early-stage evaluation remains incompatible. All restoration/rebuild/readback/setup is inside original training timer; no strict qualification if actual elapsed exceeds902.3592145430011.",
+      "shared_fp8_timing_evidence": {
+        "run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+        "code_commit": "2959f2a2250c36cb7dd10f28c02cdcfcc86fd729",
+        "first100_seconds": 39.57759546399757,
+        "after25_through100_seconds": 29.55288318300154,
+        "baseline_run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+        "baseline_first100_seconds": 54.06715966599586,
+        "baseline_after25_through100_seconds": 40.427348073004396,
+        "first100_time_reduction": 0.26799196206178977,
+        "steady_time_reduction": 0.2689878364112719,
+        "validation": false,
+        "gate_passed": true
+      },
+      "shared_fp8_amax": "atomic",
+      "shared_fp8_decode": "scalar",
+      "shared_fp8_head_tuning": "legacy",
+      "shared_fp8_pipeline_tuning": "legacy",
+      "model_wide_hyperparameters": "original-pr393",
+      "architecture": "ks3_experts",
+      "pairwise": {
+        "kind": "additive-tanh-adjacent-independent-v1",
+        "bound": 1.0,
+        "lr_mul": 0.125,
+        "initial_raw_coefficient": 0.0,
+        "pairing": "i xor1",
+        "placement": "after-independent-GS32"
+      },
+      "gradient_diagnostics_extension": "active-slot-pre-optimizer-v1-plus-pairwise",
+      "hypothesis_class": "local-pairwise-quantization-placement"
+    },
+    "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+    "validation": null,
+    "pruning": null,
+    "calibration": {
+      "passed": true,
+      "checks": [
+        {
+          "tuned": true,
+          "tokens": 1,
+          "active_experts": 1,
+          "zero_initialization_bitwise": {
+            "output": true,
+            "input_pack": true,
+            "coordinates": true,
+            "packed_features": true,
+            "input_gradient": true,
+            "gate_gradient": true,
+            "geometry_gradient": false,
+            "weight_gradient": true
+          },
+          "zero_initialization_relative_rms": {
+            "output": 0.0,
+            "input_pack": 0.0,
+            "coordinates": 0.0,
+            "packed_features": 0.0,
+            "input_gradient": 0.0,
+            "gate_gradient": 0.0,
+            "geometry_gradient": 3.480380983411635e-10,
+            "weight_gradient": 0.0
+          },
+          "zero_pair_gradient_max": 0.003667940618470311,
+          "nonzero_pair_relative_rms": {
+            "packed_features": 0.0,
+            "output": 0.0001014691952150315,
+            "input_gradient": 0.0,
+            "gate_gradient": 0.07707054913043976,
+            "geometry_gradient": 1.685315993427139e-07,
+            "pair_gradient": 1.8010264568601997e-07,
+            "weight_gradient": 0.0
+          },
+          "gate_gradient_check": {
+            "actual_forward_derivative_bitwise_equal": true,
+            "independent_max_abs_error": 1.1980533599853516e-05,
+            "measured_output_error_bound_max": 1.889743361971341e-05,
+            "output_bound_satisfied": true,
+            "weighted_relative_error": 3.4641338970686775e-06,
+            "independent_relative_error": 0.07707054913043976,
+            "reason": "Gate sums may cancel; use exact actual-forward derivative and measured independent-output absolute error bound, not relative error of a near-zero sum."
+          },
+          "quantization_effect": null
+        },
+        {
+          "tuned": true,
+          "tokens": 257,
+          "active_experts": 1,
+          "zero_initialization_bitwise": {
+            "output": true,
+            "input_pack": true,
+            "coordinates": true,
+            "packed_features": true,
+            "input_gradient": true,
+            "gate_gradient": true,
+            "geometry_gradient": false,
+            "weight_gradient": true
+          },
+          "zero_initialization_relative_rms": {
+            "output": 0.0,
+            "input_pack": 0.0,
+            "coordinates": 0.0,
+            "packed_features": 0.0,
+            "input_gradient": 0.0,
+            "gate_gradient": 0.0,
+            "geometry_gradient": 8.924325811676681e-08,
+            "weight_gradient": 0.0
+          },
+          "zero_pair_gradient_max": 0.009968362748622894,
+          "nonzero_pair_relative_rms": {
+            "packed_features": 0.0,
+            "output": 1.90065929928096e-05,
+            "input_gradient": 8.497637463733554e-05,
+            "gate_gradient": 1.600117320776917e-05,
+            "geometry_gradient": 1.9174972010205238e-07,
+            "pair_gradient": 3.590165817968227e-07,
+            "weight_gradient": 4.888369221589528e-05
+          },
+          "gate_gradient_check": {
+            "actual_forward_derivative_bitwise_equal": true,
+            "independent_max_abs_error": 5.054473876953125e-05,
+            "measured_output_error_bound_max": 5.707767195417546e-05,
+            "output_bound_satisfied": true,
+            "weighted_relative_error": 1.5473828170797788e-05,
+            "independent_relative_error": 1.600117320776917e-05,
+            "reason": "Gate sums may cancel; use exact actual-forward derivative and measured independent-output absolute error bound, not relative error of a near-zero sum."
+          },
+          "quantization_effect": null
+        },
+        {
+          "tuned": true,
+          "tokens": 4096,
+          "active_experts": 8,
+          "zero_initialization_bitwise": {
+            "output": true,
+            "input_pack": true,
+            "coordinates": true,
+            "packed_features": true,
+            "input_gradient": true,
+            "gate_gradient": true,
+            "geometry_gradient": false,
+            "weight_gradient": true
+          },
+          "zero_initialization_relative_rms": {
+            "output": 0.0,
+            "input_pack": 0.0,
+            "coordinates": 0.0,
+            "packed_features": 0.0,
+            "input_gradient": 0.0,
+            "gate_gradient": 0.0,
+            "geometry_gradient": 9.87438255606321e-08,
+            "weight_gradient": 0.0
+          },
+          "zero_pair_gradient_max": 0.01758459210395813,
+          "nonzero_pair_relative_rms": {
+            "packed_features": 0.0,
+            "output": 3.668950012070127e-05,
+            "input_gradient": 0.00010312609083484858,
+            "gate_gradient": 3.749832831090316e-05,
+            "geometry_gradient": 2.0551098600662954e-07,
+            "pair_gradient": 4.4947097421754734e-07,
+            "weight_gradient": 6.509622471639886e-05
+          },
+          "gate_gradient_check": {
+            "actual_forward_derivative_bitwise_equal": true,
+            "independent_max_abs_error": 0.0001554340124130249,
+            "measured_output_error_bound_max": 0.00016298900300171226,
+            "output_bound_satisfied": true,
+            "weighted_relative_error": 4.826864096685313e-05,
+            "independent_relative_error": 3.749832831090316e-05,
+            "reason": "Gate sums may cancel; use exact actual-forward derivative and measured independent-output absolute error bound, not relative error of a near-zero sum."
+          },
+          "quantization_effect": {
+            "raw_pair": 0.02,
+            "independent_feature_rms": 0.5346894860267639,
+            "before_changed_fraction": 0.039398193359375,
+            "after_changed_fraction": 0.5241003036499023,
+            "before_delta_rms": 0.00179202388972044,
+            "after_delta_rms": 0.0004055942117702216,
+            "limitation": "Synthetic actual-width coordinates; measures surviving BF16 feature effect, not convergence."
+          }
+        },
+        {
+          "tuned": false,
+          "tokens": 257,
+          "active_experts": 1,
+          "zero_initialization_bitwise": {
+            "output": true,
+            "input_pack": true,
+            "coordinates": true,
+            "packed_features": true,
+            "input_gradient": true,
+            "gate_gradient": true,
+            "geometry_gradient": false,
+            "weight_gradient": true
+          },
+          "zero_initialization_relative_rms": {
+            "output": 0.0,
+            "input_pack": 0.0,
+            "coordinates": 0.0,
+            "packed_features": 0.0,
+            "input_gradient": 0.0,
+            "gate_gradient": 0.0,
+            "geometry_gradient": 9.071055728782085e-08,
+            "weight_gradient": 0.0
+          },
+          "zero_pair_gradient_max": 0.01077121589332819,
+          "nonzero_pair_relative_rms": {
+            "packed_features": 0.0,
+            "output": 3.6878263927064836e-05,
+            "input_gradient": 5.249040623311885e-05,
+            "gate_gradient": 2.2448763047577813e-05,
+            "geometry_gradient": 2.1520908433103614e-07,
+            "pair_gradient": 3.5107433404846233e-07,
+            "weight_gradient": 4.26582082582172e-05
+          },
+          "gate_gradient_check": {
+            "actual_forward_derivative_bitwise_equal": true,
+            "independent_max_abs_error": 5.793571472167969e-05,
+            "measured_output_error_bound_max": 6.54073737678118e-05,
+            "output_bound_satisfied": true,
+            "weighted_relative_error": 1.5508127034991048e-05,
+            "independent_relative_error": 2.2448763047577813e-05,
+            "reason": "Gate sums may cancel; use exact actual-forward derivative and measured independent-output absolute error bound, not relative error of a near-zero sum."
+          },
+          "quantization_effect": null
+        }
+      ],
+      "pair_placement": "after-independent-GS32",
+      "cross_derivative": {
+        "observed": 0.012312462786212564,
+        "expected": 0.012312496080994606
+      },
+      "oracle": "Original independent low-precision KS3 plus independent Torch smooth pair VJP and per-expert FP32 matrix products",
+      "added_term_bound": 1.0,
+      "initial_function_bitwise_equal": true,
+      "old_gradient_equivalence": "Exact BF16 input/weight/gate gradients; FP32 geometry relative RMS below2e-6, measured individually",
+      "independent_rank_one_paths_retained": true,
+      "full_graph_training_tested": false,
+      "full_convergence_verified": false
+    },
+    "exit_code": 0,
+    "reserved_confirmation": null,
+    "events_sha256": "948b7498e919396fdef86083bf1fbb465738169963ce0937cc98dc1c0785bd95",
+    "completed_utc": "2026-10-26T08:26:33.875239+00:00",
+    "qualifies": false
+  }
+}

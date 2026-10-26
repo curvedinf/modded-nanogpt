@@ -1,0 +1,201 @@
+{
+  "utc": "2026-10-26T15:57:06.629087+00:00",
+  "run_id": "probe-experts-prepared-geometry-discovery-20261026T155013-becd49",
+  "code_commit": "b31b536eb634e6a89d8216d1d6bdbd6ec8b443b2",
+  "status": "pruned",
+  "seed": 169,
+  "phase": "cycle5_local3_closed",
+  "qualifies": false,
+  "full_validation": null,
+  "reserved_confirmation": null,
+  "probe": {
+    "loss": 4.629510302096605,
+    "step": 296,
+    "checkpoint_elapsed_seconds": 120.55282551099663,
+    "probe_completion_seconds": 123.5145828340028,
+    "probe_seconds": 2.9618954440229572,
+    "cumulative_probe_seconds": 2.9618954440229572
+  },
+  "screening": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.55282551099663,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.11095215193927288,
+    "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+    "reference_elapsed_seconds": 120.2109339319868,
+    "reference_age_seconds": 0.34189157900982536,
+    "reference_utc": "2026-10-26T14:09:02.407891+00:00",
+    "reference_loss": 4.518558150157332,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785/events.jsonl",
+      "line": 331,
+      "row_sha256": "1ffcc96b3c26752568152e11db1ddd017e3b2a266fb8c34532843dbf921fc12c"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.11095215193927288,
+      "standard_error": 0.00150280353932461,
+      "normal95_halfwidth": 0.0029454949370762355,
+      "student95_halfwidth": 0.0029755510078627277,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T15:54:25.112532+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-prepared-geometry-discovery-20261026T155013-becd49",
+    "seed": 169,
+    "code_commit": "b31b536eb634e6a89d8216d1d6bdbd6ec8b443b2",
+    "training_projection_gs32": true
+  },
+  "paired_32768": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.11095215193927288,
+    "standard_error": 0.0015884578482244938,
+    "normal95_halfwidth": 0.003113377382520008,
+    "student95_halfwidth": 0.0032436309260744163,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "pruned_training_seconds": 123.72401899198303,
+  "gradient_diagnostic_count": 0,
+  "gradient_limitation": "The first probe pruned before post-probe optimizer observation; missing gradients are not zero gradients.",
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4145215153694153,
+        "rms": 1.2835043668746948,
+        "max_abs": 6.612122535705566,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.4964081048965454,
+        "rms": 2.0777807235717773,
+        "max_abs": 44.5,
+        "nonzero_fraction": 0.261474609375
+      },
+      "projected_output": {
+        "mean": -0.22577479481697083,
+        "rms": 9.04296588897705,
+        "max_abs": 62.25,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4305976331233978,
+        "rms": 1.346193790435791,
+        "max_abs": 6.80035924911499,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5585565567016602,
+        "rms": 2.7335405349731445,
+        "max_abs": 87.0,
+        "nonzero_fraction": 0.289794921875
+      },
+      "projected_output": {
+        "mean": -0.006791312247514725,
+        "rms": 8.385454177856445,
+        "max_abs": 52.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4236201047897339,
+        "rms": 1.3184144496917725,
+        "max_abs": 5.923478126525879,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5319774746894836,
+        "rms": 2.5405960083007812,
+        "max_abs": 67.5,
+        "nonzero_fraction": 0.2939453125
+      },
+      "projected_output": {
+        "mean": 0.03762074559926987,
+        "rms": 8.388900756835938,
+        "max_abs": 63.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3805065155029297,
+        "rms": 1.3158470392227173,
+        "max_abs": 6.422792911529541,
+        "nonzero_fraction": 0.896484375
+      },
+      "nonlinear_output": {
+        "mean": 0.6102784276008606,
+        "rms": 2.6504085063934326,
+        "max_abs": 48.75,
+        "nonzero_fraction": 0.311279296875
+      },
+      "projected_output": {
+        "mean": 0.018518388271331787,
+        "rms": 9.341325759887695,
+        "max_abs": 78.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.33441126346588135,
+        "rms": 1.3314390182495117,
+        "max_abs": 7.453848838806152,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.6912614107131958,
+        "rms": 3.241462469100952,
+        "max_abs": 95.0,
+        "nonzero_fraction": 0.329345703125
+      },
+      "projected_output": {
+        "mean": -0.18322359025478363,
+        "rms": 10.867664337158203,
+        "max_abs": 86.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "actual_discovery_prefix": {
+    "first100_seconds": 38.79406260399264,
+    "after25_through100_seconds": 28.97754427298787
+  },
+  "actual_discovery_to_original_reference_duration_ratio": {
+    "first100_seconds": 0.9807889423239432,
+    "after25_through100_seconds": 0.980944906883204
+  },
+  "timing_limitation": "Timing windows are diagnostic only. One-sided compatible fixed-text CE at comparable elapsed time triggered pruning, not training loss or matched-step loss.",
+  "source_hashes_match": true,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "decision": "Close standalone prepared-geometry hypothesis. No full validation, qualification, verification2369/2370/2371 or unchanged repeat. The discovery prefix retains about1.9% lower update cost, but this did not improve screened loss/time. Test one distinct combination with validated exact gather/32-row VJP only if exact ingredient parity and strict speed improvement over BOTH standalone ingredients pass; then close the four-local batch before exploration."
+}

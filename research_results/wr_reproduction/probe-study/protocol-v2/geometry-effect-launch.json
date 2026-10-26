@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-26T10:59:45.172867+00:00",
+  "phase": "bounded_geometry_component_diagnostic",
+  "status": "running",
+  "run_id": "probe-experts-geometry-effects-calibration-20261026T105846-af1fc4",
+  "unit": "wr-probe-geometry-effect-f54b16a7",
+  "code_commit": "619b632b2f77949f5cdc8b6ba669054099901091",
+  "numerical_gate_passed": true,
+  "numerical_cases": 16,
+  "prefix_seconds": 240.0,
+  "full_graph_warmup_updates": 24,
+  "recipe": "configs/wr_reproduction/probe_experts_geometry_effects.json",
+  "run_manifest": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-geometry-effects-calibration-20261026T105846-af1fc4/run.json",
+  "not_a_screening_reference": true,
+  "source_hashes_match": true,
+  "new_stop": false,
+  "next": "Complete same-checkpoint full/no-spine/no-warp/coordinate-only fixed-text CE and local packed activation effects; audit state and bitwise next-update continuation. Use measured mechanism to choose next distinct hypothesis. Do not repeat aggregate scalar grid or relaunch controls."
+}

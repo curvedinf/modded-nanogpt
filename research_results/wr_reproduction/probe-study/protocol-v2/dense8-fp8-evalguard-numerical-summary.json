@@ -1,0 +1,48 @@
+{
+  "utc": "2026-10-26T19:24:32.345446+00:00",
+  "run_id": "probe-dense8-fp8-evalguard-width2816-calibration-20261026T192250-bed40f",
+  "code_commit": "2dab280ebb495b868981261d77dc4c56d572eed6",
+  "passed": true,
+  "active_dense_slot": 4,
+  "features": 2816,
+  "original_training_cache_checks": [
+    {
+      "exact": true,
+      "all_original_training_cache_bytes_equal": true,
+      "pointers_preserved": true
+    },
+    {
+      "exact": false,
+      "all_original_training_cache_bytes_equal": true,
+      "pointers_preserved": true
+    },
+    {
+      "exact": true,
+      "all_original_training_cache_bytes_equal": true,
+      "pointers_preserved": true
+    }
+  ],
+  "evaluation_all_cache_bytes_and_pointers_preserved": true,
+  "unguarded_evaluation_cache_changes": [
+    "ks3_dense_f8_up",
+    "ks3_dense_native_up",
+    "ks3_dense_f8_up_t",
+    "ks3_dense_native_up_t",
+    "ks3_dense_f8_down",
+    "ks3_dense_native_down",
+    "ks3_dense_f8_down_t",
+    "ks3_dense_native_down_t",
+    "ks3_dense_weight_scales",
+    "ks3_dense_weight_amax"
+  ],
+  "training_refresh_resumes": true,
+  "independent_FP8_arithmetic_oracle_reused": {
+    "run_id": "probe-dense8-fp8-width2816-calibration-20261026T190945-14ef08",
+    "code_commit": "c32fb1ef646add17cdde6e828177a8aae1a447c4",
+    "all_prior_source_hashes_identical": true,
+    "passed": true
+  },
+  "full_model_gate_passed": false,
+  "not_a_screening_reference": true,
+  "decision": "Fresh full-model speed/state gate; no convergence before full probe restoration and continuation parity."
+}

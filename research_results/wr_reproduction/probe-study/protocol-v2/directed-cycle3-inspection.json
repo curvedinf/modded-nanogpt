@@ -1,0 +1,43 @@
+{
+  "utc": "2026-10-26T12:02:48.474064+00:00",
+  "cycle": 3,
+  "local_hypotheses": [
+    {
+      "file": "fixed-geometry-discovery-summary.json",
+      "run_id": "probe-local-experts-fixed-geometry-discovery-20261026T103408-d2fb26",
+      "status": "pruned",
+      "code_commit": "12567e1e9f3da8172b78412b7c0f60db9075d535"
+    },
+    {
+      "file": "geometry-damp-projection-lift-discovery-summary.json",
+      "run_id": "probe-local-experts-geometry-damp-projection-lift-discovery-20261026T104340-82f913",
+      "status": "pruned",
+      "code_commit": "82d1423ae0352ebcbb6f0bfdefdeaeea04f92618"
+    },
+    {
+      "file": "fixed-warp-discovery-summary.json",
+      "run_id": "probe-experts-fixed-warp-discovery-20261026T111736-854382",
+      "status": "pruned",
+      "code_commit": "c4d2754278f249cd3d84df665c9bef5cb15714b1"
+    },
+    {
+      "file": "split-scale-discovery-summary.json",
+      "run_id": "probe-experts-split-coefficient-scale-discovery-20261026T115459-bcdc89",
+      "status": "pruned",
+      "code_commit": "85f61947f64ab6a45af906760beede31a13937e1"
+    }
+  ],
+  "all_four_rejected": true,
+  "qualifying_configurations": 0,
+  "new_full_validation_results": 0,
+  "independent_gradient_scalar_grid_closed": true,
+  "mechanism_diagnostic": "geometry-effect-diagnostic-summary.json",
+  "mechanism_findings": [
+    "At the same240s checkpoint removing learned cubic contribution worsened fixed-text CE by0.03376; removing warp worsened it by0.000107. Static interventions do not predict retraining outcomes.",
+    "Freezing all geometry and freezing warp while retaining cubic were screened out. Separate cubic/warp scales were screened out despite lower terminal coefficient quantization error.",
+    "The prior cubic Chebyshev coordinate change retained the same function class and was rejected. Both tested adjacent pair placements were rejected; no bound/rate escalation is planned."
+  ],
+  "next_hypothesis": "Explore zero-initialized bounded compact-support residual features at fixed coordinate knots, added to the unchanged independent rank1 KS3 output. This adds local nonlinear capacity beyond the existing global cubic/warp span and targets regions with inactive ReLU2 output. Original pathways, their parameters, and all shared kernels/settings remain unchanged. Validate function/gradients at initialization and nonzero coefficients before actual-model graph/state gate and loss/time screening.",
+  "no_convergence_gain_claim": true,
+  "reserved_text_excluded": true
+}

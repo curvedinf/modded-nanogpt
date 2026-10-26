@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-26T19:08:56.297263+00:00",
+  "source_run_id": "probe-experts-geometry-effects-calibration-20261026T105846-af1fc4",
+  "gradient_rms_up": 0.07584642618894577,
+  "gradient_rms_down": 0.02974793128669262,
+  "gradient_ratio": 2.549636996871603,
+  "relative_update_up": 0.014557595069263896,
+  "relative_update_down": 0.01573113715187148,
+  "discarded_proposal": "Input-.0625/output+.0625 balance; discarded before implementation because gradient norms were mislabeled as relative updates in a compacted summary.",
+  "no_projection_rate_experiment_launched": true
+}

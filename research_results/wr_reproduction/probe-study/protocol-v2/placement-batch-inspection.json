@@ -1,0 +1,65 @@
+{
+  "utc": "2026-10-26T06:46:55.020332+00:00",
+  "status": "five_isolated_sites_inspected",
+  "arms": [
+    {
+      "layer": 0,
+      "run_id": "probe-ks3-dense-layer0-width2816-discovery-20261026T055125-4fa9e6",
+      "status": "pruned",
+      "elapsed_seconds": 120.72138580799219,
+      "probe_ce": 4.665738020092249,
+      "gap": 0.06206398457288742,
+      "paired_student95_halfwidth": 0.004490188910106688,
+      "full_validation": null
+    },
+    {
+      "layer": 2,
+      "run_id": "probe-ks3-dense-layer2-width2816-discovery-20261026T055755-b84402",
+      "status": "pruned",
+      "elapsed_seconds": 240.22159523199662,
+      "probe_ce": 4.0939565766602755,
+      "gap": 0.026838036254048347,
+      "paired_student95_halfwidth": 0.002088139983176927,
+      "full_validation": null
+    },
+    {
+      "layer": 4,
+      "run_id": "probe-ks3-dense-layer4-width2816-discovery-20261026T060628-d83343",
+      "status": "pruned",
+      "elapsed_seconds": 360.233559218992,
+      "probe_ce": 3.7838510368019342,
+      "gap": 0.10470931977033615,
+      "paired_student95_halfwidth": 0.0034461627042805284,
+      "full_validation": null
+    },
+    {
+      "layer": 8,
+      "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+      "status": "pruned",
+      "elapsed_seconds": 720.5624596620037,
+      "probe_ce": 3.4004779886454344,
+      "gap": 0.012752771377563477,
+      "paired_student95_halfwidth": 0.0015599361134713172,
+      "full_validation": null
+    },
+    {
+      "layer": 10,
+      "run_id": "probe-ks3-dense-layer10-width2816-discovery-20261026T063320-981316",
+      "status": "pruned",
+      "elapsed_seconds": 120.72263397701317,
+      "probe_ce": 4.932907786220312,
+      "gap": 0.3292337507009506,
+      "paired_student95_halfwidth": 0.012393639738569441,
+      "full_validation": null
+    }
+  ],
+  "new_qualifying_placement": false,
+  "decision": "No placement combinations. Retain verified expert-only winner. Investigate late parallel8 degradation and sparse geometry/projection update balance before four small joint local hypotheses and one separately validated independent-path pairwise hypothesis.",
+  "diagnostic_observations": [
+    "Serial layers0/10 fail near120s; layer2 fails240s; layer4 changes from a measured advantage at240s to rejection360s.",
+    "Parallel8 stays within margin until720s; projected-core and nonlinear activation RMS grow across fixed text checkpoints. These are pre-post-multiplier moments, not direct residual-effect measurements.",
+    "Per-update gradient norms are currently unavailable after optimizer zeroing. Parameter deltas are measured, but dense-bank padding and geometry-channel mixing limit interpretation."
+  ],
+  "next_gate": "One bounded original-schedule parallel8 diagnostic prefix, same-state actual eight-rank update parity, pre-optimizer active-slot component gradient sampling. No new MLP control; no unchanged convergence repeat.",
+  "control_set_frozen": true
+}

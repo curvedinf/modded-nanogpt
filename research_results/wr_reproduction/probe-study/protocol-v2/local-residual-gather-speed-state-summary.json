@@ -1,0 +1,114 @@
+{
+  "utc": "2026-10-26T12:50:28.786039+00:00",
+  "run_id": "probe-experts-local-residual-exact-gather-calibration-20261026T124035-71a1eb",
+  "code_commit": "c80e0dd89c15ffdbd00a0af6426710f8cf65fef0",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "passed": true,
+  "phase": "cycle4_local1_local_residual_gather_speed_state_passed",
+  "seed": 169,
+  "speed": {
+    "passed": true,
+    "candidate": {
+      "first100_seconds": 39.47576866199961,
+      "after25_through100_seconds": 29.563271926977905,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "reference": {
+      "first100_seconds": 40.35625232299208,
+      "after25_through100_seconds": 30.15812886398635,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "ratios": {
+      "first100_seconds": 0.978182224307017,
+      "after25_through100_seconds": 0.9802754030367316
+    },
+    "criterion": "Both first100 and updates26-100 actual-model durations must be below the saved incumbent prefix.",
+    "limitation": "Single measured original prefix, not a sampling-error estimate or convergence result; loss pruning remains elapsed-time fixed-text only.",
+    "reference_run_id": "probe-experts-local-residual-k3-discovery-20261026T122452-435b40",
+    "reference_code_commit": "cc26eab0a8d6a5198358cd04849eb4e2c0cb1ac3"
+  },
+  "speed_improvement_percent": {
+    "first100_seconds": 2.1817775692983044,
+    "after25_through100_seconds": 1.9724596963268448
+  },
+  "state_calibration": {
+    "passed": true,
+    "step": 294,
+    "prefix_elapsed_seconds": 121.47179289002088,
+    "all_original_logical_ranks": 8,
+    "cold_probe_seconds": 2.9926946760097053,
+    "warm_probe_seconds": 2.640514371014433,
+    "pending_probe_seconds": 2.644627989997389,
+    "oracle_max_abs": 0.0,
+    "repeat_max_abs": 0.0,
+    "state_restoration": {
+      "checked_entries": 1268,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "pending_state_restoration": {
+      "checked_entries": 1456,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "continuation_parity": {
+      "passed": true,
+      "same_checkpoint": true,
+      "same_eight_logical_microbatches": true,
+      "baseline_loss": 7.646247386932373,
+      "with_probe_loss": 7.646247386932373,
+      "maximum_parameter_relative_rms": 0.0,
+      "all_parameters_bitwise_equal": true
+    },
+    "post_probe_odd_update_loss": 7.614299297332764
+  },
+  "projected_seven_probe_seconds": 18.835780902096303,
+  "projected_fraction_of900": 0.02092864544677367,
+  "per_site_knot_learned_absmax": [
+    [
+      0.059266433119773865,
+      0.050141483545303345,
+      0.04067939519882202
+    ],
+    [
+      0.06333769112825394,
+      0.0440763421356678,
+      0.03649493679404259
+    ],
+    [
+      0.0732228085398674,
+      0.04666966572403908,
+      0.03489702194929123
+    ],
+    [
+      0.07901457697153091,
+      0.061537377536296844,
+      0.046060848981142044
+    ],
+    [
+      0.059273455291986465,
+      0.044299785047769547,
+      0.05262576416134834
+    ]
+  ],
+  "all_five_routed_backwards_executed": true,
+  "five_original_dense_MLPs": true,
+  "source_hashes_match": true,
+  "shared_backend_unchanged": true,
+  "original_local_residual_function_unchanged": true,
+  "full_convergence_verified": false,
+  "not_a_screening_reference": true,
+  "limitation": "One original-schedule prefix per implementation; not a speed confidence interval or convergence win. Calibration probes are off-prefix and excluded from screening. Discovery counts all probe setup, scoring, restoration and sparse diagnostics on its continuous clock.",
+  "decision": "Launch a new seed169 900-second-cap discovery with fixed-text first-bad screening; qualifying full validation triggers three fresh frozen unpruned seeds1669/1670/1671.",
+  "verification_seeds": [
+    1669,
+    1670,
+    1671
+  ]
+}

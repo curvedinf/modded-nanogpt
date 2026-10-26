@@ -1,0 +1,15 @@
+{
+  "utc": "2026-10-26T19:42:08.746636+00:00",
+  "run_id": "probe-experts-forward-primal-vjp-calibration-20261026T194035-691a13",
+  "code_commit": "a5bbebf416070f305e8a93b3c79f40373216dc91",
+  "passed": false,
+  "failure": "Actual core.backward geometry oracle assertion at257 tokens/nonzero geometry. Isolated FP32-DC kernel had passed its coordinate/component tests; next bounded repeat adds exact actual-versus-isolated error reporting without tolerance or arithmetic changes.",
+  "passed_cases": [
+    "1token zero",
+    "1token nonzero",
+    "257tokens zero"
+  ],
+  "convergence_launched": false,
+  "full_model_gate_launched": false,
+  "decision": "Preserve first failure and diagnose BF16-coordinate-store versus isolated-FP32-store kernel discrepancy; no tolerance relaxation."
+}

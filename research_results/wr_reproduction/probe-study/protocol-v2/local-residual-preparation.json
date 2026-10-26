@@ -1,0 +1,61 @@
+{
+  "utc": "2026-10-26T12:10:44.656344+00:00",
+  "hypothesis": "Add three bounded zero-initialized compact-support responses per independent rank1 chart at fixed knots[-2,0,2], width2, after original independentGS32/BF16 features. Preserve the original cubic/warp paths and every projection. Measured coordinateRMS1.3 at120s and2.1 at240s, inactive ReLU2 coordinates, and rejected cubic-reparameterization/frozen-component hypotheses motivate localized new function capacity rather than another scalar or basis change. Keep original rates, all five original denseMLPs and all shared kernels/settings. No convergence gain is assumed.",
+  "hypothesis_class": "exploratory-local-nonlinear-capacity",
+  "recipe": "configs/wr_reproduction/probe_experts_local_residual_k3.json",
+  "settings": {
+    "kind": "additive-compact-quartic-three-knots-v1",
+    "knots": [
+      -2.0,
+      0.0,
+      2.0
+    ],
+    "width": 2.0,
+    "bound_per_coefficient": 1.0,
+    "bound": 1.0,
+    "lr_mul": 0.125,
+    "initial_raw_coefficient": 0.0,
+    "placement": "after-independent-GS32"
+  },
+  "cycle": 3,
+  "position": "exploratory_after_four_rejected_local_hypotheses",
+  "prior_batch": "directed-cycle3-inspection.json",
+  "mechanism_evidence": "geometry-effect-diagnostic-summary.json",
+  "cpu_checks": {
+    "passed": true,
+    "gradcheck": true,
+    "gradgradcheck": true,
+    "zero_function_and_coordinate_gradient": true,
+    "zero_coefficients_learnable": true,
+    "compact_support_and_boundary_derivative": true,
+    "conservative_absolute_bound": 3.0,
+    "coordinate_jacobian_diagonal": true,
+    "new_parameters": 122880
+  },
+  "scope_rejections": [
+    "architecture",
+    "original_geometry_rate",
+    "knots",
+    "precision",
+    "shared_gemm"
+  ],
+  "production_design": "Reuse original geometry producer and smoothSTE without editing their source. Add a compact-support term after independentGS32/BF16 feature. Preserve original prepared operands, projections, route and original parameter initialization; zero-only parameter creation consumes no RNG.",
+  "numerical_test_design": "Five actual-width cases, training1/257/4096/16384 tokens and evaluation257 with seven empty experts; zero initialization, routed output/input/router/post/weight parity; independent smooth coefficient/coordinate gradients and groupedFP32 matrix reference. Full24-warmup/all-eight-rank graph and temporary-probe state gate follow numerical success.",
+  "predeclared_tolerances": {
+    "initial_BF16_products": "bitwise",
+    "initial_FP32_geometry_relative_rms": 2e-06,
+    "smooth_local_gradient_relative_rms": 2e-05,
+    "features_and_output_relative_rms": 0.003,
+    "input_and_weight_relative_rms": 0.004
+  },
+  "graph_gate_design": "Original24warmup, eight actual updates, every site/knot learns, constant fixed-text original-math oracle, ordinary/pending state snapshots, same-next-update bitwise parity, projected seven probes plus sparse diagnostics<3%. No100update scalar timing screen; all additional actual cost stays on900s discoveryclock.",
+  "new_verification_seeds": [
+    1569,
+    1570,
+    1571
+  ],
+  "full_convergence_verified": false,
+  "gpu_gate_not_yet_run": true,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "no_reserved_text_used": true
+}

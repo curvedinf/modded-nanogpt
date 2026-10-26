@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-26T16:38:18.466776+00:00",
+  "source_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+  "artifact_sha256": "57682b819e305b891bc5fb23d8de2911d56c49627f7de43f24aff2f64dde073d",
+  "tensor_only_not_model_checkpoint": true,
+  "read_only": true,
+  "charts": 40960,
+  "coefficient_master_rms": 0.013702545496850984,
+  "joint_GS32_error_rms": 4.548654603821961e-05,
+  "direct_FP16_error_rms": 2.8424089267642758e-06,
+  "cubic_joint_GS32_error_rms": 4.743455681557171e-05,
+  "cubic_direct_FP16_error_rms": 2.5238049189689016e-06,
+  "warp_joint_GS32_error_rms": 4.131589586202645e-05,
+  "warp_direct_FP16_error_rms": 3.390970802414035e-06,
+  "interpretation": "Direct FP16 coefficients reduce coefficient-domain error on the saved incumbent tensor. This is a representation diagnostic only; it does not prove activation accuracy, speed or convergence improvement.",
+  "distinction": "The earlier split-scale variant retained INT8 quantization in two groups and failed screening. This proposal removes only geometry coefficient group quantization, retaining FP16 nonlinear arithmetic and all existing independent pathways. It does not repeat split groups, hidden-BF16 activations, rank changes or scalar-rate grids."
+}

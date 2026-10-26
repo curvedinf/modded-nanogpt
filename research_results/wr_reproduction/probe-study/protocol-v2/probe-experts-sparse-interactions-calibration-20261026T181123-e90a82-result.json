@@ -1,0 +1,1042 @@
+{
+  "run_id": "probe-experts-sparse-interactions-calibration-20261026T181123-e90a82",
+  "status": "calibration_complete",
+  "seed": 169,
+  "code_commit": "36d4baa0a4e68fc4939706ea4d20c0b0e2735b19",
+  "recipe": {
+    "name": "probe-experts-sparse-interactions",
+    "hypothesis": "Cycle6 exploratory: retain every original independent rank1 GS32/BF16 feature and add three zero-initialized bounded cross-coordinate terms per chart:sum_k tanh(raw_ik)*u(c_i)*u(c_(i xor2^k)), u(c)=tanh(clamp(c,-65504,65504)/4), k0/1/2. Previous interaction branches used disconnected adjacent pairs; these three partners connect each group of8 coordinates, testing interaction coverage/capacity. Each term is bounded1, totalresidual bounded3; no coordinate means, rank2/4mean spine or variance rescaling. Additional122880 FP32 coefficients use original geometryAdam.125/.9,.99/wd0; every original nonlinear path and projection/geometry rate, GS32/BF16 products, FP16 nonlinearity,64-row BF16 base coordinateVJP, all5dense/sharedsettings remain. Small prior interaction effects do not prove insufficient connectivity; more parameters and runtime must earn a loss/time gain. Require bitwise zero-init function/all-existing-gradients, independent output/all-gradient and cross-derivative/nonedge checks, then24warmup+8actual-update graph/probe/state gate. No100update architectural speed sweep.",
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "kernel_evidence": {
+      "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+      "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+      "matrix_max_relative_rms": 4.411854752106592e-05
+    },
+    "block_correctness_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+      "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+      "max_relative_rms": 0.0,
+      "evaluation_original_kernels": true,
+      "bitwise_input_and_weight_producers": true
+    },
+    "timing_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+      "first100_seconds": 54.066861718994915,
+      "updates25_to100_seconds": 40.427348073004396,
+      "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+      "reference_first100": 55.488501123007154,
+      "reference_25to100": 41.43367328601016,
+      "validation": false,
+      "first100_time_reduction": 0.025620432616493716,
+      "steady_time_reduction": 0.024287617611387313,
+      "timing_gate_passed": true
+    },
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "hardware_change_scope": "Opt-in shared nongrouped FP8 GEMM tiles across attention, dense MLP and output head; default MLP dispatch remains legacy.",
+    "shared_fp8_correctness_evidence": {
+      "run_id": "ks3-shared-fp8-dispatch-check-20261025T075607-ff0ab5",
+      "code_commit": "bcb2f5f79d96c9d82c4b0ccfcbbf0b75253fa4e1",
+      "source_format_pairs": 4,
+      "independent_shape_cases": 15,
+      "all_stored_byte_patterns": true,
+      "original_dense_mlp_autograd": true,
+      "validation": false
+    },
+    "validation_window_policy": "accepted-control",
+    "evaluation_protocol": "Capture live stage-two YaRN frequencies/attention scales on first reach of640/1408 windows. For terminal stage four or full-schedule completion only, restore those nonlearned buffers and use640/1408 evaluation arguments. Preserve raw learned weights, training schedule and all updates; no canonical mask, tail shipping or final window extension. Early-stage evaluation remains incompatible. All restoration/rebuild/readback/setup is inside original training timer; no strict qualification if actual elapsed exceeds902.3592145430011.",
+    "shared_fp8_timing_evidence": {
+      "run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+      "code_commit": "2959f2a2250c36cb7dd10f28c02cdcfcc86fd729",
+      "first100_seconds": 39.57759546399757,
+      "after25_through100_seconds": 29.55288318300154,
+      "baseline_run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "baseline_first100_seconds": 54.06715966599586,
+      "baseline_after25_through100_seconds": 40.427348073004396,
+      "first100_time_reduction": 0.26799196206178977,
+      "steady_time_reduction": 0.2689878364112719,
+      "validation": false,
+      "gate_passed": true
+    },
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_experts",
+    "hypothesis_class": "exploratory",
+    "sparse_interactions": {
+      "kind": "bounded-sparse-three-partner-interactions-v1",
+      "bound": 1.0,
+      "coordinate_scale": 4.0,
+      "partners": [
+        1,
+        2,
+        4
+      ],
+      "lr_mul": 0.125,
+      "initial_raw_coefficient": 0.0,
+      "placement": "after-independent-GS32"
+    }
+  },
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "validation": null,
+  "pruning": null,
+  "calibration": {
+    "passed": true,
+    "mode": "sparse-interactions-graph",
+    "full_graph_warmup": true,
+    "original_logical_ranks": 8,
+    "residual_placement": "after-independent-GS32",
+    "actual_prefix_updates": 8,
+    "actual_prefix_update_seconds": [
+      0.38664756700745784,
+      0.4188239799987059,
+      0.40768022698466666,
+      0.4259594260074664,
+      0.41688155999872833,
+      0.4331837719946634,
+      0.41709751400048845,
+      0.43409031798364595
+    ],
+    "not_a_speed_or_convergence_win": true,
+    "residual_parameters": [
+      5,
+      8,
+      1024,
+      3
+    ],
+    "residual_raw_max_abs": 0.004892759025096893,
+    "per_site_residual_learned_absmax": [
+      [
+        0.003983353264629841,
+        0.0039418539963662624,
+        0.003979333210736513
+      ],
+      [
+        0.003923256415873766,
+        0.003911607898771763,
+        0.0039927964098751545
+      ],
+      [
+        0.003958783578127623,
+        0.003911593928933144,
+        0.0038804737851023674
+      ],
+      [
+        0.00384474266320467,
+        0.003843438345938921,
+        0.003871896071359515
+      ],
+      [
+        0.003889665473252535,
+        0.0038257967680692673,
+        0.0037005518097430468
+      ]
+    ],
+    "routed_backward_sites": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "five_original_dense_MLPs_retained": true,
+    "fixed_probe_oracle_max_abs": 0.0,
+    "state_restoration": {
+      "checked_entries": 1268,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "pending_state_restoration": {
+      "checked_entries": 1456,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "continuation_parity": {
+      "passed": true,
+      "same_checkpoint": true,
+      "same_eight_logical_microbatches": true,
+      "baseline_loss": 13.236787796020508,
+      "with_probe_loss": 13.236787796020508,
+      "maximum_parameter_relative_rms": 0.0,
+      "all_parameters_bitwise_equal": true
+    },
+    "odd_continuation_loss": 12.898763656616211,
+    "cold_probe_seconds": 3.0821679329965264,
+    "warm_probe_seconds": 2.639456779026659,
+    "pending_probe_seconds": 2.654161483020289,
+    "projected_seven_probe_and_sparse_diagnostic_seconds": 18.951246555981925,
+    "projected_fraction_of900": 0.021056940617757695,
+    "projection_limitation": "Screen/ordinary instrumentation costs also remain on clock; actual run overhead must be inspected.",
+    "gradient_measurements": [
+      {
+        "event": "ks3_gradient_update",
+        "step": 9,
+        "original_step": 8,
+        "do_adam": false,
+        "measurements": {
+          "routed.raw_scale": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "raw_scale",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.7494063973426819,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.raw_shift": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "raw_shift",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.0015366034349426627,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.up_projection": {
+            "parameter": "moe_bank",
+            "branch": "routed",
+            "component": "up_projection",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 31457280,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.018693169578909874,
+            "update_rms": 0.00030007134773768485,
+            "relative_update_rms": 0.016052459507789052,
+            "gradient_sample_rms": 0.3434317409992218,
+            "gradient_l2_estimate": 1926.1983898475066,
+            "gradient_missing_reason": null
+          },
+          "routed.down_projection": {
+            "parameter": "moe_bank",
+            "branch": "routed",
+            "component": "down_projection",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 31457280,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.003931621089577675,
+            "update_rms": 0.0005100634298287332,
+            "relative_update_rms": 0.12973361832371363,
+            "gradient_sample_rms": 0.6108080744743347,
+            "gradient_l2_estimate": 3425.826413525899,
+            "gradient_missing_reason": null
+          },
+          "routed.spine_c0": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "spine_c0",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.002410597400739789,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.spine_c1": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "spine_c1",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.002565056551247835,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.spine_c2": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "spine_c2",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.0024414039216935635,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.spine_c3": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "spine_c3",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.002232253784313798,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.warp_c4": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "warp_c4",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.002185237128287554,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.warp_c5": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "warp_c5",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.0024261598009616137,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.interaction_xor1": {
+            "parameter": "ks3_interaction",
+            "branch": "routed",
+            "component": "bounded_interaction_raw_xor1",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.0020556149538606405,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.interaction_xor2": {
+            "parameter": "ks3_interaction",
+            "branch": "routed",
+            "component": "bounded_interaction_raw_xor2",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.0020494316704571247,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.interaction_xor4": {
+            "parameter": "ks3_interaction",
+            "branch": "routed",
+            "component": "bounded_interaction_raw_xor4",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.002040000632405281,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          }
+        },
+        "gradient_boundary": "after all-eight-rank reduction; before original step_optimizers",
+        "sampling": "deterministic bounded active-slot samples; geometry components separated",
+        "approximate_norms": true,
+        "single_original_update": true,
+        "pre_sample_training_drain_seconds": 0.04727933299727738,
+        "post_optimizer_drain_seconds": 0.010331731988117099,
+        "extra_seconds_before_optimizer": 0.0008615749829914421,
+        "timing": "All sampling, drains and logging remain on continuous training clock; drains wait for original queued training work",
+        "feedforward_post_multipliers_bf16": [
+          1.03125,
+          1.03125,
+          1.03125,
+          1.0234375,
+          1.03125,
+          1.03125,
+          1.0234375,
+          1.0,
+          1.0234375,
+          1.0,
+          1.0
+        ],
+        "activation_caveat": "Core projected-output moments precede these post multipliers and routed gate weights."
+      },
+      {
+        "event": "ks3_gradient_update",
+        "step": 10,
+        "original_step": 9,
+        "do_adam": true,
+        "measurements": {
+          "routed.raw_scale": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "raw_scale",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.7494063973426819,
+            "update_rms": 0.0004693687951657921,
+            "relative_update_rms": 0.0006263207744557902,
+            "gradient_sample_rms": 0.0007798778242431581,
+            "gradient_l2_estimate": 0.15783617416095108,
+            "gradient_missing_reason": null
+          },
+          "routed.raw_shift": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "raw_shift",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.0015366034349426627,
+            "update_rms": 0.0004704318125732243,
+            "relative_update_rms": 0.3061504366549709,
+            "gradient_sample_rms": 0.000787516008131206,
+            "gradient_l2_estimate": 0.15938203389045075,
+            "gradient_missing_reason": null
+          },
+          "routed.up_projection": {
+            "parameter": "moe_bank",
+            "branch": "routed",
+            "component": "up_projection",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 31457280,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.01870676875114441,
+            "update_rms": 0.0003095842257607728,
+            "relative_update_rms": 0.01654931591228622,
+            "gradient_sample_rms": 0.15836696326732635,
+            "gradient_l2_estimate": 888.2294594058925,
+            "gradient_missing_reason": null
+          },
+          "routed.down_projection": {
+            "parameter": "moe_bank",
+            "branch": "routed",
+            "component": "down_projection",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 31457280,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.004211306571960449,
+            "update_rms": 0.0005324163939803839,
+            "relative_update_rms": 0.12642546556104395,
+            "gradient_sample_rms": 0.33972448110580444,
+            "gradient_l2_estimate": 1905.4055591770798,
+            "gradient_missing_reason": null
+          },
+          "routed.spine_c0": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "spine_c0",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.002410597400739789,
+            "update_rms": 0.00044888141565024853,
+            "relative_update_rms": 0.18621168989582879,
+            "gradient_sample_rms": 0.2314664125442505,
+            "gradient_l2_estimate": 46.845508189952085,
+            "gradient_missing_reason": null
+          },
+          "routed.spine_c1": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "spine_c1",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.002565056551247835,
+            "update_rms": 0.00045244803186506033,
+            "relative_update_rms": 0.1763891059809016,
+            "gradient_sample_rms": 0.29544270038604736,
+            "gradient_l2_estimate": 59.793398482599514,
+            "gradient_missing_reason": null
+          },
+          "routed.spine_c2": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "spine_c2",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.0024414039216935635,
+            "update_rms": 0.00045091897482052445,
+            "relative_update_rms": 0.18469658822687934,
+            "gradient_sample_rms": 0.08002651482820511,
+            "gradient_l2_estimate": 16.196227843991462,
+            "gradient_missing_reason": null
+          },
+          "routed.spine_c3": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "spine_c3",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.002232253784313798,
+            "update_rms": 0.0004486264369916171,
+            "relative_update_rms": 0.2009746562618221,
+            "gradient_sample_rms": 0.18430259823799133,
+            "gradient_l2_estimate": 37.30022330361524,
+            "gradient_missing_reason": null
+          },
+          "routed.warp_c4": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "warp_c4",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.002185237128287554,
+            "update_rms": 0.0004522467206697911,
+            "relative_update_rms": 0.20695544424700085,
+            "gradient_sample_rms": 0.16018350422382355,
+            "gradient_l2_estimate": 32.418861883807004,
+            "gradient_missing_reason": null
+          },
+          "routed.warp_c5": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "warp_c5",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.0024261598009616137,
+            "update_rms": 0.0004478111513890326,
+            "relative_update_rms": 0.184576115395013,
+            "gradient_sample_rms": 0.23692409694194794,
+            "gradient_l2_estimate": 47.95006585056572,
+            "gradient_missing_reason": null
+          },
+          "routed.interaction_xor1": {
+            "parameter": "ks3_interaction",
+            "branch": "routed",
+            "component": "bounded_interaction_raw_xor1",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.0020556149538606405,
+            "update_rms": 0.0004622396663762629,
+            "relative_update_rms": 0.22486685335117496,
+            "gradient_sample_rms": 0.007274019997566938,
+            "gradient_l2_estimate": 1.4721581400271346,
+            "gradient_missing_reason": null
+          },
+          "routed.interaction_xor2": {
+            "parameter": "ks3_interaction",
+            "branch": "routed",
+            "component": "bounded_interaction_raw_xor2",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.0020494316704571247,
+            "update_rms": 0.00046495741116814315,
+            "relative_update_rms": 0.22687138969821552,
+            "gradient_sample_rms": 0.006607591174542904,
+            "gradient_l2_estimate": 1.3372824293620973,
+            "gradient_missing_reason": null
+          },
+          "routed.interaction_xor4": {
+            "parameter": "ks3_interaction",
+            "branch": "routed",
+            "component": "bounded_interaction_raw_xor4",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.002040000632405281,
+            "update_rms": 0.00046509949606843293,
+            "relative_update_rms": 0.2279898783757009,
+            "gradient_sample_rms": 0.007558356039226055,
+            "gradient_l2_estimate": 1.5297037088283718,
+            "gradient_missing_reason": null
+          }
+        },
+        "gradient_boundary": "after all-eight-rank reduction; before original step_optimizers",
+        "sampling": "deterministic bounded active-slot samples; geometry components separated",
+        "approximate_norms": true,
+        "single_original_update": true,
+        "pre_sample_training_drain_seconds": 0.04824250200181268,
+        "post_optimizer_drain_seconds": 0.011434775980887935,
+        "extra_seconds_before_optimizer": 0.0006509920058306307,
+        "timing": "All sampling, drains and logging remain on continuous training clock; drains wait for original queued training work",
+        "feedforward_post_multipliers_bf16": [
+          1.0390625,
+          1.0390625,
+          1.03125,
+          1.03125,
+          1.03125,
+          1.0390625,
+          1.03125,
+          1.0,
+          1.0234375,
+          1.0,
+          1.0
+        ],
+        "activation_caveat": "Core projected-output moments precede these post multipliers and routed gate weights."
+      }
+    ],
+    "activation_effect_diagnostics": [
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": 0.015313619747757912,
+          "rms": 0.5038381218910217,
+          "max_abs": 2.0779404640197754,
+          "nonzero_fraction": 0.8984375
+        },
+        "nonlinear_output": {
+          "mean": 0.1404794156551361,
+          "rms": 0.38842830061912537,
+          "max_abs": 4.34375,
+          "nonzero_fraction": 0.977294921875
+        },
+        "projected_output": {
+          "mean": 0.0011717567685991526,
+          "rms": 0.08632645010948181,
+          "max_abs": 0.40625,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "sparse_interactions_term_after_independent_GS32": {
+          "mean": 4.214798082102789e-06,
+          "rms": 6.255034531932324e-05,
+          "max_abs": 0.0005431845784187317,
+          "nonzero_fraction": 1.0
+        },
+        "residual_placement": "after-independent-GS32",
+        "per_partner_term_before_BF16": {
+          "1": {
+            "mean": 1.400673113494122e-06,
+            "rms": 3.244780964450911e-05,
+            "max_abs": 0.00034064913052134216,
+            "nonzero_fraction": 1.0
+          },
+          "2": {
+            "mean": 1.1098672985099256e-06,
+            "rms": 3.334547727718018e-05,
+            "max_abs": 0.00034669824526645243,
+            "nonzero_fraction": 1.0
+          },
+          "4": {
+            "mean": 1.7042574427250656e-06,
+            "rms": 3.374824154889211e-05,
+            "max_abs": 0.00037200856604613364,
+            "nonzero_fraction": 1.0
+          }
+        },
+        "independent_feature_sample": {
+          "mean": 0.15240661799907684,
+          "rms": 0.39078646898269653,
+          "max_abs": 4.53125,
+          "nonzero_fraction": 0.4589764475822449
+        },
+        "zero_independent_feature_activation": {
+          "zero_base_fraction": 0.5410235524177551,
+          "newly_activated_fraction": 0.5410235524177551,
+          "fraction_of_zero_base_activated": 1.0
+        },
+        "relative_feature_change_rms": 0.00010279504133918947,
+        "packed_feature_change_due_to_residual": {
+          "mean": -3.1077893254405353e-06,
+          "rms": 4.0170911233872175e-05,
+          "max_abs": 0.00054168701171875,
+          "nonzero_fraction": 0.5421066880226135
+        },
+        "residual_effect_scope": "Same live coordinates/geometry with and without sparse interactions, first probe chunk; final BF16 core features precede gate and post multiplier"
+      },
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": 0.020534168928861618,
+          "rms": 0.5023905634880066,
+          "max_abs": 2.374796152114868,
+          "nonzero_fraction": 0.900390625
+        },
+        "nonlinear_output": {
+          "mean": 0.1393067091703415,
+          "rms": 0.3783416450023651,
+          "max_abs": 5.75,
+          "nonzero_fraction": 0.98681640625
+        },
+        "projected_output": {
+          "mean": 0.0004756554262712598,
+          "rms": 0.08673880249261856,
+          "max_abs": 0.4375,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "sparse_interactions_term_after_independent_GS32": {
+          "mean": 4.962961156707024e-06,
+          "rms": 6.009969365550205e-05,
+          "max_abs": 0.0005882639670744538,
+          "nonzero_fraction": 1.0
+        },
+        "residual_placement": "after-independent-GS32",
+        "per_partner_term_before_BF16": {
+          "1": {
+            "mean": 1.3191408925194992e-06,
+            "rms": 2.9664908652193844e-05,
+            "max_abs": 0.00024407250748481601,
+            "nonzero_fraction": 1.0
+          },
+          "2": {
+            "mean": 1.8816290321410634e-06,
+            "rms": 3.331250627525151e-05,
+            "max_abs": 0.0003819855337496847,
+            "nonzero_fraction": 1.0
+          },
+          "4": {
+            "mean": 1.7621910046727862e-06,
+            "rms": 3.089115853072144e-05,
+            "max_abs": 0.0002886838046833873,
+            "nonzero_fraction": 1.0
+          }
+        },
+        "independent_feature_sample": {
+          "mean": 0.14603474736213684,
+          "rms": 0.3809890151023865,
+          "max_abs": 4.59375,
+          "nonzero_fraction": 0.4642470180988312
+        },
+        "zero_independent_feature_activation": {
+          "zero_base_fraction": 0.5357529520988464,
+          "newly_activated_fraction": 0.5357529520988464,
+          "fraction_of_zero_base_activated": 1.0
+        },
+        "relative_feature_change_rms": 9.552068531966455e-05,
+        "packed_feature_change_due_to_residual": {
+          "mean": -2.33994296650053e-06,
+          "rms": 3.639233182184398e-05,
+          "max_abs": 0.00058746337890625,
+          "nonzero_fraction": 0.5368363857269287
+        },
+        "residual_effect_scope": "Same live coordinates/geometry with and without sparse interactions, first probe chunk; final BF16 core features precede gate and post multiplier"
+      },
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": 0.031497448682785034,
+          "rms": 0.4995195269584656,
+          "max_abs": 2.7654061317443848,
+          "nonzero_fraction": 0.8984375
+        },
+        "nonlinear_output": {
+          "mean": 0.14279791712760925,
+          "rms": 0.3947027623653412,
+          "max_abs": 7.59375,
+          "nonzero_fraction": 0.974365234375
+        },
+        "projected_output": {
+          "mean": 0.0007020047632977366,
+          "rms": 0.08749126642942429,
+          "max_abs": 0.578125,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "sparse_interactions_term_after_independent_GS32": {
+          "mean": 5.9988551583955996e-06,
+          "rms": 6.149474938865751e-05,
+          "max_abs": 0.0005149105563759804,
+          "nonzero_fraction": 1.0
+        },
+        "residual_placement": "after-independent-GS32",
+        "per_partner_term_before_BF16": {
+          "1": {
+            "mean": 1.0260953331453493e-06,
+            "rms": 3.208370981155895e-05,
+            "max_abs": 0.00033932155929505825,
+            "nonzero_fraction": 1.0
+          },
+          "2": {
+            "mean": 2.705619181142538e-06,
+            "rms": 3.322111297165975e-05,
+            "max_abs": 0.00028173887403681874,
+            "nonzero_fraction": 1.0
+          },
+          "4": {
+            "mean": 2.2671410988550633e-06,
+            "rms": 3.350277984282002e-05,
+            "max_abs": 0.00034217131906189024,
+            "nonzero_fraction": 1.0
+          }
+        },
+        "independent_feature_sample": {
+          "mean": 0.15281321108341217,
+          "rms": 0.36525821685791016,
+          "max_abs": 3.703125,
+          "nonzero_fraction": 0.4611426889896393
+        },
+        "zero_independent_feature_activation": {
+          "zero_base_fraction": 0.5388572812080383,
+          "newly_activated_fraction": 0.5388572812080383,
+          "fraction_of_zero_base_activated": 1.0
+        },
+        "relative_feature_change_rms": 0.0001076007453889593,
+        "packed_feature_change_due_to_residual": {
+          "mean": -1.7342507590001333e-06,
+          "rms": 3.930205639335327e-05,
+          "max_abs": 0.0003833770751953125,
+          "nonzero_fraction": 0.5410235524177551
+        },
+        "residual_effect_scope": "Same live coordinates/geometry with and without sparse interactions, first probe chunk; final BF16 core features precede gate and post multiplier"
+      },
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": 0.032620564103126526,
+          "rms": 0.4980079233646393,
+          "max_abs": 2.2531843185424805,
+          "nonzero_fraction": 0.8984375
+        },
+        "nonlinear_output": {
+          "mean": 0.14169719815254211,
+          "rms": 0.37152716517448425,
+          "max_abs": 5.0,
+          "nonzero_fraction": 0.993408203125
+        },
+        "projected_output": {
+          "mean": -0.0006005251780152321,
+          "rms": 0.09878823906183243,
+          "max_abs": 0.400390625,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "sparse_interactions_term_after_independent_GS32": {
+          "mean": 6.921862677700119e-06,
+          "rms": 6.444523023674265e-05,
+          "max_abs": 0.000492808991111815,
+          "nonzero_fraction": 1.0
+        },
+        "residual_placement": "after-independent-GS32",
+        "per_partner_term_before_BF16": {
+          "1": {
+            "mean": 2.8787849259970244e-06,
+            "rms": 3.569369073375128e-05,
+            "max_abs": 0.00032953821937553585,
+            "nonzero_fraction": 1.0
+          },
+          "2": {
+            "mean": 2.760565166681772e-06,
+            "rms": 3.553692658897489e-05,
+            "max_abs": 0.000377145130187273,
+            "nonzero_fraction": 1.0
+          },
+          "4": {
+            "mean": 1.2825122439608094e-06,
+            "rms": 3.5704368201550096e-05,
+            "max_abs": 0.00032448506681248546,
+            "nonzero_fraction": 1.0
+          }
+        },
+        "independent_feature_sample": {
+          "mean": 0.1629088670015335,
+          "rms": 0.38112160563468933,
+          "max_abs": 3.546875,
+          "nonzero_fraction": 0.4669555723667145
+        },
+        "zero_independent_feature_activation": {
+          "zero_base_fraction": 0.5330443978309631,
+          "newly_activated_fraction": 0.5330443978309631,
+          "fraction_of_zero_base_activated": 1.0
+        },
+        "relative_feature_change_rms": 0.00010925926304859244,
+        "packed_feature_change_due_to_residual": {
+          "mean": -1.1481065484986175e-06,
+          "rms": 4.164106576354243e-05,
+          "max_abs": 0.000476837158203125,
+          "nonzero_fraction": 0.5349404215812683
+        },
+        "residual_effect_scope": "Same live coordinates/geometry with and without sparse interactions, first probe chunk; final BF16 core features precede gate and post multiplier"
+      },
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": 0.04635530710220337,
+          "rms": 0.5123829245567322,
+          "max_abs": 2.216226816177368,
+          "nonzero_fraction": 0.8984375
+        },
+        "nonlinear_output": {
+          "mean": 0.15721866488456726,
+          "rms": 0.410013884305954,
+          "max_abs": 4.96875,
+          "nonzero_fraction": 0.970947265625
+        },
+        "projected_output": {
+          "mean": -0.0012609395198523998,
+          "rms": 0.10795868933200836,
+          "max_abs": 0.423828125,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "sparse_interactions_term_after_independent_GS32": {
+          "mean": 1.0140513040823862e-05,
+          "rms": 7.011654088273644e-05,
+          "max_abs": 0.000579439103603363,
+          "nonzero_fraction": 1.0
+        },
+        "residual_placement": "after-independent-GS32",
+        "per_partner_term_before_BF16": {
+          "1": {
+            "mean": 3.318098606541753e-06,
+            "rms": 3.7831177905900404e-05,
+            "max_abs": 0.0004024437803309411,
+            "nonzero_fraction": 1.0
+          },
+          "2": {
+            "mean": 2.8669410312431864e-06,
+            "rms": 3.724768976098858e-05,
+            "max_abs": 0.0005025472491979599,
+            "nonzero_fraction": 1.0
+          },
+          "4": {
+            "mean": 3.955473857786274e-06,
+            "rms": 3.49143156199716e-05,
+            "max_abs": 0.0003065192431677133,
+            "nonzero_fraction": 1.0
+          }
+        },
+        "independent_feature_sample": {
+          "mean": 0.17866109311580658,
+          "rms": 0.4192940592765808,
+          "max_abs": 5.3125,
+          "nonzero_fraction": 0.4891657531261444
+        },
+        "zero_independent_feature_activation": {
+          "zero_base_fraction": 0.5108342170715332,
+          "newly_activated_fraction": 0.5108342170715332,
+          "fraction_of_zero_base_activated": 1.0
+        },
+        "relative_feature_change_rms": 9.964688337924547e-05,
+        "packed_feature_change_due_to_residual": {
+          "mean": -8.570617069381115e-07,
+          "rms": 4.1781346226343885e-05,
+          "max_abs": 0.000579833984375,
+          "nonzero_fraction": 0.5119176506996155
+        },
+        "residual_effect_scope": "Same live coordinates/geometry with and without sparse interactions, first probe chunk; final BF16 core features precede gate and post multiplier"
+      }
+    ],
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "not_a_screening_reference": true,
+    "full_convergence_verified": false
+  },
+  "exit_code": 0,
+  "reserved_confirmation": null,
+  "events_sha256": "15068b68f88718f76fe6dc33cde4d4a7c7369cf5f076a3c1272934cb53f6ec0d",
+  "completed_utc": "2026-10-26T18:16:24.836569+00:00",
+  "qualifies": false
+}

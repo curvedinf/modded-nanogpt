@@ -1,0 +1,46 @@
+{
+  "utc": "2026-10-26T18:11:23.443112+00:00",
+  "run_id": "probe-experts-sparse-interactions-calibration-20261026T181004-71577e",
+  "code_commit": "51a38d7687d62464bbc04bb4b7202924c39a1e92",
+  "passed": true,
+  "shape_cases": 5,
+  "cpu": {
+    "passed": true,
+    "gradcheck": true,
+    "gradgradcheck": true,
+    "initial_function_and_original_gradients_exact": true,
+    "all_three_interaction_coefficients_receive_zero_init_signal": true,
+    "analytic_cross_derivatives": [
+      0.004891244259364901,
+      0.01876458844557737,
+      0.005112146642846821
+    ],
+    "measured_cross_derivatives": [
+      0.004891244259364901,
+      0.01876458844557737,
+      0.005112146642846821
+    ],
+    "nonedge_cross_derivatives_exact_zero": true,
+    "independent_groups_of_eight": true,
+    "single_partner_reduces_to_existing_basis_exactly": true,
+    "absolute_residual_sum_bound": 3.0,
+    "independent_rank_one_paths_retained": true,
+    "new_parameters": 122880
+  },
+  "all_zero_init_outputs_and_existing_gradients_bitwise": true,
+  "maximum_nonzero_relative_rms": {
+    "features": 8.177191830327502e-07,
+    "output": 3.731584001798183e-05,
+    "input_gradient": 0.00012739327212329954,
+    "geometry_gradient": 2.416808513316937e-07,
+    "sparse_interactions_gradient": 8.410705731876078e-07,
+    "weight_gradient": 7.460062624886632e-05
+  },
+  "maximum_new_smooth_relative_rms": {
+    "coordinate": 9.060028816065824e-08,
+    "coefficient": 8.20497859876923e-07
+  },
+  "hypothesis_class": "exploratory",
+  "cycle": 6,
+  "decision": "Launch full24warmup+8update graph/state/probe gate. No speed or convergence claim."
+}

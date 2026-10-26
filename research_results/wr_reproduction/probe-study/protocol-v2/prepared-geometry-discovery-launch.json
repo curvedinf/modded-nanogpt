@@ -1,0 +1,24 @@
+{
+  "utc": "2026-10-26T15:50:40.366442+00:00",
+  "run_id": "probe-experts-prepared-geometry-discovery-20261026T155013-becd49",
+  "unit": "wr-probe-prepared-geometry-023d24db",
+  "code_commit": "b31b536eb634e6a89d8216d1d6bdbd6ec8b443b2",
+  "seed": 169,
+  "phase": "cycle5_local3_prepared_geometry_discovery",
+  "status": "running",
+  "numerical_gate_run_id": "probe-experts-prepared-geometry-calibration-20261026T154318-3550a8",
+  "speed_state_gate_run_id": "probe-experts-prepared-geometry-calibration-20261026T154358-035107",
+  "budget_seconds": 900,
+  "comparison": "Only compatible constant-condition full-vocabulary heldout CE at elapsed training time; strict below5 then first one-sided gap >=0.01. Latest nonfuture reference within3seconds.",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "probe_signature": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "frozen_verification_seeds": [
+    2369,
+    2370,
+    2371
+  ],
+  "verification_comparative_pruning_exempt": true,
+  "source_hashes_match": true,
+  "new_stop": false,
+  "full_validation_result": null
+}

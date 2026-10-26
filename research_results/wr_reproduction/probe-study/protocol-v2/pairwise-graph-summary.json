@@ -1,0 +1,75 @@
+{
+  "utc": "2026-10-26T08:03:32.406295+00:00",
+  "run_id": "probe-experts-pairwise-b1-calibration-20261026T075549-00ef74",
+  "code_commit": "12664b95c3bccc2dacb67461ed379a4b3ff2c0cf",
+  "passed": true,
+  "full_graph_warmup_updates": 24,
+  "original_logical_ranks": 8,
+  "actual_prefix_updates": 8,
+  "actual_prefix_update_seconds": [
+    0.3767751469858922,
+    0.40018447901820764,
+    0.3877836930041667,
+    0.4063960560015403,
+    0.3973763950052671,
+    0.414615938992938,
+    0.39633842400508,
+    0.41447168099693954
+  ],
+  "state_restoration": {
+    "checked_entries": 1268,
+    "changed": [],
+    "passed": true,
+    "pointer_restoration_required": true,
+    "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+  },
+  "pending_state_restoration": {
+    "checked_entries": 1456,
+    "changed": [],
+    "passed": true,
+    "pointer_restoration_required": true,
+    "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+  },
+  "continuation_parity": {
+    "passed": true,
+    "same_checkpoint": true,
+    "same_eight_logical_microbatches": true,
+    "baseline_loss": 13.23636531829834,
+    "with_probe_loss": 13.23636531829834,
+    "maximum_parameter_relative_rms": 0.0,
+    "all_parameters_bitwise_equal": true
+  },
+  "fixed_probe_oracle_max_abs": 0.0,
+  "pair_raw_max_abs": 0.004706391133368015,
+  "pair_gradient_odd": {
+    "parameter": "ks3_pair",
+    "branch": "routed",
+    "component": "bounded_pair_raw_coefficients",
+    "active_slots": null,
+    "sample_elements": 4096,
+    "total_elements": 40960,
+    "optimizer_applied": true,
+    "gradient_available": true,
+    "parameter_rms": 0.0020546899177134037,
+    "update_rms": 0.00046156017924658954,
+    "relative_update_rms": 0.22463738945107814,
+    "gradient_sample_rms": 0.007229750044643879,
+    "gradient_l2_estimate": 1.4631985315058358,
+    "gradient_missing_reason": null
+  },
+  "probe_cost": {
+    "cold": 3.200411763973534,
+    "warm": 2.6588150860043243,
+    "pending": 2.6472329489770345,
+    "projected_fraction_of900": 0.021306859668952207,
+    "limitation": "Screen/ordinary instrumentation costs also remain on clock; actual run overhead must be inspected."
+  },
+  "source_files": {
+    "wr_reproduction/ks3_pairwise.py": "54b28f87bb84ce41ca4bacdab5c0237c2ac3465c4f1ade79582ad236aa05b333",
+    "wr_reproduction/probe_pairwise_train.py": "26fca779590b7640f6f54c28ecd7b0e71345cfbb70f300493965b21aac5c470b",
+    "wr_reproduction/probe_pairwise_controller.py": "362e7eb09ce057d747a0e36a1824d19f3678efb8d226be4d22ed139a2ab14758",
+    "wr_reproduction/check_ks3_pairwise.py": "72a2f590d4dd7891d7bf4bdd38e5764ec4819ea02b5c355d27ab2ae2f8454345"
+  },
+  "full_convergence_verified": false,
+  "decision": "Both pairwise gates passed. Launch one new seed169 discovery with independent rank1 paths plus bounded pair term (bound1, zero initialization, original geometry/projection rates). All five original dense MLPs retained. Use frozen V2 fixed-probe first comparable +0.01 screen and continuous900s cap. If qualifying, three fresh569/570/571 complete unpruned with exact same code/config. Inspect actual pair activation effect and fixed-time result before further hypotheses."
+}

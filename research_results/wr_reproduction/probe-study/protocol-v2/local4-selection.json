@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-26T07:32:02.499902+00:00",
+  "completed_local_hypotheses": 3,
+  "completed_exploratory_hypotheses": 0,
+  "next_execution_index": 4,
+  "prepared_hypothesis_index": 3,
+  "next_config": "configs/wr_reproduction/probe_local_experts_joint_damp.json",
+  "reason": "Higher expert geometry with slower projections failed at360s despite finite sampled updates. The final local tests jointly slower geometry/projections on the verified expert-only architecture, checking the opposite feature-drift direction; this new joint recipe has not been run. After this arm, inspect the four-run cycle before pairwise exploration; no further scalar queue.",
+  "changes": {
+    "geometry_lr_multiplier": 0.109375,
+    "projection_lr_multiplier": 0.9375
+  },
+  "all_five_original_dense_MLPs_retained": true,
+  "scope_audit": "/root/modded-nanogpt/research_results/wr_reproduction/probe-study/protocol-v2/local34-configuration-scope-audit.json",
+  "verification_seeds_if_qualified": [
+    469,
+    470,
+    471
+  ]
+}

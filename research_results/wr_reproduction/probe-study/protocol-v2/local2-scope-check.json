@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-26T07:09:26.381907+00:00",
+  "passed": true,
+  "config": "configs/wr_reproduction/probe_local_dense8_linear_catchup.json",
+  "changed_since_local1": [
+    "name",
+    "hypothesis",
+    "dense_projection_lr_multiplier",
+    "local_cycle_index"
+  ],
+  "original_installed_optimizer_implementation_unchanged": true,
+  "reused_actual_optimizer_scope_audit": "local1-optimizer-scope-audit.json",
+  "no_new_numerical_kernel": true,
+  "no_separate_timing_gate": true,
+  "full_original_graph_warmup_required": true,
+  "frozen_backend": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9"
+}

@@ -1,0 +1,24 @@
+{
+  "utc": "2026-10-26T16:41:06.137547+00:00",
+  "phase": "cycle6_local1_fp16_coefficient_speed_state",
+  "status": "running",
+  "run_id": "probe-experts-fp16-coefficients-calibration-20261026T164025-6ce912",
+  "unit": "wr-probe-fp16-coefficient-a5e2d457",
+  "code_commit": "3b340f4a786a2d1f0a97d51087a2c0e0fa3b2161",
+  "seed": 169,
+  "numerical_gate_run_id": "probe-experts-fp16-coefficients-calibration-20261026T163853-447b76",
+  "speed_reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "maximum_prefix_duration_ratio": 1.0,
+  "gate_requirements": "Full24 graph warmup and120s original eight-logical-rank prefix. Both first100 and updates26-100 no slower than saved incumbent, original evaluation oracle, normal/pending state restoration, bitwise next update and projected7probe overhead<=3%.",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "source_hashes_match": true,
+  "new_stop": false,
+  "not_a_screening_reference": true,
+  "full_convergence_verified": false,
+  "frozen_verification_seeds": [
+    2669,
+    2670,
+    2671
+  ],
+  "next": "On complete gate pass record/commit results and launch one original seed169 loss/time trial with900s cap; a qualifying full endpoint triggers2669/2670/2671. If slower or invalid, close without convergence. Freeze all Python sources while active."
+}

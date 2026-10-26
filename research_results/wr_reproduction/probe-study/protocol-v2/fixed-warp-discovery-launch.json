@@ -1,0 +1,36 @@
+{
+  "utc": "2026-10-26T11:17:58.292873+00:00",
+  "phase": "cycle3_local3_fixed_warp_discovery",
+  "status": "running",
+  "run_id": "probe-experts-fixed-warp-discovery-20261026T111736-854382",
+  "unit": "wr-probe-fixed-warp-62fab236",
+  "code_commit": "c4d2754278f249cd3d84df665c9bef5cb15714b1",
+  "source_hashes_match": true,
+  "recipe": "configs/wr_reproduction/probe_experts_fixed_warp.json",
+  "max_train_seconds": 900,
+  "full_graph_warmup_updates": 24,
+  "geometry_lr_multiplier": 0.125,
+  "projection_lr_multiplier": 1.0,
+  "frozen_geometry_columns": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "trainable_cubic_columns": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "unchanged_original_kernels": true,
+  "five_original_dense_MLPs": true,
+  "fresh_verification_seeds": [
+    1369,
+    1370,
+    1371
+  ],
+  "new_stop": false,
+  "next": "Monitor unchanged V2 CE screening. First comparable gap>=.01 after below5 prunes. If full validation qualifies, three fresh frozen seeds run without comparative pruning. Do not edit source until discovery and any verification finish.",
+  "if_rejected": "Inspect whether freezing warp changed cubic adaptation or coefficient packing. Do not repeat unchanged component recipe or reopen aggregate scalar grid."
+}

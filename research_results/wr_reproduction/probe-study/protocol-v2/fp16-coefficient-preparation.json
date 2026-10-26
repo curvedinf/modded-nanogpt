@@ -1,0 +1,59 @@
+{
+  "utc": "2026-10-26T16:38:18.546171+00:00",
+  "phase": "cycle6_local1_fp16_coefficients_prepared",
+  "parent_commit": "72b540079ac5ec3181a684a1df7def1d36307cdc",
+  "recipe_path": "configs/wr_reproduction/probe_experts_fp16_coefficients.json",
+  "kind": "direct-fp16-geometry-coefficients-v1",
+  "cpu_checks": {
+    "passed": true,
+    "exact_independent_FP16_rounding": true,
+    "original_STE_identity": true,
+    "cubic_packing_independent_of_warp": true,
+    "warp_packing_independent_of_cubic": true,
+    "raw_warp_scalars_unchanged": true,
+    "zero_initialization_exact": true,
+    "unused_dispatch_capacity_oracles_initialized": true
+  },
+  "scope_exclusion_tests": [
+    "rank",
+    "charts",
+    "architecture",
+    "precision",
+    "geometry_backward_rows",
+    "shared_fp8_gemm_tuning",
+    "training_gs32",
+    "max_train_seconds",
+    "coefficient_precision",
+    "maximum_actual_model_prefix_ratio"
+  ],
+  "incumbent_recipe_comparison_passed": true,
+  "shared_backend_fence_passed": true,
+  "numerical_requirements": "Ten actual-width zero/nonzero cases, original zero-init bitwise outputs and all routed gradients, independent Torch FP16 forward and smooth STE, original tolerance bounds unchanged.",
+  "speed_requirements": "Both first100 and updates26-100 original all-eight-rank prefixes must cost <=1.0x saved incumbent; no allowed slowdown. Timing only does not qualify a recipe.",
+  "state_requirements": "Full24 graph warmup, actual120s prefix, fixed evaluation oracle, normal/pending state restoration, bitwise next update, projected7probes<=3%.",
+  "verification_seeds": [
+    2669,
+    2670,
+    2671
+  ],
+  "coefficient_diagnostic": {
+    "utc": "2026-10-26T16:38:18.466776+00:00",
+    "source_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+    "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+    "artifact_sha256": "57682b819e305b891bc5fb23d8de2911d56c49627f7de43f24aff2f64dde073d",
+    "tensor_only_not_model_checkpoint": true,
+    "read_only": true,
+    "charts": 40960,
+    "coefficient_master_rms": 0.013702545496850984,
+    "joint_GS32_error_rms": 4.548654603821961e-05,
+    "direct_FP16_error_rms": 2.8424089267642758e-06,
+    "cubic_joint_GS32_error_rms": 4.743455681557171e-05,
+    "cubic_direct_FP16_error_rms": 2.5238049189689016e-06,
+    "warp_joint_GS32_error_rms": 4.131589586202645e-05,
+    "warp_direct_FP16_error_rms": 3.390970802414035e-06,
+    "interpretation": "Direct FP16 coefficients reduce coefficient-domain error on the saved incumbent tensor. This is a representation diagnostic only; it does not prove activation accuracy, speed or convergence improvement.",
+    "distinction": "The earlier split-scale variant retained INT8 quantization in two groups and failed screening. This proposal removes only geometry coefficient group quantization, retaining FP16 nonlinear arithmetic and all existing independent pathways. It does not repeat split groups, hidden-BF16 activations, rank changes or scalar-rate grids."
+  },
+  "full_convergence_verified": false,
+  "decision": "Commit then run bounded numerical gate; collect actual-model speed/state gate only on pass. No convergence run before both gates pass."
+}

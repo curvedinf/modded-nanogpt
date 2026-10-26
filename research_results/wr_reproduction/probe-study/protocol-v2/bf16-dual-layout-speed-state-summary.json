@@ -1,0 +1,105 @@
+{
+  "utc": "2026-10-26T15:26:15.067860+00:00",
+  "run_id": "probe-experts-bf16-dual-layout-calibration-20261026T151958-30f106",
+  "code_commit": "a1e38420e0efcd164d84e6f6e1e3f938360d93c9",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "passed": true,
+  "phase": "cycle5_local2_bf16_dual_layout_speed_state_passed",
+  "seed": 169,
+  "speed": {
+    "passed": true,
+    "candidate": {
+      "first100_seconds": 39.45578936400125,
+      "after25_through100_seconds": 29.530266222020146,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "reference": {
+      "first100_seconds": 39.55393554098555,
+      "after25_through100_seconds": 29.54044010999496,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "ratios": {
+      "first100_seconds": 0.9975186748008272,
+      "after25_through100_seconds": 0.9996555945701238
+    },
+    "criterion": "Both first100 and updates26-100 actual-model durations must be below the saved incumbent prefix.",
+    "limitation": "Single measured original prefix, not a sampling-error estimate or convergence result; loss pruning remains elapsed-time fixed-text only.",
+    "reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+    "reference_code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58"
+  },
+  "measured_prefix_reduction_percent": {
+    "first100_seconds": 0.2481325199172768,
+    "after25_through100_seconds": 0.03444054298762378
+  },
+  "speed_limitation": "Single saved original prefix comparison. The0.25%/0.03% reductions satisfy the predeclared strict gate but do not establish a robust speed advantage or a convergence gain.",
+  "state_calibration": {
+    "passed": true,
+    "step": 294,
+    "prefix_elapsed_seconds": 121.3032940760022,
+    "all_original_logical_ranks": 8,
+    "cold_probe_seconds": 2.9077804689877667,
+    "warm_probe_seconds": 2.6303082869853824,
+    "pending_probe_seconds": 2.643148127011955,
+    "oracle_max_abs": 0.0,
+    "repeat_max_abs": 0.0,
+    "state_restoration": {
+      "checked_entries": 1266,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "pending_state_restoration": {
+      "checked_entries": 1446,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "continuation_parity": {
+      "passed": true,
+      "same_checkpoint": true,
+      "same_eight_logical_microbatches": true,
+      "baseline_loss": 7.614670276641846,
+      "with_probe_loss": 7.614670276641846,
+      "maximum_parameter_relative_rms": 0.0,
+      "all_parameters_bitwise_equal": true
+    },
+    "post_probe_odd_update_loss": 7.590432167053223
+  },
+  "projected_seven_probe_seconds": 18.68963019090006,
+  "projected_fraction_of900": 0.020766255767666733,
+  "all_five_routed_backwards_executed": true,
+  "five_original_dense_MLPs": true,
+  "executed_layout_paths": [
+    "cached_down:0",
+    "cached_down:1",
+    "cached_down:2",
+    "cached_down:3",
+    "cached_down:4",
+    "cached_up:0",
+    "cached_up:1",
+    "cached_up:2",
+    "cached_up:3",
+    "cached_up:4",
+    "original_evaluation_mm",
+    "original_training_mm",
+    "refresh_both_layouts"
+  ],
+  "extra_buffer_bytes": 125829120,
+  "cache_matches_original_orientations": true,
+  "original_evaluation_forward": true,
+  "shared_backend_unchanged": true,
+  "source_hashes_match": true,
+  "not_a_screening_reference": true,
+  "full_convergence_verified": false,
+  "overhead_limitation": "Measured projection includes probe setup/scoring/restoration; all actual policy and diagnostics remain on continuous discovery clock.",
+  "decision": "Launch one seed169 loss/time trial using frozen protocol and first comparable one-sided pruning. A qualifying full endpoint triggers three fresh unpruned seeds2269/2270/2271.",
+  "verification_seeds": [
+    2269,
+    2270,
+    2271
+  ]
+}

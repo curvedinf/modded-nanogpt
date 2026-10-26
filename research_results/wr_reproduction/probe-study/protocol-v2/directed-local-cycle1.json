@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-26T07:00:53.065495+00:00",
+  "status": "first_local_selected_remaining_hypotheses_conditional_on_results",
+  "ratio_target": "four local joint hypotheses then one independently validated pairwise interaction hypothesis",
+  "configs": [
+    "configs/wr_reproduction/probe_local_dense8_joint_damp.json",
+    "configs/wr_reproduction/probe_local_dense8_linear_catchup.json",
+    "configs/wr_reproduction/probe_local_experts_joint_damp.json",
+    "configs/wr_reproduction/probe_local_experts_geometry_tilt.json"
+  ],
+  "first": "configs/wr_reproduction/probe_local_dense8_joint_damp.json",
+  "measurement_source": "probe-gradient-boundary-dense8-calibration-20261026T065441-9a46b3",
+  "first_decision": "Launch local1 after CPU optimizer-scope checks; no separate timing screen for existing numerical implementation. Inspect its curve and measured updates before the next local choice.",
+  "limits": [
+    "One checkpoint gradient sample is diagnostic evidence, not a causal mechanism proof.",
+    "Raw dense gradient magnitudes are not directly comparable with routed gradients because activation/routing and parameter populations differ.",
+    "Coefficient-relative updates are per odd Adam application, while projection-relative updates occur every update.",
+    "No new shared/model-wide setting, data, precision, width, rank, or control cohort.",
+    "All proposals are new joint configurations; historical rejected scalar recipes and all-KS3 queues remain discarded."
+  ],
+  "exploratory": "Existing CPU prototype retains independent rank-one pathways and adds zero-initialized bounded adjacent interactions. GPU output/input/weight/geometry/coupling gradients and initialization equivalence must pass before its convergence trial.",
+  "verification_seeds": [
+    469,
+    470,
+    471
+  ]
+}

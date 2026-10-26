@@ -1,0 +1,35 @@
+{
+  "utc": "2026-10-26T16:59:32.124059+00:00",
+  "kind": "controlled_CPU_polynomial_rounding_diagnostic",
+  "code_commit": "0385d7524f456f7de2cd8628fc069c80d0446427",
+  "source_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "artifact": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-experts-reference-20261026T043959-e5168d/terminal-geometry.pt",
+  "artifact_sha256": "57682b819e305b891bc5fb23d8de2911d56c49627f7de43f24aff2f64dde073d",
+  "terminal_tensor_is_not_a_model_checkpoint": true,
+  "charts": 40960,
+  "coordinate_grid": {
+    "start": -8,
+    "end": 8,
+    "points": 65,
+    "distribution": "uniform controlled sweep shared across all charts; not actual model activations"
+  },
+  "joint_coefficient_quantization_unchanged": true,
+  "FP16_tanh_arguments_and_outputs_unchanged": true,
+  "FP16_final_pre_relu_and_square_unchanged": true,
+  "GS32_feature_packing_unchanged": true,
+  "reference": "FP64 Horner at original quantized coefficients and original FP16-rounded t/z; isolates polynomial stage rounding",
+  "deformation_rms": 2.4218558624731727,
+  "original_FP16_polynomial_error_rms": 0.0008626908147301842,
+  "FP32_polynomial_error_rms": 1.2433429872526148e-07,
+  "original_FP16_polynomial_max_abs_error": 0.017368851269409902,
+  "FP32_polynomial_max_abs_error": 2.8813933283799997e-06,
+  "packed_feature_difference_rms": 0.07650194488943604,
+  "packed_feature_relative_difference_rms": 0.0023459572638857484,
+  "packed_feature_changed_fraction": 0.02202223613858223,
+  "all_finite": true,
+  "limitations": [
+    "Controlled coordinate sweep is not actual model distribution or an activation-effect estimate.",
+    "No model checkpoint evaluation, data exposure, CE measurement, GPU timing or convergence result.",
+    "Lower arithmetic error alone is not evidence of lower held-out loss."
+  ]
+}

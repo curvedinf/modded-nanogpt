@@ -1,0 +1,1262 @@
+{
+  "utc": "2026-10-26T08:21:16.126595+00:00",
+  "run_id": "probe-experts-pairwise-b1-discovery-20261026T080332-c4656f",
+  "seed": 169,
+  "code_commit": "5c88c2c86c6568efae54e44dc1621e2e9cdf914d",
+  "status": "pruned",
+  "qualifies": false,
+  "full_validation": null,
+  "architecture": "original five dense MLPs plus independent rank1 KS3 experts and bounded additive adjacent pair terms",
+  "probe": {
+    "event": "probe",
+    "measurement": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+    "loss": 3.5684548895806074,
+    "chunk_losses": [
+      3.611497163772583,
+      3.3912932872772217,
+      3.1160383224487305,
+      3.8587265014648438,
+      3.256932258605957,
+      3.6360907554626465,
+      3.6925063133239746,
+      3.692873477935791,
+      3.600372791290283,
+      3.8800768852233887,
+      3.497176170349121,
+      3.5402472019195557,
+      3.2357959747314453,
+      3.6817564964294434,
+      3.612349510192871,
+      3.384418487548828,
+      3.629629135131836,
+      3.6686792373657227,
+      3.689828395843506,
+      3.6299784183502197,
+      3.89046573638916,
+      3.5428593158721924,
+      3.4520740509033203,
+      3.2476468086242676,
+      3.001408576965332,
+      2.7887887954711914,
+      3.172842264175415,
+      3.237346887588501,
+      3.7247586250305176,
+      3.6004996299743652,
+      3.9168038368225098,
+      3.6883726119995117,
+      3.267535448074341,
+      3.556273937225342,
+      3.8180646896362305,
+      3.668710231781006,
+      3.5394930839538574,
+      3.1988768577575684,
+      3.576704978942871,
+      4.526833534240723,
+      3.866502285003662,
+      3.5610759258270264,
+      3.8286948204040527,
+      3.064300060272217,
+      3.3331470489501953,
+      3.334815502166748,
+      3.4546406269073486,
+      3.3824453353881836,
+      3.558528184890747,
+      3.7186942100524902,
+      3.8482043743133545,
+      3.5583643913269043,
+      3.7585744857788086,
+      3.4977288246154785,
+      3.4291796684265137,
+      3.578568935394287,
+      3.496455192565918,
+      3.7996017932891846,
+      3.4876151084899902,
+      3.383861541748047,
+      3.4258804321289062,
+      3.4675230979919434,
+      3.6187801361083984,
+      3.74232816696167,
+      3.290623664855957,
+      3.306234836578369,
+      3.345888137817383,
+      3.616901397705078,
+      3.9501218795776367,
+      3.776801109313965,
+      3.777423143386841,
+      4.016242027282715,
+      3.2944469451904297,
+      3.4799461364746094,
+      3.225945472717285,
+      3.673928737640381,
+      3.297245740890503,
+      4.067137241363525,
+      3.5354833602905273,
+      3.5101494789123535,
+      3.629124402999878,
+      3.7316062450408936,
+      3.70849871635437,
+      3.273444890975952,
+      3.5835838317871094,
+      3.5939977169036865,
+      3.772498607635498,
+      4.064207077026367,
+      3.4537923336029053,
+      3.544363021850586,
+      3.360032081604004,
+      3.733640670776367,
+      3.8354597091674805,
+      3.910712242126465,
+      3.5522148609161377,
+      3.690276622772217,
+      3.6840410232543945,
+      3.6523618698120117,
+      3.631643772125244,
+      3.4283080101013184,
+      3.681084394454956,
+      3.5461761951446533,
+      3.4081082344055176,
+      3.3048532009124756,
+      3.777775287628174,
+      4.450860023498535,
+      3.7842061519622803,
+      3.6532015800476074,
+      3.4042553901672363,
+      3.8507165908813477,
+      4.652157306671143,
+      3.4720048904418945,
+      3.4347314834594727,
+      3.31261944770813,
+      3.038463592529297,
+      3.9575700759887695,
+      2.6663410663604736,
+      3.3192741870880127,
+      3.4567389488220215,
+      3.4365739822387695,
+      3.6577885150909424,
+      3.6728765964508057,
+      3.407951831817627,
+      3.394813060760498,
+      3.5187220573425293,
+      3.3881702423095703,
+      3.539506435394287,
+      3.6582212448120117
+    ],
+    "probe_signature": {
+      "version": 2,
+      "loss_definition": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+      "tokens": 1048576,
+      "offset": 0,
+      "chunk_tokens": 8192,
+      "uncertainty_block_tokens": 8192,
+      "reserved_offset": 16777216,
+      "reserved_tokens": 262144,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "yarn_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612",
+      "segmentation": "original-unaligned-BOS-within-each-fixed8192-token-chunk",
+      "precision": "bf16",
+      "weights": "raw",
+      "canonical_mask": false,
+      "tail_shipping": false,
+      "final_window_extension": false,
+      "mtp": false,
+      "prefix": false,
+      "moe_aux": false,
+      "copy_eval_block": 8192,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "clock": "continuous-perf-counter-setup-evaluation-restoration-included",
+      "validation_data": [
+        {
+          "name": "fineweb_val_000000.bin",
+          "bytes": 200001024,
+          "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+        }
+      ],
+      "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+      "measurement": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+      "purpose": "screening",
+      "input_token_offset_range": [
+        0,
+        1048576
+      ],
+      "target_token_offset_range": [
+        1,
+        1048577
+      ],
+      "interval_convention": "half-open-shard-token-offsets-after1024-byte-header"
+    },
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "step": 690,
+    "checkpoint_elapsed_seconds": 481.10748328099726,
+    "probe_start_seconds": 481.10735225101234,
+    "probe_completion_seconds": 483.78357509701164,
+    "probe_seconds": 2.676222845999291,
+    "cumulative_probe_seconds": 11.047686859004898,
+    "setup_and_restore_included": true,
+    "train_seconds": 483.78357509701164,
+    "final_validation": false,
+    "ks3_activation_diagnostics": [
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": -0.9628231525421143,
+          "rms": 2.4756977558135986,
+          "max_abs": 11.005356788635254,
+          "nonzero_fraction": 0.900390625
+        },
+        "nonlinear_output": {
+          "mean": 1.5416799783706665,
+          "rms": 7.280086994171143,
+          "max_abs": 197.0,
+          "nonzero_fraction": 0.26123046875
+        },
+        "projected_output": {
+          "mean": -0.7815871238708496,
+          "rms": 45.44408416748047,
+          "max_abs": 414.0,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "pair_term_before_GS32": {
+          "mean": 0.0005013659247197211,
+          "rms": 0.005710655823349953,
+          "max_abs": 0.04531893506646156,
+          "nonzero_fraction": 0.90185546875
+        },
+        "packed_feature_change_due_to_pair": {
+          "mean": 0.00029421690851449966,
+          "rms": 0.01670808345079422,
+          "max_abs": 0.625,
+          "nonzero_fraction": 0.02978515625
+        },
+        "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+      },
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": -0.9375853538513184,
+          "rms": 2.4673879146575928,
+          "max_abs": 10.158401489257812,
+          "nonzero_fraction": 0.8984375
+        },
+        "nonlinear_output": {
+          "mean": 1.792655110359192,
+          "rms": 8.424084663391113,
+          "max_abs": 203.0,
+          "nonzero_fraction": 0.285888671875
+        },
+        "projected_output": {
+          "mean": -1.0360383987426758,
+          "rms": 47.140926361083984,
+          "max_abs": 478.0,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "pair_term_before_GS32": {
+          "mean": 0.0005274334107525647,
+          "rms": 0.006060390267521143,
+          "max_abs": 0.043997541069984436,
+          "nonzero_fraction": 0.901611328125
+        },
+        "packed_feature_change_due_to_pair": {
+          "mean": -0.00020465627312660217,
+          "rms": 0.011267416179180145,
+          "max_abs": 0.25,
+          "nonzero_fraction": 0.02587890625
+        },
+        "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+      },
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": -1.0412170886993408,
+          "rms": 2.5583503246307373,
+          "max_abs": 10.019938468933105,
+          "nonzero_fraction": 0.90234375
+        },
+        "nonlinear_output": {
+          "mean": 1.6763107776641846,
+          "rms": 7.544803142547607,
+          "max_abs": 171.0,
+          "nonzero_fraction": 0.272216796875
+        },
+        "projected_output": {
+          "mean": 0.7305694818496704,
+          "rms": 41.290035247802734,
+          "max_abs": 252.0,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "pair_term_before_GS32": {
+          "mean": 0.0008327755494974554,
+          "rms": 0.006178123876452446,
+          "max_abs": 0.04398736730217934,
+          "nonzero_fraction": 0.901123046875
+        },
+        "packed_feature_change_due_to_pair": {
+          "mean": -0.00033448636531829834,
+          "rms": 0.015038829296827316,
+          "max_abs": 0.5,
+          "nonzero_fraction": 0.027099609375
+        },
+        "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+      },
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": -1.026960849761963,
+          "rms": 2.436710834503174,
+          "max_abs": 12.581929206848145,
+          "nonzero_fraction": 0.904296875
+        },
+        "nonlinear_output": {
+          "mean": 1.456270694732666,
+          "rms": 6.895515441894531,
+          "max_abs": 206.0,
+          "nonzero_fraction": 0.278076171875
+        },
+        "projected_output": {
+          "mean": 0.6984589695930481,
+          "rms": 40.38683319091797,
+          "max_abs": 264.0,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "pair_term_before_GS32": {
+          "mean": 0.0006167314713820815,
+          "rms": 0.005966885481029749,
+          "max_abs": 0.040938857942819595,
+          "nonzero_fraction": 0.9013671875
+        },
+        "packed_feature_change_due_to_pair": {
+          "mean": -3.8339290767908096e-05,
+          "rms": 0.01189360860735178,
+          "max_abs": 0.375,
+          "nonzero_fraction": 0.031005859375
+        },
+        "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+      },
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": -0.9647657871246338,
+          "rms": 2.465827226638794,
+          "max_abs": 11.54852294921875,
+          "nonzero_fraction": 0.900390625
+        },
+        "nonlinear_output": {
+          "mean": 1.6241130828857422,
+          "rms": 7.52064847946167,
+          "max_abs": 118.0,
+          "nonzero_fraction": 0.27197265625
+        },
+        "projected_output": {
+          "mean": 0.1330365240573883,
+          "rms": 40.81962585449219,
+          "max_abs": 608.0,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "pair_term_before_GS32": {
+          "mean": 0.0005976734682917595,
+          "rms": 0.006098682060837746,
+          "max_abs": 0.044271405786275864,
+          "nonzero_fraction": 0.9013671875
+        },
+        "packed_feature_change_due_to_pair": {
+          "mean": -2.9649585485458374e-05,
+          "rms": 0.014149035327136517,
+          "max_abs": 0.5,
+          "nonzero_fraction": 0.031494140625
+        },
+        "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+      }
+    ],
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T08:13:48.041652+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-pairwise-b1-discovery-20261026T080332-c4656f",
+    "seed": 169,
+    "code_commit": "5c88c2c86c6568efae54e44dc1621e2e9cdf914d",
+    "training_projection_gs32": true
+  },
+  "screen": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 481.10748328099726,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.013589607551693916,
+    "reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+    "reference_elapsed_seconds": 480.9096338649979,
+    "reference_age_seconds": 0.19784941599937156,
+    "reference_utc": "2026-10-26T04:50:18.523707+00:00",
+    "reference_loss": 3.5548652820289135,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-experts-reference-20261026T043959-e5168d/events.jsonl",
+      "line": 737,
+      "row_sha256": "827077e62358d2964142af2cfb79f71fe32b4713640f52279e3fae7edfccce31"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.013589607551693916,
+      "standard_error": 0.0007291203764833321,
+      "normal95_halfwidth": 0.001429075937907331,
+      "student95_halfwidth": 0.0014436583454369976,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T08:13:48.154617+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-pairwise-b1-discovery-20261026T080332-c4656f",
+    "seed": 169,
+    "code_commit": "5c88c2c86c6568efae54e44dc1621e2e9cdf914d",
+    "training_projection_gs32": true
+  },
+  "paired32768": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.013589607551693916,
+    "standard_error": 0.0008389756271472642,
+    "normal95_halfwidth": 0.0016443922292086377,
+    "student95_halfwidth": 0.0017131882306347134,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "gradient_samples": 6,
+  "pair_coefficient_updates": [
+    {
+      "step": 294,
+      "parameter": "ks3_pair",
+      "branch": "routed",
+      "component": "bounded_pair_raw_coefficients",
+      "active_slots": null,
+      "sample_elements": 4096,
+      "total_elements": 40960,
+      "optimizer_applied": true,
+      "gradient_available": true,
+      "parameter_rms": 0.014551020227372646,
+      "update_rms": 0.00048409050214104354,
+      "relative_update_rms": 0.03326849214534091,
+      "gradient_sample_rms": 0.009464464150369167,
+      "gradient_l2_estimate": 1.915472867083323,
+      "gradient_missing_reason": null
+    },
+    {
+      "step": 444,
+      "parameter": "ks3_pair",
+      "branch": "routed",
+      "component": "bounded_pair_raw_coefficients",
+      "active_slots": null,
+      "sample_elements": 4096,
+      "total_elements": 40960,
+      "optimizer_applied": true,
+      "gradient_available": true,
+      "parameter_rms": 0.02041541412472725,
+      "update_rms": 0.00022447503579314798,
+      "relative_update_rms": 0.010995370185572808,
+      "gradient_sample_rms": 0.006347905844449997,
+      "gradient_l2_estimate": 1.2847258138084172,
+      "gradient_missing_reason": null
+    },
+    {
+      "step": 594,
+      "parameter": "ks3_pair",
+      "branch": "routed",
+      "component": "bounded_pair_raw_coefficients",
+      "active_slots": null,
+      "sample_elements": 4096,
+      "total_elements": 40960,
+      "optimizer_applied": true,
+      "gradient_available": true,
+      "parameter_rms": 0.02321414090692997,
+      "update_rms": 0.0001781588653102517,
+      "relative_update_rms": 0.0076745836093838424,
+      "gradient_sample_rms": 0.0057865772396326065,
+      "gradient_l2_estimate": 1.171120891758656,
+      "gradient_missing_reason": null
+    }
+  ],
+  "paired_activation_diagnostics": [
+    {
+      "checkpoint_elapsed_seconds": 120.61251191201154,
+      "step": 292,
+      "sites": [
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.3945065140724182,
+            "rms": 1.2506784200668335,
+            "max_abs": 6.691765308380127,
+            "nonzero_fraction": 0.896484375
+          },
+          "nonlinear_output": {
+            "mean": 0.47156596183776855,
+            "rms": 1.8871618509292603,
+            "max_abs": 42.0,
+            "nonzero_fraction": 0.26806640625
+          },
+          "projected_output": {
+            "mean": -0.2167639583349228,
+            "rms": 8.254254341125488,
+            "max_abs": 54.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 9.151593258138746e-05,
+            "rms": 0.001205101958476007,
+            "max_abs": 0.011220430955290794,
+            "nonzero_fraction": 0.901611328125
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": 6.915442645549774e-05,
+            "rms": 0.0028767965268343687,
+            "max_abs": 0.09765625,
+            "nonzero_fraction": 0.015869140625
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.47030311822891235,
+            "rms": 1.305300235748291,
+            "max_abs": 5.850964069366455,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 0.4617692232131958,
+            "rms": 2.167236089706421,
+            "max_abs": 65.5,
+            "nonzero_fraction": 0.271240234375
+          },
+          "projected_output": {
+            "mean": -0.007563423365354538,
+            "rms": 7.751345634460449,
+            "max_abs": 42.75,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 5.8149897085968405e-05,
+            "rms": 0.0014137414982542396,
+            "max_abs": 0.014275524765253067,
+            "nonzero_fraction": 0.9013671875
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": -5.776062607765198e-05,
+            "rms": 0.0042086136527359486,
+            "max_abs": 0.125,
+            "nonzero_fraction": 0.0234375
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.4262961447238922,
+            "rms": 1.3358426094055176,
+            "max_abs": 5.853302955627441,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 0.5602489709854126,
+            "rms": 2.722599744796753,
+            "max_abs": 82.0,
+            "nonzero_fraction": 0.296630859375
+          },
+          "projected_output": {
+            "mean": 0.1599818766117096,
+            "rms": 8.097634315490723,
+            "max_abs": 66.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 8.984244050225243e-05,
+            "rms": 0.0013860620092600584,
+            "max_abs": 0.010445525869727135,
+            "nonzero_fraction": 0.90087890625
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": 1.6421079635620117e-05,
+            "rms": 0.002842371817678213,
+            "max_abs": 0.09375,
+            "nonzero_fraction": 0.017333984375
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.4096720218658447,
+            "rms": 1.317728877067566,
+            "max_abs": 6.4322357177734375,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 0.56709223985672,
+            "rms": 2.664020299911499,
+            "max_abs": 95.0,
+            "nonzero_fraction": 0.30810546875
+          },
+          "projected_output": {
+            "mean": 0.19871920347213745,
+            "rms": 8.742341041564941,
+            "max_abs": 68.5,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 9.711847815196961e-05,
+            "rms": 0.0013965092366561294,
+            "max_abs": 0.00974804162979126,
+            "nonzero_fraction": 0.9013671875
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": -3.062933683395386e-05,
+            "rms": 0.0027067670598626137,
+            "max_abs": 0.0859375,
+            "nonzero_fraction": 0.017333984375
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.387958824634552,
+            "rms": 1.303364872932434,
+            "max_abs": 6.645718574523926,
+            "nonzero_fraction": 0.904296875
+          },
+          "nonlinear_output": {
+            "mean": 0.61573725938797,
+            "rms": 3.2466518878936768,
+            "max_abs": 99.5,
+            "nonzero_fraction": 0.302001953125
+          },
+          "projected_output": {
+            "mean": 0.17457279562950134,
+            "rms": 9.885588645935059,
+            "max_abs": 99.5,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 9.657337795943022e-05,
+            "rms": 0.0013253946090117097,
+            "max_abs": 0.013349534012377262,
+            "nonzero_fraction": 0.901123046875
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": -2.5667250156402588e-05,
+            "rms": 0.005323011893779039,
+            "max_abs": 0.25,
+            "nonzero_fraction": 0.019775390625
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        }
+      ]
+    },
+    {
+      "checkpoint_elapsed_seconds": 240.53342779100058,
+      "step": 442,
+      "sites": [
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.7457473278045654,
+            "rms": 1.953904390335083,
+            "max_abs": 10.334850311279297,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 0.9913167953491211,
+            "rms": 5.118754863739014,
+            "max_abs": 142.0,
+            "nonzero_fraction": 0.24951171875
+          },
+          "projected_output": {
+            "mean": -0.36638784408569336,
+            "rms": 27.26773452758789,
+            "max_abs": 180.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.0002574945392552763,
+            "rms": 0.003500310005620122,
+            "max_abs": 0.03475458174943924,
+            "nonzero_fraction": 0.90087890625
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": 0.00028931547421962023,
+            "rms": 0.005318997893482447,
+            "max_abs": 0.125,
+            "nonzero_fraction": 0.0263671875
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.7606328725814819,
+            "rms": 2.0066184997558594,
+            "max_abs": 8.73138427734375,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 1.1603174209594727,
+            "rms": 4.8207502365112305,
+            "max_abs": 84.0,
+            "nonzero_fraction": 0.277099609375
+          },
+          "projected_output": {
+            "mean": 0.0386294424533844,
+            "rms": 27.828758239746094,
+            "max_abs": 192.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.0003912946558557451,
+            "rms": 0.003773799631744623,
+            "max_abs": 0.03529609367251396,
+            "nonzero_fraction": 0.901611328125
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": 0.00011677667498588562,
+            "rms": 0.007808771915733814,
+            "max_abs": 0.25,
+            "nonzero_fraction": 0.027099609375
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.7819458842277527,
+            "rms": 1.9693390130996704,
+            "max_abs": 10.637667655944824,
+            "nonzero_fraction": 0.896484375
+          },
+          "nonlinear_output": {
+            "mean": 1.0595076084136963,
+            "rms": 5.393752574920654,
+            "max_abs": 122.0,
+            "nonzero_fraction": 0.2705078125
+          },
+          "projected_output": {
+            "mean": -0.00166378915309906,
+            "rms": 25.450830459594727,
+            "max_abs": 186.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.00045294943265616894,
+            "rms": 0.003879794618114829,
+            "max_abs": 0.03531428426504135,
+            "nonzero_fraction": 0.901611328125
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": 0.00010389089584350586,
+            "rms": 0.012603421695530415,
+            "max_abs": 0.375,
+            "nonzero_fraction": 0.030517578125
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.7867081165313721,
+            "rms": 2.0066680908203125,
+            "max_abs": 8.157920837402344,
+            "nonzero_fraction": 0.8984375
+          },
+          "nonlinear_output": {
+            "mean": 1.029810905456543,
+            "rms": 5.107686996459961,
+            "max_abs": 197.0,
+            "nonzero_fraction": 0.2763671875
+          },
+          "projected_output": {
+            "mean": -0.39676886796951294,
+            "rms": 24.098739624023438,
+            "max_abs": 149.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.0004021584754809737,
+            "rms": 0.003645195160061121,
+            "max_abs": 0.038723234087228775,
+            "nonzero_fraction": 0.9013671875
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": 5.02169132232666e-06,
+            "rms": 0.011240371502935886,
+            "max_abs": 0.40625,
+            "nonzero_fraction": 0.026611328125
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.7700214385986328,
+            "rms": 1.9790838956832886,
+            "max_abs": 9.577682495117188,
+            "nonzero_fraction": 0.8984375
+          },
+          "nonlinear_output": {
+            "mean": 0.9554576873779297,
+            "rms": 4.288514614105225,
+            "max_abs": 146.0,
+            "nonzero_fraction": 0.285400390625
+          },
+          "projected_output": {
+            "mean": -0.5338459610939026,
+            "rms": 26.05513572692871,
+            "max_abs": 432.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.00034347077598795295,
+            "rms": 0.003762313397601247,
+            "max_abs": 0.03746069595217705,
+            "nonzero_fraction": 0.901611328125
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": -0.00010073557496070862,
+            "rms": 0.005536785814911127,
+            "max_abs": 0.125,
+            "nonzero_fraction": 0.025146484375
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        }
+      ]
+    },
+    {
+      "checkpoint_elapsed_seconds": 360.03390117001254,
+      "step": 592,
+      "sites": [
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9281303882598877,
+            "rms": 2.347351551055908,
+            "max_abs": 11.938518524169922,
+            "nonzero_fraction": 0.896484375
+          },
+          "nonlinear_output": {
+            "mean": 1.2756669521331787,
+            "rms": 6.077117443084717,
+            "max_abs": 204.0,
+            "nonzero_fraction": 0.25537109375
+          },
+          "projected_output": {
+            "mean": -0.33878034353256226,
+            "rms": 40.002601623535156,
+            "max_abs": 336.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.00020076753571629524,
+            "rms": 0.004583807662129402,
+            "max_abs": 0.03488479554653168,
+            "nonzero_fraction": 0.901611328125
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": -9.691715240478516e-05,
+            "rms": 0.009770750068128109,
+            "max_abs": 0.25,
+            "nonzero_fraction": 0.0244140625
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9121319055557251,
+            "rms": 2.4000141620635986,
+            "max_abs": 10.426899909973145,
+            "nonzero_fraction": 0.8984375
+          },
+          "nonlinear_output": {
+            "mean": 1.6211838722229004,
+            "rms": 7.239104747772217,
+            "max_abs": 168.0,
+            "nonzero_fraction": 0.284912109375
+          },
+          "projected_output": {
+            "mean": 0.2819465398788452,
+            "rms": 39.36508560180664,
+            "max_abs": 242.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.0006088329246267676,
+            "rms": 0.005637611728161573,
+            "max_abs": 0.0447530597448349,
+            "nonzero_fraction": 0.901123046875
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": -0.000252528116106987,
+            "rms": 0.013363408856093884,
+            "max_abs": 0.5,
+            "nonzero_fraction": 0.02392578125
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.0023974180221558,
+            "rms": 2.43436336517334,
+            "max_abs": 11.1644868850708,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 1.4456093311309814,
+            "rms": 6.3982415199279785,
+            "max_abs": 122.5,
+            "nonzero_fraction": 0.27978515625
+          },
+          "projected_output": {
+            "mean": 1.1441845893859863,
+            "rms": 36.15610122680664,
+            "max_abs": 280.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.0006366094457916915,
+            "rms": 0.005472035612910986,
+            "max_abs": 0.054856620728969574,
+            "nonzero_fraction": 0.9013671875
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": -1.58846378326416e-05,
+            "rms": 0.01518461387604475,
+            "max_abs": 0.5,
+            "nonzero_fraction": 0.02685546875
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9932751059532166,
+            "rms": 2.3943991661071777,
+            "max_abs": 10.414545059204102,
+            "nonzero_fraction": 0.904296875
+          },
+          "nonlinear_output": {
+            "mean": 1.5659065246582031,
+            "rms": 8.236594200134277,
+            "max_abs": 219.0,
+            "nonzero_fraction": 0.27294921875
+          },
+          "projected_output": {
+            "mean": 0.7183182835578918,
+            "rms": 36.477333068847656,
+            "max_abs": 245.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.0005605364567600191,
+            "rms": 0.0052887736819684505,
+            "max_abs": 0.04904576390981674,
+            "nonzero_fraction": 0.901123046875
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": 6.272643804550171e-05,
+            "rms": 0.012243769131600857,
+            "max_abs": 0.5,
+            "nonzero_fraction": 0.03076171875
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9412858486175537,
+            "rms": 2.2904441356658936,
+            "max_abs": 10.202301979064941,
+            "nonzero_fraction": 0.8984375
+          },
+          "nonlinear_output": {
+            "mean": 1.33406400680542,
+            "rms": 7.184950351715088,
+            "max_abs": 221.0,
+            "nonzero_fraction": 0.2685546875
+          },
+          "projected_output": {
+            "mean": -0.6156134009361267,
+            "rms": 41.266151428222656,
+            "max_abs": 772.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.0005174658726900816,
+            "rms": 0.0052926745265722275,
+            "max_abs": 0.04370146989822388,
+            "nonzero_fraction": 0.901123046875
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": 0.00010390952229499817,
+            "rms": 0.018212147057056427,
+            "max_abs": 0.8203125,
+            "nonzero_fraction": 0.028564453125
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        }
+      ]
+    },
+    {
+      "checkpoint_elapsed_seconds": 481.10748328099726,
+      "step": 690,
+      "sites": [
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9628231525421143,
+            "rms": 2.4756977558135986,
+            "max_abs": 11.005356788635254,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 1.5416799783706665,
+            "rms": 7.280086994171143,
+            "max_abs": 197.0,
+            "nonzero_fraction": 0.26123046875
+          },
+          "projected_output": {
+            "mean": -0.7815871238708496,
+            "rms": 45.44408416748047,
+            "max_abs": 414.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.0005013659247197211,
+            "rms": 0.005710655823349953,
+            "max_abs": 0.04531893506646156,
+            "nonzero_fraction": 0.90185546875
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": 0.00029421690851449966,
+            "rms": 0.01670808345079422,
+            "max_abs": 0.625,
+            "nonzero_fraction": 0.02978515625
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9375853538513184,
+            "rms": 2.4673879146575928,
+            "max_abs": 10.158401489257812,
+            "nonzero_fraction": 0.8984375
+          },
+          "nonlinear_output": {
+            "mean": 1.792655110359192,
+            "rms": 8.424084663391113,
+            "max_abs": 203.0,
+            "nonzero_fraction": 0.285888671875
+          },
+          "projected_output": {
+            "mean": -1.0360383987426758,
+            "rms": 47.140926361083984,
+            "max_abs": 478.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.0005274334107525647,
+            "rms": 0.006060390267521143,
+            "max_abs": 0.043997541069984436,
+            "nonzero_fraction": 0.901611328125
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": -0.00020465627312660217,
+            "rms": 0.011267416179180145,
+            "max_abs": 0.25,
+            "nonzero_fraction": 0.02587890625
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.0412170886993408,
+            "rms": 2.5583503246307373,
+            "max_abs": 10.019938468933105,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 1.6763107776641846,
+            "rms": 7.544803142547607,
+            "max_abs": 171.0,
+            "nonzero_fraction": 0.272216796875
+          },
+          "projected_output": {
+            "mean": 0.7305694818496704,
+            "rms": 41.290035247802734,
+            "max_abs": 252.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.0008327755494974554,
+            "rms": 0.006178123876452446,
+            "max_abs": 0.04398736730217934,
+            "nonzero_fraction": 0.901123046875
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": -0.00033448636531829834,
+            "rms": 0.015038829296827316,
+            "max_abs": 0.5,
+            "nonzero_fraction": 0.027099609375
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.026960849761963,
+            "rms": 2.436710834503174,
+            "max_abs": 12.581929206848145,
+            "nonzero_fraction": 0.904296875
+          },
+          "nonlinear_output": {
+            "mean": 1.456270694732666,
+            "rms": 6.895515441894531,
+            "max_abs": 206.0,
+            "nonzero_fraction": 0.278076171875
+          },
+          "projected_output": {
+            "mean": 0.6984589695930481,
+            "rms": 40.38683319091797,
+            "max_abs": 264.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.0006167314713820815,
+            "rms": 0.005966885481029749,
+            "max_abs": 0.040938857942819595,
+            "nonzero_fraction": 0.9013671875
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": -3.8339290767908096e-05,
+            "rms": 0.01189360860735178,
+            "max_abs": 0.375,
+            "nonzero_fraction": 0.031005859375
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9647657871246338,
+            "rms": 2.465827226638794,
+            "max_abs": 11.54852294921875,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 1.6241130828857422,
+            "rms": 7.52064847946167,
+            "max_abs": 118.0,
+            "nonzero_fraction": 0.27197265625
+          },
+          "projected_output": {
+            "mean": 0.1330365240573883,
+            "rms": 40.81962585449219,
+            "max_abs": 608.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_before_GS32": {
+            "mean": 0.0005976734682917595,
+            "rms": 0.006098682060837746,
+            "max_abs": 0.044271405786275864,
+            "nonzero_fraction": 0.9013671875
+          },
+          "packed_feature_change_due_to_pair": {
+            "mean": -2.9649585485458374e-05,
+            "rms": 0.014149035327136517,
+            "max_abs": 0.5,
+            "nonzero_fraction": 0.031494140625
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; core features precede gate and post multiplier"
+        }
+      ]
+    }
+  ],
+  "throughput_diagnostic": {
+    "candidate_updates": 690,
+    "reference_updates": 694,
+    "candidate_elapsed_seconds": 481.10748328099726,
+    "reference_elapsed_seconds": 480.9096338649979,
+    "difference_updates": -4,
+    "limitation": "Descriptive at comparable time; not matched-update loss pruning, and not a causal estimate of pair kernel overhead."
+  },
+  "decision": "Reject this before-GS32 pair hypothesis. Four local rate hypotheses and one exploratory pair hypothesis are now screened, with no new qualifying configuration. Retain the verified expert-only incumbent. Test one local pair quantization hypothesis only after numerical/state gates: preserve independently GS32-packed features and add the same bounded zero-initialized term afterward, before the original BF16 output projection. No rate/bound/width changes.",
+  "evidence_for_next": "At the rejection point the pair contribution is 0.0057-0.0062 RMS while independent-plus-pair features are 6.90-8.42 RMS; only 2.59-3.15% of sampled packed features differ from the no-pair version. Pair gradients and updates are nonzero. Four fewer updates out of 694 at comparable time do not establish execution cost as the main limitation.",
+  "limitations": [
+    "Probe rejection is not a final validation result.",
+    "Quantization suppression is a measured activation effect; it is not proof of why convergence lost.",
+    "A post-GS32 interaction may still be attenuated by BF16 rounding and may not improve loss/time."
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "utc": "2026-10-26T13:52:15.321898+00:00",
+  "phase": "cycle4_local4_bf16_gather_vjp32_preparation",
+  "status": "implemented_cpu_scope_passed",
+  "recipe": "configs/wr_reproduction/probe_experts_bf16_gather_vjp32.json",
+  "settings": {
+    "kind": "bf16-exact-gradient-gather-vjp32-original-function-v1",
+    "row_tile": 32,
+    "coordinate_gradient_storage": "bf16",
+    "forward": "original",
+    "gradient_producer": "exact-gather-original-torch-gate-sum"
+  },
+  "evidence": {
+    "speed_reference_run_ids": [
+      "probe-experts-bf16-vjp32-discovery-20261026T133959-793d64",
+      "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8"
+    ],
+    "maximum_actual_model_prefix_ratio": 1.0,
+    "require_faster_than_both_ingredients": true,
+    "profile_run_id": "ks3-bf16-shared-fp8-profile-20261025T095458-924154"
+  },
+  "scope_checks": [
+    {
+      "case": "geometry_rate",
+      "rejected": true
+    },
+    {
+      "case": "shared_backend",
+      "rejected": true
+    },
+    {
+      "case": "input_packing",
+      "rejected": true
+    },
+    {
+      "case": "gradient_storage",
+      "rejected": true
+    },
+    {
+      "case": "row_tile",
+      "rejected": true
+    },
+    {
+      "case": "gate_sum",
+      "rejected": true
+    },
+    {
+      "case": "speed_tolerance",
+      "rejected": true
+    },
+    {
+      "case": "only_one_reference",
+      "rejected": true
+    },
+    {
+      "case": "new_function",
+      "rejected": true
+    }
+  ],
+  "syntax_files": [
+    "wr_reproduction/ks3_bf16_gather_vjp32.py",
+    "wr_reproduction/check_ks3_bf16_gather_vjp32.py",
+    "wr_reproduction/probe_bf16_gather_vjp32_trial.py"
+  ],
+  "shared_backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "original_ingredient_sources_unchanged": true,
+  "gpu_numerical_passed": false,
+  "actual_model_speed_state_passed": false,
+  "verification_seeds": [
+    1969,
+    1970,
+    1971
+  ],
+  "decision": "Commit isolated modules/config and launch bounded numerical gate. Then one actual-model speed/state prefix; require both intervals faster than both ingredient prefixes. Failure means no convergence run. If passes, one seed169900s discovery with current fixed-probe screen; qualifying full result triggers1969/1970/1971 frozen unpruned seeds.",
+  "ingredient_reference_audit": [
+    {
+      "run_id": "probe-experts-bf16-vjp32-discovery-20261026T133959-793d64",
+      "code_commit": "92a9c9ddd221067ed26908c3817a148bad5ba2a1",
+      "timing": {
+        "first100_seconds": 39.44006166100735,
+        "after25_through100_seconds": 29.463398780004354,
+        "first100_steps": 100,
+        "all_logical_ranks": 8
+      },
+      "source_paths_unchanged": [
+        "wr_reproduction/ks3_moe.py",
+        "wr_reproduction/ks3_bf16_gemm.py",
+        "wr_reproduction/ks3_bf16_gather.py",
+        "wr_reproduction/ks3_bf16_vjp32.py"
+      ],
+      "gradient_observation_steps": [
+        294,
+        295
+      ]
+    },
+    {
+      "run_id": "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8",
+      "code_commit": "233c152d6e2c9d0077e03d275f9414ebfeeb7126",
+      "timing": {
+        "first100_seconds": 38.79183475099853,
+        "after25_through100_seconds": 28.973567784007173,
+        "first100_steps": 100,
+        "all_logical_ranks": 8
+      },
+      "source_paths_unchanged": [
+        "wr_reproduction/ks3_moe.py",
+        "wr_reproduction/ks3_bf16_gemm.py",
+        "wr_reproduction/ks3_bf16_gather.py"
+      ],
+      "gradient_observation_steps": [
+        297,
+        298
+      ]
+    }
+  ],
+  "prelaunch_audit_correction": "Initial strict metadata comparison found only gradient_diagnostics_extension label present in the older gather config. Allow precisely the known postprobe observer label or absence. Both ingredient events confirm all gradient samples afterstep100; no shared/model setting changed. No GPU run launched before correction."
+}

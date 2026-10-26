@@ -1,0 +1,38 @@
+{
+  "utc": "2026-10-26T10:58:14.615838+00:00",
+  "phase": "bounded_geometry_component_diagnostic",
+  "hypothesis": "After five isolated dense sites and multiple directed local rates failed, measure whether learned cubic or warp terms help on identical weights and fixed text, and whether GS32 activation packing changes their output effect. Original incumbent training for one bounded240s prefix; no candidate or reference curve.",
+  "hypothesis_class": "Mechanism investigation after cycle3 local2 rejection; not another aggregate scalar hypothesis.",
+  "reason": "Same-weight causal contribution checks distinguish learned cubic and warp pathways from aggregate geometry norms. No usable model checkpoint exists; terminal geometry tensors alone cannot reconstruct model activations.",
+  "recipe": "configs/wr_reproduction/probe_experts_geometry_effects.json",
+  "unchanged_incumbent_training": true,
+  "code_files": [
+    "wr_reproduction/ks3_geometry_effect.py",
+    "wr_reproduction/probe_geometry_effect_trial.py"
+  ],
+  "fixed_backend_unchanged": true,
+  "prefix_seconds": 240.0,
+  "seed": 169,
+  "full_graph_warmup_updates": 24,
+  "diagnostic_modes": [
+    "full",
+    "no_spine",
+    "no_warp",
+    "coordinate_only"
+  ],
+  "same_checkpoint": true,
+  "coefficient_quantization_scale_preserved": true,
+  "original_FP16_nonlinearity_and_GS32_activation_packing": true,
+  "checks": [
+    "CPU: incumbent-only recipe accepted; shared backend, geometry rate, projection rate and diagnostic identifier mutations rejected.",
+    "CPU: synthetic calibration record cannot enter Screen.references even if it contains a probe event.",
+    "Launch gate:16 GPU producer parity cases across128/384rows,zero/nonzero coefficients,GS32 on/off,BM16/64 plus component identity/input immutability.",
+    "Actual model: baseline diagnostic producer bitwise equals original at each routed site; graph updates cover all eight logical ranks and five original dense branches.",
+    "Post-scoring: complete explicit state/storage audit and same-prestate next-update parameter bitwise parity; next Adam update finite with six separate coefficient gradients."
+  ],
+  "stopping": "All existing study STOP paths, shared GPU lease and independent service watcher apply. No automatic convergence trials or reference collection follow.",
+  "screening_use": false,
+  "qualification_use": false,
+  "reserved_text_use": false,
+  "limitations": "Ablated forward effects do not establish a retrained architecture win. Full CE incorporates downstream routing changes; local sampled output norms precede post/router scaling. Prefix and separate diagnostics are explicitly timed, not a900s candidate result."
+}

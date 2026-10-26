@@ -1,0 +1,14 @@
+{
+  "utc": "2026-10-26T11:13:28.390908+00:00",
+  "checks": {
+    "passed": true,
+    "independent_adam_steps": 20,
+    "cubic_parameters_and_moments_bitwise_equal": true,
+    "warp_parameters_bitwise_initial": true,
+    "warp_adam_moments_zero": true,
+    "gradient_storage_preserved": true,
+    "nongeometry_parameters_untouched": true
+  },
+  "explicit_cpu_rng_only": true,
+  "unrelated_adam_parameter_comparison": true
+}

@@ -1,0 +1,136 @@
+{
+  "utc": "2026-10-26T08:52:48.786775+00:00",
+  "run_id": "probe-ks3-fp8-prepared-frozen-shared-calibration-20261026T085057-795b8e",
+  "code_commit": "fa74556cf80cdb06bf2a795d97188a2530e6270d",
+  "passed": true,
+  "block_cases": [
+    {
+      "tokens": 1,
+      "full_forward_backward_bitwise_equal": true,
+      "core_samples_ms": {
+        "native_v1": [],
+        "prepared": []
+      },
+      "median_ms": {}
+    },
+    {
+      "tokens": 257,
+      "full_forward_backward_bitwise_equal": true,
+      "core_samples_ms": {
+        "native_v1": [],
+        "prepared": []
+      },
+      "median_ms": {}
+    },
+    {
+      "tokens": 16384,
+      "full_forward_backward_bitwise_equal": true,
+      "core_samples_ms": {
+        "native_v1": [
+          1.1714971170796977,
+          1.1777639600965712,
+          1.1789224485071694
+        ],
+        "prepared": [
+          1.15640808287121,
+          1.1588112061282239,
+          1.160347940835608
+        ]
+      },
+      "median_ms": {
+        "native_v1": 1.1777639600965712,
+        "prepared": 1.1588112061282239
+      }
+    },
+    {
+      "tokens": 49152,
+      "full_forward_backward_bitwise_equal": true,
+      "core_samples_ms": {
+        "native_v1": [
+          3.279284235636393,
+          3.302833451895878,
+          3.1885161301185345
+        ],
+        "prepared": [
+          3.2170853399461317,
+          3.10208984375,
+          3.1133096567789713
+        ]
+      },
+      "median_ms": {
+        "native_v1": 3.279284235636393,
+        "prepared": 3.1133096567789713
+      }
+    }
+  ],
+  "byte_cases": 4,
+  "weight_gradient_format_cases": 12,
+  "refresh_cases": [
+    {
+      "exact": true,
+      "original_caches_and_scales_bitwise": true,
+      "native_byte_mapping_exact": true
+    },
+    {
+      "exact": false,
+      "original_caches_and_scales_bitwise": true,
+      "native_byte_mapping_exact": true
+    },
+    {
+      "exact": false,
+      "original_caches_and_scales_bitwise": true,
+      "native_byte_mapping_exact": true
+    },
+    {
+      "exact": true,
+      "original_caches_and_scales_bitwise": true,
+      "native_byte_mapping_exact": true
+    },
+    {
+      "captured_replay": true,
+      "original_caches_and_scales_bitwise": true,
+      "native_byte_mapping_exact": true
+    },
+    {
+      "captured_replay": true,
+      "original_caches_and_scales_bitwise": true,
+      "native_byte_mapping_exact": true
+    }
+  ],
+  "gather_cases": [
+    {
+      "tokens": 1,
+      "nonfinite": false,
+      "original_bytes_and_gate_gradient_exact": true,
+      "native_layouts_exact": true
+    },
+    {
+      "tokens": 257,
+      "nonfinite": false,
+      "original_bytes_and_gate_gradient_exact": true,
+      "native_layouts_exact": true
+    },
+    {
+      "tokens": 257,
+      "nonfinite": true,
+      "original_bytes_and_gate_gradient_exact": true,
+      "native_layouts_exact": true
+    },
+    {
+      "tokens": 16384,
+      "nonfinite": false,
+      "original_bytes_and_gate_gradient_exact": true,
+      "native_layouts_exact": true
+    },
+    {
+      "tokens": 49152,
+      "nonfinite": false,
+      "original_bytes_and_gate_gradient_exact": true,
+      "native_layouts_exact": true
+    }
+  ],
+  "native_tile_policy": "mi300-v2",
+  "original_formats_and_delayed_scales_preserved": true,
+  "decision": "Numerical gate passed. Launch one bounded120s actual-model prefix after24 original graph warmups, then fixed-probe oracle/state/next-update checks. Admit discovery only if both actual-model timing intervals beat saved incumbent and state checks pass.",
+  "limitation": "Core timing compares prepared FP8 implementations; it is neither a BF16 whole-model comparison nor convergence evidence."
+}

@@ -1,0 +1,35 @@
+{
+  "utc": "2026-10-26T14:41:54.454459+00:00",
+  "phase": "cycle4_exploratory_pairwise_gain_discovery",
+  "status": "running",
+  "run_id": "probe-experts-pairwise-gain-b05-discovery-20261026T144110-77190b",
+  "unit": "wr-probe-pairwise-gain-e7620bf5",
+  "code_commit": "4ee95a59d78afb58a80313eb20e855c32ea6cd70",
+  "trainer_pid": 1576396,
+  "controller_pid": 1576385,
+  "recipe": "configs/wr_reproduction/probe_experts_pairwise_gain_b05.json",
+  "numerical_gate": "pairwise-gain-numerical-summary.json",
+  "graph_state_gate": "pairwise-gain-graph-summary.json",
+  "source_hashes_match": true,
+  "new_stop": false,
+  "source_freeze": true,
+  "gpu_lease": "1576385 python          /root/modded-nanogpt/logs/wr-reproduction/gpu.lock",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true,
+  "change_scope": "Original independent rank1 GS32/BF16 feature multiplied by a zero-initialized adjacent-coordinate gain bounded[.5,1.5]. Relative residual bound only. Original64-row geometry, BF16 coordinate-VJP boundary, projections, routing/optimizer plumbing and all shared kernels/settings retained.",
+  "additional_parameters": 40960,
+  "gain_range": [
+    0.5,
+    1.5
+  ],
+  "relative_interaction_bound": ".5*abs(independent_feature)",
+  "global_absolute_activation_bound": false,
+  "verification_seeds": [
+    2069,
+    2070,
+    2071
+  ],
+  "full_convergence_verified": false,
+  "next": "Complete full24graphwarmup then continuous900s discovery with the frozen V2 probe. Strictbelow5 then first compatible latest nonfuture<=3s gap>=+.01 rejects. Inspect measured feature-gain effect and actual overhead. A qualifying full-validation result automatically launches three frozen unpruned seeds2069/2070/2071; no unchanged repeat if rejected."
+}

@@ -1,0 +1,39 @@
+{
+  "utc": "2026-10-26T07:13:29.265855+00:00",
+  "passed": true,
+  "audit_type": "Configuration scope, not a new numerical or timing test",
+  "reference_run": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "records": [
+    {
+      "config": "configs/wr_reproduction/probe_local_experts_joint_damp.json",
+      "changes": {
+        "projection_lr_multiplier": [
+          1.0,
+          0.9375
+        ],
+        "geometry.lr_mul": [
+          0.125,
+          0.109375
+        ]
+      },
+      "all_other_recipe_settings_equal_to_instrumented_expert_reference": true,
+      "five_original_dense_MLPs_retained": true
+    },
+    {
+      "config": "configs/wr_reproduction/probe_local_experts_geometry_tilt.json",
+      "changes": {
+        "projection_lr_multiplier": [
+          1.0,
+          0.9375
+        ],
+        "geometry.lr_mul": [
+          0.125,
+          0.140625
+        ]
+      },
+      "all_other_recipe_settings_equal_to_instrumented_expert_reference": true,
+      "five_original_dense_MLPs_retained": true
+    }
+  ],
+  "decision": "These hypotheses remain conditional on current local2 result. Existing tested optimizer override path; no unchanged recipe repeat and no model-wide counterpart needed."
+}

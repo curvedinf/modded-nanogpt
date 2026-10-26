@@ -1,0 +1,64 @@
+{
+  "utc": "2026-10-26T19:21:59.275611+00:00",
+  "run_id": "probe-dense8-fp8-width2816-calibration-20261026T191048-6d795a",
+  "code_commit": "3eb7b4667229c12d8933eb336f0e103aa320096e",
+  "status": "failed_state_restoration",
+  "passed": false,
+  "full_warmup_updates": 24,
+  "prefix": {
+    "event": "precision_checkpoint",
+    "step": 292,
+    "checkpoint_elapsed_seconds": 121.1628483569948,
+    "remaining_diagnostics_off_prefix_clock": true,
+    "full_validation": false,
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T19:16:56.670121+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_dense_8",
+    "run_id": "probe-dense8-fp8-width2816-calibration-20261026T191048-6d795a",
+    "seed": 169,
+    "code_commit": "3eb7b4667229c12d8933eb336f0e103aa320096e",
+    "training_projection_gs32": true
+  },
+  "speed": {
+    "passed": true,
+    "candidate": {
+      "first100_seconds": 39.92363933598972,
+      "after25_through100_seconds": 29.878673794999486,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "reference": {
+      "first100_seconds": 40.26366747400607,
+      "after25_through100_seconds": 30.067562156997155,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "ratios": {
+      "first100_seconds": 0.9915549635850766,
+      "after25_through100_seconds": 0.993717869077267
+    },
+    "criterion": "Both first100 and updates26-100 actual-model durations must be below the saved incumbent prefix.",
+    "limitation": "Single measured original prefix, not a sampling-error estimate or convergence result; loss pruning remains elapsed-time fixed-text only."
+  },
+  "changed_buffers": [
+    "buffer/ks3_dense_f8_up_t",
+    "buffer/ks3_dense_native_down",
+    "buffer/ks3_dense_native_up_t",
+    "buffer/ks3_dense_native_down_t",
+    "buffer/ks3_dense_f8_up",
+    "buffer/ks3_dense_weight_scales",
+    "buffer/ks3_dense_native_up",
+    "buffer/ks3_dense_weight_amax",
+    "buffer/ks3_dense_f8_down_t",
+    "buffer/ks3_dense_f8_down"
+  ],
+  "precise_cause": "ks3_feedforward._refresh_dense_ks3 unconditionally calls denseFP8 refresh_weights after BF16 pack, even in eval mode. FixedProbe intentionally snapshots only evaluation BF16 weights; the unused training FP8 caches/scales/amax were mutated.",
+  "continuation_checked": false,
+  "probe_cost_recorded": false,
+  "loss_time_trial_launched": false,
+  "not_a_screening_reference": true,
+  "decision": "Preserve failure. Add isolated eval-mode producer guard; original FP8 training and BF16 evaluation math unchanged. Reuse independent numerical oracle by complete prior-source equality; run new guard cache checks and a fresh full-model speed/state gate before discovery."
+}

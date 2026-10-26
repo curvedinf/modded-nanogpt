@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "gradcheck": true,
+  "gradgradcheck_away_from_support_boundary": true,
+  "initial_function_and_original_gradients_exact": true,
+  "active_pairs_have_zero_init_learning_signal": true,
+  "inactive_pairs_have_exact_zero_signal": true,
+  "cross_derivative": 0.2825732340780432,
+  "analytic_cross_derivative": 0.2825732340780432,
+  "absolute_residual_bound": 1.0,
+  "difference_width": 2.0,
+  "C1_support_boundaries_checked": true,
+  "exact_outside_support_zero_value_coordinate_and_coefficient_gradient": true,
+  "equal_coordinates_same_basis_across_sign_quadrants": true,
+  "opposite_sign_nearby_coordinates_supported": true,
+  "clamped_coordinates_zero_gradient_outside_clamp": true,
+  "can_activate_zero_independent_features": true,
+  "independent_rank_one_paths_retained": true,
+  "new_parameters": 40960,
+  "utc": "2026-10-26T20:20:02.222390+00:00",
+  "scope_guards": [
+    "architecture",
+    "rank",
+    "charts",
+    "shared_fp8_gemm_tuning",
+    "max_train_seconds",
+    "training_gs32",
+    "geometry_backward_rows",
+    "difference_width"
+  ],
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "recipe": {
+    "kind": "bounded-compact-coordinate-difference-v1",
+    "bound": 1.0,
+    "difference_width": 2.0,
+    "lr_mul": 0.125,
+    "initial_raw_coefficient": 0.0,
+    "placement": "after-independent-GS32"
+  },
+  "nonseparable_basis_determinant": 0.3965019149122868,
+  "common_coordinate_translation_invariance": true
+}

@@ -1,0 +1,80 @@
+{
+  "utc": "2026-10-26T11:54:49.978783+00:00",
+  "run_id": "probe-experts-split-coefficient-scale-calibration-20261026T114434-251413",
+  "code_commit": "4264e361be51541eb61532e35ec21359b4eb57b1",
+  "passed": true,
+  "mode": "speed_state",
+  "speed": {
+    "passed": true,
+    "candidate": {
+      "first100_seconds": 39.581475634971866,
+      "after25_through100_seconds": 29.62271801897441,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "reference": {
+      "first100_seconds": 39.55393554098555,
+      "after25_through100_seconds": 29.54044010999496,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "ratios": {
+      "first100_seconds": 1.0006962668470192,
+      "after25_through100_seconds": 1.0027852634785765
+    },
+    "reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+    "reference_code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+    "criterion": "Both actual-model original prefixes must cost at most1.02x incumbent. Predeclared small cost allowance for coefficient accuracy, not a speed-win criterion.",
+    "limitation": "Single prefix; no claim of runtime-noise precision. Any convergence gain must survive continuous elapsed-time screening and full validation."
+  },
+  "state_calibration": {
+    "step": 292,
+    "prefix_elapsed_seconds": 120.02806418199907,
+    "oracle_max_abs": 0.0,
+    "repeat_max_abs": 0.0,
+    "cold_probe_seconds": 3.085948391992133,
+    "warm_probe_seconds": 2.654284082003869,
+    "pending_probe_seconds": 2.6522414160135668,
+    "state_restoration": {
+      "checked_entries": 1264,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "pending_state_restoration": {
+      "checked_entries": 1444,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "continuation_parity": {
+      "passed": true,
+      "same_checkpoint": true,
+      "same_eight_logical_microbatches": true,
+      "baseline_loss": 7.6683759689331055,
+      "with_probe_loss": 7.6683759689331055,
+      "maximum_parameter_relative_rms": 0.0,
+      "all_parameters_bitwise_equal": true
+    },
+    "post_probe_odd_update_loss": 7.6451826095581055
+  },
+  "projected_seven_probe_seconds": 19.011652884015348,
+  "projected_fraction_of900": 0.021124058760017054,
+  "all_five_routed_backwards_executed": true,
+  "five_original_dense_MLPs": true,
+  "source_hashes_match": true,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "probe_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "events_sha256": "925e70a47f812a40c744a82a6ead98b5b45b78d8ba08fec51f85a0865087ebc0",
+  "not_a_screening_reference": true,
+  "full_validation": null,
+  "full_convergence_verified": false,
+  "decision": "Launch one seed169 discovery with the frozen split coefficient scale recipe, original24 graph warmup and continuous900s cap. First below5 then first comparable >=+.01 rejection. On qualification run1469/1470/1471 unpruned; no additional MLP.",
+  "limitations": [
+    "Single prefix timing does not estimate runtime noise; no speed improvement claim.",
+    "Probe overhead is projected from measured setup/evaluation/restoration; all actual diagnostics and policy stay on the continuous clock.",
+    "Identical-inference repetition is a runtime nondeterminism check, not text sampling uncertainty."
+  ]
+}

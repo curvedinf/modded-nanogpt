@@ -1,0 +1,191 @@
+{
+  "utc": "2026-10-26T07:37:47.357764+00:00",
+  "run_id": "probe-local-experts-joint-damp-discovery-20261026T073212-6202b9",
+  "seed": 169,
+  "code_commit": "09e2b97e8b670301ca459e98713fd62c6135cea4",
+  "status": "pruned",
+  "qualifies": false,
+  "full_validation": null,
+  "architecture": "ks3_experts",
+  "changes": {
+    "geometry_lr_multiplier": 0.109375,
+    "projection_lr_multiplier": 0.9375
+  },
+  "probe": {
+    "loss": 4.670374367386103,
+    "checkpoint_elapsed_seconds": 120.55754741799319,
+    "step": 293,
+    "probe_seconds": 2.97759135600063,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31"
+  },
+  "screen": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.55754741799319,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.0333158764988184,
+    "reference_run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+    "reference_elapsed_seconds": 120.4601258939947,
+    "reference_age_seconds": 0.09742152399849147,
+    "reference_utc": "2026-10-26T06:23:17.848237+00:00",
+    "reference_loss": 4.637058490887284,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd/events.jsonl",
+      "line": 325,
+      "row_sha256": "e795bc511e56d9cf722618ea8a47b8e97eb7cc47b8c557420c79f455760532db"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.0333158764988184,
+      "standard_error": 0.002118707113011198,
+      "normal95_halfwidth": 0.004152665941501948,
+      "student95_halfwidth": 0.004195040083762172,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T07:36:22.986269+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-local-experts-joint-damp-discovery-20261026T073212-6202b9",
+    "seed": 169,
+    "code_commit": "09e2b97e8b670301ca459e98713fd62c6135cea4",
+    "training_projection_gs32": true
+  },
+  "paired32768": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.0333158764988184,
+    "standard_error": 0.0028291908575819613,
+    "normal95_halfwidth": 0.005545214080860644,
+    "student95_halfwidth": 0.005777207731182364,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "active_gradient_samples": 0,
+  "gradient_limit": "First observation pruned before subsequent sampled updates; no candidate gradients fabricated.",
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3264462351799011,
+        "rms": 1.224892258644104,
+        "max_abs": 8.385575294494629,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.5545067191123962,
+        "rms": 3.30765700340271,
+        "max_abs": 157.0,
+        "nonzero_fraction": 0.292236328125
+      },
+      "projected_output": {
+        "mean": 0.05966762825846672,
+        "rms": 7.769164562225342,
+        "max_abs": 66.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.37406307458877563,
+        "rms": 1.2592540979385376,
+        "max_abs": 5.106945991516113,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5084960460662842,
+        "rms": 2.003073215484619,
+        "max_abs": 50.0,
+        "nonzero_fraction": 0.294677734375
+      },
+      "projected_output": {
+        "mean": -0.08459070324897766,
+        "rms": 6.532491207122803,
+        "max_abs": 34.25,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3675869405269623,
+        "rms": 1.237276554107666,
+        "max_abs": 5.305797100067139,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.48951849341392517,
+        "rms": 1.9919382333755493,
+        "max_abs": 40.75,
+        "nonzero_fraction": 0.297607421875
+      },
+      "projected_output": {
+        "mean": 0.12683804333209991,
+        "rms": 6.772409439086914,
+        "max_abs": 53.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.37278881669044495,
+        "rms": 1.2415412664413452,
+        "max_abs": 6.784797191619873,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.5131142139434814,
+        "rms": 2.479905366897583,
+        "max_abs": 50.25,
+        "nonzero_fraction": 0.303955078125
+      },
+      "projected_output": {
+        "mean": -0.039532579481601715,
+        "rms": 7.038047790527344,
+        "max_abs": 59.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.2489311397075653,
+        "rms": 1.2398031949996948,
+        "max_abs": 6.89184045791626,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.7127659320831299,
+        "rms": 3.211242914199829,
+        "max_abs": 84.0,
+        "nonzero_fraction": 0.3349609375
+      },
+      "projected_output": {
+        "mean": -0.16697907447814941,
+        "rms": 9.18721866607666,
+        "max_abs": 74.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "decision": "Reject joint expert damping. Four local joint hypotheses are complete with no qualifying improvement; retain verified expert-only recipe. Implement and numerically test bounded additive pairwise terms before the next convergence hypothesis."
+}

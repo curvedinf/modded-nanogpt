@@ -1,0 +1,481 @@
+{
+  "utc": "2026-10-26T06:57:08.561574+00:00",
+  "rows": [
+    {
+      "layer": 0,
+      "elapsed": 120.72138580799219,
+      "step": 290,
+      "probe_ce": 4.665738020092249,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -0.6337899565696716,
+            "rms": 1.4302324056625366,
+            "max_abs": 9.113240242004395,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 0.41193389892578125,
+            "rms": 1.9565695524215698,
+            "max_abs": 86.0,
+            "nonzero_fraction": 0.237548828125
+          },
+          "projected_output": {
+            "mean": 0.20758965611457825,
+            "rms": 31.018531799316406,
+            "max_abs": 896.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": "probe-ks3-experts-verification-20261026T045737-498c82",
+      "reference_step": 293,
+      "reference_elapsed": 120.6600743799936,
+      "gap": 0.06206398457288742,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    },
+    {
+      "layer": 2,
+      "elapsed": 120.36664700097754,
+      "step": 290,
+      "probe_ce": 4.7028767094016075,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.262636661529541,
+            "rms": 1.7499791383743286,
+            "max_abs": 10.90015983581543,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 0.21531590819358826,
+            "rms": 2.9129042625427246,
+            "max_abs": 158.0,
+            "nonzero_fraction": 0.112548828125
+          },
+          "projected_output": {
+            "mean": 0.29622605443000793,
+            "rms": 7.852921485900879,
+            "max_abs": 72.5,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": null,
+      "reference_step": null,
+      "reference_elapsed": null,
+      "gap": null,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    },
+    {
+      "layer": 2,
+      "elapsed": 240.22159523199662,
+      "step": 439,
+      "probe_ce": 4.0939565766602755,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.8653202056884766,
+            "rms": 2.5971977710723877,
+            "max_abs": 14.83252239227295,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 0.4233468770980835,
+            "rms": 4.902065753936768,
+            "max_abs": 253.0,
+            "nonzero_fraction": 0.122314453125
+          },
+          "projected_output": {
+            "mean": 1.0745388269424438,
+            "rms": 25.098276138305664,
+            "max_abs": 141.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": "probe-ks3-experts-verification-20261026T045737-498c82",
+      "reference_step": 444,
+      "reference_elapsed": 240.20126297298702,
+      "gap": 0.026838036254048347,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    },
+    {
+      "layer": 4,
+      "elapsed": 120.32418955399771,
+      "step": 290,
+      "probe_ce": 4.6527969893068075,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.184282660484314,
+            "rms": 1.7353521585464478,
+            "max_abs": 7.416600227355957,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 0.20934072136878967,
+            "rms": 1.4527459144592285,
+            "max_abs": 41.5,
+            "nonzero_fraction": 0.138427734375
+          },
+          "projected_output": {
+            "mean": -0.14717280864715576,
+            "rms": 9.13180923461914,
+            "max_abs": 73.5,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": null,
+      "reference_step": null,
+      "reference_elapsed": null,
+      "gap": null,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    },
+    {
+      "layer": 4,
+      "elapsed": 240.90457049399265,
+      "step": 440,
+      "probe_ce": 4.05273843370378,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.849808931350708,
+            "rms": 2.6264383792877197,
+            "max_abs": 7.94666862487793,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 0.399377703666687,
+            "rms": 2.532693386077881,
+            "max_abs": 63.75,
+            "nonzero_fraction": 0.131103515625
+          },
+          "projected_output": {
+            "mean": 0.760058581829071,
+            "rms": 27.394283294677734,
+            "max_abs": 179.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": "probe-ks3-experts-verification-20261026T045737-498c82",
+      "reference_step": 444,
+      "reference_elapsed": 240.20126297298702,
+      "gap": -0.014380106702446938,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    },
+    {
+      "layer": 4,
+      "elapsed": 360.233559218992,
+      "step": 589,
+      "probe_ce": 3.7838510368019342,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -2.018197536468506,
+            "rms": 2.981508731842041,
+            "max_abs": 11.284436225891113,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 0.6801671385765076,
+            "rms": 4.21402645111084,
+            "max_abs": 92.0,
+            "nonzero_fraction": 0.1494140625
+          },
+          "projected_output": {
+            "mean": 1.3356283903121948,
+            "rms": 42.34242248535156,
+            "max_abs": 288.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": "probe-ks3-experts-verification-20261026T051513-3659e3",
+      "reference_step": 596,
+      "reference_elapsed": 360.0470344349742,
+      "gap": 0.10470931977033615,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    },
+    {
+      "layer": 8,
+      "elapsed": 120.4601258939947,
+      "step": 290,
+      "probe_ce": 4.637058490887284,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -0.8868820667266846,
+            "rms": 1.6298820972442627,
+            "max_abs": 7.400168418884277,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 0.44785648584365845,
+            "rms": 2.3909318447113037,
+            "max_abs": 54.75,
+            "nonzero_fraction": 0.19970703125
+          },
+          "projected_output": {
+            "mean": -0.3757099509239197,
+            "rms": 18.17017364501953,
+            "max_abs": 338.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": "probe-ks3-dense-layer4-width2816-discovery-20261026T060628-d83343",
+      "reference_step": 290,
+      "reference_elapsed": 120.32418955399771,
+      "gap": -0.01573849841952324,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    },
+    {
+      "layer": 8,
+      "elapsed": 240.50047177899978,
+      "step": 439,
+      "probe_ce": 4.062283622100949,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.3139933347702026,
+            "rms": 2.3844664096832275,
+            "max_abs": 12.119348526000977,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 0.8594259023666382,
+            "rms": 4.556424140930176,
+            "max_abs": 119.5,
+            "nonzero_fraction": 0.19189453125
+          },
+          "projected_output": {
+            "mean": 0.2131347358226776,
+            "rms": 46.50630569458008,
+            "max_abs": 660.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": "probe-ks3-experts-verification-20261026T045737-498c82",
+      "reference_step": 444,
+      "reference_elapsed": 240.20126297298702,
+      "gap": -0.004834918305277824,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    },
+    {
+      "layer": 8,
+      "elapsed": 360.01539927200065,
+      "step": 588,
+      "probe_ce": 3.747848456725478,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.4184637069702148,
+            "rms": 2.7011311054229736,
+            "max_abs": 11.3141508102417,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 1.191741704940796,
+            "rms": 5.836280822753906,
+            "max_abs": 111.0,
+            "nonzero_fraction": 0.206298828125
+          },
+          "projected_output": {
+            "mean": -0.31832316517829895,
+            "rms": 79.58474731445312,
+            "max_abs": 1312.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": null,
+      "reference_step": null,
+      "reference_elapsed": null,
+      "gap": null,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    },
+    {
+      "layer": 8,
+      "elapsed": 480.3786018740211,
+      "step": 686,
+      "probe_ce": 3.559316258877516,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.3793742656707764,
+            "rms": 2.7616159915924072,
+            "max_abs": 12.434870719909668,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 1.3803763389587402,
+            "rms": 6.394251346588135,
+            "max_abs": 141.0,
+            "nonzero_fraction": 0.2236328125
+          },
+          "projected_output": {
+            "mean": -0.5993962287902832,
+            "rms": 92.6264877319336,
+            "max_abs": 1648.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": "probe-ks3-experts-verification-20261026T045737-498c82",
+      "reference_step": 693,
+      "reference_elapsed": 480.2673738769954,
+      "gap": -0.005966849625110626,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    },
+    {
+      "layer": 8,
+      "elapsed": 600.2401487820025,
+      "step": 781,
+      "probe_ce": 3.5015130899846554,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.3679981231689453,
+            "rms": 2.8185269832611084,
+            "max_abs": 13.633251190185547,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 1.5592073202133179,
+            "rms": 7.268749237060547,
+            "max_abs": 160.0,
+            "nonzero_fraction": 0.225830078125
+          },
+          "projected_output": {
+            "mean": -0.0014023780822753906,
+            "rms": 104.19757080078125,
+            "max_abs": 1872.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": "probe-ks3-experts-verification-20261026T045737-498c82",
+      "reference_step": 790,
+      "reference_elapsed": 600.2117831789947,
+      "gap": 0.007760530337691307,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    },
+    {
+      "layer": 8,
+      "elapsed": 720.5624596620037,
+      "step": 874,
+      "probe_ce": 3.4004779886454344,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.3365674018859863,
+            "rms": 2.8140740394592285,
+            "max_abs": 12.391719818115234,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 1.6156471967697144,
+            "rms": 7.317544937133789,
+            "max_abs": 138.0,
+            "nonzero_fraction": 0.230224609375
+          },
+          "projected_output": {
+            "mean": -0.11813592910766602,
+            "rms": 109.00052642822266,
+            "max_abs": 1888.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": "probe-ks3-experts-verification-20261026T051513-3659e3",
+      "reference_step": 884,
+      "reference_elapsed": 720.320877369988,
+      "gap": 0.012752771377563477,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    },
+    {
+      "layer": 10,
+      "elapsed": 120.72263397701317,
+      "step": 290,
+      "probe_ce": 4.932907786220312,
+      "dense_moments": [
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -0.43741822242736816,
+            "rms": 1.4618732929229736,
+            "max_abs": 11.066407203674316,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 0.8024688959121704,
+            "rms": 4.8416361808776855,
+            "max_abs": 193.0,
+            "nonzero_fraction": 0.306396484375
+          },
+          "projected_output": {
+            "mean": -1.3128471374511719,
+            "rms": 25.02484893798828,
+            "max_abs": 179.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ],
+      "reference_run": "probe-ks3-experts-verification-20261026T045737-498c82",
+      "reference_step": 293,
+      "reference_elapsed": 120.6600743799936,
+      "gap": 0.3292337507009506,
+      "reference_selection": "actual latest nonfuture within3s; diagnostic step counts never used in screening"
+    }
+  ],
+  "observed_limitations": [
+    "No five-site placement produced a qualifying full-validation endpoint.",
+    "Parallel8 uses874 updates at its720.56s screen versus884 updates for its selected expert-only reference at720.32s. The10-update difference is a throughput/schedule diagnostic, not a matched-step loss comparison.",
+    "The final0.01275 probe gap could reflect both lower update throughput and different learned geometry. Existing observations do not identify their separate causal effects.",
+    "Parallel8 core projected-output RMS increases18.17 to109.00 across120..720s. This excludes the learned post multiplier and route gating and cannot alone establish an activation-scale instability.",
+    "Layer10 large gap has8192/32768-block halfwidths0.01239/0.01732; precision at0.01 is not supported for that model pair, although the observed0.32923 gap is far larger. Borderline conclusions need pair-specific uncertainty."
+  ],
+  "decision": "Measure active component gradients and actual relative updates at the original optimizer boundary. Then choose four small joint geometry/projection-rate hypotheses, with at most two focused on parallel8 and the remainder near expert-only incumbent. No combinations, width/rank repetitions, or extra MLP controls."
+}

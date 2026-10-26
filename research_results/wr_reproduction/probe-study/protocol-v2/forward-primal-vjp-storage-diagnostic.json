@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-26T19:44:30.892231+00:00",
+  "run_id": "probe-experts-forward-primal-vjp-calibration-20261026T194208-716be6",
+  "code_commit": "9f0c9b6141a05aa654584b1536731a85cbc5b040",
+  "passed": false,
+  "actual_geometry_relative_rms": 4.7989306040108204e-05,
+  "largest_actual_geometry_component_error": 0.00010307846241630614,
+  "isolated_geometry_relative_rms": 1.4262830063671572e-06,
+  "actual_versus_isolated_geometry_relative_rms": 4.79596528748516e-05,
+  "bound": 3e-05,
+  "case": {
+    "tokens": 257,
+    "zero_coefficients": false
+  },
+  "compiler_observation": "Compiled TTIR and TTGIR arithmetic before coordinate storage is identical acrossBF16 andFP32 DC kernels; output cast/storage differs. Numerical outputs show geometry divergence. This is consistent with downstream arithmetic code generation, not proof of a specific compiler defect or instruction.",
+  "compiler_artifacts": [
+    {
+      "path": "/root/.triton/cache/OBSM5HNQTSLRLPKG3EHGG22EANTA2YZEWMFCLXDOLBJEM5MMHAXA/vjp.ttir",
+      "sha256": "7a90f45a4f41853f63dfcbe5ee52df592c595ced93c292872acfa6f29a68632e"
+    },
+    {
+      "path": "/root/.triton/cache/DZMIRBXR4T2MQ3JKCHKBSXQ5R7RBGAP32AKKL4Q3CY3PDXRH6TTQ/vjp.ttir",
+      "sha256": "6da7547b1ee0bca2181629fc09b1acb112321b7f92843d4d86e3303e160cc4c3"
+    }
+  ],
+  "decision": "One bounded arithmetic correction: explicitlyFP32 FMA thenFP16 round at each surrogate Horner stage, matching the independent oracle boundaries; retain3e-5 for both aggregate and each actual component. If still fails, close implementation. No timing or convergence run."
+}

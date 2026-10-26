@@ -1,0 +1,396 @@
+{
+  "utc": "2026-10-26T13:17:59.376563+00:00",
+  "run_id": "probe-experts-hidden-bf16-discovery-20261026T131217-a88268",
+  "code_commit": "e5cdda46dd3260dac3ab9d21ffbf973187402da9",
+  "phase": "cycle4_local2_hidden_bf16_first_probe_continue",
+  "status": "running",
+  "probe": {
+    "loss": 4.639284495264292,
+    "step": 293,
+    "checkpoint_elapsed_seconds": 120.49705721801729,
+    "probe_completion_seconds": 123.4663773040229,
+    "probe_seconds": 2.969512948009651,
+    "cumulative_probe_seconds": 2.969512948009651,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "utc": "2026-10-26T13:16:28.973089+00:00"
+  },
+  "screen": {
+    "event": "probe_screen",
+    "abort": false,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.49705721801729,
+    "reason": "within_one_sided_margin",
+    "gap": 0.0022260043770074844,
+    "reference_run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+    "reference_elapsed_seconds": 120.4601258939947,
+    "reference_age_seconds": 0.03693132402258925,
+    "reference_utc": "2026-10-26T06:23:17.848237+00:00",
+    "reference_loss": 4.637058490887284,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd/events.jsonl",
+      "line": 325,
+      "row_sha256": "e795bc511e56d9cf722618ea8a47b8e97eb7cc47b8c557420c79f455760532db"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.0022260043770074844,
+      "standard_error": 0.0018357560069595265,
+      "normal95_halfwidth": 0.003598081773640672,
+      "student95_halfwidth": 0.0036347968937798627,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T13:16:29.152043+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-hidden-bf16-discovery-20261026T131217-a88268",
+    "seed": 169,
+    "code_commit": "e5cdda46dd3260dac3ab9d21ffbf973187402da9",
+    "training_projection_gs32": true
+  },
+  "paired_32768_text_uncertainty": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.0022260043770074844,
+    "standard_error": 0.0020992119160527594,
+    "normal95_halfwidth": 0.004114455355463408,
+    "student95_halfwidth": 0.004286590732579735,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "sparse_gradient_update": {
+    "event": "ks3_gradient_update",
+    "step": 294,
+    "original_step": 293,
+    "do_adam": true,
+    "measurements": {
+      "routed.raw_scale": {
+        "parameter": "ks3_geometry",
+        "branch": "routed",
+        "component": "raw_scale",
+        "active_slots": null,
+        "sample_elements": 512,
+        "total_elements": 40960,
+        "optimizer_applied": true,
+        "gradient_available": true,
+        "parameter_rms": 0.7430983781814575,
+        "update_rms": 0.0003231340670026839,
+        "relative_update_rms": 0.00043484695497986625,
+        "gradient_sample_rms": 0.003987686242908239,
+        "gradient_l2_estimate": 0.8070509517894082,
+        "gradient_missing_reason": null
+      },
+      "routed.raw_shift": {
+        "parameter": "ks3_geometry",
+        "branch": "routed",
+        "component": "raw_shift",
+        "active_slots": null,
+        "sample_elements": 512,
+        "total_elements": 40960,
+        "optimizer_applied": true,
+        "gradient_available": true,
+        "parameter_rms": 0.014249970205128193,
+        "update_rms": 0.00030986362253315747,
+        "relative_update_rms": 0.02174486108200041,
+        "gradient_sample_rms": 0.00262385793030262,
+        "gradient_l2_estimate": 0.5310315082529035,
+        "gradient_missing_reason": null
+      },
+      "routed.up_projection": {
+        "parameter": "moe_bank",
+        "branch": "routed",
+        "component": "up_projection",
+        "active_slots": null,
+        "sample_elements": 4096,
+        "total_elements": 31457280,
+        "optimizer_applied": true,
+        "gradient_available": true,
+        "parameter_rms": 0.04395768791437149,
+        "update_rms": 0.0010540493531152606,
+        "relative_update_rms": 0.02397872597777488,
+        "gradient_sample_rms": 0.1345849186182022,
+        "gradient_l2_estimate": 754.8436052703884,
+        "gradient_missing_reason": null
+      },
+      "routed.down_projection": {
+        "parameter": "moe_bank",
+        "branch": "routed",
+        "component": "down_projection",
+        "active_slots": null,
+        "sample_elements": 4096,
+        "total_elements": 31457280,
+        "optimizer_applied": true,
+        "gradient_available": true,
+        "parameter_rms": 0.08264286071062088,
+        "update_rms": 0.0022311373613774776,
+        "relative_update_rms": 0.0269973394216101,
+        "gradient_sample_rms": 0.06274557113647461,
+        "gradient_l2_estimate": 351.9197664767202,
+        "gradient_missing_reason": null
+      },
+      "routed.spine_c0": {
+        "parameter": "ks3_geometry",
+        "branch": "routed",
+        "component": "spine_c0",
+        "active_slots": null,
+        "sample_elements": 512,
+        "total_elements": 40960,
+        "optimizer_applied": true,
+        "gradient_available": true,
+        "parameter_rms": 0.011197724379599094,
+        "update_rms": 0.0004913305165246129,
+        "relative_update_rms": 0.04387771120887365,
+        "gradient_sample_rms": 6.415925979614258,
+        "gradient_l2_estimate": 1298.492121256198,
+        "gradient_missing_reason": null
+      },
+      "routed.spine_c1": {
+        "parameter": "ks3_geometry",
+        "branch": "routed",
+        "component": "spine_c1",
+        "active_slots": null,
+        "sample_elements": 512,
+        "total_elements": 40960,
+        "optimizer_applied": true,
+        "gradient_available": true,
+        "parameter_rms": 0.010064312256872654,
+        "update_rms": 0.0005103021394461393,
+        "relative_update_rms": 0.05070412427810628,
+        "gradient_sample_rms": 6.097895622253418,
+        "gradient_l2_estimate": 1234.1273024185948,
+        "gradient_missing_reason": null
+      },
+      "routed.spine_c2": {
+        "parameter": "ks3_geometry",
+        "branch": "routed",
+        "component": "spine_c2",
+        "active_slots": null,
+        "sample_elements": 512,
+        "total_elements": 40960,
+        "optimizer_applied": true,
+        "gradient_available": true,
+        "parameter_rms": 0.012074503116309643,
+        "update_rms": 0.0004990902962163091,
+        "relative_update_rms": 0.04133423060218209,
+        "gradient_sample_rms": 2.757636070251465,
+        "gradient_l2_estimate": 558.1063001491666,
+        "gradient_missing_reason": null
+      },
+      "routed.spine_c3": {
+        "parameter": "ks3_geometry",
+        "branch": "routed",
+        "component": "spine_c3",
+        "active_slots": null,
+        "sample_elements": 512,
+        "total_elements": 40960,
+        "optimizer_applied": true,
+        "gradient_available": true,
+        "parameter_rms": 0.012289251200854778,
+        "update_rms": 0.00047981220996007323,
+        "relative_update_rms": 0.039043242107924356,
+        "gradient_sample_rms": 4.138620376586914,
+        "gradient_l2_estimate": 837.5978726911004,
+        "gradient_missing_reason": null
+      },
+      "routed.warp_c4": {
+        "parameter": "ks3_geometry",
+        "branch": "routed",
+        "component": "warp_c4",
+        "active_slots": null,
+        "sample_elements": 512,
+        "total_elements": 40960,
+        "optimizer_applied": true,
+        "gradient_available": true,
+        "parameter_rms": 0.01399653498083353,
+        "update_rms": 0.0003756941296160221,
+        "relative_update_rms": 0.026841938389071816,
+        "gradient_sample_rms": 0.2969709038734436,
+        "gradient_l2_estimate": 60.102685122496126,
+        "gradient_missing_reason": null
+      },
+      "routed.warp_c5": {
+        "parameter": "ks3_geometry",
+        "branch": "routed",
+        "component": "warp_c5",
+        "active_slots": null,
+        "sample_elements": 512,
+        "total_elements": 40960,
+        "optimizer_applied": true,
+        "gradient_available": true,
+        "parameter_rms": 0.013511411845684052,
+        "update_rms": 0.00039186718640848994,
+        "relative_update_rms": 0.029002682390564832,
+        "gradient_sample_rms": 0.2539263367652893,
+        "gradient_l2_estimate": 51.39107725320109,
+        "gradient_missing_reason": null
+      }
+    },
+    "gradient_boundary": "after all-eight-rank reduction; before original step_optimizers",
+    "sampling": "deterministic bounded active-slot samples; geometry components separated",
+    "approximate_norms": true,
+    "single_original_update": true,
+    "pre_sample_training_drain_seconds": 0.09105709102004766,
+    "post_optimizer_drain_seconds": 0.01187916100025177,
+    "extra_seconds_before_optimizer": 0.062332339002750814,
+    "timing": "All sampling, drains and logging remain on continuous training clock; drains wait for original queued training work",
+    "feedforward_post_multipliers_bf16": [
+      0.55859375,
+      0.640625,
+      0.6484375,
+      0.6328125,
+      0.71875,
+      0.6640625,
+      0.671875,
+      1.0,
+      0.86328125,
+      1.0,
+      1.0
+    ],
+    "activation_caveat": "Core projected-output moments precede these post multipliers and routed gate weights.",
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T13:16:29.996550+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-hidden-bf16-discovery-20261026T131217-a88268",
+    "seed": 169,
+    "code_commit": "e5cdda46dd3260dac3ab9d21ffbf973187402da9",
+    "training_projection_gs32": true
+  },
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.353831022977829,
+        "rms": 1.2832823991775513,
+        "max_abs": 5.904506206512451,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5644172430038452,
+        "rms": 2.3103086948394775,
+        "max_abs": 43.0,
+        "nonzero_fraction": 0.27587890625
+      },
+      "projected_output": {
+        "mean": -0.2518301010131836,
+        "rms": 8.563602447509766,
+        "max_abs": 55.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4213346242904663,
+        "rms": 1.3349018096923828,
+        "max_abs": 6.28177547454834,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.5883097648620605,
+        "rms": 2.474118709564209,
+        "max_abs": 42.75,
+        "nonzero_fraction": 0.283935546875
+      },
+      "projected_output": {
+        "mean": 0.011145561933517456,
+        "rms": 7.807546138763428,
+        "max_abs": 43.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.373776912689209,
+        "rms": 1.3181579113006592,
+        "max_abs": 7.643866539001465,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.6092759370803833,
+        "rms": 2.8735134601593018,
+        "max_abs": 95.0,
+        "nonzero_fraction": 0.3046875
+      },
+      "projected_output": {
+        "mean": 0.19989226758480072,
+        "rms": 8.197442054748535,
+        "max_abs": 68.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.40112677216529846,
+        "rms": 1.3238552808761597,
+        "max_abs": 5.94912052154541,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5669756531715393,
+        "rms": 2.235393762588501,
+        "max_abs": 49.0,
+        "nonzero_fraction": 0.308837890625
+      },
+      "projected_output": {
+        "mean": -0.20031161606311798,
+        "rms": 8.576135635375977,
+        "max_abs": 71.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.34926271438598633,
+        "rms": 1.2919597625732422,
+        "max_abs": 6.635885715484619,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.624078631401062,
+        "rms": 2.7537801265716553,
+        "max_abs": 73.5,
+        "nonzero_fraction": 0.317138671875
+      },
+      "projected_output": {
+        "mean": -0.10033862292766571,
+        "rms": 9.693297386169434,
+        "max_abs": 63.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "diagnostic_limitation": "Sparse gradient/component updates and probe activation moments describe this live run; coefficient scale alone is not an activation effect. No full validation result exists.",
+  "source_hashes_match": true,
+  "new_stop": false,
+  "shared_backend_unchanged": true,
+  "original_evaluation_bitwise": true,
+  "decision": "Continue to the next fixed-text probe around240 elapsed seconds. The first eligible gap is+0.002226, below+0.01. Future reference points remain excluded.",
+  "full_convergence_verified": false,
+  "verification_seeds": [
+    1769,
+    1770,
+    1771
+  ]
+}

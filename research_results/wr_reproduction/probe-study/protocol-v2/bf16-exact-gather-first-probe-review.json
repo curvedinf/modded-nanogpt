@@ -1,0 +1,364 @@
+{
+  "utc": "2026-10-26T09:41:33.237257+00:00",
+  "run_id": "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8",
+  "code_commit": "233c152d6e2c9d0077e03d275f9414ebfeeb7126",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "probe_signature": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "observation": {
+    "step": 296,
+    "checkpoint_elapsed_seconds": 120.58665766299237,
+    "probe_completion_seconds": 123.53164219399332,
+    "loss": 4.541412910446525,
+    "probe_seconds": 2.9451255179883447,
+    "cumulative_probe_seconds": 2.9451255179883447
+  },
+  "screen": {
+    "event": "probe_screen",
+    "abort": false,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.58665766299237,
+    "reason": "within_one_sided_margin",
+    "gap": -0.09564558044075966,
+    "reference_run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+    "reference_elapsed_seconds": 120.4601258939947,
+    "reference_age_seconds": 0.1265317689976655,
+    "reference_utc": "2026-10-26T06:23:17.848237+00:00",
+    "reference_loss": 4.637058490887284,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd/events.jsonl",
+      "line": 325,
+      "row_sha256": "e795bc511e56d9cf722618ea8a47b8e97eb7cc47b8c557420c79f455760532db"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": -0.09564558044075966,
+      "standard_error": 0.0017565730850195435,
+      "normal95_halfwidth": 0.003442883246638305,
+      "student95_halfwidth": 0.003478014708338696,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T09:39:52.839176+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8",
+    "seed": 169,
+    "code_commit": "233c152d6e2c9d0077e03d275f9414ebfeeb7126",
+    "training_projection_gs32": true
+  },
+  "paired32768_sensitivity": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": -0.09564558044075966,
+    "standard_error": 0.002014178340871581,
+    "normal95_halfwidth": 0.0039477895481082985,
+    "student95_halfwidth": 0.004112952172059768,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "gradient_diagnostics": [
+    {
+      "step": 297,
+      "do_adam": false,
+      "measurements": {
+        "routed.coefficients": {
+          "parameter": "ks3_geometry",
+          "branch": "routed",
+          "component": "coefficients",
+          "active_slots": null,
+          "sample_elements": 3072,
+          "total_elements": 245760,
+          "optimizer_applied": false,
+          "gradient_available": false,
+          "parameter_rms": 0.012315470725297928,
+          "update_rms": 0.0,
+          "relative_update_rms": 0.0,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+        },
+        "routed.raw_scale": {
+          "parameter": "ks3_geometry",
+          "branch": "routed",
+          "component": "raw_scale",
+          "active_slots": null,
+          "sample_elements": 512,
+          "total_elements": 40960,
+          "optimizer_applied": false,
+          "gradient_available": false,
+          "parameter_rms": 0.743416965007782,
+          "update_rms": 0.0,
+          "relative_update_rms": 0.0,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+        },
+        "routed.raw_shift": {
+          "parameter": "ks3_geometry",
+          "branch": "routed",
+          "component": "raw_shift",
+          "active_slots": null,
+          "sample_elements": 512,
+          "total_elements": 40960,
+          "optimizer_applied": false,
+          "gradient_available": false,
+          "parameter_rms": 0.0143445935100317,
+          "update_rms": 0.0,
+          "relative_update_rms": 0.0,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+        },
+        "routed.up_projection": {
+          "parameter": "moe_bank",
+          "branch": "routed",
+          "component": "up_projection",
+          "active_slots": null,
+          "sample_elements": 4096,
+          "total_elements": 31457280,
+          "optimizer_applied": true,
+          "gradient_available": true,
+          "parameter_rms": 0.04315592348575592,
+          "update_rms": 0.0010743016609922051,
+          "relative_update_rms": 0.02489349257806498,
+          "gradient_sample_rms": 0.14427480101585388,
+          "gradient_l2_estimate": 809.1910450785529,
+          "gradient_missing_reason": null
+        },
+        "routed.down_projection": {
+          "parameter": "moe_bank",
+          "branch": "routed",
+          "component": "down_projection",
+          "active_slots": null,
+          "sample_elements": 4096,
+          "total_elements": 31457280,
+          "optimizer_applied": true,
+          "gradient_available": true,
+          "parameter_rms": 0.08486886322498322,
+          "update_rms": 0.002206590725108981,
+          "relative_update_rms": 0.026000003314047188,
+          "gradient_sample_rms": 0.06319271773099899,
+          "gradient_l2_estimate": 354.42766818636625,
+          "gradient_missing_reason": null
+        }
+      }
+    },
+    {
+      "step": 298,
+      "do_adam": true,
+      "measurements": {
+        "routed.coefficients": {
+          "parameter": "ks3_geometry",
+          "branch": "routed",
+          "component": "coefficients",
+          "active_slots": null,
+          "sample_elements": 3072,
+          "total_elements": 245760,
+          "optimizer_applied": true,
+          "gradient_available": true,
+          "parameter_rms": 0.012315470725297928,
+          "update_rms": 0.00043952150736004114,
+          "relative_update_rms": 0.035688567425782136,
+          "gradient_sample_rms": 2.5708725452423096,
+          "gradient_l2_estimate": 1274.4891587770035,
+          "gradient_missing_reason": null
+        },
+        "routed.raw_scale": {
+          "parameter": "ks3_geometry",
+          "branch": "routed",
+          "component": "raw_scale",
+          "active_slots": null,
+          "sample_elements": 512,
+          "total_elements": 40960,
+          "optimizer_applied": true,
+          "gradient_available": true,
+          "parameter_rms": 0.743416965007782,
+          "update_rms": 0.00032788972021080554,
+          "relative_update_rms": 0.00044105762397737754,
+          "gradient_sample_rms": 0.0026856905315071344,
+          "gradient_l2_estimate": 0.5435455468742881,
+          "gradient_missing_reason": null
+        },
+        "routed.raw_shift": {
+          "parameter": "ks3_geometry",
+          "branch": "routed",
+          "component": "raw_shift",
+          "active_slots": null,
+          "sample_elements": 512,
+          "total_elements": 40960,
+          "optimizer_applied": true,
+          "gradient_available": true,
+          "parameter_rms": 0.0143445935100317,
+          "update_rms": 0.0003190481220372021,
+          "relative_update_rms": 0.022241698366292504,
+          "gradient_sample_rms": 0.0017828127602115273,
+          "gradient_l2_estimate": 0.3608159336883225,
+          "gradient_missing_reason": null
+        },
+        "routed.up_projection": {
+          "parameter": "moe_bank",
+          "branch": "routed",
+          "component": "up_projection",
+          "active_slots": null,
+          "sample_elements": 4096,
+          "total_elements": 31457280,
+          "optimizer_applied": true,
+          "gradient_available": true,
+          "parameter_rms": 0.04329032823443413,
+          "update_rms": 0.001059529255144298,
+          "relative_update_rms": 0.024474964694343068,
+          "gradient_sample_rms": 0.15628035366535187,
+          "gradient_l2_estimate": 876.5263359733594,
+          "gradient_missing_reason": null
+        },
+        "routed.down_projection": {
+          "parameter": "moe_bank",
+          "branch": "routed",
+          "component": "down_projection",
+          "active_slots": null,
+          "sample_elements": 4096,
+          "total_elements": 31457280,
+          "optimizer_applied": true,
+          "gradient_available": true,
+          "parameter_rms": 0.08513687551021576,
+          "update_rms": 0.0021843898575752974,
+          "relative_update_rms": 0.025657388111608437,
+          "gradient_sample_rms": 0.06884123384952545,
+          "gradient_l2_estimate": 386.10838185854254,
+          "gradient_missing_reason": null
+        }
+      }
+    }
+  ],
+  "ks3_activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4044598639011383,
+        "rms": 1.2616056203842163,
+        "max_abs": 5.98604679107666,
+        "nonzero_fraction": 0.90625
+      },
+      "nonlinear_output": {
+        "mean": 0.4852558374404907,
+        "rms": 2.144484519958496,
+        "max_abs": 45.75,
+        "nonzero_fraction": 0.263916015625
+      },
+      "projected_output": {
+        "mean": -0.2748417854309082,
+        "rms": 8.443758964538574,
+        "max_abs": 52.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4542117118835449,
+        "rms": 1.34176504611969,
+        "max_abs": 5.908938407897949,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.5293630361557007,
+        "rms": 2.219043493270874,
+        "max_abs": 61.0,
+        "nonzero_fraction": 0.28173828125
+      },
+      "projected_output": {
+        "mean": 0.24498072266578674,
+        "rms": 8.490934371948242,
+        "max_abs": 70.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4458443820476532,
+        "rms": 1.3598235845565796,
+        "max_abs": 5.31263542175293,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.5611399412155151,
+        "rms": 2.382030487060547,
+        "max_abs": 53.0,
+        "nonzero_fraction": 0.29052734375
+      },
+      "projected_output": {
+        "mean": 0.07610942423343658,
+        "rms": 8.455217361450195,
+        "max_abs": 62.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4256068468093872,
+        "rms": 1.3102340698242188,
+        "max_abs": 5.75340461730957,
+        "nonzero_fraction": 0.896484375
+      },
+      "nonlinear_output": {
+        "mean": 0.5274866223335266,
+        "rms": 2.2836732864379883,
+        "max_abs": 63.0,
+        "nonzero_fraction": 0.303466796875
+      },
+      "projected_output": {
+        "mean": 0.3723776936531067,
+        "rms": 8.860297203063965,
+        "max_abs": 75.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3955317735671997,
+        "rms": 1.3308875560760498,
+        "max_abs": 10.030557632446289,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.6305316686630249,
+        "rms": 3.6823253631591797,
+        "max_abs": 174.0,
+        "nonzero_fraction": 0.3017578125
+      },
+      "projected_output": {
+        "mean": -0.24177806079387665,
+        "rms": 10.631086349487305,
+        "max_abs": 232.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "decision": "Continue unchanged: first held-out CE4.541412910446525 at120.58665766299237s is below5 and0.09564558044075966 better than the best eligible nonfuture compatible observation. No full-validation or convergence claim.",
+  "limits": [
+    "Block sampling uncertainty uses fixed-text paired losses under an independence approximation;32768-token coarsening is a sensitivity check.",
+    "Training objective is diagnostic only; no loss comparisons at matched steps.",
+    "Core activation moments precede routed gates and feedforward post multipliers.",
+    "Unavailable even-update Adam gradients remain in original rank-local accumulation; they are not zero gradients."
+  ],
+  "full_validation": false
+}

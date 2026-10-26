@@ -1,0 +1,9 @@
+{
+  "utc": "2026-10-26T08:25:58.443387+00:00",
+  "run_id": "probe-experts-pairwise-postpack-b1-calibration-20261026T082402-b3f429",
+  "code_commit": "e4d8000fd69337ad82f53500557ea9c0f5831756",
+  "status": "numerical_gate_failed_before_training",
+  "failure": "One-token independent gate-gradient relative error .07707055 while packed features/input/weight gradients are exact and output relative error .00010147.",
+  "next": "Explicitly test gate derivative against the actual forward values bitwise and the independent projection using the measured forward-error absolute bound. Keep output, geometry, pair and weight/input gradient checks. This diagnoses cancellation rather than silently loosening the .015 threshold.",
+  "original_log": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-pairwise-postpack-b1-calibration-20261026T082402-b3f429/console.log"
+}

@@ -1,0 +1,39 @@
+{
+  "utc": "2026-10-26T15:18:30.048349+00:00",
+  "hypothesis": "Cycle5 local2: the original verified BF16 KS3 caches only one weight orientation; both forward projections consume transposed views. Test dual contiguous orientations produced from the sameGS32 quantized values in the existing two batched refresh producers. Reuse the new cache across eight logical ranks and preserve original selected matmul tiles, geometry/VJP, all rates, all five original denseMLPs and shared backend. Include extra120MiB cache and producer writes in the whole-model cost. Require exact cache and output/input/router/post/geometry/weight-gradient parity, all-rank graph/probe restoration, and both first100/updates26-100 strictly faster than original incumbent before any loss/time run. No gain is assumed.",
+  "cpu_scope_checks": {
+    "passed": true,
+    "rejected_mutations": [
+      "geometry.lr_mul",
+      "projection_lr_multiplier",
+      "shared_fp8_gemm_tuning",
+      "geometry_backward_rows",
+      "pairwise_gain",
+      "charts",
+      "bf16_dual_layout.original_selected_tiles",
+      "bf16_dual_layout.original_GS32_quantization",
+      "bf16_dual_layout.training_only",
+      "bf16_dual_evidence.maximum_actual_model_prefix_ratio"
+    ]
+  },
+  "speed_reference": {
+    "speed_reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+    "maximum_actual_model_prefix_ratio": 1.0,
+    "profile_run_id": "ks3-bf16-shared-fp8-profile-20261025T095458-924154"
+  },
+  "reference_code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+  "unchanged_source_files": [
+    "wr_reproduction/ks3_moe.py",
+    "wr_reproduction/ks3_bf16_gemm.py",
+    "wr_reproduction/ks3_weight_pack.py",
+    "wr_reproduction/bf16_tiles.py"
+  ],
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "extra_buffer_bytes": 125829120,
+  "new_parameters": 0,
+  "probe_state_contract": "Evaluation bypasses all new caches and never refreshes them. Full state audits hash both registered buffers/pointers; continuation snapshot restores graph-owned buffers in place. Actual graph gate required.",
+  "gpu_numerical_passed": false,
+  "full_graph_training_tested": false,
+  "full_convergence_verified": false,
+  "next": "Run bounded exact value/gradient/cache refresh GPU tests, then120s actual-model prefix and state gate; loss/time trial requires strict whole-prefix speed improvement."
+}

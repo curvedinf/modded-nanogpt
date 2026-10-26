@@ -1,0 +1,23 @@
+{
+  "utc": "2026-10-26T18:33:45.590384+00:00",
+  "snapshot": {
+    "passed": true,
+    "scope": "nested pending state, aliases/storage, Adam scalar, numpy scratch, rings, RNG and exact/different comparisons",
+    "checked_tensors": 3,
+    "checked_arrays": 1,
+    "changed": [],
+    "saved_tensor_bytes": 96
+  },
+  "scope_exclusions": [
+    "charts",
+    "rank",
+    "architecture",
+    "shared_fp8_gemm_tuning",
+    "geometry_backward_rows",
+    "projection_lr_multiplier",
+    "max_train_seconds"
+  ],
+  "passed": true,
+  "rationale": "Pending-container restoration, in-place alias, RNG and numerical comparison tests; scope must remain original incumbent.",
+  "bounded_gpu_test_pending": true
+}

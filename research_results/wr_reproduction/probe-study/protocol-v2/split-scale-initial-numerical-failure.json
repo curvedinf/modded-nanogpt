@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-26T11:42:04.618252+00:00",
+  "failed_run_id": "probe-experts-split-coefficient-scale-calibration-20261026T113802-031e99",
+  "failed_code_commit": "60b63986d8ee7eee61037bb779329ce50068939b",
+  "status": "error",
+  "failure": "Independent forward oracle relativeRMS0.56855 at one token/zero coefficients; training never started.",
+  "cause": "Original dispatch allocates extra padded capacity past offs[-1], with tile experts clamped to E-1. Independent forward oracle left those rows uninitialized; independent input-gradient matrix oracle likewise left its masked tail uninitialized.",
+  "correction": "Evaluate all forward capacity using the last expert, as original dispatch specifies; initialize the masked backward tail to zero. Add explicit CPU unused-capacity regression checks.",
+  "production_kernel_changed": false,
+  "tolerances_changed": false,
+  "production_kernel_sha256": "1ca9d8d70e41b5384e1b2f423af8b719ac75b41d470ed964e0706b2284438b3e",
+  "cpu_checks": {
+    "passed": true,
+    "cubic_packing_independent_of_warp": true,
+    "warp_packing_independent_of_cubic": true,
+    "raw_warp_scalars_unchanged": true,
+    "zero_initialization_exact": true,
+    "unused_dispatch_capacity_oracles_initialized": true
+  },
+  "result_sha256": "0720a2004d343ebde17110aa12ec738225581a5bdb146929fae9cbb8ebadf6fc",
+  "decision": "Repeat bounded numerical gate with corrected independent oracles; no model training or convergence trial until it passes."
+}

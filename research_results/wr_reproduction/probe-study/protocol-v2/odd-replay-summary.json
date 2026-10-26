@@ -1,0 +1,253 @@
+{
+  "utc": "2026-10-26T18:42:28.617692+00:00",
+  "run_id": "probe-experts-first-event-replay-calibration-20261026T183407-abfe30",
+  "code_commit": "fef060067c327c3e1a5328d169019fe329c86585",
+  "status": "calibration_complete",
+  "diagnostic_completed": true,
+  "all_rewinds_passed": true,
+  "restored_snapshot": {
+    "passed": true,
+    "checked_tensors": 612,
+    "checked_arrays": 72,
+    "changed": [],
+    "saved_tensor_bytes": 13198034456
+  },
+  "exact_sparse_write_domain_rows": 359077,
+  "sparse_table_pointer_preserved": true,
+  "probe_state_audit": {
+    "checked_entries": 1444,
+    "changed": [],
+    "passed": true,
+    "pointer_restoration_required": true,
+    "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+  },
+  "first_update_objective": 17.171756744384766,
+  "first_adam_objective": 17.144744873046875,
+  "baseline_next_objective": 15.067445755004883,
+  "comparisons": [
+    {
+      "branch": "no_probe_b",
+      "dense_gradient_hash_mismatches": [],
+      "sparse_premerge_ranks_differ": [],
+      "sparse_merged_ranks_differ": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "sampled_head_counters_equal": true,
+      "sampler_offsets_equal": true,
+      "odd_objective": 17.144744873046875,
+      "next_even_objective": 15.067468643188477,
+      "next_even_objective_delta": 2.288818359375e-05,
+      "odd_state_differences": [
+        {
+          "component": "parameter/value_embeds",
+          "changed_elements": 105,
+          "total_elements": 154533888,
+          "max_abs": 1.12109375,
+          "relative_rms": 0.0012616848481011252
+        },
+        {
+          "component": "optimizer/value_embeds/exp_avg",
+          "changed_elements": 463646,
+          "total_elements": 154533888,
+          "max_abs": 0.000244140625,
+          "relative_rms": 0.000676456105906734
+        },
+        {
+          "component": "optimizer/value_embeds/exp_avg_sq",
+          "changed_elements": 463636,
+          "total_elements": 154533888,
+          "max_abs": 0.00010066106915473938,
+          "relative_rms": 0.001280178121810932
+        },
+        {
+          "component": "sparse/touched_rows",
+          "changed_elements": 55785,
+          "total_elements": 275771136,
+          "max_abs": 0.03125,
+          "relative_rms": 7.613453779878306e-05
+        },
+        {
+          "component": "sparse/touched_moment",
+          "changed_elements": 4825,
+          "total_elements": 359077,
+          "max_abs": 4.8923538997769356e-08,
+          "relative_rms": 0.00012631409607531593
+        }
+      ],
+      "next_update_parameter_differences": [
+        {
+          "component": "parameter/value_embeds",
+          "changed_elements": 105,
+          "total_elements": 154533888,
+          "max_abs": 1.12109375,
+          "relative_rms": 0.0012616848481011252
+        },
+        {
+          "component": "parameter/qk_bank",
+          "changed_elements": 1943911,
+          "total_elements": 9437184,
+          "max_abs": 0.00152587890625,
+          "relative_rms": 0.002493407538554137
+        },
+        {
+          "component": "parameter/vo_bank",
+          "changed_elements": 1384504,
+          "total_elements": 9437184,
+          "max_abs": 0.0008544921875,
+          "relative_rms": 0.0016513839130491593
+        },
+        {
+          "component": "parameter/mlp_bank",
+          "changed_elements": 11692234,
+          "total_elements": 34603008,
+          "max_abs": 0.001941680908203125,
+          "relative_rms": 0.00340127320269608
+        },
+        {
+          "component": "parameter/moe_bank",
+          "changed_elements": 34328039,
+          "total_elements": 62914560,
+          "max_abs": 0.001953125,
+          "relative_rms": 0.0033848161588410303
+        }
+      ]
+    },
+    {
+      "branch": "with_probe",
+      "dense_gradient_hash_mismatches": [],
+      "sparse_premerge_ranks_differ": [],
+      "sparse_merged_ranks_differ": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "sampled_head_counters_equal": true,
+      "sampler_offsets_equal": true,
+      "odd_objective": 17.144744873046875,
+      "next_even_objective": 15.067413330078125,
+      "next_even_objective_delta": -3.24249267578125e-05,
+      "odd_state_differences": [
+        {
+          "component": "parameter/value_embeds",
+          "changed_elements": 121,
+          "total_elements": 154533888,
+          "max_abs": 1.12109375,
+          "relative_rms": 0.001443775739180012
+        },
+        {
+          "component": "optimizer/value_embeds/exp_avg",
+          "changed_elements": 457050,
+          "total_elements": 154533888,
+          "max_abs": 0.0003662109375,
+          "relative_rms": 0.0006890973096989971
+        },
+        {
+          "component": "optimizer/value_embeds/exp_avg_sq",
+          "changed_elements": 457041,
+          "total_elements": 154533888,
+          "max_abs": 0.00011669471859931946,
+          "relative_rms": 0.0013746138628656687
+        },
+        {
+          "component": "sparse/touched_rows",
+          "changed_elements": 57932,
+          "total_elements": 275771136,
+          "max_abs": 0.03125,
+          "relative_rms": 7.743922441407982e-05
+        },
+        {
+          "component": "sparse/touched_moment",
+          "changed_elements": 4911,
+          "total_elements": 359077,
+          "max_abs": 6.382470019161701e-08,
+          "relative_rms": 0.00015995465079572294
+        }
+      ],
+      "next_update_parameter_differences": [
+        {
+          "component": "parameter/value_embeds",
+          "changed_elements": 121,
+          "total_elements": 154533888,
+          "max_abs": 1.12109375,
+          "relative_rms": 0.001443775739180012
+        },
+        {
+          "component": "parameter/qk_bank",
+          "changed_elements": 1952371,
+          "total_elements": 9437184,
+          "max_abs": 0.0018310546875,
+          "relative_rms": 0.0024971929771105336
+        },
+        {
+          "component": "parameter/vo_bank",
+          "changed_elements": 1069591,
+          "total_elements": 9437184,
+          "max_abs": 0.000732421875,
+          "relative_rms": 0.001417986926418771
+        },
+        {
+          "component": "parameter/mlp_bank",
+          "changed_elements": 11471194,
+          "total_elements": 34603008,
+          "max_abs": 0.001911163330078125,
+          "relative_rms": 0.0032829101540421974
+        },
+        {
+          "component": "parameter/moe_bank",
+          "changed_elements": 34608544,
+          "total_elements": 62914560,
+          "max_abs": 0.00196075439453125,
+          "relative_rms": 0.0034728862778385895
+        }
+      ]
+    }
+  ],
+  "diagnostic_seconds": 140.80893150198972,
+  "original_logical_ranks": 8,
+  "full_graph_warmup": true,
+  "not_a_screening_reference": true,
+  "screen_store_exclusion_verified": true,
+  "source_evidence": {
+    "path": "wr_reproduction/pr393/upstream/track_1_short/perf/kernels/row_scatter.py",
+    "sha256": "0fab7962d5fe8841c61682fb9f2190f97ac8471e0cdb16821f5e0cc0b05e8c13",
+    "mechanism": "Event.launch_ngram calls scatter_add_rows into a zero FP16 per-rank payload. Identical incoming row/gradient hashes in all8ranks yield different merged payload hashes. The frozen kernel uses relaxed atomic_add and explicitly documents unspecified collision order."
+  },
+  "findings": [
+    "No-probe replay nondeterminism exists from the identical checkpoint and data; it is not caused solely by inserting evaluation.",
+    "At the first Adam event, changed state is restricted to value embeddings/their moments and touched n-gram rows/moments. All other model parameters and ordinary dense optimizer states match exactly.",
+    "The next update propagates those differences into shared attention/dense/KS3 projection banks. This establishes a concrete route for early trajectory divergence; later120s or900s variance is not measured.",
+    "With-probe immediate restoration passes1444entries. Its pre-optimizer dense and n-gram gradient hashes also match the no-probe branch, and sparse merged payloads differ in the same component.",
+    "Value-embedding outputs also differ in both comparisons. Their pre-event accumulated gradient hashes were not captured, so the precise value-embedding divergence point is not independently isolated."
+  ],
+  "conclusions": {
+    "odd_update_bitwise_parity_established": false,
+    "probe_mutation_detected": false,
+    "no_probe_nondeterminism_established": true,
+    "long_run_variance_estimated": false,
+    "late_screening_gaps_explained": false,
+    "architecture_gain_established": false,
+    "new_control_required": false,
+    "shared_kernels_changed": false,
+    "screening_policy_changed": false
+  },
+  "limitations": [
+    "Two no-probe replays and one with-probe replay at one checkpoint cannot establish statistical equivalence or a training-seed noise interval.",
+    "The measured paired text-block halfwidths describe sampling of held-out text conditional on trained weights. They exclude training trajectory nondeterminism and current-best selection effects.",
+    "No prior screening decision or frozen three-seed endpoint is rewritten. No unchanged-recipe convergence repeat, full validation or reserved text was used.",
+    "Snapshot restores13.198GB of selected tensor state in place plus all359077first-event sparse rows; PyTorch version increments from deliberate restoration are normalized only for rewind comparison. Probe comparisons themselves retain version checks.",
+    "Diagnostic tracing and snapshots synchronize. The140.809seconds is diagnostic cost, not normal probe overhead or model throughput."
+  ],
+  "decision": "Retain original expert-only incumbent. Preserve strictbelow5/firstone-sided+.01/nonfuture3s V2 screening and all shared kernels. Treat screen rejections as decisions about observed runs, not causal architecture estimates. Investigate a new KS3-only mechanism using recorded functional/gradient effects and bottleneck evidence; do not repeat rejected scalar grids or alter common atomics."
+}

@@ -1,0 +1,64 @@
+{
+  "utc": "2026-10-26T13:29:27.580095+00:00",
+  "phase": "cycle4_local3_bf16_vjp32_numerical_gate",
+  "status": "prepared",
+  "recipe": "configs/wr_reproduction/probe_experts_bf16_vjp32.json",
+  "hypothesis": "Test a32-row geometry backward tile in the original GS32/BF16 experts. The saved actual-model BF16 profile measured160_vjp launches totaling52101.65us over4updates; summed kernel durations are not wall-time shares. A prior32-row benefit applied only to FP8, while current BF16 source still hardcodes64rows. Preserve original independent rank1 forward, BF16 coordinate-gradient storage, GS32 operands, FP16 nonlinearity, all rates and shared settings. Only FP32 geometry partial reduction grouping changes. Require numerical parity plus both actual-model prefixes faster before900s fixed-probe-screened training.",
+  "settings": {
+    "kind": "bf16-geometry-vjp32-original-function-v1",
+    "row_tile": 32,
+    "coordinate_gradient_storage": "bf16",
+    "forward": "original"
+  },
+  "evidence": {
+    "speed_reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+    "maximum_actual_model_prefix_ratio": 1.0,
+    "profile_run_id": "ks3-bf16-shared-fp8-profile-20261025T095458-924154",
+    "prior_distinct_fp8_tile_run_id": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859"
+  },
+  "scope_cpu_checks": {
+    "passed": true,
+    "cases": [
+      "geometry_rate",
+      "shared_backend",
+      "input_packing",
+      "gradient_storage",
+      "speed_limit",
+      "row_tile",
+      "extra_function"
+    ]
+  },
+  "syntax_passed": true,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "fenced_files_unchanged": true,
+  "profile": {
+    "path": "research_results/wr_reproduction/research/ks3-bf16-shared-fp8-profile-20261025T095458-924154-profile-summary.json",
+    "sha256": "d9204b848d6275bf4222f9f9fa342949bde451e5245d062e74ac550b0ede6907",
+    "first_update": 26,
+    "last_update": 29,
+    "geometry_backward": {
+      "name": "_vjp",
+      "count": 160,
+      "total_us": 52101.649999999994,
+      "mean_us": 325.63531249999994,
+      "fraction_of_kernel_duration_sum": 0.03370076918243631
+    },
+    "warning": "Kernel durations can overlap across streams; sums/fractions are not elapsed-time shares."
+  },
+  "source_audit": {
+    "original_bf16": "wr_reproduction/ks3_moe.py backward uses fixed64-row_vjp/_reduce;geometry_backward_rows only configuresFP8 ininstall",
+    "new_bf16": "Opt-in32-row backward overlay, original coordinate-gradient BF16 storage, original producers/products, no forward patch",
+    "prior_fp8": "Existing32-row FP8 block/timing evidence is preserved and does not prove the BF16 gate."
+  },
+  "numeric_gate": "Ten zero/nonzero actual-width cases including1/257/16384/49152tokens andemptyexperts. Original output/input/router/post/weight gradients bitwise. FP32 geometry reduction/components bounded3e-6, independent smoothSTE3e-5. Original untuned fallback bitwise.",
+  "speed_gate": "Full24graphwarmup plus bounded120s original all-eight-rank prefix. Both first100 andupdates26-100 must be strictly faster than the saved original BF16 incumbent; normal/pending state, original-eval oracle, bitwise same-next-update andprojected7probe<=3% required.",
+  "verification_seeds": [
+    1869,
+    1870,
+    1871
+  ],
+  "new_parameters": 0,
+  "original_function_and_optimizer": true,
+  "full_convergence_verified": false,
+  "decision": "Run numerical gate now. Only a pass permits actual-model speed/state; a slower gate forbids convergence. No unchanged recipe repeats or extra MLP controls."
+}

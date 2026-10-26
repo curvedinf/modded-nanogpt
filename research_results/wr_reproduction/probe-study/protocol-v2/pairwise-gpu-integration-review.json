@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-26T07:21:54.844377+00:00",
+  "status": "read_only_design_review_no_GPU_implementation_or_claim",
+  "current_training_sources_unchanged": true,
+  "cpu_oracle": "ks3_research/pairwise_reference.py",
+  "integration_findings": [
+    "Original core.forward computes independent rank1 geometry then GS32 activation packing before the existing down GEMM. Add bounded interaction before that same GS32 packing; do not average coordinates.",
+    "Staging the independent feature through BF16 before adding interaction can change the zero-coefficient function through an extra rounding boundary. A fused geometry extension or lossless intermediate must preserve original rounding.",
+    "Original core.backward computes the independent geometry VJP before BF16 coordinate-gradient storage. The interaction VJP must include both pair members before that storage, plus a separate pair-coefficient reduction.",
+    "Existing routed and projection matmuls, prepared weights, routing and shared kernels can stay unchanged. The new parameter needs the geometry Adam schedule and explicit model/optimizer inventory.",
+    "Bound1 interactions may be hidden by GS32 group scales when base feature magnitudes are large. Measure the activation effect on actual inputs, not the coefficient mean. This is an unresolved hypothesis, not evidence of a gain."
+  ],
+  "required_gates": [
+    "Zero-pair coefficients: original function and input/output-weight/up-weight/geometry gradients match at actual1024 routed shapes",
+    "Nonzero coefficients: independent reference output, all VJPs, pair gradient and nonzero cross-coordinate derivatives",
+    "Keep existing CPU gradcheck/gradgradcheck evidence; do not relabel rank2/4 mean spines",
+    "Actual all-eight-rank graph execution and sparse state continuation before convergence"
+  ],
+  "execution_order": "Finish four directed local hypotheses and any automatic required verification first. Implement/test optional KS3-only pairwise extension at a source-freeze boundary; never edit a running frozen candidate or verification set."
+}

@@ -1,0 +1,69 @@
+{
+  "utc": "2026-10-26T14:50:47.779557+00:00",
+  "cycle": 4,
+  "local_batch_record": "directed-cycle4-inspection.json",
+  "local_results": [
+    {
+      "run_id": "probe-experts-local-residual-exact-gather-discovery-20261026T125041-4a1477",
+      "code_commit": "d712c32396c0f883075f60d1405d66cca5de6b4b",
+      "status": "pruned",
+      "probe_loss": 4.640410654246807,
+      "elapsed_seconds": 120.7757279239886,
+      "gap": 0.09899774380028248,
+      "reference_run_id": "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8",
+      "reference_age_seconds": 0.1890702609962318,
+      "full_validation": null
+    },
+    {
+      "run_id": "probe-experts-hidden-bf16-discovery-20261026T131217-a88268",
+      "code_commit": "e5cdda46dd3260dac3ab9d21ffbf973187402da9",
+      "status": "pruned",
+      "probe_loss": 4.082069020718336,
+      "elapsed_seconds": 240.7167126010172,
+      "gap": 0.07675355114042759,
+      "reference_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+      "reference_age_seconds": 0.5952262130158488,
+      "full_validation": null
+    },
+    {
+      "run_id": "probe-experts-bf16-vjp32-discovery-20261026T133959-793d64",
+      "code_commit": "92a9c9ddd221067ed26908c3817a148bad5ba2a1",
+      "status": "pruned",
+      "probe_loss": 4.03465248644352,
+      "elapsed_seconds": 240.21670477898442,
+      "gap": 0.029337016865611076,
+      "reference_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+      "reference_age_seconds": 0.09521839098306373,
+      "full_validation": null
+    },
+    {
+      "run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+      "code_commit": "72a449c54dae6a84ed2623b4987c0b0bd3d3aac1",
+      "status": "pruned",
+      "probe_loss": 4.070169642567635,
+      "elapsed_seconds": 240.47123250199365,
+      "gap": 0.06485417298972607,
+      "reference_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+      "reference_age_seconds": 0.34974611399229616,
+      "full_validation": null
+    }
+  ],
+  "completed_local_hypotheses": 4,
+  "completed_exploratory_hypotheses": 1,
+  "exploratory_result": {
+    "step": 285,
+    "loss": 4.833128806203604,
+    "checkpoint_elapsed_seconds": 120.34346182300942,
+    "probe_completion_seconds": 123.40018760800012,
+    "probe_seconds": 3.056849603977753,
+    "cumulative_probe_seconds": 3.056849603977753,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "run_id": "probe-experts-pairwise-gain-b05-discovery-20261026T144110-77190b",
+    "gap": 0.3145706560462713,
+    "status": "pruned"
+  },
+  "new_qualifying_results": 0,
+  "original_expert_only_incumbent_remains_best_full_validation": true,
+  "decision": "Close cycle4: all four local hypotheses and bounded feature-gain exploration rejected. Retain verified original expert-only incumbent. No unchanged gain recipe rerun.",
+  "next": "Test one local producer-fusion implementation of the gain equations with original geometry backward and BF16 boundaries. Require numerical equivalence, all-rank state gates and both first100/updates26-100 faster than unfused gain AND no more than2% above original incumbent before any loss/time trial. This is a kernel-cost hypothesis, not an increased bound/rate or a claimed convergence improvement."
+}

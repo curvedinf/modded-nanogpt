@@ -1,0 +1,30 @@
+{
+  "utc": "2026-10-26T13:40:36.549419+00:00",
+  "phase": "cycle4_local3_bf16_vjp32_discovery",
+  "status": "running",
+  "run_id": "probe-experts-bf16-vjp32-discovery-20261026T133959-793d64",
+  "unit": "wr-probe-bf16-vjp32-0b4b88bf",
+  "code_commit": "92a9c9ddd221067ed26908c3817a148bad5ba2a1",
+  "trainer_pid": 1571848,
+  "controller_pid": 1571837,
+  "recipe": "configs/wr_reproduction/probe_experts_bf16_vjp32.json",
+  "numerical_gate": "bf16-vjp32-numerical-summary.json",
+  "speed_state_gate": "bf16-vjp32-speed-state-summary.json",
+  "source_hashes_match": true,
+  "new_stop": false,
+  "source_freeze": true,
+  "gpu_lease": "1571837 python          /root/modded-nanogpt/logs/wr-reproduction/gpu.lock",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "probe_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true,
+  "original_forward_and_evaluation": true,
+  "change_scope": "Only BF16 geometry backward row tile64->32 and matching partial reduction grouping. Original BF16 coordinate storage, all producer/products, forward, evaluation, optimizer and shared kernels/settings retained.",
+  "verification_seeds": [
+    1869,
+    1870,
+    1871
+  ],
+  "full_convergence_verified": false,
+  "next": "Complete full24graphwarmup, then900s continuous-clock discovery with fixed1Mheldout probes every120s. Strictbelow5 then first one-sided>=.01 compatible nonfuture<=3s observation prunes. If full validation qualifies, controller executes1869/1870/1871 frozen unpruned; no source changes during discovery or verification."
+}

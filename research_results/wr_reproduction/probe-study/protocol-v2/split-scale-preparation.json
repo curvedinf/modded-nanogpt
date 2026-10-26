@@ -1,0 +1,25 @@
+{
+  "utc": "2026-10-26T11:37:22.019774+00:00",
+  "cpu_quantization_independence": {
+    "passed": true,
+    "cubic_packing_independent_of_warp": true,
+    "warp_packing_independent_of_cubic": true,
+    "raw_warp_scalars_unchanged": true,
+    "zero_initialization_exact": true
+  },
+  "negative_scope_checks": 4,
+  "hypothesis": "Retain both learned cubic and warp components but give their four/two coefficients separate roundedFP16 quantization scales. Archived terminal geometry has warp-dominated shared scales in53.93% of charts, and separated packing reduces cubic coefficient RMS quantization error from4.7435e-5 to3.2116e-5. Test whether reduced cross-component packing interference improves loss/time; this is coefficient accuracy, not a speed-win claim.",
+  "recipe": "configs/wr_reproduction/probe_experts_split_coefficient_scale.json",
+  "cycle": "3 local4",
+  "numerical_gate": "Actual widths8experts/1024charts/768dims;1/257/4096/16384token cases, empty experts/padding, zero/nonzero coefficients, train/eval kernels. Independent FP16-stage forward and smoothFP32 STE; zero-init full routed output/input/router/post/geometry/weight gradients bitwise original.",
+  "source_files": [
+    "wr_reproduction/ks3_split_coefficient_scale.py",
+    "wr_reproduction/check_ks3_split_coefficient_scale.py",
+    "wr_reproduction/probe_split_coefficient_trial.py"
+  ],
+  "cost_gate": "Full24-update warmup and bounded120s original schedule prefix, both first100 and26-100 costs <=1.02x incumbent. Probe oracle/restoration/bitwise next-update parity required. Numerical or cost failures block discovery.",
+  "next": "Only after gates pass:900s-cap seed169 fixed-probe discovery; qualifying configuration triggers fresh unpruned1469/1470/1471.",
+  "shared_backend_unchanged": true,
+  "original_dense_MLPs_retained": true,
+  "additional_model_parameters": 0
+}

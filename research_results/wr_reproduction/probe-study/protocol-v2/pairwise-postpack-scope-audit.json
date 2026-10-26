@@ -1,0 +1,44 @@
+{
+  "utc": "2026-10-26T08:23:39.608270+00:00",
+  "changes": {
+    "name": {
+      "before": "probe-experts-pairwise-b1",
+      "after": "probe-experts-pairwise-postpack-b1"
+    },
+    "hypothesis": {
+      "before": "Retain every independent rank1 KS3 expert feature and add bounded adjacent-coordinate interactions with separate zero-initialized coefficients. Test whether limited cross-coordinate structure improves CE per continuous900s; this is a new exploratory hypothesis, not mean-coordinate rank2/4 coupling.",
+      "after": "Local follow-up to measured GS32 attenuation in the rejected before-pack pair trial: preserve the original independent GS32/BF16 KS3 features, then add the same bounded zero-initialized adjacent-coordinate term before the original BF16 projection. Rates, bound, coordinate scale, width, independent pathways and all shared kernels/settings stay fixed. Test surviving activation effect and loss per continuous900 seconds; gain is unproven."
+    },
+    "pairwise": {
+      "before": {
+        "kind": "additive-tanh-adjacent-independent-v1",
+        "bound": 1.0,
+        "lr_mul": 0.125,
+        "initial_raw_coefficient": 0.0,
+        "pairing": "i xor1"
+      },
+      "after": {
+        "kind": "additive-tanh-adjacent-independent-v1",
+        "bound": 1.0,
+        "lr_mul": 0.125,
+        "initial_raw_coefficient": 0.0,
+        "pairing": "i xor1",
+        "placement": "after-independent-GS32"
+      }
+    },
+    "hypothesis_class": {
+      "before": "exploratory-pairwise-independent-rank1",
+      "after": "local-pairwise-quantization-placement"
+    }
+  },
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "shared_fence_unchanged": true,
+  "placement_gate_rejects_mismatch": true,
+  "source_files": {
+    "wr_reproduction/ks3_pairwise.py": "bd2faa84edb19e3ee3f48a61282c2ea63b59488aa4bf1d8ba27dcc5d5778c8f5",
+    "wr_reproduction/probe_pairwise_train.py": "0f21d90df15335f6c2325cd5f6d53449b61524b7524e61367e9701349ae655e1",
+    "wr_reproduction/check_ks3_pairwise.py": "cbb82f496dc7f63175f04f46349e4023638f9128ff2e5ef14e14159e1c44a41e",
+    "wr_reproduction/probe_pairwise_controller.py": "4a8659b0ad090435a4f94d2d5eec257080856dbf4e92d18430a211ea99a053a1"
+  },
+  "decision": "Commit the minimal optional placement and run bounded GPU numerical, then full24-warmup graph/state gates before any discovery."
+}

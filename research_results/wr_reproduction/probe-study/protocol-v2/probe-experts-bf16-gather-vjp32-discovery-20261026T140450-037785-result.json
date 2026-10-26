@@ -1,0 +1,165 @@
+{
+  "run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+  "status": "pruned",
+  "seed": 169,
+  "code_commit": "72a449c54dae6a84ed2623b4987c0b0bd3d3aac1",
+  "recipe": {
+    "name": "probe-experts-bf16-gather-vjp32",
+    "hypothesis": "Combine the individually validated exact BF16 gradient producer and32-row geometry VJP. Both standalone ingredient loss/time trials were pruned, so no convergence benefit is assumed. The actual-model BF16 profile identifies gradient materialization and geometry backward costs; this new combination removes the first while retaining the smaller geometry tile. Preserve original independent rank1 function, GS32 packing, BF16 coordinate-gradient storage, FP16 nonlinearity, rates, five original dense MLPs and shared settings. Require bitwise all-gradient parity to the32-row ingredient and both model timing prefixes faster than BOTH standalone ingredients before one900s fixed-probe-screened discovery.",
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 32,
+    "bf16_kernel_mode": "tuned",
+    "kernel_evidence": {
+      "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+      "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+      "matrix_max_relative_rms": 4.411854752106592e-05
+    },
+    "block_correctness_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+      "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+      "max_relative_rms": 0.0,
+      "evaluation_original_kernels": true,
+      "bitwise_input_and_weight_producers": true
+    },
+    "timing_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+      "first100_seconds": 54.066861718994915,
+      "updates25_to100_seconds": 40.427348073004396,
+      "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+      "reference_first100": 55.488501123007154,
+      "reference_25to100": 41.43367328601016,
+      "validation": false,
+      "first100_time_reduction": 0.025620432616493716,
+      "steady_time_reduction": 0.024287617611387313,
+      "timing_gate_passed": true
+    },
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "hardware_change_scope": "Opt-in shared nongrouped FP8 GEMM tiles across attention, dense MLP and output head; default MLP dispatch remains legacy.",
+    "shared_fp8_correctness_evidence": {
+      "run_id": "ks3-shared-fp8-dispatch-check-20261025T075607-ff0ab5",
+      "code_commit": "bcb2f5f79d96c9d82c4b0ccfcbbf0b75253fa4e1",
+      "source_format_pairs": 4,
+      "independent_shape_cases": 15,
+      "all_stored_byte_patterns": true,
+      "original_dense_mlp_autograd": true,
+      "validation": false
+    },
+    "validation_window_policy": "accepted-control",
+    "evaluation_protocol": "Capture live stage-two YaRN frequencies/attention scales on first reach of640/1408 windows. For terminal stage four or full-schedule completion only, restore those nonlearned buffers and use640/1408 evaluation arguments. Preserve raw learned weights, training schedule and all updates; no canonical mask, tail shipping or final window extension. Early-stage evaluation remains incompatible. All restoration/rebuild/readback/setup is inside original training timer; no strict qualification if actual elapsed exceeds902.3592145430011.",
+    "shared_fp8_timing_evidence": {
+      "run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+      "code_commit": "2959f2a2250c36cb7dd10f28c02cdcfcc86fd729",
+      "first100_seconds": 39.57759546399757,
+      "after25_through100_seconds": 29.55288318300154,
+      "baseline_run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "baseline_first100_seconds": 54.06715966599586,
+      "baseline_after25_through100_seconds": 40.427348073004396,
+      "first100_time_reduction": 0.26799196206178977,
+      "steady_time_reduction": 0.2689878364112719,
+      "validation": false,
+      "gate_passed": true
+    },
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_experts",
+    "hypothesis_class": "local-kernel",
+    "bf16_gather_vjp32": {
+      "kind": "bf16-exact-gradient-gather-vjp32-original-function-v1",
+      "row_tile": 32,
+      "coordinate_gradient_storage": "bf16",
+      "forward": "original",
+      "gradient_producer": "exact-gather-original-torch-gate-sum"
+    },
+    "bf16_combination_evidence": {
+      "speed_reference_run_ids": [
+        "probe-experts-bf16-vjp32-discovery-20261026T133959-793d64",
+        "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8"
+      ],
+      "maximum_actual_model_prefix_ratio": 1.0,
+      "require_faster_than_both_ingredients": true,
+      "profile_run_id": "ks3-bf16-shared-fp8-profile-20261025T095458-924154"
+    }
+  },
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "validation": null,
+  "pruning": {
+    "event": "screening_abort",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 240.47123250199365,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.06485417298972607,
+    "reference_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+    "reference_elapsed_seconds": 240.12148638800136,
+    "reference_age_seconds": 0.34974611399229616,
+    "reference_utc": "2026-10-26T09:08:48.799304+00:00",
+    "reference_loss": 4.0053154695779085,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a/events.jsonl",
+      "line": 492,
+      "row_sha256": "ba3df04d2ad4d2732cbaabec03b2c03e1c02fdd5a6471b751760928f2daa02ea"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.06485417298972607,
+      "standard_error": 0.0011892476177760342,
+      "normal95_halfwidth": 0.002330925330841027,
+      "student95_halfwidth": 0.0023547102831965477,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T14:11:02.537123+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+    "seed": 169,
+    "code_commit": "72a449c54dae6a84ed2623b4987c0b0bd3d3aac1",
+    "training_projection_gs32": true
+  },
+  "calibration": null,
+  "exit_code": 0,
+  "reserved_confirmation": null,
+  "events_sha256": "3452828f027fdfc93f3b9eabf97b5e84e86f7e3493e800392d8eefd162e0ecb3",
+  "completed_utc": "2026-10-26T14:11:04.625748+00:00",
+  "qualifies": false
+}

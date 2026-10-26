@@ -1,0 +1,29 @@
+{
+  "utc": "2026-10-26T12:51:29.256408+00:00",
+  "phase": "cycle4_local1_local_residual_gather_discovery",
+  "status": "running",
+  "run_id": "probe-experts-local-residual-exact-gather-discovery-20261026T125041-4a1477",
+  "unit": "wr-probe-local-residual-gather-ee0344a5",
+  "code_commit": "d712c32396c0f883075f60d1405d66cca5de6b4b",
+  "trainer_pid": 1567844,
+  "controller_pid": 1567832,
+  "source_hashes_match": true,
+  "new_stop": false,
+  "source_freeze": true,
+  "gpu_lease": "1567832 python          /root/modded-nanogpt/logs/wr-reproduction/gpu.lock",
+  "recipe": "configs/wr_reproduction/probe_experts_local_residual_exact_gather.json",
+  "numerical_gate": "local-residual-gather-numerical-summary.json",
+  "speed_state_gate": "local-residual-gather-speed-state-summary.json",
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true,
+  "original_local_residual_function_unchanged": true,
+  "verification_seeds": [
+    1669,
+    1670,
+    1671
+  ],
+  "full_convergence_verified": false,
+  "hypothesis": "Test whether the measured exact gradient-producer speed improvement changes compact residual loss versus elapsed time; no function or optimizer changes.",
+  "next": "Complete full24graphwarmup, then seed169 fixed-text screened trial with900s continuous cap. First comparable probe atloss<5 withgap>=0.01 against best compatible nonfuture<=3s reference prunes immediately. Qualifying full validation triggers1669/1670/1671 frozen unpruned seeds; all STOP paths remain authoritative.",
+  "no_unchanged_recipe_repeats": true
+}

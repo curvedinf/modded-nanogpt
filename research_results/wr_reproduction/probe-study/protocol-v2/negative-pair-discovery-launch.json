@@ -1,0 +1,25 @@
+{
+  "utc": "2026-10-26T16:27:38.059817+00:00",
+  "phase": "cycle5_exploratory_negative_pair_discovery",
+  "status": "running",
+  "run_id": "probe-experts-negative-pair-discovery-20261026T162705-ba7a3f",
+  "unit": "wr-probe-negative-pair-e206a2fb",
+  "code_commit": "00f6fcf0ce84c2cc7e7300b8797735d91eb6cf99",
+  "seed": 169,
+  "numerical_gate_run_id": "probe-experts-negative-pair-calibration-20261026T162153-c071a8",
+  "graph_gate_run_id": "probe-experts-negative-pair-calibration-20261026T162312-84b057",
+  "budget_seconds": 900,
+  "comparison": "Compatible constant-condition heldout full-vocabulary CE at elapsed training time only. Strict below5, first one-sided gap >=0.01, latest nonfuture reference within3seconds.",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "probe_signature": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "source_hashes_match": true,
+  "new_stop": false,
+  "frozen_verification_seeds": [
+    2569,
+    2570,
+    2571
+  ],
+  "verification_comparative_pruning_exempt": true,
+  "full_validation_result": null,
+  "next": "Monitor the fixed-probe trial and any automatically triggered frozen verification. On completion record loss/time and actual activation/gradient diagnostics, then close cycle5 inspection before selecting the next directed hypothesis."
+}

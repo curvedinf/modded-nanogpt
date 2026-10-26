@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-26T07:55:48.764754+00:00",
+  "run_id": "probe-experts-pairwise-b1-calibration-20261026T075030-04f324",
+  "code_commit": "8d88d18b16b0c07fcd13ec96385d1c1afde6702c",
+  "passed": true,
+  "initial_function_bitwise_equal": true,
+  "zero_input_gate_and_weight_gradients_bitwise_equal": true,
+  "max_zero_geometry_relative_rms": 9.87438255606321e-08,
+  "max_nonzero_pair_gradient_relative_rms": 4.4947097421754734e-07,
+  "max_nonzero_all_output_gradient_relative_rms": 0.000715746427886188,
+  "cross_derivative": {
+    "observed": 0.012312462786212564,
+    "expected": 0.012312496080994606
+  },
+  "shape": {
+    "experts": 8,
+    "features": 1024,
+    "model_dimension": 768,
+    "tokens": [
+      1,
+      257,
+      4096
+    ]
+  },
+  "training_and_BF16_evaluation_paths": true,
+  "decision": "Numerical gate passes after fused geometry correction. Proceed to full24 graph warmup, eight actual all-rank updates, independent fixed-probe oracle, state/storage restoration and even/odd continuation before convergence. Additional pair parameter uses original geometry Adam cadence/betas/rate; independent paths/shared backend unchanged."
+}

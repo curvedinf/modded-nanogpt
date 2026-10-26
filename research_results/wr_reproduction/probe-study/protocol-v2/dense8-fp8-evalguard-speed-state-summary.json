@@ -1,0 +1,95 @@
+{
+  "utc": "2026-10-26T19:30:22.585936+00:00",
+  "run_id": "probe-dense8-fp8-evalguard-width2816-calibration-20261026T192432-e22ede",
+  "code_commit": "df830cbb33598dd0cb05f7b252d7023163fe1cf5",
+  "passed": true,
+  "full_warmup_updates": 24,
+  "all_eight_logical_ranks": true,
+  "prefix_elapsed_seconds": 121.06443609899725,
+  "speed": {
+    "passed": true,
+    "candidate": {
+      "first100_seconds": 39.89395345500088,
+      "after25_through100_seconds": 29.859122609021142,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "reference": {
+      "first100_seconds": 40.26366747400607,
+      "after25_through100_seconds": 30.067562156997155,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "ratios": {
+      "first100_seconds": 0.9908176765257692,
+      "after25_through100_seconds": 0.9930676272692928
+    },
+    "criterion": "Both first100 and updates26-100 actual-model durations must be below the saved incumbent prefix.",
+    "limitation": "Single measured original prefix, not a sampling-error estimate or convergence result; loss pruning remains elapsed-time fixed-text only.",
+    "reference_run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+    "reference_code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1"
+  },
+  "expert_only_speed_comparison": {
+    "passed": false,
+    "candidate": {
+      "first100_seconds": 39.89395345500088,
+      "after25_through100_seconds": 29.859122609021142,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "reference": {
+      "first100_seconds": 39.55393554098555,
+      "after25_through100_seconds": 29.54044010999496,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "ratios": {
+      "first100_seconds": 1.0085963105659361,
+      "after25_through100_seconds": 1.0107880078238358
+    },
+    "criterion": "Both first100 and updates26-100 actual-model durations must be below the saved incumbent prefix.",
+    "limitation": "Single measured original prefix, not a sampling-error estimate or convergence result; loss pruning remains elapsed-time fixed-text only.",
+    "reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+    "informational_only": true
+  },
+  "cold_probe_seconds": 2.993888397992123,
+  "warm_probe_seconds": 2.723158009990584,
+  "projected_seven_probe_seconds": 19.332836457935628,
+  "projected_fraction_of900": 0.021480929397706253,
+  "oracle_max_abs": 0.0,
+  "repeat_max_abs": 0.0,
+  "state_restoration": {
+    "checked_entries": 1288,
+    "changed": [],
+    "passed": true,
+    "pointer_restoration_required": true,
+    "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+  },
+  "pending_state_restoration": {
+    "checked_entries": 1477,
+    "changed": [],
+    "passed": true,
+    "pointer_restoration_required": true,
+    "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+  },
+  "continuation_parity": {
+    "passed": true,
+    "same_checkpoint": true,
+    "same_eight_logical_microbatches": true,
+    "baseline_loss": 7.647515296936035,
+    "with_probe_loss": 7.647515296936035,
+    "maximum_parameter_relative_rms": 0.0,
+    "all_parameters_bitwise_equal": true
+  },
+  "post_probe_odd_update_loss": 7.647932052612305,
+  "evaluation_training_cache_guard_executed": [
+    "bf16_evaluation_skips_unused_fp8_refresh",
+    "original_training_fp8_refresh"
+  ],
+  "frozen_shared_backend_unchanged": true,
+  "all_python_sources_frozen": true,
+  "not_a_screening_reference": true,
+  "full_convergence_verified": false,
+  "uncertainty": "Timing prefixes are single measurements; deterministic repeated inference is not sampling uncertainty. Even-update parity is bitwise. The separate first-event replay audit documents original sparse atomic nondeterminism; no odd-update equivalence or long-run variance claim.",
+  "decision": "Launch the changed layer8 FP8 recipe with a continuous900s cap and frozenV2 elapsed-time probe screen. A qualifying full endpoint triggers3269/3270/3271 unpruned frozen seeds."
+}

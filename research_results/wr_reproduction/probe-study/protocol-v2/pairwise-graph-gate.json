@@ -1,0 +1,638 @@
+{
+  "utc": "2026-10-26T08:30:54.769377+00:00",
+  "run_id": "probe-experts-pairwise-postpack-b1-calibration-20261026T082749-350ece",
+  "code_commit": "e681c3b937ac104ca3d9385dbacf620282f22a29",
+  "passed": true,
+  "source_files": {
+    "wr_reproduction/ks3_pairwise.py": "bd2faa84edb19e3ee3f48a61282c2ea63b59488aa4bf1d8ba27dcc5d5778c8f5",
+    "wr_reproduction/probe_pairwise_train.py": "0f21d90df15335f6c2325cd5f6d53449b61524b7524e61367e9701349ae655e1",
+    "wr_reproduction/probe_pairwise_controller.py": "4a8659b0ad090435a4f94d2d5eec257080856dbf4e92d18430a211ea99a053a1",
+    "wr_reproduction/check_ks3_pairwise.py": "97abcb78437adc42707869a77a06d60be222e36641ea7aa70fb44d633b43745e"
+  },
+  "result": {
+    "run_id": "probe-experts-pairwise-postpack-b1-calibration-20261026T082749-350ece",
+    "status": "calibration_complete",
+    "seed": 169,
+    "code_commit": "e681c3b937ac104ca3d9385dbacf620282f22a29",
+    "recipe": {
+      "name": "probe-experts-pairwise-postpack-b1",
+      "hypothesis": "Local follow-up to measured GS32 attenuation in the rejected before-pack pair trial: preserve the original independent GS32/BF16 KS3 features, then add the same bounded zero-initialized adjacent-coordinate term before the original BF16 projection. Rates, bound, coordinate scale, width, independent pathways and all shared kernels/settings stay fixed. Test surviving activation effect and loss per continuous900 seconds; gain is unproven.",
+      "precision": "bf16",
+      "charts": 1024,
+      "rank": 1,
+      "group_size": 32,
+      "nonlinearity": "fp16",
+      "geometry": {
+        "lr_mul": 0.125,
+        "betas": [
+          0.9,
+          0.99
+        ],
+        "weight_decay": 0,
+        "raw_scale": 0.75,
+        "raw_shift": 0.0,
+        "coefficients": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "projection_accumulation": "fp32",
+      "validation_precision": "bf16",
+      "max_train_seconds": 900.0,
+      "validation_setup_reserve_seconds": 2.0,
+      "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+      "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+      "training_gs32": true,
+      "weight_packing": "loop",
+      "geometry_backward_rows": 64,
+      "bf16_kernel_mode": "tuned",
+      "kernel_evidence": {
+        "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+        "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+        "matrix_max_relative_rms": 4.411854752106592e-05
+      },
+      "block_correctness_evidence": {
+        "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+        "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+        "max_relative_rms": 0.0,
+        "evaluation_original_kernels": true,
+        "bitwise_input_and_weight_producers": true
+      },
+      "timing_evidence": {
+        "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+        "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+        "first100_seconds": 54.066861718994915,
+        "updates25_to100_seconds": 40.427348073004396,
+        "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+        "reference_first100": 55.488501123007154,
+        "reference_25to100": 41.43367328601016,
+        "validation": false,
+        "first100_time_reduction": 0.025620432616493716,
+        "steady_time_reduction": 0.024287617611387313,
+        "timing_gate_passed": true
+      },
+      "shared_fp8_gemm_tuning": "mi300-v1",
+      "hardware_change_scope": "Opt-in shared nongrouped FP8 GEMM tiles across attention, dense MLP and output head; default MLP dispatch remains legacy.",
+      "shared_fp8_correctness_evidence": {
+        "run_id": "ks3-shared-fp8-dispatch-check-20261025T075607-ff0ab5",
+        "code_commit": "bcb2f5f79d96c9d82c4b0ccfcbbf0b75253fa4e1",
+        "source_format_pairs": 4,
+        "independent_shape_cases": 15,
+        "all_stored_byte_patterns": true,
+        "original_dense_mlp_autograd": true,
+        "validation": false
+      },
+      "validation_window_policy": "accepted-control",
+      "evaluation_protocol": "Capture live stage-two YaRN frequencies/attention scales on first reach of640/1408 windows. For terminal stage four or full-schedule completion only, restore those nonlearned buffers and use640/1408 evaluation arguments. Preserve raw learned weights, training schedule and all updates; no canonical mask, tail shipping or final window extension. Early-stage evaluation remains incompatible. All restoration/rebuild/readback/setup is inside original training timer; no strict qualification if actual elapsed exceeds902.3592145430011.",
+      "shared_fp8_timing_evidence": {
+        "run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+        "code_commit": "2959f2a2250c36cb7dd10f28c02cdcfcc86fd729",
+        "first100_seconds": 39.57759546399757,
+        "after25_through100_seconds": 29.55288318300154,
+        "baseline_run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+        "baseline_first100_seconds": 54.06715966599586,
+        "baseline_after25_through100_seconds": 40.427348073004396,
+        "first100_time_reduction": 0.26799196206178977,
+        "steady_time_reduction": 0.2689878364112719,
+        "validation": false,
+        "gate_passed": true
+      },
+      "shared_fp8_amax": "atomic",
+      "shared_fp8_decode": "scalar",
+      "shared_fp8_head_tuning": "legacy",
+      "shared_fp8_pipeline_tuning": "legacy",
+      "model_wide_hyperparameters": "original-pr393",
+      "architecture": "ks3_experts",
+      "pairwise": {
+        "kind": "additive-tanh-adjacent-independent-v1",
+        "bound": 1.0,
+        "lr_mul": 0.125,
+        "initial_raw_coefficient": 0.0,
+        "pairing": "i xor1",
+        "placement": "after-independent-GS32"
+      },
+      "gradient_diagnostics_extension": "active-slot-pre-optimizer-v1-plus-pairwise",
+      "hypothesis_class": "local-pairwise-quantization-placement"
+    },
+    "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+    "validation": null,
+    "pruning": null,
+    "calibration": {
+      "passed": true,
+      "mode": "pairwise-graph",
+      "full_graph_warmup": true,
+      "original_logical_ranks": 8,
+      "pair_placement": "after-independent-GS32",
+      "actual_prefix_updates": 8,
+      "actual_prefix_update_seconds": [
+        0.36960216201259755,
+        0.4008144740073476,
+        0.38887744399835356,
+        0.40696818102151155,
+        0.3981795090076048,
+        0.41389373000129126,
+        0.3976810629828833,
+        0.4148392239876557
+      ],
+      "not_a_speed_or_convergence_win": true,
+      "pair_parameters": [
+        5,
+        8,
+        1024
+      ],
+      "pair_raw_max_abs": 0.0046984730288386345,
+      "routed_backward_sites": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "five_original_dense_MLPs_retained": true,
+      "fixed_probe_oracle_max_abs": 0.0,
+      "state_restoration": {
+        "checked_entries": 1268,
+        "changed": [],
+        "passed": true,
+        "pointer_restoration_required": true,
+        "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+      },
+      "pending_state_restoration": {
+        "checked_entries": 1456,
+        "changed": [],
+        "passed": true,
+        "pointer_restoration_required": true,
+        "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+      },
+      "continuation_parity": {
+        "passed": true,
+        "same_checkpoint": true,
+        "same_eight_logical_microbatches": true,
+        "baseline_loss": 13.236366271972656,
+        "with_probe_loss": 13.236366271972656,
+        "maximum_parameter_relative_rms": 0.0,
+        "all_parameters_bitwise_equal": true
+      },
+      "odd_continuation_loss": 12.89725112915039,
+      "cold_probe_seconds": 3.1642984640202485,
+      "warm_probe_seconds": 2.604613725008676,
+      "pending_probe_seconds": 2.629197911999654,
+      "projected_seven_probe_and_sparse_diagnostic_seconds": 18.813130242779152,
+      "projected_fraction_of900": 0.02090347804753239,
+      "projection_limitation": "Screen/ordinary instrumentation costs also remain on clock; actual run overhead must be inspected.",
+      "gradient_measurements": [
+        {
+          "event": "ks3_gradient_update",
+          "step": 9,
+          "original_step": 8,
+          "do_adam": false,
+          "measurements": {
+            "routed.coefficients": {
+              "parameter": "ks3_geometry",
+              "branch": "routed",
+              "component": "coefficients",
+              "active_slots": null,
+              "sample_elements": 3072,
+              "total_elements": 245760,
+              "optimizer_applied": false,
+              "gradient_available": false,
+              "parameter_rms": 0.0023787175305187702,
+              "update_rms": 0.0,
+              "relative_update_rms": 0.0,
+              "gradient_sample_rms": null,
+              "gradient_l2_estimate": null,
+              "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+            },
+            "routed.raw_scale": {
+              "parameter": "ks3_geometry",
+              "branch": "routed",
+              "component": "raw_scale",
+              "active_slots": null,
+              "sample_elements": 512,
+              "total_elements": 40960,
+              "optimizer_applied": false,
+              "gradient_available": false,
+              "parameter_rms": 0.7494034171104431,
+              "update_rms": 0.0,
+              "relative_update_rms": 0.0,
+              "gradient_sample_rms": null,
+              "gradient_l2_estimate": null,
+              "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+            },
+            "routed.raw_shift": {
+              "parameter": "ks3_geometry",
+              "branch": "routed",
+              "component": "raw_shift",
+              "active_slots": null,
+              "sample_elements": 512,
+              "total_elements": 40960,
+              "optimizer_applied": false,
+              "gradient_available": false,
+              "parameter_rms": 0.0015369993634521961,
+              "update_rms": 0.0,
+              "relative_update_rms": 0.0,
+              "gradient_sample_rms": null,
+              "gradient_l2_estimate": null,
+              "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+            },
+            "routed.up_projection": {
+              "parameter": "moe_bank",
+              "branch": "routed",
+              "component": "up_projection",
+              "active_slots": null,
+              "sample_elements": 4096,
+              "total_elements": 31457280,
+              "optimizer_applied": true,
+              "gradient_available": true,
+              "parameter_rms": 0.018696080893278122,
+              "update_rms": 0.0002991827204823494,
+              "relative_update_rms": 0.016002429717231047,
+              "gradient_sample_rms": 0.3416776955127716,
+              "gradient_l2_estimate": 1916.3605117821612,
+              "gradient_missing_reason": null
+            },
+            "routed.down_projection": {
+              "parameter": "moe_bank",
+              "branch": "routed",
+              "component": "down_projection",
+              "active_slots": null,
+              "sample_elements": 4096,
+              "total_elements": 31457280,
+              "optimizer_applied": true,
+              "gradient_available": true,
+              "parameter_rms": 0.0039241015911102295,
+              "update_rms": 0.0005088503239676356,
+              "relative_update_rms": 0.12967307602851044,
+              "gradient_sample_rms": 0.6072613596916199,
+              "gradient_l2_estimate": 3405.9340288446324,
+              "gradient_missing_reason": null
+            },
+            "routed.pair_coefficients": {
+              "parameter": "ks3_pair",
+              "branch": "routed",
+              "component": "bounded_pair_raw_coefficients",
+              "active_slots": null,
+              "sample_elements": 4096,
+              "total_elements": 40960,
+              "optimizer_applied": false,
+              "gradient_available": false,
+              "parameter_rms": 0.002053523203358054,
+              "update_rms": 0.0,
+              "relative_update_rms": 0.0,
+              "gradient_sample_rms": null,
+              "gradient_l2_estimate": null,
+              "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+            }
+          },
+          "gradient_boundary": "after all-eight-rank reduction; before original step_optimizers",
+          "sampling": "deterministic bounded active-slot samples; geometry components separated",
+          "approximate_norms": true,
+          "single_original_update": true,
+          "pre_sample_training_drain_seconds": 0.044805690995417535,
+          "post_optimizer_drain_seconds": 0.010300365014700219,
+          "extra_seconds_before_optimizer": 0.0006767199956811965,
+          "timing": "All sampling, drains and logging remain on continuous training clock; drains wait for original queued training work",
+          "feedforward_post_multipliers_bf16": [
+            1.03125,
+            1.03125,
+            1.03125,
+            1.0234375,
+            1.03125,
+            1.03125,
+            1.0234375,
+            1.0,
+            1.0234375,
+            1.0,
+            1.0
+          ],
+          "activation_caveat": "Core projected-output moments precede these post multipliers and routed gate weights."
+        },
+        {
+          "event": "ks3_gradient_update",
+          "step": 10,
+          "original_step": 9,
+          "do_adam": true,
+          "measurements": {
+            "routed.coefficients": {
+              "parameter": "ks3_geometry",
+              "branch": "routed",
+              "component": "coefficients",
+              "active_slots": null,
+              "sample_elements": 3072,
+              "total_elements": 245760,
+              "optimizer_applied": true,
+              "gradient_available": true,
+              "parameter_rms": 0.0023787175305187702,
+              "update_rms": 0.00045013820636086166,
+              "relative_update_rms": 0.18923567030789562,
+              "gradient_sample_rms": 0.20867064595222473,
+              "gradient_l2_estimate": 103.44677588675975,
+              "gradient_missing_reason": null
+            },
+            "routed.raw_scale": {
+              "parameter": "ks3_geometry",
+              "branch": "routed",
+              "component": "raw_scale",
+              "active_slots": null,
+              "sample_elements": 512,
+              "total_elements": 40960,
+              "optimizer_applied": true,
+              "gradient_available": true,
+              "parameter_rms": 0.7494034171104431,
+              "update_rms": 0.00046797431423328817,
+              "relative_update_rms": 0.000624462477149768,
+              "gradient_sample_rms": 0.0007683598669245839,
+              "gradient_l2_estimate": 0.1555051034973159,
+              "gradient_missing_reason": null
+            },
+            "routed.raw_shift": {
+              "parameter": "ks3_geometry",
+              "branch": "routed",
+              "component": "raw_shift",
+              "active_slots": null,
+              "sample_elements": 512,
+              "total_elements": 40960,
+              "optimizer_applied": true,
+              "gradient_available": true,
+              "parameter_rms": 0.0015369993634521961,
+              "update_rms": 0.00047082925448194146,
+              "relative_update_rms": 0.306330155807241,
+              "gradient_sample_rms": 0.0007724525639787316,
+              "gradient_l2_estimate": 0.15633340714302266,
+              "gradient_missing_reason": null
+            },
+            "routed.up_projection": {
+              "parameter": "moe_bank",
+              "branch": "routed",
+              "component": "up_projection",
+              "active_slots": null,
+              "sample_elements": 4096,
+              "total_elements": 31457280,
+              "optimizer_applied": true,
+              "gradient_available": true,
+              "parameter_rms": 0.018711352720856667,
+              "update_rms": 0.0003103366761934012,
+              "relative_update_rms": 0.016585475183068056,
+              "gradient_sample_rms": 0.15709860622882843,
+              "gradient_l2_estimate": 881.1156519337055,
+              "gradient_missing_reason": null
+            },
+            "routed.down_projection": {
+              "parameter": "moe_bank",
+              "branch": "routed",
+              "component": "down_projection",
+              "active_slots": null,
+              "sample_elements": 4096,
+              "total_elements": 31457280,
+              "optimizer_applied": true,
+              "gradient_available": true,
+              "parameter_rms": 0.004202608019113541,
+              "update_rms": 0.0005334943998605013,
+              "relative_update_rms": 0.12694364961808446,
+              "gradient_sample_rms": 0.3373538851737976,
+              "gradient_l2_estimate": 1892.1096475821728,
+              "gradient_missing_reason": null
+            },
+            "routed.pair_coefficients": {
+              "parameter": "ks3_pair",
+              "branch": "routed",
+              "component": "bounded_pair_raw_coefficients",
+              "active_slots": null,
+              "sample_elements": 4096,
+              "total_elements": 40960,
+              "optimizer_applied": true,
+              "gradient_available": true,
+              "parameter_rms": 0.002053523203358054,
+              "update_rms": 0.00046255913912318647,
+              "relative_update_rms": 0.22525147919769292,
+              "gradient_sample_rms": 0.007230370305478573,
+              "gradient_l2_estimate": 1.4633240634726217,
+              "gradient_missing_reason": null
+            }
+          },
+          "gradient_boundary": "after all-eight-rank reduction; before original step_optimizers",
+          "sampling": "deterministic bounded active-slot samples; geometry components separated",
+          "approximate_norms": true,
+          "single_original_update": true,
+          "pre_sample_training_drain_seconds": 0.045863909006584436,
+          "post_optimizer_drain_seconds": 0.011423885996919125,
+          "extra_seconds_before_optimizer": 0.0003763139829970896,
+          "timing": "All sampling, drains and logging remain on continuous training clock; drains wait for original queued training work",
+          "feedforward_post_multipliers_bf16": [
+            1.0390625,
+            1.0390625,
+            1.03125,
+            1.03125,
+            1.03125,
+            1.0390625,
+            1.03125,
+            1.0,
+            1.0234375,
+            1.0,
+            1.0
+          ],
+          "activation_caveat": "Core projected-output moments precede these post multipliers and routed gate weights."
+        }
+      ],
+      "activation_effect_diagnostics": [
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": 0.021631503477692604,
+            "rms": 0.5060955882072449,
+            "max_abs": 2.2826268672943115,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 0.14563333988189697,
+            "rms": 0.407295823097229,
+            "max_abs": 5.375,
+            "nonzero_fraction": 0.976318359375
+          },
+          "projected_output": {
+            "mean": -0.0005461493274196982,
+            "rms": 0.08477122336626053,
+            "max_abs": 0.375,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_after_independent_GS32": {
+            "mean": 1.4026869621375226e-06,
+            "rms": 3.116236621281132e-05,
+            "max_abs": 0.00034452887484803796,
+            "nonzero_fraction": 0.902099609375
+          },
+          "pair_placement": "after-independent-GS32",
+          "packed_feature_change_due_to_pair": {
+            "mean": -1.2766020063281758e-06,
+            "rms": 2.0535397197818384e-05,
+            "max_abs": 0.000301361083984375,
+            "nonzero_fraction": 0.498779296875
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; final BF16 core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": 0.01250477321445942,
+            "rms": 0.5005089044570923,
+            "max_abs": 2.414293050765991,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 0.13572904467582703,
+            "rms": 0.37071165442466736,
+            "max_abs": 5.9375,
+            "nonzero_fraction": 0.9873046875
+          },
+          "projected_output": {
+            "mean": -0.00014861795352771878,
+            "rms": 0.08675338327884674,
+            "max_abs": 0.408203125,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_after_independent_GS32": {
+            "mean": 2.836387693605502e-07,
+            "rms": 2.985142964462284e-05,
+            "max_abs": 0.0003031864180229604,
+            "nonzero_fraction": 0.9013671875
+          },
+          "pair_placement": "after-independent-GS32",
+          "packed_feature_change_due_to_pair": {
+            "mean": -1.1337931482557906e-06,
+            "rms": 2.0100986148463562e-05,
+            "max_abs": 0.00020694732666015625,
+            "nonzero_fraction": 0.492919921875
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; final BF16 core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": 0.03222273290157318,
+            "rms": 0.504372239112854,
+            "max_abs": 2.4278225898742676,
+            "nonzero_fraction": 0.8984375
+          },
+          "nonlinear_output": {
+            "mean": 0.14696945250034332,
+            "rms": 0.37810948491096497,
+            "max_abs": 5.96875,
+            "nonzero_fraction": 0.973388671875
+          },
+          "projected_output": {
+            "mean": -0.000825475319288671,
+            "rms": 0.08691194653511047,
+            "max_abs": 0.58984375,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_after_independent_GS32": {
+            "mean": 9.777005516298232e-07,
+            "rms": 2.9772703783237375e-05,
+            "max_abs": 0.00026696050190366805,
+            "nonzero_fraction": 0.9013671875
+          },
+          "pair_placement": "after-independent-GS32",
+          "packed_feature_change_due_to_pair": {
+            "mean": -8.604760637354048e-07,
+            "rms": 2.00136946659768e-05,
+            "max_abs": 0.00026702880859375,
+            "nonzero_fraction": 0.486328125
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; final BF16 core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": 0.030836306512355804,
+            "rms": 0.5063801407814026,
+            "max_abs": 2.2696733474731445,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 0.14581100642681122,
+            "rms": 0.3652598261833191,
+            "max_abs": 4.125,
+            "nonzero_fraction": 0.993896484375
+          },
+          "projected_output": {
+            "mean": -0.0010096071055158973,
+            "rms": 0.10141128301620483,
+            "max_abs": 0.48046875,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_after_independent_GS32": {
+            "mean": 2.035325223914697e-06,
+            "rms": 3.336222653160803e-05,
+            "max_abs": 0.0003182687796652317,
+            "nonzero_fraction": 0.901123046875
+          },
+          "pair_placement": "after-independent-GS32",
+          "packed_feature_change_due_to_pair": {
+            "mean": -4.214000455249334e-07,
+            "rms": 2.238098568341229e-05,
+            "max_abs": 0.0003185272216796875,
+            "nonzero_fraction": 0.475341796875
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; final BF16 core features precede gate and post multiplier"
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": 0.0426897332072258,
+            "rms": 0.522898256778717,
+            "max_abs": 2.4435322284698486,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 0.1624847799539566,
+            "rms": 0.42063838243484497,
+            "max_abs": 6.03125,
+            "nonzero_fraction": 0.970947265625
+          },
+          "projected_output": {
+            "mean": 0.0004693985392805189,
+            "rms": 0.10849803686141968,
+            "max_abs": 0.416015625,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false,
+          "pair_term_after_independent_GS32": {
+            "mean": 2.5168428692268208e-06,
+            "rms": 3.645351898740046e-05,
+            "max_abs": 0.00044347791117616,
+            "nonzero_fraction": 0.9013671875
+          },
+          "pair_placement": "after-independent-GS32",
+          "packed_feature_change_due_to_pair": {
+            "mean": -3.6459391594689805e-07,
+            "rms": 2.2409860321204178e-05,
+            "max_abs": 0.0002765655517578125,
+            "nonzero_fraction": 0.4697265625
+          },
+          "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; final BF16 core features precede gate and post multiplier"
+        }
+      ],
+      "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "not_a_screening_reference": true,
+      "full_convergence_verified": false
+    },
+    "exit_code": 0,
+    "reserved_confirmation": null,
+    "events_sha256": "968f7ca7eff6eefce146785d0d1de8543d9c2f09989a78b8243b160aaa6618d7",
+    "completed_utc": "2026-10-26T08:30:54.764621+00:00",
+    "qualifies": false
+  }
+}

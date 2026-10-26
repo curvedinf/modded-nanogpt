@@ -1,0 +1,63 @@
+{
+  "utc": "2026-10-26T09:54:23.756056+00:00",
+  "configuration": "configs/wr_reproduction/probe_local_experts_joint_lift_gather.json",
+  "hypothesis": "Small joint increase near the verified expert-only recipe: geometry Adam0.125->0.1328125 and KS3 projection ANVIL multiplier1->1.03125. Retain original output2x policy, exact BF16 gather and all five original dense MLPs. Finite sampled coefficient/projection updates motivate a modest coordinated increase; they do not prove rates are too small. Earlier expert damping and counter-tilt were rejected. Use full graph warmup and900s-cap fixed-text screening without a redundant scalar timing gate.",
+  "changed_rates": {
+    "geometry.lr_mul": [
+      0.125,
+      0.1328125
+    ],
+    "projection_lr_multiplier": [
+      1.0,
+      1.03125
+    ]
+  },
+  "unchanged": "All mathematical kernels, architecture, widths, rank, geometry initialization/betas/decay, original output2x policy, dense MLPs, shared settings, probe/final evaluation and clock.",
+  "gate_reuse": [
+    {
+      "mode": "numerical",
+      "run_id": "probe-ks3-bf16-exact-gradient-gather-calibration-20261026T092705-52a3e1",
+      "code_commit": "8e3eef845fba269d45253b3e9645311d8d61f2a8",
+      "recipe_scope": "same kernel and architecture; geometry/projection rates only",
+      "prior_sources_unchanged": true,
+      "sole_new_control_source": "wr_reproduction/probe_joint_gather_trial.py",
+      "new_rate_recipe_was_not_the_calibration_recipe": true
+    },
+    {
+      "mode": "speed_state",
+      "run_id": "probe-ks3-bf16-exact-gradient-gather-calibration-20261026T092817-1b36fe",
+      "code_commit": "4c7cb3aa7d0555788c461f45bc0da9b5f8c1fc47",
+      "recipe_scope": "same kernel and architecture; geometry/projection rates only",
+      "prior_sources_unchanged": true,
+      "sole_new_control_source": "wr_reproduction/probe_joint_gather_trial.py",
+      "new_rate_recipe_was_not_the_calibration_recipe": true
+    }
+  ],
+  "cpu_checks": [
+    "valid numerical gate reuse",
+    "valid model/state gate reuse",
+    "all old implementation hashes unchanged",
+    "reject precision",
+    "reject shared_fp8_gemm_tuning",
+    "reject charts",
+    "reject projection_lr_multiplier",
+    "reject geometry betas",
+    "reject geometry raw_scale",
+    "reject geometry lr_mul",
+    "reject unchanged recipe",
+    "reject changed kernel",
+    "reject unrelated source addition"
+  ],
+  "archived_configs_checked": 251,
+  "duplicate_rate_matches": [],
+  "source_addition": "wr_reproduction/probe_joint_gather_trial.py",
+  "verification_seeds": [
+    969,
+    970,
+    971
+  ],
+  "full_graph_warmup_required": true,
+  "separate_scalar_timing_gate": false,
+  "cpu_implementation_correction": "Initial alias base collided with the existing probe_study wildcard export. Renamed the controller alias before any launch; all compatibility checks now pass.",
+  "decision": "Launch one new joint-rate hypothesis using unchanged tested implementation and fixed-text screening."
+}

@@ -1,0 +1,26 @@
+{
+  "utc": "2026-10-26T20:00:58.539089+00:00",
+  "passed": true,
+  "cpu": {
+    "passed": true,
+    "layout_cases": 67,
+    "tile_predicates_checked": 63623,
+    "first_sentinel_proves_whole_tile_invalid": true,
+    "all_original_projection_tiles_divide128": true,
+    "contract": "Original dispatch: each expert begins at128 alignment, real rows precede sentinel padding, then unused capacity. No assumption about source-index order within the real rows."
+  },
+  "scope_mutations_rejected": [
+    "architecture",
+    "precision",
+    "charts",
+    "shared_fp8_gemm_tuning",
+    "geometry.lr_mul",
+    "skip_padding",
+    "skip_padding_evidence.maximum_actual_model_prefix_ratio",
+    "max_train_seconds"
+  ],
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "hypothesis": "Cycle7local4: original top1 routing allocates128-aligned expert segments plus extra capacity. The original KS3 grouped projection kernel performs every allocated row tile, including whole tiles with only sentinel rows. Read the first SRC entry per row tile and skip its dot loop only when it proves the entire tile is padding; storezero for those unused outputs. Retain original tile dispatch, BF16 operands, accumulation order, geometry/VJP, Torch gate reduction, weight-gradient kernels, router, initialization and all rates. FourKS3 projection products only; original evaluation delegated. Original profile095458 reports640_mm calls over4updates; no speedup inferred from isolatedwork counts. Validate original dispatch predicate and bitwise full routed gradients including empty/skewed experts, require strictly faster actual-model first100 and26-100 prefixes, then elapsed-time fixedV2 trial. No unchanged rejected recipe repeat or shared-kernel tuning.",
+  "numerical_gpu_passed": false,
+  "actual_model_passed": false
+}

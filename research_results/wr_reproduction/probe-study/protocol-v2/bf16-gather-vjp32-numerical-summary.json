@@ -1,0 +1,103 @@
+{
+  "utc": "2026-10-26T13:55:21.884641+00:00",
+  "phase": "cycle4_local4_bf16_gather_vjp32_numerical_passed",
+  "status": "numerical_passed",
+  "run_id": "probe-experts-bf16-gather-vjp32-calibration-20261026T135432-b9af7c",
+  "code_commit": "87aae9a19ce54f1c7ebfc4ba068f6d7d4a5a8f01",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "passed": true,
+  "case_count": 10,
+  "numerical_seed": 1969,
+  "cases": [
+    {
+      "tuned": true,
+      "tokens": 1,
+      "zero_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1024
+    },
+    {
+      "tuned": true,
+      "tokens": 1,
+      "zero_coefficients": false,
+      "active_experts": 1,
+      "padded_rows": 1024
+    },
+    {
+      "tuned": true,
+      "tokens": 257,
+      "zero_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1280
+    },
+    {
+      "tuned": true,
+      "tokens": 257,
+      "zero_coefficients": false,
+      "active_experts": 1,
+      "padded_rows": 1280
+    },
+    {
+      "tuned": true,
+      "tokens": 16384,
+      "zero_coefficients": true,
+      "active_experts": 8,
+      "padded_rows": 17280
+    },
+    {
+      "tuned": true,
+      "tokens": 16384,
+      "zero_coefficients": false,
+      "active_experts": 8,
+      "padded_rows": 17280
+    },
+    {
+      "tuned": true,
+      "tokens": 49152,
+      "zero_coefficients": true,
+      "active_experts": 8,
+      "padded_rows": 50048
+    },
+    {
+      "tuned": true,
+      "tokens": 49152,
+      "zero_coefficients": false,
+      "active_experts": 8,
+      "padded_rows": 50048
+    },
+    {
+      "tuned": false,
+      "tokens": 257,
+      "zero_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1280
+    },
+    {
+      "tuned": false,
+      "tokens": 257,
+      "zero_coefficients": false,
+      "active_experts": 1,
+      "padded_rows": 1280
+    }
+  ],
+  "all_combined_vs32row_core_and_routed_gradients_bitwise": true,
+  "original_forward_input_router_post_weight_gradients_bitwise": true,
+  "original_BF16_coordinate_gradients_bitwise": true,
+  "max_geometry_reduction_relative_rms": 1.2855656450483366e-07,
+  "max_geometry_component_relative_rms": 1.3570094381520903e-07,
+  "max_routed_geometry_relative_rms": 1.2892805045794375e-07,
+  "max_independent_coordinate_relative_rms": 2.7846073891169e-08,
+  "max_independent_geometry_component_relative_rms": 1.3717491356146638e-06,
+  "original_untuned_all_values_bitwise": true,
+  "install_idempotent": true,
+  "shared_backend_unchanged": true,
+  "source_hashes_match": true,
+  "not_a_screening_reference": true,
+  "full_convergence_verified": false,
+  "verification_seeds": [
+    1969,
+    1970,
+    1971
+  ],
+  "decision": "Launch one bounded actual-model speed/state calibration after full24graphwarmup. Require both first100 and updates26-100 faster than BOTH standalone ingredients plus original-eval oracle/state restoration/bitwise next-update and projected7probe<=3%. No convergence if gate fails."
+}

@@ -1,0 +1,23 @@
+{
+  "utc": "2026-10-26T15:41:25.714986+00:00",
+  "run_id": "probe-experts-prepared-geometry-calibration-20261026T154101-f7bb12",
+  "unit": "wr-probe-prepared-geometry-5ab02b99",
+  "code_commit": "962768ce27a20d1e78369559f893342429cadeb4",
+  "seed": 169,
+  "mode": "speed_state",
+  "numerical_gate_run_id": "probe-experts-prepared-geometry-calibration-20261026T154011-e5646a",
+  "numerical_gate_passed": true,
+  "status": "error",
+  "actual_model_prefix_seconds": 120,
+  "all_rank_graph_warmup_required": true,
+  "speed_reference": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "speed_criteria": "Both first100 and updates26\u2013100 strictly faster than original incumbent169; same original schedule/objective signatures.",
+  "state_gate": "Original evaluation oracle, normal/pending state addresses/values, same-next-update parity and all ten cached geometry/VJP paths.",
+  "pending_verification_seeds": [
+    2369,
+    2370,
+    2371
+  ],
+  "loss_time_trial_launched": false,
+  "outcome": "KeyError before first warmup completed; no timed training or loss/time trial."
+}

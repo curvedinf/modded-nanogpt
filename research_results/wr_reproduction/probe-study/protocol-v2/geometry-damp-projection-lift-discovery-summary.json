@@ -1,0 +1,197 @@
+{
+  "utc": "2026-10-26T10:52:22.382335+00:00",
+  "run_id": "probe-local-experts-geometry-damp-projection-lift-discovery-20261026T104340-82f913",
+  "code_commit": "82d1423ae0352ebcbb6f0bfdefdeaeea04f92618",
+  "status": "pruned",
+  "seed": 169,
+  "recipe_config": "configs/wr_reproduction/probe_local_experts_geometry_damp_projection_lift.json",
+  "geometry_lr_multiplier": 0.109375,
+  "projection_lr_multiplier": 1.03125,
+  "checkpoint_elapsed_seconds": 120.60290096898098,
+  "step": 293,
+  "probe_loss": 4.610820639878511,
+  "probe_seconds": 2.956926343991654,
+  "cumulative_probe_seconds": 2.956926343991654,
+  "screen": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.60290096898098,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.06940772943198681,
+    "reference_run_id": "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8",
+    "reference_elapsed_seconds": 120.58665766299237,
+    "reference_age_seconds": 0.01624330598860979,
+    "reference_utc": "2026-10-26T09:39:52.705870+00:00",
+    "reference_loss": 4.541412910446525,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8/events.jsonl",
+      "line": 330,
+      "row_sha256": "bff03fbc7d74779cad6588f2881ed5cb227166cf0b7543ab68deee0ea6bea9dd"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.06940772943198681,
+      "standard_error": 0.0016357537334323916,
+      "normal95_halfwidth": 0.0032060773175274877,
+      "student95_halfwidth": 0.0032387923921961353,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T10:47:53.638179+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-local-experts-geometry-damp-projection-lift-discovery-20261026T104340-82f913",
+    "seed": 169,
+    "code_commit": "82d1423ae0352ebcbb6f0bfdefdeaeea04f92618",
+    "training_projection_gs32": true
+  },
+  "paired_32768_token_sensitivity": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.06940772943198681,
+    "standard_error": 0.0016624003403218738,
+    "normal95_halfwidth": 0.003258304667030873,
+    "student95_halfwidth": 0.003394621494937266,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "gradient_update_rows": 0,
+  "gradient_absence_reason": "First probe rejected candidate before scheduled two-update sampling; missing does not mean zero gradients.",
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3939052224159241,
+        "rms": 1.3153374195098877,
+        "max_abs": 7.207669258117676,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.5607773065567017,
+        "rms": 2.51310396194458,
+        "max_abs": 57.25,
+        "nonzero_fraction": 0.275390625
+      },
+      "projected_output": {
+        "mean": -0.277177631855011,
+        "rms": 9.12527084350586,
+        "max_abs": 81.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.47773897647857666,
+        "rms": 1.3761978149414062,
+        "max_abs": 5.03916597366333,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.5368484854698181,
+        "rms": 2.190321207046509,
+        "max_abs": 43.0,
+        "nonzero_fraction": 0.282470703125
+      },
+      "projected_output": {
+        "mean": 0.12884971499443054,
+        "rms": 7.728353500366211,
+        "max_abs": 40.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.421916663646698,
+        "rms": 1.3719455003738403,
+        "max_abs": 6.896477699279785,
+        "nonzero_fraction": 0.904296875
+      },
+      "nonlinear_output": {
+        "mean": 0.5926169157028198,
+        "rms": 2.5869789123535156,
+        "max_abs": 82.0,
+        "nonzero_fraction": 0.30078125
+      },
+      "projected_output": {
+        "mean": 0.1706455647945404,
+        "rms": 8.728272438049316,
+        "max_abs": 59.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4502168297767639,
+        "rms": 1.3521751165390015,
+        "max_abs": 7.038459300994873,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5422170162200928,
+        "rms": 2.417832374572754,
+        "max_abs": 74.5,
+        "nonzero_fraction": 0.29736328125
+      },
+      "projected_output": {
+        "mean": 0.2085725963115692,
+        "rms": 8.795087814331055,
+        "max_abs": 51.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4069865345954895,
+        "rms": 1.3379616737365723,
+        "max_abs": 6.881819725036621,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.6022748947143555,
+        "rms": 2.7679572105407715,
+        "max_abs": 89.0,
+        "nonzero_fraction": 0.30078125
+      },
+      "projected_output": {
+        "mean": 0.012605056166648865,
+        "rms": 10.473467826843262,
+        "max_abs": 89.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "final_validation": null,
+  "qualifies": false,
+  "verification_seeds_not_launched": [
+    1269,
+    1270,
+    1271
+  ],
+  "result_sha256": "1d99a74b792183770710acdb36108a0316ef4afc235c5ceaae818def3089d429",
+  "events_sha256": "81969fe4b4b510e358af20485d84df77228f778b947707cdeb2d74493979ccb2",
+  "decision": "Close aggregate geometry/projection scalar grid. Run bounded same-weights geometry component and quantization-effect diagnostics before choosing another hypothesis.",
+  "limitations": "Probe-only one-seed rejection; no full900s or terminal ordering claim. Original kernels and all five dense MLPs retained."
+}

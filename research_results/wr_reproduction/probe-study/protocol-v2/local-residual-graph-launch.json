@@ -1,0 +1,30 @@
+{
+  "utc": "2026-10-26T12:19:31.578167+00:00",
+  "phase": "cycle3_exploratory_local_residual_graph_gate",
+  "status": "running",
+  "run_id": "probe-experts-local-residual-k3-calibration-20261026T121837-392a43",
+  "unit": "wr-probe-local-residual-b400ec5c",
+  "code_commit": "6e3585eb537f719afce298ccc7f450cfa30b8df1",
+  "trainer_pid": 1565472,
+  "source_hashes_match": true,
+  "new_stop": false,
+  "recipe": "configs/wr_reproduction/probe_experts_local_residual_k3.json",
+  "numerical_gate": "local-residual-numerical-summary.json",
+  "source_freeze": true,
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true,
+  "added_parameters": 122880,
+  "verification_seeds": [
+    1569,
+    1570,
+    1571
+  ],
+  "gpu_lease": "1565462 python          /root/modded-nanogpt/logs/wr-reproduction/gpu.lock",
+  "preserved_failures": [
+    "local-residual-initial-numerical-failure.json",
+    "local-residual-gradient-boundary-diagnosis.json"
+  ],
+  "initial_numerical_failure_resolved": "OriginalBF16 coordinate-gradient boundary restored; all five new zero/nonzero cases passed, with all original routed outputs and gradients bitwise equal at zero added coefficients.",
+  "next": "Finish full24graphwarmup, eight actual updates, ordinary/pending probe-state checks, original evaluation oracle and same-eight-rank next-update bitwise parity. If all pass and projected probe/diagnostic overhead<=3%, launch one seed169900s-cap discovery; qualification launches1569/1570/1571 unpruned. No unchanged failed recipe repeats.",
+  "full_convergence_verified": false
+}

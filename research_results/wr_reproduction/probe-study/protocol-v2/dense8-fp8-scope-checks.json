@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-26T19:08:56.297412+00:00",
+  "passed": true,
+  "scope_mutations_rejected": [
+    "architecture",
+    "selected_dense_layer",
+    "dense_charts",
+    "precision",
+    "geometry_backward_rows",
+    "dense_precision",
+    "fp8_native_gemm_tuning",
+    "shared_fp8_amax",
+    "dense8_fp8"
+  ],
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "shared_backend_unchanged": true,
+  "configuration_only_with_new_isolated_controller": true,
+  "correction": {
+    "source_run_id": "probe-experts-geometry-effects-calibration-20261026T105846-af1fc4",
+    "gradient_rms_up": 0.07584642618894577,
+    "gradient_rms_down": 0.02974793128669262,
+    "gradient_ratio": 2.549636996871603,
+    "relative_update_up": 0.014557595069263896,
+    "relative_update_down": 0.01573113715187148,
+    "discarded_proposal": "Input-.0625/output+.0625 balance; discarded before implementation because gradient norms were mislabeled as relative updates in a compacted summary.",
+    "no_projection_rate_experiment_launched": true
+  }
+}

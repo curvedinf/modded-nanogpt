@@ -1,0 +1,21 @@
+{
+  "utc": "2026-10-26T08:33:09.887985+00:00",
+  "run_id": "probe-experts-pairwise-postpack-b1-discovery-20261026T083221-f33e0f",
+  "unit": "wr-probe-pairwise-3b8adee6",
+  "code_commit": "fba876e417ab871c6cf435d46955a5a27be6177c",
+  "config": "configs/wr_reproduction/probe_experts_pairwise_postpack_b1.json",
+  "status": "running",
+  "seed": 169,
+  "nominal_continuous_training_budget_seconds": 900,
+  "comparative_pruning": true,
+  "verification_seeds_if_qualified": [
+    669,
+    670,
+    671
+  ],
+  "previous_rejected_run_id": "probe-experts-pairwise-b1-discovery-20261026T080332-c4656f",
+  "reason": "Changed KS3 pair placement after independent feature GS32/BF16 packing; same bound/rates/width and unchanged shared backend. This is the first local follow-up after the completed4-local:1-exploratory cycle.",
+  "numerical_gate": "pairwise-postpack-numerical-summary.json",
+  "graph_gate": "pairwise-postpack-graph-summary.json",
+  "no_full_result_yet": true
+}

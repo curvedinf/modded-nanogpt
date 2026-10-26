@@ -1,0 +1,47 @@
+{
+  "utc": "2026-10-26T15:38:38.460374+00:00",
+  "phase": "cycle5_local3_prepared_geometry",
+  "hypothesis": "Cycle5 local3: original KS3 geometry/VJP tiles repeatedly quantize the same six coefficients and compute the same softplus/tanh scale and shift. Prepare these unchanged quantities once per original weight refresh, reuse across all forward/backward row tiles and eight ranks, and keep original equations, tiles, rounding, gradients and evaluation. This targets the saved actual-model geometry/VJP bottleneck after dual weight layouts failed. No optimizer/model-wide setting or extra learned parameter changes. Require exact original outputs/all gradients, cache freshness and all-rank graph/state tests; both actual-model timing prefixes must beat original incumbent before a loss/time trial.",
+  "recipe_path": "configs/wr_reproduction/probe_experts_prepared_geometry.json",
+  "original_backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "shared_fence_passed": true,
+  "cpu_scope_exclusion_checks": [
+    "geometry.lr_mul",
+    "projection_lr_multiplier",
+    "shared_fp8_gemm_tuning",
+    "geometry_backward_rows",
+    "charts",
+    "rank",
+    "prepared_geometry.original_selected_tiles",
+    "prepared_geometry.original_GS32_quantization",
+    "prepared_geometry.training_only",
+    "prepared_geometry_evidence.maximum_actual_model_prefix_ratio"
+  ],
+  "source_consumer_math_suffixes_byte_identical": true,
+  "original_rank1_GS32_FP16_nonlinearity": true,
+  "new_parameters": 0,
+  "extra_buffer_bytes": 1474560,
+  "cache_lifetime": "Allocate once before graph capture. Refresh after original weight preparation before next eight-rank update; untouched by untuned evaluation; buffer addresses remain fixed.",
+  "profile_evidence": {
+    "path": "research_results/wr_reproduction/research/ks3-bf16-shared-fp8-profile-20261025T095458-924154-profile-summary.json",
+    "sha256": "d9204b848d6275bf4222f9f9fa342949bde451e5245d062e74ac550b0ede6907",
+    "geometry_calls": 160,
+    "geometry_accumulated_device_us": 30442.918,
+    "vjp_calls": 160,
+    "vjp_accumulated_device_us": 52101.65,
+    "limitation": "Saved actual-model four-update profile; overlapping device durations are not elapsed-time fractions or a current speed baseline."
+  },
+  "scope": "Prepare original six integer GS32 coefficients, FP16 coefficient scale and FP32 softplus/tanh transforms once per refresh; consumers use same mathematical suffixes and original geometry64-row VJP plus geometry producer tile. Original all other kernels and optimizer rates retained.",
+  "predeclared_gates": [
+    "Ten exact output/input/router/post/geometry/weight gradient comparisons at zero/nonzero coefficients, padded/empty dispatch and actual token shapes; two cache refreshes and independent coefficient quantizer.",
+    "Full original24 warmup and120s all-eight-rank prefix; both first100 and26\u2013100 durations strictly below saved original incumbent169.",
+    "Original evaluation oracle, normal/pending state audits, bitwise next-update parity, all ten cachedsite paths and projected7probe overhead<=3%."
+  ],
+  "numerical_seed": 2369,
+  "verification_seeds": [
+    2369,
+    2370,
+    2371
+  ],
+  "no_loss_time_trial_before_all_gates": true
+}

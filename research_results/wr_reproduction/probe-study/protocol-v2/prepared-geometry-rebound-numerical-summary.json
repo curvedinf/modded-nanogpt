@@ -1,0 +1,473 @@
+{
+  "utc": "2026-10-26T15:43:44.782606+00:00",
+  "run_id": "probe-experts-prepared-geometry-calibration-20261026T154318-3550a8",
+  "code_commit": "de6623097b3dd6ada72caf5182cea0e112c01b98",
+  "seed": 169,
+  "passed": true,
+  "numerical_seed": 2369,
+  "checks": [
+    {
+      "tuned": true,
+      "tokens": 1,
+      "site": 0,
+      "zero_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1024,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true,
+      "cache_readonly_during_consumers": true
+    },
+    {
+      "tuned": true,
+      "tokens": 1,
+      "site": 0,
+      "zero_coefficients": false,
+      "active_experts": 1,
+      "padded_rows": 1024,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true,
+      "cache_readonly_during_consumers": true
+    },
+    {
+      "tuned": true,
+      "tokens": 257,
+      "site": 1,
+      "zero_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true,
+      "cache_readonly_during_consumers": true
+    },
+    {
+      "tuned": true,
+      "tokens": 257,
+      "site": 1,
+      "zero_coefficients": false,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true,
+      "cache_readonly_during_consumers": true
+    },
+    {
+      "tuned": true,
+      "tokens": 16384,
+      "site": 2,
+      "zero_coefficients": true,
+      "active_experts": 8,
+      "padded_rows": 17280,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true,
+      "cache_readonly_during_consumers": true
+    },
+    {
+      "tuned": true,
+      "tokens": 16384,
+      "site": 2,
+      "zero_coefficients": false,
+      "active_experts": 8,
+      "padded_rows": 17280,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true,
+      "cache_readonly_during_consumers": true
+    },
+    {
+      "tuned": true,
+      "tokens": 49152,
+      "site": 3,
+      "zero_coefficients": true,
+      "active_experts": 8,
+      "padded_rows": 50048,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true,
+      "cache_readonly_during_consumers": true
+    },
+    {
+      "tuned": true,
+      "tokens": 49152,
+      "site": 3,
+      "zero_coefficients": false,
+      "active_experts": 8,
+      "padded_rows": 50048,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true,
+      "cache_readonly_during_consumers": true
+    },
+    {
+      "tuned": false,
+      "tokens": 257,
+      "site": 4,
+      "zero_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true,
+      "cache_readonly_during_consumers": true
+    },
+    {
+      "tuned": false,
+      "tokens": 257,
+      "site": 4,
+      "zero_coefficients": false,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_pack": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "coordinates": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "features": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "gate_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "geometry_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        },
+        "weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0
+        }
+      },
+      "routed_output_input_router_post_geometry_weight_bitwise_equal": true,
+      "cache_readonly_during_consumers": true
+    }
+  ],
+  "cache_refresh_checks": [
+    {
+      "index": 0,
+      "original_weights_bitwise": true,
+      "independent_torch_quantized_coefficients_bitwise": true,
+      "repeated_cache_bitwise": true,
+      "all_buffer_pointers_preserved": true
+    },
+    {
+      "index": 1,
+      "original_weights_bitwise": true,
+      "independent_torch_quantized_coefficients_bitwise": true,
+      "repeated_cache_bitwise": true,
+      "all_buffer_pointers_preserved": true
+    }
+  ],
+  "all_original_outputs_and_gradients_bitwise_equal": true,
+  "binding_after_optimizer_style_storage_consolidation": true,
+  "new_parameters": 0,
+  "extra_buffer_bytes": 1474560,
+  "original_untuned_evaluation_bitwise": true,
+  "allocation_consumes_no_RNG": true,
+  "decision": "The corrected final-storage binding passes all10 exact numerical cases. Retry full24graphwarmup plus bounded120s actual-model speed/state once; no change to math, tolerances, original recipe or strict speed criterion."
+}

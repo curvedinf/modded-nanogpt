@@ -1,0 +1,91 @@
+{
+  "utc": "2026-10-26T17:44:06.182898+00:00",
+  "run_id": "probe-experts-odd-residual-calibration-20261026T173834-2827ab",
+  "code_commit": "443994140f5851dd6d01e560964124fbc5980e30",
+  "passed": true,
+  "full_graph_warmup": true,
+  "original_logical_ranks": 8,
+  "actual_prefix_updates": 8,
+  "actual_prefix_update_seconds": [
+    0.3725415899825748,
+    0.4033184199943207,
+    0.39134626800660044,
+    0.4099918740103021,
+    0.400869248987874,
+    0.41813910397468135,
+    0.3999725759786088,
+    0.4178007120208349
+  ],
+  "not_a_speed_or_convergence_win": true,
+  "residual_parameters": [
+    5,
+    8,
+    1024
+  ],
+  "residual_raw_max_abs": 0.004883666522800922,
+  "per_site_residual_learned_absmax": [
+    0.003973029553890228,
+    0.0038607525639235973,
+    0.0038697156123816967,
+    0.0037975539453327656,
+    0.0038073183968663216
+  ],
+  "routed_backward_sites": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "five_original_dense_MLPs_retained": true,
+  "fixed_probe_oracle_max_abs": 0.0,
+  "state_restoration": {
+    "checked_entries": 1268,
+    "changed": [],
+    "passed": true,
+    "pointer_restoration_required": true,
+    "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+  },
+  "pending_state_restoration": {
+    "checked_entries": 1456,
+    "changed": [],
+    "passed": true,
+    "pointer_restoration_required": true,
+    "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+  },
+  "continuation_parity": {
+    "passed": true,
+    "same_checkpoint": true,
+    "same_eight_logical_microbatches": true,
+    "baseline_loss": 13.237229347229004,
+    "with_probe_loss": 13.237229347229004,
+    "maximum_parameter_relative_rms": 0.0,
+    "all_parameters_bitwise_equal": true
+  },
+  "odd_continuation_loss": 12.898701667785645,
+  "cold_probe_seconds": 3.079902212979505,
+  "warm_probe_seconds": 2.6476445300213527,
+  "pending_probe_seconds": 2.6407843249908183,
+  "projected_seven_probe_and_sparse_diagnostic_seconds": 18.995055524050258,
+  "projected_fraction_of900": 0.02110561724894473,
+  "projection_limitation": "Screen/ordinary instrumentation costs also remain on clock; actual run overhead must be inspected.",
+  "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "not_a_screening_reference": true,
+  "odd_residual_adam_gradient": {
+    "parameter": "ks3_odd",
+    "branch": "routed",
+    "component": "bounded_odd_residual_raw_coefficients",
+    "active_slots": null,
+    "sample_elements": 4096,
+    "total_elements": 40960,
+    "optimizer_applied": true,
+    "gradient_available": true,
+    "parameter_rms": 0.002200116403400898,
+    "update_rms": 0.0004603786510415375,
+    "relative_update_rms": 0.2092519515466968,
+    "gradient_sample_rms": 0.27664098143577576,
+    "gradient_l2_estimate": 55.98819811081018,
+    "gradient_missing_reason": null
+  },
+  "decision": "Launch one screened900-second discovery. FixedV2 policy unchanged; no100update architectural timing sweep. Qualifying full endpoint triggers2869/2870/2871 unpruned verification."
+}

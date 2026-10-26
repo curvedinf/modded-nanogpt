@@ -1,0 +1,215 @@
+{
+  "utc": "2026-10-26T07:09:26.377590+00:00",
+  "run_id": "probe-local-dense8-joint-damp-discovery-20261026T070301-e00e7e",
+  "code_commit": "0330209219cc774b364c686cc015a1912a950d6e",
+  "seed": 169,
+  "status": "pruned",
+  "qualifies": false,
+  "full_validation": null,
+  "architecture": "ks3_dense_8",
+  "hypothesis": "Reduce parallel dense shape drift and projection drift together by12.5% and6.25%, responding to measured active dense coefficient relative update5.04% per Adam application versus routed4.05%, and growing fixed-text core activation RMS. Keep routed expert geometry/projections unchanged.",
+  "changes": {
+    "dense_geometry_lr_multiplier": 0.109375,
+    "dense_projection_lr_multiplier": 0.9375
+  },
+  "probe": {
+    "checkpoint_elapsed_seconds": 120.5892198359943,
+    "step": 290,
+    "loss": 4.65640926361084,
+    "probe_seconds": 3.1184694080147892,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31"
+  },
+  "screen": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.5892198359943,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.019350772723555565,
+    "reference_run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+    "reference_elapsed_seconds": 120.4601258939947,
+    "reference_age_seconds": 0.12909394199959934,
+    "reference_utc": "2026-10-26T06:23:17.848237+00:00",
+    "reference_loss": 4.637058490887284,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd/events.jsonl",
+      "line": 325,
+      "row_sha256": "e795bc511e56d9cf722618ea8a47b8e97eb7cc47b8c557420c79f455760532db"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.019350772723555565,
+      "standard_error": 0.002777885490992455,
+      "normal95_halfwidth": 0.005444655562345212,
+      "student95_halfwidth": 0.005500213272165061,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T07:07:15.868390+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_dense_8",
+    "run_id": "probe-local-dense8-joint-damp-discovery-20261026T070301-e00e7e",
+    "seed": 169,
+    "code_commit": "0330209219cc774b364c686cc015a1912a950d6e",
+    "training_projection_gs32": true
+  },
+  "paired32768": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.019350772723555565,
+    "standard_error": 0.003832644205485791,
+    "normal95_halfwidth": 0.0075119826427521505,
+    "student95_halfwidth": 0.007826259467601985,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.36996904015541077,
+        "rms": 1.2751301527023315,
+        "max_abs": 8.913859367370605,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5418493747711182,
+        "rms": 2.9901514053344727,
+        "max_abs": 133.0,
+        "nonzero_fraction": 0.279541015625
+      },
+      "projected_output": {
+        "mean": -0.2572348117828369,
+        "rms": 8.822704315185547,
+        "max_abs": 62.25,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3948565125465393,
+        "rms": 1.2849618196487427,
+        "max_abs": 5.149094581604004,
+        "nonzero_fraction": 0.89453125
+      },
+      "nonlinear_output": {
+        "mean": 0.5211465358734131,
+        "rms": 2.109966278076172,
+        "max_abs": 45.5,
+        "nonzero_fraction": 0.29443359375
+      },
+      "projected_output": {
+        "mean": -0.11965049803256989,
+        "rms": 7.669610977172852,
+        "max_abs": 78.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3939961791038513,
+        "rms": 1.319756031036377,
+        "max_abs": 7.335395336151123,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5900084972381592,
+        "rms": 2.6531431674957275,
+        "max_abs": 81.5,
+        "nonzero_fraction": 0.29931640625
+      },
+      "projected_output": {
+        "mean": -0.1068204715847969,
+        "rms": 7.9717183113098145,
+        "max_abs": 64.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4058171510696411,
+        "rms": 1.297676682472229,
+        "max_abs": 7.714644908905029,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5590734481811523,
+        "rms": 3.453403949737549,
+        "max_abs": 167.0,
+        "nonzero_fraction": 0.3056640625
+      },
+      "projected_output": {
+        "mean": 0.0970509722828865,
+        "rms": 8.427326202392578,
+        "max_abs": 57.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3610553741455078,
+        "rms": 1.276403546333313,
+        "max_abs": 6.030848503112793,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.579186737537384,
+        "rms": 2.5011508464813232,
+        "max_abs": 63.5,
+        "nonzero_fraction": 0.315673828125
+      },
+      "projected_output": {
+        "mean": -0.10968521237373352,
+        "rms": 9.495590209960938,
+        "max_abs": 71.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "dense",
+      "coordinate": {
+        "mean": -0.7821612358093262,
+        "rms": 1.508479118347168,
+        "max_abs": 7.172216892242432,
+        "nonzero_fraction": 1.0
+      },
+      "nonlinear_output": {
+        "mean": 0.4072606861591339,
+        "rms": 1.9977383613586426,
+        "max_abs": 46.0,
+        "nonzero_fraction": 0.2158203125
+      },
+      "projected_output": {
+        "mean": -0.48954659700393677,
+        "rms": 16.441078186035156,
+        "max_abs": 326.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "active_gradient_samples": 0,
+  "gradient_limit": "Pruned before the first subsequent update; no candidate gradient sample exists. Base calibration is separate evidence, not a candidate gradient measurement.",
+  "decision": "Reject joint damping. Next test the distinct linear-catchup hypothesis: same0.109375 dense geometry with projection1.0625. This tests whether slower projection adaptation caused the early deficit; experts and all shared settings remain fixed."
+}

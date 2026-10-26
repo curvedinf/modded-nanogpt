@@ -1,0 +1,82 @@
+{
+  "utc": "2026-10-26T17:11:57.085673+00:00",
+  "run_id": "probe-experts-fp32-horner-calibration-20261026T170515-87bd8d",
+  "code_commit": "e2266df77d9fb3e15ec70a83c1746b8f52432c46",
+  "phase": "cycle6_local2_fp32_horner",
+  "status": "speed_state_passed",
+  "seed": 169,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "speed": {
+    "passed": true,
+    "candidate": {
+      "first100_seconds": 39.42397386400262,
+      "after25_through100_seconds": 29.51582781301113,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "reference": {
+      "first100_seconds": 39.55393554098555,
+      "after25_through100_seconds": 29.54044010999496,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "ratios": {
+      "first100_seconds": 0.9967143174198617,
+      "after25_through100_seconds": 0.9991668270041953
+    },
+    "reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+    "reference_code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+    "criterion": "Both first100 and updates26-100 actual-model durations must be no slower than the saved original incumbent prefix. No allowed slowdown.",
+    "limitation": "Single prefix; no claim of runtime-noise precision. Any convergence gain must survive continuous elapsed-time screening and full validation."
+  },
+  "state": {
+    "passed": true,
+    "step": 294,
+    "prefix_elapsed_seconds": 121.1704449619865,
+    "all_original_logical_ranks": 8,
+    "cold_probe_seconds": 2.8951183250173926,
+    "warm_probe_seconds": 2.6272311479842756,
+    "pending_probe_seconds": 2.6331648339983076,
+    "oracle_max_abs": 0.0,
+    "repeat_max_abs": 0.0,
+    "state_restoration": {
+      "checked_entries": 1264,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "pending_state_restoration": {
+      "checked_entries": 1444,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "continuation_parity": {
+      "passed": true,
+      "same_checkpoint": true,
+      "same_eight_logical_microbatches": true,
+      "baseline_loss": 7.636284828186035,
+      "with_probe_loss": 7.636284828186035,
+      "maximum_parameter_relative_rms": 0.0,
+      "all_parameters_bitwise_equal": true
+    },
+    "post_probe_odd_update_loss": 7.6087846755981445
+  },
+  "projected_seven_probe_seconds": 18.658505212923046,
+  "projected_fraction_of900": 0.020731672458803384,
+  "all_five_routed_backwards_executed": true,
+  "five_original_dense_MLPs": true,
+  "training_and_original_evaluation_executed": true,
+  "full_validation": null,
+  "not_a_screening_reference": true,
+  "decision": "All numerical, actual-model cost, oracle, normal/pending state restoration, bitwise next-update and overhead gates passed. Launch one frozen seed169 continuous900-second-cap discovery with fixed-text screening. A qualifying full endpoint triggers three unpruned frozen seeds2769/2770/2771.",
+  "limitations": [
+    "Single timing prefix; margins0.33%/0.08% satisfy the predeclared no-slower gate but do not establish a robust runtime gain.",
+    "Sparse table audit checks readonly pointer/version and1024 sampled rows, not all130GB of content.",
+    "Actual training clock includes all probe, policy and sparse-diagnostic overhead.",
+    "The gate is not a convergence result or a screening reference."
+  ]
+}

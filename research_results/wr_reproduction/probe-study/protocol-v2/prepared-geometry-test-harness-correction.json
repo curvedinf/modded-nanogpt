@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-26T15:39:42.963345+00:00",
+  "failed_run_id": "probe-experts-prepared-geometry-calibration-20261026T153852-935df0",
+  "failed_code_commit": "69836b8356d09d0899d0499b0adb2ae67ce6d443",
+  "cause": "Test harness created geometry view within no_grad and later used it in custom-op autograd; PyTorch rejected ambiguous view/version tracking before the first output comparison.",
+  "failed_before_output_comparisons": true,
+  "correction": "Create a fresh detached requires-grad leaf from the same geometry storage after in-place test initialization and cache preparation.",
+  "kernel_changed": false,
+  "tolerances_changed": false,
+  "decision": "Preserve failed run and repeat only the corrected meaningful numerical gate. No speed/state or convergence launched."
+}

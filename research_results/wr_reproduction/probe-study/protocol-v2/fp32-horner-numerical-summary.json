@@ -1,0 +1,32 @@
+{
+  "utc": "2026-10-26T17:05:08.197281+00:00",
+  "run_id": "probe-experts-fp32-horner-calibration-20261026T170353-d72fa8",
+  "code_commit": "e9b5fa5cf9b3704eeae3a59cd8044d9c484bec7a",
+  "status": "numerical_passed",
+  "cases": 10,
+  "numerical_seed": 2769,
+  "max_relative_rms": {
+    "forward_feature_relative_rms": 0.0005250275135040283,
+    "output_relative_rms": 0.0009979592869058251,
+    "independent_coordinate_gradient_relative_rms": 3.114735136477975e-08,
+    "independent_geometry_gradient_relative_rms": 6.61753063013748e-07,
+    "independent_input_gradient_relative_rms": 4.048855043947697e-05,
+    "independent_weight_gradient_relative_rms": 0.0005245076026767492
+  },
+  "max_training_relative_rms": {
+    "forward_feature_relative_rms": 6.096879587857984e-05,
+    "output_relative_rms": 0.00011451598402345553,
+    "independent_coordinate_gradient_relative_rms": 3.114735136477975e-08,
+    "independent_geometry_gradient_relative_rms": 6.61753063013748e-07,
+    "independent_input_gradient_relative_rms": 4.048855043947697e-05,
+    "independent_weight_gradient_relative_rms": 9.480236622039229e-05
+  },
+  "max_individual_geometry_gradient_relative_rms": 9.94789729702461e-07,
+  "all_zero_initialization_cases_bitwise_original": true,
+  "all_evaluation_cases_bitwise_original": true,
+  "padded_and_empty_experts_checked": true,
+  "original_shared_backend_frozen": true,
+  "actual_model_training_tested": false,
+  "full_convergence_verified": false,
+  "decision": "Proceed to the bounded actual-model speed/state gate. Require full24 warmup, all8 logical ranks/all5 backwards, original probe math, normal/pending state restoration, bitwise next update, projected probe overhead<=3%, and both original timing prefixes no slower. No loss/time trial before complete gate pass."
+}

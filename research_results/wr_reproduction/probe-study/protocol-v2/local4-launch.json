@@ -1,0 +1,21 @@
+{
+  "utc": "2026-10-26T07:32:42.325201+00:00",
+  "run_id": "probe-local-experts-joint-damp-discovery-20261026T073212-6202b9",
+  "unit": "wr-probe-directed-820c60d2",
+  "code_commit": "09e2b97e8b670301ca459e98713fd62c6135cea4",
+  "status": "running",
+  "source_matches": true,
+  "fence_matches": true,
+  "new_stop": false,
+  "latest_event": "warmup_step",
+  "config": "configs/wr_reproduction/probe_local_experts_joint_damp.json",
+  "execution_index": 4,
+  "prepared_hypothesis_index": 3,
+  "completed_local_hypotheses": 3,
+  "verification_seeds_if_qualified": [
+    469,
+    470,
+    471
+  ],
+  "shared_settings_unchanged": true
+}

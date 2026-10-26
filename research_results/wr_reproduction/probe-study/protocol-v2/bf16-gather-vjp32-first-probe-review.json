@@ -1,0 +1,36 @@
+{
+  "utc": "2026-10-26T14:09:54.719860+00:00",
+  "run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+  "code_commit": "72a449c54dae6a84ed2623b4987c0b0bd3d3aac1",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "phase": "cycle4_local4_bf16_gather_vjp32_discovery",
+  "status": "running",
+  "probe": {
+    "utc": "2026-10-26T14:09:02.407891+00:00",
+    "step": 296,
+    "loss": 4.518558150157332,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "checkpoint_elapsed_seconds": 120.2109339319868,
+    "probe_completion_seconds": 123.16231816698564,
+    "probe_seconds": 2.951523477997398,
+    "cumulative_probe_seconds": 2.951523477997398,
+    "setup_and_restore_included": true
+  },
+  "screen": {
+    "utc": "2026-10-26T14:09:02.599351+00:00",
+    "abort": false,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.2109339319868,
+    "reason": "no_comparable_nonfuture_probe",
+    "max_reference_age_seconds": 3.0
+  },
+  "gradient_samples_after_first_probe": 2,
+  "paired_text_uncertainty": null,
+  "uncertainty_reason": "No compatible nonfuture reference point; no paired comparison or precision claim.",
+  "full_validation": null,
+  "full_convergence_verified": false,
+  "source_hashes_match": true,
+  "new_stop": false,
+  "decision": "Continue to the next scheduled held-out probe. No comparison to future or stale points and no training-objective pruning. Sources frozen; qualifying full result triggers1969/1970/1971 unpruned verification."
+}

@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-26T16:23:48.398700+00:00",
+  "phase": "cycle5_exploratory_negative_pair_graph",
+  "status": "running",
+  "run_id": "probe-experts-negative-pair-calibration-20261026T162312-84b057",
+  "unit": "wr-probe-negative-pair-4563edc5",
+  "code_commit": "37ac4eca61649063f59a78011ef20411a21bd5e6",
+  "seed": 169,
+  "numerical_gate_run_id": "probe-experts-negative-pair-calibration-20261026T162153-c071a8",
+  "graph_requirements": "Full24 graph warmup, eight original logical ranks, eight actual updates with all five new coefficient banks learning; independent fixed-evaluation oracle, normal/pending state restoration and bitwise next-update parity; projected seven probes plus sparse diagnostics<=3%.",
+  "source_hashes_match": true,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "new_stop": false,
+  "not_a_screening_reference": true,
+  "full_convergence_verified": false,
+  "frozen_verification_seeds": [
+    2569,
+    2570,
+    2571
+  ],
+  "next": "On graph pass commit calibration and launch one seed169 loss/time trial capped900s. On gate failure preserve evidence and diagnose a bounded implementation fix only. No training-loss pruning and no extra MLP control."
+}

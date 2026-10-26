@@ -1,0 +1,214 @@
+{
+  "utc": "2026-10-26T07:14:45.004390+00:00",
+  "run_id": "probe-local-dense8-linear-catchup-discovery-20261026T070926-a2faff",
+  "seed": 169,
+  "code_commit": "798f2ab11d7363f9e1bfd97b37eb5bf70043f20a",
+  "status": "pruned",
+  "qualifies": false,
+  "full_validation": null,
+  "architecture": "ks3_dense_8",
+  "changes": {
+    "dense_geometry_lr_multiplier": 0.109375,
+    "dense_projection_lr_multiplier": 1.0625
+  },
+  "probe": {
+    "checkpoint_elapsed_seconds": 120.47134202500456,
+    "step": 290,
+    "loss": 4.668558018282056,
+    "probe_seconds": 3.0477327220141888,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31"
+  },
+  "screen": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.47134202500456,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.031499527394771576,
+    "reference_run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+    "reference_elapsed_seconds": 120.4601258939947,
+    "reference_age_seconds": 0.011216131009859964,
+    "reference_utc": "2026-10-26T06:23:17.848237+00:00",
+    "reference_loss": 4.637058490887284,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd/events.jsonl",
+      "line": 325,
+      "row_sha256": "e795bc511e56d9cf722618ea8a47b8e97eb7cc47b8c557420c79f455760532db"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.031499527394771576,
+      "standard_error": 0.0015364235603298711,
+      "normal95_halfwidth": 0.0030113901782465474,
+      "student95_halfwidth": 0.003042118649453145,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T07:13:39.012684+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_dense_8",
+    "run_id": "probe-local-dense8-linear-catchup-discovery-20261026T070926-a2faff",
+    "seed": 169,
+    "code_commit": "798f2ab11d7363f9e1bfd97b37eb5bf70043f20a",
+    "training_projection_gs32": true
+  },
+  "paired32768": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.031499527394771576,
+    "standard_error": 0.0018286691551112069,
+    "normal95_halfwidth": 0.0035841915440179653,
+    "student95_halfwidth": 0.0037341424147370843,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.36751723289489746,
+        "rms": 1.2514245510101318,
+        "max_abs": 5.9065704345703125,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5294405221939087,
+        "rms": 2.1926474571228027,
+        "max_abs": 45.5,
+        "nonzero_fraction": 0.26708984375
+      },
+      "projected_output": {
+        "mean": -0.054116398096084595,
+        "rms": 7.940199851989746,
+        "max_abs": 55.25,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.40032535791397095,
+        "rms": 1.2863819599151611,
+        "max_abs": 4.578670024871826,
+        "nonzero_fraction": 0.896484375
+      },
+      "nonlinear_output": {
+        "mean": 0.526978611946106,
+        "rms": 2.056086540222168,
+        "max_abs": 34.0,
+        "nonzero_fraction": 0.29052734375
+      },
+      "projected_output": {
+        "mean": 0.05455775558948517,
+        "rms": 7.45206356048584,
+        "max_abs": 47.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3853127956390381,
+        "rms": 1.3293304443359375,
+        "max_abs": 6.4452409744262695,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.5870758295059204,
+        "rms": 2.3830015659332275,
+        "max_abs": 74.0,
+        "nonzero_fraction": 0.302001953125
+      },
+      "projected_output": {
+        "mean": 0.09459745138883591,
+        "rms": 7.872871398925781,
+        "max_abs": 61.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.39795300364494324,
+        "rms": 1.2609525918960571,
+        "max_abs": 5.1485419273376465,
+        "nonzero_fraction": 0.904296875
+      },
+      "nonlinear_output": {
+        "mean": 0.4937434792518616,
+        "rms": 1.993524193763733,
+        "max_abs": 35.5,
+        "nonzero_fraction": 0.303955078125
+      },
+      "projected_output": {
+        "mean": 0.04941120371222496,
+        "rms": 8.254839897155762,
+        "max_abs": 47.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.28988173604011536,
+        "rms": 1.273573875427246,
+        "max_abs": 6.781493186950684,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.6802794337272644,
+        "rms": 2.8814995288848877,
+        "max_abs": 75.0,
+        "nonzero_fraction": 0.33251953125
+      },
+      "projected_output": {
+        "mean": -0.0497673824429512,
+        "rms": 10.177595138549805,
+        "max_abs": 86.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "dense",
+      "coordinate": {
+        "mean": -1.0146466493606567,
+        "rms": 1.7385152578353882,
+        "max_abs": 8.374436378479004,
+        "nonzero_fraction": 1.0
+      },
+      "nonlinear_output": {
+        "mean": 0.4154842495918274,
+        "rms": 2.142700433731079,
+        "max_abs": 50.0,
+        "nonzero_fraction": 0.1806640625
+      },
+      "projected_output": {
+        "mean": -0.40134018659591675,
+        "rms": 18.14315414428711,
+        "max_abs": 312.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "active_gradient_samples": 0,
+  "gradient_limit": "First observation pruned before following updates; do not fabricate candidate gradient measurements.",
+  "decision": "Reject dense linear catchup. Both modest dense geometry reductions with opposite projection-rate changes fail early. Stop this dense-rate branch and return to the verified expert-only architecture; run the already proposed opposite geometry-direction hypothesis next, before deciding on the remaining expert damping arm."
+}

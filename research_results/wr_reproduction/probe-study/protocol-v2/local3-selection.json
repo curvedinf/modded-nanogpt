@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-26T07:14:45.009059+00:00",
+  "completed_local_hypotheses": 2,
+  "completed_exploratory_hypotheses": 0,
+  "next_execution_index": 3,
+  "next_config": "configs/wr_reproduction/probe_local_experts_geometry_tilt.json",
+  "prepared_hypothesis_index": 4,
+  "reordered": true,
+  "reason": "The two dense trials both lowered geometry and failed at the first probe. Return to the incumbent expert-only architecture and test modestly higher geometry relative to slower projections. This is a new joint hypothesis, not a repeat of any historical scalar recipe.",
+  "changes": {
+    "architecture": "ks3_experts",
+    "geometry_lr": 0.140625,
+    "projection_lr_multiplier": 0.9375
+  },
+  "shared_settings_and_all_five_original_dense_MLPs_unchanged": true
+}

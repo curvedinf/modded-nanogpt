@@ -1,0 +1,75 @@
+{
+  "utc": "2026-10-26T09:22:52.766224+00:00",
+  "hypothesis": "Retain the verified expert-only GS32/BF16 function and optimizer; fuse only KS3 backward padded-row gradient gather, BF16 gate multiplication and FP32 gate reduction. All-product FP8 gained2.5percent model-prefix speed but failed held-out CE at360s. Remove producer temporary matrices while retaining incumbent precision. Require full-block/routed-gradient checks and faster actual-model timing before one900s held-out-screened trial.",
+  "configuration": "configs/wr_reproduction/probe_ks3_bf16_gather.json",
+  "hypothesis_class": "cycle2-local3-ks3-only-bf16-producer-fusion",
+  "base_reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "changed_fields": {
+    "hypothesis": [
+      "Acquire one exempt fixed-probe reference under the frozen shared original-PR393 recipe.",
+      "Retain the verified expert-only GS32/BF16 function and optimizer; fuse only KS3 backward padded-row gradient gather, BF16 gate multiplication and FP32 gate reduction. All-product FP8 gained2.5percent model-prefix speed but failed held-out CE at360s. Remove producer temporary matrices while retaining incumbent precision. Require full-block/routed-gradient checks and faster actual-model timing before one900s held-out-screened trial."
+    ],
+    "hypothesis_class": [
+      null,
+      "cycle2-local3-ks3-only-bf16-producer-fusion"
+    ],
+    "gradient_diagnostics_extension": [
+      null,
+      "active-slot-pre-optimizer-v1"
+    ],
+    "name": [
+      "probe-ks3-experts",
+      "probe-ks3-bf16-fused-gradient-gather"
+    ],
+    "ks3_bf16_gradient_gather": [
+      null,
+      "fused-v1"
+    ],
+    "gather_fusion": [
+      null,
+      {
+        "speed_reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+        "previous_precision_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+        "previous_precision_rejection_gap": 0.0354424174875021,
+        "profile_evidence": "research_results/wr_reproduction/research/ks3-bf16-shared-fp8-profile-20261025T095458-924154-profile-summary.json",
+        "profile_scope": "Original actual-model updates26-29,160 KS3 backward calls.320 float where kernels summed9154.595us; two where operations occur in each KS3 backward. Kernel sums overlap and are not elapsed shares.",
+        "unchanged": "GS32 inputs/weights/features, FP16 nonlinearity, BF16 products, FP32 accumulation, original64-row geometry VJP, original weight_packing=loop setting, optimizers, schedules, five original dense MLPs and shared backend.",
+        "floating_point_change": "Gate derivative FP32 row-tree sum: bound absolute error by2e-6 times absolute dot-product sum and check routed gradients before model trial."
+      }
+    ]
+  },
+  "shared_setting_changes": [],
+  "fenced_source_changes": [],
+  "new_sources": [
+    "wr_reproduction/ks3_bf16_gather.py",
+    "wr_reproduction/check_ks3_bf16_gather.py",
+    "wr_reproduction/probe_bf16_gather_trial.py"
+  ],
+  "cpu_checks": [
+    "valid incumbent BF16 scope",
+    "shared fence unchanged",
+    "only explicit gather/diagnostic/metadata fields changed",
+    "rejected precision",
+    "rejected charts",
+    "rejected architecture",
+    "rejected weight_packing",
+    "rejected shared_fp8_gemm_tuning",
+    "unpassed numerical gate rejected"
+  ],
+  "cpu_guard_correction": "Initial guard copied FP8 batched-packing expectation and rejected the incumbent recipe. Corrected guard to actual frozen BF16 loop setting; recipe itself remains unchanged.",
+  "gpu_checks_pending": true,
+  "verification_seeds": [
+    869,
+    870,
+    871
+  ],
+  "scope": {
+    "speed_reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+    "previous_precision_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+    "previous_precision_rejection_gap": 0.0354424174875021,
+    "profile_evidence": "research_results/wr_reproduction/research/ks3-bf16-shared-fp8-profile-20261025T095458-924154-profile-summary.json",
+    "profile_scope": "Original actual-model updates26-29,160 KS3 backward calls.320 float where kernels summed9154.595us; two where operations occur in each KS3 backward. Kernel sums overlap and are not elapsed shares.",
+    "unchanged": "GS32 inputs/weights/features, FP16 nonlinearity, BF16 products, FP32 accumulation, original64-row geometry VJP, original weight_packing=loop setting, optimizers, schedules, five original dense MLPs and shared backend.",
+    "floating_point_change": "Gate derivative FP32 row-tree sum: bound absolute error by2e-6 times absolute dot-product sum and check routed gradients before model trial."
+  }
+}

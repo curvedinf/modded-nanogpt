@@ -1,0 +1,146 @@
+{
+  "utc": "2026-10-26T18:18:02.475261+00:00",
+  "run_id": "probe-experts-sparse-interactions-calibration-20261026T181123-e90a82",
+  "code_commit": "36d4baa0a4e68fc4939706ea4d20c0b0e2735b19",
+  "passed": true,
+  "full_graph_warmup": true,
+  "original_logical_ranks": 8,
+  "actual_prefix_updates": 8,
+  "actual_prefix_update_seconds": [
+    0.38664756700745784,
+    0.4188239799987059,
+    0.40768022698466666,
+    0.4259594260074664,
+    0.41688155999872833,
+    0.4331837719946634,
+    0.41709751400048845,
+    0.43409031798364595
+  ],
+  "not_a_speed_or_convergence_win": true,
+  "residual_parameters": [
+    5,
+    8,
+    1024,
+    3
+  ],
+  "residual_raw_max_abs": 0.004892759025096893,
+  "per_site_residual_learned_absmax": [
+    [
+      0.003983353264629841,
+      0.0039418539963662624,
+      0.003979333210736513
+    ],
+    [
+      0.003923256415873766,
+      0.003911607898771763,
+      0.0039927964098751545
+    ],
+    [
+      0.003958783578127623,
+      0.003911593928933144,
+      0.0038804737851023674
+    ],
+    [
+      0.00384474266320467,
+      0.003843438345938921,
+      0.003871896071359515
+    ],
+    [
+      0.003889665473252535,
+      0.0038257967680692673,
+      0.0037005518097430468
+    ]
+  ],
+  "routed_backward_sites": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "five_original_dense_MLPs_retained": true,
+  "fixed_probe_oracle_max_abs": 0.0,
+  "state_restoration": {
+    "checked_entries": 1268,
+    "changed": [],
+    "passed": true,
+    "pointer_restoration_required": true,
+    "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+  },
+  "pending_state_restoration": {
+    "checked_entries": 1456,
+    "changed": [],
+    "passed": true,
+    "pointer_restoration_required": true,
+    "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+  },
+  "continuation_parity": {
+    "passed": true,
+    "same_checkpoint": true,
+    "same_eight_logical_microbatches": true,
+    "baseline_loss": 13.236787796020508,
+    "with_probe_loss": 13.236787796020508,
+    "maximum_parameter_relative_rms": 0.0,
+    "all_parameters_bitwise_equal": true
+  },
+  "odd_continuation_loss": 12.898763656616211,
+  "cold_probe_seconds": 3.0821679329965264,
+  "warm_probe_seconds": 2.639456779026659,
+  "pending_probe_seconds": 2.654161483020289,
+  "projected_seven_probe_and_sparse_diagnostic_seconds": 18.951246555981925,
+  "projected_fraction_of900": 0.021056940617757695,
+  "projection_limitation": "Screen/ordinary instrumentation costs also remain on clock; actual run overhead must be inspected.",
+  "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "not_a_screening_reference": true,
+  "interaction_adam_observations": {
+    "routed.interaction_xor1": {
+      "parameter": "ks3_interaction",
+      "branch": "routed",
+      "component": "bounded_interaction_raw_xor1",
+      "active_slots": null,
+      "sample_elements": 4096,
+      "total_elements": 40960,
+      "optimizer_applied": true,
+      "gradient_available": true,
+      "parameter_rms": 0.0020556149538606405,
+      "update_rms": 0.0004622396663762629,
+      "relative_update_rms": 0.22486685335117496,
+      "gradient_sample_rms": 0.007274019997566938,
+      "gradient_l2_estimate": 1.4721581400271346,
+      "gradient_missing_reason": null
+    },
+    "routed.interaction_xor2": {
+      "parameter": "ks3_interaction",
+      "branch": "routed",
+      "component": "bounded_interaction_raw_xor2",
+      "active_slots": null,
+      "sample_elements": 4096,
+      "total_elements": 40960,
+      "optimizer_applied": true,
+      "gradient_available": true,
+      "parameter_rms": 0.0020494316704571247,
+      "update_rms": 0.00046495741116814315,
+      "relative_update_rms": 0.22687138969821552,
+      "gradient_sample_rms": 0.006607591174542904,
+      "gradient_l2_estimate": 1.3372824293620973,
+      "gradient_missing_reason": null
+    },
+    "routed.interaction_xor4": {
+      "parameter": "ks3_interaction",
+      "branch": "routed",
+      "component": "bounded_interaction_raw_xor4",
+      "active_slots": null,
+      "sample_elements": 4096,
+      "total_elements": 40960,
+      "optimizer_applied": true,
+      "gradient_available": true,
+      "parameter_rms": 0.002040000632405281,
+      "update_rms": 0.00046509949606843293,
+      "relative_update_rms": 0.2279898783757009,
+      "gradient_sample_rms": 0.007558356039226055,
+      "gradient_l2_estimate": 1.5297037088283718,
+      "gradient_missing_reason": null
+    }
+  },
+  "decision": "Launch one screened900-second discovery. Keep V2 screening and timing frozen. Qualifying full endpoint automatically triggers fresh3069/3070/3071 without comparative pruning. No separate100-update architecture timing sweep."
+}

@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-26T08:04:23.808154+00:00",
+  "run_id": "probe-experts-pairwise-b1-discovery-20261026T080332-c4656f",
+  "unit": "wr-probe-pairwise-94c1530e",
+  "code_commit": "5c88c2c86c6568efae54e44dc1621e2e9cdf914d",
+  "status": "running",
+  "source_matches": true,
+  "fence_matches": true,
+  "new_stop": false,
+  "latest_event": "warmup_step",
+  "config": "configs/wr_reproduction/probe_experts_pairwise_b1.json",
+  "completed_local_hypotheses": 4,
+  "completed_exploratory_hypotheses": 0,
+  "active_exploratory_hypothesis": 1,
+  "verification_seeds_if_qualified": [
+    569,
+    570,
+    571
+  ],
+  "additional_parameters": 40960,
+  "freeze_until_discovery_and_any_verification_finish": true
+}

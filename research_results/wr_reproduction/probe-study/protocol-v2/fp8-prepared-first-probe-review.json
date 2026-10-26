@@ -1,0 +1,294 @@
+{
+  "utc": "2026-10-26T09:08:05.267210+00:00",
+  "run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+  "code_commit": "744594dc31cc9785468fc1ebca611bbe3cb789ad",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "probe_signature": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "observation": {
+    "step": 297,
+    "checkpoint_elapsed_seconds": 120.61270165201859,
+    "probe_completion_seconds": 123.60876733899931,
+    "loss": 4.553097669035196,
+    "probe_seconds": 2.996184899995569,
+    "cumulative_probe_seconds": 2.996184899995569
+  },
+  "screen": {
+    "event": "probe_screen",
+    "abort": false,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.61270165201859,
+    "reason": "within_one_sided_margin",
+    "gap": -0.03691597282886505,
+    "reference_run_id": "probe-experts-pairwise-b1-discovery-20261026T080332-c4656f",
+    "reference_elapsed_seconds": 120.61251191201154,
+    "reference_age_seconds": 0.00018974000704474747,
+    "reference_utc": "2026-10-26T08:07:47.888640+00:00",
+    "reference_loss": 4.590013641864061,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-pairwise-b1-discovery-20261026T080332-c4656f/events.jsonl",
+      "line": 327,
+      "row_sha256": "4976c99284d0193ad296cf56cce5a0c713251a8de535c5568c3eb93eeea638cf"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": -0.03691597282886505,
+      "standard_error": 0.0018458725255488806,
+      "normal95_halfwidth": 0.0036179101500758057,
+      "student95_halfwidth": 0.0036548276005867837,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T09:06:49.777929+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-fp8-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+    "seed": 169,
+    "code_commit": "744594dc31cc9785468fc1ebca611bbe3cb789ad",
+    "training_projection_gs32": true
+  },
+  "paired32768_sensitivity": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": -0.03691597282886505,
+    "standard_error": 0.0020603600313042762,
+    "normal95_halfwidth": 0.004038305661356381,
+    "student95_halfwidth": 0.0042072551839233314,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "gradient_diagnostics": [
+    {
+      "step": 298,
+      "do_adam": true,
+      "measurements": {
+        "routed.coefficients": {
+          "parameter_rms": 0.012352466583251953,
+          "relative_update_rms": 0.03734181044622177,
+          "gradient_sample_rms": 2.4970593452453613,
+          "gradient_l2_estimate": 1237.8968651042408,
+          "gradient_available": true,
+          "optimizer_applied": true,
+          "gradient_missing_reason": null
+        },
+        "routed.raw_scale": {
+          "parameter_rms": 0.743530809879303,
+          "relative_update_rms": 0.00043198143031511715,
+          "gradient_sample_rms": 0.002485620090737939,
+          "gradient_l2_estimate": 0.5030541366148022,
+          "gradient_available": true,
+          "optimizer_applied": true,
+          "gradient_missing_reason": null
+        },
+        "routed.raw_shift": {
+          "parameter_rms": 0.014901479706168175,
+          "relative_update_rms": 0.021111355385403638,
+          "gradient_sample_rms": 0.0016428965609520674,
+          "gradient_l2_estimate": 0.3324988859306356,
+          "gradient_available": true,
+          "optimizer_applied": true,
+          "gradient_missing_reason": null
+        },
+        "routed.up_projection": {
+          "parameter_rms": 0.04438190534710884,
+          "relative_update_rms": 0.023625013608309174,
+          "gradient_sample_rms": 0.13167840242385864,
+          "gradient_l2_estimate": 738.5418889604128,
+          "gradient_available": true,
+          "optimizer_applied": true,
+          "gradient_missing_reason": null
+        },
+        "routed.down_projection": {
+          "parameter_rms": 0.0852535143494606,
+          "relative_update_rms": 0.02583444865310854,
+          "gradient_sample_rms": 0.06247623264789581,
+          "gradient_l2_estimate": 350.4091333549389,
+          "gradient_available": true,
+          "optimizer_applied": true,
+          "gradient_missing_reason": null
+        }
+      }
+    },
+    {
+      "step": 299,
+      "do_adam": false,
+      "measurements": {
+        "routed.coefficients": {
+          "parameter_rms": 0.012395554222166538,
+          "relative_update_rms": 0.0,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_available": false,
+          "optimizer_applied": false,
+          "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+        },
+        "routed.raw_scale": {
+          "parameter_rms": 0.7434408664703369,
+          "relative_update_rms": 0.0,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_available": false,
+          "optimizer_applied": false,
+          "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+        },
+        "routed.raw_shift": {
+          "parameter_rms": 0.015001974068582058,
+          "relative_update_rms": 0.0,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_available": false,
+          "optimizer_applied": false,
+          "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+        },
+        "routed.up_projection": {
+          "parameter_rms": 0.04450498893857002,
+          "relative_update_rms": 0.02337364681443446,
+          "gradient_sample_rms": 0.17363862693309784,
+          "gradient_l2_estimate": 973.8833185329333,
+          "gradient_available": true,
+          "optimizer_applied": true,
+          "gradient_missing_reason": null
+        },
+        "routed.down_projection": {
+          "parameter_rms": 0.08554980158805847,
+          "relative_update_rms": 0.025456721976433293,
+          "gradient_sample_rms": 0.08966173231601715,
+          "gradient_l2_estimate": 502.8838741449986,
+          "gradient_available": true,
+          "optimizer_applied": true,
+          "gradient_missing_reason": null
+        }
+      }
+    }
+  ],
+  "ks3_activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3883349895477295,
+        "rms": 1.3033621311187744,
+        "max_abs": 6.057392120361328,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.5308431386947632,
+        "rms": 2.2461655139923096,
+        "max_abs": 51.75,
+        "nonzero_fraction": 0.2724609375
+      },
+      "projected_output": {
+        "mean": -0.045664362609386444,
+        "rms": 8.821680068969727,
+        "max_abs": 75.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4514423608779907,
+        "rms": 1.339736819267273,
+        "max_abs": 6.121984481811523,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5238648056983948,
+        "rms": 2.2617313861846924,
+        "max_abs": 61.25,
+        "nonzero_fraction": 0.292236328125
+      },
+      "projected_output": {
+        "mean": 0.10849662125110626,
+        "rms": 8.32259464263916,
+        "max_abs": 50.25,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.43014538288116455,
+        "rms": 1.3519306182861328,
+        "max_abs": 5.829995632171631,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.591945230960846,
+        "rms": 2.749288320541382,
+        "max_abs": 73.5,
+        "nonzero_fraction": 0.287109375
+      },
+      "projected_output": {
+        "mean": -0.15207025408744812,
+        "rms": 7.903981685638428,
+        "max_abs": 50.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4424373507499695,
+        "rms": 1.3255795240402222,
+        "max_abs": 7.889896869659424,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.54005366563797,
+        "rms": 2.8309686183929443,
+        "max_abs": 120.5,
+        "nonzero_fraction": 0.29638671875
+      },
+      "projected_output": {
+        "mean": 0.29077816009521484,
+        "rms": 8.841297149658203,
+        "max_abs": 74.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.44911983609199524,
+        "rms": 1.3388453722000122,
+        "max_abs": 5.325151443481445,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.566129207611084,
+        "rms": 2.3919618129730225,
+        "max_abs": 41.25,
+        "nonzero_fraction": 0.2890625
+      },
+      "projected_output": {
+        "mean": 0.03023153357207775,
+        "rms": 9.262337684631348,
+        "max_abs": 114.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "decision": "Continue unchanged: first held-out probe is below5 and0.03691597282886505 better than latest eligible current-best compatible nonfuture observation. No final result or causal attribution from this prefix.",
+  "limits": [
+    "All128 paired8192 blocks and32 adjacent32768 sensitivity blocks use the fixed text; independence remains an approximation.",
+    "Training gradients are bounded sample estimates, and missing even-update Adam gradients are original rank-local accumulation, not zero gradients.",
+    "Reported core activation moments precede feedforward post multipliers and routed gate weights.",
+    "Probe cost is measured on clock; actual total instrumentation overhead will be reported at termination."
+  ],
+  "full_validation": false
+}

@@ -1,0 +1,93 @@
+{
+  "utc": "2026-10-26T14:31:12.467919+00:00",
+  "phase": "cycle4_exploratory_pairwise_gain_numerical_passed",
+  "status": "numerical_passed",
+  "run_id": "probe-experts-pairwise-gain-b05-calibration-20261026T142939-dee096",
+  "code_commit": "7d571ca780868ffa5885340988724452cd10f593",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "passed": true,
+  "case_count": 5,
+  "numerical_seed": 2069,
+  "cpu_derivative_checks": {
+    "passed": true,
+    "gradcheck": true,
+    "gradgradcheck": true,
+    "initial_function_and_original_gradients_exact": true,
+    "zero_coefficients_have_learning_signal": true,
+    "cross_derivative": 0.048483528621838905,
+    "analytic_cross_derivative": 0.048483528621838905,
+    "gain_range": [
+      0.5,
+      1.5
+    ],
+    "relative_interaction_bound": ".5*abs(independent_feature)",
+    "global_absolute_activation_bound": false,
+    "independent_rank_one_paths_retained": true,
+    "new_parameters": 40960
+  },
+  "cases": [
+    {
+      "tuned": true,
+      "tokens": 1,
+      "active_experts": 1,
+      "padded_rows": 1024
+    },
+    {
+      "tuned": true,
+      "tokens": 257,
+      "active_experts": 1,
+      "padded_rows": 1280
+    },
+    {
+      "tuned": true,
+      "tokens": 4096,
+      "active_experts": 8,
+      "padded_rows": 4992
+    },
+    {
+      "tuned": true,
+      "tokens": 16384,
+      "active_experts": 8,
+      "padded_rows": 17280
+    },
+    {
+      "tuned": false,
+      "tokens": 257,
+      "active_experts": 1,
+      "padded_rows": 1280
+    }
+  ],
+  "all_initial_outputs_and_original_gradients_bitwise": true,
+  "initial_routed_geometry_gradient_error": 0.0,
+  "maximum_nonzero_relative_rms": {
+    "features": 0.0,
+    "output": 3.238149656681344e-05,
+    "input_gradient": 0.00011746914242394269,
+    "geometry_gradient": 2.3148652417148696e-07,
+    "pair_gain_gradient": 5.804992042612866e-07,
+    "weight_gradient": 7.347223436227068e-05
+  },
+  "maximum_smooth_gain_vjp_relative_rms": {
+    "coordinate": 9.923636135056313e-09,
+    "coefficient": 5.52395874819922e-07,
+    "original_feature_path": 0.0
+  },
+  "original_BF16_coordinate_VJP_storage_retained": true,
+  "additional_parameters": 40960,
+  "gain_range": [
+    0.5,
+    1.5
+  ],
+  "relative_interaction_bound": ".5*abs(independent_feature)",
+  "global_absolute_activation_bound": false,
+  "shared_backend_unchanged": true,
+  "source_hashes_match": true,
+  "not_a_screening_reference": true,
+  "full_convergence_verified": false,
+  "verification_seeds": [
+    2069,
+    2070,
+    2071
+  ],
+  "decision": "Launch graph/state gate: full24graphwarmup,8actual all-rank updates, all five gain banks learning, original-eval oracle, normal/pending state restoration, bitwise next-update parity and projected7probe<=3%. No separate100update timing sweep for this new nonlinear capacity. If passes, one900s seed169 discovery under the frozen heldout screen."
+}

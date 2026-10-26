@@ -1,0 +1,67 @@
+{
+  "utc": "2026-10-26T15:08:12.974447+00:00",
+  "cycle": 5,
+  "next_local_hypothesis": 2,
+  "status": "read_only_audit_complete",
+  "profile_path": "research_results/wr_reproduction/research/ks3-bf16-shared-fp8-profile-20261025T095458-924154-profile-summary.json",
+  "profile_sha256": "d9204b848d6275bf4222f9f9fa342949bde451e5245d062e74ac550b0ede6907",
+  "profiled_original_updates": [
+    26,
+    29
+  ],
+  "measured_kernel_rows": [
+    {
+      "name": "_mm",
+      "count": 640,
+      "total_us": 66574.61999999998,
+      "mean_us": 104.02284374999996,
+      "fraction_of_kernel_duration_sum": 0.04306228117590148
+    },
+    {
+      "name": "_vjp",
+      "count": 160,
+      "total_us": 52101.649999999994,
+      "mean_us": 325.63531249999994,
+      "fraction_of_kernel_duration_sum": 0.03370076918243631
+    },
+    {
+      "name": "_dw",
+      "count": 320,
+      "total_us": 37979.31500000004,
+      "mean_us": 118.68535937500012,
+      "fraction_of_kernel_duration_sum": 0.02456605747652987
+    },
+    {
+      "name": "_geometry",
+      "count": 160,
+      "total_us": 30442.917999999998,
+      "mean_us": 190.2682375,
+      "fraction_of_kernel_duration_sum": 0.019691310212974746
+    }
+  ],
+  "profile_limitation": "Kernel durations can overlap across streams; sums/fractions are not elapsed-time shares.",
+  "profile_usable_as_speed_reference": false,
+  "source_hashes": {
+    "wr_reproduction/ks3_moe.py": "5997e7011ef3a136bd2ad878fbbd48d1f38b94e75ca9511fb71e962a70cbef40",
+    "wr_reproduction/ks3_bf16_gemm.py": "c6342dab76dc1ebb18365b1270f67f27d7eba32433ec75fac39d12b7ebc55ef7",
+    "wr_reproduction/ks3_weight_pack.py": "1a26a914abed9e2862539180a5fc18b5d81af6caf95c4e23a055d8858befd04b",
+    "wr_reproduction/bf16_tiles.py": "ae8bfe5bf7934fab0cd4239662132a0686b2cedf4b59fbde5d42e07e722623ab"
+  },
+  "observations": [
+    "OriginalBF16 training already batches both weight producers into two kernels; batching is not a new optimization.",
+    "BF16 cache stores only ks3_up[5,8,1024,768] and ks3_down[5,8,768,1024]. Forward projections pass transposed views; backward projections pass the original cached layouts.",
+    "The FP8 producer already emits dual layouts. Its BF16 branch currently emits only Q; this audit does not establish that a secondBF16 layout is faster.",
+    "The saved actual-model profile reports640 KS3_mm calls totaling66574.62us over4updates; sums overlap and are not an elapsed-time share."
+  ],
+  "hypothesis": "Test an optional second contiguousBF16 orientation emitted by the existing KS3 weight producer and reused across the original forward projections. Keep originalGS32 quantized values, original selected matmul tiles/reduction policy, geometry/VJP, projection optimizer and shared kernels. Account for the additional producer writes/cache in actual-model timing.",
+  "required_checks": [
+    "Exact dual-buffer value/transpose parity, full refresh and rank-local graph execution coverage.",
+    "Output/input/router/post/geometry and weight-gradient checks at actual1024x768 shapes, empty routing, padded routes, training/evaluation paths.",
+    "Probe state/next-update parity with new graph-owned cached buffers restored in place.",
+    "Actual-model speed gate against saved original incumbent first100 and26-100; no convergence trial unless both are strictly faster."
+  ],
+  "next": "Implement a separate KS3-only dualBF16 weight-layout overlay with cached producer outputs, then one bounded numerical and actual-model speed/state gate. Do not resume failed gain code or scalar queues.",
+  "shared_backend_unchanged": true,
+  "new_parameters": false,
+  "full_convergence_verified": false
+}

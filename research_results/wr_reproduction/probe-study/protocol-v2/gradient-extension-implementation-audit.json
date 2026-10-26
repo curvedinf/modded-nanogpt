@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-26T06:53:41.990166+00:00",
+  "status": "CPU_and_GPU_gates_pending",
+  "shared_backend_fence": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "frozen_files_unchanged": true,
+  "extension_scope": "Read-only bounded active-slot samples before original step_optimizers, and after original update; two updates after each unchanged fixed-text probe. Continuous clock unchanged. Original training/probe/evaluation modules untouched.",
+  "overhead_accounting": "Report sampling, readback and logging plus existing V2 overhead. Separately expose waits draining already queued training/optimizer work; full wall clock includes every wait. No wall-time subtraction.",
+  "numerical_gate": "CPU even/odd with gradient clearing plus actual-model same-prestate/data all-eight-rank update parity and next odd update.",
+  "controls": "One existing MLP control remains frozen; CE/data/YaRN/schedules/shared math unchanged. Additional candidate diagnostic cost is paid on clock.",
+  "verification": "Three fresh frozen unpruned seeds use same optional extension command and exact source hashes."
+}

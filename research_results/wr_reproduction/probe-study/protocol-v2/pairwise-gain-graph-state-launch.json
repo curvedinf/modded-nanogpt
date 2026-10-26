@@ -1,0 +1,34 @@
+{
+  "utc": "2026-10-26T14:32:24.463268+00:00",
+  "phase": "cycle4_exploratory_pairwise_gain_graph_state_gate",
+  "status": "running",
+  "run_id": "probe-experts-pairwise-gain-b05-calibration-20261026T143124-fcdde6",
+  "unit": "wr-probe-pairwise-gain-6357429c",
+  "code_commit": "8da6bdd95dc1fbeddafd04323f80ab004bb49a2e",
+  "trainer_pid": 1575668,
+  "controller_pid": 1575657,
+  "recipe": "configs/wr_reproduction/probe_experts_pairwise_gain_b05.json",
+  "numerical_gate": "pairwise-gain-numerical-summary.json",
+  "source_hashes_match": true,
+  "new_stop": false,
+  "source_freeze": true,
+  "gpu_lease": "1575657 python          /root/modded-nanogpt/logs/wr-reproduction/gpu.lock",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true,
+  "change_scope": "Original independent rank1 GS32/BF16 feature multiplied by a zero-initialized adjacent-coordinate gain bounded[.5,1.5]. Relative residual bound only. Original64-row geometry, BF16 coordinate-VJP boundary, projections, routing/optimizer plumbing and all shared kernels/settings retained.",
+  "additional_parameters": 40960,
+  "gain_range": [
+    0.5,
+    1.5
+  ],
+  "relative_interaction_bound": ".5*abs(independent_feature)",
+  "global_absolute_activation_bound": false,
+  "verification_seeds": [
+    2069,
+    2070,
+    2071
+  ],
+  "full_convergence_verified": false,
+  "next": "Finish full24graphwarmup and8actual original all-eight-rank updates. All five gain banks must learn; require normal/pending state restoration, original-eval oracle, bitwise next-update and projected7probe<=3% before900s discovery. New nonlinear capacity has no separate100update timing sweep. Qualifying full result triggers2069/2070/2071 frozen unpruned seeds."
+}

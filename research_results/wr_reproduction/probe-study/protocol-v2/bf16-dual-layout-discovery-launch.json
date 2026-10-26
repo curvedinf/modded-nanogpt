@@ -1,0 +1,24 @@
+{
+  "utc": "2026-10-26T15:26:56.895470+00:00",
+  "run_id": "probe-experts-bf16-dual-layout-discovery-20261026T152627-028606",
+  "unit": "wr-probe-bf16-dual-layout-9318449e",
+  "code_commit": "e6e6349482f7f059a23fc590845bfb95da8675a3",
+  "seed": 169,
+  "phase": "cycle5_local2_bf16_dual_layout_discovery",
+  "status": "running",
+  "actual_model_speed_gate": "passed_both_marginal_improvements_not_robust_evidence",
+  "numerical_gate_run_id": "probe-experts-bf16-dual-layout-calibration-20261026T151843-0c16f4",
+  "speed_state_gate_run_id": "probe-experts-bf16-dual-layout-calibration-20261026T151958-30f106",
+  "budget_seconds": 900,
+  "comparison": "Only compatible constant-condition full-vocabulary heldoutCE at elapsed training time; below5 then first one-sided gap>=.01; latest nonfuture reference within3seconds.",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "probe_signature": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "frozen_verification_seeds": [
+    2269,
+    2270,
+    2271
+  ],
+  "verification_comparative_pruning_exempt": true,
+  "source_hashes_match": true,
+  "new_stop": false
+}

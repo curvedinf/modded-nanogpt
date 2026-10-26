@@ -1,0 +1,24 @@
+{
+  "utc": "2026-10-26T15:44:54.904936+00:00",
+  "run_id": "probe-experts-prepared-geometry-calibration-20261026T154358-035107",
+  "unit": "wr-probe-prepared-geometry-6f18b329",
+  "code_commit": "940a788644c26eb324ad835aefeb36819c0525a6",
+  "seed": 169,
+  "mode": "speed_state",
+  "numerical_gate_run_id": "probe-experts-prepared-geometry-calibration-20261026T154318-3550a8",
+  "numerical_gate_passed": true,
+  "status": "running",
+  "optimizer_storage_binding_corrected": true,
+  "first_actual_all_rank_warmup_updates_completed": true,
+  "actual_model_prefix_seconds": 120,
+  "all_rank_graph_warmup_required": true,
+  "speed_reference": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "speed_criteria": "Both first100 and updates26\u2013100 strictly faster than original incumbent169; same original schedule/objective signatures.",
+  "state_gate": "Original evaluation oracle, normal/pending state addresses/values, same-next-update parity and all ten cached geometry/VJP paths.",
+  "pending_verification_seeds": [
+    2369,
+    2370,
+    2371
+  ],
+  "loss_time_trial_launched": false
+}

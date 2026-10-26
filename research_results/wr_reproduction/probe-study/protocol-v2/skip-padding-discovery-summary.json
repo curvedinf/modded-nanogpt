@@ -1,0 +1,207 @@
+{
+  "utc": "2026-10-26T20:16:32.064665+00:00",
+  "cycle": 7,
+  "position": "local4",
+  "run_id": "probe-experts-skip-padding-discovery-20261026T201001-579c5d",
+  "code_commit": "448f39e53b2901f03e2bd537d3f7cf593cbfaa09",
+  "status": "pruned",
+  "qualifies": false,
+  "probe": {
+    "loss": 4.669934511184692,
+    "step": 293,
+    "checkpoint_elapsed_seconds": 120.54353685799288,
+    "probe_completion_seconds": 123.52530322698294,
+    "probe_seconds": 2.981892046984285,
+    "cumulative_probe_seconds": 2.981892046984285,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31"
+  },
+  "screening": {
+    "utc": "2026-10-26T20:14:12.536554+00:00",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.54353685799288,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.15137636102735996,
+    "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+    "reference_elapsed_seconds": 120.2109339319868,
+    "reference_age_seconds": 0.332602926006075,
+    "reference_utc": "2026-10-26T14:09:02.407891+00:00",
+    "reference_loss": 4.518558150157332,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785/events.jsonl",
+      "line": 331,
+      "row_sha256": "1ffcc96b3c26752568152e11db1ddd017e3b2a266fb8c34532843dbf921fc12c"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.15137636102735996,
+      "standard_error": 0.0023987759332202356,
+      "normal95_halfwidth": 0.0047016008291116615,
+      "student95_halfwidth": 0.004749576347776067,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    }
+  },
+  "paired_32768_token_uncertainty": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.15137636102735996,
+    "standard_error": 0.002982230766694125,
+    "normal95_halfwidth": 0.005845172302720485,
+    "student95_halfwidth": 0.006089715225589403,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "pruning": {
+    "event": "research_pruned",
+    "reason": "first_one_sided_gap_at_least_001",
+    "train_seconds": 123.7848191439989,
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T20:14:12.536747+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-skip-padding-discovery-20261026T201001-579c5d",
+    "seed": 169,
+    "code_commit": "448f39e53b2901f03e2bd537d3f7cf593cbfaa09",
+    "training_projection_gs32": true
+  },
+  "actual_prefix": {
+    "first100_seconds": 39.534886429988546,
+    "after25_through100_seconds": 29.524215090001235,
+    "first100_steps": 100,
+    "all_logical_ranks": 8
+  },
+  "gradient_observation_count": 0,
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3869152069091797,
+        "rms": 1.2526917457580566,
+        "max_abs": 6.224007606506348,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5000731348991394,
+        "rms": 2.121068239212036,
+        "max_abs": 47.75,
+        "nonzero_fraction": 0.27001953125
+      },
+      "projected_output": {
+        "mean": -0.0012739785015583038,
+        "rms": 8.174031257629395,
+        "max_abs": 51.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.38956305384635925,
+        "rms": 1.3189947605133057,
+        "max_abs": 5.803153991699219,
+        "nonzero_fraction": 0.896484375
+      },
+      "nonlinear_output": {
+        "mean": 0.5962905883789062,
+        "rms": 2.711026430130005,
+        "max_abs": 64.0,
+        "nonzero_fraction": 0.291259765625
+      },
+      "projected_output": {
+        "mean": 0.08222104609012604,
+        "rms": 7.98549747467041,
+        "max_abs": 64.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3921532928943634,
+        "rms": 1.3172687292099,
+        "max_abs": 5.699102878570557,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.5674434304237366,
+        "rms": 2.3971030712127686,
+        "max_abs": 54.75,
+        "nonzero_fraction": 0.30810546875
+      },
+      "projected_output": {
+        "mean": 0.03759543597698212,
+        "rms": 8.030028343200684,
+        "max_abs": 58.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.41759753227233887,
+        "rms": 1.3102598190307617,
+        "max_abs": 5.502910614013672,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5258879661560059,
+        "rms": 2.166649580001831,
+        "max_abs": 58.5,
+        "nonzero_fraction": 0.311279296875
+      },
+      "projected_output": {
+        "mean": 0.16082733869552612,
+        "rms": 8.58167552947998,
+        "max_abs": 59.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.31263458728790283,
+        "rms": 1.2922213077545166,
+        "max_abs": 9.419589042663574,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.6769070625305176,
+        "rms": 3.420543670654297,
+        "max_abs": 137.0,
+        "nonzero_fraction": 0.322509765625
+      },
+      "projected_output": {
+        "mean": 0.17022736370563507,
+        "rms": 10.505664825439453,
+        "max_abs": 84.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "full_validation": null,
+  "reserved_confirmation": null,
+  "verification_seeds_not_launched": [
+    3469,
+    3470,
+    3471
+  ],
+  "frozen_backend_unchanged": true,
+  "limitation": "Paired block uncertainty conditions on these fixed trained weights; it does not estimate training nondeterminism or current-best selection uncertainty. First-probe rejection leaves no post-probe gradient observations; absent observations do not mean zero gradients. Bitwise bounded numerical tests do not establish identical independent full training trajectories.",
+  "decision": "Reject padding-skip local4 at FIRST compatible one-sided gap. Preserve evidence; no unchanged retry or claimed speed/convergence win. Inspect all four cycle7locals before one distinct exploratory hypothesis."
+}

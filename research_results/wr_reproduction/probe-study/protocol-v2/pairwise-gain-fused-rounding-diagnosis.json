@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-26T15:02:05.212083+00:00",
+  "run_id": "probe-experts-pairwise-gain-fused-calibration-20261026T145821-8b329f",
+  "code_commit": "ba12f266924ad0bb2316057b75f789e21b89c4d7",
+  "status": "nonzero_gain_gradient_exact_parity_failure",
+  "relative_rms": 1.0665958116717889e-09,
+  "all_other_tested_outputs_and_gradients_bitwise_equal": true,
+  "independent_oracle_cases_passed": 5,
+  "numerical_gate_passed": false,
+  "hypothesis": "Kernel-wide FMA permission may change linked transcendental arithmetic despite explicit elementary rounding. This is a diagnosis to test, not established.",
+  "decision": "One bounded correction: compile both new fused producers with the original gain consumer no-FMA option. Retest original-function and exact unfused parity without relaxing tolerances. If exact parity still fails, close this fusion attempt before any training or speed trial.",
+  "training_launched": false
+}

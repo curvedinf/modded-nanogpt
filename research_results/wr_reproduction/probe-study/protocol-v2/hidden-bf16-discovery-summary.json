@@ -1,0 +1,212 @@
+{
+  "utc": "2026-10-26T13:24:21.715394+00:00",
+  "run_id": "probe-experts-hidden-bf16-discovery-20261026T131217-a88268",
+  "code_commit": "e5cdda46dd3260dac3ab9d21ffbf973187402da9",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "status": "pruned",
+  "qualifies": false,
+  "full_validation": null,
+  "phase": "cycle4_local2_hidden_bf16_rejected",
+  "seed": 169,
+  "probes": [
+    {
+      "loss": 4.639284495264292,
+      "step": 293,
+      "checkpoint_elapsed_seconds": 120.49705721801729,
+      "probe_completion_seconds": 123.4663773040229,
+      "probe_seconds": 2.969512948009651,
+      "cumulative_probe_seconds": 2.969512948009651,
+      "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "utc": "2026-10-26T13:16:28.973089+00:00"
+    },
+    {
+      "loss": 4.082069020718336,
+      "step": 445,
+      "checkpoint_elapsed_seconds": 240.7167126010172,
+      "probe_completion_seconds": 243.3376710130251,
+      "probe_seconds": 2.6210994349967223,
+      "cumulative_probe_seconds": 5.590612383006373,
+      "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "utc": "2026-10-26T13:18:28.844385+00:00"
+    }
+  ],
+  "pruning": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 240.7167126010172,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.07675355114042759,
+    "reference_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+    "reference_elapsed_seconds": 240.12148638800136,
+    "reference_age_seconds": 0.5952262130158488,
+    "reference_utc": "2026-10-26T09:08:48.799304+00:00",
+    "reference_loss": 4.0053154695779085,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a/events.jsonl",
+      "line": 492,
+      "row_sha256": "ba3df04d2ad4d2732cbaabec03b2c03e1c02fdd5a6471b751760928f2daa02ea"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.07675355114042759,
+      "standard_error": 0.0013407728592848087,
+      "normal95_halfwidth": 0.0026279148041982252,
+      "student95_halfwidth": 0.002654730261383921,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T13:18:29.012678+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-hidden-bf16-discovery-20261026T131217-a88268",
+    "seed": 169,
+    "code_commit": "e5cdda46dd3260dac3ab9d21ffbf973187402da9",
+    "training_projection_gs32": true
+  },
+  "paired_32768_text_uncertainty": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.07675355114042759,
+    "standard_error": 0.0011927726872010167,
+    "normal95_halfwidth": 0.0023378344669139927,
+    "student95_halfwidth": 0.0024356418272644758,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "train_seconds_at_prune": 243.50609609202365,
+  "first_probe_review": "hidden-bf16-first-probe-review.json",
+  "last_activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.7176176309585571,
+        "rms": 1.9778681993484497,
+        "max_abs": 11.403258323669434,
+        "nonzero_fraction": 0.896484375
+      },
+      "nonlinear_output": {
+        "mean": 1.1114003658294678,
+        "rms": 6.18654727935791,
+        "max_abs": 192.0,
+        "nonzero_fraction": 0.250244140625
+      },
+      "projected_output": {
+        "mean": -0.6287184953689575,
+        "rms": 26.952585220336914,
+        "max_abs": 197.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.7565975189208984,
+        "rms": 2.0576295852661133,
+        "max_abs": 12.077247619628906,
+        "nonzero_fraction": 0.904296875
+      },
+      "nonlinear_output": {
+        "mean": 1.3273022174835205,
+        "rms": 6.933203220367432,
+        "max_abs": 236.0,
+        "nonzero_fraction": 0.27099609375
+      },
+      "projected_output": {
+        "mean": 0.29657530784606934,
+        "rms": 27.773237228393555,
+        "max_abs": 228.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.7304592132568359,
+        "rms": 1.9927743673324585,
+        "max_abs": 7.692940711975098,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 1.1280860900878906,
+        "rms": 4.788564682006836,
+        "max_abs": 138.0,
+        "nonzero_fraction": 0.28369140625
+      },
+      "projected_output": {
+        "mean": 1.133355975151062,
+        "rms": 25.743898391723633,
+        "max_abs": 170.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.7133089303970337,
+        "rms": 1.958226203918457,
+        "max_abs": 10.944101333618164,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 1.1851367950439453,
+        "rms": 6.090693950653076,
+        "max_abs": 160.0,
+        "nonzero_fraction": 0.280517578125
+      },
+      "projected_output": {
+        "mean": 0.3227878212928772,
+        "rms": 26.458152770996094,
+        "max_abs": 166.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.7580912113189697,
+        "rms": 1.9455149173736572,
+        "max_abs": 7.927856922149658,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 1.0165764093399048,
+        "rms": 4.821404457092285,
+        "max_abs": 126.0,
+        "nonzero_fraction": 0.27197265625
+      },
+      "projected_output": {
+        "mean": -0.3392666280269623,
+        "rms": 26.254343032836914,
+        "max_abs": 420.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "adam_gradient_sample_steps": [
+    294
+  ],
+  "gradient_limitation": "Available optimizer sample is step294 after the first probe. The second probe pruned before additional samples; no claim about gradient/update values at pruning.",
+  "verification_seeds_launched": [],
+  "source_hashes_match": true,
+  "new_stop": false,
+  "original_evaluation_unchanged": true,
+  "decision": "Reject training-only hiddenBF16 under the first comparable bad-probe rule. No unchanged repeat or verification seeds. Preserve the original independent GS32/BF16 function for the next targeted geometry-backward kernel experiment.",
+  "interpretation": "Bypassing training hidden-feature GS32 did not improve the observed loss/time curve. The actual-model speed margin was small and never established a convergence win; coefficient or activation representation arguments alone do not establish causality."
+}

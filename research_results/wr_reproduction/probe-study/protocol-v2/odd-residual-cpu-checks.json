@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-26T17:37:30.867788+00:00",
+  "passed": true,
+  "checks": {
+    "passed": true,
+    "gradcheck": true,
+    "gradgradcheck": true,
+    "initial_function_and_original_gradients_exact": true,
+    "zero_init_learning_signal_on_both_signs": true,
+    "cross_coordinate_derivatives_exact_zero": true,
+    "diagonal_second_derivative": 0.02447554647924591,
+    "analytic_diagonal_second_derivative": 0.02447554647924591,
+    "absolute_residual_bound": 4.0,
+    "odd_function": true,
+    "coordinate_clamp_derivative_checked": true,
+    "can_activate_zero_independent_features": true,
+    "independent_rank_one_paths_retained": true,
+    "new_parameters": 40960
+  },
+  "scope_exclusions": 10,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "existing_python_modified": false,
+  "shared_math_changed": false,
+  "parameter_name": "ks3_odd",
+  "reused_plumbing": "Existing routed dispatch/custom-op/autograd and partial reduction helpers; the independent feature/VJP and new optimizer parameter are defined in a separate module.",
+  "not_a_convergence_result": true
+}

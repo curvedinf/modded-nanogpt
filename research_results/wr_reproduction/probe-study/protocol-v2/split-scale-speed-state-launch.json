@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-26T11:45:31.148909+00:00",
+  "phase": "cycle3_local4_split_scale_speed_state_gate",
+  "status": "running",
+  "run_id": "probe-experts-split-coefficient-scale-calibration-20261026T114434-251413",
+  "unit": "wr-probe-split-scale-b7032219",
+  "code_commit": "4264e361be51541eb61532e35ec21359b4eb57b1",
+  "source_hashes_match": true,
+  "new_stop": false,
+  "recipe": "configs/wr_reproduction/probe_experts_split_coefficient_scale.json",
+  "maximum_actual_model_prefix_ratio": 1.02,
+  "accuracy_hypothesis_not_speed_claim": true,
+  "preserved_initial_failure": "split-scale-initial-numerical-failure.json",
+  "initial_failure_resolved": "Independent oracle padding correction; production kernel and numerical tolerances unchanged. New numerical gate passed10cases.",
+  "next": "Finish original24warmup+bounded120s prefix. Check first100 and26-100 costs against frozen incumbent, original evaluation oracle, ordinary/pending state restoration and bitwise next update. Discovery remains blocked until every gate passes. Then seed169900s-cap; qualification launches1469/1470/1471unpruned.",
+  "source_freeze": true,
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true
+}

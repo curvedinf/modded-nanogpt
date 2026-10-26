@@ -1,0 +1,39 @@
+{
+  "utc": "2026-10-26T18:10:03.990518+00:00",
+  "passed": true,
+  "checks": {
+    "passed": true,
+    "gradcheck": true,
+    "gradgradcheck": true,
+    "initial_function_and_original_gradients_exact": true,
+    "all_three_interaction_coefficients_receive_zero_init_signal": true,
+    "analytic_cross_derivatives": [
+      0.004891244259364901,
+      0.01876458844557737,
+      0.005112146642846821
+    ],
+    "measured_cross_derivatives": [
+      0.004891244259364901,
+      0.01876458844557737,
+      0.005112146642846821
+    ],
+    "nonedge_cross_derivatives_exact_zero": true,
+    "independent_groups_of_eight": true,
+    "single_partner_reduces_to_existing_basis_exactly": true,
+    "absolute_residual_sum_bound": 3.0,
+    "independent_rank_one_paths_retained": true,
+    "new_parameters": 122880
+  },
+  "scope_exclusions": 12,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "partner_offsets": [
+    1,
+    2,
+    4
+  ],
+  "additional_parameters": 122880,
+  "parameter_name": "ks3_interaction",
+  "original_independent_rank_one_paths_retained": true,
+  "original_shared_kernels_unchanged": true,
+  "not_a_convergence_result": true
+}

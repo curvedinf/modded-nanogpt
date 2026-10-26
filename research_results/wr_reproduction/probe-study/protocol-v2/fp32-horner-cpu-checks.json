@@ -1,0 +1,30 @@
+{
+  "utc": "2026-10-26T17:03:15.756615+00:00",
+  "passed": true,
+  "cpu": {
+    "passed": true,
+    "original_joint_coefficient_GS32": true,
+    "original_STE_identity": true,
+    "raw_warp_scalars_unchanged": true,
+    "zero_initialization_exact": true,
+    "unused_dispatch_capacity_oracles_initialized": true
+  },
+  "scope_exclusions": [
+    "rank",
+    "charts",
+    "architecture",
+    "precision",
+    "geometry_backward_rows",
+    "shared_fp8_gemm_tuning",
+    "training_gs32",
+    "max_train_seconds",
+    "horner_precision",
+    "allowed_slowdown"
+  ],
+  "backend_fence_passed": true,
+  "new_parameters": 0,
+  "original_evaluation_required": true,
+  "numerical_GPU_gate_pending": true,
+  "actual_model_speed_state_gate_pending": true,
+  "maximum_actual_model_prefix_ratio": 1.0
+}

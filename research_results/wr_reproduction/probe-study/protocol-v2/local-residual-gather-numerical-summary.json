@@ -1,0 +1,195 @@
+{
+  "utc": "2026-10-26T12:40:21.924972+00:00",
+  "run_id": "probe-experts-local-residual-exact-gather-calibration-20261026T123845-8218ac",
+  "code_commit": "baf01ebba0fdebc23c82af7503eebda7a1f5077d",
+  "passed": true,
+  "cases": 8,
+  "checks": [
+    {
+      "tokens": 1,
+      "zero_local_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1024,
+      "producer_gradient_and_gate_derivative_bitwise_equal": true,
+      "block_gradient_bitwise": {
+        "input": true,
+        "gate": true,
+        "geometry": true,
+        "local_coefficients": true,
+        "weights": true
+      },
+      "routed_output_and_projection_gradient_bitwise_equal": true,
+      "routed_gradient_bitwise": {
+        "input": true,
+        "router": true,
+        "post": true,
+        "geometry": true,
+        "local_coefficients": true
+      }
+    },
+    {
+      "tokens": 1,
+      "zero_local_coefficients": false,
+      "active_experts": 1,
+      "padded_rows": 1024,
+      "producer_gradient_and_gate_derivative_bitwise_equal": true,
+      "block_gradient_bitwise": {
+        "input": true,
+        "gate": true,
+        "geometry": true,
+        "local_coefficients": true,
+        "weights": true
+      },
+      "routed_output_and_projection_gradient_bitwise_equal": true,
+      "routed_gradient_bitwise": {
+        "input": true,
+        "router": true,
+        "post": true,
+        "geometry": true,
+        "local_coefficients": true
+      }
+    },
+    {
+      "tokens": 257,
+      "zero_local_coefficients": true,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "producer_gradient_and_gate_derivative_bitwise_equal": true,
+      "block_gradient_bitwise": {
+        "input": true,
+        "gate": true,
+        "geometry": true,
+        "local_coefficients": true,
+        "weights": true
+      },
+      "routed_output_and_projection_gradient_bitwise_equal": true,
+      "routed_gradient_bitwise": {
+        "input": true,
+        "router": true,
+        "post": true,
+        "geometry": true,
+        "local_coefficients": true
+      }
+    },
+    {
+      "tokens": 257,
+      "zero_local_coefficients": false,
+      "active_experts": 1,
+      "padded_rows": 1280,
+      "producer_gradient_and_gate_derivative_bitwise_equal": true,
+      "block_gradient_bitwise": {
+        "input": true,
+        "gate": true,
+        "geometry": true,
+        "local_coefficients": true,
+        "weights": true
+      },
+      "routed_output_and_projection_gradient_bitwise_equal": true,
+      "routed_gradient_bitwise": {
+        "input": true,
+        "router": true,
+        "post": true,
+        "geometry": true,
+        "local_coefficients": true
+      }
+    },
+    {
+      "tokens": 16384,
+      "zero_local_coefficients": true,
+      "active_experts": 8,
+      "padded_rows": 17280,
+      "producer_gradient_and_gate_derivative_bitwise_equal": true,
+      "block_gradient_bitwise": {
+        "input": true,
+        "gate": true,
+        "geometry": true,
+        "local_coefficients": true,
+        "weights": true
+      },
+      "routed_output_and_projection_gradient_bitwise_equal": true,
+      "routed_gradient_bitwise": {
+        "input": true,
+        "router": true,
+        "post": true,
+        "geometry": true,
+        "local_coefficients": true
+      }
+    },
+    {
+      "tokens": 16384,
+      "zero_local_coefficients": false,
+      "active_experts": 8,
+      "padded_rows": 17280,
+      "producer_gradient_and_gate_derivative_bitwise_equal": true,
+      "block_gradient_bitwise": {
+        "input": true,
+        "gate": true,
+        "geometry": true,
+        "local_coefficients": true,
+        "weights": true
+      },
+      "routed_output_and_projection_gradient_bitwise_equal": true,
+      "routed_gradient_bitwise": {
+        "input": true,
+        "router": true,
+        "post": true,
+        "geometry": true,
+        "local_coefficients": true
+      }
+    },
+    {
+      "tokens": 49152,
+      "zero_local_coefficients": true,
+      "active_experts": 8,
+      "padded_rows": 50048,
+      "producer_gradient_and_gate_derivative_bitwise_equal": true,
+      "block_gradient_bitwise": {
+        "input": true,
+        "gate": true,
+        "geometry": true,
+        "local_coefficients": true,
+        "weights": true
+      },
+      "routed_output_and_projection_gradient_bitwise_equal": true,
+      "routed_gradient_bitwise": {
+        "input": true,
+        "router": true,
+        "post": true,
+        "geometry": true,
+        "local_coefficients": true
+      }
+    },
+    {
+      "tokens": 49152,
+      "zero_local_coefficients": false,
+      "active_experts": 8,
+      "padded_rows": 50048,
+      "producer_gradient_and_gate_derivative_bitwise_equal": true,
+      "block_gradient_bitwise": {
+        "input": true,
+        "gate": true,
+        "geometry": true,
+        "local_coefficients": true,
+        "weights": true
+      },
+      "routed_output_and_projection_gradient_bitwise_equal": true,
+      "routed_gradient_bitwise": {
+        "input": true,
+        "router": true,
+        "post": true,
+        "geometry": true,
+        "local_coefficients": true
+      }
+    }
+  ],
+  "untuned_fallback_bitwise_equal": true,
+  "installation_idempotent": true,
+  "all_original_and_local_function_parameters_unchanged": true,
+  "original_BF16_gradient_boundary_unchanged": true,
+  "all_shared_kernels_unchanged": true,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "events_sha256": "de2d960886d50a2abd0cb3b56c3d0dcceaae5e3bccba43d5dd4f7b1118528ce2",
+  "actual_model_speed_verified": false,
+  "full_convergence_verified": false,
+  "decision": "Launch bounded actual-model120s prefix after full24graphwarmup. Require first100<40.35625232299208s and updates26-100<30.15812886398635s, plus originalmath probe/state/nextupdate parity and projectedprobeoverhead<=3%. No convergence if slower."
+}

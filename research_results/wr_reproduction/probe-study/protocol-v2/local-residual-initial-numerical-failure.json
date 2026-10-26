@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-26T12:14:56.639242+00:00",
+  "run_id": "probe-experts-local-residual-k3-calibration-20261026T121105-318de1",
+  "code_commit": "1193f7b49c65e73253bee943f8ccd26d45b86c63",
+  "status": "error",
+  "mode": "numerical",
+  "failed_check": "Exact routed output and weight-gradient equivalence at zero added coefficients, tuned4096tokens.",
+  "passed_cases_before_failure": [
+    1,
+    257
+  ],
+  "production_fix_not_yet_selected": true,
+  "decision": "Keep gate failed. Add per-tensor mismatch evidence to the unchanged numerical check and rerun once to identify the failing path; no training or graph calibration.",
+  "console_sha256": "9f0a9d6e50a413e6fd85c6e241bf446a6cd212a817236c7c1f9b237829aa11ed",
+  "tolerances_unchanged": true
+}

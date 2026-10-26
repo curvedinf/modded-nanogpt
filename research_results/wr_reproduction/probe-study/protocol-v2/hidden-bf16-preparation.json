@@ -1,0 +1,52 @@
+{
+  "utc": "2026-10-26T13:03:23.056095+00:00",
+  "phase": "cycle4_local2_hidden_bf16_numerical_gate",
+  "status": "prepared",
+  "recipe": "configs/wr_reproduction/probe_experts_hidden_bf16.json",
+  "hypothesis": "Retain only training KS3 hidden features in BF16 after the original FP16 nonlinearity, bypassing their group32 INT8 rounding. Keep original GS32 input, weight and joint coefficient packing, BF16 products, independent rank1 geometry and optimizer rates. The original evaluation forward remains bitwise unchanged. Same-coordinate diagnostics found warp packing-delta error0.0265-0.0331 versus unpacked warp delta0.0526-0.0682; test the training representation effect separately from rejected coefficient-scale and added-capacity hypotheses. No speed or loss gain is assumed. Require both original actual-model prefixes faster before the900s screened trial.",
+  "settings": {
+    "kind": "training-hidden-bf16-original-eval-v1",
+    "training_hidden_gs32": false,
+    "evaluation_hidden_gs32": true,
+    "input_gs32": true,
+    "weight_gs32": true,
+    "coefficient_gs32": true
+  },
+  "evidence": {
+    "speed_reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+    "maximum_actual_model_prefix_ratio": 1.0,
+    "diagnostic_run_id": "probe-experts-geometry-effects-calibration-20261026T105846-af1fc4"
+  },
+  "scope_cpu_checks": {
+    "passed": true,
+    "cases": [
+      "geometry_rate",
+      "shared_backend",
+      "input_packing",
+      "eval_precision",
+      "speed_limit",
+      "extra_function"
+    ]
+  },
+  "syntax_passed": true,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "fenced_files_unchanged": true,
+  "new_files": [
+    "wr_reproduction/ks3_hidden_bf16.py",
+    "wr_reproduction/check_ks3_hidden_bf16.py",
+    "wr_reproduction/probe_hidden_bf16_trial.py"
+  ],
+  "source_change_scope": "One opt-in training-only forward overlay calls original geometry with hidden GS32 disabled. Original evaluation forward, backward, input and projection packing and all shared kernels/settings unchanged.",
+  "numeric_gate": "Actual expert shapes1/257/16384/49152, zero/nonzero geometry, independent FP16-stage forward and smooth-STE autograd plus input/weight gradients. Exact original evaluation output/all routed gradients; unchanged input pack/coordinates; idempotent installation.",
+  "speed_gate": "Full24graphwarmup then bounded120s all-eight-rank original prefix; both first100<39.55393554098555s and updates26-100<29.54044010999496s. Also original-eval oracle, normal/pending state restoration, bitwise next-update parity and projected7probe<=3% of900.",
+  "verification_seeds": [
+    1769,
+    1770,
+    1771
+  ],
+  "historical_direct_quant_repeats": false,
+  "novelty": "Old direct-quant FP8 trials changed broader activation/projection packing. This BF16 variant changes only the training hidden-feature quantizer and retains accepted evaluation. No local/pair capacity, split coefficient scales, basis change or rate scalar.",
+  "implementation_environment_note": "Initial generator invocation used unavailable bare python and wrote no driver/config; repeated with the project venv successfully. Six scope exclusions and syntax checks passed.",
+  "decision": "Run bounded numerical gate now; only after passing run actual-model speed/state gate. Do not launch convergence if either fails.",
+  "full_convergence_verified": false
+}

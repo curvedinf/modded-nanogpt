@@ -1,0 +1,796 @@
+{
+  "run_id": "probe-experts-chebyshev-cubic-calibration-20261026T101530-dd8824",
+  "status": "calibration_complete",
+  "seed": 169,
+  "code_commit": "d93227da230e13f370f28a8b40c806cba4d0ddf0",
+  "recipe": {
+    "name": "probe-experts-chebyshev-cubic",
+    "hypothesis": "Reparameterize only the four independent rank1 cubic geometry master coefficients as Chebyshev T0..T3(t/4), t=4*tanh(c/4), then convert to the original Hermite coefficients before unchanged coefficient GS32/FP16 evaluation. The smooth cubic function class and zero-coefficient initial function are identical; optimizer coordinates and subsequent quantization trajectory differ. Original Hermite basis grows over t in[-4,4]; bounded Chebyshev bases may condition Adam better. This is an exploratory optimizer-coordinate hypothesis, not a variance rescaling, mean-spine coupling, new function class or proven improvement. Keep warp basis, rawscale.75, all optimizer rates/betas/decay, independent pathways, original projections, five dense MLPs, exact BF16 gather and shared backend fixed.",
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "kernel_evidence": {
+      "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+      "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+      "matrix_max_relative_rms": 4.411854752106592e-05
+    },
+    "block_correctness_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+      "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+      "max_relative_rms": 0.0,
+      "evaluation_original_kernels": true,
+      "bitwise_input_and_weight_producers": true
+    },
+    "timing_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+      "first100_seconds": 54.066861718994915,
+      "updates25_to100_seconds": 40.427348073004396,
+      "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+      "reference_first100": 55.488501123007154,
+      "reference_25to100": 41.43367328601016,
+      "validation": false,
+      "first100_time_reduction": 0.025620432616493716,
+      "steady_time_reduction": 0.024287617611387313,
+      "timing_gate_passed": true
+    },
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "hardware_change_scope": "Opt-in shared nongrouped FP8 GEMM tiles across attention, dense MLP and output head; default MLP dispatch remains legacy.",
+    "shared_fp8_correctness_evidence": {
+      "run_id": "ks3-shared-fp8-dispatch-check-20261025T075607-ff0ab5",
+      "code_commit": "bcb2f5f79d96c9d82c4b0ccfcbbf0b75253fa4e1",
+      "source_format_pairs": 4,
+      "independent_shape_cases": 15,
+      "all_stored_byte_patterns": true,
+      "original_dense_mlp_autograd": true,
+      "validation": false
+    },
+    "validation_window_policy": "accepted-control",
+    "evaluation_protocol": "Capture live stage-two YaRN frequencies/attention scales on first reach of640/1408 windows. For terminal stage four or full-schedule completion only, restore those nonlearned buffers and use640/1408 evaluation arguments. Preserve raw learned weights, training schedule and all updates; no canonical mask, tail shipping or final window extension. Early-stage evaluation remains incompatible. All restoration/rebuild/readback/setup is inside original training timer; no strict qualification if actual elapsed exceeds902.3592145430011.",
+    "shared_fp8_timing_evidence": {
+      "run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+      "code_commit": "2959f2a2250c36cb7dd10f28c02cdcfcc86fd729",
+      "first100_seconds": 39.57759546399757,
+      "after25_through100_seconds": 29.55288318300154,
+      "baseline_run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "baseline_first100_seconds": 54.06715966599586,
+      "baseline_after25_through100_seconds": 40.427348073004396,
+      "first100_time_reduction": 0.26799196206178977,
+      "steady_time_reduction": 0.2689878364112719,
+      "validation": false,
+      "gate_passed": true
+    },
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_experts",
+    "hypothesis_class": "cycle2-exploratory-cubic-basis-conditioning",
+    "gradient_diagnostics_extension": "active-slot-pre-optimizer-v1",
+    "gather_fusion": {
+      "speed_reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+      "previous_precision_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+      "previous_precision_rejection_gap": 0.0354424174875021,
+      "profile_evidence": "research_results/wr_reproduction/research/ks3-bf16-shared-fp8-profile-20261025T095458-924154-profile-summary.json",
+      "profile_scope": "Original actual-model updates26-29,160 KS3 backward calls.320 float where kernels summed9154.595us; two where operations occur in each KS3 backward. Kernel sums overlap and are not elapsed shares.",
+      "unchanged": "GS32 inputs/weights/features, FP16 nonlinearity, BF16 products, FP32 accumulation, original64-row geometry VJP, original weight_packing=loop setting, optimizers, schedules, five original dense MLPs and shared backend.",
+      "floating_point_change": "None intended: identical BF16 gated gradients and FP32 product terms, followed by original Torch sum. Require bitwise core and all routed gradients.",
+      "initial_gate_run_id": "probe-ks3-bf16-fused-gradient-gather-calibration-20261026T092332-77fc51",
+      "initial_gate_code_commit": "8ab684de62898fa71673486586dd76092501fcbf",
+      "producer_revision": "fused-v2-exact-sum"
+    },
+    "ks3_bf16_gradient_gather": "fused-v2-exact-sum",
+    "geometry_parameterization": "cubic-chebyshev-normalized-to-hermite-v1",
+    "basis_evidence": {
+      "previous_run_id": "probe-local-experts-joint-lift-gather-discovery-20261026T095521-88c66d",
+      "previous_result": "Joint rate increase pruned at120.60399s by+0.01724981. No full endpoint.",
+      "coordinate_rms_at_first_probe": [
+        1.3429374694824219,
+        1.3788423538208008,
+        1.3769073486328125,
+        1.3564471006393433,
+        1.3738943338394165
+      ],
+      "observed_max_abs_coordinates": [
+        6.325737953186035,
+        7.468914031982422,
+        6.560427188873291,
+        5.560748100280762,
+        8.179900169372559
+      ],
+      "limitation": "Moments do not establish ill conditioning. A same-coordinate basis/effect diagnostic will test the mechanism during normal probes. Previous unchanged scalar recipes and pairwise terms are not repeated.",
+      "history_search": "395 archived/current config records scanned; no Chebyshev-cubic-to-Hermite optimizer reparameterization found. Existing warp T2/T3 and rank2/4 mean-spine hypotheses are distinct.",
+      "validation": "Original BF16 nonlinear/projection kernels receive mapped raw geometry in both probe and terminal evaluation; constant heldout text/attention/YaRN/loss definition unchanged."
+    }
+  },
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "validation": null,
+  "pruning": null,
+  "calibration": {
+    "passed": true,
+    "mode": "graph",
+    "full_graph_warmup": true,
+    "original_logical_ranks": 8,
+    "actual_prefix_updates": 8,
+    "actual_prefix_update_seconds": [
+      0.3601015140011441,
+      0.3919159100041725,
+      0.37922116299159825,
+      0.3969340070034377,
+      0.3885645019763615,
+      0.40493109900853597,
+      0.3870436839933973,
+      0.4050821929995436
+    ],
+    "not_a_speed_or_convergence_win": true,
+    "geometry_parameterization": "cubic-chebyshev-normalized-to-hermite-v1",
+    "routed_backward_sites": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "five_original_dense_MLPs_retained": true,
+    "parameter_count_unchanged": true,
+    "fixed_probe_oracle_max_abs": 0.0,
+    "state_restoration": {
+      "checked_entries": 1264,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "pending_state_restoration": {
+      "checked_entries": 1444,
+      "changed": [],
+      "passed": true,
+      "pointer_restoration_required": true,
+      "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+    },
+    "continuation_parity": {
+      "passed": true,
+      "same_checkpoint": true,
+      "same_eight_logical_microbatches": true,
+      "baseline_loss": 13.237125396728516,
+      "with_probe_loss": 13.237125396728516,
+      "maximum_parameter_relative_rms": 0.0,
+      "all_parameters_bitwise_equal": true
+    },
+    "odd_continuation_loss": 12.89826488494873,
+    "cold_probe_seconds": 3.1258818920177873,
+    "warm_probe_seconds": 2.6723419099871535,
+    "pending_probe_seconds": 2.6519002559944056,
+    "projected_seven_probe_and_diagnostic_seconds": 19.187039990822086,
+    "projected_fraction_of900": 0.021318933323135652,
+    "projection_limitation": "Screen/ordinary instrumentation also remains on clock; inspect actual run overhead.",
+    "gradient_measurements": [
+      {
+        "event": "ks3_gradient_update",
+        "step": 9,
+        "original_step": 8,
+        "do_adam": false,
+        "measurements": {
+          "routed.raw_scale": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "raw_scale",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.7494035363197327,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.raw_shift": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "raw_shift",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.0015334569616243243,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.up_projection": {
+            "parameter": "moe_bank",
+            "branch": "routed",
+            "component": "up_projection",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 31457280,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.01869294047355652,
+            "update_rms": 0.0003007988852914423,
+            "relative_update_rms": 0.016091576695328357,
+            "gradient_sample_rms": 0.338565856218338,
+            "gradient_l2_estimate": 1898.9072041147847,
+            "gradient_missing_reason": null
+          },
+          "routed.down_projection": {
+            "parameter": "moe_bank",
+            "branch": "routed",
+            "component": "down_projection",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 31457280,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.00391946779564023,
+            "update_rms": 0.0005107723991386592,
+            "relative_update_rms": 0.1303167740545822,
+            "gradient_sample_rms": 0.6049851775169373,
+            "gradient_l2_estimate": 3393.1676537066887,
+            "gradient_missing_reason": null
+          },
+          "routed.T0": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "T0",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.002475930843502283,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.T1": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "T1",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.0025626516435295343,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.T2": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "T2",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.002469876781105995,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.T3": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "T3",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.002558539854362607,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.warp_T2": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "warp_T2",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.002175701782107353,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          },
+          "routed.warp_T3": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "warp_T3",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": false,
+            "gradient_available": false,
+            "parameter_rms": 0.0024217513855546713,
+            "update_rms": 0.0,
+            "relative_update_rms": 0.0,
+            "gradient_sample_rms": null,
+            "gradient_l2_estimate": null,
+            "gradient_missing_reason": "Adam gradient remains in original rank-local accumulation on this even update"
+          }
+        },
+        "gradient_boundary": "after all-eight-rank reduction; before original step_optimizers",
+        "sampling": "deterministic bounded active-slot samples; geometry components separated",
+        "approximate_norms": true,
+        "single_original_update": true,
+        "pre_sample_training_drain_seconds": 0.04376342601608485,
+        "post_optimizer_drain_seconds": 0.010333498998079449,
+        "extra_seconds_before_optimizer": 0.0007427029777318239,
+        "timing": "All sampling, drains and logging remain on continuous training clock; drains wait for original queued training work",
+        "feedforward_post_multipliers_bf16": [
+          1.03125,
+          1.03125,
+          1.03125,
+          1.0234375,
+          1.03125,
+          1.03125,
+          1.0234375,
+          1.0,
+          1.0234375,
+          1.0,
+          1.0
+        ],
+        "activation_caveat": "Core projected-output moments precede these post multipliers and routed gate weights."
+      },
+      {
+        "event": "ks3_gradient_update",
+        "step": 10,
+        "original_step": 9,
+        "do_adam": true,
+        "measurements": {
+          "routed.raw_scale": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "raw_scale",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.7494035363197327,
+            "update_rms": 0.00046754549839533865,
+            "relative_update_rms": 0.0006238901682949366,
+            "gradient_sample_rms": 0.000788675679359585,
+            "gradient_l2_estimate": 0.15961673484524388,
+            "gradient_missing_reason": null
+          },
+          "routed.raw_shift": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "raw_shift",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.0015334569616243243,
+            "update_rms": 0.00047007083776406944,
+            "relative_update_rms": 0.30654322196701483,
+            "gradient_sample_rms": 0.0007917734328657389,
+            "gradient_l2_estimate": 0.16024367607463388,
+            "gradient_missing_reason": null
+          },
+          "routed.up_projection": {
+            "parameter": "moe_bank",
+            "branch": "routed",
+            "component": "up_projection",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 31457280,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.018708951771259308,
+            "update_rms": 0.0003084928903263062,
+            "relative_update_rms": 0.016489052625610644,
+            "gradient_sample_rms": 0.15603546798229218,
+            "gradient_l2_estimate": 875.1528507881117,
+            "gradient_missing_reason": null
+          },
+          "routed.down_projection": {
+            "parameter": "moe_bank",
+            "branch": "routed",
+            "component": "down_projection",
+            "active_slots": null,
+            "sample_elements": 4096,
+            "total_elements": 31457280,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.004198919981718063,
+            "update_rms": 0.0005320575437508523,
+            "relative_update_rms": 0.12671295144165892,
+            "gradient_sample_rms": 0.33835792541503906,
+            "gradient_l2_estimate": 1897.7409869871865,
+            "gradient_missing_reason": null
+          },
+          "routed.T0": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "T0",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.002475930843502283,
+            "update_rms": 0.0004515437176451087,
+            "relative_update_rms": 0.1823733158097363,
+            "gradient_sample_rms": 0.3816773295402527,
+            "gradient_l2_estimate": 77.2460603262634,
+            "gradient_missing_reason": null
+          },
+          "routed.T1": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "T1",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.0025626516435295343,
+            "update_rms": 0.00045448626042343676,
+            "relative_update_rms": 0.17734999666106543,
+            "gradient_sample_rms": 0.08354565501213074,
+            "gradient_l2_estimate": 16.908451740735707,
+            "gradient_missing_reason": null
+          },
+          "routed.T2": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "T2",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.002469876781105995,
+            "update_rms": 0.00044976346543990076,
+            "relative_update_rms": 0.18209955609141745,
+            "gradient_sample_rms": 0.3451036214828491,
+            "gradient_l2_estimate": 69.84406225013876,
+            "gradient_missing_reason": null
+          },
+          "routed.T3": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "T3",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.002558539854362607,
+            "update_rms": 0.0004545142001006752,
+            "relative_update_rms": 0.17764593321682123,
+            "gradient_sample_rms": 0.22267715632915497,
+            "gradient_l2_estimate": 45.066687800928555,
+            "gradient_missing_reason": null
+          },
+          "routed.warp_T2": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "warp_T2",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.002175701782107353,
+            "update_rms": 0.00045226330985315144,
+            "relative_update_rms": 0.20787008291876094,
+            "gradient_sample_rms": 0.16292832791805267,
+            "gradient_l2_estimate": 32.974375141366146,
+            "gradient_missing_reason": null
+          },
+          "routed.warp_T3": {
+            "parameter": "ks3_geometry",
+            "branch": "routed",
+            "component": "warp_T3",
+            "active_slots": null,
+            "sample_elements": 512,
+            "total_elements": 40960,
+            "optimizer_applied": true,
+            "gradient_available": true,
+            "parameter_rms": 0.0024217513855546713,
+            "update_rms": 0.0004476037865970284,
+            "relative_update_rms": 0.18482648106114757,
+            "gradient_sample_rms": 0.23818770051002502,
+            "gradient_l2_estimate": 48.20580123198263,
+            "gradient_missing_reason": null
+          }
+        },
+        "gradient_boundary": "after all-eight-rank reduction; before original step_optimizers",
+        "sampling": "deterministic bounded active-slot samples; geometry components separated",
+        "approximate_norms": true,
+        "single_original_update": true,
+        "pre_sample_training_drain_seconds": 0.04460974899120629,
+        "post_optimizer_drain_seconds": 0.011379122006474063,
+        "extra_seconds_before_optimizer": 0.00048067999887280166,
+        "timing": "All sampling, drains and logging remain on continuous training clock; drains wait for original queued training work",
+        "feedforward_post_multipliers_bf16": [
+          1.0390625,
+          1.0390625,
+          1.03125,
+          1.03125,
+          1.03125,
+          1.0390625,
+          1.03125,
+          1.0,
+          1.0234375,
+          1.0,
+          1.0
+        ],
+        "activation_caveat": "Core projected-output moments precede these post multipliers and routed gate weights."
+      }
+    ],
+    "activation_effect_diagnostics": [
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": 0.01865452527999878,
+          "rms": 0.5167703628540039,
+          "max_abs": 2.178570508956909,
+          "nonzero_fraction": 0.8984375
+        },
+        "nonlinear_output": {
+          "mean": 0.14998003840446472,
+          "rms": 0.41599011421203613,
+          "max_abs": 4.78125,
+          "nonzero_fraction": 0.494873046875
+        },
+        "projected_output": {
+          "mean": 0.0012971548130735755,
+          "rms": 0.0862501710653305,
+          "max_abs": 0.376953125,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "geometry_basis_effect": {
+          "original_Hermite_basis_rms_same_coordinates": [
+            1.3761407136917114,
+            1.5312026739120483,
+            1.209038496017456,
+            0.6353051066398621
+          ],
+          "normalized_Chebyshev_basis_rms": [
+            1.0,
+            0.13223619759082794,
+            0.9664687514305115,
+            0.367404967546463
+          ],
+          "coordinate_rms": 0.5398541688919067,
+          "smooth_quantized_cubic_deformation_rms": 0.004449103958904743,
+          "smooth_quantized_warp_deformation_rms": 0.001957374159246683,
+          "scope": "4096 deterministic sampled feature entries on first probe chunk; padding excluded. Smooth FP32 deformations at quantized physical coefficients, not measured packed activation deltas or post/router effects."
+        }
+      },
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": 0.027928587049245834,
+          "rms": 0.502871036529541,
+          "max_abs": 2.3884294033050537,
+          "nonzero_fraction": 0.900390625
+        },
+        "nonlinear_output": {
+          "mean": 0.14577293395996094,
+          "rms": 0.3953644037246704,
+          "max_abs": 5.75,
+          "nonzero_fraction": 0.51220703125
+        },
+        "projected_output": {
+          "mean": -0.00026276434073224664,
+          "rms": 0.08785343170166016,
+          "max_abs": 0.6015625,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "geometry_basis_effect": {
+          "original_Hermite_basis_rms_same_coordinates": [
+            1.3611972332000732,
+            1.5182510614395142,
+            1.20681631565094,
+            0.6128067970275879
+          ],
+          "normalized_Chebyshev_basis_rms": [
+            1.0,
+            0.1275748312473297,
+            0.968610405921936,
+            0.3574524223804474
+          ],
+          "coordinate_rms": 0.5194923281669617,
+          "smooth_quantized_cubic_deformation_rms": 0.00471676979213953,
+          "smooth_quantized_warp_deformation_rms": 0.0021208985708653927,
+          "scope": "4096 deterministic sampled feature entries on first probe chunk; padding excluded. Smooth FP32 deformations at quantized physical coefficients, not measured packed activation deltas or post/router effects."
+        }
+      },
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": 0.03419627621769905,
+          "rms": 0.496318519115448,
+          "max_abs": 1.8904188871383667,
+          "nonzero_fraction": 0.900390625
+        },
+        "nonlinear_output": {
+          "mean": 0.1417286992073059,
+          "rms": 0.3543377220630646,
+          "max_abs": 3.59375,
+          "nonzero_fraction": 0.501708984375
+        },
+        "projected_output": {
+          "mean": -0.0018437152029946446,
+          "rms": 0.08640886098146439,
+          "max_abs": 0.455078125,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "geometry_basis_effect": {
+          "original_Hermite_basis_rms_same_coordinates": [
+            1.3618220090866089,
+            1.5120316743850708,
+            1.1844482421875,
+            0.6327736377716064
+          ],
+          "normalized_Chebyshev_basis_rms": [
+            1.0,
+            0.1326616257429123,
+            0.9662200808525085,
+            0.36911213397979736
+          ],
+          "coordinate_rms": 0.541520357131958,
+          "smooth_quantized_cubic_deformation_rms": 0.004770503379404545,
+          "smooth_quantized_warp_deformation_rms": 0.0021065843757241964,
+          "scope": "4096 deterministic sampled feature entries on first probe chunk; padding excluded. Smooth FP32 deformations at quantized physical coefficients, not measured packed activation deltas or post/router effects."
+        }
+      },
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": 0.038737647235393524,
+          "rms": 0.5091890096664429,
+          "max_abs": 2.2381627559661865,
+          "nonzero_fraction": 0.900390625
+        },
+        "nonlinear_output": {
+          "mean": 0.15185807645320892,
+          "rms": 0.38499704003334045,
+          "max_abs": 4.15625,
+          "nonzero_fraction": 0.532958984375
+        },
+        "projected_output": {
+          "mean": 0.00036560813896358013,
+          "rms": 0.1008966863155365,
+          "max_abs": 0.478515625,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "geometry_basis_effect": {
+          "original_Hermite_basis_rms_same_coordinates": [
+            1.417158842086792,
+            1.5912015438079834,
+            1.2444716691970825,
+            0.6377465128898621
+          ],
+          "normalized_Chebyshev_basis_rms": [
+            1.0,
+            0.13298958539962769,
+            0.9658597111701965,
+            0.3722619414329529
+          ],
+          "coordinate_rms": 0.5415951013565063,
+          "smooth_quantized_cubic_deformation_rms": 0.005503885447978973,
+          "smooth_quantized_warp_deformation_rms": 0.00248373718932271,
+          "scope": "4096 deterministic sampled feature entries on first probe chunk; padding excluded. Smooth FP32 deformations at quantized physical coefficients, not measured packed activation deltas or post/router effects."
+        }
+      },
+      {
+        "branch": "routed",
+        "coordinate": {
+          "mean": 0.04448993504047394,
+          "rms": 0.5182844996452332,
+          "max_abs": 2.3425474166870117,
+          "nonzero_fraction": 0.900390625
+        },
+        "nonlinear_output": {
+          "mean": 0.1594536155462265,
+          "rms": 0.39793112874031067,
+          "max_abs": 5.53125,
+          "nonzero_fraction": 0.51171875
+        },
+        "projected_output": {
+          "mean": 5.237676668912172e-05,
+          "rms": 0.10880082845687866,
+          "max_abs": 0.421875,
+          "nonzero_fraction": 1.0
+        },
+        "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+        "training_objective_used": false,
+        "geometry_basis_effect": {
+          "original_Hermite_basis_rms_same_coordinates": [
+            1.402943730354309,
+            1.5632442235946655,
+            1.2127968072891235,
+            0.6331199407577515
+          ],
+          "normalized_Chebyshev_basis_rms": [
+            1.0,
+            0.13411353528499603,
+            0.9653430581092834,
+            0.3744884729385376
+          ],
+          "coordinate_rms": 0.5466118454933167,
+          "smooth_quantized_cubic_deformation_rms": 0.005602804943919182,
+          "smooth_quantized_warp_deformation_rms": 0.0024967819917947054,
+          "scope": "4096 deterministic sampled feature entries on first probe chunk; padding excluded. Smooth FP32 deformations at quantized physical coefficients, not measured packed activation deltas or post/router effects."
+        }
+      }
+    ],
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "not_a_screening_reference": true,
+    "full_convergence_verified": false
+  },
+  "exit_code": 0,
+  "reserved_confirmation": null,
+  "events_sha256": "e1019dd79710444ba3e4c189beb705078db451cff6562dc5b4c5c615a1b98c0b",
+  "completed_utc": "2026-10-26T10:20:35.125565+00:00",
+  "qualifies": false
+}

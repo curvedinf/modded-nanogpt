@@ -1,0 +1,81 @@
+{
+  "utc": "2026-10-26T09:26:28.408588+00:00",
+  "configuration": "configs/wr_reproduction/probe_ks3_bf16_gather_exact.json",
+  "changed_fields": {
+    "name": [
+      "probe-ks3-experts",
+      "probe-ks3-bf16-exact-gradient-gather"
+    ],
+    "hypothesis_class": [
+      null,
+      "cycle2-local3-ks3-only-bf16-producer-fusion"
+    ],
+    "gather_fusion": [
+      null,
+      {
+        "speed_reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+        "previous_precision_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+        "previous_precision_rejection_gap": 0.0354424174875021,
+        "profile_evidence": "research_results/wr_reproduction/research/ks3-bf16-shared-fp8-profile-20261025T095458-924154-profile-summary.json",
+        "profile_scope": "Original actual-model updates26-29,160 KS3 backward calls.320 float where kernels summed9154.595us; two where operations occur in each KS3 backward. Kernel sums overlap and are not elapsed shares.",
+        "unchanged": "GS32 inputs/weights/features, FP16 nonlinearity, BF16 products, FP32 accumulation, original64-row geometry VJP, original weight_packing=loop setting, optimizers, schedules, five original dense MLPs and shared backend.",
+        "floating_point_change": "None intended: identical BF16 gated gradients and FP32 product terms, followed by original Torch sum. Require bitwise core and all routed gradients.",
+        "initial_gate_run_id": "probe-ks3-bf16-fused-gradient-gather-calibration-20261026T092332-77fc51",
+        "initial_gate_code_commit": "8ab684de62898fa71673486586dd76092501fcbf",
+        "producer_revision": "fused-v2-exact-sum"
+      }
+    ],
+    "gradient_diagnostics_extension": [
+      null,
+      "active-slot-pre-optimizer-v1"
+    ],
+    "hypothesis": [
+      "Acquire one exempt fixed-probe reference under the frozen shared original-PR393 recipe.",
+      "Fuse KS3-only BF16 padded-row gradient gather, BF16 gate multiplication and original FP32 dot-product producers; retain the original Torch row reduction exactly. The all-FP8 trial failed held-out loss/time despite2.5percent prefix speed. The first BF16 fusion changed reduction order and failed routed gradient tolerance, so this corrected local hypothesis requires bitwise gate/core/routed gradients. Original incumbent geometry, projections, precision, optimizers and shared backend remain frozen; use an actual-model speed/state gate before convergence."
+    ],
+    "ks3_bf16_gradient_gather": [
+      null,
+      "fused-v2-exact-sum"
+    ]
+  },
+  "fenced_source_changes": [],
+  "shared_setting_changes": [],
+  "cpu_checks": [
+    "valid incumbent BF16 scope",
+    "shared fence unchanged",
+    "only gather/diagnostic/metadata fields changed",
+    "rejected precision",
+    "rejected charts",
+    "rejected architecture",
+    "rejected weight_packing",
+    "rejected shared_fp8_gemm_tuning",
+    "rejected ks3_bf16_gradient_gather",
+    "unpassed gate rejected"
+  ],
+  "verification_seeds": [
+    869,
+    870,
+    871
+  ],
+  "previous_failed_gate": {
+    "utc": "2026-10-26T09:26:28.384112+00:00",
+    "run_id": "probe-ks3-bf16-fused-gradient-gather-calibration-20261026T092332-77fc51",
+    "code_commit": "8ab684de62898fa71673486586dd76092501fcbf",
+    "status": "numerical_gate_failed",
+    "numerical_seed": 869,
+    "passed_cases": [
+      1,
+      257
+    ],
+    "failed_case": {
+      "tokens": 16384,
+      "component": "router_gradient",
+      "relative_rms": 0.00035298001603223383,
+      "required_relative_rms_below": 0.0001
+    },
+    "core_gradient_evidence": "Gated BF16 gradient and input/geometry/weight gradients were bitwise equal before the routed check. Gate derivative changed only by FP32 reduction reassociation; BF16 router rounding amplified the small change.",
+    "decision": "Retain exact original Torch gate row reduction. New producer stores the original FP32 dot-product terms alongside BF16 gated gradients. Require bitwise gate and all routed gradients; no tolerance relaxation. Repeat only failed implementation gate with new code/config, then actual-model speed/state gate if passed.",
+    "full_validation": false
+  },
+  "decision": "Run bounded numerical gate of corrected producer; all gradients must be bitwise equal."
+}

@@ -1,0 +1,30 @@
+{
+  "utc": "2026-10-26T12:41:28.574437+00:00",
+  "phase": "cycle4_local1_local_residual_gather_speed_state_gate",
+  "status": "running",
+  "run_id": "probe-experts-local-residual-exact-gather-calibration-20261026T124035-71a1eb",
+  "unit": "wr-probe-local-residual-gather-3202237f",
+  "code_commit": "c80e0dd89c15ffdbd00a0af6426710f8cf65fef0",
+  "trainer_pid": 1567110,
+  "source_hashes_match": true,
+  "new_stop": false,
+  "recipe": "configs/wr_reproduction/probe_experts_local_residual_exact_gather.json",
+  "numerical_gate": "local-residual-gather-numerical-summary.json",
+  "source_freeze": true,
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true,
+  "original_local_residual_function_unchanged": true,
+  "verification_seeds": [
+    1669,
+    1670,
+    1671
+  ],
+  "gpu_lease": "1567099 python          /root/modded-nanogpt/logs/wr-reproduction/gpu.lock",
+  "speed_reference_run_id": "probe-experts-local-residual-k3-discovery-20261026T122452-435b40",
+  "strict_prefix_limits_seconds": {
+    "first100": 40.35625232299208,
+    "updates26_to100": 30.15812886398635
+  },
+  "next": "Finish full24warmup then bounded120s original-prefix speed/state check. Require both prefixes strictly faster plus original-eval oracle, normal/pending state restoration, bitwise same-next-update parity and projectedoverhead<=3%. Only a passed gate permits seed169900s discovery; a qualifying full result triggers1669/1670/1671 unpruned. If slower, record that and do not launch convergence.",
+  "full_convergence_verified": false
+}

@@ -1,0 +1,161 @@
+{
+  "utc": "2026-10-26T12:16:38.844894+00:00",
+  "run_id": "probe-experts-local-residual-k3-calibration-20261026T121518-cd61ab",
+  "code_commit": "d226c2abc7e7e637aaf3e9398d4cdab5468f6da7",
+  "status": "error",
+  "mode": "numerical",
+  "routed_zero_coefficient_checks": [
+    {
+      "event": "routed_initial_parity",
+      "tuned": true,
+      "tokens": 1,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "router_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "post_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "geometry_gradient": {
+          "bitwise": false,
+          "relative_rms": 2.254941094959051e-10,
+          "max_abs": 7.275957614183426e-12,
+          "changed_elements": 101
+        },
+        "up_weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "down_weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        }
+      }
+    },
+    {
+      "event": "routed_initial_parity",
+      "tuned": true,
+      "tokens": 257,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "input_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "router_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "post_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "geometry_gradient": {
+          "bitwise": false,
+          "relative_rms": 7.039847105261288e-08,
+          "max_abs": 2.9802322387695312e-08,
+          "changed_elements": 38999
+        },
+        "up_weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "down_weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        }
+      }
+    },
+    {
+      "event": "routed_initial_parity",
+      "tuned": true,
+      "tokens": 4096,
+      "comparisons": {
+        "output": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "input_gradient": {
+          "bitwise": false,
+          "relative_rms": 1.6689582480466925e-05,
+          "max_abs": 1.52587890625e-05,
+          "changed_elements": 122
+        },
+        "router_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "post_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        },
+        "geometry_gradient": {
+          "bitwise": false,
+          "relative_rms": 9.942893086645199e-08,
+          "max_abs": 1.1920928955078125e-07,
+          "changed_elements": 45139
+        },
+        "up_weight_gradient": {
+          "bitwise": false,
+          "relative_rms": 1.5199762856354937e-05,
+          "max_abs": 0.00048828125,
+          "changed_elements": 174
+        },
+        "down_weight_gradient": {
+          "bitwise": true,
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "changed_elements": 0
+        }
+      }
+    }
+  ],
+  "diagnosis": "Only input and up-projection gradients fail exact equality at4096tokens (122 and174 elements, relativeRMS1.669e-5 and1.520e-5). Forward, router, post and down-projection gradients are bitwise equal. The reused original VJP was asked to write anFP32 temporary, changing its originalBF16 storage boundary and associated compiler rounding.",
+  "targeted_fix": "Keep the original VJP BF16 output pointer, then add the new smooth residual derivative inFP32 and storeBF16. Preserve original geometry reduction. Update independent reference to include that explicitly retained originalBF16 boundary. Tighten zero-initialized original geometry gradients from a roundoff tolerance to bitwise equality; other tolerances unchanged.",
+  "production_fix_not_yet_verified": true,
+  "decision": "Rerun the bounded numerical gate after the targeted boundary fix. No graph training or convergence until all cases pass.",
+  "console_sha256": "173ede1d0602aeb4bdf36ffd15824766abd27eec296207cec0dc9699e9007b9e"
+}

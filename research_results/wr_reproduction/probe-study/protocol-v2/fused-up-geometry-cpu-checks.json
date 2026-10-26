@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-26T18:54:02.659227+00:00",
+  "passed": true,
+  "scope_mutations_rejected": [
+    "precision",
+    "charts",
+    "rank",
+    "geometry_backward_rows",
+    "training_gs32",
+    "shared_fp8_amax",
+    "bf16_kernel_mode",
+    "max_train_seconds",
+    "fused_geometry",
+    "fused_geometry_evidence"
+  ],
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "original_fenced_sources_unchanged": true,
+  "exact_numerical_criterion": "bitwise all stored coordinates/features/outputs and input/router/post/geometry/weight gradients; no tolerance relaxation",
+  "next": "One bounded numerical GPU gate; actual-model speed/state gate only if passed"
+}

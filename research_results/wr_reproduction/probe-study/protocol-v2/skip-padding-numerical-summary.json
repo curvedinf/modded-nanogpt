@@ -1,0 +1,405 @@
+{
+  "utc": "2026-10-26T20:02:30.146862+00:00",
+  "cycle": 7,
+  "position": "local4",
+  "run_id": "probe-experts-skip-padding-calibration-20261026T200058-0ec836",
+  "code_commit": "ef29e73f2f98d5cf45631952d8b6d7fa8baf7949",
+  "passed": true,
+  "checks": [
+    {
+      "tokens": 1,
+      "zero_coefficients": true,
+      "padded_rows": 1024,
+      "active_experts": 1,
+      "original_dispatch_predicate_checked": true,
+      "row_blocks": {
+        "32": {
+          "total": 32,
+          "entirely_padding": 31
+        },
+        "64": {
+          "total": 16,
+          "entirely_padding": 15
+        },
+        "128": {
+          "total": 8,
+          "entirely_padding": 7
+        }
+      },
+      "valid_output_and_saved_producers_bitwise": true,
+      "original_backward_bitwise": {
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "both_projection_weight_gradients": true
+      },
+      "routed_output_input_router_post_geometry_and_weight_gradients_bitwise": true,
+      "original_evaluation_and_untuned_backward_bitwise": true
+    },
+    {
+      "tokens": 1,
+      "zero_coefficients": false,
+      "padded_rows": 1024,
+      "active_experts": 1,
+      "original_dispatch_predicate_checked": true,
+      "row_blocks": {
+        "32": {
+          "total": 32,
+          "entirely_padding": 31
+        },
+        "64": {
+          "total": 16,
+          "entirely_padding": 15
+        },
+        "128": {
+          "total": 8,
+          "entirely_padding": 7
+        }
+      },
+      "valid_output_and_saved_producers_bitwise": true,
+      "original_backward_bitwise": {
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "both_projection_weight_gradients": true
+      },
+      "routed_output_input_router_post_geometry_and_weight_gradients_bitwise": true,
+      "original_evaluation_and_untuned_backward_bitwise": true
+    },
+    {
+      "tokens": 257,
+      "zero_coefficients": true,
+      "padded_rows": 1280,
+      "active_experts": 1,
+      "original_dispatch_predicate_checked": true,
+      "row_blocks": {
+        "32": {
+          "total": 40,
+          "entirely_padding": 31
+        },
+        "64": {
+          "total": 20,
+          "entirely_padding": 15
+        },
+        "128": {
+          "total": 10,
+          "entirely_padding": 7
+        }
+      },
+      "valid_output_and_saved_producers_bitwise": true,
+      "original_backward_bitwise": {
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "both_projection_weight_gradients": true
+      },
+      "routed_output_input_router_post_geometry_and_weight_gradients_bitwise": true,
+      "original_evaluation_and_untuned_backward_bitwise": true
+    },
+    {
+      "tokens": 257,
+      "zero_coefficients": false,
+      "padded_rows": 1280,
+      "active_experts": 1,
+      "original_dispatch_predicate_checked": true,
+      "row_blocks": {
+        "32": {
+          "total": 40,
+          "entirely_padding": 31
+        },
+        "64": {
+          "total": 20,
+          "entirely_padding": 15
+        },
+        "128": {
+          "total": 10,
+          "entirely_padding": 7
+        }
+      },
+      "valid_output_and_saved_producers_bitwise": true,
+      "original_backward_bitwise": {
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "both_projection_weight_gradients": true
+      },
+      "routed_output_input_router_post_geometry_and_weight_gradients_bitwise": true,
+      "original_evaluation_and_untuned_backward_bitwise": true
+    },
+    {
+      "tokens": 16384,
+      "zero_coefficients": true,
+      "padded_rows": 17280,
+      "active_experts": 8,
+      "original_dispatch_predicate_checked": true,
+      "row_blocks": {
+        "32": {
+          "total": 540,
+          "entirely_padding": 25
+        },
+        "64": {
+          "total": 270,
+          "entirely_padding": 11
+        },
+        "128": {
+          "total": 135,
+          "entirely_padding": 3
+        }
+      },
+      "valid_output_and_saved_producers_bitwise": true,
+      "original_backward_bitwise": {
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "both_projection_weight_gradients": true
+      },
+      "routed_output_input_router_post_geometry_and_weight_gradients_bitwise": true,
+      "original_evaluation_and_untuned_backward_bitwise": true
+    },
+    {
+      "tokens": 16384,
+      "zero_coefficients": false,
+      "padded_rows": 17280,
+      "active_experts": 8,
+      "original_dispatch_predicate_checked": true,
+      "row_blocks": {
+        "32": {
+          "total": 540,
+          "entirely_padding": 25
+        },
+        "64": {
+          "total": 270,
+          "entirely_padding": 11
+        },
+        "128": {
+          "total": 135,
+          "entirely_padding": 3
+        }
+      },
+      "valid_output_and_saved_producers_bitwise": true,
+      "original_backward_bitwise": {
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "both_projection_weight_gradients": true
+      },
+      "routed_output_input_router_post_geometry_and_weight_gradients_bitwise": true,
+      "original_evaluation_and_untuned_backward_bitwise": true
+    },
+    {
+      "tokens": 49152,
+      "zero_coefficients": true,
+      "padded_rows": 50048,
+      "active_experts": 8,
+      "original_dispatch_predicate_checked": true,
+      "row_blocks": {
+        "32": {
+          "total": 1564,
+          "entirely_padding": 25
+        },
+        "64": {
+          "total": 782,
+          "entirely_padding": 12
+        },
+        "128": {
+          "total": 391,
+          "entirely_padding": 4
+        }
+      },
+      "valid_output_and_saved_producers_bitwise": true,
+      "original_backward_bitwise": {
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "both_projection_weight_gradients": true
+      },
+      "routed_output_input_router_post_geometry_and_weight_gradients_bitwise": true,
+      "original_evaluation_and_untuned_backward_bitwise": true
+    },
+    {
+      "tokens": 49152,
+      "zero_coefficients": false,
+      "padded_rows": 50048,
+      "active_experts": 8,
+      "original_dispatch_predicate_checked": true,
+      "row_blocks": {
+        "32": {
+          "total": 1564,
+          "entirely_padding": 25
+        },
+        "64": {
+          "total": 782,
+          "entirely_padding": 12
+        },
+        "128": {
+          "total": 391,
+          "entirely_padding": 4
+        }
+      },
+      "valid_output_and_saved_producers_bitwise": true,
+      "original_backward_bitwise": {
+        "input_gradient": true,
+        "gate_gradient": true,
+        "geometry_gradient": true,
+        "both_projection_weight_gradients": true
+      },
+      "routed_output_input_router_post_geometry_and_weight_gradients_bitwise": true,
+      "original_evaluation_and_untuned_backward_bitwise": true
+    }
+  ],
+  "case_count": 8,
+  "matrix_shapes": [
+    [
+      1,
+      1024,
+      768,
+      1024,
+      64,
+      128,
+      128,
+      4,
+      1,
+      16
+    ],
+    [
+      1,
+      1024,
+      1024,
+      768,
+      128,
+      128,
+      64,
+      8,
+      1,
+      32
+    ],
+    [
+      257,
+      1280,
+      768,
+      1024,
+      64,
+      128,
+      128,
+      4,
+      1,
+      16
+    ],
+    [
+      257,
+      1280,
+      1024,
+      768,
+      128,
+      128,
+      64,
+      8,
+      1,
+      32
+    ],
+    [
+      16384,
+      17280,
+      768,
+      1024,
+      64,
+      128,
+      128,
+      4,
+      1,
+      16
+    ],
+    [
+      16384,
+      17280,
+      1024,
+      768,
+      128,
+      128,
+      64,
+      8,
+      1,
+      32
+    ],
+    [
+      49152,
+      50048,
+      768,
+      1024,
+      64,
+      128,
+      64,
+      4,
+      1,
+      16
+    ],
+    [
+      49152,
+      50048,
+      768,
+      1024,
+      128,
+      128,
+      64,
+      8,
+      1,
+      32
+    ],
+    [
+      49152,
+      50048,
+      1024,
+      768,
+      64,
+      128,
+      64,
+      4,
+      1,
+      16
+    ],
+    [
+      49152,
+      50048,
+      1024,
+      768,
+      64,
+      128,
+      128,
+      4,
+      1,
+      16
+    ]
+  ],
+  "shape_fields": [
+    "tokens",
+    "capacity_rows",
+    "N",
+    "K",
+    "BM",
+    "BN",
+    "BK",
+    "warps",
+    "stages",
+    "mfma"
+  ],
+  "original_routed_function_and_all_gradients_bitwise": true,
+  "original_evaluation_and_untuned_backward_bitwise": true,
+  "original_geometry_VJP_rates_and_shared_backend": true,
+  "original_dispatch_predicate_checked": true,
+  "valid_token_rows_unchanged": true,
+  "unused_down_projection_output_rows_may_differ": true,
+  "real_shape_skip_fractions": {
+    "16384": {
+      "64": 0.040740740740740744,
+      "128": 0.022222222222222223
+    },
+    "49152": {
+      "64": 0.015345268542199489,
+      "128": 0.010230179028132993
+    }
+  },
+  "limitation": "Counts are from the specified numerical random-routing cases, not measured model-trained routing frequencies or a speed estimate. The extra SRC load and branch may outweigh saved products.",
+  "not_a_screening_reference": true,
+  "full_convergence_verified": false,
+  "decision": "Run one bounded actual-model full24warmup/120s speed-state gate. Require both original-prefix timings strictly faster, exact probe oracle and state/continuation parity, projectedprobe<=3percent. Otherwise reject without unchanged retry."
+}

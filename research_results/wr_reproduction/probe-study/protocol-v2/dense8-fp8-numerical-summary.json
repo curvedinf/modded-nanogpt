@@ -1,0 +1,84 @@
+{
+  "utc": "2026-10-26T19:10:48.127116+00:00",
+  "run_id": "probe-dense8-fp8-width2816-calibration-20261026T190945-14ef08",
+  "code_commit": "c32fb1ef646add17cdde6e828177a8aae1a447c4",
+  "status": "calibration_complete",
+  "passed": true,
+  "features": 2816,
+  "checks": [
+    {
+      "tokens": 1,
+      "relative_rms": {
+        "output": 0.0,
+        "input_gradient": 0.0,
+        "up_gradient": 0.0,
+        "down_gradient": 0.0,
+        "geometry_gradient": 3.0661212235827406e-07,
+        "post_gradient": 0.0
+      },
+      "repeated_backward_additive": true
+    },
+    {
+      "tokens": 257,
+      "relative_rms": {
+        "output": 3.963549044527781e-09,
+        "input_gradient": 8.182948658941314e-05,
+        "up_gradient": 6.803996802773327e-05,
+        "down_gradient": 6.58733188174665e-05,
+        "geometry_gradient": 6.132944463388412e-07,
+        "post_gradient": 0.0
+      },
+      "repeated_backward_additive": true
+    },
+    {
+      "tokens": 4096,
+      "relative_rms": {
+        "output": 1.0067719813378062e-05,
+        "input_gradient": 0.00017628523346502334,
+        "up_gradient": 0.0001878504263004288,
+        "down_gradient": 5.257593875285238e-05,
+        "geometry_gradient": 7.858521939851926e-07,
+        "post_gradient": 0.0
+      },
+      "repeated_backward_additive": true
+    }
+  ],
+  "cache_checks": [
+    {
+      "exact": true,
+      "original_and_native_bytes_exact": true,
+      "delayed_scale_exact": true
+    },
+    {
+      "exact": false,
+      "original_and_native_bytes_exact": true,
+      "delayed_scale_exact": true
+    },
+    {
+      "exact": false,
+      "original_and_native_bytes_exact": true,
+      "delayed_scale_exact": true
+    },
+    {
+      "exact": true,
+      "original_and_native_bytes_exact": true,
+      "delayed_scale_exact": true
+    },
+    {
+      "captured_replay": true,
+      "original_and_native_bytes_exact": true,
+      "delayed_scale_exact": true
+    },
+    {
+      "captured_replay": true,
+      "original_and_native_bytes_exact": true,
+      "delayed_scale_exact": true
+    }
+  ],
+  "multiple_live_sites_and_padded_bank_verified": true,
+  "oracle": "Independent Torch GS32/FP8 encoding and decoded products, pinned nonlinear forward, smooth STE with explicit FP8 gradient boundaries",
+  "max_relative_rms": 0.0001878504263004288,
+  "full_convergence_verified": false,
+  "not_a_screening_reference": true,
+  "decision": "Proceed to one full-warmup actual-model speed/state gate; no new BF16 or MLP reference."
+}

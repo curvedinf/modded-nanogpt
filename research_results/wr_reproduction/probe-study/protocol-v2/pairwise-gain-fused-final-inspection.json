@@ -1,0 +1,44 @@
+{
+  "utc": "2026-10-26T15:06:04.625258+00:00",
+  "cycle": 5,
+  "local_hypothesis": 1,
+  "status": "rejected_at_numerical_gate",
+  "run_id": "probe-experts-pairwise-gain-fused-calibration-20261026T150233-dba724",
+  "code_commit": "2c0ca04ef989243d116a4c38a92aa91f4b2a5e30",
+  "all_attempts": [
+    {
+      "run_id": "probe-experts-pairwise-gain-fused-calibration-20261026T145558-225940",
+      "code_commit": "c088af2",
+      "failure": "Unsupported HIP libdevice rounding names; no numeric test completed."
+    },
+    {
+      "run_id": "probe-experts-pairwise-gain-fused-calibration-20261026T145821-8b329f",
+      "code_commit": "ba12f266924ad0bb2316057b75f789e21b89c4d7",
+      "failure": "Five independent-oracle cases passed and zero-initialization parity passed. Nonzero exact gain-gradient comparison failed at relativeRMS1.0665958116717889e-9; other observed outputs/gradients bitwise equal."
+    },
+    {
+      "run_id": "probe-experts-pairwise-gain-fused-calibration-20261026T150233-dba724",
+      "code_commit": "2c0ca04ef989243d116a4c38a92aa91f4b2a5e30",
+      "failure": "Disabling FMA globally to match gain consumer breaks original independent-feature zero-initialization parity on the first GPUcase."
+    }
+  ],
+  "latest_zero_initialization_relative_rms": {
+    "output": 0.000931557035073638,
+    "input_pack": 0.0,
+    "coordinates": 0.0,
+    "packed_features": 0.00015043173334561288,
+    "input_gradient": 0.0,
+    "gate_gradient": 0.007313212379813194,
+    "geometry_gradient": 0.0,
+    "weight_gradient": 0.00012379894906189293
+  },
+  "numerical_gate_passed": false,
+  "actual_model_speed_gate_launched": false,
+  "loss_time_trial_launched": false,
+  "verification_seeds_launched": [],
+  "shared_backend_unchanged": true,
+  "gpu_lease_released": true,
+  "decision": "Close this bounded producer-fusion attempt. No tolerance relaxation, no further fix iterations and no speed/convergence trial. Preserve the original expert-only verified incumbent and unfused-gain rejection.",
+  "limitation": "The combined producers cannot use a single FMA policy while passing the declared exact original/gain parity checks in this implementation. This is an implementation rejection, not proof that all future fusion is impossible.",
+  "next": "Use the saved actual-model KS3 profile and existing normal-run update timings to inspect originalBF16 projection memory layouts/cached operands before selecting the next local hypothesis. Keep failed gain configurations out of training."
+}

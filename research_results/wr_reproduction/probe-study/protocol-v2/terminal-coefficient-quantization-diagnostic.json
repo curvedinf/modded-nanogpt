@@ -1,0 +1,57 @@
+{
+  "utc": "2026-10-26T11:14:32.010044+00:00",
+  "source_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+  "artifact_sha256": "57682b819e305b891bc5fb23d8de2911d56c49627f7de43f24aff2f64dde073d",
+  "tensor_only_not_model_checkpoint": true,
+  "charts": 40960,
+  "warp_sets_joint_coefficient_scale_fraction": 0.5393310785293579,
+  "by_routed_site": [
+    {
+      "site": 0,
+      "warp_dominance_fraction": 0.6051025390625,
+      "cubic_master_rms": 0.010244166928529636,
+      "warp_master_rms": 0.016977405223824252,
+      "joint_quantization_cubic_error_rms": 4.661713941131994e-05,
+      "separate_cubic_quantization_error_rms": 2.819132880796301e-05
+    },
+    {
+      "site": 1,
+      "warp_dominance_fraction": 0.5653076171875,
+      "cubic_master_rms": 0.012848014523830829,
+      "warp_master_rms": 0.01771324475495818,
+      "joint_quantization_cubic_error_rms": 5.010376326758096e-05,
+      "separate_cubic_quantization_error_rms": 3.3892684820869303e-05
+    },
+    {
+      "site": 2,
+      "warp_dominance_fraction": 0.543701171875,
+      "cubic_master_rms": 0.012493043180622325,
+      "warp_master_rms": 0.016893501942330868,
+      "joint_quantization_cubic_error_rms": 4.846106230504026e-05,
+      "separate_cubic_quantization_error_rms": 3.273899455277158e-05
+    },
+    {
+      "site": 3,
+      "warp_dominance_fraction": 0.5252685546875,
+      "cubic_master_rms": 0.012778006132434771,
+      "warp_master_rms": 0.016147459906100326,
+      "joint_quantization_cubic_error_rms": 4.791616166537823e-05,
+      "separate_cubic_quantization_error_rms": 3.3409257550887225e-05
+    },
+    {
+      "site": 4,
+      "warp_dominance_fraction": 0.457275390625,
+      "cubic_master_rms": 0.012098372492543055,
+      "warp_master_rms": 0.014028430471353995,
+      "joint_quantization_cubic_error_rms": 4.3842992741196565e-05,
+      "separate_cubic_quantization_error_rms": 3.202747643021533e-05
+    }
+  ],
+  "cubic_master_rms": 0.012130446148974943,
+  "warp_master_rms": 0.01640072595141603,
+  "joint_quantization_cubic_error_rms": 4.743455681557171e-05,
+  "separate_cubic_quantization_error_rms": 3.211617849384136e-05,
+  "interpretation": "The lower-impact warp can set the six-coefficient group scale; this is a measured representation interaction, not evidence that it causes loss degradation.",
+  "limitation": "Original incumbent terminal geometry around898s, not the240s counterfactual checkpoint. Coefficient quantization errors alone do not measure activation or convergence effects. No changed quantization recipe is queued; fixed-warp ablation is the next test."
+}

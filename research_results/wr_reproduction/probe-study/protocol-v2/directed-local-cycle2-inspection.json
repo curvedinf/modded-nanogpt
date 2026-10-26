@@ -1,0 +1,80 @@
+{
+  "utc": "2026-10-26T10:17:46.988138+00:00",
+  "local_hypotheses": [
+    {
+      "summary": "pairwise-postpack-discovery-summary.json",
+      "run_id": "probe-experts-pairwise-postpack-b1-discovery-20261026T083221-f33e0f",
+      "code_commit": "fba876e417ab871c6cf435d46955a5a27be6177c",
+      "status": "pruned",
+      "full_validation": null,
+      "screen": {
+        "candidate_elapsed_seconds": 360.6614774869813,
+        "gap": 0.08372480422258377,
+        "reference_run_id": "probe-ks3-experts-verification-20261026T045737-498c82",
+        "reference_elapsed_seconds": 360.2659069939982,
+        "reference_age_seconds": 0.3955704929830972,
+        "reason": "first_one_sided_gap_at_least_001"
+      },
+      "qualifies": false
+    },
+    {
+      "summary": "fp8-prepared-discovery-summary.json",
+      "run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+      "code_commit": "744594dc31cc9785468fc1ebca611bbe3cb789ad",
+      "status": "pruned",
+      "full_validation": null,
+      "screen": {
+        "candidate_elapsed_seconds": 360.68443931499496,
+        "gap": 0.0354424174875021,
+        "reference_run_id": "probe-ks3-experts-verification-20261026T045737-498c82",
+        "reference_elapsed_seconds": 360.2659069939982,
+        "reference_age_seconds": 0.4185323209967464,
+        "reason": "first_one_sided_gap_at_least_001"
+      },
+      "qualifies": false
+    },
+    {
+      "summary": "bf16-exact-gather-discovery-summary.json",
+      "run_id": "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8",
+      "code_commit": "233c152d6e2c9d0077e03d275f9414ebfeeb7126",
+      "status": "pruned",
+      "full_validation": null,
+      "screen": {
+        "candidate_elapsed_seconds": 240.3915928270144,
+        "gap": 0.04322904162108898,
+        "reference_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+        "reference_elapsed_seconds": 240.12148638800136,
+        "reference_age_seconds": 0.2701064390130341,
+        "reason": "first_one_sided_gap_at_least_001"
+      },
+      "qualifies": false
+    },
+    {
+      "summary": "joint-lift-gather-discovery-summary.json",
+      "run_id": "probe-local-experts-joint-lift-gather-discovery-20261026T095521-88c66d",
+      "code_commit": "9e3552eef9ccb9364a96e8d44261fdfbd0a15bb0",
+      "status": "pruned",
+      "full_validation": null,
+      "screen": {
+        "candidate_elapsed_seconds": 120.60399357602,
+        "gap": 0.017249805852770805,
+        "reference_run_id": "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8",
+        "reference_elapsed_seconds": 120.58665766299237,
+        "reference_age_seconds": 0.017335913027636707,
+        "reason": "first_one_sided_gap_at_least_001"
+      },
+      "qualifies": false
+    }
+  ],
+  "local_count": 4,
+  "qualifying_count": 0,
+  "decision": "No unchanged repeats or verification cohorts. Proceed to the new independent cubic-basis optimizer-coordinate exploratory hypothesis after numerical/state gates. Pairwise placements are rejected for this tested setup; neither short prefix speed nor a120s reference point is a terminal architectural win.",
+  "next_configuration": "configs/wr_reproduction/probe_experts_chebyshev_cubic.json",
+  "limitations": [
+    "Dynamic-best policy can use earlier points from a subsequently pruned run; no terminal ordering is inferred.",
+    "Joint lift pruned at first observation; its post-probe gradient window did not occur.",
+    "Observed coordinate/output moments motivate mechanism tests but do not diagnose causality."
+  ],
+  "original_incumbent_still_verified": true,
+  "shared_backend_and_MLP_control_unchanged": true
+}

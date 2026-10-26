@@ -1,0 +1,202 @@
+{
+  "utc": "2026-10-26T15:32:20.420276+00:00",
+  "run_id": "probe-experts-bf16-dual-layout-discovery-20261026T152627-028606",
+  "code_commit": "e6e6349482f7f059a23fc590845bfb95da8675a3",
+  "status": "pruned",
+  "seed": 169,
+  "phase": "cycle5_local2_closed",
+  "qualifies": false,
+  "full_validation": null,
+  "reserved_confirmation": null,
+  "probe": {
+    "loss": 4.660535205155611,
+    "step": 293,
+    "checkpoint_elapsed_seconds": 120.64059366501169,
+    "probe_completion_seconds": 123.58447995901224,
+    "probe_seconds": 2.944001690018922,
+    "cumulative_probe_seconds": 2.944001690018922
+  },
+  "screening": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.64059366501169,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.14197705499827862,
+    "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+    "reference_elapsed_seconds": 120.2109339319868,
+    "reference_age_seconds": 0.42965973302489147,
+    "reference_utc": "2026-10-26T14:09:02.407891+00:00",
+    "reference_loss": 4.518558150157332,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785/events.jsonl",
+      "line": 331,
+      "row_sha256": "1ffcc96b3c26752568152e11db1ddd017e3b2a266fb8c34532843dbf921fc12c"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.14197705499827862,
+      "standard_error": 0.0019267939873281901,
+      "normal95_halfwidth": 0.0037765162151632524,
+      "student95_halfwidth": 0.0038150520949098163,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T15:30:37.879538+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-bf16-dual-layout-discovery-20261026T152627-028606",
+    "seed": 169,
+    "code_commit": "e6e6349482f7f059a23fc590845bfb95da8675a3",
+    "training_projection_gs32": true
+  },
+  "paired_32768": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.14197705499827862,
+    "standard_error": 0.0022286711731597446,
+    "normal95_halfwidth": 0.004368195499393099,
+    "student95_halfwidth": 0.004550946535592198,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "pruned_training_seconds": 123.79190613000537,
+  "gradient_diagnostic_count": 0,
+  "gradient_limitation": "First probe pruned before post-probe optimizer observation; missing gradient diagnostics do not mean zero gradients.",
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.40070438385009766,
+        "rms": 1.274090051651001,
+        "max_abs": 9.59034252166748,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.49977511167526245,
+        "rms": 2.5679988861083984,
+        "max_abs": 117.0,
+        "nonzero_fraction": 0.270263671875
+      },
+      "projected_output": {
+        "mean": -0.12349210679531097,
+        "rms": 8.744573593139648,
+        "max_abs": 71.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3944511413574219,
+        "rms": 1.3251605033874512,
+        "max_abs": 6.303682327270508,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.618490993976593,
+        "rms": 2.655424118041992,
+        "max_abs": 76.5,
+        "nonzero_fraction": 0.283447265625
+      },
+      "projected_output": {
+        "mean": 0.1437080204486847,
+        "rms": 8.050690650939941,
+        "max_abs": 69.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4354196786880493,
+        "rms": 1.3199182748794556,
+        "max_abs": 6.251833915710449,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5408861637115479,
+        "rms": 2.606196403503418,
+        "max_abs": 69.5,
+        "nonzero_fraction": 0.2861328125
+      },
+      "projected_output": {
+        "mean": 0.30326834321022034,
+        "rms": 6.962001323699951,
+        "max_abs": 45.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3937675356864929,
+        "rms": 1.2767778635025024,
+        "max_abs": 6.537153244018555,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.5368913412094116,
+        "rms": 2.3853776454925537,
+        "max_abs": 49.25,
+        "nonzero_fraction": 0.30078125
+      },
+      "projected_output": {
+        "mean": 0.209395632147789,
+        "rms": 7.685852527618408,
+        "max_abs": 61.25,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.33855170011520386,
+        "rms": 1.2848230600357056,
+        "max_abs": 5.7627081871032715,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.6125659942626953,
+        "rms": 2.54001784324646,
+        "max_abs": 59.75,
+        "nonzero_fraction": 0.311279296875
+      },
+      "projected_output": {
+        "mean": 0.147156223654747,
+        "rms": 9.122636795043945,
+        "max_abs": 97.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "actual_discovery_prefix": {
+    "first100_seconds": 39.5547468260047,
+    "after25_through100_seconds": 29.552955452003516
+  },
+  "actual_discovery_to_original_reference_duration_ratio": {
+    "first100_seconds": 1.00002051085456,
+    "after25_through100_seconds": 1.0004236680957344
+  },
+  "timing_limitation": "Training objectives and matched-step durations are diagnostic only. HeldoutCE at comparable elapsed training time alone triggered pruning. One saved prefix is not a runtime variability estimate.",
+  "source_hashes_match": true,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "new_stop": false,
+  "decision": "Close dual-layout-only hypothesis; no terminal validation, no verification2269/2270/2271 and no unchanged rerun. The discovery prefix shows no actual speed benefit, despite the marginal calibration pass. Retain original expert-only verified incumbent; investigate remaining architectural limits before another local change."
+}

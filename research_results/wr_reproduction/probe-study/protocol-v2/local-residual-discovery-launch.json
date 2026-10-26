@@ -1,0 +1,29 @@
+{
+  "utc": "2026-10-26T12:25:42.709518+00:00",
+  "phase": "cycle3_exploratory_local_residual_discovery",
+  "status": "running",
+  "run_id": "probe-experts-local-residual-k3-discovery-20261026T122452-435b40",
+  "unit": "wr-probe-local-residual-e9f13ef8",
+  "code_commit": "cc26eab0a8d6a5198358cd04849eb4e2c0cb1ac3",
+  "trainer_pid": 1566198,
+  "source_hashes_match": true,
+  "new_stop": false,
+  "recipe": "configs/wr_reproduction/probe_experts_local_residual_k3.json",
+  "numerical_gate": "local-residual-numerical-summary.json",
+  "graph_gate": "local-residual-graph-summary.json",
+  "source_freeze": true,
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true,
+  "added_parameters": 122880,
+  "verification_seeds": [
+    1569,
+    1570,
+    1571
+  ],
+  "gpu_lease": "1566187 python          /root/modded-nanogpt/logs/wr-reproduction/gpu.lock",
+  "continuous_training_seconds_cap": 900,
+  "comparative_pruning_exempt": false,
+  "hypothesis": "Add three bounded zero-initialized compact-support responses per independent rank1 chart at fixed knots[-2,0,2], width2, after original independentGS32/BF16 features. Preserve the original cubic/warp paths and every projection. Measured coordinateRMS1.3 at120s and2.1 at240s, inactive ReLU2 coordinates, and rejected cubic-reparameterization/frozen-component hypotheses motivate localized new function capacity rather than another scalar or basis change. Keep original rates, all five original denseMLPs and all shared kernels/settings. No convergence gain is assumed.",
+  "next": "Complete full24graphwarmup, then strictbelow5 and first compatible nonfuture gap>=+.01 screen, latest point per run within3s then bestMLPorKS3. On qualifying full10485760token validation, automatically run1569/1570/1571 unpruned with frozen sources/config. Inspect discovery and sparse activation/update diagnostics before choosing further hypotheses.",
+  "full_convergence_verified": false
+}

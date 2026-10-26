@@ -1,0 +1,49 @@
+{
+  "utc": "2026-10-26T14:55:20.627108+00:00",
+  "hypothesis": "Cycle5 local1: test a kernel-cost explanation for the rejected bounded feature gain. The unfused gain took5.08%/5.17% longer for first100/updates26-100 and its120s probe lost+.31457, despite a measurable.14-.27% relative feature effect. Fuse independent geometry into the gain feature producer and gain preparation while retaining explicitBF16 rounding, the original geometry/direct-partner backward, all projections/gathers and frozen gain equations/initialization/rates. Require exact output/gradient equivalence to unfused gain, all-rank graph/state continuation, both prefixes strictly faster than unfused and <=1.02 times original incumbent. A kernel timing gate is not a convergence win; no bound/rate escalation or unchanged repeat.",
+  "cpu_scope_tests": {
+    "passed": true,
+    "rejected_mutations": [
+      "geometry.lr_mul",
+      "projection_lr_scale",
+      "shared_backend.fp8_dense",
+      "pairwise_gain.initial_raw_coefficient",
+      "pairwise_gain.bound",
+      "pairwise_gain.partner_scale",
+      "geometry_backward_rows",
+      "ks3_bf16_gradient_gather",
+      "pairwise_gain_fused.maximum_incumbent_prefix_ratio"
+    ]
+  },
+  "speed_references": [
+    {
+      "role": "unfused",
+      "run_id": "probe-experts-pairwise-gain-b05-discovery-20261026T144110-77190b",
+      "code_commit": "4ee95a59d78afb58a80313eb20e855c32ea6cd70",
+      "same_source_files": [
+        "wr_reproduction/ks3_moe.py",
+        "wr_reproduction/ks3_bf16_gemm.py",
+        "wr_reproduction/ks3_pairwise_gain.py",
+        "wr_reproduction/probe_pairwise_gain_train.py"
+      ],
+      "configuration_comparable": true
+    },
+    {
+      "role": "incumbent",
+      "run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+      "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+      "same_source_files": [
+        "wr_reproduction/ks3_moe.py",
+        "wr_reproduction/ks3_bf16_gemm.py"
+      ],
+      "configuration_comparable": true
+    }
+  ],
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "kind": "pairwise-gain-fused-independent-feature-producers-v1",
+  "implementation_scope": "New isolated modules only. Original producer equations copied with intermediateBF16 rounding; gain consumers use explicit round-to-nearest operations to preserve no-FMA arithmetic. Original geometryVJP and partnerVJP retained.",
+  "gpu_numerical_test_passed": false,
+  "full_graph_training_tested": false,
+  "full_convergence_verified": false,
+  "next": "Run boundedGPU exact fused/unfused and independent-oracle tests, then one actual-model speed/state gate. No loss/time run unless both predeclared speed constraints pass."
+}

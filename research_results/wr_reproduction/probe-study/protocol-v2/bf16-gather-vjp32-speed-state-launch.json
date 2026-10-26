@@ -1,0 +1,36 @@
+{
+  "utc": "2026-10-26T13:56:09.963592+00:00",
+  "phase": "cycle4_local4_bf16_gather_vjp32_speed_state_gate",
+  "status": "running",
+  "run_id": "probe-experts-bf16-gather-vjp32-calibration-20261026T135543-9a45d7",
+  "unit": "wr-probe-bf16-gather-vjp32-e25837aa",
+  "code_commit": "1dea9a657ba531a114e0bd25952d9970950ba978",
+  "trainer_pid": 1573154,
+  "controller_pid": 1573143,
+  "recipe": "configs/wr_reproduction/probe_experts_bf16_gather_vjp32.json",
+  "numerical_gate": "bf16-gather-vjp32-numerical-summary.json",
+  "source_hashes_match": true,
+  "new_stop": false,
+  "source_freeze": true,
+  "gpu_lease": "1573143 python          /root/modded-nanogpt/logs/wr-reproduction/gpu.lock",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "shared_backend_unchanged": true,
+  "five_original_dense_MLPs": true,
+  "original_forward_and_evaluation": true,
+  "change_scope": "Combine the separately validated exactBF16 gradient gather and32-row geometry VJP. Original Torch gate reduction, BF16 coordinate storage, GS32 packing, BF16 products, forward/evaluation, optimizer and shared settings retained.",
+  "strict_prefix_limits_seconds": {
+    "first100": 38.79183475099853,
+    "updates26_to100": 28.973567784007173
+  },
+  "speed_reference_run_ids": [
+    "probe-experts-bf16-vjp32-discovery-20261026T133959-793d64",
+    "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8"
+  ],
+  "verification_seeds": [
+    1969,
+    1970,
+    1971
+  ],
+  "full_convergence_verified": false,
+  "next": "Finish full24graphwarmup and bounded120s original all-eight-rank speed/state gate. Both prefixes strictly faster than BOTH individual ingredient discovery prefixes plus normal/pending state restoration, original-eval oracle, bitwise next-update and projected7probe<=3% required before900s discovery. If gate fails, no convergence or unchanged repeat. Qualifying full result triggers1969/1970/1971 frozen unpruned seeds."
+}

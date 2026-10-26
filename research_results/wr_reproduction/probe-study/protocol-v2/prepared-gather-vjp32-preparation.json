@@ -1,0 +1,76 @@
+{
+  "utc": "2026-10-26T16:00:28.550741+00:00",
+  "phase": "cycle5_local4_prepared_gather_vjp32",
+  "hypothesis": "Cycle5 local4: combine the prepared geometry cache with the previously validated exact BF16 gradient gather and32-row VJP. Standalone cache reduced actual-model prefixes by about1.9% but lost the first120s probe; the gather/row32 ingredient reached the current best120s probe but lost at240s. Test whether combining their distinct reductions in KS3 work improves loss per elapsed time. Do not change independent rank1 functions, optimizer rates, initial geometry, shared kernels or any dense MLP. Require bitwise parity to the gather/row32 ingredient at actual shapes, full graph/state checks and both timing windows strictly faster than BOTH standalone discovery runs. No convergence benefit is assumed.",
+  "recipe_path": "configs/wr_reproduction/probe_experts_prepared_gather_vjp32.json",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "cpu_scope_exclusion_checks": [
+    "geometry.lr_mul",
+    "projection_lr_multiplier",
+    "shared_fp8_gemm_tuning",
+    "geometry_backward_rows",
+    "charts",
+    "rank",
+    "prepared_gather_vjp32.geometry_rows",
+    "prepared_gather_vjp32.original_GS32_quantization",
+    "prepared_gather_vjp32.gradient_producer",
+    "prepared_gather_vjp32_evidence.maximum_actual_model_prefix_ratio",
+    "prepared_gather_vjp32_evidence.require_faster_than_both_ingredients"
+  ],
+  "ingredient_speed_references": [
+    {
+      "run_id": "probe-experts-prepared-geometry-discovery-20261026T155013-becd49",
+      "code_commit": "b31b536eb634e6a89d8216d1d6bdbd6ec8b443b2",
+      "first100_seconds": 38.79406260399264,
+      "after25_through100_seconds": 28.97754427298787,
+      "source_implementations_unchanged": [
+        "wr_reproduction/ks3_moe.py",
+        "wr_reproduction/ks3_bf16_gemm.py",
+        "wr_reproduction/ks3_weight_pack.py",
+        "wr_reproduction/bf16_tiles.py",
+        "wr_reproduction/ks3_bf16_gather.py",
+        "wr_reproduction/ks3_bf16_gather_vjp32.py",
+        "wr_reproduction/ks3_prepared_geometry.py"
+      ]
+    },
+    {
+      "run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+      "code_commit": "72a449c54dae6a84ed2623b4987c0b0bd3d3aac1",
+      "first100_seconds": 38.671425492007984,
+      "after25_through100_seconds": 28.880108442011988,
+      "source_implementations_unchanged": [
+        "wr_reproduction/ks3_moe.py",
+        "wr_reproduction/ks3_bf16_gemm.py",
+        "wr_reproduction/ks3_weight_pack.py",
+        "wr_reproduction/bf16_tiles.py",
+        "wr_reproduction/ks3_bf16_gather.py",
+        "wr_reproduction/ks3_bf16_gather_vjp32.py"
+      ]
+    }
+  ],
+  "reused_ingredient_numerical": {
+    "run_id": "probe-experts-bf16-gather-vjp32-calibration-20261026T135432-b9af7c",
+    "code_commit": "87aae9a19ce54f1c7ebfc4ba068f6d7d4a5a8f01",
+    "path": "/root/modded-nanogpt/research_results/wr_reproduction/probe-study/protocol-v2/bf16-gather-vjp32-numerical-summary.json",
+    "sha256": "0ee389987d24bc636461148d59cdd5b6200f094d053a95e0b52ee8f1d14bdd06"
+  },
+  "new_math_approximations": false,
+  "new_parameters": 0,
+  "extra_buffer_bytes": 1474560,
+  "shared_backend_unchanged": true,
+  "consumer_geometry_cache_source_unchanged": true,
+  "original_forward_and_evaluation": true,
+  "all_five_original_dense_MLPs": true,
+  "predeclared_gates": [
+    "Ten actual-shape zero/nonzero cases must be bitwise equal to validated gather/row32 ingredient for every output and gradient, including full routed wrapper; no tolerance relaxation.",
+    "Both first100 and updates26-100 must be strictly faster than BOTH component discovery prefixes after full24 warmup and120s original-schedule all-rank run.",
+    "All ten cache paths and five routed backwards, original evaluation oracle, normal/pending state checks, bitwise next-update parity and projected7probe overhead<=3%."
+  ],
+  "numerical_seed": 2369,
+  "verification_seeds": [
+    2469,
+    2470,
+    2471
+  ],
+  "decision": "Run bounded numerical gate, then actual-model speed/state only on pass. No discovery before all gates. This closes the fourth local hypothesis in cycle5; inspect the batch before next exploration."
+}

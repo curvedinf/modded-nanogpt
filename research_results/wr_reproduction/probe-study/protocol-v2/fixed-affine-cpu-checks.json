@@ -1,0 +1,39 @@
+{
+  "utc": "2026-10-26T17:56:06.252463+00:00",
+  "passed": true,
+  "cpu": {
+    "passed": true,
+    "independent_adam_steps": 20,
+    "all_six_coefficient_parameters_and_moments_bitwise_equal": true,
+    "affine_parameters_bitwise_initial": true,
+    "affine_adam_moments_zero": true,
+    "gradient_storage_preserved": true,
+    "nongeometry_parameters_untouched": true,
+    "discarded_c4_c5_freeze_implies_zero_affine_gradients": true,
+    "retained_nonzero_warp_produces_affine_gradients": [
+      0.02922688972566753,
+      0.07037916521767705
+    ]
+  },
+  "scope_exclusions": 9,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "original_forward_backward_kernels_unchanged": true,
+  "active_geometry_columns": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "frozen_geometry_columns": [
+    6,
+    7
+  ],
+  "frozen_geometry_values": [
+    0.75,
+    0.0
+  ],
+  "no_added_parameters_or_buffers": true,
+  "not_a_convergence_result": true
+}

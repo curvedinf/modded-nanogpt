@@ -1,0 +1,67 @@
+{
+  "utc": "2026-10-26T16:35:43.271301+00:00",
+  "cycle": 5,
+  "completed_local_hypotheses": 4,
+  "completed_exploratory_hypotheses": 1,
+  "local_results": [
+    {
+      "hypothesis": "Producer fusion for bounded feature gain",
+      "run_id": "probe-experts-pairwise-gain-fused-calibration-20261026T150233-dba724",
+      "code_commit": "2c0ca04ef989243d116a4c38a92aa91f4b2a5e30",
+      "status": "rejected_at_numerical_gate",
+      "decision": "Close this bounded producer-fusion attempt. No tolerance relaxation, no further fix iterations and no speed/convergence trial. Preserve the original expert-only verified incumbent and unfused-gain rejection.",
+      "full_validation": null
+    },
+    {
+      "run_id": "probe-experts-bf16-dual-layout-discovery-20261026T152627-028606",
+      "code_commit": "e6e6349482f7f059a23fc590845bfb95da8675a3",
+      "status": "pruned",
+      "probe_loss": 4.660535205155611,
+      "elapsed_seconds": 120.64059366501169,
+      "gap": 0.14197705499827862,
+      "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+      "reference_age_seconds": 0.42965973302489147,
+      "full_validation": null
+    },
+    {
+      "run_id": "probe-experts-prepared-geometry-discovery-20261026T155013-becd49",
+      "code_commit": "b31b536eb634e6a89d8216d1d6bdbd6ec8b443b2",
+      "status": "pruned",
+      "probe_loss": 4.629510302096605,
+      "elapsed_seconds": 120.55282551099663,
+      "gap": 0.11095215193927288,
+      "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+      "reference_age_seconds": 0.34189157900982536,
+      "full_validation": null
+    },
+    {
+      "run_id": "probe-experts-prepared-gather-vjp32-discovery-20261026T161049-9afa99",
+      "code_commit": "93bec17964e195c4fd82f599b278e0becee13842",
+      "status": "pruned",
+      "probe_loss": 4.572703260928392,
+      "elapsed_seconds": 120.85372768499656,
+      "gap": 0.05414511077105999,
+      "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+      "reference_age_seconds": 0.6427937530097552,
+      "full_validation": null
+    }
+  ],
+  "new_qualifying_results": 0,
+  "original_expert_only_incumbent_remains_best_full_validation": true,
+  "decision": "Close cycle5: four local hypotheses and one exploratory negative-coordinate coactivation hypothesis produced no new qualifying result. All original independent pathways were retained and numerical/state gates passed for the trained candidates. Preserve the verified original expert-only incumbent.",
+  "limiting_evidence": "Combined discovery features are nonzero in only26.37%-32.03% of the first-probe coordinate sample, with coordinate RMS1.29-1.36 and positive independent squared-ReLU features. Previous multiplicative gain cannot activate an exactly zero independent feature. Earlier odd tanh-product and one-dimensional compact residual experiments also failed; these results do not prove a useful interaction exists.",
+  "next": "Investigate existing six-coefficient rounding with a read-only terminal geometry comparison. A possible next local hypothesis is direct FP16 coefficients instead of partial GS32 coefficient quantization, retaining FP16 Horner math, activation/projection GS32, BF16 products and original optimizer settings. This is distinct from the failed split-scale test; require numerical and actual-model speed/state gates with no slower prefix before any training trial.",
+  "exploratory_result": {
+    "step": 289,
+    "loss": 4.678995091468096,
+    "checkpoint_elapsed_seconds": 120.51410733399098,
+    "probe_completion_seconds": 123.55260372097837,
+    "probe_seconds": 3.0386373679793905,
+    "cumulative_probe_seconds": 3.0386373679793905,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "run_id": "probe-experts-negative-pair-discovery-20261026T162705-ba7a3f",
+    "code_commit": "00f6fcf0ce84c2cc7e7300b8797735d91eb6cf99",
+    "gap": 0.16043694131076336,
+    "status": "pruned"
+  }
+}

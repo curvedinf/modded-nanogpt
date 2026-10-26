@@ -1,0 +1,44 @@
+{
+  "utc": "2026-10-26T11:12:32.597171+00:00",
+  "cpu_mask_and_adam_checks": {
+    "passed": true,
+    "independent_adam_steps": 20,
+    "cubic_parameters_and_moments_bitwise_equal": true,
+    "warp_parameters_bitwise_initial": true,
+    "warp_adam_moments_zero": true,
+    "gradient_storage_preserved": true,
+    "nongeometry_parameters_untouched": true
+  },
+  "negative_scope_checks": 4,
+  "source_files": [
+    "wr_reproduction/probe_fixed_warp_trial.py"
+  ],
+  "hypothesis": "Keep learned independent cubic spines and original expert projections, fixing warp c4/c5/raw_scale/raw_shift at initialization. A same-checkpoint diagnostic found cubic removal costs+.03376 CE while warp removal costs+.000107, despite larger warp coefficient RMS. Test whether concentrating adaptation on the effective cubic pathway improves loss/time; counterfactual results do not establish a retrained win.",
+  "recipe": "configs/wr_reproduction/probe_experts_fixed_warp.json",
+  "cycle": "3 local3",
+  "mask_columns": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "mask_boundary": "Reduced eight-logical-rank geometry gradient immediately before original Adam; non-Adam accumulation unchanged.",
+  "cubic_columns": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "full_kernel_math_unchanged": true,
+  "shared_backend_unchanged": true,
+  "original_projection_multiplier": 1.0,
+  "geometry_lr_multiplier": 0.125,
+  "geometry_adam_betas": [
+    0.9,
+    0.99
+  ],
+  "geometry_weight_decay": 0.0,
+  "gpu_gate": "Full24-update graph warmup plus8 original updates; audit all163840 frozen values/moments, fixed probe oracle, in-place state restoration and bitwise next eight-rank update parity. No100-update speed screen for component placement/control hypothesis.",
+  "after_gate": "900s-cap discovery with frozenV2 probe; if qualifying, three fresh frozen unpruned seeds1369/1370/1371.",
+  "archive_review": "794 config/result-like records scanned for component controls; no earlier routed-only warp-freeze recipe identified. All-geometry freeze and warp initialization shifts are different interventions."
+}

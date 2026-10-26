@@ -1,0 +1,53 @@
+{
+  "utc": "2026-10-26T07:59:08.676902+00:00",
+  "passed": true,
+  "base_instrumented_source_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+  "current_source_commit": "12664b95c3bccc2dacb67461ed379a4b3ff2c0cf",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "recipe_changes": {
+    "gradient_diagnostics_extension": {
+      "before": null,
+      "after": "active-slot-pre-optimizer-v1-plus-pairwise"
+    },
+    "hypothesis_class": {
+      "before": null,
+      "after": "exploratory-pairwise-independent-rank1"
+    },
+    "pairwise": {
+      "before": null,
+      "after": {
+        "kind": "additive-tanh-adjacent-independent-v1",
+        "bound": 1.0,
+        "lr_mul": 0.125,
+        "initial_raw_coefficient": 0.0,
+        "pairing": "i xor1"
+      }
+    },
+    "hypothesis": {
+      "before": "Acquire one exempt fixed-probe reference under the frozen shared original-PR393 recipe.",
+      "after": "Retain every independent rank1 KS3 expert feature and add bounded adjacent-coordinate interactions with separate zero-initialized coefficients. Test whether limited cross-coordinate structure improves CE per continuous900s; this is a new exploratory hypothesis, not mean-coordinate rank2/4 coupling."
+    },
+    "name": {
+      "before": "probe-ks3-experts",
+      "after": "probe-experts-pairwise-b1"
+    }
+  },
+  "protected_paths_unchanged": [
+    "wr_reproduction/train.py",
+    "wr_reproduction/research.py",
+    "wr_reproduction/ks3_moe.py",
+    "wr_reproduction/probe_train.py",
+    "wr_reproduction/probe_evaluation.py",
+    "wr_reproduction/probe_study.py",
+    "wr_reproduction/probe_diagnostics.py",
+    "wr_reproduction/fused_fp8.py",
+    "wr_reproduction/pr393/upstream",
+    "configs/wr_reproduction/matched_backend.json",
+    "configs/wr_reproduction/probe_backend_v2.json"
+  ],
+  "model_overlay_scope": "PairwiseGPT inherits incumbent class, adds zero FP32 pair parameter after parent initialization without RNG calls, and overrides only MoE expert branch. All five dense branches, retained bank initialization, shared math and settings are inherited unchanged.",
+  "extra_parameters": 40960,
+  "optimizer_scope": "Original geometry Adam [.9,.99], lr multiplier0.125 and zero weight decay extended only to pair coefficients; original parameter configurations and schedules unchanged.",
+  "probe_instrumentation_scope": "Frozen scorer, protocol/signature and pruning unchanged. New process-local context gathers bounded actual pair-term and packed-feature effects on first probe chunk; all work is inside the existing probe timer. New sparse observer includes pair gradient/update at original pre-optimizer boundary.",
+  "full_graph_gate_pending": true
+}

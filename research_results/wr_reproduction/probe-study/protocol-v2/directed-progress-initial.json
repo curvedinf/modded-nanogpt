@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-26T07:05:44.064065+00:00",
+  "cycle": 1,
+  "phase": "local1_running",
+  "run_id": "probe-local-dense8-joint-damp-discovery-20261026T070301-e00e7e",
+  "unit": "wr-probe-directed-9af70241",
+  "configs": [
+    "configs/wr_reproduction/probe_local_dense8_joint_damp.json",
+    "configs/wr_reproduction/probe_local_dense8_linear_catchup.json",
+    "configs/wr_reproduction/probe_local_experts_joint_damp.json",
+    "configs/wr_reproduction/probe_local_experts_geometry_tilt.json"
+  ],
+  "completed_local_hypotheses": 0,
+  "completed_exploratory_hypotheses": 0,
+  "source_commit": "0330209219cc774b364c686cc015a1912a950d6e",
+  "next": "Inspect local1 curve and active component diagnostics before launching local2. A qualifying result automatically completes469/470/471 unpruned first."
+}

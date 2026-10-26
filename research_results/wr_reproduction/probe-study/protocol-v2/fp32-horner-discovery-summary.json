@@ -1,0 +1,220 @@
+{
+  "utc": "2026-10-26T17:21:37.346518+00:00",
+  "run_id": "probe-experts-fp32-horner-discovery-20261026T171202-b9203a",
+  "code_commit": "0ee11b9ebab163afd34b86b72c70a95636adbbf6",
+  "seed": 169,
+  "status": "pruned",
+  "configuration": "configs/wr_reproduction/probe_experts_fp32_horner.json",
+  "phase": "cycle6_local2_fp32_horner",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+  "probes": [
+    {
+      "step": 293,
+      "loss": 4.678871832787991,
+      "checkpoint_elapsed_seconds": 120.518620354007,
+      "probe_completion_seconds": 123.51235497900052,
+      "probe_seconds": 2.9938693279982544,
+      "cumulative_probe_seconds": 2.9938693279982544,
+      "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31"
+    }
+  ],
+  "screening": {
+    "event": "screening_abort",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.518620354007,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.16031368263065815,
+    "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+    "reference_elapsed_seconds": 120.2109339319868,
+    "reference_age_seconds": 0.3076864220201969,
+    "reference_utc": "2026-10-26T14:09:02.407891+00:00",
+    "reference_loss": 4.518558150157332,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785/events.jsonl",
+      "line": 331,
+      "row_sha256": "1ffcc96b3c26752568152e11db1ddd017e3b2a266fb8c34532843dbf921fc12c"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.16031368263065815,
+      "standard_error": 0.0023102739772844524,
+      "normal95_halfwidth": 0.004528136995477526,
+      "student95_halfwidth": 0.0045743424750232155,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T17:16:14.284639+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-fp32-horner-discovery-20261026T171202-b9203a",
+    "seed": 169,
+    "code_commit": "0ee11b9ebab163afd34b86b72c70a95636adbbf6",
+    "training_projection_gs32": true
+  },
+  "paired32768_block_sensitivity": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.16031368263065815,
+    "standard_error": 0.00272253712418364,
+    "normal95_halfwidth": 0.0053361727633999346,
+    "student95_halfwidth": 0.0055594208075829925,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "pruned_train_seconds": 123.73525071100448,
+  "actual_prefix_timing": {
+    "first100_seconds": 39.5151856970042,
+    "after25_through100_seconds": 29.514521226024954,
+    "first100_steps": 100,
+    "all_logical_ranks": 8
+  },
+  "original_incumbent_prefix_timing": {
+    "first100_seconds": 39.55393554098555,
+    "after25_through100_seconds": 29.54044010999496,
+    "first100_steps": 100,
+    "all_logical_ranks": 8
+  },
+  "actual_prefix_ratios": {
+    "first100_seconds": 0.9990203289899889,
+    "after25_through100_seconds": 0.9991225965532843
+  },
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3663952946662903,
+        "rms": 1.3056422472000122,
+        "max_abs": 7.187682151794434,
+        "nonzero_fraction": 0.904296875
+      },
+      "nonlinear_output": {
+        "mean": 0.605365514755249,
+        "rms": 2.929504156112671,
+        "max_abs": 98.0,
+        "nonzero_fraction": 0.275146484375
+      },
+      "projected_output": {
+        "mean": -0.043247148394584656,
+        "rms": 8.432286262512207,
+        "max_abs": 48.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.42731672525405884,
+        "rms": 1.3053057193756104,
+        "max_abs": 4.936647415161133,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5066473484039307,
+        "rms": 1.9614732265472412,
+        "max_abs": 48.75,
+        "nonzero_fraction": 0.283447265625
+      },
+      "projected_output": {
+        "mean": 0.008912045508623123,
+        "rms": 8.125167846679688,
+        "max_abs": 50.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4009801149368286,
+        "rms": 1.3079800605773926,
+        "max_abs": 7.775838851928711,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5993000268936157,
+        "rms": 3.226663827896118,
+        "max_abs": 133.0,
+        "nonzero_fraction": 0.283935546875
+      },
+      "projected_output": {
+        "mean": -0.05854222923517227,
+        "rms": 8.087080955505371,
+        "max_abs": 53.25,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.42023470997810364,
+        "rms": 1.326979637145996,
+        "max_abs": 5.233107089996338,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.577447772026062,
+        "rms": 2.519197940826416,
+        "max_abs": 57.0,
+        "nonzero_fraction": 0.2939453125
+      },
+      "projected_output": {
+        "mean": -0.0909058079123497,
+        "rms": 8.50568675994873,
+        "max_abs": 76.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3265702724456787,
+        "rms": 1.3173965215682983,
+        "max_abs": 7.970806121826172,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.7357425093650818,
+        "rms": 4.026366233825684,
+        "max_abs": 141.0,
+        "nonzero_fraction": 0.316162109375
+      },
+      "projected_output": {
+        "mean": -0.06092599034309387,
+        "rms": 10.744250297546387,
+        "max_abs": 87.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "gradient_update_diagnostics": [],
+  "gradient_diagnostic_unavailable_reason": "First probe pruned before diagnostic optimizer updates; unavailable does not mean zero gradients.",
+  "validation": null,
+  "reserved_confirmation": null,
+  "qualifies": false,
+  "verification_seeds_launched": [],
+  "events_sha256": "26d3e39558c0581215ad537ecf41c570db6a63e01d8795ee67ca98c849624a25",
+  "decision": "Reject FP32 training Horner at the first eligible bad observation. No unchanged rerun and no2769/2770/2771 verification. Retain original expert-only incumbent; inspect archived trajectory variation before selecting further local changes.",
+  "interpretation": [
+    "Both actual prefixes remained marginally no slower; no robust runtime benefit inferred.",
+    "Better controlled-grid polynomial accuracy did not improve screened loss/time.",
+    "All sampled coordinate/nonlinear/projected outputs were finite; no diagnosed overflow.",
+    "Original untuned evaluation remains bitwise original; no stage-dependent probe precision was introduced."
+  ]
+}

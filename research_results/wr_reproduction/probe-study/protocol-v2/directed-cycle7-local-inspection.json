@@ -1,0 +1,40 @@
+{
+  "utc": "2026-10-26T20:16:32.065673+00:00",
+  "cycle": 7,
+  "local_hypotheses": [
+    {
+      "artifact": "fused-up-geometry-numerical-summary.json",
+      "run_id": "probe-experts-fused-up-geometry-calibration-20261026T185424-7eac2e",
+      "code_commit": "adddde5f1debc293d6449f7440ec85c1a7447dc1",
+      "status": "rejected_numerical",
+      "qualifies": false
+    },
+    {
+      "artifact": "dense8-fp8-evalguard-discovery-summary.json",
+      "run_id": "probe-dense8-fp8-evalguard-width2816-discovery-20261026T193022-72d964",
+      "code_commit": "bd914cf6ec6ac0a0bf761b10b7a8f6af6a675478",
+      "status": "pruned",
+      "qualifies": false
+    },
+    {
+      "artifact": "forward-primal-vjp-discovery-summary.json",
+      "run_id": "probe-experts-forward-primal-vjp-discovery-20261026T195201-e89275",
+      "code_commit": "9b8957caf35c34a23bc5dc5b166274eac0664051",
+      "status": "pruned",
+      "qualifies": false
+    },
+    {
+      "artifact": "skip-padding-discovery-summary.json",
+      "run_id": "probe-experts-skip-padding-discovery-20261026T201001-579c5d",
+      "code_commit": "448f39e53b2901f03e2bd537d3f7cf593cbfaa09",
+      "status": "pruned",
+      "qualifies": false
+    }
+  ],
+  "new_wins": 0,
+  "incumbent_retained": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "conclusion": "Fused up-projection geometry failed strict numerical equivalence. Dense8-onlyFP8 improved a bounded same-placement timing sample but failed held-out screening. Forward-rounded VJP and exact valid-token padding skipping also failed first comparable probes. No combination is justified.",
+  "next_exploratory_hypothesis": "Bounded compact coordinate-difference interaction, zero initialized after independent GS32 features. Distinguishes nearby coordinates across sign quadrants rather than multiplying separate coordinate transforms; independent pathways remain.",
+  "motivation_limitations": "Earlier additive interactions produced small activation effects, but that does not prove insufficient capacity. A difference-dependent basis changes interaction geometry and can cost runtime. No projected convergence gain is claimed.",
+  "cycle_complete": false
+}

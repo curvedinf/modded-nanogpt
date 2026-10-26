@@ -1,0 +1,39 @@
+{
+  "utc": "2026-10-26T10:13:40.022740+00:00",
+  "hypothesis": "Reparameterize only the four independent rank1 cubic geometry master coefficients as Chebyshev T0..T3(t/4), t=4*tanh(c/4), then convert to the original Hermite coefficients before unchanged coefficient GS32/FP16 evaluation. The smooth cubic function class and zero-coefficient initial function are identical; optimizer coordinates and subsequent quantization trajectory differ. Original Hermite basis grows over t in[-4,4]; bounded Chebyshev bases may condition Adam better. This is an exploratory optimizer-coordinate hypothesis, not a variance rescaling, mean-spine coupling, new function class or proven improvement. Keep warp basis, rawscale.75, all optimizer rates/betas/decay, independent pathways, original projections, five dense MLPs, exact BF16 gather and shared backend fixed.",
+  "hypothesis_class": "cycle2-exploratory-cubic-basis-conditioning",
+  "configuration": "configs/wr_reproduction/probe_experts_chebyshev_cubic.json",
+  "parent_result_commit": "62222de",
+  "scope_checks": 6,
+  "unchanged_shared_backend": true,
+  "original_zero_function_preserved_by_linear_map": true,
+  "next_actions": [
+    "CPU cubic identity/gradient audit passed",
+    "Bounded actual-width numerical and routed gradient gate",
+    "24-update graph warmup plus8 original updates and probe continuation/state gate",
+    "One fixed-probe discovery if gates pass"
+  ],
+  "verification_seeds": [
+    1069,
+    1070,
+    1071
+  ],
+  "no_redundant_scalar100_update_screen": true,
+  "cpu_identity_max_abs": 8.018585795355193e-14,
+  "cpu_gradient_max_abs": 1.3405943022348765e-13,
+  "theoretical_basis_max_abs": {
+    "hermite": [
+      175,
+      176,
+      100,
+      80
+    ],
+    "chebyshev": [
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "cpu_test_limitation": "Bounded bases and algebraic identity do not establish improved conditioning or convergence. Coefficient quantization remains after the map."
+}

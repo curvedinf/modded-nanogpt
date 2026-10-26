@@ -1,0 +1,56 @@
+{
+  "utc": "2026-10-26T14:18:17.841807+00:00",
+  "cycle": 4,
+  "completed_local_hypotheses": 4,
+  "new_qualifying_results": 0,
+  "local_results": [
+    {
+      "run_id": "probe-experts-local-residual-exact-gather-discovery-20261026T125041-4a1477",
+      "code_commit": "d712c32396c0f883075f60d1405d66cca5de6b4b",
+      "status": "pruned",
+      "probe_loss": 4.640410654246807,
+      "elapsed_seconds": 120.7757279239886,
+      "gap": 0.09899774380028248,
+      "reference_run_id": "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8",
+      "reference_age_seconds": 0.1890702609962318,
+      "full_validation": null
+    },
+    {
+      "run_id": "probe-experts-hidden-bf16-discovery-20261026T131217-a88268",
+      "code_commit": "e5cdda46dd3260dac3ab9d21ffbf973187402da9",
+      "status": "pruned",
+      "probe_loss": 4.082069020718336,
+      "elapsed_seconds": 240.7167126010172,
+      "gap": 0.07675355114042759,
+      "reference_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+      "reference_age_seconds": 0.5952262130158488,
+      "full_validation": null
+    },
+    {
+      "run_id": "probe-experts-bf16-vjp32-discovery-20261026T133959-793d64",
+      "code_commit": "92a9c9ddd221067ed26908c3817a148bad5ba2a1",
+      "status": "pruned",
+      "probe_loss": 4.03465248644352,
+      "elapsed_seconds": 240.21670477898442,
+      "gap": 0.029337016865611076,
+      "reference_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+      "reference_age_seconds": 0.09521839098306373,
+      "full_validation": null
+    },
+    {
+      "run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+      "code_commit": "72a449c54dae6a84ed2623b4987c0b0bd3d3aac1",
+      "status": "pruned",
+      "probe_loss": 4.070169642567635,
+      "elapsed_seconds": 240.47123250199365,
+      "gap": 0.06485417298972607,
+      "reference_run_id": "probe-ks3-fp8-prepared-frozen-shared-discovery-20261026T090235-3d727a",
+      "reference_age_seconds": 0.34974611399229616,
+      "full_validation": null
+    }
+  ],
+  "decision": "Reject combined exact gather/row32 for loss/time; no1969/1970/1971 verification or unchanged repeat. Cycle4 local batch closed with four rejections. Next exploratory hypothesis: zero-initialized bounded pairwise feature gains on original independent rank1 experts, retaining original64-row BF16 kernels and all shared settings. Require initial equivalence, cross-derivatives, output/weight gradients, graph/state tests before convergence.",
+  "next_hypothesis": "h_i_new = BF16(h_i_independent * (1 + .5*tanh(a_i)*tanh(c_(i xor1)/4))), a_i initially0. Original independent GS32/BF16 feature retained; multiplicative factor bounded[.5,1.5]. Relative interaction bound .5*abs(h_i), not a claimed global absolute bound.",
+  "motivation": "Earlier additive after-GS32 pair term changed many features but had only about.005 RMS while normal nonlinear features reach several units RMS. Test relative feature modulation, not an unchanged additive bound/rate repeat. The new capacity and effect are hypotheses; no gain asserted.",
+  "original_expert_only_incumbent_remains_best_full_validation": true
+}

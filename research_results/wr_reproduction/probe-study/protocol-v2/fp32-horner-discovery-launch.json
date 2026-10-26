@@ -1,0 +1,26 @@
+{
+  "utc": "2026-10-26T17:12:49.953658+00:00",
+  "phase": "cycle6_local2_fp32_horner",
+  "status": "discovery_running",
+  "run_id": "probe-experts-fp32-horner-discovery-20261026T171202-b9203a",
+  "unit": "wr-probe-fp32-horner-3a7cff3e",
+  "code_commit": "0ee11b9ebab163afd34b86b72c70a95636adbbf6",
+  "seed": 169,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "configuration": "configs/wr_reproduction/probe_experts_fp32_horner.json",
+  "numerical_gate_run_id": "probe-experts-fp32-horner-calibration-20261026T170353-d72fa8",
+  "speed_state_gate_run_id": "probe-experts-fp32-horner-calibration-20261026T170515-87bd8d",
+  "gate_record_commit": "0ee11b9ebab163afd34b86b72c70a95636adbbf6",
+  "source_manifest": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-fp32-horner-discovery-20261026T171202-b9203a/run.json",
+  "max_train_seconds": 900,
+  "verification_seeds_if_qualified": [
+    2769,
+    2770,
+    2771
+  ],
+  "gpu_lease_holder_pid": 1588767,
+  "independent_stop_watch_active": true,
+  "source_and_fence_checks_passed": true,
+  "historical_STOP_markers_preserved": true,
+  "next": "Monitor the fixed held-out probes under the frozen V2 below5/first one-sided>=.01/latest nonfuture<=3s policy. Never substitute training loss or use a future reference. Complete raw full validation if screening survives the900-second cap. A qualifying endpoint automatically triggers2769/2770/2771 frozen unpruned verification. Record actual overhead and paired8192/32768 uncertainty. Freeze all Python sources while this unit or verification descendants are active; after final result choose cycle6 local3 from evidence."
+}

@@ -1,0 +1,73 @@
+{
+  "utc": "2026-10-26T19:52:00.963891+00:00",
+  "cycle": 7,
+  "position": "local3",
+  "run_id": "probe-experts-forward-primal-vjp-calibration-20261026T194615-cf734f",
+  "code_commit": "e026a8e34f941bcef0e4ff04ae3c97e117eee47e",
+  "passed": true,
+  "full_warmup_updates": 24,
+  "all_eight_logical_ranks": true,
+  "prefix_elapsed_seconds": 120.27238706799108,
+  "speed": {
+    "passed": true,
+    "candidate": {
+      "first100_seconds": 39.62785408998025,
+      "after25_through100_seconds": 29.65595632098848,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "reference": {
+      "first100_seconds": 39.55393554098555,
+      "after25_through100_seconds": 29.54044010999496,
+      "first100_steps": 100,
+      "all_logical_ranks": 8
+    },
+    "ratios": {
+      "first100_seconds": 1.0018688038998826,
+      "after25_through100_seconds": 1.0039104431268928
+    },
+    "reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+    "reference_code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+    "criterion": "Both first100 and updates26-100 actual-model durations must be at most1.03 times the saved original incumbent prefix. This is a gradient hypothesis, not a speedup claim.",
+    "limitation": "Single prefix; no claim of runtime-noise precision. Any convergence gain must survive continuous elapsed-time screening and full validation."
+  },
+  "cold_probe_seconds": 2.879732015018817,
+  "warm_probe_seconds": 2.6019475780194625,
+  "projected_seven_probe_seconds": 18.491417483135592,
+  "projected_fraction_of900": 0.020546019425706212,
+  "oracle_max_abs": 0.0,
+  "repeat_max_abs": 0.0,
+  "state_restoration": {
+    "checked_entries": 1264,
+    "changed": [],
+    "passed": true,
+    "pointer_restoration_required": true,
+    "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+  },
+  "pending_state_restoration": {
+    "checked_entries": 1444,
+    "changed": [],
+    "passed": true,
+    "pointer_restoration_required": true,
+    "sparse_table_contract": "readonly pointer/version plus1024 sampled rows; not a full130GB content hash"
+  },
+  "continuation_parity": {
+    "passed": true,
+    "same_checkpoint": true,
+    "same_eight_logical_microbatches": true,
+    "baseline_loss": 7.631011962890625,
+    "with_probe_loss": 7.631011962890625,
+    "maximum_parameter_relative_rms": 0.0,
+    "all_parameters_bitwise_equal": true
+  },
+  "post_probe_odd_update_loss": 7.631070613861084,
+  "all_five_routed_backwards_executed": true,
+  "five_original_dense_MLPs": true,
+  "original_forward_and_evaluation": true,
+  "only_squared_relu_multiplier_changed": true,
+  "frozen_backend_unchanged": true,
+  "not_a_screening_reference": true,
+  "full_convergence_verified": false,
+  "limitation": "Timing is a single bounded prefix, not runtime variance. Even-update parity is bitwise; original sparse first-event atomic nondeterminism remains documented separately. No architectural or convergence gain established.",
+  "decision": "Launch screened900s forward-primal VJP trial; original function and settings retained. Qualifying full-validation endpoint triggers3369/3370/3371 frozen unpruned seeds. No further numerical or timing repeats."
+}

@@ -1,0 +1,261 @@
+{
+  "utc": "2026-10-26T12:57:48.014043+00:00",
+  "run_id": "probe-experts-local-residual-exact-gather-discovery-20261026T125041-4a1477",
+  "code_commit": "d712c32396c0f883075f60d1405d66cca5de6b4b",
+  "status": "pruned",
+  "qualifies": false,
+  "full_validation": null,
+  "phase": "cycle4_local1_local_residual_gather_rejected",
+  "seed": 169,
+  "step": 293,
+  "probe_loss": 4.640410654246807,
+  "checkpoint_elapsed_seconds": 120.7757279239886,
+  "probe_seconds": 3.038840805995278,
+  "probe_completion_seconds": 123.81445728699327,
+  "train_seconds_at_prune": 123.990974558983,
+  "screening": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.7757279239886,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.09899774380028248,
+    "reference_run_id": "probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8",
+    "reference_elapsed_seconds": 120.58665766299237,
+    "reference_age_seconds": 0.1890702609962318,
+    "reference_utc": "2026-10-26T09:39:52.705870+00:00",
+    "reference_loss": 4.541412910446525,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-bf16-exact-gradient-gather-discovery-20261026T093540-ef56c8/events.jsonl",
+      "line": 330,
+      "row_sha256": "bff03fbc7d74779cad6588f2881ed5cb227166cf0b7543ab68deee0ea6bea9dd"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.09899774380028248,
+      "standard_error": 0.0016004821526889544,
+      "normal95_halfwidth": 0.0031369450192703504,
+      "student95_halfwidth": 0.00316895466232413,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T12:54:55.270302+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-local-residual-exact-gather-discovery-20261026T125041-4a1477",
+    "seed": 169,
+    "code_commit": "d712c32396c0f883075f60d1405d66cca5de6b4b",
+    "training_projection_gs32": true
+  },
+  "paired_32768_text_uncertainty": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.09899774380028248,
+    "standard_error": 0.0016000954899977097,
+    "normal95_halfwidth": 0.003136187160395511,
+    "student95_halfwidth": 0.003267394990575323,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.36827629804611206,
+        "rms": 1.2815266847610474,
+        "max_abs": 10.560310363769531,
+        "nonzero_fraction": 0.904296875
+      },
+      "nonlinear_output": {
+        "mean": 0.5679172873497009,
+        "rms": 3.6828629970550537,
+        "max_abs": 190.0,
+        "nonzero_fraction": 0.999267578125
+      },
+      "projected_output": {
+        "mean": 0.16685059666633606,
+        "rms": 9.015931129455566,
+        "max_abs": 79.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false,
+      "local_term_after_independent_GS32": {
+        "mean": -0.0015585139626637101,
+        "rms": 0.0087506752461195,
+        "max_abs": 0.04308256506919861,
+        "nonzero_fraction": 0.994312047958374
+      },
+      "local_placement": "after-independent-GS32",
+      "packed_feature_change_due_to_local": {
+        "mean": -0.0015976111171767116,
+        "rms": 0.00875637587159872,
+        "max_abs": 0.04296875,
+        "nonzero_fraction": 0.8938244581222534
+      },
+      "local_effect_scope": "Same live coordinates/geometry with and without local, first probe chunk; final BF16 core features precede gate and post multiplier"
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.42342501878738403,
+        "rms": 1.3277673721313477,
+        "max_abs": 6.487216472625732,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5661237239837646,
+        "rms": 2.925290584564209,
+        "max_abs": 107.5,
+        "nonzero_fraction": 0.998046875
+      },
+      "projected_output": {
+        "mean": 0.16787831485271454,
+        "rms": 8.034295082092285,
+        "max_abs": 43.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false,
+      "local_term_after_independent_GS32": {
+        "mean": -0.0012002871371805668,
+        "rms": 0.010927517898380756,
+        "max_abs": 0.04808264970779419,
+        "nonzero_fraction": 0.9953941702842712
+      },
+      "local_placement": "after-independent-GS32",
+      "packed_feature_change_due_to_local": {
+        "mean": -0.0012158943573012948,
+        "rms": 0.010949359275400639,
+        "max_abs": 0.048095703125,
+        "nonzero_fraction": 0.8908154368400574
+      },
+      "local_effect_scope": "Same live coordinates/geometry with and without local, first probe chunk; final BF16 core features precede gate and post multiplier"
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.40888655185699463,
+        "rms": 1.3134170770645142,
+        "max_abs": 6.285566806793213,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5380204916000366,
+        "rms": 2.415560245513916,
+        "max_abs": 71.5,
+        "nonzero_fraction": 0.998779296875
+      },
+      "projected_output": {
+        "mean": 0.16808396577835083,
+        "rms": 8.643457412719727,
+        "max_abs": 67.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false,
+      "local_term_after_independent_GS32": {
+        "mean": -0.0005118000553920865,
+        "rms": 0.010370754636824131,
+        "max_abs": 0.05105139687657356,
+        "nonzero_fraction": 0.9924160242080688
+      },
+      "local_placement": "after-independent-GS32",
+      "packed_feature_change_due_to_local": {
+        "mean": -0.0005753692239522934,
+        "rms": 0.010367198847234249,
+        "max_abs": 0.051025390625,
+        "nonzero_fraction": 0.8905742168426514
+      },
+      "local_effect_scope": "Same live coordinates/geometry with and without local, first probe chunk; final BF16 core features precede gate and post multiplier"
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.41082414984703064,
+        "rms": 1.3266093730926514,
+        "max_abs": 8.097079277038574,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.5765042304992676,
+        "rms": 2.6352698802948,
+        "max_abs": 81.5,
+        "nonzero_fraction": 0.997802734375
+      },
+      "projected_output": {
+        "mean": 0.15792134404182434,
+        "rms": 8.187918663024902,
+        "max_abs": 61.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false,
+      "local_term_after_independent_GS32": {
+        "mean": -0.0007199464016593993,
+        "rms": 0.010110214352607727,
+        "max_abs": 0.04357501491904259,
+        "nonzero_fraction": 0.994037926197052
+      },
+      "local_placement": "after-independent-GS32",
+      "packed_feature_change_due_to_local": {
+        "mean": -0.0007428081007674336,
+        "rms": 0.010141486302018166,
+        "max_abs": 0.04345703125,
+        "nonzero_fraction": 0.8921409249305725
+      },
+      "local_effect_scope": "Same live coordinates/geometry with and without local, first probe chunk; final BF16 core features precede gate and post multiplier"
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3674599528312683,
+        "rms": 1.2911701202392578,
+        "max_abs": 5.732560157775879,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5432693362236023,
+        "rms": 2.140613079071045,
+        "max_abs": 44.5,
+        "nonzero_fraction": 0.998291015625
+      },
+      "projected_output": {
+        "mean": -0.18441559374332428,
+        "rms": 9.81402587890625,
+        "max_abs": 87.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false,
+      "local_term_after_independent_GS32": {
+        "mean": -0.002015535719692707,
+        "rms": 0.010516924783587456,
+        "max_abs": 0.040101662278175354,
+        "nonzero_fraction": 0.9951232075691223
+      },
+      "local_placement": "after-independent-GS32",
+      "packed_feature_change_due_to_local": {
+        "mean": -0.0020921584218740463,
+        "rms": 0.010499437339603901,
+        "max_abs": 0.0400390625,
+        "nonzero_fraction": 0.8856678009033203
+      },
+      "local_effect_scope": "Same live coordinates/geometry with and without local, first probe chunk; final BF16 core features precede gate and post multiplier"
+    }
+  ],
+  "gradient_samples": 0,
+  "gradient_limitation": "First-probe pruning precedes the armed subsequent optimizer samples; missing gradient/update observations are not zeros.",
+  "actual_model_speed_gate": "local-residual-gather-speed-state-summary.json",
+  "speed_gain_is_not_convergence_gain": true,
+  "verification_seeds_launched": [],
+  "new_stop": false,
+  "source_hashes_match": true,
+  "decision": "Reject this compact-residual kernel variant under the first one-sided comparable-probe rule. No unchanged repeat or verification seeds. Return to the incumbent for a distinct training-feature precision hypothesis; all original evaluation, projection and shared settings remain frozen."
+}

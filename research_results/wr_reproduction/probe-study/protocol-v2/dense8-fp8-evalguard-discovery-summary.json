@@ -1,0 +1,219 @@
+{
+  "utc": "2026-10-26T19:35:50.989583+00:00",
+  "cycle": 7,
+  "position": "local2",
+  "run_id": "probe-dense8-fp8-evalguard-width2816-discovery-20261026T193022-72d964",
+  "code_commit": "bd914cf6ec6ac0a0bf761b10b7a8f6af6a675478",
+  "status": "pruned",
+  "qualifies": false,
+  "checkpoint_elapsed_seconds": 120.33909298700746,
+  "probe_loss": 4.635840704664588,
+  "probe_seconds": 3.1083878469944466,
+  "pruned_elapsed_seconds": 123.6989915400045,
+  "screening_decision": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.33909298700746,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.11728255450725555,
+    "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+    "reference_elapsed_seconds": 120.2109339319868,
+    "reference_age_seconds": 0.12815905502066016,
+    "reference_utc": "2026-10-26T14:09:02.407891+00:00",
+    "reference_loss": 4.518558150157332,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785/events.jsonl",
+      "line": 331,
+      "row_sha256": "1ffcc96b3c26752568152e11db1ddd017e3b2a266fb8c34532843dbf921fc12c"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.11728255450725555,
+      "standard_error": 0.0017665218799634884,
+      "normal95_halfwidth": 0.003462382884728437,
+      "student95_halfwidth": 0.003497713322327707,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T19:34:36.387825+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_dense_8",
+    "run_id": "probe-dense8-fp8-evalguard-width2816-discovery-20261026T193022-72d964",
+    "seed": 169,
+    "code_commit": "bd914cf6ec6ac0a0bf761b10b7a8f6af6a675478",
+    "training_projection_gs32": true
+  },
+  "paired_32768_token_block_uncertainty": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.11728255450725555,
+    "standard_error": 0.0021500899081614844,
+    "normal95_halfwidth": 0.004214176219996509,
+    "student95_halfwidth": 0.004390483592465751,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "actual_timing_prefix": {
+    "first100_seconds": 39.97138289999566,
+    "after25_through100_seconds": 29.86384378001094
+  },
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.35561591386795044,
+        "rms": 1.2607247829437256,
+        "max_abs": 6.136824131011963,
+        "nonzero_fraction": 0.904296875
+      },
+      "nonlinear_output": {
+        "mean": 0.5321083068847656,
+        "rms": 2.100492238998413,
+        "max_abs": 39.5,
+        "nonzero_fraction": 0.282470703125
+      },
+      "projected_output": {
+        "mean": -0.0422741174697876,
+        "rms": 8.084969520568848,
+        "max_abs": 59.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4042186141014099,
+        "rms": 1.3334145545959473,
+        "max_abs": 7.096494197845459,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.6359639167785645,
+        "rms": 3.253173351287842,
+        "max_abs": 111.5,
+        "nonzero_fraction": 0.28515625
+      },
+      "projected_output": {
+        "mean": 0.21569785475730896,
+        "rms": 7.834682464599609,
+        "max_abs": 58.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3944917917251587,
+        "rms": 1.2933539152145386,
+        "max_abs": 5.364637851715088,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5262835025787354,
+        "rms": 2.076225996017456,
+        "max_abs": 44.0,
+        "nonzero_fraction": 0.294189453125
+      },
+      "projected_output": {
+        "mean": -0.0657326951622963,
+        "rms": 8.070110321044922,
+        "max_abs": 62.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4364883005619049,
+        "rms": 1.2964264154434204,
+        "max_abs": 6.372939586639404,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.5463260412216187,
+        "rms": 2.724172592163086,
+        "max_abs": 68.5,
+        "nonzero_fraction": 0.287109375
+      },
+      "projected_output": {
+        "mean": -0.020482316613197327,
+        "rms": 8.311895370483398,
+        "max_abs": 85.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3399278521537781,
+        "rms": 1.3096669912338257,
+        "max_abs": 6.455432891845703,
+        "nonzero_fraction": 0.896484375
+      },
+      "nonlinear_output": {
+        "mean": 0.6606155037879944,
+        "rms": 2.9506959915161133,
+        "max_abs": 81.0,
+        "nonzero_fraction": 0.31201171875
+      },
+      "projected_output": {
+        "mean": 0.18560440838336945,
+        "rms": 9.696013450622559,
+        "max_abs": 67.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "dense",
+      "coordinate": {
+        "mean": -0.9549052715301514,
+        "rms": 1.6402311325073242,
+        "max_abs": 8.207649230957031,
+        "nonzero_fraction": 1.0
+      },
+      "nonlinear_output": {
+        "mean": 0.3594331741333008,
+        "rms": 1.9921977519989014,
+        "max_abs": 56.0,
+        "nonzero_fraction": 0.184814453125
+      },
+      "projected_output": {
+        "mean": -0.22195708751678467,
+        "rms": 16.424272537231445,
+        "max_abs": 372.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "gradient_diagnostics_available": false,
+  "gradient_missing_reason": "First probe rejected before the two scheduled post-probe optimizer observations; missing gradients are not zero.",
+  "full_validation": null,
+  "reserved_confirmation": null,
+  "verification_seeds_launched": [],
+  "no_new_placement_win": true,
+  "limitations": [
+    "A small whole-model timing improvement is not a convergence gain.",
+    "Paired text uncertainty is conditional on observed weights and text blocks, not training-run variance or current-best selection uncertainty.",
+    "Prior BF16 layer8 first probe at120.460s is future relative to120.339s and is not a permitted simultaneous comparator."
+  ],
+  "decision": "Reject unchanged dense8FP8 recipe; preserve cache-guard fix and all gates. Next local3 investigates the forward-rounded versus smooth squared-ReLU backward multiplier on expert-only KS3; no scalar-grid repeat or shared-kernel change."
+}

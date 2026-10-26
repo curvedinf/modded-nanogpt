@@ -1,0 +1,421 @@
+{
+  "run_id": "probe-experts-difference-pair-calibration-20261026T202011-3e4056",
+  "status": "calibration_complete",
+  "seed": 169,
+  "code_commit": "8211f0ffee612d37723b1e0b080385f58d9ec4c3",
+  "recipe": {
+    "name": "probe-experts-difference-pair",
+    "hypothesis": "Cycle7 exploratory: add a bounded compact interaction of coordinate differences after the original independent GS32/BF16 rank1 features. b(d)=max(1-(d/2)^2,0)^2 with d=clamp(c_i)-clamp(c_(i xor1)); residual=tanh(raw_i)*b(d), raw initialized to zero. Unlike the rejected separable signed/negative-coordinate products, this nonseparable C1 basis is supported near the equality diagonal in every sign quadrant. It also differs from the prior univariate compact residual and does not replace either independent pathway with a mean or difference. Earlier pair terms changed featureRMS by only about0.1%-0.3% in sampled probes, but this does not establish that capacity is the limitation or predict a gain. Preserve all original projections, routing, geometry, rates, all five dense MLPs and shared settings. Test analytic cross derivatives and support/clamp boundaries; exact zero-init original function and gradients; independent nonzero output/input/gate/geometry/projection gradients; then one full graph/state gate and elapsed-time screened trial. No combination of failed locals.",
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+    "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "kernel_evidence": {
+      "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+      "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+      "matrix_max_relative_rms": 4.411854752106592e-05
+    },
+    "block_correctness_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+      "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+      "max_relative_rms": 0.0,
+      "evaluation_original_kernels": true,
+      "bitwise_input_and_weight_producers": true
+    },
+    "timing_evidence": {
+      "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+      "first100_seconds": 54.066861718994915,
+      "updates25_to100_seconds": 40.427348073004396,
+      "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+      "reference_first100": 55.488501123007154,
+      "reference_25to100": 41.43367328601016,
+      "validation": false,
+      "first100_time_reduction": 0.025620432616493716,
+      "steady_time_reduction": 0.024287617611387313,
+      "timing_gate_passed": true
+    },
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "hardware_change_scope": "Opt-in shared nongrouped FP8 GEMM tiles across attention, dense MLP and output head; default MLP dispatch remains legacy.",
+    "shared_fp8_correctness_evidence": {
+      "run_id": "ks3-shared-fp8-dispatch-check-20261025T075607-ff0ab5",
+      "code_commit": "bcb2f5f79d96c9d82c4b0ccfcbbf0b75253fa4e1",
+      "source_format_pairs": 4,
+      "independent_shape_cases": 15,
+      "all_stored_byte_patterns": true,
+      "original_dense_mlp_autograd": true,
+      "validation": false
+    },
+    "validation_window_policy": "accepted-control",
+    "evaluation_protocol": "Capture live stage-two YaRN frequencies/attention scales on first reach of640/1408 windows. For terminal stage four or full-schedule completion only, restore those nonlearned buffers and use640/1408 evaluation arguments. Preserve raw learned weights, training schedule and all updates; no canonical mask, tail shipping or final window extension. Early-stage evaluation remains incompatible. All restoration/rebuild/readback/setup is inside original training timer; no strict qualification if actual elapsed exceeds902.3592145430011.",
+    "shared_fp8_timing_evidence": {
+      "run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+      "code_commit": "2959f2a2250c36cb7dd10f28c02cdcfcc86fd729",
+      "first100_seconds": 39.57759546399757,
+      "after25_through100_seconds": 29.55288318300154,
+      "baseline_run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+      "baseline_first100_seconds": 54.06715966599586,
+      "baseline_after25_through100_seconds": 40.427348073004396,
+      "first100_time_reduction": 0.26799196206178977,
+      "steady_time_reduction": 0.2689878364112719,
+      "validation": false,
+      "gate_passed": true
+    },
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_experts",
+    "hypothesis_class": "exploratory",
+    "difference_pair": {
+      "kind": "bounded-compact-coordinate-difference-v1",
+      "bound": 1.0,
+      "difference_width": 2.0,
+      "lr_mul": 0.125,
+      "initial_raw_coefficient": 0.0,
+      "placement": "after-independent-GS32"
+    }
+  },
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "validation": null,
+  "pruning": null,
+  "calibration": {
+    "mode": "numerical",
+    "passed": true,
+    "cpu_checks": {
+      "passed": true,
+      "gradcheck": true,
+      "gradgradcheck_away_from_support_boundary": true,
+      "initial_function_and_original_gradients_exact": true,
+      "active_pairs_have_zero_init_learning_signal": true,
+      "inactive_pairs_have_exact_zero_signal": true,
+      "cross_derivative": 0.2825732340780432,
+      "analytic_cross_derivative": 0.2825732340780432,
+      "absolute_residual_bound": 1.0,
+      "difference_width": 2.0,
+      "C1_support_boundaries_checked": true,
+      "exact_outside_support_zero_value_coordinate_and_coefficient_gradient": true,
+      "equal_coordinates_same_basis_across_sign_quadrants": true,
+      "opposite_sign_nearby_coordinates_supported": true,
+      "nonseparable_basis_determinant": 0.3965019149122868,
+      "common_coordinate_translation_invariance": true,
+      "clamped_coordinates_zero_gradient_outside_clamp": true,
+      "can_activate_zero_independent_features": true,
+      "independent_rank_one_paths_retained": true,
+      "new_parameters": 40960
+    },
+    "gpu_boundary_checks": {
+      "passed": true,
+      "relative_rms": {
+        "output": 0.0,
+        "coordinate": 6.235637073359612e-08,
+        "coefficient": 1.032448011528686e-07
+      },
+      "exact_zero_gradients_at_support_edges_and_clamped_or_padded_rows": true
+    },
+    "checks": [
+      {
+        "tuned": true,
+        "tokens": 1,
+        "zero_geometry": false,
+        "active_experts": 1,
+        "padded_rows": 1024,
+        "zero_initialization_bitwise": {
+          "output": true,
+          "input_pack": true,
+          "coordinates": true,
+          "packed_features": true,
+          "input_gradient": true,
+          "gate_gradient": true,
+          "geometry_gradient": true,
+          "weight_gradient": true
+        },
+        "zero_initialization_relative_rms": {
+          "output": 0.0,
+          "input_pack": 0.0,
+          "coordinates": 0.0,
+          "packed_features": 0.0,
+          "input_gradient": 0.0,
+          "gate_gradient": 0.0,
+          "geometry_gradient": 0.0,
+          "weight_gradient": 0.0
+        },
+        "routed_initial_output_input_router_post_weight_bitwise_equal": true,
+        "routed_initial_geometry_relative_rms": 0.0,
+        "nonzero_relative_rms": {
+          "features": 0.0,
+          "output": 1.3710219626261733e-09,
+          "input_gradient": 0.0,
+          "geometry_gradient": 1.8148135438877944e-07,
+          "difference_pair_gradient": 1.846774893010661e-07,
+          "weight_gradient": 0.0
+        },
+        "smooth_added_derivative_relative_rms": {
+          "coordinate": 8.182428956615695e-08,
+          "coefficient": 5.679308046069309e-08
+        },
+        "actual_gate_gradient_bitwise_equal": true,
+        "independent_gate_gradient_forward_error_bound_satisfied": true
+      },
+      {
+        "tuned": true,
+        "tokens": 257,
+        "zero_geometry": true,
+        "active_experts": 1,
+        "padded_rows": 1280,
+        "zero_initialization_bitwise": {
+          "output": true,
+          "input_pack": true,
+          "coordinates": true,
+          "packed_features": true,
+          "input_gradient": true,
+          "gate_gradient": true,
+          "geometry_gradient": true,
+          "weight_gradient": true
+        },
+        "zero_initialization_relative_rms": {
+          "output": 0.0,
+          "input_pack": 0.0,
+          "coordinates": 0.0,
+          "packed_features": 0.0,
+          "input_gradient": 0.0,
+          "gate_gradient": 0.0,
+          "geometry_gradient": 0.0,
+          "weight_gradient": 0.0
+        },
+        "routed_initial_output_input_router_post_weight_bitwise_equal": true,
+        "routed_initial_geometry_relative_rms": 0.0,
+        "nonzero_relative_rms": {
+          "features": 0.0,
+          "output": 2.373485767748207e-05,
+          "input_gradient": 9.581851190887392e-05,
+          "geometry_gradient": 1.77526459310684e-07,
+          "difference_pair_gradient": 3.422317433887656e-07,
+          "weight_gradient": 4.896907557849772e-05
+        },
+        "smooth_added_derivative_relative_rms": {
+          "coordinate": 7.672544199976983e-08,
+          "coefficient": 2.897891704378708e-07
+        },
+        "actual_gate_gradient_bitwise_equal": true,
+        "independent_gate_gradient_forward_error_bound_satisfied": true
+      },
+      {
+        "tuned": true,
+        "tokens": 257,
+        "zero_geometry": false,
+        "active_experts": 1,
+        "padded_rows": 1280,
+        "zero_initialization_bitwise": {
+          "output": true,
+          "input_pack": true,
+          "coordinates": true,
+          "packed_features": true,
+          "input_gradient": true,
+          "gate_gradient": true,
+          "geometry_gradient": true,
+          "weight_gradient": true
+        },
+        "zero_initialization_relative_rms": {
+          "output": 0.0,
+          "input_pack": 0.0,
+          "coordinates": 0.0,
+          "packed_features": 0.0,
+          "input_gradient": 0.0,
+          "gate_gradient": 0.0,
+          "geometry_gradient": 0.0,
+          "weight_gradient": 0.0
+        },
+        "routed_initial_output_input_router_post_weight_bitwise_equal": true,
+        "routed_initial_geometry_relative_rms": 0.0,
+        "nonzero_relative_rms": {
+          "features": 3.012033857885399e-06,
+          "output": 2.5066954549402e-05,
+          "input_gradient": 8.962788706412539e-05,
+          "geometry_gradient": 1.9333131717758079e-07,
+          "difference_pair_gradient": 3.5703584444490843e-07,
+          "weight_gradient": 5.0059046770911664e-05
+        },
+        "smooth_added_derivative_relative_rms": {
+          "coordinate": 7.71356596374062e-08,
+          "coefficient": 3.0445150400737475e-07
+        },
+        "actual_gate_gradient_bitwise_equal": true,
+        "independent_gate_gradient_forward_error_bound_satisfied": true
+      },
+      {
+        "tuned": true,
+        "tokens": 4096,
+        "zero_geometry": false,
+        "active_experts": 8,
+        "padded_rows": 4992,
+        "zero_initialization_bitwise": {
+          "output": true,
+          "input_pack": true,
+          "coordinates": true,
+          "packed_features": true,
+          "input_gradient": true,
+          "gate_gradient": true,
+          "geometry_gradient": true,
+          "weight_gradient": true
+        },
+        "zero_initialization_relative_rms": {
+          "output": 0.0,
+          "input_pack": 0.0,
+          "coordinates": 0.0,
+          "packed_features": 0.0,
+          "input_gradient": 0.0,
+          "gate_gradient": 0.0,
+          "geometry_gradient": 0.0,
+          "weight_gradient": 0.0
+        },
+        "routed_initial_output_input_router_post_weight_bitwise_equal": true,
+        "routed_initial_geometry_relative_rms": 0.0,
+        "nonzero_relative_rms": {
+          "features": 2.901834477597731e-06,
+          "output": 3.479144288576208e-05,
+          "input_gradient": 9.752411278896034e-05,
+          "geometry_gradient": 2.1264558824896085e-07,
+          "difference_pair_gradient": 4.4829022272097063e-07,
+          "weight_gradient": 6.0994560044491664e-05
+        },
+        "smooth_added_derivative_relative_rms": {
+          "coordinate": 7.844040084137305e-08,
+          "coefficient": 4.1549841967025714e-07
+        },
+        "actual_gate_gradient_bitwise_equal": true,
+        "independent_gate_gradient_forward_error_bound_satisfied": true
+      },
+      {
+        "tuned": true,
+        "tokens": 16384,
+        "zero_geometry": false,
+        "active_experts": 8,
+        "padded_rows": 17280,
+        "zero_initialization_bitwise": {
+          "output": true,
+          "input_pack": true,
+          "coordinates": true,
+          "packed_features": true,
+          "input_gradient": true,
+          "gate_gradient": true,
+          "geometry_gradient": true,
+          "weight_gradient": true
+        },
+        "zero_initialization_relative_rms": {
+          "output": 0.0,
+          "input_pack": 0.0,
+          "coordinates": 0.0,
+          "packed_features": 0.0,
+          "input_gradient": 0.0,
+          "gate_gradient": 0.0,
+          "geometry_gradient": 0.0,
+          "weight_gradient": 0.0
+        },
+        "routed_initial_output_input_router_post_weight_bitwise_equal": true,
+        "routed_initial_geometry_relative_rms": 0.0,
+        "nonzero_relative_rms": {
+          "features": 2.962426151498221e-06,
+          "output": 3.474218101473525e-05,
+          "input_gradient": 0.00010217924864264205,
+          "geometry_gradient": 2.1905300684466056e-07,
+          "difference_pair_gradient": 8.339205805896199e-07,
+          "weight_gradient": 8.368404087377712e-05
+        },
+        "smooth_added_derivative_relative_rms": {
+          "coordinate": 7.871906149148344e-08,
+          "coefficient": 8.154157171702536e-07
+        },
+        "actual_gate_gradient_bitwise_equal": true,
+        "independent_gate_gradient_forward_error_bound_satisfied": true
+      },
+      {
+        "tuned": false,
+        "tokens": 257,
+        "zero_geometry": false,
+        "active_experts": 1,
+        "padded_rows": 1280,
+        "zero_initialization_bitwise": {
+          "output": true,
+          "input_pack": true,
+          "coordinates": true,
+          "packed_features": true,
+          "input_gradient": true,
+          "gate_gradient": true,
+          "geometry_gradient": true,
+          "weight_gradient": true
+        },
+        "zero_initialization_relative_rms": {
+          "output": 0.0,
+          "input_pack": 0.0,
+          "coordinates": 0.0,
+          "packed_features": 0.0,
+          "input_gradient": 0.0,
+          "gate_gradient": 0.0,
+          "geometry_gradient": 0.0,
+          "weight_gradient": 0.0
+        },
+        "routed_initial_output_input_router_post_weight_bitwise_equal": true,
+        "routed_initial_geometry_relative_rms": 0.0,
+        "nonzero_relative_rms": {
+          "features": 4.233149411447812e-06,
+          "output": 2.428789230179973e-05,
+          "input_gradient": 9.785709698917344e-05,
+          "geometry_gradient": 2.1088719392992061e-07,
+          "difference_pair_gradient": 3.5175733614778437e-07,
+          "weight_gradient": 5.406366108218208e-05
+        },
+        "smooth_added_derivative_relative_rms": {
+          "coordinate": 7.63879484111385e-08,
+          "coefficient": 2.919214807661774e-07
+        },
+        "actual_gate_gradient_bitwise_equal": true,
+        "independent_gate_gradient_forward_error_bound_satisfied": true
+      }
+    ],
+    "numerical_seed": 3569,
+    "original_independent_rank_one_paths_retained": true,
+    "additional_parameters": 40960,
+    "initial_output_BF16_input_router_post_weight_gradients_bitwise_equal": true,
+    "original_geometry_gradient_bitwise_equal": true,
+    "smooth_new_gradient_relative_rms_tolerance": 2e-05,
+    "oracle": "Original independent geometry and BF16 coordinate-VJP boundary plus independent Torch coordinate-difference/cross-coordinate autograd and groupedFP32 matrix products withBF16 storage. Padding follows original dispatch tiles andSRC validity.",
+    "full_graph_training_tested": false,
+    "full_convergence_verified": false
+  },
+  "exit_code": 0,
+  "reserved_confirmation": null,
+  "events_sha256": "722465dcdb8780b2b627d99512fbbdebdc6c6a405a6b225ebea4c3e21e2d6196",
+  "completed_utc": "2026-10-26T20:20:30.694984+00:00",
+  "qualifies": false
+}

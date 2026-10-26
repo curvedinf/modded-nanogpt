@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-26T15:42:56.539865+00:00",
+  "failed_run_id": "probe-experts-prepared-geometry-calibration-20261026T154101-f7bb12",
+  "failed_code_commit": "962768ce27a20d1e78369559f893342429cadeb4",
+  "phase": "cycle5_local3_prepared_geometry",
+  "cause": "Original replicated Adam reassigns parameter.data into flat storage during TrainingManager construction, after model cache attachment. Initial cache lookup key was stale at first warmup custom-op call.",
+  "source_evidence": "wr_reproduction/pr393/upstream/track_1_short/perf/replicated_adam.py:80",
+  "failure": "KeyError before first warmup completed; no timed training or loss/time trial.",
+  "correction": "Explicitly bind the unchanged cache to the final optimizer-owned geometry addresses after runner construction and before any graph warmup. Add a numerical test that simulates that parameter-storage consolidation.",
+  "math_kernels_changed": false,
+  "tolerances_changed": false,
+  "decision": "Preserve failed gate, repeat numerical gate with storage consolidation coverage, then retry one bounded speed/state gate only on pass."
+}

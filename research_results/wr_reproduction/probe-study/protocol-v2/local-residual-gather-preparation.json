@@ -1,0 +1,36 @@
+{
+  "utc": "2026-10-26T12:37:53.874513+00:00",
+  "cycle": 4,
+  "position": "local1",
+  "recipe": "configs/wr_reproduction/probe_experts_local_residual_exact_gather.json",
+  "hypothesis": "Retain the compact-residual function, original geometry/VJP BF16 boundary, every parameter and optimizer. Apply the previously validated exactBF16 gradient gather to its backward to reduce materialized gather/mask intermediates while retaining the originalTorch gate reduction. The unfused trial was pruned with a measurable surviving local feature effect. This is a new kernel-cost hypothesis, not an unchanged retrial or a claimed gain. Require both actual-model first100 and updates26-100 prefixes faster than that same unfused compact-residual run before loss/time testing.",
+  "prior_result": "local-residual-discovery-summary.json",
+  "speed_reference_run_id": "probe-experts-local-residual-k3-discovery-20261026T122452-435b40",
+  "speed_reference_code_commit": "cc26eab0a8d6a5198358cd04849eb4e2c0cb1ac3",
+  "speed_reference_prefix": {
+    "first100_seconds": 40.35625232299208,
+    "after25_through100_seconds": 30.15812886398635,
+    "first100_steps": 100,
+    "all_logical_ranks": 8
+  },
+  "source_scope": "Three new overlay/check/controller files. Frozen compact-residual feature, BF16gradient boundary, optimizer, original model sources and shared kernels unmodified.",
+  "numerical_gate": "Same forward plus exact producer, block gradients, full routed input/router/post/geometry/local/projection gradients for1/257/16384/49152tokens with zero and learned local coefficients. Every comparison must be bitwise; untuned backward remains original.",
+  "speed_state_gate": "Full24graphwarmup then bounded120s original all8logical-rank prefix, strict first100 and updates26-100 ratios<1 against unfused compact residual, original evaluation math oracle, normal/pending state, nextupdatebitwise, projected overhead<=3%. No convergence if slower.",
+  "cpu_scope_checks": [
+    "geometry_rate",
+    "local_rate",
+    "bound",
+    "reference",
+    "shared_backend"
+  ],
+  "cpu_scope_checks_passed": true,
+  "syntax_passed": true,
+  "new_verification_seeds": [
+    1669,
+    1670,
+    1671
+  ],
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "no_reserved_text_used": true,
+  "full_convergence_verified": false
+}

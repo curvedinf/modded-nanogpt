@@ -1,0 +1,63 @@
+{
+  "utc": "2026-10-26T16:21:35.055277+00:00",
+  "phase": "cycle5_exploratory_negative_pair_prepared",
+  "parent_commit": "d6828f6dd22469436ac82c1abc0b2c686380f2ee",
+  "recipe_path": "configs/wr_reproduction/probe_experts_negative_pair.json",
+  "settings": {
+    "kind": "bounded-negative-coordinate-coactivation-v1",
+    "bound": 1.0,
+    "coordinate_scale": 1.0,
+    "lr_mul": 0.125,
+    "initial_raw_coefficient": 0.0,
+    "placement": "after-independent-GS32"
+  },
+  "limiting_evidence_run_id": "probe-experts-prepared-gather-vjp32-discovery-20261026T161049-9afa99",
+  "four_local_inspection": "directed-cycle5-inspection.json",
+  "distinction": "Adds an even, C1 basis supported only on pairs of negative coordinates. The previous odd tanh-product has nonzero support and opposite sign on mixed-sign coordinates; multiplicative gain cannot activate zero original features; compact one-dimensional residuals have no cross-derivative. Every original independent feature is retained separately. This is not a mean-spine or variance-rescaling variant.",
+  "formula": "h_i=BF16(original_GS32_BF16_h_i+tanh(raw_i)*u(c_i)*u(c_(i xor1))); u(c)=max(-tanh(clamp(c,-65504,65504)),0)^2",
+  "absolute_residual_bound": 1.0,
+  "new_parameters": 40960,
+  "initial_raw_coefficient": 0.0,
+  "optimizer": "Adam lr_mul0.125 betas[0.9,0.99] wd0",
+  "cpu_mathematical_checks": {
+    "passed": true,
+    "gradcheck": true,
+    "gradgradcheck_away_from_boundary": true,
+    "initial_function_and_original_gradients_exact": true,
+    "active_negative_pairs_have_zero_init_learning_signal": true,
+    "inactive_pairs_have_exact_zero_signal": true,
+    "cross_derivative": 0.15590681048633914,
+    "analytic_cross_derivative": 0.15590681048633917,
+    "absolute_residual_bound": 1.0,
+    "exact_nonnegative_coordinate_support_exclusion": true,
+    "C1_zero_boundary_checked": true,
+    "can_activate_zero_independent_features": true,
+    "independent_rank_one_paths_retained": true,
+    "new_parameters": 40960
+  },
+  "scope_exclusion_tests": [
+    "rank",
+    "charts",
+    "architecture",
+    "precision",
+    "geometry_backward_rows",
+    "shared_fp8_gemm_tuning",
+    "training_gs32",
+    "max_train_seconds",
+    "negative_pair.bound",
+    "negative_pair.initial_raw_coefficient",
+    "negative_pair.coordinate_scale",
+    "negative_pair.placement"
+  ],
+  "shared_backend_fence_passed": true,
+  "numerical_requirements": "Zero-init bitwise original output/input/router/post/geometry/projection gradients; nonzero Torch autograd and grouped matrix oracle with unchanged predeclared tolerances. Empty experts and padded rows covered at1/257/4096/16384 tokens plus untuned257 evaluation.",
+  "graph_requirements": "Full24 graph warmup, eight original logical ranks, eight training updates with all five new coefficient banks learning, original evaluation math, normal/pending state restoration and bitwise next update. Projected seven-probe and sparse diagnostics<=3%.",
+  "diagnostic_requirements": "Actual residual and feature changes, fraction of zero independent features newly activated, gradient/update magnitudes for added coefficients and original geometry/projections. Coefficient size alone is not activation effect.",
+  "verification_seeds": [
+    2569,
+    2570,
+    2571
+  ],
+  "no_convergence_claim": true,
+  "no_extra_MLP_controls": true
+}

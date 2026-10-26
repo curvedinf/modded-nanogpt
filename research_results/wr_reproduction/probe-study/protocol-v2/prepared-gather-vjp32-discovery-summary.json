@@ -1,0 +1,204 @@
+{
+  "utc": "2026-10-26T16:17:40.189074+00:00",
+  "run_id": "probe-experts-prepared-gather-vjp32-discovery-20261026T161049-9afa99",
+  "code_commit": "93bec17964e195c4fd82f599b278e0becee13842",
+  "status": "pruned",
+  "seed": 169,
+  "phase": "cycle5_local4_closed",
+  "qualifies": false,
+  "full_validation": null,
+  "reserved_confirmation": null,
+  "probe": {
+    "step": 300,
+    "loss": 4.572703260928392,
+    "checkpoint_elapsed_seconds": 120.85372768499656,
+    "probe_completion_seconds": 123.79739005301963,
+    "probe_seconds": 2.943760039022891,
+    "cumulative_probe_seconds": 2.943760039022891,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31"
+  },
+  "screening": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.85372768499656,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.05414511077105999,
+    "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+    "reference_elapsed_seconds": 120.2109339319868,
+    "reference_age_seconds": 0.6427937530097552,
+    "reference_utc": "2026-10-26T14:09:02.407891+00:00",
+    "reference_loss": 4.518558150157332,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785/events.jsonl",
+      "line": 331,
+      "row_sha256": "1ffcc96b3c26752568152e11db1ddd017e3b2a266fb8c34532843dbf921fc12c"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.05414511077105999,
+      "standard_error": 0.0019946595115670268,
+      "normal95_halfwidth": 0.003909532642671372,
+      "student95_halfwidth": 0.003949425832902713,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T16:14:58.225312+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-prepared-gather-vjp32-discovery-20261026T161049-9afa99",
+    "seed": 169,
+    "code_commit": "93bec17964e195c4fd82f599b278e0becee13842",
+    "training_projection_gs32": true
+  },
+  "paired_32768": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.05414511077105999,
+    "standard_error": 0.0020464631866100305,
+    "normal95_halfwidth": 0.00401106784575566,
+    "student95_halfwidth": 0.004178877827057682,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "pruned_training_seconds": 124.00985154201044,
+  "gradient_diagnostic_count": 0,
+  "gradient_limitation": "First-probe pruning precedes the scheduled sparse optimizer observations; absence is not zero gradient.",
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.417123019695282,
+        "rms": 1.3202627897262573,
+        "max_abs": 8.352404594421387,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.5843127965927124,
+        "rms": 3.20797061920166,
+        "max_abs": 101.0,
+        "nonzero_fraction": 0.263671875
+      },
+      "projected_output": {
+        "mean": -0.13230052590370178,
+        "rms": 9.422261238098145,
+        "max_abs": 84.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4744393825531006,
+        "rms": 1.3568068742752075,
+        "max_abs": 5.133448600769043,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.49059176445007324,
+        "rms": 1.9496923685073853,
+        "max_abs": 43.5,
+        "nonzero_fraction": 0.284423828125
+      },
+      "projected_output": {
+        "mean": 0.33304888010025024,
+        "rms": 9.599700927734375,
+        "max_abs": 73.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.470905065536499,
+        "rms": 1.3432199954986572,
+        "max_abs": 6.490683555603027,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.51804518699646,
+        "rms": 2.5187196731567383,
+        "max_abs": 66.5,
+        "nonzero_fraction": 0.2802734375
+      },
+      "projected_output": {
+        "mean": 0.1279427409172058,
+        "rms": 7.728331089019775,
+        "max_abs": 56.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.41924765706062317,
+        "rms": 1.3410711288452148,
+        "max_abs": 8.389558792114258,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.5951847434043884,
+        "rms": 3.129196882247925,
+        "max_abs": 117.5,
+        "nonzero_fraction": 0.299072265625
+      },
+      "projected_output": {
+        "mean": 0.10659085959196091,
+        "rms": 8.319233894348145,
+        "max_abs": 54.25,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.37280571460723877,
+        "rms": 1.2913731336593628,
+        "max_abs": 5.483473300933838,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.57430100440979,
+        "rms": 2.435002326965332,
+        "max_abs": 65.5,
+        "nonzero_fraction": 0.3203125
+      },
+      "projected_output": {
+        "mean": -0.008344113826751709,
+        "rms": 9.782514572143555,
+        "max_abs": 121.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "actual_discovery_prefix": {
+    "first100_seconds": 37.92495509699802,
+    "after25_through100_seconds": 28.326999419979984,
+    "first100_steps": 100,
+    "all_logical_ranks": 8
+  },
+  "actual_discovery_to_original_reference_duration_ratio": {
+    "first100_seconds": 0.9588162234248577,
+    "after25_through100_seconds": 0.9589227281145208
+  },
+  "timing_limitation": "Actual-model timing is diagnostic only. Loss pruning uses elapsed-time fixed heldout CE, never matched steps. Faster prefixes do not establish convergence benefit.",
+  "source_hashes_match": true,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "decision": "Close combined prepared-geometry/exact-gather/row32 hypothesis after first compatible rejection. No full validation, qualification, verification2469/2470/2471 or unchanged repeat. Inspect cycle5 batch and retain the original expert-only incumbent."
+}

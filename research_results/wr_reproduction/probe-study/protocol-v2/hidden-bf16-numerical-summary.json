@@ -1,0 +1,38 @@
+{
+  "utc": "2026-10-26T13:05:00.285667+00:00",
+  "run_id": "probe-experts-hidden-bf16-calibration-20261026T130342-655a53",
+  "code_commit": "0618597cd4cfaa145fcfd5def413e3f8546cbed2",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "passed": true,
+  "cases": 10,
+  "training_cases": 8,
+  "original_eval_cases": 2,
+  "numerical_seed": 1769,
+  "maximum_relative_rms": {
+    "features": 0.00019053780124522746,
+    "output": 0.0005218905280344188,
+    "input_gradient": 3.673805986181833e-05,
+    "geometry_gradient": 8.850880703903385e-07,
+    "weight_gradient": 0.00040774213266558945
+  },
+  "max_smooth_coordinate_error": 2.6475229120137556e-08,
+  "max_smooth_geometry_error": 8.851056350067665e-07,
+  "max_smooth_component_error": 1.3522405879484722e-06,
+  "original_evaluation_bitwise": true,
+  "all_eval_routed_bitwise": true,
+  "input_pack_coordinates_bitwise": true,
+  "original_initial_training_function_equivalence_expected": false,
+  "initial_function_limitation": "This precision hypothesis changes only the training hidden-feature quantizer, including at initialization. The independent rank1 nonlinear function and fixed evaluation precision remain original; no initial training output equivalence is claimed.",
+  "oracle": "Independent Torch joint coefficient packing, original FP16 rounding stages without hidden GS32, smooth FP32 STE autograd and grouped FP32 matrix products with BF16 storage.",
+  "tolerance_scope": "FP16/BLAS reduction and BF16 storage included in forward/input/weight bounds; smooth gradients below3e-5 relativeRMS. All evaluation values and gradients require bitwise equality.",
+  "install_idempotent": true,
+  "full_convergence_verified": false,
+  "shared_backend_unchanged": true,
+  "source_hashes_match": true,
+  "decision": "Launch the bounded actual-model speed/state gate. Require both original prefixes strictly faster, full24graphwarmup, evaluation oracle, normal/pending restoration and bitwise next-update parity before discovery.",
+  "verification_seeds": [
+    1769,
+    1770,
+    1771
+  ]
+}

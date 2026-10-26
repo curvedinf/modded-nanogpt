@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-26T19:40:24.979843+00:00",
+  "passed": true,
+  "cpu": {
+    "passed": true,
+    "explicit_hybrid_STE": true,
+    "padded_rows_zero_gradient": true,
+    "original_coordinate_clamp": true,
+    "zero_geometry_multiplier_checked": true,
+    "initial_function_unchanged": true,
+    "initial_gradient_expected_to_change": true,
+    "no_claim_of_derivative_of_discrete_FP16_map": true
+  },
+  "scope_mutations_rejected": [
+    "architecture",
+    "precision",
+    "charts",
+    "shared_fp8_gemm_tuning",
+    "geometry.lr_mul",
+    "forward_primal_vjp",
+    "forward_primal_vjp_evidence.maximum_actual_model_prefix_ratio",
+    "max_train_seconds"
+  ],
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "hypothesis": "Cycle7local3: inspect a specific KS3 gradient mismatch after scalar grids and forward-precision variants failed. Original forward uses joint-GS32 coefficients and FP16-stage Horner, then FP16 pre-square ReLU; original VJP multiplies the smooth FP32 Jacobian by twice a separately recomputed smooth preactivation. Change only that squared-ReLU multiplier to twice the original forward-rounded ReLU, retaining the original smooth polynomial/tanh Jacobian and coefficient identity STE. Every forward, evaluation, projection product, parameter, initialization and optimizer rate remains original. This explicitly changes initial gradients through FP16 rounding and is a hybrid surrogate, not an exact derivative of the discrete map. Validate against independent Torch autograd of the defined detached-correction surrogate, measure effect sizes, run bounded actual-model state/cost gate (maximum3percent slowdown), then fixedV2 elapsed-time screening. No gain assumed and no unchanged rejected recipe repeated.",
+  "numerical_gpu_passed": false,
+  "actual_model_passed": false
+}

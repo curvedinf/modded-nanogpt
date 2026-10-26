@@ -1,0 +1,40 @@
+{
+  "utc": "2026-10-26T18:05:27.139566+00:00",
+  "cycle": 6,
+  "local_hypotheses": [
+    {
+      "artifact": "fp16-coefficient-discovery-summary.json",
+      "run_id": "probe-experts-fp16-coefficients-discovery-20261026T164833-812733",
+      "code_commit": "90ec2888c1309590a40f12089a30792f23adfc69",
+      "status": "pruned",
+      "qualifies": false
+    },
+    {
+      "artifact": "fp32-horner-discovery-summary.json",
+      "run_id": "probe-experts-fp32-horner-discovery-20261026T171202-b9203a",
+      "code_commit": "0ee11b9ebab163afd34b86b72c70a95636adbbf6",
+      "status": "pruned",
+      "qualifies": false
+    },
+    {
+      "artifact": "odd-residual-discovery-summary.json",
+      "run_id": "probe-experts-odd-residual-discovery-20261026T174406-38bfea",
+      "code_commit": "b7dc4072a7b473ba20fcd8f3ed72504310e26253",
+      "status": "pruned",
+      "qualifies": false
+    },
+    {
+      "artifact": "fixed-affine-discovery-summary.json",
+      "run_id": "probe-experts-fixed-affine-discovery-20261026T180008-7906cc",
+      "code_commit": "b3c7cfa21a8c2bb189a9af80dd977320c2f55bcc",
+      "status": "pruned",
+      "qualifies": false
+    }
+  ],
+  "new_wins": 0,
+  "incumbent_retained": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "conclusion": "DirectFP16 coefficient precision and FP32 Horner rounding did not improve screened loss/time. An independent odd residual activated all sampled zero base features but changed featureRMS only0.4%-0.8% at240s and failed. Fixed affine shape retained all six learned coefficients but failed at120s. No local combination is justified.",
+  "next_exploratory_hypothesis": "Test a sparse interaction graph with three partner coordinates per chart (xor1,xor2,xor4), preserving every original independent rank1 feature. Prior interaction branches used only disconnected adjacent pairs; three partners connect groups of8 coordinates and add distinct mixed terms. Add3 zero-initialized bounded coefficients per chart after originalGS32; no coordinate means, no variance rescaling. Increased parameters/cost are hypotheses only; require independent cross-derivatives, initial function and output/all-gradient checks plus fullgraph/state gates beforeloss/time.",
+  "motivation_limitations": "Prior small interaction effects do not prove insufficient connectivity. New connectivity adds capacity and can cost runtime; convergence must be measured. No win or precision claim from isolated kernels or activation coverage.",
+  "discarded_equivalent_proposal": "Freeze c4/c5 only atzero: affine gradients vanish identically, equivalent to previous4:8freeze; discarded withoutGPU run."
+}

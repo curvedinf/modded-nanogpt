@@ -1,0 +1,365 @@
+{
+  "utc": "2026-10-26T16:35:43.270694+00:00",
+  "run_id": "probe-experts-negative-pair-discovery-20261026T162705-ba7a3f",
+  "code_commit": "00f6fcf0ce84c2cc7e7300b8797735d91eb6cf99",
+  "status": "pruned",
+  "seed": 169,
+  "phase": "cycle5_exploratory_closed",
+  "qualifies": false,
+  "full_validation": null,
+  "reserved_confirmation": null,
+  "probe": {
+    "step": 289,
+    "loss": 4.678995091468096,
+    "checkpoint_elapsed_seconds": 120.51410733399098,
+    "probe_completion_seconds": 123.55260372097837,
+    "probe_seconds": 3.0386373679793905,
+    "cumulative_probe_seconds": 3.0386373679793905,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31"
+  },
+  "screening": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.51410733399098,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.16043694131076336,
+    "reference_run_id": "probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785",
+    "reference_elapsed_seconds": 120.2109339319868,
+    "reference_age_seconds": 0.30317340200417675,
+    "reference_utc": "2026-10-26T14:09:02.407891+00:00",
+    "reference_loss": 4.518558150157332,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-experts-bf16-gather-vjp32-discovery-20261026T140450-037785/events.jsonl",
+      "line": 331,
+      "row_sha256": "1ffcc96b3c26752568152e11db1ddd017e3b2a266fb8c34532843dbf921fc12c"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.16043694131076336,
+      "standard_error": 0.0022692911262334786,
+      "normal95_halfwidth": 0.004447810607417618,
+      "student95_halfwidth": 0.004493196429942288,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T16:31:17.313215+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-negative-pair-discovery-20261026T162705-ba7a3f",
+    "seed": 169,
+    "code_commit": "00f6fcf0ce84c2cc7e7300b8797735d91eb6cf99",
+    "training_projection_gs32": true
+  },
+  "paired_32768": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.16043694131076336,
+    "standard_error": 0.0026132711774989855,
+    "normal95_halfwidth": 0.005122011507898011,
+    "student95_halfwidth": 0.005336299744452928,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "pruned_training_seconds": 123.77141421899432,
+  "gradient_diagnostic_count": 0,
+  "gradient_limitation": "The first-probe rejection precedes sparse optimizer observations. Missing gradient measurements are not zero gradients.",
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.35729730129241943,
+        "rms": 1.2546217441558838,
+        "max_abs": 8.429693222045898,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.5304110050201416,
+        "rms": 2.666106939315796,
+        "max_abs": 101.5,
+        "nonzero_fraction": 0.6689453125
+      },
+      "projected_output": {
+        "mean": -0.16630300879478455,
+        "rms": 8.404996871948242,
+        "max_abs": 52.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false,
+      "negative_pair_term_after_independent_GS32": {
+        "mean": 0.0007449335535056889,
+        "rms": 0.003512020455673337,
+        "max_abs": 0.04168473929166794,
+        "nonzero_fraction": 0.43159034848213196
+      },
+      "pair_placement": "after-independent-GS32",
+      "negative_coactivation_basis": {
+        "mean": 0.1210634782910347,
+        "rms": 0.2544403374195099,
+        "max_abs": 0.9805771112442017,
+        "nonzero_fraction": 0.43159034848213196
+      },
+      "independent_feature_sample": {
+        "mean": 0.5794675946235657,
+        "rms": 3.0830864906311035,
+        "max_abs": 105.5,
+        "nonzero_fraction": 0.2847466766834259
+      },
+      "zero_independent_feature_activation": {
+        "zero_base_fraction": 0.7152532935142517,
+        "newly_activated_fraction": 0.43077754974365234,
+        "fraction_of_zero_base_activated": 0.6022727489471436
+      },
+      "relative_feature_change_rms": 0.0011378457963220074,
+      "packed_feature_change_due_to_pair": {
+        "mean": 0.0007443397771567106,
+        "rms": 0.0035080770030617714,
+        "max_abs": 0.041748046875,
+        "nonzero_fraction": 0.4313194155693054
+      },
+      "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; final BF16 core features precede gate and post multiplier"
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.43754637241363525,
+        "rms": 1.3221639394760132,
+        "max_abs": 5.857398509979248,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.5014976263046265,
+        "rms": 1.9472923278808594,
+        "max_abs": 29.625,
+        "nonzero_fraction": 0.690673828125
+      },
+      "projected_output": {
+        "mean": 0.04024108126759529,
+        "rms": 7.0713372230529785,
+        "max_abs": 53.25,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false,
+      "negative_pair_term_after_independent_GS32": {
+        "mean": 0.0014410294825211167,
+        "rms": 0.004921083338558674,
+        "max_abs": 0.0451957993209362,
+        "nonzero_fraction": 0.44826653599739075
+      },
+      "pair_placement": "after-independent-GS32",
+      "negative_coactivation_basis": {
+        "mean": 0.1402009129524231,
+        "rms": 0.2817186713218689,
+        "max_abs": 0.9820550680160522,
+        "nonzero_fraction": 0.44826653599739075
+      },
+      "independent_feature_sample": {
+        "mean": 0.5222846865653992,
+        "rms": 2.285780668258667,
+        "max_abs": 73.5,
+        "nonzero_fraction": 0.27491873502731323
+      },
+      "zero_independent_feature_activation": {
+        "zero_base_fraction": 0.7250812649726868,
+        "newly_activated_fraction": 0.44826653599739075,
+        "fraction_of_zero_base_activated": 0.6182293891906738
+      },
+      "relative_feature_change_rms": 0.002153014110315576,
+      "packed_feature_change_due_to_pair": {
+        "mean": 0.0014411506708711386,
+        "rms": 0.004921318031847477,
+        "max_abs": 0.045166015625,
+        "nonzero_fraction": 0.44826653599739075
+      },
+      "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; final BF16 core features precede gate and post multiplier"
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.38791030645370483,
+        "rms": 1.2940880060195923,
+        "max_abs": 7.539469242095947,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5530593991279602,
+        "rms": 2.7254478931427,
+        "max_abs": 119.5,
+        "nonzero_fraction": 0.685302734375
+      },
+      "projected_output": {
+        "mean": 0.04385926574468613,
+        "rms": 7.9050726890563965,
+        "max_abs": 61.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false,
+      "negative_pair_term_after_independent_GS32": {
+        "mean": 0.001390022342093289,
+        "rms": 0.0047293961979448795,
+        "max_abs": 0.036940522491931915,
+        "nonzero_fraction": 0.43325209617614746
+      },
+      "pair_placement": "after-independent-GS32",
+      "negative_coactivation_basis": {
+        "mean": 0.1322430521249771,
+        "rms": 0.2733226418495178,
+        "max_abs": 0.988184928894043,
+        "nonzero_fraction": 0.43325209617614746
+      },
+      "independent_feature_sample": {
+        "mean": 0.6196462512016296,
+        "rms": 2.4653820991516113,
+        "max_abs": 55.75,
+        "nonzero_fraction": 0.2981316149234772
+      },
+      "zero_independent_feature_activation": {
+        "zero_base_fraction": 0.7018684148788452,
+        "newly_activated_fraction": 0.43325209617614746,
+        "fraction_of_zero_base_activated": 0.6172839403152466
+      },
+      "relative_feature_change_rms": 0.001917851855211061,
+      "packed_feature_change_due_to_pair": {
+        "mean": 0.0013898644829168916,
+        "rms": 0.004728237632662058,
+        "max_abs": 0.036865234375,
+        "nonzero_fraction": 0.43325209617614746
+      },
+      "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; final BF16 core features precede gate and post multiplier"
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3658066987991333,
+        "rms": 1.2763429880142212,
+        "max_abs": 6.869976997375488,
+        "nonzero_fraction": 0.896484375
+      },
+      "nonlinear_output": {
+        "mean": 0.5950899124145508,
+        "rms": 2.9864883422851562,
+        "max_abs": 74.5,
+        "nonzero_fraction": 0.68798828125
+      },
+      "projected_output": {
+        "mean": 0.18177583813667297,
+        "rms": 7.964107036590576,
+        "max_abs": 99.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false,
+      "negative_pair_term_after_independent_GS32": {
+        "mean": 0.001145696616731584,
+        "rms": 0.004457575269043446,
+        "max_abs": 0.04196859523653984,
+        "nonzero_fraction": 0.43743228912353516
+      },
+      "pair_placement": "after-independent-GS32",
+      "negative_coactivation_basis": {
+        "mean": 0.1322464644908905,
+        "rms": 0.2743035554885864,
+        "max_abs": 0.9950906038284302,
+        "nonzero_fraction": 0.43743228912353516
+      },
+      "independent_feature_sample": {
+        "mean": 0.6436954736709595,
+        "rms": 3.4156181812286377,
+        "max_abs": 137.0,
+        "nonzero_fraction": 0.29712891578674316
+      },
+      "zero_independent_feature_activation": {
+        "zero_base_fraction": 0.7028710842132568,
+        "newly_activated_fraction": 0.43743228912353516,
+        "fraction_of_zero_base_activated": 0.6223506927490234
+      },
+      "relative_feature_change_rms": 0.0013053726837534267,
+      "packed_feature_change_due_to_pair": {
+        "mean": 0.0011456342181190848,
+        "rms": 0.004458654671907425,
+        "max_abs": 0.0419921875,
+        "nonzero_fraction": 0.43743228912353516
+      },
+      "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; final BF16 core features precede gate and post multiplier"
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4235187768936157,
+        "rms": 1.2740991115570068,
+        "max_abs": 6.195568561553955,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.46725645661354065,
+        "rms": 1.8956637382507324,
+        "max_abs": 38.5,
+        "nonzero_fraction": 0.696044921875
+      },
+      "projected_output": {
+        "mean": 0.025202885270118713,
+        "rms": 8.164457321166992,
+        "max_abs": 76.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false,
+      "negative_pair_term_after_independent_GS32": {
+        "mean": 0.000501432572491467,
+        "rms": 0.004137161187827587,
+        "max_abs": 0.03391202911734581,
+        "nonzero_fraction": 0.43731382489204407
+      },
+      "pair_placement": "after-independent-GS32",
+      "negative_coactivation_basis": {
+        "mean": 0.13718152046203613,
+        "rms": 0.28192946314811707,
+        "max_abs": 0.9836105704307556,
+        "nonzero_fraction": 0.43731382489204407
+      },
+      "independent_feature_sample": {
+        "mean": 0.5992898344993591,
+        "rms": 2.3793320655822754,
+        "max_abs": 50.75,
+        "nonzero_fraction": 0.296236127614975
+      },
+      "zero_independent_feature_activation": {
+        "zero_base_fraction": 0.7037639021873474,
+        "newly_activated_fraction": 0.43623071908950806,
+        "fraction_of_zero_base_activated": 0.6198537945747375
+      },
+      "relative_feature_change_rms": 0.001738570827803743,
+      "packed_feature_change_due_to_pair": {
+        "mean": 0.0004999632947146893,
+        "rms": 0.004136637318879366,
+        "max_abs": 0.033935546875,
+        "nonzero_fraction": 0.43704304099082947
+      },
+      "pair_effect_scope": "Same live coordinates/geometry with and without pair, first probe chunk; final BF16 core features precede gate and post multiplier"
+    }
+  ],
+  "activation_interpretation": "The bounded interaction activates60%-62% of sampled zero independent features. Actual packed feature-change RMS is0.00351-0.00492, only0.11%-0.22% of independent feature RMS. Activation coverage increased, but the measured elapsed-time CE worsened; coverage is not a convergence result.",
+  "actual_discovery_prefix": {
+    "first100_seconds": 40.53003555198666,
+    "after25_through100_seconds": 30.289745816000504,
+    "first100_steps": 100,
+    "all_logical_ranks": 8
+  },
+  "actual_discovery_to_original_reference_duration_ratio": {
+    "first100_seconds": 1.0246776963569069,
+    "after25_through100_seconds": 1.025365421206166
+  },
+  "timing_limitation": "Matched-step durations are speed diagnostics only; pruning uses measured elapsed-time heldout CE.",
+  "source_hashes_match": true,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "decision": "Close negative-coordinate coactivation. No full validation, qualification, verification2569/2570/2571 or unchanged rerun. Close the four-local/one-exploratory cycle5 batch; retain original expert-only incumbent."
+}

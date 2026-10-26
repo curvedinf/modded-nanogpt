@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-26T08:53:45.313395+00:00",
+  "run_id": "probe-ks3-fp8-prepared-frozen-shared-calibration-20261026T085254-fe704e",
+  "unit": "wr-probe-precision-8ab1ec1b",
+  "code_commit": "45841318d9a94e32351e25e3a4c6c60c4167b766",
+  "status": "running",
+  "mode": "speed_state",
+  "seed": 169,
+  "reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "reference_prefix_timing": {
+    "first100_seconds": 39.55393554098555,
+    "after25_through100_seconds": 29.54044010999496,
+    "first100_steps": 100,
+    "all_logical_ranks": 8
+  },
+  "gate": "Require both first100 and updates26-100 actual-model durations below reference; fixed-probe oracle exact within1e-6, state restoration and next-update bitwise parity; projected7-probe fraction<=.03.",
+  "prefix_budget_seconds": 120,
+  "full_graph_warmup_updates": 24,
+  "not_a_convergence_run": true,
+  "not_a_screening_reference": true,
+  "verification_seeds_if_later_discovery_qualifies": [
+    769,
+    770,
+    771
+  ],
+  "next": "Finish bounded speed/state gate, inspect timings and all state/probe checks, then release exactly one prepared-FP8 discovery only if the gate passes."
+}

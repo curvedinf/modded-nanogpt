@@ -1,0 +1,214 @@
+{
+  "utc": "2026-10-26T11:24:16.254888+00:00",
+  "run_id": "probe-experts-fixed-warp-discovery-20261026T111736-854382",
+  "code_commit": "c4d2754278f249cd3d84df665c9bef5cb15714b1",
+  "seed": 169,
+  "status": "pruned",
+  "probe_loss": 4.654735833406448,
+  "checkpoint_elapsed_seconds": 120.49865578199388,
+  "step": 293,
+  "probe_seconds": 2.9375431619992014,
+  "screen": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.49865578199388,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.017677342519164085,
+    "reference_run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+    "reference_elapsed_seconds": 120.4601258939947,
+    "reference_age_seconds": 0.038529887999175116,
+    "reference_utc": "2026-10-26T06:23:17.848237+00:00",
+    "reference_loss": 4.637058490887284,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd/events.jsonl",
+      "line": 325,
+      "row_sha256": "e795bc511e56d9cf722618ea8a47b8e97eb7cc47b8c557420c79f455760532db"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.017677342519164085,
+      "standard_error": 0.001903722352834688,
+      "normal95_halfwidth": 0.003731295811555988,
+      "student95_halfwidth": 0.0037693702586126822,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "fixed_warp": "routed-warp-fixed-c4-c5-scale-shift-v1",
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T11:21:50.421462+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-fixed-warp-discovery-20261026T111736-854382",
+    "seed": 169,
+    "code_commit": "c4d2754278f249cd3d84df665c9bef5cb15714b1",
+    "training_projection_gs32": true
+  },
+  "paired_32768_token_sensitivity": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.017677342519164085,
+    "standard_error": 0.0019145415171410796,
+    "normal95_halfwidth": 0.003752501373596516,
+    "student95_halfwidth": 0.003909493778002084,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "terminal_frozen_state": {
+    "event": "fixed_warp_terminal_audit",
+    "frozen_parameter_values": 163840,
+    "all_frozen_parameters_bitwise_initial": true,
+    "all_frozen_first_moments_zero": true,
+    "all_frozen_second_moments_zero": true,
+    "cubic_coefficients_nonzero": true,
+    "cubic_first_moments_nonzero": true,
+    "fixed_warp": "routed-warp-fixed-c4-c5-scale-shift-v1",
+    "gradient_extension": "active-slot-pre-optimizer-v1",
+    "utc": "2026-10-26T11:21:50.449527+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_experts",
+    "run_id": "probe-experts-fixed-warp-discovery-20261026T111736-854382",
+    "seed": 169,
+    "code_commit": "c4d2754278f249cd3d84df665c9bef5cb15714b1",
+    "training_projection_gs32": true
+  },
+  "gradient_update_rows": 0,
+  "gradient_absence_reason": "First probe rejected before the two-update gradient window; missing does not mean zero.",
+  "activation_diagnostics": [
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3736412525177002,
+        "rms": 1.2941398620605469,
+        "max_abs": 8.329949378967285,
+        "nonzero_fraction": 0.896484375
+      },
+      "nonlinear_output": {
+        "mean": 0.583812415599823,
+        "rms": 3.0059683322906494,
+        "max_abs": 111.5,
+        "nonzero_fraction": 0.29931640625
+      },
+      "projected_output": {
+        "mean": -0.02434317022562027,
+        "rms": 8.389887809753418,
+        "max_abs": 65.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.394240140914917,
+        "rms": 1.3048866987228394,
+        "max_abs": 7.248311996459961,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.5547759532928467,
+        "rms": 2.5820648670196533,
+        "max_abs": 89.0,
+        "nonzero_fraction": 0.332763671875
+      },
+      "projected_output": {
+        "mean": 0.08755168318748474,
+        "rms": 8.123976707458496,
+        "max_abs": 59.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.41867202520370483,
+        "rms": 1.329946517944336,
+        "max_abs": 5.002137184143066,
+        "nonzero_fraction": 0.904296875
+      },
+      "nonlinear_output": {
+        "mean": 0.5617532730102539,
+        "rms": 2.3413190841674805,
+        "max_abs": 46.75,
+        "nonzero_fraction": 0.33544921875
+      },
+      "projected_output": {
+        "mean": 0.05569149926304817,
+        "rms": 9.026834487915039,
+        "max_abs": 78.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3737342953681946,
+        "rms": 1.3203643560409546,
+        "max_abs": 6.604757308959961,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.6455743908882141,
+        "rms": 3.058100461959839,
+        "max_abs": 85.5,
+        "nonzero_fraction": 0.35400390625
+      },
+      "projected_output": {
+        "mean": 0.3135656416416168,
+        "rms": 9.017355918884277,
+        "max_abs": 73.5,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.345077246427536,
+        "rms": 1.3063619136810303,
+        "max_abs": 7.506696701049805,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.6987564563751221,
+        "rms": 4.330158233642578,
+        "max_abs": 148.0,
+        "nonzero_fraction": 0.35595703125
+      },
+      "projected_output": {
+        "mean": -0.1940791755914688,
+        "rms": 10.688997268676758,
+        "max_abs": 77.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "validation": null,
+  "qualifies": false,
+  "verification_seeds_not_launched": [
+    1369,
+    1370,
+    1371
+  ],
+  "events_sha256": "722c164b3055f9f361ce3a1c82a9f32c3ae0c60be2d21a316e17d10378edfb49",
+  "result_sha256": "ac01adb239e679e2d13a41283c022c06dcc25ab428a42b7303b8f33966c3d0a8",
+  "decision": "Reject fixed-warp recipe; no unchanged repeat. Cycle3 local4 tests separate cubic/warp coefficient quantization scales while retaining both learned components, subject to numerical and actual-model gates.",
+  "interpretation": "Weak same-checkpoint warp removal effect did not predict a successful warp-frozen training trajectory. This does not isolate coefficient-scale competition as the cause.",
+  "hypothesis_evidence": "terminal-coefficient-quantization-diagnostic.json",
+  "limitations": "One-seed first-probe rejection; no terminal validation or900s ordering claim."
+}

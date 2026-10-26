@@ -1,0 +1,122 @@
+{
+  "utc": "2026-10-26T08:50:36.936017+00:00",
+  "config": "configs/wr_reproduction/probe_ks3_fp8_prepared.json",
+  "hypothesis": "Documented new-protocol reevaluation of the previously prepared native FP8 KS3 block: old convergence tests were rejected using stochastic training proxies, which cannot resolve held-out loss/time. Apply only the previously tested KS3 producer/cached-weight/dual-layout/native-gather path with1024 independent rank1 experts. Keep the frozen shared backend and all five original dense MLPs. Require numerical, actual-model speed, and fixed-probe state-restoration gates before one900s held-out-screened trial.",
+  "changes": {
+    "name": {
+      "before": "probe-ks3-experts",
+      "after": "probe-ks3-fp8-prepared-frozen-shared"
+    },
+    "hypothesis": {
+      "before": "Acquire one exempt fixed-probe reference under the frozen shared original-PR393 recipe.",
+      "after": "Documented new-protocol reevaluation of the previously prepared native FP8 KS3 block: old convergence tests were rejected using stochastic training proxies, which cannot resolve held-out loss/time. Apply only the previously tested KS3 producer/cached-weight/dual-layout/native-gather path with1024 independent rank1 experts. Keep the frozen shared backend and all five original dense MLPs. Require numerical, actual-model speed, and fixed-probe state-restoration gates before one900s held-out-screened trial."
+    },
+    "precision": {
+      "before": "bf16",
+      "after": "fp8"
+    },
+    "weight_packing": {
+      "before": "loop",
+      "after": "batched"
+    },
+    "geometry_backward_rows": {
+      "before": 64,
+      "after": 32
+    },
+    "bf16_kernel_mode": {
+      "before": "tuned",
+      "after": "legacy"
+    },
+    "fp8_native_gemm_tuning": {
+      "before": null,
+      "after": "mi300-v2"
+    },
+    "fp8_prepared_native_weights": {
+      "before": null,
+      "after": true
+    },
+    "fp8_prepared_native_activations": {
+      "before": null,
+      "after": true
+    },
+    "fp8_prepared_native_dual": {
+      "before": null,
+      "after": true
+    },
+    "fp8_prepared_native_gather": {
+      "before": null,
+      "after": true
+    },
+    "hypothesis_class": {
+      "before": null,
+      "after": "local-ks3-precision-new-protocol-reevaluation"
+    },
+    "gradient_diagnostics_extension": {
+      "before": null,
+      "after": "active-slot-pre-optimizer-v1"
+    },
+    "precision_reevaluation": {
+      "before": null,
+      "after": {
+        "speed_reference_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+        "historical_ambiguous_run_id": "ks3-fp8-prepared-native-gather-20261025T133614-c5cca4",
+        "historical_rejection": "dynamic_best_training_proxy",
+        "historical_training_proxy_gap": 0.0992012023925781,
+        "screening_store_import": false,
+        "historical_kernel_gate": "ks3-fp8-prepared-native-tiles-v2-20261025T142909-9c3597",
+        "historical_actual_model_timing": "ks3-fp8-prepared-native-tiles-v2-20261025T143217-3e3aa6",
+        "reason_for_fresh_speed_gate": "Historical timing used a different shared backend; only KS3-specific preparation transfers, while the V2 shared backend stays frozen.",
+        "precision_trial_scope": "Forward/backward KS3 projections become native prepared FP8 with original delayed scales; geometry nonlinearities and final/probe BF16 evaluation remain as specified."
+      }
+    }
+  },
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "shared_setting_changes": [],
+  "frozen_source_changes": [],
+  "cpu_gate_checks_passed": 6,
+  "measurement_reused": {
+    "profile": "research_results/wr_reproduction/research/ks3-bf16-shared-fp8-profile-20261025T095458-924154-profile-summary.json",
+    "sha256": "d9204b848d6275bf4222f9f9fa342949bde451e5245d062e74ac550b0ede6907",
+    "profiled_updates": 4,
+    "actual_original_shape": true,
+    "kernels": [
+      {
+        "name": "_mm",
+        "count": 640,
+        "total_us": 66574.61999999998,
+        "mean_us": 104.02284374999996,
+        "fraction_of_kernel_duration_sum": 0.04306228117590148
+      },
+      {
+        "name": "_vjp",
+        "count": 160,
+        "total_us": 52101.649999999994,
+        "mean_us": 325.63531249999994,
+        "fraction_of_kernel_duration_sum": 0.03370076918243631
+      },
+      {
+        "name": "_dw",
+        "count": 320,
+        "total_us": 37979.31500000004,
+        "mean_us": 118.68535937500012,
+        "fraction_of_kernel_duration_sum": 0.02456605747652987
+      },
+      {
+        "name": "_geometry",
+        "count": 160,
+        "total_us": 30442.917999999998,
+        "mean_us": 190.2682375,
+        "fraction_of_kernel_duration_sum": 0.019691310212974746
+      }
+    ],
+    "limitation": "Kernel durations can overlap across streams; sums/fractions are not elapsed-time shares."
+  },
+  "ambiguous_old_rejection": {
+    "run_id": "ks3-fp8-prepared-native-gather-20261025T133614-c5cca4",
+    "status": "pruned",
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.0992012023925781,
+    "not_imported_as_reference": true
+  },
+  "next": "Run bounded existing prepared-FP8 numerical oracle; then full24 graph warmup plus one120s actual-model prefix for speed and state parity. No extra MLP control and no unbounded hardware sweep."
+}
