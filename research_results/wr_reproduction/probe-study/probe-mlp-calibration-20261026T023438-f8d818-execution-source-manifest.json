@@ -1,0 +1,6 @@
+{
+  "utc": "2026-10-26T02:36:52.830990+00:00",
+  "code_commit": "153dbd6e4cef1f57b9298b276103693c65ddfd5b",
+  "calibration_sha256": "79cd81f824da0e005d34927c1f4887bf21b72050be55647bae043e38abeadada",
+  "reason": "Calibration helper is imported after graph warmup; record exact loaded revision independently"
+}

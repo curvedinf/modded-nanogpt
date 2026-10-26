@@ -219,22 +219,22 @@ def _reduce(P,O,OFFS,N:tl.constexpr,T:tl.constexpr,B:tl.constexpr,BM:tl.constexp
             tl.store(O+base+6*RANK+j-6,total,j>=6)
 
 @torch.library.custom_op('wr_ks3::forward',mutates_args=())
-def forward(rows:torch.Tensor,src:torch.Tensor,tiles:torch.Tensor,up:torch.Tensor,down:torch.Tensor,g:torch.Tensor)->tuple[torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor]:
-    if BF16_TUNED_KERNELS:
+def forward(rows:torch.Tensor,src:torch.Tensor,tiles:torch.Tensor,up:torch.Tensor,down:torch.Tensor,g:torch.Tensor,gs32:bool=True)->tuple[torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor]:
+    if BF16_TUNED_KERNELS or not gs32:
         m,d=src.numel(),rows.shape[1]
         x=torch.empty((m,d),device=rows.device,dtype=torch.bfloat16)
         _pack[(tr.cdiv(m,128),tr.cdiv(d,32))](rows,x,m,d,*rows.stride(),
-            SRC=src,INPUT_ROWS=rows.shape[0],ROWS_PER_TILE=128,num_warps=4)
+            SRC=src,INPUT_ROWS=rows.shape[0],ROWS_PER_TILE=128,GS32=gs32,num_warps=4)
     else:
         x=pack(torch.where((src<rows.shape[0])[:,None],rows[src.clamp(0,rows.shape[0]-1).long()],0).contiguous())
     c=mm(x,up.transpose(1,2),tiles);h=torch.empty_like(c,dtype=torch.bfloat16)
     bm=64 if BF16_TUNED_KERNELS else 16
-    _geometry[(tr.cdiv(c.shape[0],bm),tr.cdiv(c.shape[1],32))](c,g,h,tiles,*c.shape,BM=bm,RANK=KS3_RANK,num_warps=4)
+    _geometry[(tr.cdiv(c.shape[0],bm),tr.cdiv(c.shape[1],32))](c,g,h,tiles,*c.shape,BM=bm,RANK=KS3_RANK,GS32=gs32,num_warps=4)
     y=mm(h,down.transpose(1,2),tiles,dtype=rows.dtype)
     return y,x,c,h
 
 @forward.register_fake
-def _(rows,src,tiles,up,down,g):
+def _(rows,src,tiles,up,down,g,gs32=True):
     m=src.numel();d=rows.shape[1];n=up.shape[1]
     return rows.new_empty((m,d)),rows.new_empty((m,d)),rows.new_empty((m,n),dtype=torch.float32),rows.new_empty((m,n))
 
@@ -267,12 +267,13 @@ def _(grad,y,x,c,h,gate,src,offs,tiles,up,down,g,bank,layer):
 
 class RoutedKS3(torch.autograd.Function):
     @staticmethod
-    def forward(ctx,rows,router,post,w1,w2,up,down,g,bank,layer):
+    def forward(ctx,rows,router,post,w1,w2,up,down,g,bank,layer,gs32=True):
+        ctx.argument_count=len(ctx.needs_input_grad)
         from track_1_short.perf.kernels import moe_mlp as moe
         probs=torch.softmax(torch.nn.functional.linear(rows,router).float(),-1)
         gate,expert=probs.max(-1);dest,src,offs,tiles,counts=moe.moe_dispatch(expert,router.shape[0])
         pf=post.float().reshape(());scale=gate*pf
-        y,x,c,h=forward(rows,src,tiles,up,down,g)
+        y,x,c,h=forward(rows,src,tiles,up,down,g,gs32)
         ctx.save_for_backward(rows,router,post,probs,gate,expert,dest,src,offs,tiles,y,x,c,h,scale,g)
         ctx.up=up;ctx.down=down;ctx.bank=bank;ctx.layer=layer
         ctx.mark_non_differentiable(counts)
@@ -286,7 +287,7 @@ class RoutedKS3(torch.autograd.Function):
         dp=dp.scatter_add(1,expert[:,None],(ds*post.float()).reshape(-1,1))
         dl=(probs*(dp-(probs*dp).sum(-1,keepdim=True))).to(torch.bfloat16)
         dx=moe.dx_combine(dxp,dest,dl.float(),router)
-        return dx,dl.T@rows,(ds*gate).sum().to(post.dtype).reshape(post.shape),None,None,None,None,dg,None,None
+        return (dx,dl.T@rows,(ds*gate).sum().to(post.dtype).reshape(post.shape),None,None,None,None,dg,None,None,None)[:ctx.argument_count]
 
 
 def install(precision="bf16",geometry_config=None,training_gs32=True,charts=1024,batched_weight_pack=False,geometry_backward_rows=64,bf16_kernel_mode='legacy',projection_lr_multiplier=1.,subspace_rank=1,prepared_native_weights=False,prepared_native_activations=False,prepared_native_dual=False,prepared_native_gather=False):
@@ -297,8 +298,8 @@ def install(precision="bf16",geometry_config=None,training_gs32=True,charts=1024
     from track_1_short.model import gpt as gpt_module,moe as moe_module
     global KS3_RANK
     if subspace_rank not in (1,2,4):raise ValueError('Unsupported KS3 rank')
-    if subspace_rank!=1 and (precision!='bf16' or charts*subspace_rank!=1024 or bf16_kernel_mode!='tuned'):
-        raise ValueError('Higher rank requires1024 projection features and tuned BF16 training')
+    if subspace_rank!=1 and (precision!='bf16' or not (charts*subspace_rank==1024 or (subspace_rank==2 and charts in (384,768))) or bf16_kernel_mode!='tuned'):
+        raise ValueError('Higher rank requires1024 features or rank-two768/1536, and tuned BF16 training')
     if prepared_native_weights and (precision!='fp8' or charts not in (1024,1536) or subspace_rank!=1 or not batched_weight_pack):
         raise ValueError('Prepared native weights require1024/1536 rank-one FP8 with batched packing')
     if prepared_native_activations and not prepared_native_weights:raise ValueError('Prepared activations require prepared weights')
@@ -322,11 +323,14 @@ def install(precision="bf16",geometry_config=None,training_gs32=True,charts=1024
     gpt_module.MOE_HIDDEN=moe_module.MOE_HIDDEN=features
     geometry_config=geometry_config or {}
     geometry_lr=geometry_config.get('lr_mul',.125)
+    from wr_reproduction.ks3_optimizer import validate_geometry_betas
+    geometry_betas=validate_geometry_betas(geometry_config.get('betas',(.9,.99)))
     initial_scale=geometry_config.get('raw_scale',.75)
     initial_shift=geometry_config.get('raw_shift',0.)
     coefficients=geometry_config.get('coefficients',[0.]*6)
     if len(coefficients)!=6:raise ValueError('KS3 requires six geometry coefficients')
     class KS3GPT(GPT):
+        ks3_routed_training_gs32=True
         def init_moe(self,model_dim,rank,grad_scale,bound):
             initial_rng=torch.get_rng_state() if features!=1024 else None
             super().init_moe(model_dim,rank,grad_scale,bound)
@@ -383,7 +387,7 @@ def install(precision="bf16",geometry_config=None,training_gs32=True,charts=1024
                 from wr_reproduction.ks3_moe_fp8 import routed
                 out,probs,counts=routed(self,k,rows,router,post,w1,w2)
             elif self.training:
-                out,probs,counts=RoutedKS3.apply(rows,router,post,w1,w2,self.ks3_up[k],self.ks3_down[k],self.ks3_geometry[k],self.moe_bank_grad,k)
+                out,probs,counts=RoutedKS3.apply(rows,router,post,w1,w2,self.ks3_up[k],self.ks3_down[k],self.ks3_geometry[k],self.moe_bank_grad,k,self.ks3_routed_training_gs32)
             else:
                 from track_1_short.perf.kernels import moe_mlp as moe
                 probs=torch.softmax(torch.nn.functional.linear(rows,router).float(),-1);gate,expert=probs.max(-1)
@@ -394,7 +398,7 @@ def install(precision="bf16",geometry_config=None,training_gs32=True,charts=1024
     original=training.AnvilAndAdam
     def optimizer(*args,**kwargs):
         from wr_reproduction.ks3_optimizer import configure
-        configure(kwargs['param_table'],geometry_lr,projection_lr_multiplier)
+        configure(kwargs['param_table'],geometry_lr,projection_lr_multiplier,geometry_betas=geometry_betas)
         kwargs['scatter_order'].append('ks3_geometry');kwargs['work_order'].append('ks3_geometry')
         return original(*args,**kwargs)
     training.AnvilAndAdam=optimizer

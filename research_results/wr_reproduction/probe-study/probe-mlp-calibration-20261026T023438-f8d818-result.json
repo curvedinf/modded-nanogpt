@@ -1,0 +1,50 @@
+{
+  "run_id": "probe-mlp-calibration-20261026T023438-f8d818",
+  "status": "calibration_complete",
+  "seed": 169,
+  "code_commit": "153dbd6e4cef1f57b9298b276103693c65ddfd5b",
+  "recipe": {
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "mlp",
+    "name": "probe-mlp",
+    "hypothesis": "Acquire one exempt fixed-probe reference under the frozen shared original-PR393 recipe."
+  },
+  "backend_hash": "provisional-calibration-not-screenable",
+  "validation": null,
+  "pruning": null,
+  "calibration": {
+    "passed": true,
+    "mode": "probe",
+    "updates": 4,
+    "all_original_logical_ranks": 8,
+    "probe_seconds": [
+      0.16338713798904791,
+      0.15766420899308287,
+      0.1612417240103241
+    ],
+    "paired_adjacent_update": {
+      "available": true,
+      "blocks": 8,
+      "mean_difference": -0.1340329647064209,
+      "standard_error": 0.0017339583536754148,
+      "normal95_halfwidth": 0.0033985583732038128,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "full_convergence_verified": false
+  },
+  "exit_code": 0,
+  "reserved_confirmation": null,
+  "events_sha256": "0c05e689593a833636070cc88c9cdb1f10e9bb008bf2eff5ef90f51b267d2c8a",
+  "completed_utc": "2026-10-26T02:37:22.053517+00:00",
+  "qualifies": false
+}

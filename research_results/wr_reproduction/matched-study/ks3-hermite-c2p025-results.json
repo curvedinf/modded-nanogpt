@@ -1,0 +1,207 @@
+{
+  "utc": "2026-10-26T00:14:53.156930+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_study": "pending-rank1-width1536-normalized-rate.json",
+  "wait_for_run": "matched-ks3-all-rank1-width1536-normlr-20261026T000846-d87fae",
+  "results_name": "ks3-hermite-c2p025-results.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_hermite_c2p025.json",
+      "recipe_sha256": "6f363520127db99ec4ede87441cc41f6bc29fe78e7ef997acbac390df0f296ef",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Initialize the KS3 Hermite slope coefficient c2 at +0.025, with every other coefficient zero. The initial preactivation becomes x + 0.025*t*(t-1)^2, where t is the bounded chart coordinate; test whether this structured positive slope prior helps early learning. Both the baseline and wider rank-two terminal geometry had positive mean c2, which motivates a new initialization hypothesis but is not validation evidence. Keep rank-one dense/routed width1024, geometry Adam0.125, projection rates and decay, BF16/GS32, all45 feedforward branches, MoE8top1 and all shared/model-wide settings fixed.",
+      "changes": {
+        "geometry.coefficients[2]": {
+          "before": 0,
+          "after": 0.025
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/hermite-c2p025-cpu-model-audit.json",
+        "sha256": "ef8fbf4ad31fc7da8372f0e710a63b1909abf0e39028d147b87271b70a4d5a51"
+      },
+      "initialization_hypothesis_evidence": {
+        "run_id": "matched-ks3-all-20261025T173936-bf006b",
+        "event": "terminal_geometry",
+        "events_sha256": "a858ba1b043d893a6bbecd996af4d027f02815575628a41a82b0b664b2b505a9",
+        "component": "c2",
+        "mean": 0.006936291337673306,
+        "rms": 0.01272089549741574,
+        "validation": false
+      },
+      "correctness_required": false,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "KS3 coefficient initialization only. Existing independent nonzero-coefficient forward/all-gradient GPU oracles cover unchanged kernels and shapes. New CPU full-model audit checks exact dense/routed geometry, original projection/router/nonfeedforward initialization, global RNG, ANVIL shape/output2x/padding; FP64 reference separately checks intended function and analytic derivatives. Mandatory actual graph warmup precedes training.",
+      "run_id": "matched-ks3-all-hermite-c2p025-20261026T001813-2cb58c",
+      "result": {
+        "run_id": "matched-ks3-all-hermite-c2p025-20261026T001813-2cb58c",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "f99335d9fb81508863107572da52645f5d384212",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0.025,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-hermite-c2p025",
+          "hypothesis": "Initialize the KS3 Hermite slope coefficient c2 at +0.025, with every other coefficient zero. The initial preactivation becomes x + 0.025*t*(t-1)^2, where t is the bounded chart coordinate; test whether this structured positive slope prior helps early learning. Both the baseline and wider rank-two terminal geometry had positive mean c2, which motivates a new initialization hypothesis but is not validation evidence. Keep rank-one dense/routed width1024, geometry Adam0.125, projection rates and decay, BF16/GS32, all45 feedforward branches, MoE8top1 and all shared/model-wide settings fixed."
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 3.5850727558135986,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.0784294605255126,
+          "reference_run_id": "matched-ks3-all-geometry025-20261025T182458-d37cf6",
+          "reference_wall_seconds": 326.8391181069892,
+          "reference_age_seconds": 0.4612564110138919,
+          "reference_objective": 3.506643295288086,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 600,
+          "comparable_runs": 15,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-geometry025-20261025T182458-d37cf6/events.jsonl",
+            "sha256": "e67169f6bfd444614d0c6a2a4c9bdeb1585a91385bf24e88d3433905508cafea",
+            "line": 634,
+            "row_sha256": "769aab3982db432f22c0f71bb7ae753327c49dd530c2bc210ed91af7691e5f6c"
+          },
+          "step": 597,
+          "train_seconds": 327.3003745180031,
+          "reference_snapshot_sha256": "8e99faccd3b5b385ba77c0f2dd21bdc03c77c4c581839532f6c500220ad19753",
+          "utc": "2026-10-26T00:25:47.883012+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-hermite-c2p025-20261026T001813-2cb58c",
+          "seed": 168,
+          "code_commit": "f99335d9fb81508863107572da52645f5d384212",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "a7b015a4b1a162daf2433ae75619a921a451cdf0b2ebda7e28c1f62b7b5dd3ce",
+        "completed_utc": "2026-10-26T00:25:49.976900+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "unit": "wr-matched-hermite-c2p025-ordered",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "a51be7013b4393887109a76c836bd2da6b336d09877160f27b9419ade5fbe955",
+    "code_commit": "f99335d9fb81508863107572da52645f5d384212"
+  },
+  "completed_utc": "2026-10-26T00:25:49.980082+00:00"
+}

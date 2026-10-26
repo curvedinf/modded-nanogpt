@@ -1,0 +1,61 @@
+{
+  "run_id": "matched-ks3-all-routed768-normlr-20261025T231638-ce2c73",
+  "status": "error",
+  "seed": 172,
+  "code_commit": "c2f0b6ab05bbe10c10ef8d3c33e29f38982e96a8",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 768,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-routed768-normlr",
+    "hypothesis": "Reduce only routed KS3 expert width from1024 to768, preserving all five dense KS3 branches at1024. Complement the completed dense-only768 and both-branch768 capacity ablations by isolating routed capacity and elapsed-time cost. Multiply routed projection learning rate by sqrt(1024/768) and explicitly keep dense projection multiplier1.0 so original effective ANVIL rates remain equal. Preserve zero initial geometry coefficients, all other KS3 settings, MoE8top1 and every shared/model-wide setting.",
+    "dense_charts": 1024,
+    "projection_lr_multiplier": 1.1547005383792515,
+    "dense_projection_lr_multiplier": 1.0
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": null,
+  "timing": null,
+  "correctness": null,
+  "exit_code": 1,
+  "events_sha256": null,
+  "completed_utc": "2026-10-25T23:17:01.513275+00:00",
+  "qualifies": false
+}

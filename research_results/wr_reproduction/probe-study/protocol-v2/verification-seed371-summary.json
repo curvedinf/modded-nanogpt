@@ -1,0 +1,33 @@
+{
+  "utc": "2026-10-26T05:51:12.899179+00:00",
+  "seed": 371,
+  "run_id": "probe-ks3-experts-verification-20261026T053250-ff4a2d",
+  "status": "complete",
+  "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+  "launch_head_commit": "51bbd646e4f2b8f2f8deb3e3934455857360d595",
+  "full_validation_loss": 3.3026838302612305,
+  "full_validation_tokens": 10485760,
+  "training_seconds": 898.3941647590254,
+  "difference_from_control": -0.03122711181640625,
+  "total_instrumentation_seconds": 20.927764663967537,
+  "instrumentation_fraction": 0.023294635567430416,
+  "comparative_pruning_exempt": true,
+  "reserved_confirmation": {
+    "loss": 3.2500903233885765,
+    "difference_from_control": -0.03019052743911743,
+    "paired_block8192": {
+      "available": true,
+      "blocks": 32,
+      "mean_difference": -0.03019052743911743,
+      "standard_error": 0.0015543319685409056,
+      "normal95_halfwidth": 0.003046490658340175,
+      "student95_halfwidth": 0.003173945879760529,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "tuning_use_forbidden": true
+  },
+  "verification_group": "d55d7e76b7446a2bdbf11380a1f5e786690630a449b9d53e25584ed3efd57f55",
+  "remaining_seeds": [],
+  "decision": "Required replication complete. Release the five isolated dense-site trials through the existing measurement-review worker; inspect the entire batch before combinations or directed optimizer choices."
+}

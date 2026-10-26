@@ -1,0 +1,55 @@
+{
+  "utc": "2026-10-25T22:53:43.022222+00:00",
+  "status": "prepared",
+  "wait_for_study": "ks3-projection-decay-study.json",
+  "results_name": "ks3-scale125-results.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_scale125.json",
+      "recipe_sha256": "337a7e841172a5b8cc05e31f43dba3287665dda6580c4083edb18574c34496ab",
+      "seed": 168,
+      "status": "prepared",
+      "hypothesis": "Increase KS3 initial raw warp scale from 0.75 to 1.25, changing the learned T2/T3 coefficient basis toward earlier saturation. With all six coefficients initially zero this preserves the initial feedforward function and input gradients, while changing geometry coefficient gradients. This isolates KS3 geometry conditioning after the smaller-scale 0.5 ablation was proxy-pruned. Keep every dense/routed width at 1024, rank one, original GS32/BF16 precision, projection learning rates and decay, geometry Adam multiplier 0.125, and all shared/model-wide settings fixed.",
+      "changes": {
+        "geometry.raw_scale": {
+          "before": 0.75,
+          "after": 1.25
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/scale125-cpu-model-audit.json",
+        "sha256": "591adfb8f3378b7e4c29be8556fd8cb066b876c26922e6e27b395fba27278fa5"
+      },
+      "cpu_basis_audit": {
+        "path": "research_results/wr_reproduction/matched-study/scale125-cpu-basis-audit.json",
+        "sha256": "0d143ce7113feb021823a2da83943ce73f8af3d38e30db1d2ee5ee321b5c005d"
+      },
+      "correctness_required": false,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "Existing independent all-output/all-gradient GS32 numerical oracles cover unchanged kernels. CPU analytical basis audit verifies the new initialization changes only warped coefficient gradients; full model CPU audit preserves nonfeedforward and routed projection initialization. No new arithmetic, shape, precision, or timing sweep."
+    }
+  ],
+  "decision": "Complete dense768 and the KS3-only projection-decay trial plus all qualifying verification, then test the distinct larger KS3 warp basis using original KS3 projection decay and all shared/model-wide settings.",
+  "manifest": "logs/wr-reproduction/matched-study/pending-scale125.json",
+  "cpu_model_auditor": {
+    "path": "wr_reproduction/check_ks3_feedforward_cpu.py",
+    "sha256": "a89b5ded7595de3d1e775005695e573c2321c11a2ff46e3a474292f7170d2262"
+  },
+  "cpu_basis_auditor": {
+    "path": "check_wr_ks3_warp_scale.py",
+    "sha256": "f37c25a7425095830707b3b0b8048fc45d42fcad09d68b04726b9de0c1b8fb28"
+  },
+  "staged_decay_prototype": {
+    "path": "research_results/wr_reproduction/matched-study/ks3-projection-decay-prototype.json",
+    "sha256": "59a15f468886798b44f8314f2209c675ee9817027840ef9285306cabfeebd487"
+  },
+  "unchanged_numerical_sources": {
+    "wr_reproduction/ks3_moe.py": "70cffd25edd4ef0e2231d182dcf9df09a3b89a097fc12f4e68651dc4dd9a19ba",
+    "wr_reproduction/ks3_bf16_gemm.py": "c6342dab76dc1ebb18365b1270f67f27d7eba32433ec75fac39d12b7ebc55ef7",
+    "wr_reproduction/ks3_feedforward_source.py": "388467e576f93d189e2cc31fce19c11377df3f6a60de68a22fdb9db186634106",
+    "ks3_research/vendor/ks3_reference.py": "81efd8fd89bd37a6dd7e75a9101fc67b1408a9ee16377a841a0e1f729c471080"
+  },
+  "decay_default_preserved": 1.0
+}

@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-26T03:28:43.840742+00:00",
+  "status": "corrective_protocol_rerun_authorized_by_operational_plan",
+  "explicit_instruction": "Reference reruns are explicitly authorized for acquiring reusable probe curves; no redundant three-seed MLP rebaseline.",
+  "explicit_precision_instruction": "If sample-size precision cannot support0.01 within budget, record the limit, enlarge sample and reduce cadence.",
+  "interpretation": "One seed169 MLP and one seed169 incumbent KS3 under the final corrected protocol; previous64K pair remains immutable evidence. No additional MLP seed cohort.",
+  "earlier_question_was_overrestrictive": true,
+  "not_an_explicit_option_reply": true,
+  "constraints": "Finish active frozen269/270/271 verification without source/code changes; calibrate enlarged sample at actual near-below5 weights before freezing a separate corrected protocol/fence. Placement queue stays stopped.",
+  "observed_maximum_student95_halfwidth": 0.03896957468893146
+}

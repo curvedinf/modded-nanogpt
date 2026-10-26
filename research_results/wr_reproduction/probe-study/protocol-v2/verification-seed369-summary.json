@@ -1,0 +1,23 @@
+{
+  "utc": "2026-10-26T05:15:27.367772+00:00",
+  "run_id": "probe-ks3-experts-verification-20261026T045737-498c82",
+  "seed": 369,
+  "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+  "status": "complete",
+  "full_validation_loss": 3.302371025085449,
+  "full_validation_tokens": 10485760,
+  "training_seconds": 897.7494905659987,
+  "control_loss": 3.3339109420776367,
+  "difference_from_control": -0.0315399169921875,
+  "total_instrumentation_seconds": 20.80064560592291,
+  "instrumentation_fraction": 0.023169765980940688,
+  "reserved_confirmation_loss": 3.249577708542347,
+  "reserved_text_tuning_forbidden": true,
+  "comparative_pruning_exempt": true,
+  "verification_group": "d55d7e76b7446a2bdbf11380a1f5e786690630a449b9d53e25584ed3efd57f55",
+  "remaining_seeds": [
+    370,
+    371
+  ],
+  "decision": "First of three fresh frozen seeds complete. Continue 370 and 371; report aggregate statistics after all three."
+}

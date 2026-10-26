@@ -1,0 +1,152 @@
+{
+  "run_id": "matched-ks3-all-routed768-normlr-20261025T232152-2d109e",
+  "status": "correctness_passed",
+  "seed": 172,
+  "code_commit": "35cb62d6a4f4664f5736fa7ad47c67de29748bae",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 768,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-routed768-normlr",
+    "hypothesis": "Reduce only routed KS3 expert width from1024 to768, preserving all five dense KS3 branches at1024. Complement the completed dense-only768 and both-branch768 capacity ablations by isolating routed capacity and elapsed-time cost. Multiply routed projection learning rate by sqrt(1024/768) and explicitly keep dense projection multiplier1.0 so original effective ANVIL rates remain equal. Preserve zero initial geometry coefficients, all other KS3 settings, MoE8top1 and every shared/model-wide setting.",
+    "dense_charts": 1024,
+    "projection_lr_multiplier": 1.1547005383792515,
+    "dense_projection_lr_multiplier": 1.0
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": null,
+  "timing": null,
+  "correctness": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "features": 768,
+    "checks": [
+      {
+        "tokens": 1,
+        "gs32": true,
+        "active_experts": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "probabilities": 0.0,
+          "input_gradient": 0.0022472685668617487,
+          "router_gradient": 0.0,
+          "post_gradient": 0.0,
+          "geometry_gradient": 6.803268775001925e-07,
+          "up_gradient": 0.0,
+          "down_gradient": 0.0
+        },
+        "unrelated_gradient_bank_unchanged": true
+      },
+      {
+        "tokens": 257,
+        "gs32": true,
+        "active_experts": 1,
+        "relative_rms": {
+          "output": 0.0001249375200131908,
+          "probabilities": 0.0,
+          "input_gradient": 9.45190986385569e-05,
+          "router_gradient": 0.000873730459716171,
+          "post_gradient": 0.005681818351149559,
+          "geometry_gradient": 1.3989462104291306e-06,
+          "up_gradient": 7.902558718342334e-05,
+          "down_gradient": 0.0001339241862297058
+        },
+        "unrelated_gradient_bank_unchanged": true
+      },
+      {
+        "tokens": 4096,
+        "gs32": true,
+        "active_experts": 8,
+        "relative_rms": {
+          "output": 0.00014538364484906197,
+          "probabilities": 0.0,
+          "input_gradient": 0.0016644559800624847,
+          "router_gradient": 0.0007977467612363398,
+          "post_gradient": 0.0,
+          "geometry_gradient": 9.933095270753256e-07,
+          "up_gradient": 9.638772462494671e-05,
+          "down_gradient": 0.0001303578756051138
+        },
+        "unrelated_gradient_bank_unchanged": true
+      }
+    ],
+    "cache_checks": [
+      {
+        "training": true,
+        "routed_training_gs32": true,
+        "cache_gs32": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "training": false,
+        "routed_training_gs32": true,
+        "cache_gs32": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "training": true,
+        "routed_training_gs32": true,
+        "cache_gs32": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "captured_replay": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "captured_replay": true,
+        "cache_bytes_exact": true
+      }
+    ],
+    "routed_training_projection_gs32": true,
+    "routed_validation_projection_gs32": true,
+    "routed_width_changed_only": true,
+    "geometry_coefficient_gs32": true,
+    "shared_backend_modified": false,
+    "validation": false,
+    "scalar_gradient_accumulation": "original-pr393-fp32-with-bf16-forward-scale-ste",
+    "relative_rms_tolerance": 0.015,
+    "oracle": "Independent Torch top1 routing/products and pinned nonlinear forward with independent STE; original FP32 scalar-gradient reduction; input, router, post, projection-bank and geometry gradients, empty experts, cache bytes and graph replay"
+  },
+  "exit_code": 0,
+  "events_sha256": "74916dc10cc0df44f7d35a35d855ad86860fca9e71adf643724074935c95695a",
+  "completed_utc": "2026-10-25T23:22:08.579559+00:00",
+  "qualifies": false
+}

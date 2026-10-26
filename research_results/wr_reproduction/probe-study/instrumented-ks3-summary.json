@@ -1,0 +1,42 @@
+{
+  "utc": "2026-10-26T03:20:04.649716+00:00",
+  "run_id": "probe-ks3-experts-reference-20261026T030119-bb4dc7",
+  "seed": 169,
+  "qualifies": true,
+  "full_validation_loss": 3.300508499145508,
+  "full_validation_tokens": 10485760,
+  "timed_training_seconds": 897.9224437639932,
+  "updates": 1019,
+  "mlp_full_validation_loss": 3.318265914916992,
+  "loss_difference": -0.017757415771484375,
+  "total_instrumentation_seconds": 6.543433515005745,
+  "instrumentation_fraction": 0.007291428954940411,
+  "reserved_confirmation_loss": 3.3498762026429176,
+  "reserved_paired_uncertainty": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": -0.017044827342033386,
+    "standard_error": 0.0014558384927656175,
+    "normal95_halfwidth": 0.0028534434458206102,
+    "student95_halfwidth": 0.0029728222022273906,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "reserved_results_for_confirmation_only": true,
+  "code_commit": "8fe49e530f7a53340cc6ff6206f5d342b8025a6c",
+  "backend_hash": "244af450ed03c5c27ffe275133d2f6e1bb425e1388928790e327cb38aade8a96",
+  "events_sha256": "8d75fa8adc2a34ff20fb7f62a2fe9ecca5566798be8202d6da20b653269e76b1",
+  "active_verification": {
+    "run_id": "probe-ks3-experts-verification-20261026T031856-1ecf9a",
+    "trainer_pid": 663827,
+    "controller_pid": 661884,
+    "unit": "wr-probe-references-d0f3c003",
+    "utc": "2026-10-26T03:18:56.561092+00:00"
+  },
+  "verification_seeds": [
+    269,
+    270,
+    271
+  ],
+  "comparative_pruning": false
+}

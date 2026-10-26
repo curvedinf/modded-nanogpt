@@ -1,0 +1,46 @@
+{
+  "utc": "2026-10-26T00:21:25.167690+00:00",
+  "runs": [
+    {
+      "run_id": "matched-ks3-all-rank2-width1536-normlr-20261025T235812-1d1f18",
+      "code_commit": "f207ae5bf7f89ed8fdc90df4bae811d039dcb491",
+      "rank": 2,
+      "charts": 768,
+      "projection_features": 1536,
+      "projection_multiplier": 0.816496580927726,
+      "result_sha256": "5603a93a2a7395139e96be49aad6abbfea53462cee861f7dae4dac4099d57402",
+      "events_sha256": "deb09b5d1542313b7c657eb7383890010ed54baa2b51f7700debaf16bb3955f5",
+      "proxy_prune_seconds": 348.8054810850008,
+      "training_proxy": 3.4948978424072266,
+      "gap": 0.0340485572814942,
+      "reference_run_id": "matched-ks3-all-20261025T173936-bf006b",
+      "reference_seconds": 348.1032988789957,
+      "reference_age_seconds": 0.7021822060050908,
+      "validation": null,
+      "qualifies": false
+    },
+    {
+      "run_id": "matched-ks3-all-rank1-width1536-normlr-20261026T000846-d87fae",
+      "code_commit": "1d89ab5b7ad5c7063fe7a4f31260ad098b55d9d5",
+      "rank": 1,
+      "charts": 1536,
+      "projection_features": 1536,
+      "projection_multiplier": 0.816496580927726,
+      "result_sha256": "170cfbcda4b9931ac7d31fbd54353516a218a21ac3839d3757a24c9392f0250e",
+      "events_sha256": "e8229b2e2801a2cbf1f8dccb4deff6fd45a561c0d4708e316885b5247fe7b52e",
+      "proxy_prune_seconds": 312.57282502402086,
+      "training_proxy": 4.394289970397949,
+      "gap": 0.012905120849609,
+      "reference_run_id": "matched-ks3-all-rank2-width1536-normlr-20261025T235812-1d1f18",
+      "reference_seconds": 299.50731714398717,
+      "reference_age_seconds": 13.065507880033692,
+      "validation": null,
+      "qualifies": false
+    }
+  ],
+  "paired_initialization_sha256": "285bb8c14e5399d5b858df7ec66890201a5a67e3a6d3574ad4038ac7dda11f09",
+  "control_set_sha256": "59746335a66614f8f4fa3e903601d4d7ba57cc591a27f31e48517189d09e8413",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation_comparison_available": false,
+  "decision": "Both equal-projection-capacity recipes were stopped by the required training-proxy screen. These are not measured validation progress or a full-validation ranking of ranks; preserve both and continue distinct KS3 hypotheses."
+}

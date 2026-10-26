@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-26T00:06:41.414969+00:00",
+  "passed": true,
+  "tests": 3,
+  "command": ".venv-mi300/bin/python -m unittest test_wr_matched_rank1_width1536",
+  "test_source_sha256": "a663d48fcfc4492a27ae42970b7c408433dfe49e8dc1d11a60a9e5b8e451370e",
+  "wrapper_source_sha256": "502ea31d9028b77d075cbfab5ae90eefe914acc2e6d8573a8a239040be44d1fb",
+  "checks": [
+    "Numerical oracle only for correctness; discovery and frozen verification command/source unchanged",
+    "Reject architecture/rank/width/precision scope changes before registration",
+    "Pin both independent oracle and scalar/cache helper sources"
+  ]
+}

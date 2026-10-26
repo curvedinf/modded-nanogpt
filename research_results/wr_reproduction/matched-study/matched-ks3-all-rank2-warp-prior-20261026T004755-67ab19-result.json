@@ -1,0 +1,160 @@
+{
+  "run_id": "matched-ks3-all-rank2-warp-prior-20261026T004755-67ab19",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "c98b7f41b9f6bb37623059ec7339c03e54d1aef9",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 512,
+    "rank": 2,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0.025,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-rank2-warp-prior",
+    "hypothesis": "Make rank-two chart coupling active at initialization by setting the even Chebyshev warp coefficient c4 to+0.025 for both coordinates of every chart. Zero-initialized rank-two geometry initially reduces to independent ReLU-squared coordinates; this structured prior introduces nonzero within-chart cross derivatives immediately. Test its interaction with paired-coordinate geometry after rank-two zero initialization and rank-one c4+0.025 were separately proxy-pruned. Keep512 rank-two charts and1024 projection features in all dense/routed sites, original projection/geometry rates and decay, BF16/GS32, MoE8top1 and every shared/model-wide setting fixed. No validation advantage is inferred from earlier proxy observations.",
+    "dense_charts": 512
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 3.515073537826538,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.02055287361145,
+    "reference_run_id": "matched-ks3-all-rank2-20261025T185248-cc3fd2",
+    "reference_wall_seconds": 316.73575443198206,
+    "reference_age_seconds": 0.027521401992999017,
+    "reference_objective": 3.494520664215088,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 2,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "mtp": [
+        1.0
+      ],
+      "prefix": 0.0,
+      "candidates": 14336,
+      "batch_tokens": 393216,
+      "global_batch_tokens": 393216,
+      "logical_batch_tokens": 49152,
+      "logical_ranks": 8,
+      "train_max_seq_len": 3072,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "reference_source_step": 600,
+    "comparable_runs": 3,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-rank2-20261025T185248-cc3fd2/events.jsonl",
+      "sha256": "bf0694ddc54df8b883129a7e413379d6c391a04d7bcd8052c93b9db0233bc0e8",
+      "line": 634,
+      "row_sha256": "b75989c212f28ab97a6ee4d3d4c3bfaee574b4d6cbfe21592edac848be942259"
+    },
+    "step": 596,
+    "train_seconds": 316.76327583397506,
+    "reference_snapshot_sha256": "1c914d2841d4d3b3a142a3493d3a22b907dbccc0aa2f2d6b87a2b2dbfe5a0e44",
+    "utc": "2026-10-26T00:55:24.080218+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c512-r2",
+    "architecture": "ks3_all",
+    "run_id": "matched-ks3-all-rank2-warp-prior-20261026T004755-67ab19",
+    "seed": 168,
+    "code_commit": "c98b7f41b9f6bb37623059ec7339c03e54d1aef9",
+    "training_projection_gs32": true
+  },
+  "timing": null,
+  "correctness": null,
+  "exit_code": 0,
+  "events_sha256": "a9f26428596360b587b3fb9b99cdd11ef0b38734230801697e04366ff36e0afe",
+  "completed_utc": "2026-10-26T00:55:26.071725+00:00",
+  "qualifies": false
+}

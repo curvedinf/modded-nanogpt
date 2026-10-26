@@ -1,0 +1,221 @@
+{
+  "utc": "2026-10-25T23:21:21.149769+00:00",
+  "status": "reference_precision_bug_corrected_new_gate_required",
+  "failed_oracle_run_id": "matched-ks3-all-routed768-normlr-20261025T231638-ce2c73",
+  "failed_result_sha256": "935f69b078a8112cdfe3c019c5541b31022d132d4ff4695f82c599a0432b583a",
+  "failed_console_sha256": "cb2ce9568a0f6f4908e0b40848a23435f37ea4918eab461e873a29c1dfda49a5",
+  "diagnostic_run_id": "matched-ks3-all-routed768-normlr-20261025T231903-eba3b1",
+  "diagnostic_events_sha256": "e49eee0d5abf5b3a5e20d28b670697e81ba60b4bbbaaecdf59e509ba098d10e3",
+  "diagnostic_checks": [
+    {
+      "tokens": 1,
+      "actual_post": 0.12060546875,
+      "original_autograd_post": 0.12109375,
+      "reference_fp64_dot": 0.1207011117899215,
+      "candidate_fp64_dot": 0.1207011117899215,
+      "reference_fp64_dot_bf16": 0.12060546875,
+      "candidate_fp64_dot_bf16": 0.12060546875,
+      "reference_fp32_post": 0.12070111930370331,
+      "candidate_fp32_post": 0.12070111930370331,
+      "reference_fp32_post_bf16": 0.12060546875,
+      "candidate_fp32_post_bf16": 0.12060546875,
+      "reconstructed_bf16_autograd_post": 0.12109375,
+      "actual_vs_reference_fp32_relative_rms": 0.0,
+      "actual_vs_candidate_fp32_relative_rms": 0.0,
+      "expert_output_relative_rms": 0.0,
+      "absolute_product_sum": 0.9957177023870774
+    },
+    {
+      "tokens": 257,
+      "actual_post": 0.1708984375,
+      "original_autograd_post": 0.166015625,
+      "reference_fp64_dot": 0.17140547998870448,
+      "candidate_fp64_dot": 0.17118486948048173,
+      "reference_fp64_dot_bf16": 0.171875,
+      "candidate_fp64_dot_bf16": 0.1708984375,
+      "reference_fp32_post": 0.1714056134223938,
+      "candidate_fp32_post": 0.17118489742279053,
+      "reference_fp32_post_bf16": 0.171875,
+      "candidate_fp32_post_bf16": 0.1708984375,
+      "reconstructed_bf16_autograd_post": 0.166015625,
+      "actual_vs_reference_fp32_relative_rms": 0.005681818351149559,
+      "actual_vs_candidate_fp32_relative_rms": 0.0,
+      "expert_output_relative_rms": 0.00016209417663048953,
+      "absolute_product_sum": 357.36152984946034
+    },
+    {
+      "tokens": 4096,
+      "actual_post": -2.671875,
+      "original_autograd_post": -2.65625,
+      "reference_fp64_dot": -2.6709993703817005,
+      "candidate_fp64_dot": -2.670916439568371,
+      "reference_fp64_dot_bf16": -2.671875,
+      "candidate_fp64_dot_bf16": -2.671875,
+      "reference_fp32_post": -2.6710002422332764,
+      "candidate_fp32_post": -2.670916795730591,
+      "reference_fp32_post_bf16": -2.671875,
+      "candidate_fp32_post_bf16": -2.671875,
+      "reconstructed_bf16_autograd_post": -2.65625,
+      "actual_vs_reference_fp32_relative_rms": 0.0,
+      "actual_vs_candidate_fp32_relative_rms": 0.0,
+      "expert_output_relative_rms": 0.00012889783829450607,
+      "absolute_product_sum": 4013.1398499160096
+    }
+  ],
+  "cause": "The eager Torch reference multiplied and reduced scalar-gradient intermediates in BF16. Original PR393 and KS3 accumulate ds and dpost in FP32 while storing the forward scale and expert gradient in BF16. A quantized-forward-scale STE now expresses those original boundaries in independent Torch autograd.",
+  "unchanged_relative_rms_tolerance": 0.015,
+  "kernels_and_training_sources_unchanged": true,
+  "shared_backend_modified": false,
+  "original_pr393_reference": {
+    "path": "wr_reproduction/pr393/upstream/track_1_short/perf/kernels/moe_mlp.py",
+    "sha256": "88f21ac5a6830014e40cb35352262ac1bb64af2d965a7b931df7160c76d8eb49"
+  },
+  "reference_functions": [
+    "_experts_backward",
+    "RoutedMoE.backward"
+  ],
+  "corrected_oracle": {
+    "path": "check_wr_ks3_routed768.py",
+    "sha256": "c86f5f5ab20a7386216abffa3ca6785afb6f5ab9a1dfd421760d747b711a7443"
+  },
+  "cpu_scalar_tests": {
+    "passed": true,
+    "cases": 6,
+    "token_counts": [
+      1,
+      257,
+      4096
+    ],
+    "post_dtypes": [
+      "bfloat16",
+      "float32"
+    ],
+    "forward_exact": true,
+    "all_three_analytic_derivatives_checked": true,
+    "path": "test_wr_routed_scalar_reference.py",
+    "sha256": "b1e1fef9a01ae9fa74d4378b16355704af7f4d7d6306278d4a6aae03b882e686"
+  },
+  "wrapper_tests": {
+    "passed": true,
+    "count": 3,
+    "path": "test_wr_matched_routed768.py",
+    "sha256": "0cc08fd753b326c8d9ab53188aef4c65bd8af34dd6564cdeca18aff6f75f1761"
+  },
+  "failed_queue_evidence": {
+    "utc": "2026-10-25T23:09:13.757829+00:00",
+    "status": "running",
+    "wait_for_study": "random-spine-study.json",
+    "results_name": "ks3-routed768-normalized-rate-results.json",
+    "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+    "oracle_sha256": "0ec5bea4371d6484f0740b54bc2da0d36514e4c132ae093fcab8aaf1ea34f49f",
+    "items": [
+      {
+        "recipe": "configs/wr_reproduction/matched_ks3_all_routed768_normlr.json",
+        "recipe_sha256": "f9d379bb7e02aff4dc0865c7d5b9e9e3c693810bb12ae0ac48dc3852f88c0428",
+        "seed": 168,
+        "status": "prepared",
+        "hypothesis": "Reduce only routed KS3 expert width from1024 to768, preserving all five dense KS3 branches at1024. Complement the completed dense-only768 and both-branch768 capacity ablations by isolating routed capacity and elapsed-time cost. Multiply routed projection learning rate by sqrt(1024/768) and explicitly keep dense projection multiplier1.0 so original effective ANVIL rates remain equal. Preserve zero initial geometry coefficients, all other KS3 settings, MoE8top1 and every shared/model-wide setting.",
+        "changes": {
+          "charts": {
+            "before": 1024,
+            "after": 768
+          },
+          "dense_charts": {
+            "before": 1024,
+            "after": 1024
+          },
+          "projection_lr_multiplier": {
+            "before": 1.0,
+            "after": 1.1547005383792515
+          },
+          "dense_projection_lr_multiplier": {
+            "before": 1.0,
+            "after": 1.0
+          }
+        },
+        "cpu_audit": {
+          "path": "research_results/wr_reproduction/matched-study/routed768-cpu-model-audit.json",
+          "sha256": "af785028d2fc6e05a31cc50bc9e7f24d06a92bfb6871ced372462f4a4bff181d"
+        },
+        "cpu_optimizer_audit": {
+          "path": "research_results/wr_reproduction/matched-study/routed768-cpu-optimizer-audit.json",
+          "sha256": "fc19c7823a21ae9c62792de91eb0327dd5833edb29a839526268ab059d43ad6a"
+        },
+        "correctness_required": true,
+        "actual_full_graph_warmup_required": true,
+        "kernel_source_unchanged": true,
+        "oracle_scope": "Dedicated registered width768 GS32/BF16 routed oracle: all eight experts, input/router/post/projection/geometry gradients, empty experts, exact caches and captured refresh replay. No new kernel, precision implementation or timing sweep.",
+        "correctness_run_id": "matched-ks3-all-routed768-normlr-20261025T231638-ce2c73",
+        "correctness_result": {
+          "run_id": "matched-ks3-all-routed768-normlr-20261025T231638-ce2c73",
+          "status": "error",
+          "seed": 172,
+          "code_commit": "c2f0b6ab05bbe10c10ef8d3c33e29f38982e96a8",
+          "recipe": {
+            "precision": "bf16",
+            "charts": 768,
+            "rank": 1,
+            "group_size": 32,
+            "nonlinearity": "fp16",
+            "geometry": {
+              "lr_mul": 0.125,
+              "betas": [
+                0.9,
+                0.99
+              ],
+              "weight_decay": 0,
+              "raw_scale": 0.75,
+              "raw_shift": 0.0,
+              "coefficients": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "projection_accumulation": "fp32",
+            "training_gs32": true,
+            "weight_packing": "loop",
+            "geometry_backward_rows": 64,
+            "bf16_kernel_mode": "tuned",
+            "shared_fp8_gemm_tuning": "mi300-v1",
+            "shared_fp8_amax": "atomic",
+            "shared_fp8_decode": "scalar",
+            "shared_fp8_head_tuning": "legacy",
+            "shared_fp8_pipeline_tuning": "legacy",
+            "validation_window_policy": "accepted-control",
+            "validation_precision": "bf16",
+            "max_train_seconds": 900.0,
+            "validation_setup_reserve_seconds": 2.0,
+            "model_wide_hyperparameters": "original-pr393",
+            "architecture": "ks3_all",
+            "name": "matched-ks3-all-routed768-normlr",
+            "hypothesis": "Reduce only routed KS3 expert width from1024 to768, preserving all five dense KS3 branches at1024. Complement the completed dense-only768 and both-branch768 capacity ablations by isolating routed capacity and elapsed-time cost. Multiply routed projection learning rate by sqrt(1024/768) and explicitly keep dense projection multiplier1.0 so original effective ANVIL rates remain equal. Preserve zero initial geometry coefficients, all other KS3 settings, MoE8top1 and every shared/model-wide setting.",
+            "dense_charts": 1024,
+            "projection_lr_multiplier": 1.1547005383792515,
+            "dense_projection_lr_multiplier": 1.0
+          },
+          "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+          "validation": null,
+          "pruning": null,
+          "timing": null,
+          "correctness": null,
+          "exit_code": 1,
+          "events_sha256": null,
+          "completed_utc": "2026-10-25T23:17:01.513275+00:00",
+          "qualifies": false
+        }
+      }
+    ],
+    "decision": "Finish scale125 and random-spine discoveries plus any required verification, then isolate routed768/dense1024 with normalized projection rates and zero coefficient initialization.",
+    "unit": "wr-matched-routed768-ordered",
+    "scheduler": {
+      "path": "run_wr_matched_ablations.py",
+      "sha256": "a51be7013b4393887109a76c836bd2da6b336d09877160f27b9419ade5fbe955",
+      "code_commit": "6be84f7a2b98f3bad7ebf0c80de096422bbe34af"
+    }
+  },
+  "decision": "Preserve failed oracle and separate diagnostic; run a new full routed768 correctness gate at the unchanged tolerance. Launch convergence only if it passes. No training has run for this routed-only768 recipe."
+}

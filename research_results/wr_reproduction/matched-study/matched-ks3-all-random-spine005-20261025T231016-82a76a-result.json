@@ -1,0 +1,162 @@
+{
+  "run_id": "matched-ks3-all-random-spine005-20261025T231016-82a76a",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "6be84f7a2b98f3bad7ebf0c80de096422bbe34af",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "coefficient_init_std": 0.05
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-random-spine005",
+    "hypothesis": "Initialize all six KS3 spine coefficients independently from normal(0,0.05), matching the vendored KS3 reference initialization scale instead of zero coefficients. Test whether starting with distinct nonlinear chart functions helps the fully replaced feedforward architecture learn under the fixed elapsed-time budget. Use a seed-local CPU generator without advancing model or data RNG streams; preserve every projection and nonfeedforward initial value, raw warp scale/shift, original KS3 projection decay and learning rates, geometry Adam0.125, 1024 rank-one BF16/GS32 blocks, and all shared/model-wide settings."
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 4.918825149536133,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 1,
+      "attention_windows": [
+        384,
+        896
+      ],
+      "mtp": [
+        1.0,
+        0.16190476715564728
+      ],
+      "prefix": 0.10000000149011612,
+      "candidates": 10240,
+      "batch_tokens": 262144,
+      "global_batch_tokens": 262144,
+      "logical_batch_tokens": 32768,
+      "logical_ranks": 8,
+      "train_max_seq_len": 2048,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.010363101959229,
+    "reference_run_id": "matched-ks3-all-projection125-20261025T183239-04cc8c",
+    "reference_wall_seconds": 250.6172688450024,
+    "reference_age_seconds": 3.012917688989546,
+    "reference_objective": 4.908462047576904,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 1,
+      "attention_windows": [
+        384,
+        896
+      ],
+      "mtp": [
+        1.0,
+        0.16190476715564728
+      ],
+      "prefix": 0.10000000149011612,
+      "candidates": 10240,
+      "batch_tokens": 262144,
+      "global_batch_tokens": 262144,
+      "logical_batch_tokens": 32768,
+      "logical_ranks": 8,
+      "train_max_seq_len": 2048,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "reference_source_step": 494,
+    "comparable_runs": 20,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-projection125-20261025T183239-04cc8c/events.jsonl",
+      "sha256": "9f6ee378d5ab437d33d5b8bc729989382bf2b21480943058ed9cd1c4dc61b410",
+      "line": 528,
+      "row_sha256": "0e01a93232b067e4eb8350a889f76ada8f96c3728602393c8e3f5e403e2211d1"
+    },
+    "step": 494,
+    "train_seconds": 253.63018653399195,
+    "reference_snapshot_sha256": "63bbc86da558a9b7b8fc8506b0ae7cb821fe05bedd456d702cb73f1b44ee29a4",
+    "utc": "2026-10-25T23:16:36.782413+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_all",
+    "run_id": "matched-ks3-all-random-spine005-20261025T231016-82a76a",
+    "seed": 168,
+    "code_commit": "6be84f7a2b98f3bad7ebf0c80de096422bbe34af",
+    "training_projection_gs32": true
+  },
+  "timing": null,
+  "correctness": null,
+  "exit_code": 0,
+  "events_sha256": "e1f245ab97bb7a0e592bb942dcd207d773207cf82aae5ca6ab9ba7bb82768c2b",
+  "completed_utc": "2026-10-25T23:16:38.718354+00:00",
+  "qualifies": false
+}

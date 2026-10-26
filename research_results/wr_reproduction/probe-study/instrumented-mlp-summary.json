@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-26T03:02:55.862443+00:00",
+  "run_id": "probe-mlp-control-20261026T024345-ef50bf",
+  "kind": "single_instrumented_mlp_control",
+  "seed": 169,
+  "full_validation_loss": 3.318265914916992,
+  "full_validation_tokens": 10485760,
+  "timed_training_seconds": 897.9328787570121,
+  "updates": 978,
+  "probe_count": 14,
+  "probe_seconds": 4.188654454017524,
+  "total_instrumentation_seconds": 5.419319670036202,
+  "instrumentation_fraction": 0.006038627369714447,
+  "reserved_confirmation_loss": 3.366921029984951,
+  "reserved_confirmation_for_tuning": false,
+  "code_commit": "b08817929cd90b0a88d845d9609996fe7eb221f6",
+  "backend_hash": "244af450ed03c5c27ffe275133d2f6e1bb425e1388928790e327cb38aade8a96",
+  "events_sha256": "7f0911d6d9fadfab578f039ba92c8a348f13671a887f79912b19396e15f3a793",
+  "next_run_id": "probe-ks3-experts-reference-20261026T030119-bb4dc7"
+}

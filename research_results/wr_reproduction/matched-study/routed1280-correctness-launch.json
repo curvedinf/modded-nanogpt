@@ -1,0 +1,98 @@
+{
+  "utc": "2026-10-25T23:40:56.901643+00:00",
+  "passed": true,
+  "oracle_run_id": "matched-ks3-all-routed1280-normlr-20261025T233926-2cdbe7",
+  "oracle_code_commit": "b19e8c40fc83d8d9c5b9ade32db386170ebe16d5",
+  "oracle_result_sha256": "b8dc448f209e1e8f5cf41a5d38aeafefc6d0752d492b7eb5a387d9e027779bb4",
+  "oracle_events_sha256": "24a6a1dcaf53c326daa7cfdc230a0c8714e73f3d6ae8eb0c66e4a52076b3c7d6",
+  "maximum_relative_rms": 0.0016766723711043596,
+  "unchanged_relative_rms_tolerance": 0.015,
+  "checks": [
+    {
+      "tokens": 1,
+      "gs32": true,
+      "active_experts": 1,
+      "relative_rms": {
+        "output": 0.0,
+        "probabilities": 0.0,
+        "input_gradient": 0.001045553362928331,
+        "router_gradient": 0.0,
+        "post_gradient": 0.0,
+        "geometry_gradient": 1.3582420024249586e-06,
+        "up_gradient": 0.0,
+        "down_gradient": 0.0
+      },
+      "unrelated_gradient_bank_unchanged": true
+    },
+    {
+      "tokens": 257,
+      "gs32": true,
+      "active_experts": 1,
+      "relative_rms": {
+        "output": 0.0001877418253570795,
+        "probabilities": 0.0,
+        "input_gradient": 0.00012140871695009992,
+        "router_gradient": 0.000277879269560799,
+        "post_gradient": 0.0,
+        "geometry_gradient": 1.0269732229062356e-06,
+        "up_gradient": 9.872497321339324e-05,
+        "down_gradient": 0.00015076428826432675
+      },
+      "unrelated_gradient_bank_unchanged": true
+    },
+    {
+      "tokens": 4096,
+      "gs32": true,
+      "active_experts": 8,
+      "relative_rms": {
+        "output": 0.0001441495551262051,
+        "probabilities": 0.0,
+        "input_gradient": 0.0016766723711043596,
+        "router_gradient": 0.0008884412236511707,
+        "post_gradient": 0.0,
+        "geometry_gradient": 1.0461511692483327e-06,
+        "up_gradient": 0.00011221856402698904,
+        "down_gradient": 0.00012226038961671293
+      },
+      "unrelated_gradient_bank_unchanged": true
+    }
+  ],
+  "cache_checks": [
+    {
+      "training": true,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "training": false,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "training": true,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "captured_replay": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "captured_replay": true,
+      "cache_bytes_exact": true
+    }
+  ],
+  "scalar_gradient_accumulation": "original-pr393-fp32-with-bf16-forward-scale-ste",
+  "routed_width": 1280,
+  "dense_width": 1024,
+  "discovery_run_id": "matched-ks3-all-routed1280-normlr-20261025T233951-df2b3c",
+  "discovery_code_commit": "b19e8c40fc83d8d9c5b9ade32db386170ebe16d5",
+  "source_hashes_unchanged_since_preparation": true,
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "control_set_sha256": "59746335a66614f8f4fa3e903601d4d7ba57cc591a27f31e48517189d09e8413",
+  "validation_measured": false,
+  "decision": "Independent routed-width numerical gate passed; single-GPU discovery launched. Mandatory actual graph warmup remains in the trainer. A matched full-validation win triggers three frozen fresh seeds without comparative pruning."
+}

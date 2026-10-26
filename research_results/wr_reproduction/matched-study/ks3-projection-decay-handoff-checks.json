@@ -1,0 +1,15 @@
+{
+  "utc": "2026-10-25T22:46:46.421929+00:00",
+  "passed": true,
+  "cpu_only": true,
+  "gpu_initialized": false,
+  "tests": 7,
+  "prototype_sha256": "59a15f468886798b44f8314f2209c675ee9817027840ef9285306cabfeebd487",
+  "patch_applies": true,
+  "shared_backend_unchanged": true,
+  "script_hashes": {
+    "check_wr_ks3_projection_decay.py": "99077d9e961a61657357fb566597ca34246207ee34c8d3d2fc90782920694cc0",
+    "run_wr_matched_ks3_projection_decay.py": "d8969d4f500e7fd166fa67c6c3bbd68d2dfb86e1706122574ae5e6a32aae19d1",
+    "test_wr_matched_ks3_projection_decay.py": "664193b808fb154bd801403358ec32af303269bda000abb5fd6d580be408def4"
+  }
+}

@@ -1,0 +1,488 @@
+{
+  "passed": true,
+  "gpu_initialized": false,
+  "architecture": "ks3_all",
+  "nonfeedforward_initialization_identical": true,
+  "router_identical": true,
+  "original_retained_initialization_identical": true,
+  "anvil_shape_and_output_lr_and_padding_verified": true,
+  "routed_projection_initialization_identical": true,
+  "dense_features": 1024,
+  "routed_features": 1024,
+  "inventory": {
+    "architecture": "ks3_all",
+    "layers": [
+      {
+        "layer": 0,
+        "feedforward": [
+          {
+            "branch": "dense",
+            "slot": 0,
+            "type": "ks3",
+            "instances": 1,
+            "projection_shape": [
+              2,
+              1024,
+              768
+            ],
+            "projection_parameters": 1572864
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 1,
+        "feedforward": [
+          {
+            "branch": "routed_experts",
+            "slot": 0,
+            "type": "ks3",
+            "instances": 8,
+            "topk": 1,
+            "projection_shape": [
+              2,
+              8,
+              1024,
+              768
+            ],
+            "projection_parameters": 12582912
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 2,
+        "feedforward": [
+          {
+            "branch": "dense",
+            "slot": 1,
+            "type": "ks3",
+            "instances": 1,
+            "projection_shape": [
+              2,
+              1024,
+              768
+            ],
+            "projection_parameters": 1572864
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 3,
+        "feedforward": [
+          {
+            "branch": "routed_experts",
+            "slot": 1,
+            "type": "ks3",
+            "instances": 8,
+            "topk": 1,
+            "projection_shape": [
+              2,
+              8,
+              1024,
+              768
+            ],
+            "projection_parameters": 12582912
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 4,
+        "feedforward": [
+          {
+            "branch": "dense",
+            "slot": 2,
+            "type": "ks3",
+            "instances": 1,
+            "projection_shape": [
+              2,
+              1024,
+              768
+            ],
+            "projection_parameters": 1572864
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 5,
+        "feedforward": [
+          {
+            "branch": "routed_experts",
+            "slot": 2,
+            "type": "ks3",
+            "instances": 8,
+            "topk": 1,
+            "projection_shape": [
+              2,
+              8,
+              1024,
+              768
+            ],
+            "projection_parameters": 12582912
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 6,
+        "feedforward": [
+          {
+            "branch": "routed_experts",
+            "slot": 3,
+            "type": "ks3",
+            "instances": 8,
+            "topk": 1,
+            "projection_shape": [
+              2,
+              8,
+              1024,
+              768
+            ],
+            "projection_parameters": 12582912
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 7,
+        "feedforward": [],
+        "removed_feedforward": true
+      },
+      {
+        "layer": 8,
+        "feedforward": [
+          {
+            "branch": "parallel_dense",
+            "slot": 4,
+            "type": "ks3",
+            "instances": 1,
+            "projection_shape": [
+              2,
+              1024,
+              768
+            ],
+            "projection_parameters": 1572864
+          },
+          {
+            "branch": "routed_experts",
+            "slot": 4,
+            "type": "ks3",
+            "instances": 8,
+            "topk": 1,
+            "projection_shape": [
+              2,
+              8,
+              1024,
+              768
+            ],
+            "projection_parameters": 12582912
+          }
+        ],
+        "removed_feedforward": false
+      },
+      {
+        "layer": 9,
+        "feedforward": [],
+        "removed_feedforward": true
+      },
+      {
+        "layer": 10,
+        "feedforward": [
+          {
+            "branch": "dense",
+            "slot": 3,
+            "type": "ks3",
+            "instances": 1,
+            "projection_shape": [
+              2,
+              1024,
+              768
+            ],
+            "projection_parameters": 1572864
+          }
+        ],
+        "removed_feedforward": false
+      }
+    ],
+    "dense_sites": 5,
+    "moe_sites": 5,
+    "routed_expert_instances": 40,
+    "active_conventional_mlp_instances": 0,
+    "total_parameters": 326980456,
+    "parameter_inventory": {
+      "value_embeds": {
+        "shape": [
+          201216,
+          768
+        ],
+        "parameters": 154533888
+      },
+      "ve_gate_bank": {
+        "shape": [
+          3,
+          6,
+          12
+        ],
+        "parameters": 216
+      },
+      "qk_bank": {
+        "shape": [
+          48,
+          256,
+          768
+        ],
+        "parameters": 9437184
+      },
+      "vo_bank": {
+        "shape": [
+          16,
+          768,
+          768
+        ],
+        "parameters": 9437184
+      },
+      "mlp_bank": {
+        "shape": [
+          8,
+          2,
+          1024,
+          768
+        ],
+        "parameters": 12582912
+      },
+      "moe_bank": {
+        "shape": [
+          80,
+          1024,
+          768
+        ],
+        "parameters": 62914560
+      },
+      "moe_router": {
+        "shape": [
+          5,
+          8,
+          768
+        ],
+        "parameters": 30720
+      },
+      "post_lambdas": {
+        "shape": [
+          11,
+          2
+        ],
+        "parameters": 22
+      },
+      "resid_lambdas": {
+        "shape": [
+          11,
+          2
+        ],
+        "parameters": 22
+      },
+      "scalars": {
+        "shape": [
+          24
+        ],
+        "parameters": 24
+      },
+      "mudd_w1": {
+        "shape": [
+          2,
+          64,
+          768
+        ],
+        "parameters": 98304
+      },
+      "mudd_w2": {
+        "shape": [
+          2,
+          14,
+          64
+        ],
+        "parameters": 1792
+      },
+      "mudd_b2": {
+        "shape": [
+          2,
+          14
+        ],
+        "parameters": 28
+      },
+      "mudd_w2g": {
+        "shape": [
+          14,
+          12,
+          64
+        ],
+        "parameters": 10752
+      },
+      "_mudd_gate_scale": {
+        "shape": [],
+        "parameters": 1
+      },
+      "mudd_gate_w1": {
+        "shape": [
+          2,
+          64,
+          768
+        ],
+        "parameters": 98304
+      },
+      "mudd_gate_w2": {
+        "shape": [
+          2,
+          17,
+          64
+        ],
+        "parameters": 2176
+      },
+      "mudd_gate_b2": {
+        "shape": [
+          2,
+          17
+        ],
+        "parameters": 34
+      },
+      "copy_qk_bank": {
+        "shape": [
+          2,
+          128,
+          768
+        ],
+        "parameters": 196608
+      },
+      "copy_k_sink": {
+        "shape": [
+          128
+        ],
+        "parameters": 128
+      },
+      "copy_qk_gain": {
+        "shape": [
+          1
+        ],
+        "parameters": 1
+      },
+      "ks3_geometry": {
+        "shape": [
+          5,
+          8,
+          1024,
+          8
+        ],
+        "parameters": 327680
+      },
+      "ks3_dense_geometry": {
+        "shape": [
+          5,
+          1024,
+          8
+        ],
+        "parameters": 40960
+      },
+      "lm_head.weight": {
+        "shape": [
+          768,
+          50304
+        ],
+        "parameters": 38633472
+      },
+      "embed.weight": {
+        "shape": [
+          50304,
+          768
+        ],
+        "parameters": 38633472
+      },
+      "smear_gate.weight": {
+        "shape": [
+          1,
+          12
+        ],
+        "parameters": 12
+      }
+    },
+    "upstream_forward_sha256": "80a84072b3617cf50a33968a043e1768a29a39a0455b6b1d8fa14aed0a50bf41",
+    "forward_transform_sha256": "902100e3411a976eadf0316a455356c8e780ddc512cb4baf13ed6a43611a70ba",
+    "coverage": "Static forward call-site audit; real full-graph capture is required before training",
+    "excluded": [
+      "attention projections",
+      "head",
+      "embedding",
+      "router",
+      "MUDD gates"
+    ]
+  },
+  "cache_policy_checks": [
+    {
+      "training": true,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "calls": 2
+    },
+    {
+      "training": false,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "calls": 45
+    },
+    {
+      "training": true,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "calls": 2
+    },
+    {
+      "training": true,
+      "routed_training_gs32": false,
+      "cache_gs32": false,
+      "calls": 2
+    },
+    {
+      "training": false,
+      "routed_training_gs32": false,
+      "cache_gs32": true,
+      "calls": 45
+    },
+    {
+      "training": true,
+      "routed_training_gs32": false,
+      "cache_gs32": false,
+      "calls": 2
+    }
+  ],
+  "autograd_arity_checks": [
+    {
+      "explicit_direct_flag": false,
+      "fake_forward_backward_passed": true
+    },
+    {
+      "explicit_direct_flag": true,
+      "fake_forward_backward_passed": true
+    }
+  ],
+  "oracle_projection_shape_check": true,
+  "oracle_numerical_check_requires_gpu": true,
+  "unchanged_arithmetic": [
+    "ks3_moe.py:_pack",
+    "ks3_moe.py:_geometry",
+    "ks3_moe.py:_vjp",
+    "ks3_moe.py:_reduce",
+    "ks3_moe.py:backward",
+    "ks3_weight_pack.py:_weights",
+    "ks3_weight_pack.py:refresh"
+  ],
+  "invalid_flags_and_shapes_rejected": 5,
+  "staged_source_hashes": {
+    "matched_controller.py": "74585766bf4618ed243b75f9cbd6dbbbba9688ccb4481b5630dc136cbe74c41a",
+    "check_ks3_routed_bf16_direct.py": "553e7714807e549a4c7ab1150444fde87065ed317f5d8d34d3c056b49e6dc855",
+    "ks3_weight_pack.py": "1a26a914abed9e2862539180a5fc18b5d81af6caf95c4e23a055d8858befd04b",
+    "ks3_moe.py": "70cffd25edd4ef0e2231d182dcf9df09a3b89a097fc12f4e68651dc4dd9a19ba",
+    "ks3_feedforward.py": "738a4d9ad208f24252c2f4f7df712596beb3265218f97297a056ac9406ef3ba4"
+  },
+  "cpu_auditor_sha256": "0ac98344b67b315022f811350943bb2f736ab7e14fff17ee349295a5526e6bdd"
+}

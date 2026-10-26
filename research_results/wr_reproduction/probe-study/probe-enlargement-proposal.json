@@ -1,0 +1,72 @@
+{
+  "utc": "2026-10-26T03:14:31.687845+00:00",
+  "status": "proposal_requires_control_count_clarification",
+  "protocol": {
+    "version": 1,
+    "loss_definition": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+    "tokens": 1048576,
+    "offset": 0,
+    "chunk_tokens": 8192,
+    "uncertainty_block_tokens": 8192,
+    "reserved_offset": 12582912,
+    "reserved_tokens": 262144,
+    "interval_seconds": 120.0,
+    "max_reference_age_seconds": 3.0,
+    "attention_windows": [
+      640,
+      1408
+    ],
+    "yarn_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612",
+    "segmentation": "original-unaligned-BOS-within-each-fixed8192-token-chunk",
+    "precision": "bf16",
+    "weights": "raw",
+    "canonical_mask": false,
+    "tail_shipping": false,
+    "final_window_extension": false,
+    "mtp": false,
+    "prefix": false,
+    "moe_aux": false,
+    "copy_eval_block": 8192,
+    "softcap": [
+      23.0,
+      5.0,
+      7.5
+    ],
+    "clock": "continuous-perf-counter-setup-evaluation-restoration-included",
+    "uncertainty": "paired-nonoverlapping8192-token-block-student95-halfwidth; correlated-block caveat; not runtime noise"
+  },
+  "preserves_all_shared_model_math": true,
+  "reference_reconstruction_possible": false,
+  "measured_65536_token_warm_seconds_range": [
+    0.1576,
+    0.1721
+  ],
+  "projected_1048576_token_warm_seconds_range": [
+    2.5216,
+    2.7536
+  ],
+  "projected_7_probe_plus_cold_overhead_fraction": 0.026605777777777777,
+  "projected_worst_student95_halfwidth": 0.006985339243369246,
+  "projection_caveat": "Linear cost and independent-block variance projection only; enlarged sample requires actual validation. No precision claim from repeated deterministic inference.",
+  "observed_worst_pair": {
+    "run_id": "probe-ks3-experts-reference-20261026T030119-bb4dc7",
+    "checkpoint_elapsed_seconds": 120.22014554301859,
+    "gap": -0.09734994173049927,
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 8,
+      "mean_difference": -0.09734994173049927,
+      "standard_error": 0.014111796451251001,
+      "normal95_halfwidth": 0.02765912104445196,
+      "student95_halfwidth": 0.03337439860720862,
+      "resolves_001": false,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    }
+  },
+  "required_new_references": [
+    "one replacement instrumented original MLP seed169",
+    "one replacement incumbent KS3 seed169"
+  ],
+  "why": "Old64K curves cannot be turned into1M measurements without model checkpoints. Existing original-count authorization says exactly one MLP and one KS3 reference.",
+  "already_authorized_work_continues": "Current exempt KS3 reference and three frozen seeds if it qualifies. No placement candidate has launched."
+}

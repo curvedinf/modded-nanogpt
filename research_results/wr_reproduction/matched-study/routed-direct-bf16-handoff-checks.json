@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-25T22:31:29.203937+00:00",
+  "passed": true,
+  "cpu_only": true,
+  "gpu_initialized": false,
+  "tests": 11,
+  "prototype_sha256": "261363b314f8f4049cefa71585c19d55c31abfb1c0abbfcc3fc5b5e5132b97bd",
+  "patch_applies": true,
+  "resolved_predecessor_preserved": true,
+  "backend_fence_unchanged": true,
+  "script_hashes": {
+    "run_wr_matched_routed_direct_bf16.py": "e3eb3c88d9b0f29489aeee9480e22ca0b8a9e46ae02e5eb377b7d65d6a43ed23",
+    "check_wr_routed_direct_bf16.py": "0ac98344b67b315022f811350943bb2f736ab7e14fff17ee349295a5526e6bdd",
+    "test_wr_matched_routed_direct_bf16.py": "e52fef725437e710ca6134d974cfe5157eae99a908613eb873a2f0ad7208a84f"
+  }
+}

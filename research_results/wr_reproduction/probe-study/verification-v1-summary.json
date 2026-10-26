@@ -1,0 +1,49 @@
+{
+  "utc": "2026-10-26T04:11:47.644975+00:00",
+  "status": "three_fresh_frozen_seeds_complete",
+  "runs": [
+    {
+      "seed": 269,
+      "run_id": "probe-ks3-experts-verification-20261026T031856-1ecf9a",
+      "code_commit": "8fe49e530f7a53340cc6ff6206f5d342b8025a6c",
+      "full_validation_loss": 3.3006529808044434,
+      "training_seconds": 897.4537855699891,
+      "full_validation_tokens": 10485760,
+      "reserved_confirmation_loss": 3.3483522087335587,
+      "instrumentation_fraction": 0.007082550176140139,
+      "events_sha256": "95acbd78662156ba9d151a2c4eb8db14a5fd2a6e6ef5f4e4f0ed72c8d04dd693"
+    },
+    {
+      "seed": 270,
+      "run_id": "probe-ks3-experts-verification-20261026T033633-6e4eec",
+      "code_commit": "8fe49e530f7a53340cc6ff6206f5d342b8025a6c",
+      "full_validation_loss": 3.2995657920837402,
+      "training_seconds": 897.859081913979,
+      "full_validation_tokens": 10485760,
+      "reserved_confirmation_loss": 3.34747601300478,
+      "instrumentation_fraction": 0.007073036858398149,
+      "events_sha256": "7136c2f204ad72297d52badeb63bec0d5e771bcbf031818b0007e0130693b6d7"
+    },
+    {
+      "seed": 271,
+      "run_id": "probe-ks3-experts-verification-20261026T035409-adde28",
+      "code_commit": "8fe49e530f7a53340cc6ff6206f5d342b8025a6c",
+      "full_validation_loss": 3.300765037536621,
+      "training_seconds": 897.9370187500026,
+      "full_validation_tokens": 10485760,
+      "reserved_confirmation_loss": 3.3483029901981354,
+      "instrumentation_fraction": 0.007268165655946967,
+      "events_sha256": "56065fed394cda3a423f825be6dcd8169dd9fb987b8b8b093a50a4d751cad490"
+    }
+  ],
+  "mean": 3.300327936808268,
+  "sample_std": 0.0006624104570815424,
+  "minimum": 3.2995657920837402,
+  "maximum": 3.300765037536621,
+  "instrumented_mlp_loss": 3.318265914916992,
+  "mean_minus_mlp": -0.017937978108724106,
+  "all_below_mlp": true,
+  "all_within900_seconds": true,
+  "reserved_confirmation_for_confirmation_only": true,
+  "probe_limitation": "64K paired text uncertainty is insufficient at some comparison times; no placement was screened with this protocol."
+}

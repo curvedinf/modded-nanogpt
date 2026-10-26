@@ -1,0 +1,88 @@
+{
+  "utc": "2026-10-25T22:45:41.861423+00:00",
+  "not_deployed": true,
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-projection-wd050",
+    "hypothesis": "Halve weight decay only on dense and routed KS3 projection banks, testing whether original PR393 projection regularization is too strong for the narrower full-KS3 feedforward architecture. Keep all1024/rank1 BF16 GS32 blocks, projection learning rates, geometry Adam0.125/no geometry decay, initialization, original optimizer algorithm, MoE8top1 and every shared/model-wide setting fixed. Retained MLP banks in hybrids keep their original decay. This is a KS3-specific parameter-policy ablation, not a model-wide recipe change.",
+    "ks3_projection_weight_decay_multiplier": 0.5
+  },
+  "staged_sources": [
+    {
+      "path": "wr_reproduction/ks3_feedforward.py",
+      "base_sha256": "738a4d9ad208f24252c2f4f7df712596beb3265218f97297a056ac9406ef3ba4",
+      "staged_sha256": "95c410ffa89d7f6cd4b00d83429c7a84426de4aa5c801860a9c2352edb9fc43d"
+    }
+  ],
+  "patch": "research_results/wr_reproduction/matched-study/ks3-projection-decay-prototype.patch",
+  "patch_sha256": "6ca2187ce59e2a6601502dd494e1beb2244f155f6ffb8be6e4900c30b82c27d1",
+  "cpu_auditor": {
+    "path": "check_wr_ks3_projection_decay.py",
+    "sha256": "99077d9e961a61657357fb566597ca34246207ee34c8d3d2fc90782920694cc0"
+  },
+  "cpu_optimizer_audit": {
+    "path": "research_results/wr_reproduction/matched-study/ks3-projection-decay-cpu-optimizer-audit.json",
+    "sha256": "47d841990df64e72db7ea6e27b598b7fee1b6c7e03f100823845970d6092d560"
+  },
+  "cpu_model_audit": {
+    "path": "research_results/wr_reproduction/matched-study/ks3-projection-decay-model-audit-reuse.json",
+    "sha256": "25755067deebb514b332633d0bca961111a351048cb55e93cc85a56802547e6a"
+  },
+  "unchanged_sources": {
+    "wr_reproduction/ks3_moe.py": "70cffd25edd4ef0e2231d182dcf9df09a3b89a097fc12f4e68651dc4dd9a19ba",
+    "wr_reproduction/ks3_weight_pack.py": "1a26a914abed9e2862539180a5fc18b5d81af6caf95c4e23a055d8858befd04b",
+    "wr_reproduction/ks3_optimizer.py": "5588483859503dad227b5f8be78a7fc9de5da0ed22d8b93af55d8b95756a303c",
+    "wr_reproduction/ks3_bf16_gemm.py": "c6342dab76dc1ebb18365b1270f67f27d7eba32433ec75fac39d12b7ebc55ef7",
+    "wr_reproduction/ks3_feedforward_source.py": "388467e576f93d189e2cc31fce19c11377df3f6a60de68a22fdb9db186634106",
+    "wr_reproduction/ks3_dense_fp8.py": "23f66add17c6f75113cc9789e427a3a349ecafb362d702d80c6c4f6ee4401ecb",
+    "wr_reproduction/matched_controller.py": "74585766bf4618ed243b75f9cbd6dbbbba9688ccb4481b5630dc136cbe74c41a",
+    "run_wr_matched_dense2816.py": "b9b55ac877273cf625a15b68bba3f5ae9265c06d938055e387a834b6492dd833"
+  },
+  "baseline_recipe": {
+    "path": "configs/wr_reproduction/matched_ks3_all.json",
+    "sha256": "a84eb1c0ccffd8e009de25c8ea3e68333d4b8e35cee82d3c9b4f80769df55df3"
+  },
+  "prerequisite_manifest": "logs/wr-reproduction/matched-study/pending-dense768-normalized-rate.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "scope": "KS3 projection parameter groups only; shared optimizer algorithm and all non-KS3 parameter settings unchanged. Not a model-wide recipe change.",
+  "kernel_arithmetic_and_architecture_unchanged": true,
+  "decision": "Wait for dense768 and any verification. Deploy under exclusive leases, then one nominal900s discovery with actual full graph warmup. Existing numerical oracles remain applicable because model/arithmetic/cache paths are unchanged; no repeated timing sweep."
+}

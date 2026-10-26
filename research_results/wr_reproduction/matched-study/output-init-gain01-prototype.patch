@@ -1,0 +1,60 @@
+--- a/wr_reproduction/ks3_feedforward.py
++++ b/wr_reproduction/ks3_feedforward.py
+@@ -78,6 +78,30 @@
+         value[...,:6*rank].add_((noise*std).to(value.device))
+     return dict(distribution='normal',std=std,seed=seed,
+                 generator='isolated-cpu-generator-routed-then-dense-v1')
++
++@torch.no_grad()
++def initialize_output_projections(routed,dense,retained_slots,gain):
++    """KS3-only nonzero outputs, without advancing model or data RNG streams."""
++    if not gain:
++        return dict(distribution='original-zero',gain=0.,seed=None)
++    seed=torch.initial_seed()
++    generator=torch.Generator(device='cpu').manual_seed(seed)
++    routed_features,model_dim=routed.shape[-2:]
++    dense_features=dense.shape[-2]
++    routed_outputs=routed.view(5,2,8,routed_features,model_dim)[:,1]
++    routed_noise=torch.randn(routed_outputs.shape,generator=generator,device='cpu',dtype=torch.float32)
++    routed_std=gain/math.sqrt(routed_features)
++    routed_outputs.copy_((routed_noise*routed_std).to(routed_outputs))
++    dense_std=gain/math.sqrt(dense_features)
++    active_slots=[s for s in range(5) if s not in retained_slots]
++    for slot in active_slots:
++        noise=torch.randn(dense[slot,1].shape,generator=generator,device='cpu',dtype=torch.float32)
++        dense[slot,1].copy_((noise*dense_std).to(dense[slot,1]))
++    return dict(distribution='normal',gain=gain,seed=seed,
++                generator='isolated-cpu-generator-routed-then-active-dense-v1',
++                routed_output_matrices=40,dense_output_slots=active_slots,
++                routed_fan_in=routed_features,dense_fan_in=dense_features,
++                routed_std=routed_std,dense_std=dense_std)
+ 
+ def install(base,recipe):
+     if recipe['precision']!='bf16':raise ValueError('Full-feedforward implementation currently verified for BF16 KS3 only')
+@@ -104,6 +128,10 @@
+     initial_std=geometry.get('coefficient_init_std',0.)
+     if isinstance(initial_std,bool) or not isinstance(initial_std,(int,float)) or not math.isfinite(initial_std) or initial_std<0:
+         raise ValueError('KS3 initial coefficient standard deviation must be finite and nonnegative')
++    output_init_gain=recipe.get('ks3_output_projection_init_gain',0.)
++    if (isinstance(output_init_gain,bool) or not isinstance(output_init_gain,(int,float))
++            or not math.isfinite(output_init_gain) or output_init_gain<0):
++        raise ValueError('KS3 output projection initialization gain must be finite and nonnegative')
+     multiplier=recipe.get('dense_projection_lr_multiplier',recipe.get('projection_lr_multiplier',1.))
+     if not math.isfinite(multiplier) or multiplier<=0:
+         raise ValueError('Dense KS3 projection LR multiplier must be finite and positive')
+@@ -146,6 +174,7 @@
+                 self.retained_mlp_bank=torch.nn.Parameter(retained)
+                 self.retained_mlp_bank.label='retained_mlp_bank';self.retained_mlp_bank.reshape=(8,2816,768)
+                 self.retained_mlp_bank.frozen_matrices=frozenset(2*s+j for s in range(len(keep),4) for j in (0,1))
++            self.ks3_output_projection_initialization=initialize_output_projections(self.moe_bank,self.mlp_bank,keep,output_init_gain)
+             init_retained(self,768)
+             self.register_buffer('_mlp_ks3_up',torch.zeros((5,features,768),device=self.device,dtype=torch.bfloat16),persistent=False)
+             self.register_buffer('_mlp_ks3_down',torch.zeros((5,768,features),device=self.device,dtype=torch.bfloat16),persistent=False)
+@@ -205,6 +234,7 @@
+                         retained_original_mlp_slots=list(keep),all_feedforward_paths_mapped=True,
+                         original_mlp_fallback_is_fatal=True,transformed_forward_sha256=forward_sha,
+                         actual_graph_warmup=True,ks3_geometry_initialization=dict(self.ks3_geometry_initialization),
++                        ks3_output_projection_initialization=dict(self.ks3_output_projection_initialization),
+                         dense_projection_optimizer=dict(optimizer_policy),
+                         dense_geometry_optimizer=dict(geometry_policy),
+                         dense_training_precision=dense_precision,dense_validation_precision='bf16',

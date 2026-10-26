@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-26T02:47:03.592660+00:00",
+  "not_screening_references": true,
+  "ks3_expert_only_losses": [
+    3.3001344204,
+    3.3004999161,
+    3.3012843132
+  ],
+  "matched_mlp_losses": [
+    3.3141083717,
+    3.3152177334,
+    3.3163712025
+  ],
+  "winning_source": "f1366345fcdbde52d06711b33300e481db855c34",
+  "prior_controls_immutable": true,
+  "original_vendor_sha256": "becdb04749963afa8adc39812a61ec3bb14b0ad966c2fc04e1e4edd4ec1ed501",
+  "obsolete_targets_excluded": [
+    3.454925298690796,
+    3.68,
+    3.793633
+  ]
+}

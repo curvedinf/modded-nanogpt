@@ -1,0 +1,210 @@
+{
+  "run_id": "probe-mlp-control-20261026T042221-0121f6",
+  "status": "complete",
+  "seed": 169,
+  "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+  "recipe": {
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "mlp",
+    "name": "probe-mlp",
+    "hypothesis": "Acquire one exempt fixed-probe reference under the frozen shared original-PR393 recipe."
+  },
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "validation": {
+    "event": "validation",
+    "final": false,
+    "loss": 3.3339109420776367,
+    "train_seconds": 898.1670716530061,
+    "val_tokens": 10485760,
+    "evaluation_signature": {
+      "loss_definition": "pr393-cplm-full10485760-raw-no-canonical-no-tail-bf16-v1",
+      "val_tokens": 10485760,
+      "val_data": [
+        {
+          "name": "fineweb_val_000000.bin",
+          "bytes": 200001024,
+          "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+        }
+      ],
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "attention_segment_cap": 2560,
+      "align_to_bos": false,
+      "val_global_batch_tokens": 2097152,
+      "logical_ranks": 8,
+      "weights": "raw",
+      "canonical_mask": false,
+      "tail_shipping": false,
+      "final_window_extension": false,
+      "expert_evaluation": "bf16",
+      "mtp": false,
+      "prefix": false,
+      "moe_aux": false,
+      "probe_backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9"
+    },
+    "step": 969,
+    "budget_seconds": 900.0,
+    "budget_overrun_seconds": 0.0,
+    "within_control_budget": true,
+    "evaluation_protocol": {
+      "policy": "accepted-control",
+      "training_windows": [
+        640,
+        1408
+      ],
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "yarn_snapshot_step": 595,
+      "restored": false,
+      "compatible": true,
+      "setup_on_training_clock": true,
+      "yarn_snapshot_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612"
+    },
+    "utc": "2026-10-26T04:39:56.729714+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "mlp-fp8",
+    "architecture": "mlp",
+    "run_id": "probe-mlp-control-20261026T042221-0121f6",
+    "seed": 169,
+    "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+    "training_projection_gs32": false
+  },
+  "pruning": null,
+  "calibration": null,
+  "exit_code": 0,
+  "reserved_confirmation": {
+    "event": "reserved_confirmation",
+    "measurement": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+    "loss": 3.280280850827694,
+    "chunk_losses": [
+      3.0000905990600586,
+      3.2237401008605957,
+      3.291043996810913,
+      3.597879409790039,
+      3.113387107849121,
+      3.367166042327881,
+      3.244006633758545,
+      3.1949431896209717,
+      3.130356788635254,
+      3.428215980529785,
+      3.5107200145721436,
+      2.988731861114502,
+      3.0184543132781982,
+      2.903935194015503,
+      3.3739712238311768,
+      3.264446258544922,
+      3.607762575149536,
+      3.2519588470458984,
+      3.3899097442626953,
+      3.4581732749938965,
+      3.444103717803955,
+      3.1449177265167236,
+      3.428400993347168,
+      3.4248650074005127,
+      3.157571792602539,
+      3.343824863433838,
+      3.238689422607422,
+      3.1939542293548584,
+      3.1973538398742676,
+      3.143613338470459,
+      3.250312328338623,
+      3.642486810684204
+    ],
+    "probe_signature": {
+      "version": 2,
+      "loss_definition": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+      "tokens": 262144,
+      "offset": 16777216,
+      "chunk_tokens": 8192,
+      "uncertainty_block_tokens": 8192,
+      "reserved_offset": 16777216,
+      "reserved_tokens": 262144,
+      "attention_windows": [
+        640,
+        1408
+      ],
+      "yarn_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612",
+      "segmentation": "original-unaligned-BOS-within-each-fixed8192-token-chunk",
+      "precision": "bf16",
+      "weights": "raw",
+      "canonical_mask": false,
+      "tail_shipping": false,
+      "final_window_extension": false,
+      "mtp": false,
+      "prefix": false,
+      "moe_aux": false,
+      "copy_eval_block": 8192,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "clock": "continuous-perf-counter-setup-evaluation-restoration-included",
+      "validation_data": [
+        {
+          "name": "fineweb_val_000000.bin",
+          "bytes": 200001024,
+          "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+        }
+      ],
+      "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+      "measurement": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+      "purpose": "reserved-confirmation",
+      "input_token_offset_range": [
+        16777216,
+        17039360
+      ],
+      "target_token_offset_range": [
+        16777217,
+        17039361
+      ],
+      "interval_convention": "half-open-shard-token-offsets-after1024-byte-header"
+    },
+    "signature_hash": "13000afd8ff073a8204c0c186939a584d970cff2033fe723e1cb0132e4749737",
+    "step": 969,
+    "checkpoint_elapsed_seconds": 5.5171025451272726e-05,
+    "probe_start_seconds": 3.7800054997205734e-07,
+    "probe_completion_seconds": 0.6463801480131224,
+    "probe_seconds": 0.6463797700125724,
+    "cumulative_probe_seconds": 0.6463797700125724,
+    "setup_and_restore_included": true,
+    "train_seconds": 0.6463801480131224,
+    "final_validation": false,
+    "ks3_activation_diagnostics": [],
+    "terminal_training_seconds": 898.1670716530061,
+    "tuning_use_forbidden": true,
+    "timing": "separate-terminal-confirmation",
+    "utc": "2026-10-26T04:39:57.398127+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "mlp-fp8",
+    "architecture": "mlp",
+    "run_id": "probe-mlp-control-20261026T042221-0121f6",
+    "seed": 169,
+    "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+    "training_projection_gs32": false
+  },
+  "events_sha256": "f5f2c09826155a25120fdbeca776dc96fe9e25aeefa8eb0d94b58d952d59d443",
+  "completed_utc": "2026-10-26T04:39:59.654592+00:00",
+  "qualifies": false
+}

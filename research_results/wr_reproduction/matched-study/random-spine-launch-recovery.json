@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-25T23:10:16.290622+00:00",
+  "status": "resolved_before_training",
+  "failure": "Launch blocked by strict clean-source/config guard while the next routed768 config was being prepared",
+  "error_log_sha256": "293380e1cc031a2d276edca4bf51c8203b381afd3e5f61b4726dc28343470f13",
+  "preserved_empty_directories": [
+    "logs/wr-reproduction/matched-study/runs/matched-ks3-all-random-spine005-20261025T230830-ce9e35"
+  ],
+  "registered_trial": false,
+  "timed_training_updates": 0,
+  "gpu_training_started": false,
+  "source_hashes_unchanged": true,
+  "deployment_commit": "5d8ec8e7d861df66e9c9f930138697626809c060",
+  "resolution_commit": "6be84f7a2b98f3bad7ebf0c80de096422bbe34af",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "decision": "Preserve refusal and empty directory; retry already-deployed random-spine controller under the same leases with a new run directory. Stage future candidate configs outside the committed config tree until their audits are ready."
+}

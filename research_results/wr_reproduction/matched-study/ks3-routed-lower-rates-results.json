@@ -1,0 +1,434 @@
+{
+  "utc": "2026-10-26T00:28:56.176040+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_study": "pending-routedproj125.json",
+  "wait_for_run": "matched-ks3-all-routedproj125-20261026T002551-0ddd43",
+  "results_name": "ks3-routed-lower-rates-results.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_routedproj0875.json",
+      "recipe_sha256": "8242cc41d53a04b644288cf358dd511f28cc4eb76c1a647663ac0e306b7f11bb",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Reduce only routed KS3 expert projection learning rate to0.875 of the original rate, preserving dense KS3 projection rates at1.0. The earlier global0.875 recipe changed both branches; this isolates expert projection adaptation and complements the routed-only1.25 arm. Keep width1024/rank one, geometry Adam0.125 and zero coefficients, BF16/GS32, projection decay, all45 KS3 feedforward branches, MoE8top1, and all shared/model-wide settings unchanged. Prior training-proxy prunes are not validation evidence.",
+      "changes": {
+        "projection_lr_multiplier": {
+          "before": 1.0,
+          "after": 0.875
+        },
+        "dense_projection_lr_multiplier": {
+          "before": 1.0,
+          "after": 1.0,
+          "explicit_override": true
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/routedproj125-cpu-model-audit.json",
+        "sha256": "591adfb8f3378b7e4c29be8556fd8cb066b876c26922e6e27b395fba27278fa5",
+        "reuse_scope": "Exact unchanged architecture, initialization, precision and runtime; only audited KS3 optimizer rate fields differ from the previously checked recipe."
+      },
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/routedproj0875-cpu-optimizer-audit.json",
+        "sha256": "9bbd8ba9f6d586b6a902382362f09d614149265f5738e78a1c82cd8761ade842"
+      },
+      "candidate_optimizer_case": {
+        "architecture": "ks3_all",
+        "dense_features": 1024,
+        "routed_features": 1024,
+        "requested_routed_multiplier": 0.875,
+        "requested_dense_multiplier": 1.0,
+        "effective_dense_multiplier": 1.1547005383792515,
+        "effective_routed_multiplier": 1.010362971081845,
+        "retained_effective_multiplier": null,
+        "geometry_multiplier": 0.125,
+        "geometry_adam_policy_verified": true,
+        "dense_geometry_multiplier": 0.125,
+        "shared_optimizer_table_unchanged": true,
+        "output_2x_and_padding_preserved": true
+      },
+      "correctness_required": false,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "Only KS3 parameter-rate configuration changes. Reuse existing independent numerical and full-model initialization audits under exact runtime and initial-model setting equality; new immutable-original-ANVIL meta cases check effective rates, output2x, padding and unchanged shared settings. Full graph warmup is mandatory per run.",
+      "run_id": "matched-ks3-all-routedproj0875-20261026T003330-658214",
+      "result": {
+        "run_id": "matched-ks3-all-routedproj0875-20261026T003330-658214",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "a73508b156e5eb76325e0a194c859f6fcd12d8ba",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-routedproj0875",
+          "hypothesis": "Reduce only routed KS3 expert projection learning rate to0.875 of the original rate, preserving dense KS3 projection rates at1.0. The earlier global0.875 recipe changed both branches; this isolates expert projection adaptation and complements the routed-only1.25 arm. Keep width1024/rank one, geometry Adam0.125 and zero coefficients, BF16/GS32, projection decay, all45 KS3 feedforward branches, MoE8top1, and all shared/model-wide settings unchanged. Prior training-proxy prunes are not validation evidence.",
+          "projection_lr_multiplier": 0.875,
+          "dense_projection_lr_multiplier": 1.0
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 3.586256504058838,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.079613208770752,
+          "reference_run_id": "matched-ks3-all-geometry025-20261025T182458-d37cf6",
+          "reference_wall_seconds": 326.8391181069892,
+          "reference_age_seconds": 0.736961278016679,
+          "reference_objective": 3.506643295288086,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 600,
+          "comparable_runs": 17,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-geometry025-20261025T182458-d37cf6/events.jsonl",
+            "sha256": "e67169f6bfd444614d0c6a2a4c9bdeb1585a91385bf24e88d3433905508cafea",
+            "line": 634,
+            "row_sha256": "769aab3982db432f22c0f71bb7ae753327c49dd530c2bc210ed91af7691e5f6c"
+          },
+          "step": 597,
+          "train_seconds": 327.57607938500587,
+          "reference_snapshot_sha256": "2e2c66e3ac544c06fe196944d13dcc03c6c8d8d8952a4f54b62d74af15023e64",
+          "utc": "2026-10-26T00:41:08.434814+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-routedproj0875-20261026T003330-658214",
+          "seed": 168,
+          "code_commit": "a73508b156e5eb76325e0a194c859f6fcd12d8ba",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "08bd6505c347bb579a6dbf1b7a997e900e3360b3528c888709c715b4b5751c09",
+        "completed_utc": "2026-10-26T00:41:10.636629+00:00",
+        "qualifies": false
+      }
+    },
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_routedgeom00625.json",
+      "recipe_sha256": "cf7cc8e157e796a38d0f1d0d66952d4906a8638452a2dc4bfe8ece2f64448493",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Halve only routed KS3 geometry Adam multiplier from0.125 to0.0625, explicitly preserving the dense geometry multiplier at0.125. Test slower adaptation of expert nonlinearities after global0.0625 and dense-only0.0625 were proxy-pruned; restore original projection rates for both branches so this is separate from projection-rate ablations. Keep width1024/rank one, zero coefficients, BF16/GS32, projection decay, all45 KS3 feedforward branches, MoE8top1, and every shared/model-wide setting unchanged. Training-proxy outcomes do not establish validation quality.",
+      "changes": {
+        "geometry.lr_mul": {
+          "before": 0.125,
+          "after": 0.0625
+        },
+        "dense_geometry_lr_multiplier": {
+          "before": 0.125,
+          "after": 0.125,
+          "explicit_override": true
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/routedproj125-cpu-model-audit.json",
+        "sha256": "591adfb8f3378b7e4c29be8556fd8cb066b876c26922e6e27b395fba27278fa5",
+        "reuse_scope": "Exact unchanged architecture, initialization, precision and runtime; only audited KS3 optimizer rate fields differ from the previously checked recipe."
+      },
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/routedgeom00625-cpu-optimizer-audit.json",
+        "sha256": "deb3e2d1142fc33c034971af6ebeb0e4069c8e6ee62f79ffcd4c6a3cdd10e8c5"
+      },
+      "candidate_optimizer_case": {
+        "architecture": "ks3_all",
+        "dense_features": 1024,
+        "routed_features": 1024,
+        "requested_routed_multiplier": 1.0,
+        "requested_dense_multiplier": null,
+        "effective_dense_multiplier": 1.1547005383792515,
+        "effective_routed_multiplier": 1.1547005383792515,
+        "retained_effective_multiplier": null,
+        "geometry_multiplier": 0.0625,
+        "geometry_adam_policy_verified": true,
+        "dense_geometry_multiplier": 0.125,
+        "shared_optimizer_table_unchanged": true,
+        "output_2x_and_padding_preserved": true
+      },
+      "correctness_required": false,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "Only KS3 parameter-rate configuration changes. Reuse existing independent numerical and full-model initialization audits under exact runtime and initial-model setting equality; new immutable-original-ANVIL meta cases check effective rates, output2x, padding and unchanged shared settings. Full graph warmup is mandatory per run.",
+      "run_id": "matched-ks3-all-routedgeom00625-20261026T004110-83ba84",
+      "result": {
+        "run_id": "matched-ks3-all-routedgeom00625-20261026T004110-83ba84",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "2fff608401407ca40d5f24d2b6f9b1858eb1c8fe",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.0625,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-routedgeom00625",
+          "hypothesis": "Halve only routed KS3 geometry Adam multiplier from0.125 to0.0625, explicitly preserving the dense geometry multiplier at0.125. Test slower adaptation of expert nonlinearities after global0.0625 and dense-only0.0625 were proxy-pruned; restore original projection rates for both branches so this is separate from projection-rate ablations. Keep width1024/rank one, zero coefficients, BF16/GS32, projection decay, all45 KS3 feedforward branches, MoE8top1, and every shared/model-wide setting unchanged. Training-proxy outcomes do not establish validation quality.",
+          "dense_geometry_lr_multiplier": 0.125
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 4.467041015625,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 1,
+            "attention_windows": [
+              384,
+              896
+            ],
+            "mtp": [
+              1.0,
+              0.12222222238779068
+            ],
+            "prefix": 0.05000000074505806,
+            "candidates": 10240,
+            "batch_tokens": 262144,
+            "global_batch_tokens": 262144,
+            "logical_batch_tokens": 32768,
+            "logical_ranks": 8,
+            "train_max_seq_len": 2048,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.013185501098633,
+          "reference_run_id": "matched-ks3-all-geometry00625-20261025T192621-0bf0aa",
+          "reference_wall_seconds": 268.38181064100354,
+          "reference_age_seconds": 3.816726393008139,
+          "reference_objective": 4.453855514526367,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 1,
+            "attention_windows": [
+              384,
+              896
+            ],
+            "mtp": [
+              1.0,
+              0.12222222238779068
+            ],
+            "prefix": 0.05000000074505806,
+            "candidates": 10240,
+            "batch_tokens": 262144,
+            "global_batch_tokens": 262144,
+            "logical_batch_tokens": 32768,
+            "logical_ranks": 8,
+            "train_max_seq_len": 2048,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 519,
+          "comparable_runs": 21,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-geometry00625-20261025T192621-0bf0aa/events.jsonl",
+            "sha256": "596988559ecd6857cb12f4f57a51454fd6b92559d8803eeacf3b895f9fc2f5db",
+            "line": 553,
+            "row_sha256": "a8215ad9b2d8335196c0808ef23b411a266baa2254a239365c7f4f7ce03d5f26"
+          },
+          "step": 519,
+          "train_seconds": 272.1985370340117,
+          "reference_snapshot_sha256": "d1aa8115fc83e0b67754e26f749232f01be314e23fc25982dd24b36d9a496e89",
+          "utc": "2026-10-26T00:47:53.167526+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-routedgeom00625-20261026T004110-83ba84",
+          "seed": 168,
+          "code_commit": "2fff608401407ca40d5f24d2b6f9b1858eb1c8fe",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "7408219d8338f4ddb1cc3015e9b9a26dd5e2474a5679608dc469cd7a9921fa93",
+        "completed_utc": "2026-10-26T00:47:55.445779+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "unit": "wr-matched-routed-lower-rates-ordered",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "a51be7013b4393887109a76c836bd2da6b336d09877160f27b9419ade5fbe955",
+    "code_commit": "a73508b156e5eb76325e0a194c859f6fcd12d8ba"
+  },
+  "completed_utc": "2026-10-26T00:47:55.449149+00:00"
+}

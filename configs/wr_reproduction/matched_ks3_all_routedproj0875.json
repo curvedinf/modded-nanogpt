@@ -1,0 +1,45 @@
+{
+  "precision": "bf16",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "training_gs32": true,
+  "weight_packing": "loop",
+  "geometry_backward_rows": 64,
+  "bf16_kernel_mode": "tuned",
+  "shared_fp8_gemm_tuning": "mi300-v1",
+  "shared_fp8_amax": "atomic",
+  "shared_fp8_decode": "scalar",
+  "shared_fp8_head_tuning": "legacy",
+  "shared_fp8_pipeline_tuning": "legacy",
+  "validation_window_policy": "accepted-control",
+  "validation_precision": "bf16",
+  "max_train_seconds": 900.0,
+  "validation_setup_reserve_seconds": 2.0,
+  "model_wide_hyperparameters": "original-pr393",
+  "architecture": "ks3_all",
+  "name": "matched-ks3-all-routedproj0875",
+  "hypothesis": "Reduce only routed KS3 expert projection learning rate to0.875 of the original rate, preserving dense KS3 projection rates at1.0. The earlier global0.875 recipe changed both branches; this isolates expert projection adaptation and complements the routed-only1.25 arm. Keep width1024/rank one, geometry Adam0.125 and zero coefficients, BF16/GS32, projection decay, all45 KS3 feedforward branches, MoE8top1, and all shared/model-wide settings unchanged. Prior training-proxy prunes are not validation evidence.",
+  "projection_lr_multiplier": 0.875,
+  "dense_projection_lr_multiplier": 1.0
+}

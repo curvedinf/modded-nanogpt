@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-26T05:52:26.776585+00:00",
+  "status": "resolved_after_successful_launch",
+  "unit": "wr-probe-placements-21bf33f7",
+  "original_release_utc": "2026-10-26T05:51:18.479898+00:00",
+  "original_error_record": "logs/wr-reproduction/probe-study/placement-release-blocker.json",
+  "cause": "The review helper passed a release object containing utc to append(), which itself supplies utc. This failed only after the queue launch and both durable placement-release records were written.",
+  "effect": "The independent placement controller and GPU trial continued normally. No measurement, training, reference or release gate was changed.",
+  "repair": "Append the missing release note without duplicate utc and publish the release status. Preserve the original error and service journal; do not launch another queue.",
+  "source_changes": false,
+  "training_restart": false
+}

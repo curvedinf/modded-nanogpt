@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-26T02:08:09.716708+00:00",
+  "passed": true,
+  "tests": 10,
+  "gpu_initialized": false,
+  "command": ".venv-mi300/bin/python -m unittest -v test_wr_matched_output_initialization",
+  "test_source": {
+    "path": "test_wr_matched_output_initialization.py",
+    "sha256": "0cd1b50fce2e30f94e0245f13e2a4a1744a01fba3cd39c7d5ad83e8e9310ff5b"
+  },
+  "log": {
+    "path": "logs/wr-reproduction/matched-study/staging/output-init-gain01/scheduler-tests.log",
+    "sha256": "24a6feee69984ca4d53a0cf19cb76ced9d5b83d92f339c3636b896804e3719e3"
+  },
+  "scheduler": {
+    "path": "run_wr_matched_output_initialization.py",
+    "sha256": "cfb6bc9bb8cabda796ef756b586846d867dd999700335b6c944f8a7c172da9c4"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "gain": 0.0,
+      "input_gradient_norm": 0.0,
+      "input_projection_gradient_norm": 0.0,
+      "spine_coefficient_gradient_norm": 0.0,
+      "output_projection_gradient_norm": 16.017886846745473,
+      "initial_warp_gradients_zero": true,
+      "analytical_gradients_passed": true
+    },
+    {
+      "gain": 0.1,
+      "input_gradient_norm": 0.7798023668031469,
+      "input_projection_gradient_norm": 2.322094204552354,
+      "spine_coefficient_gradient_norm": 1.8154167931200043,
+      "output_projection_gradient_norm": 16.017886846745473,
+      "initial_warp_gradients_zero": true,
+      "analytical_gradients_passed": true
+    }
+  ],
+  "validation": false,
+  "gpu_initialized": false,
+  "oracle": "Independent FP64 matrix/ReLU-square/Hermite derivative formulas against the pinned reference",
+  "interpretation": "Nonzero outputs enable input and spine-coefficient gradients immediately; warp gradients remain zero at zero coefficients. This is a gradient-flow check, not a performance result."
+}

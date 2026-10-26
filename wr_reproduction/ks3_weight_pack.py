@@ -63,4 +63,5 @@ def refresh_bf16(m):
     for projection,q in ((0,m.ks3_up),(1,m.ks3_down)):
         r,c=(n,d) if projection==0 else (d,n)
         _weights[(tr.cdiv(r,128)*tr.cdiv(c,32),40)](
-            m.moe_bank,q,None,None,None,n,d,projection,True,FP8=False,num_warps=4)
+            m.moe_bank,q,None,None,None,n,d,projection,
+            (not m.training or getattr(m,'ks3_routed_training_gs32',True)),FP8=False,num_warps=4)

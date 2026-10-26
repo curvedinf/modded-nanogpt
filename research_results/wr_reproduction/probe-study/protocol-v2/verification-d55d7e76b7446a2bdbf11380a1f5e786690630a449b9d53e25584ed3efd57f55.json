@@ -1,0 +1,902 @@
+{
+  "identity": "d55d7e76b7446a2bdbf11380a1f5e786690630a449b9d53e25584ed3efd57f55",
+  "discovery": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "status": "complete",
+  "seeds": [
+    {
+      "seed": 369,
+      "status": "complete",
+      "run_id": "probe-ks3-experts-verification-20261026T045737-498c82",
+      "result": {
+        "run_id": "probe-ks3-experts-verification-20261026T045737-498c82",
+        "status": "complete",
+        "seed": 369,
+        "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+        "recipe": {
+          "name": "probe-ks3-experts",
+          "hypothesis": "Acquire one exempt fixed-probe reference under the frozen shared original-PR393 recipe.",
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+          "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "kernel_evidence": {
+            "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+            "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+            "matrix_max_relative_rms": 4.411854752106592e-05
+          },
+          "block_correctness_evidence": {
+            "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+            "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+            "max_relative_rms": 0.0,
+            "evaluation_original_kernels": true,
+            "bitwise_input_and_weight_producers": true
+          },
+          "timing_evidence": {
+            "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+            "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+            "first100_seconds": 54.066861718994915,
+            "updates25_to100_seconds": 40.427348073004396,
+            "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+            "reference_first100": 55.488501123007154,
+            "reference_25to100": 41.43367328601016,
+            "validation": false,
+            "first100_time_reduction": 0.025620432616493716,
+            "steady_time_reduction": 0.024287617611387313,
+            "timing_gate_passed": true
+          },
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "hardware_change_scope": "Opt-in shared nongrouped FP8 GEMM tiles across attention, dense MLP and output head; default MLP dispatch remains legacy.",
+          "shared_fp8_correctness_evidence": {
+            "run_id": "ks3-shared-fp8-dispatch-check-20261025T075607-ff0ab5",
+            "code_commit": "bcb2f5f79d96c9d82c4b0ccfcbbf0b75253fa4e1",
+            "source_format_pairs": 4,
+            "independent_shape_cases": 15,
+            "all_stored_byte_patterns": true,
+            "original_dense_mlp_autograd": true,
+            "validation": false
+          },
+          "validation_window_policy": "accepted-control",
+          "evaluation_protocol": "Capture live stage-two YaRN frequencies/attention scales on first reach of640/1408 windows. For terminal stage four or full-schedule completion only, restore those nonlearned buffers and use640/1408 evaluation arguments. Preserve raw learned weights, training schedule and all updates; no canonical mask, tail shipping or final window extension. Early-stage evaluation remains incompatible. All restoration/rebuild/readback/setup is inside original training timer; no strict qualification if actual elapsed exceeds902.3592145430011.",
+          "shared_fp8_timing_evidence": {
+            "run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+            "code_commit": "2959f2a2250c36cb7dd10f28c02cdcfcc86fd729",
+            "first100_seconds": 39.57759546399757,
+            "after25_through100_seconds": 29.55288318300154,
+            "baseline_run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+            "baseline_first100_seconds": 54.06715966599586,
+            "baseline_after25_through100_seconds": 40.427348073004396,
+            "first100_time_reduction": 0.26799196206178977,
+            "steady_time_reduction": 0.2689878364112719,
+            "validation": false,
+            "gate_passed": true
+          },
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_experts"
+        },
+        "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+        "validation": {
+          "event": "validation",
+          "final": false,
+          "loss": 3.302371025085449,
+          "train_seconds": 897.7494905659987,
+          "val_tokens": 10485760,
+          "evaluation_signature": {
+            "loss_definition": "pr393-cplm-full10485760-raw-no-canonical-no-tail-bf16-v1",
+            "val_tokens": 10485760,
+            "val_data": [
+              {
+                "name": "fineweb_val_000000.bin",
+                "bytes": 200001024,
+                "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+              }
+            ],
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "attention_segment_cap": 2560,
+            "align_to_bos": false,
+            "val_global_batch_tokens": 2097152,
+            "logical_ranks": 8,
+            "weights": "raw",
+            "canonical_mask": false,
+            "tail_shipping": false,
+            "final_window_extension": false,
+            "expert_evaluation": "bf16",
+            "mtp": false,
+            "prefix": false,
+            "moe_aux": false,
+            "probe_backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9"
+          },
+          "step": 1009,
+          "budget_seconds": 900.0,
+          "budget_overrun_seconds": 0.0,
+          "within_control_budget": true,
+          "evaluation_protocol": {
+            "policy": "accepted-control",
+            "training_windows": [
+              640,
+              1408
+            ],
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "yarn_snapshot_step": 595,
+            "restored": false,
+            "compatible": true,
+            "setup_on_training_clock": true,
+            "yarn_snapshot_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612"
+          },
+          "utc": "2026-10-26T05:15:10.250124+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_experts",
+          "run_id": "probe-ks3-experts-verification-20261026T045737-498c82",
+          "seed": 369,
+          "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+          "training_projection_gs32": true
+        },
+        "pruning": null,
+        "calibration": null,
+        "exit_code": 0,
+        "reserved_confirmation": {
+          "event": "reserved_confirmation",
+          "measurement": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+          "loss": 3.249577708542347,
+          "chunk_losses": [
+            2.967463731765747,
+            3.1799116134643555,
+            3.2689003944396973,
+            3.576782703399658,
+            3.093726634979248,
+            3.342334270477295,
+            3.2146246433258057,
+            3.1630196571350098,
+            3.1031157970428467,
+            3.396679401397705,
+            3.4833319187164307,
+            2.9637575149536133,
+            3.0054800510406494,
+            2.8829216957092285,
+            3.3405137062072754,
+            3.233644962310791,
+            3.562289237976074,
+            3.206575393676758,
+            3.3762762546539307,
+            3.4319233894348145,
+            3.3968591690063477,
+            3.10654878616333,
+            3.3859949111938477,
+            3.3979010581970215,
+            3.127044200897217,
+            3.3090968132019043,
+            3.2008519172668457,
+            3.1472463607788086,
+            3.1623454093933105,
+            3.115705728530884,
+            3.2195966243743896,
+            3.6240227222442627
+          ],
+          "probe_signature": {
+            "version": 2,
+            "loss_definition": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+            "tokens": 262144,
+            "offset": 16777216,
+            "chunk_tokens": 8192,
+            "uncertainty_block_tokens": 8192,
+            "reserved_offset": 16777216,
+            "reserved_tokens": 262144,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "yarn_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612",
+            "segmentation": "original-unaligned-BOS-within-each-fixed8192-token-chunk",
+            "precision": "bf16",
+            "weights": "raw",
+            "canonical_mask": false,
+            "tail_shipping": false,
+            "final_window_extension": false,
+            "mtp": false,
+            "prefix": false,
+            "moe_aux": false,
+            "copy_eval_block": 8192,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "clock": "continuous-perf-counter-setup-evaluation-restoration-included",
+            "validation_data": [
+              {
+                "name": "fineweb_val_000000.bin",
+                "bytes": 200001024,
+                "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+              }
+            ],
+            "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+            "measurement": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+            "purpose": "reserved-confirmation",
+            "input_token_offset_range": [
+              16777216,
+              17039360
+            ],
+            "target_token_offset_range": [
+              16777217,
+              17039361
+            ],
+            "interval_convention": "half-open-shard-token-offsets-after1024-byte-header"
+          },
+          "signature_hash": "13000afd8ff073a8204c0c186939a584d970cff2033fe723e1cb0132e4749737",
+          "step": 1009,
+          "checkpoint_elapsed_seconds": 5.765998503193259e-05,
+          "probe_start_seconds": 5.079782567918301e-07,
+          "probe_completion_seconds": 0.6777882669994142,
+          "probe_seconds": 0.6777877590211574,
+          "cumulative_probe_seconds": 0.6777877590211574,
+          "setup_and_restore_included": true,
+          "train_seconds": 0.6777882669994142,
+          "final_validation": false,
+          "ks3_activation_diagnostics": [],
+          "terminal_training_seconds": 897.7494905659987,
+          "tuning_use_forbidden": true,
+          "timing": "separate-terminal-confirmation",
+          "utc": "2026-10-26T05:15:10.949373+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_experts",
+          "run_id": "probe-ks3-experts-verification-20261026T045737-498c82",
+          "seed": 369,
+          "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+          "training_projection_gs32": true
+        },
+        "events_sha256": "56ee49079bfac111ff6c63f55595522418d2d6ecd29d316c6f0dba20c9ba05a0",
+        "completed_utc": "2026-10-26T05:15:13.182916+00:00",
+        "qualifies": true
+      }
+    },
+    {
+      "seed": 370,
+      "status": "complete",
+      "run_id": "probe-ks3-experts-verification-20261026T051513-3659e3",
+      "result": {
+        "run_id": "probe-ks3-experts-verification-20261026T051513-3659e3",
+        "status": "complete",
+        "seed": 370,
+        "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+        "recipe": {
+          "name": "probe-ks3-experts",
+          "hypothesis": "Acquire one exempt fixed-probe reference under the frozen shared original-PR393 recipe.",
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+          "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "kernel_evidence": {
+            "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+            "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+            "matrix_max_relative_rms": 4.411854752106592e-05
+          },
+          "block_correctness_evidence": {
+            "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+            "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+            "max_relative_rms": 0.0,
+            "evaluation_original_kernels": true,
+            "bitwise_input_and_weight_producers": true
+          },
+          "timing_evidence": {
+            "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+            "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+            "first100_seconds": 54.066861718994915,
+            "updates25_to100_seconds": 40.427348073004396,
+            "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+            "reference_first100": 55.488501123007154,
+            "reference_25to100": 41.43367328601016,
+            "validation": false,
+            "first100_time_reduction": 0.025620432616493716,
+            "steady_time_reduction": 0.024287617611387313,
+            "timing_gate_passed": true
+          },
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "hardware_change_scope": "Opt-in shared nongrouped FP8 GEMM tiles across attention, dense MLP and output head; default MLP dispatch remains legacy.",
+          "shared_fp8_correctness_evidence": {
+            "run_id": "ks3-shared-fp8-dispatch-check-20261025T075607-ff0ab5",
+            "code_commit": "bcb2f5f79d96c9d82c4b0ccfcbbf0b75253fa4e1",
+            "source_format_pairs": 4,
+            "independent_shape_cases": 15,
+            "all_stored_byte_patterns": true,
+            "original_dense_mlp_autograd": true,
+            "validation": false
+          },
+          "validation_window_policy": "accepted-control",
+          "evaluation_protocol": "Capture live stage-two YaRN frequencies/attention scales on first reach of640/1408 windows. For terminal stage four or full-schedule completion only, restore those nonlearned buffers and use640/1408 evaluation arguments. Preserve raw learned weights, training schedule and all updates; no canonical mask, tail shipping or final window extension. Early-stage evaluation remains incompatible. All restoration/rebuild/readback/setup is inside original training timer; no strict qualification if actual elapsed exceeds902.3592145430011.",
+          "shared_fp8_timing_evidence": {
+            "run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+            "code_commit": "2959f2a2250c36cb7dd10f28c02cdcfcc86fd729",
+            "first100_seconds": 39.57759546399757,
+            "after25_through100_seconds": 29.55288318300154,
+            "baseline_run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+            "baseline_first100_seconds": 54.06715966599586,
+            "baseline_after25_through100_seconds": 40.427348073004396,
+            "first100_time_reduction": 0.26799196206178977,
+            "steady_time_reduction": 0.2689878364112719,
+            "validation": false,
+            "gate_passed": true
+          },
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_experts"
+        },
+        "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+        "validation": {
+          "event": "validation",
+          "final": false,
+          "loss": 3.302345037460327,
+          "train_seconds": 898.2873911429779,
+          "val_tokens": 10485760,
+          "evaluation_signature": {
+            "loss_definition": "pr393-cplm-full10485760-raw-no-canonical-no-tail-bf16-v1",
+            "val_tokens": 10485760,
+            "val_data": [
+              {
+                "name": "fineweb_val_000000.bin",
+                "bytes": 200001024,
+                "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+              }
+            ],
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "attention_segment_cap": 2560,
+            "align_to_bos": false,
+            "val_global_batch_tokens": 2097152,
+            "logical_ranks": 8,
+            "weights": "raw",
+            "canonical_mask": false,
+            "tail_shipping": false,
+            "final_window_extension": false,
+            "expert_evaluation": "bf16",
+            "mtp": false,
+            "prefix": false,
+            "moe_aux": false,
+            "probe_backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9"
+          },
+          "step": 1009,
+          "budget_seconds": 900.0,
+          "budget_overrun_seconds": 0.0,
+          "within_control_budget": true,
+          "evaluation_protocol": {
+            "policy": "accepted-control",
+            "training_windows": [
+              640,
+              1408
+            ],
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "yarn_snapshot_step": 595,
+            "restored": false,
+            "compatible": true,
+            "setup_on_training_clock": true,
+            "yarn_snapshot_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612"
+          },
+          "utc": "2026-10-26T05:32:47.324585+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_experts",
+          "run_id": "probe-ks3-experts-verification-20261026T051513-3659e3",
+          "seed": 370,
+          "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+          "training_projection_gs32": true
+        },
+        "pruning": null,
+        "calibration": null,
+        "exit_code": 0,
+        "reserved_confirmation": {
+          "event": "reserved_confirmation",
+          "measurement": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+          "loss": 3.2501453906297684,
+          "chunk_losses": [
+            2.9613094329833984,
+            3.189466953277588,
+            3.2564191818237305,
+            3.566066265106201,
+            3.091503620147705,
+            3.337606191635132,
+            3.210541248321533,
+            3.1636931896209717,
+            3.1097187995910645,
+            3.407505512237549,
+            3.487372636795044,
+            2.9694268703460693,
+            3.0079517364501953,
+            2.8845643997192383,
+            3.3285441398620605,
+            3.2330002784729004,
+            3.5824623107910156,
+            3.209904670715332,
+            3.36907958984375,
+            3.4388554096221924,
+            3.401583433151245,
+            3.117727756500244,
+            3.3982810974121094,
+            3.3935792446136475,
+            3.1309831142425537,
+            3.3004040718078613,
+            3.207490921020508,
+            3.1393179893493652,
+            3.1626574993133545,
+            3.1180810928344727,
+            3.2088944911956787,
+            3.620659351348877
+          ],
+          "probe_signature": {
+            "version": 2,
+            "loss_definition": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+            "tokens": 262144,
+            "offset": 16777216,
+            "chunk_tokens": 8192,
+            "uncertainty_block_tokens": 8192,
+            "reserved_offset": 16777216,
+            "reserved_tokens": 262144,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "yarn_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612",
+            "segmentation": "original-unaligned-BOS-within-each-fixed8192-token-chunk",
+            "precision": "bf16",
+            "weights": "raw",
+            "canonical_mask": false,
+            "tail_shipping": false,
+            "final_window_extension": false,
+            "mtp": false,
+            "prefix": false,
+            "moe_aux": false,
+            "copy_eval_block": 8192,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "clock": "continuous-perf-counter-setup-evaluation-restoration-included",
+            "validation_data": [
+              {
+                "name": "fineweb_val_000000.bin",
+                "bytes": 200001024,
+                "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+              }
+            ],
+            "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+            "measurement": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+            "purpose": "reserved-confirmation",
+            "input_token_offset_range": [
+              16777216,
+              17039360
+            ],
+            "target_token_offset_range": [
+              16777217,
+              17039361
+            ],
+            "interval_convention": "half-open-shard-token-offsets-after1024-byte-header"
+          },
+          "signature_hash": "13000afd8ff073a8204c0c186939a584d970cff2033fe723e1cb0132e4749737",
+          "step": 1009,
+          "checkpoint_elapsed_seconds": 5.723899812437594e-05,
+          "probe_start_seconds": 7.229973562061787e-07,
+          "probe_completion_seconds": 0.6678808830038179,
+          "probe_seconds": 0.6678801600064617,
+          "cumulative_probe_seconds": 0.6678801600064617,
+          "setup_and_restore_included": true,
+          "train_seconds": 0.6678808830038179,
+          "final_validation": false,
+          "ks3_activation_diagnostics": [],
+          "terminal_training_seconds": 898.2873911429779,
+          "tuning_use_forbidden": true,
+          "timing": "separate-terminal-confirmation",
+          "utc": "2026-10-26T05:32:48.013644+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_experts",
+          "run_id": "probe-ks3-experts-verification-20261026T051513-3659e3",
+          "seed": 370,
+          "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+          "training_projection_gs32": true
+        },
+        "events_sha256": "ca5fa66f61d20c176b54d23500027fc6ea96a616b847751ecf1ea69241cdd157",
+        "completed_utc": "2026-10-26T05:32:50.220488+00:00",
+        "qualifies": true
+      }
+    },
+    {
+      "seed": 371,
+      "status": "complete",
+      "run_id": "probe-ks3-experts-verification-20261026T053250-ff4a2d",
+      "result": {
+        "run_id": "probe-ks3-experts-verification-20261026T053250-ff4a2d",
+        "status": "complete",
+        "seed": 371,
+        "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+        "recipe": {
+          "name": "probe-ks3-experts",
+          "hypothesis": "Acquire one exempt fixed-probe reference under the frozen shared original-PR393 recipe.",
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "cap_rule": "Stop before starting an update if current elapsed plus 1.05 times the maximum of the last four observed stage update durations plus setup reserve reaches the exact budget. Setup remains on the original timer. Report any actual overrun; strict qualification has no tolerance.",
+          "preserved": "Original full PR393 MoE8 top1 router, non-KS3 blocks, CPLM, global update sizes over eight logical ranks, objective schedule, optimizer settings and FP8 formats. Full 24-update warmup restored before continuous training. Raw full validation, no canonical mask, no final window extension, no tail shipping.",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "kernel_evidence": {
+            "run_id": "ks3-bf16-tile-sweep-20261025T044906-e89c04",
+            "code_commit": "caf34ecdf6e49008f6331ee706c9ab8eb3698b72",
+            "matrix_max_relative_rms": 4.411854752106592e-05
+          },
+          "block_correctness_evidence": {
+            "run_id": "ks3-bf16-tuned-20261025T045933-4ec215",
+            "code_commit": "93b451bd39815c6423b51f413feeb48fe045d816",
+            "max_relative_rms": 0.0,
+            "evaluation_original_kernels": true,
+            "bitwise_input_and_weight_producers": true
+          },
+          "timing_evidence": {
+            "run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+            "code_commit": "97d2f2c4526d081f9c4d4dcd4cf37bf1e6ae8a08",
+            "first100_seconds": 54.066861718994915,
+            "updates25_to100_seconds": 40.427348073004396,
+            "reference": "ks3-fp8-batched-weights-vjp32-20261025T042914-d01859",
+            "reference_first100": 55.488501123007154,
+            "reference_25to100": 41.43367328601016,
+            "validation": false,
+            "first100_time_reduction": 0.025620432616493716,
+            "steady_time_reduction": 0.024287617611387313,
+            "timing_gate_passed": true
+          },
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "hardware_change_scope": "Opt-in shared nongrouped FP8 GEMM tiles across attention, dense MLP and output head; default MLP dispatch remains legacy.",
+          "shared_fp8_correctness_evidence": {
+            "run_id": "ks3-shared-fp8-dispatch-check-20261025T075607-ff0ab5",
+            "code_commit": "bcb2f5f79d96c9d82c4b0ccfcbbf0b75253fa4e1",
+            "source_format_pairs": 4,
+            "independent_shape_cases": 15,
+            "all_stored_byte_patterns": true,
+            "original_dense_mlp_autograd": true,
+            "validation": false
+          },
+          "validation_window_policy": "accepted-control",
+          "evaluation_protocol": "Capture live stage-two YaRN frequencies/attention scales on first reach of640/1408 windows. For terminal stage four or full-schedule completion only, restore those nonlearned buffers and use640/1408 evaluation arguments. Preserve raw learned weights, training schedule and all updates; no canonical mask, tail shipping or final window extension. Early-stage evaluation remains incompatible. All restoration/rebuild/readback/setup is inside original training timer; no strict qualification if actual elapsed exceeds902.3592145430011.",
+          "shared_fp8_timing_evidence": {
+            "run_id": "ks3-bf16-tuned-shared-fp8-20261025T080404-f267b9",
+            "code_commit": "2959f2a2250c36cb7dd10f28c02cdcfcc86fd729",
+            "first100_seconds": 39.57759546399757,
+            "after25_through100_seconds": 29.55288318300154,
+            "baseline_run_id": "ks3-bf16-tuned-20261025T050142-be4e00",
+            "baseline_first100_seconds": 54.06715966599586,
+            "baseline_after25_through100_seconds": 40.427348073004396,
+            "first100_time_reduction": 0.26799196206178977,
+            "steady_time_reduction": 0.2689878364112719,
+            "validation": false,
+            "gate_passed": true
+          },
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_experts"
+        },
+        "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+        "validation": {
+          "event": "validation",
+          "final": false,
+          "loss": 3.3026838302612305,
+          "train_seconds": 898.3941647590254,
+          "val_tokens": 10485760,
+          "evaluation_signature": {
+            "loss_definition": "pr393-cplm-full10485760-raw-no-canonical-no-tail-bf16-v1",
+            "val_tokens": 10485760,
+            "val_data": [
+              {
+                "name": "fineweb_val_000000.bin",
+                "bytes": 200001024,
+                "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+              }
+            ],
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "attention_segment_cap": 2560,
+            "align_to_bos": false,
+            "val_global_batch_tokens": 2097152,
+            "logical_ranks": 8,
+            "weights": "raw",
+            "canonical_mask": false,
+            "tail_shipping": false,
+            "final_window_extension": false,
+            "expert_evaluation": "bf16",
+            "mtp": false,
+            "prefix": false,
+            "moe_aux": false,
+            "probe_backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9"
+          },
+          "step": 1009,
+          "budget_seconds": 900.0,
+          "budget_overrun_seconds": 0.0,
+          "within_control_budget": true,
+          "evaluation_protocol": {
+            "policy": "accepted-control",
+            "training_windows": [
+              640,
+              1408
+            ],
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "yarn_snapshot_step": 595,
+            "restored": false,
+            "compatible": true,
+            "setup_on_training_clock": true,
+            "yarn_snapshot_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612"
+          },
+          "utc": "2026-10-26T05:50:23.723591+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_experts",
+          "run_id": "probe-ks3-experts-verification-20261026T053250-ff4a2d",
+          "seed": 371,
+          "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+          "training_projection_gs32": true
+        },
+        "pruning": null,
+        "calibration": null,
+        "exit_code": 0,
+        "reserved_confirmation": {
+          "event": "reserved_confirmation",
+          "measurement": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+          "loss": 3.2500903233885765,
+          "chunk_losses": [
+            2.9642648696899414,
+            3.191541910171509,
+            3.258808135986328,
+            3.5713882446289062,
+            3.087559461593628,
+            3.3418993949890137,
+            3.2173497676849365,
+            3.1577579975128174,
+            3.102381706237793,
+            3.4136176109313965,
+            3.485175848007202,
+            2.949967622756958,
+            2.9998910427093506,
+            2.88325834274292,
+            3.3293793201446533,
+            3.2383780479431152,
+            3.568986415863037,
+            3.2033798694610596,
+            3.378690242767334,
+            3.425083637237549,
+            3.406233549118042,
+            3.1168057918548584,
+            3.3898003101348877,
+            3.403724193572998,
+            3.138662099838257,
+            3.3099160194396973,
+            3.2109622955322266,
+            3.1486940383911133,
+            3.160404682159424,
+            3.114755630493164,
+            3.217411518096924,
+            3.616760730743408
+          ],
+          "probe_signature": {
+            "version": 2,
+            "loss_definition": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+            "tokens": 262144,
+            "offset": 16777216,
+            "chunk_tokens": 8192,
+            "uncertainty_block_tokens": 8192,
+            "reserved_offset": 16777216,
+            "reserved_tokens": 262144,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "yarn_sha256": "f578f7187981f9a8220c90ea99eaaa35616aa87bf99b49cfdd2307f3628f3612",
+            "segmentation": "original-unaligned-BOS-within-each-fixed8192-token-chunk",
+            "precision": "bf16",
+            "weights": "raw",
+            "canonical_mask": false,
+            "tail_shipping": false,
+            "final_window_extension": false,
+            "mtp": false,
+            "prefix": false,
+            "moe_aux": false,
+            "copy_eval_block": 8192,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "clock": "continuous-perf-counter-setup-evaluation-restoration-included",
+            "validation_data": [
+              {
+                "name": "fineweb_val_000000.bin",
+                "bytes": 200001024,
+                "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+              }
+            ],
+            "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+            "measurement": "fixed-heldout-full-vocabulary-cplm-bf16-raw-v1",
+            "purpose": "reserved-confirmation",
+            "input_token_offset_range": [
+              16777216,
+              17039360
+            ],
+            "target_token_offset_range": [
+              16777217,
+              17039361
+            ],
+            "interval_convention": "half-open-shard-token-offsets-after1024-byte-header"
+          },
+          "signature_hash": "13000afd8ff073a8204c0c186939a584d970cff2033fe723e1cb0132e4749737",
+          "step": 1009,
+          "checkpoint_elapsed_seconds": 5.540897836908698e-05,
+          "probe_start_seconds": 4.689791239798069e-07,
+          "probe_completion_seconds": 0.6664773939992301,
+          "probe_seconds": 0.6664769250201061,
+          "cumulative_probe_seconds": 0.6664769250201061,
+          "setup_and_restore_included": true,
+          "train_seconds": 0.6664773939992301,
+          "final_validation": false,
+          "ks3_activation_diagnostics": [],
+          "terminal_training_seconds": 898.3941647590254,
+          "tuning_use_forbidden": true,
+          "timing": "separate-terminal-confirmation",
+          "utc": "2026-10-26T05:50:24.411712+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_experts",
+          "run_id": "probe-ks3-experts-verification-20261026T053250-ff4a2d",
+          "seed": 371,
+          "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+          "training_projection_gs32": true
+        },
+        "events_sha256": "1d0aef751d14bc4026dd9c37efabbb819e3a1ef42a602cac14fe7bea507922a8",
+        "completed_utc": "2026-10-26T05:50:26.233635+00:00",
+        "qualifies": true
+      }
+    }
+  ],
+  "statistics": {
+    "losses": [
+      3.302371025085449,
+      3.302345037460327,
+      3.3026838302612305
+    ],
+    "mean": 3.302466630935669,
+    "sample_std": 0.00018854840077061594,
+    "minimum": 3.302345037460327,
+    "maximum": 3.3026838302612305,
+    "control_loss": 3.3339109420776367
+  },
+  "completed_utc": "2026-10-26T05:50:26.239070+00:00"
+}

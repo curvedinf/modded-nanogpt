@@ -1,0 +1,135 @@
+{
+  "utc": "2026-10-25T23:59:18.168078+00:00",
+  "passed": true,
+  "oracle_run_id": "matched-ks3-all-rank2-width1536-normlr-20261025T235747-5dc2d8",
+  "oracle_code_commit": "f207ae5bf7f89ed8fdc90df4bae811d039dcb491",
+  "oracle_result_sha256": "a7446dac94a84d34825c7ef873dd8279caa81a33b17dc60f72670ed4179f9aa3",
+  "oracle_events_sha256": "0789993972e0d7d9675952a31dc53559efb2172458f72b8eb89aad103498f9b0",
+  "checks": [
+    {
+      "branch": "dense",
+      "tokens": 1,
+      "relative_rms": {
+        "output": 0.0,
+        "input_gradient": 0.00016011568368412554,
+        "up_gradient": 2.6336570954299532e-05,
+        "down_gradient": 0.0,
+        "geometry_gradient": 3.873508660490188e-07,
+        "post_gradient": 0.0
+      }
+    },
+    {
+      "branch": "dense",
+      "tokens": 257,
+      "relative_rms": {
+        "output": 8.456203067908064e-05,
+        "input_gradient": 0.0001235651725437492,
+        "up_gradient": 8.9224886323791e-05,
+        "down_gradient": 6.884874164825305e-05,
+        "geometry_gradient": 5.523999107026611e-07,
+        "post_gradient": 0.0
+      }
+    },
+    {
+      "branch": "dense",
+      "tokens": 4096,
+      "relative_rms": {
+        "output": 0.00021004030713811517,
+        "input_gradient": 0.0001501400547567755,
+        "up_gradient": 0.00018451493815518916,
+        "down_gradient": 0.0002529067569412291,
+        "geometry_gradient": 8.458252409582201e-07,
+        "post_gradient": 0.0
+      }
+    },
+    {
+      "branch": "routed",
+      "tokens": 1,
+      "active_experts": 1,
+      "relative_rms": {
+        "output": 0.0,
+        "probabilities": 0.0,
+        "input_gradient": 0.0004049345152452588,
+        "router_gradient": 0.0,
+        "post_gradient": 0.0,
+        "geometry_gradient": 3.704410289628868e-07,
+        "up_gradient": 0.0,
+        "down_gradient": 0.0
+      },
+      "unrelated_gradient_bank_unchanged": true
+    },
+    {
+      "branch": "routed",
+      "tokens": 257,
+      "active_experts": 1,
+      "relative_rms": {
+        "output": 0.00019213580526411533,
+        "probabilities": 0.0,
+        "input_gradient": 0.00018915072723757476,
+        "router_gradient": 0.0010506492108106613,
+        "post_gradient": 0.0,
+        "geometry_gradient": 5.756725727223966e-07,
+        "up_gradient": 0.00010433242277940735,
+        "down_gradient": 0.00014843254757579416
+      },
+      "unrelated_gradient_bank_unchanged": true
+    },
+    {
+      "branch": "routed",
+      "tokens": 4096,
+      "active_experts": 8,
+      "relative_rms": {
+        "output": 0.0001910615828819573,
+        "probabilities": 0.0,
+        "input_gradient": 0.001677231048233807,
+        "router_gradient": 0.001118907704949379,
+        "post_gradient": 0.0,
+        "geometry_gradient": 6.232521627680399e-07,
+        "up_gradient": 0.00010189173190155998,
+        "down_gradient": 0.00015366892330348492
+      },
+      "unrelated_gradient_bank_unchanged": true
+    }
+  ],
+  "cache_checks": [
+    {
+      "training": true,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "training": false,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "training": true,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "captured_replay": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "captured_replay": true,
+      "cache_bytes_exact": true
+    }
+  ],
+  "maximum_relative_rms": 0.001677231048233807,
+  "unchanged_relative_rms_tolerance": 0.015,
+  "rank": 2,
+  "charts": 768,
+  "projection_features": 1536,
+  "discovery_run_id": "matched-ks3-all-rank2-width1536-normlr-20261025T235812-1d1f18",
+  "discovery_code_commit": "f207ae5bf7f89ed8fdc90df4bae811d039dcb491",
+  "deployment_commit": "f207ae5bf7f89ed8fdc90df4bae811d039dcb491",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "control_set_sha256": "59746335a66614f8f4fa3e903601d4d7ba57cc591a27f31e48517189d09e8413",
+  "prototype_sha256": "443aede556edf7b1c6c17049a89dcb9230b8814b493d043a343a70e47cd928e1",
+  "validation_measured": false,
+  "decision": "Both independent numerical gates passed under the leased deployment; discovery launched. Require actual full graph warmup, preserve below5/first+0.01 training-proxy screening, and run three frozen fresh verification seeds if full validation qualifies."
+}

@@ -1,0 +1,41 @@
+--- a/wr_reproduction/ks3_feedforward.py
++++ b/wr_reproduction/ks3_feedforward.py
+@@ -92,6 +92,9 @@
+     geometry_multiplier=recipe.get('dense_geometry_lr_multiplier',geometry['lr_mul'])
+     if not math.isfinite(geometry_multiplier) or geometry_multiplier<0:
+         raise ValueError('Dense KS3 geometry LR multiplier must be finite and nonnegative')
++    decay_multiplier=recipe.get('ks3_projection_weight_decay_multiplier',1.)
++    if not math.isfinite(decay_multiplier) or decay_multiplier<0:
++        raise ValueError('KS3 projection weight decay multiplier must be finite and nonnegative')
+     optimizer_policy={}
+     geometry_policy={}
+     transformed_forward,forward_sha=compile_method(forward_tree(),gpt.__dict__)
+@@ -202,7 +205,11 @@
+         table=kw['param_table']
+         table['ks3_dense_geometry']=dict(optim='adam',comms='replicated',adam_betas=[.9,.99],lr_mul=geometry_multiplier,wd_mul=0.)
+         if keep:table['retained_mlp_bank']=dict(table['mlp_bank'])
+-        table['mlp_bank']=dict(table['mlp_bank'],lr_mul=multiplier)
++        # Retained original MLP banks above keep the unmodified policy.
++        table['mlp_bank']=dict(table['mlp_bank'],lr_mul=multiplier,
++                               wd_mul=table['mlp_bank'].get('wd_mul',1.)*decay_multiplier)
++        table['moe_bank']=dict(table['moe_bank'],
++                               wd_mul=table['moe_bank'].get('wd_mul',1.)*decay_multiplier)
+         for key in ('scatter_order','work_order'):
+             kw[key].append('ks3_dense_geometry')
+             if keep:kw[key].insert(kw[key].index('mlp_bank')+1,'retained_mlp_bank')
+@@ -211,8 +218,14 @@
+         assert len(dense)==1
+         cfg=dense[0];shape_scale=max(1.,features/768)**.5
+         assert cfg.lr_mul==shape_scale*multiplier
++        routed=[c for c in result.param_cfgs.values() if c.label=='moe_bank']
++        assert len(routed)==1
++        assert cfg.wd_mul==table['mlp_bank']['wd_mul'] and routed[0].wd_mul==table['moe_bank']['wd_mul']
+         optimizer_policy.update(multiplier=multiplier,effective_multiplier=cfg.lr_mul,
+-                                shape_scale=shape_scale,base_lr=cfg.lr,weight_decay=cfg.weight_decay)
++                                shape_scale=shape_scale,base_lr=cfg.lr,weight_decay=cfg.weight_decay,
++                                ks3_weight_decay_multiplier=decay_multiplier,
++                                dense_weight_decay_multiplier=cfg.wd_mul,
++                                routed_weight_decay_multiplier=routed[0].wd_mul)
+         dense_geometry=[cfg for cfg in result.param_cfgs.values() if cfg.label=='ks3_dense_geometry']
+         assert len(dense_geometry)==1
+         geom=dense_geometry[0]

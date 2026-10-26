@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-25T23:38:12.104909+00:00",
+  "passed": true,
+  "tests": 3,
+  "command": ".venv-mi300/bin/python -m unittest test_wr_matched_routed1280",
+  "test_source_sha256": "292cd9b8093bf09b719176291529b5902f8f58f15f94de722862ca1a44225611",
+  "wrapper_source_sha256": "f1ca766990de9ba4bf1c9c5f1219b1820b729bdc3150c24a193bdff0d6020806",
+  "checks": [
+    "Only correctness receives the routed oracle; discovery and frozen verification retain original commands and source hashes",
+    "Scope rejection precedes registration",
+    "Changed oracle source hash blocks the queue"
+  ]
+}

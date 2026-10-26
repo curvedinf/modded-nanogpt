@@ -1,0 +1,155 @@
+{
+  "passed": true,
+  "same_checkpoint": true,
+  "same_eight_logical_microbatches": true,
+  "baseline_loss": 15.067641258239746,
+  "with_probe_loss": 15.067641258239746,
+  "maximum_parameter_relative_rms": 0.0,
+  "all_parameters_bitwise_equal": true,
+  "parameters": [
+    {
+      "parameter": "value_embeds",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "ve_gate_bank",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "qk_bank",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "vo_bank",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "mlp_bank",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "moe_bank",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "moe_router",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "post_lambdas",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "resid_lambdas",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "scalars",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "mudd_w1",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "mudd_w2",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "mudd_b2",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "mudd_w2g",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "_mudd_gate_scale",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "mudd_gate_w1",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "mudd_gate_w2",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "mudd_gate_b2",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "copy_qk_bank",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "copy_k_sink",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "copy_qk_gain",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "lm_head.weight",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "embed.weight",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    },
+    {
+      "parameter": "smear_gate.weight",
+      "max_abs": 0.0,
+      "relative_rms": 0.0,
+      "exact": true
+    }
+  ]
+}

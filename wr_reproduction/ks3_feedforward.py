@@ -1,7 +1,7 @@
 """KS3 at every dense and routed feedforward site, with explicit edge hybrids.
 
 The dense KS3 projections retain the original mlp_bank ANVIL label, master
-mantissas, alternating2x output LR, sharding/padding, and gradient accumulation.
+mantissas, default alternating2x output LR, sharding/padding, and gradient accumulation.
 Hybrid MLPs use a separately padded original-width bank with identical policy.
 """
 import math
@@ -66,10 +66,50 @@ class DenseKS3(torch.autograd.Function):
         dx,bank,dg=dense_backward(grad,*ctx.saved_tensors,ctx.slot)
         return (dx,bank[0],bank[1],None,None,dg,None,None)[:ctx.argument_count]
 
+@torch.no_grad()
+def initialize_spines(routed,dense,rank,std):
+    """Seed-local CPU noise; never advance model or data RNG streams."""
+    if not std:return dict(distribution='constant',std=0.,seed=None)
+    seed=torch.initial_seed()
+    generator=torch.Generator(device='cpu').manual_seed(seed)
+    for value in (routed,dense):
+        noise=torch.randn((*value.shape[:-1],6*rank),generator=generator,
+                          device='cpu',dtype=torch.float32)
+        value[...,:6*rank].add_((noise*std).to(value.device))
+    return dict(distribution='normal',std=std,seed=seed,
+                generator='isolated-cpu-generator-routed-then-dense-v1')
+
+@torch.no_grad()
+def initialize_output_projections(routed,dense,retained_slots,gain):
+    """KS3-only nonzero outputs, without advancing model or data RNG streams."""
+    if not gain:
+        return dict(distribution='original-zero',gain=0.,seed=None)
+    seed=torch.initial_seed()
+    generator=torch.Generator(device='cpu').manual_seed(seed)
+    routed_features,model_dim=routed.shape[-2:]
+    dense_features=dense.shape[-2]
+    routed_outputs=routed.view(5,2,8,routed_features,model_dim)[:,1]
+    routed_noise=torch.randn(routed_outputs.shape,generator=generator,device='cpu',dtype=torch.float32)
+    routed_std=gain/math.sqrt(routed_features)
+    routed_outputs.copy_((routed_noise*routed_std).to(routed_outputs))
+    dense_std=gain/math.sqrt(dense_features)
+    active_slots=[s for s in range(5) if s not in retained_slots]
+    for slot in active_slots:
+        noise=torch.randn(dense[slot,1].shape,generator=generator,device='cpu',dtype=torch.float32)
+        dense[slot,1].copy_((noise*dense_std).to(dense[slot,1]))
+    return dict(distribution='normal',gain=gain,seed=seed,
+                generator='isolated-cpu-generator-routed-then-active-dense-v1',
+                routed_output_matrices=40,dense_output_slots=active_slots,
+                routed_fan_in=routed_features,dense_fan_in=dense_features,
+                routed_std=routed_std,dense_std=dense_std)
+
 def install(base,recipe):
     if recipe['precision']!='bf16':raise ValueError('Full-feedforward implementation currently verified for BF16 KS3 only')
     dense_precision=recipe.get('dense_precision','bf16')
     if dense_precision not in ('bf16','fp8'):raise ValueError('Unknown dense KS3 precision')
+    routed_gs32=recipe.get('routed_training_gs32',True)
+    if type(routed_gs32) is not bool:raise ValueError('Routed GS32 selection must be boolean')
+    if not routed_gs32 and (recipe['rank']!=1 or recipe['charts']!=1024):raise ValueError('Direct routed BF16 requires1024 rank-one features')
     dense_gs32=recipe.get('dense_training_gs32',True)
     if type(dense_gs32) is not bool:raise ValueError('Dense GS32 selection must be boolean')
     if not dense_gs32 and recipe['rank']!=1:raise ValueError('Direct dense encoding requires rank one')
@@ -83,12 +123,28 @@ def install(base,recipe):
     charts,rank=recipe.get('dense_charts',recipe['charts']),recipe['rank'];features=charts*rank
     if features not in (512,768,1024,1280,1536,2816):raise ValueError('Unsupported dense KS3 width')
     geometry=recipe['geometry']
+    from wr_reproduction.ks3_optimizer import validate_geometry_betas
+    geometry_betas=validate_geometry_betas(geometry.get('betas',(.9,.99)))
+    initial_std=geometry.get('coefficient_init_std',0.)
+    if isinstance(initial_std,bool) or not isinstance(initial_std,(int,float)) or not math.isfinite(initial_std) or initial_std<0:
+        raise ValueError('KS3 initial coefficient standard deviation must be finite and nonnegative')
+    output_init_gain=recipe.get('ks3_output_projection_init_gain',0.)
+    if (isinstance(output_init_gain,bool) or not isinstance(output_init_gain,(int,float))
+            or not math.isfinite(output_init_gain) or output_init_gain<0):
+        raise ValueError('KS3 output projection initialization gain must be finite and nonnegative')
     multiplier=recipe.get('dense_projection_lr_multiplier',recipe.get('projection_lr_multiplier',1.))
     if not math.isfinite(multiplier) or multiplier<=0:
         raise ValueError('Dense KS3 projection LR multiplier must be finite and positive')
     geometry_multiplier=recipe.get('dense_geometry_lr_multiplier',geometry['lr_mul'])
     if not math.isfinite(geometry_multiplier) or geometry_multiplier<0:
         raise ValueError('Dense KS3 geometry LR multiplier must be finite and nonnegative')
+    output_multiplier=recipe.get('ks3_output_projection_lr_multiplier',2.)
+    if (isinstance(output_multiplier,bool) or not isinstance(output_multiplier,(int,float))
+            or not math.isfinite(output_multiplier) or output_multiplier<=0):
+        raise ValueError('KS3 output projection LR multiplier must be finite and positive')
+    decay_multiplier=recipe.get('ks3_projection_weight_decay_multiplier',1.)
+    if not math.isfinite(decay_multiplier) or decay_multiplier<0:
+        raise ValueError('KS3 projection weight decay multiplier must be finite and nonnegative')
     optimizer_policy={}
     geometry_policy={}
     transformed_forward,forward_sha=compile_method(forward_tree(),gpt.__dict__)
@@ -96,9 +152,11 @@ def install(base,recipe):
     # Reuse the exact original allocation/layout definitions, only with fewer
     # retained dense slots and remapped fold-lambda source indices.
     namespace=dict(gpt.__dict__,NUM_USED_MLP_SLOTS=len(keep),
+                   PARALLEL_MLP_SLOT=mapping.get(DENSE[8],len(keep)),
                    MLP_SLOT_OF_LAYER={layer:mapping[slot] for layer,slot in DENSE.items() if slot in mapping and layer!=8})
     init_retained,_=compile_method(method('init_mlp_fp8'),namespace)
     class FullKS3GPT(base):
+        ks3_routed_training_gs32=routed_gs32
         _matched_forward_sha256=forward_sha
         retained_slots=keep
         forward=transformed_forward
@@ -117,6 +175,7 @@ def install(base,recipe):
                 self.retained_mlp_bank=torch.nn.Parameter(retained)
                 self.retained_mlp_bank.label='retained_mlp_bank';self.retained_mlp_bank.reshape=(8,2816,768)
                 self.retained_mlp_bank.frozen_matrices=frozenset(2*s+j for s in range(len(keep),4) for j in (0,1))
+            self.ks3_output_projection_initialization=initialize_output_projections(self.moe_bank,self.mlp_bank,keep,output_init_gain)
             init_retained(self,768)
             self.register_buffer('_mlp_ks3_up',torch.zeros((5,features,768),device=self.device,dtype=torch.bfloat16),persistent=False)
             self.register_buffer('_mlp_ks3_down',torch.zeros((5,768,features),device=self.device,dtype=torch.bfloat16),persistent=False)
@@ -124,6 +183,7 @@ def install(base,recipe):
             for coordinate in range(rank):geo[...,6*coordinate:6*coordinate+6]=torch.tensor(geometry['coefficients'],device=self.device)
             geo[...,6*rank]=geometry['raw_scale'];geo[...,6*rank+1]=geometry['raw_shift']
             self.ks3_dense_geometry=torch.nn.Parameter(geo);self.ks3_dense_geometry.label='ks3_dense_geometry'
+            self.ks3_geometry_initialization=initialize_spines(self.ks3_geometry,self.ks3_dense_geometry,rank,initial_std)
             if dense_precision=='fp8':
                 from wr_reproduction.ks3_dense_fp8 import init_buffers
                 init_buffers(self,features,training_gs32=dense_gs32)
@@ -174,17 +234,29 @@ def install(base,recipe):
                         routed_ks3_backward_layers=[1,3,5,6,8],
                         retained_original_mlp_slots=list(keep),all_feedforward_paths_mapped=True,
                         original_mlp_fallback_is_fatal=True,transformed_forward_sha256=forward_sha,
-                        actual_graph_warmup=True,dense_projection_optimizer=dict(optimizer_policy),
+                        actual_graph_warmup=True,ks3_geometry_initialization=dict(self.ks3_geometry_initialization),
+                        ks3_output_projection_initialization=dict(self.ks3_output_projection_initialization),
+                        dense_projection_optimizer=dict(optimizer_policy),
                         dense_geometry_optimizer=dict(geometry_policy),
                         dense_training_precision=dense_precision,dense_validation_precision='bf16',
                         dense_training_projection_gs32=dense_gs32,dense_validation_projection_gs32=True,
                         dense_geometry_coefficient_gs32=True,
+                        routed_training_projection_gs32=routed_gs32,routed_validation_projection_gs32=True,
                         dense_fp8_activation_scale_slots=scale_mapping if dense_precision=='fp8' else None)
-    # Extend the original per-matrix output-LR/padding policy to the retained
-    # bank. All existing labels execute the byte-for-byte original method.
+    # Original builder owns shapes, padding and all optimizer semantics.
+    # Explicit KS3-only output-rate ablations remap active output matrix rates
+    # before the original bank scalar staging. Retained MLPs keep original2x.
     original_build=anvil.AnvilAndAdam._build_param_cfg
     def build(optimizer,param,label):
-        if label!='retained_mlp_bank':return original_build(optimizer,param,label)
+        if label!='retained_mlp_bank':
+            result=original_build(optimizer,param,label)
+            if label in ('mlp_bank','moe_bank'):
+                cfg=optimizer.param_cfgs[param]
+                assert cfg.per_matrix_lr_mul is not None
+                assert all(value in (0.,1.,2.) for value in cfg.per_matrix_lr_mul)
+                cfg.per_matrix_lr_mul=[output_multiplier if value==2. else value
+                                       for value in cfg.per_matrix_lr_mul]
+            return result
         saved=optimizer.param_table['mlp_bank']
         try:
             optimizer.param_table['mlp_bank']=optimizer.param_table[label]
@@ -195,9 +267,13 @@ def install(base,recipe):
     original_optimizer=training.AnvilAndAdam
     def optimizer(*a,**kw):
         table=kw['param_table']
-        table['ks3_dense_geometry']=dict(optim='adam',comms='replicated',adam_betas=[.9,.99],lr_mul=geometry_multiplier,wd_mul=0.)
+        table['ks3_dense_geometry']=dict(optim='adam',comms='replicated',adam_betas=list(geometry_betas),lr_mul=geometry_multiplier,wd_mul=0.)
         if keep:table['retained_mlp_bank']=dict(table['mlp_bank'])
-        table['mlp_bank']=dict(table['mlp_bank'],lr_mul=multiplier)
+        # Retained original MLP banks above keep the unmodified policy.
+        table['mlp_bank']=dict(table['mlp_bank'],lr_mul=multiplier,
+                               wd_mul=table['mlp_bank'].get('wd_mul',1.)*decay_multiplier)
+        table['moe_bank']=dict(table['moe_bank'],
+                               wd_mul=table['moe_bank'].get('wd_mul',1.)*decay_multiplier)
         for key in ('scatter_order','work_order'):
             kw[key].append('ks3_dense_geometry')
             if keep:kw[key].insert(kw[key].index('mlp_bank')+1,'retained_mlp_bank')
@@ -206,15 +282,28 @@ def install(base,recipe):
         assert len(dense)==1
         cfg=dense[0];shape_scale=max(1.,features/768)**.5
         assert cfg.lr_mul==shape_scale*multiplier
+        routed=[c for c in result.param_cfgs.values() if c.label=='moe_bank']
+        assert len(routed)==1
+        assert cfg.wd_mul==table['mlp_bank']['wd_mul'] and routed[0].wd_mul==table['moe_bank']['wd_mul']
         optimizer_policy.update(multiplier=multiplier,effective_multiplier=cfg.lr_mul,
-                                shape_scale=shape_scale,base_lr=cfg.lr,weight_decay=cfg.weight_decay)
+                                shape_scale=shape_scale,base_lr=cfg.lr,weight_decay=cfg.weight_decay,
+                                ks3_weight_decay_multiplier=decay_multiplier,
+                                dense_weight_decay_multiplier=cfg.wd_mul,
+                                routed_weight_decay_multiplier=routed[0].wd_mul,
+                                ks3_output_projection_multiplier=output_multiplier,
+                                dense_per_matrix_lr_multipliers=list(cfg.per_matrix_lr_mul),
+                                routed_per_matrix_lr_multipliers=list(routed[0].per_matrix_lr_mul))
         dense_geometry=[cfg for cfg in result.param_cfgs.values() if cfg.label=='ks3_dense_geometry']
         assert len(dense_geometry)==1
         geom=dense_geometry[0]
         assert geom.lr_mul==geometry_multiplier
+        routed_geometry=[c for c in result.param_cfgs.values() if c.label=='ks3_geometry']
+        assert len(routed_geometry)==1
+        assert tuple(geom.adam_betas)==tuple(routed_geometry[0].adam_betas)==tuple(geometry_betas)
         geometry_policy.update(multiplier=geom.lr_mul,base_lr=geom.lr,
                                adam_betas=list(geom.adam_betas),weight_decay_multiplier=geom.wd_mul,
-                               eps=geom.eps,routed_geometry_multiplier=geometry['lr_mul'])
+                               eps=geom.eps,routed_geometry_multiplier=geometry['lr_mul'],
+                               routed_adam_betas=list(routed_geometry[0].adam_betas))
         return result
     training.AnvilAndAdam=optimizer
     return FullKS3GPT

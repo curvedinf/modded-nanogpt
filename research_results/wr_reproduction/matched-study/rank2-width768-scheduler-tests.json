@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-26T01:49:08.693797+00:00",
+  "passed": true,
+  "tests": 7,
+  "gpu_initialized": false,
+  "command": ".venv-mi300/bin/python -m unittest -v test_wr_matched_rank2_width768",
+  "test_source": {
+    "path": "test_wr_matched_rank2_width768.py",
+    "sha256": "011390177119501ecbe5206f95702f731db310833bb800b596a608da00586d2a"
+  },
+  "log": {
+    "path": "logs/wr-reproduction/matched-study/staging/rank2-width768/scheduler-tests.log",
+    "sha256": "d53ed37b76a241a6a3a4b123da4b43e22242e520f0e9046bba390c091ab83061"
+  },
+  "scheduler": {
+    "path": "run_wr_matched_rank2_width768.py",
+    "sha256": "a9d4b251e4fb82aad3be8bdb7e3ccbfa91ddab00b54018013898402e904a2849"
+  }
+}

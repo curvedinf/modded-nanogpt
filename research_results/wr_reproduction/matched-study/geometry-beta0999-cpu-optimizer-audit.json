@@ -1,0 +1,363 @@
+{
+  "passed": true,
+  "gpu_initialized": false,
+  "checks": [
+    {
+      "architecture": "ks3_all",
+      "dense_features": 1024,
+      "routed_features": 1024,
+      "requested_geometry_betas": null,
+      "effective_dense_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_routed_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_dense_decay_multiplier": 1.0,
+      "effective_routed_decay_multiplier": 1.0,
+      "retained_original_decay_preserved": true,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.1547005383792515,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": null,
+      "geometry_multiplier": 0.125,
+      "geometry_adam_policy_verified": true,
+      "dense_geometry_multiplier": 0.125,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_all",
+      "dense_features": 1024,
+      "routed_features": 1024,
+      "requested_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_dense_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_routed_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_dense_decay_multiplier": 1.0,
+      "effective_routed_decay_multiplier": 1.0,
+      "retained_original_decay_preserved": true,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.1547005383792515,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": null,
+      "geometry_multiplier": 0.125,
+      "geometry_adam_policy_verified": true,
+      "dense_geometry_multiplier": 0.125,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_all",
+      "dense_features": 1024,
+      "routed_features": 1024,
+      "requested_geometry_betas": [
+        0.9,
+        0.999
+      ],
+      "effective_dense_geometry_betas": [
+        0.9,
+        0.999
+      ],
+      "effective_routed_geometry_betas": [
+        0.9,
+        0.999
+      ],
+      "effective_dense_decay_multiplier": 1.0,
+      "effective_routed_decay_multiplier": 1.0,
+      "retained_original_decay_preserved": true,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.1547005383792515,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": null,
+      "geometry_multiplier": 0.125,
+      "geometry_adam_policy_verified": true,
+      "dense_geometry_multiplier": 0.125,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_first_mlp",
+      "dense_features": 1024,
+      "routed_features": 1024,
+      "requested_geometry_betas": null,
+      "effective_dense_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_routed_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_dense_decay_multiplier": 1.0,
+      "effective_routed_decay_multiplier": 1.0,
+      "retained_original_decay_preserved": true,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.1547005383792515,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": 1.9148542155126762,
+      "geometry_multiplier": 0.125,
+      "geometry_adam_policy_verified": true,
+      "dense_geometry_multiplier": 0.125,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_first_mlp",
+      "dense_features": 1024,
+      "routed_features": 1024,
+      "requested_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_dense_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_routed_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_dense_decay_multiplier": 1.0,
+      "effective_routed_decay_multiplier": 1.0,
+      "retained_original_decay_preserved": true,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.1547005383792515,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": 1.9148542155126762,
+      "geometry_multiplier": 0.125,
+      "geometry_adam_policy_verified": true,
+      "dense_geometry_multiplier": 0.125,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_first_mlp",
+      "dense_features": 1024,
+      "routed_features": 1024,
+      "requested_geometry_betas": [
+        0.9,
+        0.999
+      ],
+      "effective_dense_geometry_betas": [
+        0.9,
+        0.999
+      ],
+      "effective_routed_geometry_betas": [
+        0.9,
+        0.999
+      ],
+      "effective_dense_decay_multiplier": 1.0,
+      "effective_routed_decay_multiplier": 1.0,
+      "retained_original_decay_preserved": true,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.1547005383792515,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": 1.9148542155126762,
+      "geometry_multiplier": 0.125,
+      "geometry_adam_policy_verified": true,
+      "dense_geometry_multiplier": 0.125,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_last_mlp",
+      "dense_features": 1024,
+      "routed_features": 1024,
+      "requested_geometry_betas": null,
+      "effective_dense_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_routed_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_dense_decay_multiplier": 1.0,
+      "effective_routed_decay_multiplier": 1.0,
+      "retained_original_decay_preserved": true,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.1547005383792515,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": 1.9148542155126762,
+      "geometry_multiplier": 0.125,
+      "geometry_adam_policy_verified": true,
+      "dense_geometry_multiplier": 0.125,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_last_mlp",
+      "dense_features": 1024,
+      "routed_features": 1024,
+      "requested_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_dense_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_routed_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_dense_decay_multiplier": 1.0,
+      "effective_routed_decay_multiplier": 1.0,
+      "retained_original_decay_preserved": true,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.1547005383792515,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": 1.9148542155126762,
+      "geometry_multiplier": 0.125,
+      "geometry_adam_policy_verified": true,
+      "dense_geometry_multiplier": 0.125,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_last_mlp",
+      "dense_features": 1024,
+      "routed_features": 1024,
+      "requested_geometry_betas": [
+        0.9,
+        0.999
+      ],
+      "effective_dense_geometry_betas": [
+        0.9,
+        0.999
+      ],
+      "effective_routed_geometry_betas": [
+        0.9,
+        0.999
+      ],
+      "effective_dense_decay_multiplier": 1.0,
+      "effective_routed_decay_multiplier": 1.0,
+      "retained_original_decay_preserved": true,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.1547005383792515,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": 1.9148542155126762,
+      "geometry_multiplier": 0.125,
+      "geometry_adam_policy_verified": true,
+      "dense_geometry_multiplier": 0.125,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_both_mlp",
+      "dense_features": 1024,
+      "routed_features": 1024,
+      "requested_geometry_betas": null,
+      "effective_dense_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_routed_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_dense_decay_multiplier": 1.0,
+      "effective_routed_decay_multiplier": 1.0,
+      "retained_original_decay_preserved": true,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.1547005383792515,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": 1.9148542155126762,
+      "geometry_multiplier": 0.125,
+      "geometry_adam_policy_verified": true,
+      "dense_geometry_multiplier": 0.125,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_both_mlp",
+      "dense_features": 1024,
+      "routed_features": 1024,
+      "requested_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_dense_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_routed_geometry_betas": [
+        0.9,
+        0.99
+      ],
+      "effective_dense_decay_multiplier": 1.0,
+      "effective_routed_decay_multiplier": 1.0,
+      "retained_original_decay_preserved": true,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.1547005383792515,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": 1.9148542155126762,
+      "geometry_multiplier": 0.125,
+      "geometry_adam_policy_verified": true,
+      "dense_geometry_multiplier": 0.125,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    },
+    {
+      "architecture": "ks3_both_mlp",
+      "dense_features": 1024,
+      "routed_features": 1024,
+      "requested_geometry_betas": [
+        0.9,
+        0.999
+      ],
+      "effective_dense_geometry_betas": [
+        0.9,
+        0.999
+      ],
+      "effective_routed_geometry_betas": [
+        0.9,
+        0.999
+      ],
+      "effective_dense_decay_multiplier": 1.0,
+      "effective_routed_decay_multiplier": 1.0,
+      "retained_original_decay_preserved": true,
+      "requested_routed_multiplier": 1.0,
+      "requested_dense_multiplier": null,
+      "effective_dense_multiplier": 1.1547005383792515,
+      "effective_routed_multiplier": 1.1547005383792515,
+      "retained_effective_multiplier": 1.9148542155126762,
+      "geometry_multiplier": 0.125,
+      "geometry_adam_policy_verified": true,
+      "dense_geometry_multiplier": 0.125,
+      "shared_optimizer_table_unchanged": true,
+      "output_2x_and_padding_preserved": true
+    }
+  ],
+  "invalid_geometry_betas_rejected_by_both_overlays": 11,
+  "default_parameter_tables_identical": true,
+  "audit_script_sha256": "7df89e843004256302995f253bb769242b8fcd39681ab07492521630a8e4c522",
+  "staged_source_hashes": {
+    "ks3_optimizer.py": "b4899ec0e340a7994bef5d8cbc07293c429db3afa612e34ca2ea982137d2ceba",
+    "ks3_moe.py": "f1d289bf54bee3b5a5ada7b13ca5a560978abe57bf854ff4b022e2ec75873afe",
+    "ks3_feedforward.py": "2991bd2277bdd0f7acf63af6e7550e6e5dea00e1236e91aac71801fe6f48e4a4"
+  },
+  "scope": "KS3 geometry policy only; immutable original ANVIL parameter-config builder and all four architectures. No optimizer algorithms, shared policies or kernels changed."
+}

@@ -1,0 +1,214 @@
+{
+  "run_id": "matched-ks3-all-routed-direct-bf16-20261025T223148-cd40e5",
+  "status": "correctness_passed",
+  "seed": 172,
+  "code_commit": "220a9007f3e3dfee14b47067570daec58f674048",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-routed-direct-bf16",
+    "hypothesis": "Remove GS32 rounding only from routed KS3 BF16 training inputs, weights and nonlinear outputs. Preserve dense KS3 GS32 encoding, geometry coefficient GS32, FP16 nonlinearities, original router/top1 and optimizer semantics, and fixed GS32 BF16 validation. Require direct/default numerical and cache checks plus a faster paired whole-model timing gate before discovery.",
+    "routed_training_gs32": false
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": null,
+  "timing": null,
+  "correctness": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "features": 1024,
+    "checks": [
+      {
+        "tokens": 1,
+        "gs32": true,
+        "active_experts": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "probabilities": 0.0,
+          "input_gradient": 0.0021407988388091326,
+          "router_gradient": 0.0,
+          "post_gradient": 0.004629629664123058,
+          "geometry_gradient": 6.305377837634296e-07,
+          "up_gradient": 0.0,
+          "down_gradient": 0.0
+        },
+        "unrelated_gradient_bank_unchanged": true
+      },
+      {
+        "tokens": 257,
+        "gs32": true,
+        "active_experts": 1,
+        "relative_rms": {
+          "output": 6.68446155032143e-05,
+          "probabilities": 0.0,
+          "input_gradient": 0.0015410610940307379,
+          "router_gradient": 0.003622702555730939,
+          "post_gradient": 0.0,
+          "geometry_gradient": 9.941196594809298e-07,
+          "up_gradient": 5.369221980799921e-05,
+          "down_gradient": 4.899640043731779e-05
+        },
+        "unrelated_gradient_bank_unchanged": true
+      },
+      {
+        "tokens": 4096,
+        "gs32": true,
+        "active_experts": 8,
+        "relative_rms": {
+          "output": 0.00019935188174713403,
+          "probabilities": 0.0,
+          "input_gradient": 0.0021840769331902266,
+          "router_gradient": 0.004107653629034758,
+          "post_gradient": 0.004524887073785067,
+          "geometry_gradient": 1.0124716709469794e-06,
+          "up_gradient": 0.00010123879474122077,
+          "down_gradient": 0.00016232732741627842
+        },
+        "unrelated_gradient_bank_unchanged": true
+      },
+      {
+        "tokens": 1,
+        "gs32": false,
+        "active_experts": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "probabilities": 0.0,
+          "input_gradient": 0.0012680722866207361,
+          "router_gradient": 0.010747727006673813,
+          "post_gradient": 0.008130080997943878,
+          "geometry_gradient": 6.240738912310917e-07,
+          "up_gradient": 0.0,
+          "down_gradient": 0.0
+        },
+        "unrelated_gradient_bank_unchanged": true
+      },
+      {
+        "tokens": 257,
+        "gs32": false,
+        "active_experts": 1,
+        "relative_rms": {
+          "output": 7.52816122258082e-05,
+          "probabilities": 0.0,
+          "input_gradient": 0.001527557848021388,
+          "router_gradient": 0.0041858176700770855,
+          "post_gradient": 0.0,
+          "geometry_gradient": 9.595042911314522e-07,
+          "up_gradient": 5.7024637499125674e-05,
+          "down_gradient": 6.374879740178585e-05
+        },
+        "unrelated_gradient_bank_unchanged": true
+      },
+      {
+        "tokens": 4096,
+        "gs32": false,
+        "active_experts": 8,
+        "relative_rms": {
+          "output": 0.00015346459986176342,
+          "probabilities": 0.0,
+          "input_gradient": 0.0021729706786572933,
+          "router_gradient": 0.004011675249785185,
+          "post_gradient": 0.004347825888544321,
+          "geometry_gradient": 1.1932576171602705e-06,
+          "up_gradient": 0.00010071974975289777,
+          "down_gradient": 0.0001114961996790953
+        },
+        "unrelated_gradient_bank_unchanged": true
+      }
+    ],
+    "cache_checks": [
+      {
+        "training": true,
+        "routed_training_gs32": true,
+        "cache_gs32": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "training": false,
+        "routed_training_gs32": true,
+        "cache_gs32": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "training": true,
+        "routed_training_gs32": true,
+        "cache_gs32": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "training": true,
+        "routed_training_gs32": false,
+        "cache_gs32": false,
+        "cache_bytes_exact": true
+      },
+      {
+        "training": false,
+        "routed_training_gs32": false,
+        "cache_gs32": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "training": true,
+        "routed_training_gs32": false,
+        "cache_gs32": false,
+        "cache_bytes_exact": true
+      },
+      {
+        "captured_replay": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "captured_replay": true,
+        "cache_bytes_exact": true
+      }
+    ],
+    "routed_training_projection_gs32": false,
+    "routed_validation_projection_gs32": true,
+    "original_routed_gs32_regression": true,
+    "geometry_coefficient_gs32": true,
+    "shared_backend_modified": false,
+    "validation": false,
+    "oracle": "Independent Torch top1 routing/products and pinned nonlinear forward with independent STE; input, router, post, projection-bank and geometry gradients, empty experts, cache bytes and graph replay"
+  },
+  "exit_code": 0,
+  "events_sha256": "e08d4eaa57698008d8858e7fbb123fbc666d58c7eef8f5870804f6a72d034ece",
+  "completed_utc": "2026-10-25T22:32:12.714186+00:00",
+  "qualifies": false
+}

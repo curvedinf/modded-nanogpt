@@ -1,0 +1,81 @@
+{
+  "utc": "2026-10-26T00:05:49.771720+00:00",
+  "passed": true,
+  "gpu_initialized": false,
+  "rank1_audit": {
+    "path": "research_results/wr_reproduction/matched-study/rank1-width1536-cpu-model-audit.json",
+    "sha256": "20cac58eac6440997a2f3f6e6b29d0d2d26795126fc7a51f03c598b217e57c05"
+  },
+  "rank2_audit": {
+    "path": "research_results/wr_reproduction/matched-study/rank2-width1536-cpu-projection-pair-audit.json",
+    "sha256": "d4f14524180c72fe36d343a9b063660770019511ffbf3c6f9079f9f124afaee9"
+  },
+  "projection_banks": {
+    "mlp_bank": {
+      "shape": [
+        8,
+        2,
+        1536,
+        768
+      ],
+      "elements": 18874368,
+      "sha256": "d2ef7c1b45d396807f9f44b5e3ac4118d92d702d5deb56267cd730dc6f86c9dd"
+    },
+    "moe_bank": {
+      "shape": [
+        80,
+        1536,
+        768
+      ],
+      "elements": 94371840,
+      "sha256": "354f9a377026ab083b55736e88fd5f7c595637990ce5d2cdd4705662db9f9c62"
+    }
+  },
+  "projection_shapes_counts_and_initial_values_identical": true,
+  "rank1_geometry": {
+    "ks3_geometry": {
+      "shape": [
+        5,
+        8,
+        1536,
+        8
+      ],
+      "elements": 491520,
+      "zero_coefficients": true
+    },
+    "ks3_dense_geometry": {
+      "shape": [
+        5,
+        1536,
+        8
+      ],
+      "elements": 61440,
+      "zero_coefficients": true
+    }
+  },
+  "rank2_geometry": {
+    "ks3_geometry": {
+      "shape": [
+        5,
+        8,
+        768,
+        14
+      ],
+      "elements": 430080,
+      "zero_coefficients": true
+    },
+    "ks3_dense_geometry": {
+      "shape": [
+        5,
+        768,
+        14
+      ],
+      "elements": 53760,
+      "zero_coefficients": true
+    }
+  },
+  "rank1_geometry_parameters": 552960,
+  "rank2_geometry_parameters": 483840,
+  "model_wide_hyperparameters": "original-pr393",
+  "decision": "A rank comparison at equal projection capacity and equal initial projection values; geometry parameterization/counts are explicitly different. No validation inference."
+}

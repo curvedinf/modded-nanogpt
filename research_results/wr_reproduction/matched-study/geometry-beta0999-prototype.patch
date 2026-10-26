@@ -1,0 +1,79 @@
+--- a/wr_reproduction/ks3_optimizer.py
++++ b/wr_reproduction/ks3_optimizer.py
+@@ -2,10 +2,19 @@
+ import math
+ 
+ 
+-def configure(table,geometry_lr,projection_lr_multiplier=1.):
++def validate_geometry_betas(value):
++    if (not isinstance(value,(tuple,list)) or len(value)!=2
++            or any(isinstance(x,bool) or not isinstance(x,(int,float))
++                   or not math.isfinite(x) or not 0<=x<1 for x in value)):
++        raise ValueError('KS3 geometry Adam betas must be two finite numbers in [0,1)')
++    return [float(x) for x in value]
++
++
++def configure(table,geometry_lr,projection_lr_multiplier=1.,geometry_betas=(.9,.99)):
++    betas=validate_geometry_betas(geometry_betas)
+     if not math.isfinite(projection_lr_multiplier) or projection_lr_multiplier<=0:
+         raise ValueError('Projection LR multiplier must be finite and positive')
+-    table['ks3_geometry']=dict(optim='adam',comms='replicated',adam_betas=[.9,.99],
++    table['ks3_geometry']=dict(optim='adam',comms='replicated',adam_betas=betas,
+                                lr_mul=geometry_lr,wd_mul=0.)
+     if projection_lr_multiplier!=1.:
+         original=table['moe_bank']
+--- a/wr_reproduction/ks3_moe.py
++++ b/wr_reproduction/ks3_moe.py
+@@ -323,6 +323,8 @@
+     gpt_module.MOE_HIDDEN=moe_module.MOE_HIDDEN=features
+     geometry_config=geometry_config or {}
+     geometry_lr=geometry_config.get('lr_mul',.125)
++    from wr_reproduction.ks3_optimizer import validate_geometry_betas
++    geometry_betas=validate_geometry_betas(geometry_config.get('betas',(.9,.99)))
+     initial_scale=geometry_config.get('raw_scale',.75)
+     initial_shift=geometry_config.get('raw_shift',0.)
+     coefficients=geometry_config.get('coefficients',[0.]*6)
+@@ -396,7 +398,7 @@
+     original=training.AnvilAndAdam
+     def optimizer(*args,**kwargs):
+         from wr_reproduction.ks3_optimizer import configure
+-        configure(kwargs['param_table'],geometry_lr,projection_lr_multiplier)
++        configure(kwargs['param_table'],geometry_lr,projection_lr_multiplier,geometry_betas=geometry_betas)
+         kwargs['scatter_order'].append('ks3_geometry');kwargs['work_order'].append('ks3_geometry')
+         return original(*args,**kwargs)
+     training.AnvilAndAdam=optimizer
+--- a/wr_reproduction/ks3_feedforward.py
++++ b/wr_reproduction/ks3_feedforward.py
+@@ -99,6 +99,8 @@
+     charts,rank=recipe.get('dense_charts',recipe['charts']),recipe['rank'];features=charts*rank
+     if features not in (512,768,1024,1280,1536,2816):raise ValueError('Unsupported dense KS3 width')
+     geometry=recipe['geometry']
++    from wr_reproduction.ks3_optimizer import validate_geometry_betas
++    geometry_betas=validate_geometry_betas(geometry.get('betas',(.9,.99)))
+     initial_std=geometry.get('coefficient_init_std',0.)
+     if isinstance(initial_std,bool) or not isinstance(initial_std,(int,float)) or not math.isfinite(initial_std) or initial_std<0:
+         raise ValueError('KS3 initial coefficient standard deviation must be finite and nonnegative')
+@@ -221,7 +223,7 @@
+     original_optimizer=training.AnvilAndAdam
+     def optimizer(*a,**kw):
+         table=kw['param_table']
+-        table['ks3_dense_geometry']=dict(optim='adam',comms='replicated',adam_betas=[.9,.99],lr_mul=geometry_multiplier,wd_mul=0.)
++        table['ks3_dense_geometry']=dict(optim='adam',comms='replicated',adam_betas=list(geometry_betas),lr_mul=geometry_multiplier,wd_mul=0.)
+         if keep:table['retained_mlp_bank']=dict(table['mlp_bank'])
+         # Retained original MLP banks above keep the unmodified policy.
+         table['mlp_bank']=dict(table['mlp_bank'],lr_mul=multiplier,
+@@ -248,9 +250,13 @@
+         assert len(dense_geometry)==1
+         geom=dense_geometry[0]
+         assert geom.lr_mul==geometry_multiplier
++        routed_geometry=[c for c in result.param_cfgs.values() if c.label=='ks3_geometry']
++        assert len(routed_geometry)==1
++        assert tuple(geom.adam_betas)==tuple(routed_geometry[0].adam_betas)==tuple(geometry_betas)
+         geometry_policy.update(multiplier=geom.lr_mul,base_lr=geom.lr,
+                                adam_betas=list(geom.adam_betas),weight_decay_multiplier=geom.wd_mul,
+-                               eps=geom.eps,routed_geometry_multiplier=geometry['lr_mul'])
++                               eps=geom.eps,routed_geometry_multiplier=geometry['lr_mul'],
++                               routed_adam_betas=list(routed_geometry[0].adam_betas))
+         return result
+     training.AnvilAndAdam=optimizer
+     return FullKS3GPT

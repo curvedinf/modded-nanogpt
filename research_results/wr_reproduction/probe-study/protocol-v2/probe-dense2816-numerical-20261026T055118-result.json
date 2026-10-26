@@ -1,0 +1,46 @@
+{
+  "event": "kernel_correctness",
+  "passed": true,
+  "checks": [
+    {
+      "tokens": 1,
+      "relative_rms": {
+        "output": 0.0,
+        "input_gradient": 0.0,
+        "up_gradient": 0.0016603837721049786,
+        "down_gradient": 0.0016673497157171369,
+        "geometry_gradient": 4.215793580897298e-07,
+        "post_gradient": 0.0
+      }
+    },
+    {
+      "tokens": 257,
+      "relative_rms": {
+        "output": 0.0001353416737401858,
+        "input_gradient": 0.00016660615801811218,
+        "up_gradient": 0.0016615077620372176,
+        "down_gradient": 0.0016610450111329556,
+        "geometry_gradient": 7.818400149517402e-07,
+        "post_gradient": 0.0
+      }
+    },
+    {
+      "tokens": 4096,
+      "relative_rms": {
+        "output": 0.0002409491135040298,
+        "input_gradient": 0.00014230712258722633,
+        "up_gradient": 0.0016614757478237152,
+        "down_gradient": 0.0016642598202452064,
+        "geometry_gradient": 9.899339374896954e-07,
+        "post_gradient": 0.005076142027974129
+      }
+    }
+  ],
+  "features": 2816,
+  "oracle": "Independent ks3_blas_fused_unpack autograd; all gradients, nonzero geometry and output post factor",
+  "shared_backend_modified": false,
+  "validation": false,
+  "run_id": "probe-dense2816-numerical-20261026T055118",
+  "code_commit": "f61db62ae5be07044d6ab76b09992aa90b8dbd3f",
+  "exit_code": 0
+}

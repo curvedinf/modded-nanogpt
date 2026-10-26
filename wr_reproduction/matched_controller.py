@@ -44,11 +44,12 @@ def create_run(recipe,seed,kind,unit,frozen=None):
     if recipe['architecture']!='mlp':command+=['--ks3-precision',recipe['precision']]
     if kind=='timing':command+=['--timing-updates','100']
     if kind=='correctness':
-        oracle=('wr_reproduction.check_ks3_feedforward_bf16_direct' if recipe.get('dense_precision','bf16')=='bf16' and recipe.get('dense_training_gs32',True) is False else
+        oracle=('wr_reproduction.check_ks3_routed_bf16_direct' if recipe.get('routed_training_gs32',True) is False else
+                'wr_reproduction.check_ks3_feedforward_bf16_direct' if recipe.get('dense_precision','bf16')=='bf16' and recipe.get('dense_training_gs32',True) is False else
                 'wr_reproduction.check_ks3_feedforward_fp8' if recipe.get('dense_precision')=='fp8' else
                 'wr_reproduction.check_ks3_feedforward' if recipe['rank']==1 else 'wr_reproduction.check_ks3_feedforward_rank')
         command=[str(PYTHON),'-m',oracle,'--out',str(directory/'events.jsonl'),
-                 '--features',str(recipe.get('dense_charts',recipe['charts'])*recipe['rank'])]
+                 '--features',str((recipe['charts'] if recipe.get('routed_training_gs32',True) is False else recipe.get('dense_charts',recipe['charts']))*recipe['rank'])]
         if recipe['rank']!=1:command+=['--rank',str(recipe['rank'])]
         if recipe.get('dense_precision')=='fp8' and recipe.get('dense_training_gs32',True) is False:
             command+=['--dense-native-pack']

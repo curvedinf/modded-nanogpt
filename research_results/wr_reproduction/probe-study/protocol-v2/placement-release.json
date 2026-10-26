@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-26T05:51:18.479898+00:00",
+  "launched": true,
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "controller": {
+    "unit": "wr-probe-placements-21bf33f7",
+    "status": "waiting_for_references_and_required_replication",
+    "utc": "2026-10-26T05:51:18.479739+00:00"
+  },
+  "review": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/measurement-review.json",
+  "decision": "All reference/required verification endpoints complete, actual total instrumentation<=3%, measured paired8192/32768 uncertainty supports.01. Launch only the five isolated sites and inspect before combining."
+}

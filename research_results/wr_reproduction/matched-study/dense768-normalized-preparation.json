@@ -1,0 +1,44 @@
+{
+  "utc": "2026-10-25T22:37:26.833481+00:00",
+  "status": "prepared",
+  "wait_for_study": "routed-direct-bf16-study.json",
+  "results_name": "ks3-dense768-normalized-rate-results.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_dense768_normlr.json",
+      "recipe_sha256": "a2c79873c7570ee873994d04fec44faf4e824d4644792c2ed4b72507536efe24",
+      "seed": 168,
+      "status": "pending",
+      "hypothesis": "Reduce only the five dense KS3 projection widths from1024 to768 while preserving all40 routed experts at1024. Isolate the dense capacity/elapsed-time tradeoff from the prior both-branch768 ablation. Compensate the ANVIL shape-factor change with dense projection multiplier sqrt(1024/768), preserving its baseline effective multiplier. Keep routed projections/initialization, BF16/GS32, geometry Adam0.125, MoE8top1 and all shared/model-wide settings unchanged. Width768 has already completed actual optimizer warmup; width512 remains excluded under the frozen backend.",
+      "changes": {
+        "dense_charts": {
+          "before": 1024,
+          "after": 768
+        },
+        "dense_projection_lr_multiplier": {
+          "before": 1.0,
+          "after": 1.1547005383792515
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/dense768-normalized-cpu-model-audit.json",
+        "sha256": "0d1a8f713d0cf966d60b4c31a8b133aea659e192c05d51b929b1f900c4f48013"
+      },
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/dense768-normalized-cpu-optimizer-audit.json",
+        "sha256": "b5b8bbc3c38cee64e3e1c636c9c78a2ca7512987e275da2b2bf137d56ee42167"
+      },
+      "correctness_required": true,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "Validate the768-wide dense projection under the current optional-precision source before this dense-only width configuration; ordinary GS32 precision remains enabled. No timing sweep.",
+      "optimizer_shape_support_evidence": {
+        "run_id": "matched-ks3-all-width768-normlr-20261025T213736-27cd6a",
+        "events_sha256": "1fe3f12cac74d9de42e75e52199b4c31782e891e5ce98245ad11b064e2e3144f",
+        "actual_warmup_passed": true
+      }
+    }
+  ],
+  "decision": "Complete routed direct-BF16 correctness/timing/discovery and any verification, then isolate dense-only supported768 capacity with unchanged1024 routed experts."
+}

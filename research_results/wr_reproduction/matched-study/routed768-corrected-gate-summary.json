@@ -1,0 +1,97 @@
+{
+  "utc": "2026-10-25T23:23:40.021048+00:00",
+  "passed": true,
+  "oracle_run_id": "matched-ks3-all-routed768-normlr-20261025T232152-2d109e",
+  "oracle_code_commit": "35cb62d6a4f4664f5736fa7ad47c67de29748bae",
+  "oracle_result_sha256": "6046274a22402260dfc970ae1ed592f38f9f44eb8e01b1ba161283607ec960fb",
+  "oracle_events_sha256": "74916dc10cc0df44f7d35a35d855ad86860fca9e71adf643724074935c95695a",
+  "maximum_relative_rms": 0.005681818351149559,
+  "unchanged_relative_rms_tolerance": 0.015,
+  "checks": [
+    {
+      "tokens": 1,
+      "gs32": true,
+      "active_experts": 1,
+      "relative_rms": {
+        "output": 0.0,
+        "probabilities": 0.0,
+        "input_gradient": 0.0022472685668617487,
+        "router_gradient": 0.0,
+        "post_gradient": 0.0,
+        "geometry_gradient": 6.803268775001925e-07,
+        "up_gradient": 0.0,
+        "down_gradient": 0.0
+      },
+      "unrelated_gradient_bank_unchanged": true
+    },
+    {
+      "tokens": 257,
+      "gs32": true,
+      "active_experts": 1,
+      "relative_rms": {
+        "output": 0.0001249375200131908,
+        "probabilities": 0.0,
+        "input_gradient": 9.45190986385569e-05,
+        "router_gradient": 0.000873730459716171,
+        "post_gradient": 0.005681818351149559,
+        "geometry_gradient": 1.3989462104291306e-06,
+        "up_gradient": 7.902558718342334e-05,
+        "down_gradient": 0.0001339241862297058
+      },
+      "unrelated_gradient_bank_unchanged": true
+    },
+    {
+      "tokens": 4096,
+      "gs32": true,
+      "active_experts": 8,
+      "relative_rms": {
+        "output": 0.00014538364484906197,
+        "probabilities": 0.0,
+        "input_gradient": 0.0016644559800624847,
+        "router_gradient": 0.0007977467612363398,
+        "post_gradient": 0.0,
+        "geometry_gradient": 9.933095270753256e-07,
+        "up_gradient": 9.638772462494671e-05,
+        "down_gradient": 0.0001303578756051138
+      },
+      "unrelated_gradient_bank_unchanged": true
+    }
+  ],
+  "cache_checks": [
+    {
+      "training": true,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "training": false,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "training": true,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "captured_replay": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "captured_replay": true,
+      "cache_bytes_exact": true
+    }
+  ],
+  "failed_gate_preserved": "matched-ks3-all-routed768-normlr-20261025T231638-ce2c73",
+  "resolution_sha256": "16e4a29a682848ff1b6d90f00cbcb67611b3e2cf33b02622c37d93cf1cb5d2b7",
+  "shared_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "training_sources_unchanged": true,
+  "discovery_run_id": "matched-ks3-all-routed768-normlr-20261025T232208-6a4fef",
+  "discovery_code_commit": "35cb62d6a4f4664f5736fa7ad47c67de29748bae",
+  "validation_measured": false,
+  "original_scalar_precision_reference": "wr_reproduction/pr393/upstream/track_1_short/perf/kernels/moe_mlp.py:RoutedFP8MoE.backward",
+  "metadata_erratum": "The earlier resolution named this class RoutedMoE; the exact upstream class is RoutedFP8MoE. The cited source-file hash and FP32 ds/dpost formula are unchanged."
+}

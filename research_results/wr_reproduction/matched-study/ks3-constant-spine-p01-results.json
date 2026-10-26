@@ -1,0 +1,212 @@
+{
+  "utc": "2026-10-26T01:14:11.761099+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_study": "pending-geometry-beta105.json",
+  "wait_for_run": "matched-ks3-all-geometry-beta105-20261026T010714-d32194",
+  "results_name": "ks3-constant-spine-p01-results.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_constant_spine_p01.json",
+      "recipe_sha256": "10f14b97e54bdcc8b9bd94c159a8aeada34268a4a09275893bb29dd20d9e4a00",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Initialize both Hermite endpoint coefficients c0 and c1 to+0.1 in every dense/routed rank-one KS3 chart, leaving slopes and Chebyshev warp coefficients zero. Since the two endpoint basis functions sum to one, this yields the initial function ReLU(x+0.1)^2 rather than the zero-coefficient ReLU(x)^2, giving small negative projected features a gradient immediately. Test this constant activation shift as a separate architectural initialization hypothesis, distinct from earlier slope/warp/random priors and optimizer-memory changes. Restore geometry Adam betas[0.9,0.99] and retain multiplier0.125, width1024, rank one, BF16/GS32, projection policy, all45 feedforward branches, MoE8top1 and every shared/model-wide setting.",
+      "changes": {
+        "geometry.coefficients[0:2]": {
+          "before": [
+            0,
+            0
+          ],
+          "after": [
+            0.1,
+            0.1
+          ]
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/constant-spine-p01-cpu-model-audit.json",
+        "sha256": "18ad407c89bb1c6fda35206874c5798938082bf8d7b43b8409bdf966024402ee"
+      },
+      "correctness_required": false,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "prior_gpu_oracle_evidence": [
+        {
+          "path": "research_results/wr_reproduction/matched-study/matched-ks3-all-20261025T223212-51a1c8-result.json",
+          "sha256": "d67485940c5e8a76d559ac2aab8217f99afb3cbde425773e42095e680c6072a1",
+          "code_commit": "220a9007f3e3dfee14b47067570daec58f674048",
+          "scope": "Existing rank-one1024 BF16/GS32 dense+routed independent output/all-gradient and graph-cache oracle with nonzero coefficients."
+        }
+      ],
+      "oracle_scope": "Only KS3 coefficient initialization changes. Existing nonzero-coefficient GPU oracles cover unchanged kernels and shapes. CPU reference verifies the constant shift and analytical input/all-six-coefficient derivatives; full-model audit checks exact dense/routed geometry, original projection/router/nonfeedforward initialization, global RNG and ANVIL shape/output2x/padding. Actual full-graph warmup remains mandatory.",
+      "run_id": "matched-ks3-all-constant-spine-p01-20261026T011427-bbe239",
+      "result": {
+        "run_id": "matched-ks3-all-constant-spine-p01-20261026T011427-bbe239",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "d349a1a84206b582812c98196babf450425b87fc",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0.1,
+              0.1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-constant-spine-p01",
+          "hypothesis": "Initialize both Hermite endpoint coefficients c0 and c1 to+0.1 in every dense/routed rank-one KS3 chart, leaving slopes and Chebyshev warp coefficients zero. Since the two endpoint basis functions sum to one, this yields the initial function ReLU(x+0.1)^2 rather than the zero-coefficient ReLU(x)^2, giving small negative projected features a gradient immediately. Test this constant activation shift as a separate architectural initialization hypothesis, distinct from earlier slope/warp/random priors and optimizer-memory changes. Restore geometry Adam betas[0.9,0.99] and retain multiplier0.125, width1024, rank one, BF16/GS32, projection policy, all45 feedforward branches, MoE8top1 and every shared/model-wide setting."
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 3.579658031463623,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.064584493637085,
+          "reference_run_id": "matched-ks3-all-rank2-warp-prior-20261026T004755-67ab19",
+          "reference_wall_seconds": 316.76327583397506,
+          "reference_age_seconds": 11.670394350017887,
+          "reference_objective": 3.515073537826538,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 2,
+            "attention_windows": [
+              640,
+              1408
+            ],
+            "mtp": [
+              1.0
+            ],
+            "prefix": 0.0,
+            "candidates": 14336,
+            "batch_tokens": 393216,
+            "global_batch_tokens": 393216,
+            "logical_batch_tokens": 49152,
+            "logical_ranks": 8,
+            "train_max_seq_len": 3072,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 596,
+          "comparable_runs": 18,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-rank2-warp-prior-20261026T004755-67ab19/events.jsonl",
+            "sha256": "a9f26428596360b587b3fb9b99cdd11ef0b38734230801697e04366ff36e0afe",
+            "line": 630,
+            "row_sha256": "1367866c679d64072f038fd01f10dbcc34584134fa3a30058b58f9100f29143c"
+          },
+          "step": 597,
+          "train_seconds": 328.43367018399294,
+          "reference_snapshot_sha256": "3b5492028ab370a9271e507aa098c7691a58152eb49eb07fbafaa5517529dc65",
+          "utc": "2026-10-26T01:22:02.378262+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-constant-spine-p01-20261026T011427-bbe239",
+          "seed": 168,
+          "code_commit": "d349a1a84206b582812c98196babf450425b87fc",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "9d1a9a0c6e7a742d18523c34235492815bfab5ec8ae19121bcb06287d6e9f931",
+        "completed_utc": "2026-10-26T01:22:04.409747+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "unit": "wr-matched-constant-spine-p01-ordered.service",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "a51be7013b4393887109a76c836bd2da6b336d09877160f27b9419ade5fbe955",
+    "code_commit": "d349a1a84206b582812c98196babf450425b87fc"
+  },
+  "completed_utc": "2026-10-26T01:22:04.412874+00:00"
+}

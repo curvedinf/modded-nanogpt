@@ -1,0 +1,60 @@
+{
+  "utc": "2026-10-26T04:49:17.307882+00:00",
+  "status": "confirmed_diagnostic_limitation",
+  "run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+  "affected_measurements": [
+    "gradient_sample_rms",
+    "gradient_l2_estimate",
+    "gradient_missing_reason"
+  ],
+  "observed_steps": [
+    294,
+    446,
+    598
+  ],
+  "finding": "after_update reads parameter.grad after the original optimizer clears gradients for updated parameters. Null therefore does not establish that Adam was skipped. The emitted missing-reason string is incorrect for the sampled odd zero-based Adam updates and for ANVIL banks.",
+  "evidence": [
+    {
+      "path": "wr_reproduction/probe_diagnostics.py",
+      "lines": [
+        57,
+        68
+      ],
+      "fact": "p.grad is sampled after r.step returns; a null gradient receives the Adam-not-applied label."
+    },
+    {
+      "path": "wr_reproduction/train.py",
+      "lines": [
+        212,
+        214
+      ],
+      "fact": "Reduced original gradients are installed before step_optimizers."
+    },
+    {
+      "path": "wr_reproduction/pr393/upstream/track_1_short/optim/anvil.py",
+      "lines": [
+        748,
+        752
+      ],
+      "fact": "Updated parameter gradients are cleared after applying the update."
+    },
+    {
+      "path": "wr_reproduction/pr393/upstream/track_1_short/training.py",
+      "lines": [
+        176,
+        178
+      ],
+      "fact": "Adam applies at odd zero-based step indices; diagnostic event step is one-based."
+    }
+  ],
+  "valid_measurements": [
+    "fixed held-out probe CE and per-chunk contributions",
+    "full validation CE",
+    "activation coordinate/nonlinear/projected-output sample moments with existing padding limitations",
+    "actual sampled parameter differences across one original update"
+  ],
+  "current_action": "Keep frozen references and required replication unchanged. Do not infer gradients or optimizer cadence from null fields. Preserve evidence rather than rewrite historical events.",
+  "followup": "Before using gradient norms for directed rate hypotheses, add a bounded KS3-only pre-optimizer gradient tap after the frozen placement batch. Preserve shared mathematical sources and fixed-probe instrumentation. Verify that the tap preserves gradient tensors, update parity and clock accounting; audit the new KS3 source/config without a model-wide control change.",
+  "tuning_claim": "No gradient-norm claim is supported by these post-update null fields."
+}

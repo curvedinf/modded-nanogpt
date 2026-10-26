@@ -1,0 +1,398 @@
+{
+  "utc": "2026-10-26T05:59:14.887034+00:00",
+  "run_id": "probe-ks3-dense-layer0-width2816-discovery-20261026T055125-4fa9e6",
+  "seed": 169,
+  "code_commit": "f61db62ae5be07044d6ab76b09992aa90b8dbd3f",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "architecture": "ks3_dense_0",
+  "replaced_dense_layer": 0,
+  "dense_features": 2816,
+  "other_dense_branches": "original FP8 MLP",
+  "routed_experts": "incumbent KS3",
+  "status": "pruned",
+  "qualifies": false,
+  "full_validation": null,
+  "probe": {
+    "loss": 4.665738020092249,
+    "checkpoint_elapsed_seconds": 120.72138580799219,
+    "completion_seconds": 124.18519271499827,
+    "seconds": 3.4639516909956,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "tokens": 1048576
+  },
+  "screen": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 120.72138580799219,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.06206398457288742,
+    "reference_run_id": "probe-ks3-experts-verification-20261026T045737-498c82",
+    "reference_elapsed_seconds": 120.6600743799936,
+    "reference_age_seconds": 0.06131142799858935,
+    "reference_utc": "2026-10-26T05:01:54.917133+00:00",
+    "reference_loss": 4.6036740355193615,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-experts-verification-20261026T045737-498c82/events.jsonl",
+      "line": 327,
+      "row_sha256": "ade2ca02d63bc7abfd650549ddb4dbc8e6360940da43348edbd0d0aca2c9d0dc"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.06206398457288742,
+      "standard_error": 0.0022677721768215595,
+      "normal95_halfwidth": 0.004444833466570257,
+      "student95_halfwidth": 0.004490188910106688,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "utc": "2026-10-26T05:57:53.410221+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_dense_0",
+    "run_id": "probe-ks3-dense-layer0-width2816-discovery-20261026T055125-4fa9e6",
+    "seed": 169,
+    "code_commit": "f61db62ae5be07044d6ab76b09992aa90b8dbd3f",
+    "training_projection_gs32": true
+  },
+  "paired_block32768": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.06206398457288742,
+    "standard_error": 0.0025015796007633903,
+    "normal95_halfwidth": 0.004903096017496245,
+    "student95_halfwidth": 0.005108225544758842,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "execution_coverage": {
+    "event": "feedforward_execution_coverage",
+    "dense_ks3_forward_slots": [
+      0
+    ],
+    "dense_ks3_backward_slots": [
+      0
+    ],
+    "routed_ks3_backward_layers": [
+      1,
+      3,
+      5,
+      6,
+      8
+    ],
+    "retained_original_mlp_slots": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "all_feedforward_paths_mapped": true,
+    "original_mlp_fallback_is_fatal": true,
+    "transformed_forward_sha256": "902100e3411a976eadf0316a455356c8e780ddc512cb4baf13ed6a43611a70ba",
+    "actual_graph_warmup": true,
+    "ks3_geometry_initialization": {
+      "distribution": "constant",
+      "std": 0.0,
+      "seed": null
+    },
+    "ks3_output_projection_initialization": {
+      "distribution": "original-zero",
+      "gain": 0.0,
+      "seed": null
+    },
+    "dense_projection_optimizer": {
+      "multiplier": 1.0,
+      "effective_multiplier": 1.9148542155126762,
+      "shape_scale": 1.9148542155126762,
+      "base_lr": 0.023,
+      "weight_decay": 2.25,
+      "ks3_weight_decay_multiplier": 1.0,
+      "dense_weight_decay_multiplier": 1.0,
+      "routed_weight_decay_multiplier": 1.0,
+      "ks3_output_projection_multiplier": 2.0,
+      "dense_per_matrix_lr_multipliers": [
+        1.0,
+        2.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "routed_per_matrix_lr_multipliers": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ]
+    },
+    "dense_geometry_optimizer": {
+      "multiplier": 0.125,
+      "base_lr": 0.008,
+      "adam_betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay_multiplier": 0.0,
+      "eps": 1e-10,
+      "routed_geometry_multiplier": 0.125,
+      "routed_adam_betas": [
+        0.9,
+        0.99
+      ]
+    },
+    "dense_training_precision": "bf16",
+    "dense_validation_precision": "bf16",
+    "dense_training_projection_gs32": true,
+    "dense_validation_projection_gs32": true,
+    "dense_geometry_coefficient_gs32": true,
+    "routed_training_projection_gs32": true,
+    "routed_validation_projection_gs32": true,
+    "dense_fp8_activation_scale_slots": null,
+    "utc": "2026-10-26T05:55:47.667291+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_dense_0",
+    "run_id": "probe-ks3-dense-layer0-width2816-discovery-20261026T055125-4fa9e6",
+    "seed": 169,
+    "code_commit": "f61db62ae5be07044d6ab76b09992aa90b8dbd3f",
+    "training_projection_gs32": true
+  },
+  "activation_diagnostics": [
+    {
+      "branch": "dense",
+      "coordinate": {
+        "mean": -0.6337899565696716,
+        "rms": 1.4302324056625366,
+        "max_abs": 9.113240242004395,
+        "nonzero_fraction": 1.0
+      },
+      "nonlinear_output": {
+        "mean": 0.41193389892578125,
+        "rms": 1.9565695524215698,
+        "max_abs": 86.0,
+        "nonzero_fraction": 0.237548828125
+      },
+      "projected_output": {
+        "mean": 0.20758965611457825,
+        "rms": 31.018531799316406,
+        "max_abs": 896.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.3848263621330261,
+        "rms": 1.2476195096969604,
+        "max_abs": 6.539042949676514,
+        "nonzero_fraction": 0.90234375
+      },
+      "nonlinear_output": {
+        "mean": 0.5068594217300415,
+        "rms": 2.3515613079071045,
+        "max_abs": 55.25,
+        "nonzero_fraction": 0.265625
+      },
+      "projected_output": {
+        "mean": -0.2468869388103485,
+        "rms": 8.5778226852417,
+        "max_abs": 56.25,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.39155256748199463,
+        "rms": 1.3079532384872437,
+        "max_abs": 6.356531143188477,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5804281234741211,
+        "rms": 2.9245712757110596,
+        "max_abs": 87.0,
+        "nonzero_fraction": 0.290771484375
+      },
+      "projected_output": {
+        "mean": 0.0529160313308239,
+        "rms": 7.628950119018555,
+        "max_abs": 52.75,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.4287338852882385,
+        "rms": 1.3237292766571045,
+        "max_abs": 4.883888244628906,
+        "nonzero_fraction": 0.8984375
+      },
+      "nonlinear_output": {
+        "mean": 0.5411662459373474,
+        "rms": 2.1500349044799805,
+        "max_abs": 36.0,
+        "nonzero_fraction": 0.294189453125
+      },
+      "projected_output": {
+        "mean": -0.0380215048789978,
+        "rms": 7.790401458740234,
+        "max_abs": 45.25,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.40381932258605957,
+        "rms": 1.2931946516036987,
+        "max_abs": 5.279957294464111,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.5340137481689453,
+        "rms": 2.248311996459961,
+        "max_abs": 51.0,
+        "nonzero_fraction": 0.299072265625
+      },
+      "projected_output": {
+        "mean": -0.061306871473789215,
+        "rms": 8.466994285583496,
+        "max_abs": 83.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    },
+    {
+      "branch": "routed",
+      "coordinate": {
+        "mean": -0.353893518447876,
+        "rms": 1.2931386232376099,
+        "max_abs": 6.1910400390625,
+        "nonzero_fraction": 0.900390625
+      },
+      "nonlinear_output": {
+        "mean": 0.6160159111022949,
+        "rms": 2.601269483566284,
+        "max_abs": 54.25,
+        "nonzero_fraction": 0.310302734375
+      },
+      "projected_output": {
+        "mean": -0.07286514341831207,
+        "rms": 10.845619201660156,
+        "max_abs": 181.0,
+        "nonzero_fraction": 1.0
+      },
+      "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+      "training_objective_used": false
+    }
+  ],
+  "diagnostic_limits": [
+    "Activation moments are a deterministic bounded sample from the first fixed-probe chunk; routed coordinate padding may be present.",
+    "Projected-output moments are activation measurements; coefficient means are not activation effects.",
+    "First-observation pruning occurs before the following update; this candidate has no next-update parameter/gradient diagnostic.",
+    "No full-validation endpoint exists for a pruned trial."
+  ],
+  "decision": "Reject this unchanged layer0 placement on the first one-sided compatible probe gap. Continue layers2,4,8,10, then inspect the whole batch before combining placements or choosing directed rate hypotheses."
+}

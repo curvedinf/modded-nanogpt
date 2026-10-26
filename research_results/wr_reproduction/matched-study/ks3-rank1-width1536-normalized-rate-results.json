@@ -1,0 +1,407 @@
+{
+  "utc": "2026-10-26T00:05:49.772290+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_study": "rank2-width1536-study.json",
+  "wait_for_run": "matched-ks3-all-rank2-width1536-normlr-20261025T235812-1d1f18",
+  "results_name": "ks3-rank1-width1536-normalized-rate-results.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "oracle_source_hashes": {
+    "check_wr_ks3_rank1_width1536.py": "cce5faf1b37d41559714c848a8d9bc48e934145b6d5da5e30514f0998ef6169c",
+    "check_wr_ks3_routed768.py": "24e3c551a34b3f3f36f781327ac8038a3aa0bbb1e30300a726713e11958de94d"
+  },
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_rank1_width1536_normlr.json",
+      "recipe_sha256": "2ad31605052c3285be146dfa9781c1f3ef9dfb2d635ffc310307782eaeaff305",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Compare rank-one and rank-two KS3 at identical1536-feature dense and routed projection widths and normalized effective ANVIL rates. Use1536 rank-one charts instead of768 rank-two charts; this isolates learned chart coupling and geometry parameterization from projection capacity and projection initialization. Keep geometry Adam0.125, zero coefficients, BF16/GS32, projection multiplier sqrt(1024/1536), decay, MoE8top1, and every shared/model-wide setting unchanged. Validate the complete dense and routed numerical paths before the distinct timed discovery; proxy prunes do not imply measured validation quality.",
+      "changes": {
+        "rank": {
+          "before": 2,
+          "after": 1
+        },
+        "charts": {
+          "before": 768,
+          "after": 1536
+        },
+        "dense_charts": {
+          "before": 768,
+          "after": 1536
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/rank1-width1536-cpu-model-audit.json",
+        "sha256": "20cac58eac6440997a2f3f6e6b29d0d2d26795126fc7a51f03c598b217e57c05"
+      },
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/rank1-width1536-cpu-optimizer-audit.json",
+        "sha256": "f45d0061fd3a95e8fe622cdcfb8b3531f38fbe06867e8bef655028c7328fdc17"
+      },
+      "paired_projection_audit": {
+        "path": "research_results/wr_reproduction/matched-study/rank-width1536-paired-initialization.json",
+        "sha256": "285bb8c14e5399d5b858df7ec66890201a5a67e3a6d3574ad4038ac7dda11f09"
+      },
+      "correctness_required": true,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "Six independent dense/routed numerical cases including all gradients, seven empty experts, eight active experts, original FP32 routed scalar derivatives, exact train/eval/train caches and graph refresh replay. Existing rank-one GS32/BF16 kernels; no new shared or KS3 arithmetic.",
+      "correctness_run_id": "matched-ks3-all-rank1-width1536-normlr-20261026T000821-d6ed15",
+      "correctness_result": {
+        "run_id": "matched-ks3-all-rank1-width1536-normlr-20261026T000821-d6ed15",
+        "status": "correctness_passed",
+        "seed": 172,
+        "code_commit": "1d89ab5b7ad5c7063fe7a4f31260ad098b55d9d5",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1536,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-rank1-width1536-normlr",
+          "hypothesis": "Compare rank-one and rank-two KS3 at identical1536-feature dense and routed projection widths and normalized effective ANVIL rates. Use1536 rank-one charts instead of768 rank-two charts; this isolates learned chart coupling and geometry parameterization from projection capacity and projection initialization. Keep geometry Adam0.125, zero coefficients, BF16/GS32, projection multiplier sqrt(1024/1536), decay, MoE8top1, and every shared/model-wide setting unchanged. Validate the complete dense and routed numerical paths before the distinct timed discovery; proxy prunes do not imply measured validation quality.",
+          "dense_charts": 1536,
+          "projection_lr_multiplier": 0.816496580927726
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": null,
+        "timing": null,
+        "correctness": {
+          "event": "kernel_correctness",
+          "passed": true,
+          "features": 1536,
+          "rank": 1,
+          "charts": 1536,
+          "checks": [
+            {
+              "branch": "dense",
+              "tokens": 1,
+              "relative_rms": {
+                "output": 0.0,
+                "input_gradient": 0.0,
+                "up_gradient": 1.6809856333566131e-06,
+                "down_gradient": 0.0,
+                "geometry_gradient": 4.0410301949123095e-07,
+                "post_gradient": 0.0
+              }
+            },
+            {
+              "branch": "dense",
+              "tokens": 257,
+              "relative_rms": {
+                "output": 0.000176076267962344,
+                "input_gradient": 0.00016630707250442356,
+                "up_gradient": 0.00011732929124264047,
+                "down_gradient": 0.00011282821651548147,
+                "geometry_gradient": 9.78351977209968e-07,
+                "post_gradient": 0.0
+              }
+            },
+            {
+              "branch": "dense",
+              "tokens": 4096,
+              "relative_rms": {
+                "output": 0.00022190911113284528,
+                "input_gradient": 0.00015016527322586626,
+                "up_gradient": 0.00018986726354341954,
+                "down_gradient": 0.0002701969933696091,
+                "geometry_gradient": 1.3902579212299315e-06,
+                "post_gradient": 0.0
+              }
+            },
+            {
+              "branch": "routed",
+              "tokens": 1,
+              "active_experts": 1,
+              "relative_rms": {
+                "output": 0.0,
+                "probabilities": 0.0,
+                "input_gradient": 0.0005009233136661351,
+                "router_gradient": 0.0,
+                "post_gradient": 0.0,
+                "geometry_gradient": 6.867167030577548e-07,
+                "up_gradient": 3.5309341228639823e-07,
+                "down_gradient": 0.0
+              },
+              "unrelated_gradient_bank_unchanged": true
+            },
+            {
+              "branch": "routed",
+              "tokens": 257,
+              "active_experts": 1,
+              "relative_rms": {
+                "output": 0.00014126526366453618,
+                "probabilities": 0.0,
+                "input_gradient": 0.00012704319669865072,
+                "router_gradient": 0.0009158283937722445,
+                "post_gradient": 0.0,
+                "geometry_gradient": 9.458982503929292e-07,
+                "up_gradient": 9.453555685468018e-05,
+                "down_gradient": 8.497286034980789e-05
+              },
+              "unrelated_gradient_bank_unchanged": true
+            },
+            {
+              "branch": "routed",
+              "tokens": 4096,
+              "active_experts": 8,
+              "relative_rms": {
+                "output": 0.00019977765623480082,
+                "probabilities": 0.0,
+                "input_gradient": 0.0016713961958885193,
+                "router_gradient": 0.001042307703755796,
+                "post_gradient": 0.0,
+                "geometry_gradient": 1.0465804507475696e-06,
+                "up_gradient": 0.0001050744904205203,
+                "down_gradient": 0.0001617085508769378
+              },
+              "unrelated_gradient_bank_unchanged": true
+            }
+          ],
+          "cache_checks": [
+            {
+              "training": true,
+              "routed_training_gs32": true,
+              "cache_gs32": true,
+              "cache_bytes_exact": true
+            },
+            {
+              "training": false,
+              "routed_training_gs32": true,
+              "cache_gs32": true,
+              "cache_bytes_exact": true
+            },
+            {
+              "training": true,
+              "routed_training_gs32": true,
+              "cache_gs32": true,
+              "cache_bytes_exact": true
+            },
+            {
+              "captured_replay": true,
+              "cache_bytes_exact": true
+            },
+            {
+              "captured_replay": true,
+              "cache_bytes_exact": true
+            }
+          ],
+          "relative_rms_tolerance": 0.015,
+          "shared_backend_modified": false,
+          "validation": false,
+          "oracle": "Independent Torch GS32/products/top1 routing, pinned nonlinear forward, independent rank-one smooth STE and original FP32 routed scalar derivatives; dense and routed all-gradient checks plus exact cache/graph replay"
+        },
+        "exit_code": 0,
+        "events_sha256": "5119bbb14855ee7eb383011e0fea4e01b4d822943cd004f41c0a8771b8cb1d02",
+        "completed_utc": "2026-10-26T00:08:45.914803+00:00",
+        "qualifies": false
+      },
+      "run_id": "matched-ks3-all-rank1-width1536-normlr-20261026T000846-d87fae",
+      "result": {
+        "run_id": "matched-ks3-all-rank1-width1536-normlr-20261026T000846-d87fae",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "1d89ab5b7ad5c7063fe7a4f31260ad098b55d9d5",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1536,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-rank1-width1536-normlr",
+          "hypothesis": "Compare rank-one and rank-two KS3 at identical1536-feature dense and routed projection widths and normalized effective ANVIL rates. Use1536 rank-one charts instead of768 rank-two charts; this isolates learned chart coupling and geometry parameterization from projection capacity and projection initialization. Keep geometry Adam0.125, zero coefficients, BF16/GS32, projection multiplier sqrt(1024/1536), decay, MoE8top1, and every shared/model-wide setting unchanged. Validate the complete dense and routed numerical paths before the distinct timed discovery; proxy prunes do not imply measured validation quality.",
+          "dense_charts": 1536,
+          "projection_lr_multiplier": 0.816496580927726
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 4.394289970397949,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 1,
+            "attention_windows": [
+              384,
+              896
+            ],
+            "mtp": [
+              1.0,
+              0.1031746044754982
+            ],
+            "prefix": 0.05000000074505806,
+            "candidates": 10240,
+            "batch_tokens": 262144,
+            "global_batch_tokens": 262144,
+            "logical_batch_tokens": 32768,
+            "logical_ranks": 8,
+            "train_max_seq_len": 2048,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.012905120849609,
+          "reference_run_id": "matched-ks3-all-rank2-width1536-normlr-20261025T235812-1d1f18",
+          "reference_wall_seconds": 299.50731714398717,
+          "reference_age_seconds": 13.065507880033692,
+          "reference_objective": 4.38138484954834,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 1,
+            "attention_windows": [
+              384,
+              896
+            ],
+            "mtp": [
+              1.0,
+              0.1031746044754982
+            ],
+            "prefix": 0.05000000074505806,
+            "candidates": 10240,
+            "batch_tokens": 262144,
+            "global_batch_tokens": 262144,
+            "logical_batch_tokens": 32768,
+            "logical_ranks": 8,
+            "train_max_seq_len": 2048,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 531,
+          "comparable_runs": 1,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-rank2-width1536-normlr-20261025T235812-1d1f18/events.jsonl",
+            "sha256": "deb09b5d1542313b7c657eb7383890010ed54baa2b51f7700debaf16bb3955f5",
+            "line": 565,
+            "row_sha256": "114773cc9051b69493de741bd99a268275997ff974657841613ac4e518e827cc"
+          },
+          "step": 531,
+          "train_seconds": 312.57282502402086,
+          "reference_snapshot_sha256": "70b184524e81ebbd46deef21b344a5c2f9e3f5f0ccb16ae67595120bf826968f",
+          "utc": "2026-10-26T00:18:09.973714+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1536-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-rank1-width1536-normlr-20261026T000846-d87fae",
+          "seed": 168,
+          "code_commit": "1d89ab5b7ad5c7063fe7a4f31260ad098b55d9d5",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "e8229b2e2801a2cbf1f8dccb4deff6fd45a561c0d4708e316885b5247fe7b52e",
+        "completed_utc": "2026-10-26T00:18:12.246621+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "unit": "wr-matched-rank1-width1536-ordered",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "a51be7013b4393887109a76c836bd2da6b336d09877160f27b9419ade5fbe955",
+    "code_commit": "1d89ab5b7ad5c7063fe7a4f31260ad098b55d9d5"
+  },
+  "completed_utc": "2026-10-26T00:18:12.250125+00:00"
+}

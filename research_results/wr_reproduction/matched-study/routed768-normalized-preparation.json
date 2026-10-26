@@ -1,0 +1,80 @@
+{
+  "utc": "2026-10-25T23:09:13.757829+00:00",
+  "status": "prepared",
+  "wait_for_study": "random-spine-study.json",
+  "results_name": "ks3-routed768-normalized-rate-results.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "oracle_sha256": "0ec5bea4371d6484f0740b54bc2da0d36514e4c132ae093fcab8aaf1ea34f49f",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_routed768_normlr.json",
+      "recipe_sha256": "f9d379bb7e02aff4dc0865c7d5b9e9e3c693810bb12ae0ac48dc3852f88c0428",
+      "seed": 168,
+      "status": "prepared",
+      "hypothesis": "Reduce only routed KS3 expert width from1024 to768, preserving all five dense KS3 branches at1024. Complement the completed dense-only768 and both-branch768 capacity ablations by isolating routed capacity and elapsed-time cost. Multiply routed projection learning rate by sqrt(1024/768) and explicitly keep dense projection multiplier1.0 so original effective ANVIL rates remain equal. Preserve zero initial geometry coefficients, all other KS3 settings, MoE8top1 and every shared/model-wide setting.",
+      "changes": {
+        "charts": {
+          "before": 1024,
+          "after": 768
+        },
+        "dense_charts": {
+          "before": 1024,
+          "after": 1024
+        },
+        "projection_lr_multiplier": {
+          "before": 1.0,
+          "after": 1.1547005383792515
+        },
+        "dense_projection_lr_multiplier": {
+          "before": 1.0,
+          "after": 1.0
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/routed768-cpu-model-audit.json",
+        "sha256": "af785028d2fc6e05a31cc50bc9e7f24d06a92bfb6871ced372462f4a4bff181d"
+      },
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/routed768-cpu-optimizer-audit.json",
+        "sha256": "fc19c7823a21ae9c62792de91eb0327dd5833edb29a839526268ab059d43ad6a"
+      },
+      "correctness_required": true,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "Dedicated registered width768 GS32/BF16 routed oracle: all eight experts, input/router/post/projection/geometry gradients, empty experts, exact caches and captured refresh replay. No new kernel, precision implementation or timing sweep."
+    }
+  ],
+  "decision": "Finish scale125 and random-spine discoveries plus any required verification, then isolate routed768/dense1024 with normalized projection rates and zero coefficient initialization.",
+  "manifest": "logs/wr-reproduction/matched-study/pending-routed768-normalized-rate.json",
+  "model_auditor": {
+    "path": "wr_reproduction/check_ks3_feedforward_cpu.py",
+    "sha256": "a89b5ded7595de3d1e775005695e573c2321c11a2ff46e3a474292f7170d2262"
+  },
+  "optimizer_auditor": {
+    "path": "check_wr_dense_projection_lr.py",
+    "sha256": "18b2f3fdb8d164ed071aa14d11d513144889e6e38319af5488af2b9d9c201721"
+  },
+  "audited_staged_module": {
+    "path": "logs/wr-reproduction/matched-study/staging/random-spine/ks3_feedforward.py",
+    "sha256": "868ae810507a3fbb089ea0b3f83e84322ac15156681226b0c59d06399d9aecad"
+  },
+  "required_runtime_prototype": {
+    "path": "research_results/wr_reproduction/matched-study/random-spine-prototype.json",
+    "sha256": "3753811fb3c3e044610409b9c30a5dfaf28c653f736c5e21d4dadd251ff6ce3c"
+  },
+  "entrypoint": {
+    "path": "run_wr_matched_routed768.py",
+    "sha256": "ae931bcb7a10899e26ce9f5803f5fb2c28ee408ef4fb5eee5dd1590a4a0863dd"
+  },
+  "oracle": {
+    "path": "check_wr_ks3_routed768.py",
+    "sha256": "0ec5bea4371d6484f0740b54bc2da0d36514e4c132ae093fcab8aaf1ea34f49f"
+  },
+  "entrypoint_tests": {
+    "passed": true,
+    "count": 3,
+    "command": ".venv-mi300/bin/python -m unittest test_wr_matched_routed768 -v",
+    "path": "test_wr_matched_routed768.py",
+    "sha256": "0cc08fd753b326c8d9ab53188aef4c65bd8af34dd6564cdeca18aff6f75f1761"
+  }
+}

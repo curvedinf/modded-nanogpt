@@ -1,0 +1,180 @@
+{
+  "utc": "2026-10-26T05:51:12.898661+00:00",
+  "status": "three_fresh_frozen_verifications_complete",
+  "verification_group": "d55d7e76b7446a2bdbf11380a1f5e786690630a449b9d53e25584ed3efd57f55",
+  "discovery_run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+  "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "source_hashes_verified": true,
+  "probe_protocol_path": "/root/modded-nanogpt/configs/wr_reproduction/probe_protocol_v2.json",
+  "control": {
+    "run_id": "probe-mlp-control-20261026T042221-0121f6",
+    "loss": 3.3339109420776367,
+    "training_seconds": 898.1670716530061,
+    "one_instrumented_seed_intentional": true,
+    "immutable": true
+  },
+  "seeds": [
+    {
+      "seed": 369,
+      "run_id": "probe-ks3-experts-verification-20261026T045737-498c82",
+      "status": "complete",
+      "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+      "launch_head_commit": "49622162bbc9033fdbcd0d9368c62c306e4800c2",
+      "full_validation_loss": 3.302371025085449,
+      "full_validation_tokens": 10485760,
+      "training_seconds": 897.7494905659987,
+      "difference_from_control": -0.0315399169921875,
+      "total_instrumentation_seconds": 20.80064560592291,
+      "instrumentation_fraction": 0.023169765980940688,
+      "comparative_pruning_exempt": true,
+      "reserved_confirmation": {
+        "loss": 3.249577708542347,
+        "difference_from_control": -0.030703142285346985,
+        "paired_block8192": {
+          "available": true,
+          "blocks": 32,
+          "mean_difference": -0.030703142285346985,
+          "standard_error": 0.001650111588404551,
+          "normal95_halfwidth": 0.00323421871327292,
+          "student95_halfwidth": 0.003369527863522093,
+          "resolves_001": true,
+          "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+        },
+        "tuning_use_forbidden": true
+      }
+    },
+    {
+      "seed": 370,
+      "run_id": "probe-ks3-experts-verification-20261026T051513-3659e3",
+      "status": "complete",
+      "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+      "launch_head_commit": "123f1d9674639365bcf271e0835ae37ee1a7635b",
+      "full_validation_loss": 3.302345037460327,
+      "full_validation_tokens": 10485760,
+      "training_seconds": 898.2873911429779,
+      "difference_from_control": -0.03156590461730957,
+      "total_instrumentation_seconds": 20.67608165499405,
+      "instrumentation_fraction": 0.02301722350648368,
+      "comparative_pruning_exempt": true,
+      "reserved_confirmation": {
+        "loss": 3.2501453906297684,
+        "difference_from_control": -0.030135460197925568,
+        "paired_block8192": {
+          "available": true,
+          "blocks": 32,
+          "mean_difference": -0.030135460197925568,
+          "standard_error": 0.0016908538403576884,
+          "normal95_halfwidth": 0.0033140735271010692,
+          "student95_halfwidth": 0.0034527235420103992,
+          "resolves_001": true,
+          "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+        },
+        "tuning_use_forbidden": true
+      }
+    },
+    {
+      "seed": 371,
+      "run_id": "probe-ks3-experts-verification-20261026T053250-ff4a2d",
+      "status": "complete",
+      "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+      "launch_head_commit": "51bbd646e4f2b8f2f8deb3e3934455857360d595",
+      "full_validation_loss": 3.3026838302612305,
+      "full_validation_tokens": 10485760,
+      "training_seconds": 898.3941647590254,
+      "difference_from_control": -0.03122711181640625,
+      "total_instrumentation_seconds": 20.927764663967537,
+      "instrumentation_fraction": 0.023294635567430416,
+      "comparative_pruning_exempt": true,
+      "reserved_confirmation": {
+        "loss": 3.2500903233885765,
+        "difference_from_control": -0.03019052743911743,
+        "paired_block8192": {
+          "available": true,
+          "blocks": 32,
+          "mean_difference": -0.03019052743911743,
+          "standard_error": 0.0015543319685409056,
+          "normal95_halfwidth": 0.003046490658340175,
+          "student95_halfwidth": 0.003173945879760529,
+          "resolves_001": true,
+          "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+        },
+        "tuning_use_forbidden": true
+      }
+    }
+  ],
+  "full_validation_statistics": {
+    "values": [
+      3.302371025085449,
+      3.302345037460327,
+      3.3026838302612305
+    ],
+    "mean": 3.302466630935669,
+    "sample_std": 0.00018854840077061594,
+    "minimum": 3.302345037460327,
+    "maximum": 3.3026838302612305,
+    "median": 3.302371025085449
+  },
+  "training_seconds_statistics": {
+    "values": [
+      897.7494905659987,
+      898.2873911429779,
+      898.3941647590254
+    ],
+    "mean": 898.1436821560006,
+    "sample_std": 0.3455291716949162,
+    "minimum": 897.7494905659987,
+    "maximum": 898.3941647590254,
+    "median": 898.2873911429779
+  },
+  "mean_difference_from_control": -0.03144431114196777,
+  "all_three_below_control": true,
+  "reserved_confirmation": {
+    "loss_statistics": {
+      "values": [
+        3.249577708542347,
+        3.2501453906297684,
+        3.2500903233885765
+      ],
+      "mean": 3.2499378075202308,
+      "sample_std": 0.00031306797291923925,
+      "minimum": 3.249577708542347,
+      "maximum": 3.2501453906297684,
+      "median": 3.2500903233885765
+    },
+    "control_loss": 3.280280850827694,
+    "tokens": 262144,
+    "offset": 16777216,
+    "signature_hash": "13000afd8ff073a8204c0c186939a584d970cff2033fe723e1cb0132e4749737",
+    "tuning_use_forbidden": true,
+    "separate_from_full_validation_and_screening": true
+  },
+  "measurement_gate": {
+    "passed": true,
+    "comparable_observations": 28,
+    "unresolved_precision": 0,
+    "maximum_block8192_halfwidth": 0.006402929421764467,
+    "total_instrumentation_within_three_percent": true,
+    "maximum_block32768_halfwidth": 0.008277930248185775,
+    "uncertainty_method": "Paired Student-t 95% halfwidth over fixed 8192-token blocks; contiguous32768-token sensitivity; sampling uncertainty, not repeated-inference noise."
+  },
+  "limitations": [
+    "Three KS3 seeds versus one instrumented MLP control; the control seed variance is not estimated by this cohort.",
+    "Full validation, fixed screening probe and reserved confirmation have distinct text/protocol labels.",
+    "Measured block uncertainty does not guarantee precision for every future architecture.",
+    "Post-update null gradients are unavailable, not evidence of zero gradients; see gradient-diagnostic-availability-audit.json."
+  ],
+  "decision": "Required replication complete. Release the five isolated dense-site trials through the existing measurement-review worker; inspect the entire batch before combinations or directed optimizer choices.",
+  "placement_release": {
+    "utc": "2026-10-26T05:51:18.479898+00:00",
+    "launched": true,
+    "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+    "controller": {
+      "unit": "wr-probe-placements-21bf33f7",
+      "status": "waiting_for_references_and_required_replication",
+      "utc": "2026-10-26T05:51:18.479739+00:00"
+    },
+    "review": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/measurement-review.json",
+    "decision": "All reference/required verification endpoints complete, actual total instrumentation<=3%, measured paired8192/32768 uncertainty supports.01. Launch only the five isolated sites and inspect before combining."
+  }
+}

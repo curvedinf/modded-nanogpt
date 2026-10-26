@@ -1,0 +1,162 @@
+{
+  "run_id": "matched-ks3-all-routedgeom00625-20261026T004110-83ba84",
+  "status": "pruned",
+  "seed": 168,
+  "code_commit": "2fff608401407ca40d5f24d2b6f9b1858eb1c8fe",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 1024,
+    "rank": 1,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.0625,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-routedgeom00625",
+    "hypothesis": "Halve only routed KS3 geometry Adam multiplier from0.125 to0.0625, explicitly preserving the dense geometry multiplier at0.125. Test slower adaptation of expert nonlinearities after global0.0625 and dense-only0.0625 were proxy-pruned; restore original projection rates for both branches so this is separate from projection-rate ablations. Keep width1024/rank one, zero coefficients, BF16/GS32, projection decay, all45 KS3 feedforward branches, MoE8top1, and every shared/model-wide setting unchanged. Training-proxy outcomes do not establish validation quality.",
+    "dense_geometry_lr_multiplier": 0.125
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": {
+    "event": "screening_abort",
+    "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+    "warmup_reached": true,
+    "eligible": true,
+    "abort": true,
+    "candidate_objective": 4.467041015625,
+    "metric_kind": "training",
+    "candidate_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 1,
+      "attention_windows": [
+        384,
+        896
+      ],
+      "mtp": [
+        1.0,
+        0.12222222238779068
+      ],
+      "prefix": 0.05000000074505806,
+      "candidates": 10240,
+      "batch_tokens": 262144,
+      "global_batch_tokens": 262144,
+      "logical_batch_tokens": 32768,
+      "logical_ranks": 8,
+      "train_max_seq_len": 2048,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "margin": 0.01,
+    "reason": "dynamic_best_training_proxy",
+    "gap": 0.013185501098633,
+    "reference_run_id": "matched-ks3-all-geometry00625-20261025T192621-0bf0aa",
+    "reference_wall_seconds": 268.38181064100354,
+    "reference_age_seconds": 3.816726393008139,
+    "reference_objective": 4.453855514526367,
+    "reference_signature": {
+      "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+      "stage": 1,
+      "attention_windows": [
+        384,
+        896
+      ],
+      "mtp": [
+        1.0,
+        0.12222222238779068
+      ],
+      "prefix": 0.05000000074505806,
+      "candidates": 10240,
+      "batch_tokens": 262144,
+      "global_batch_tokens": 262144,
+      "logical_batch_tokens": 32768,
+      "logical_ranks": 8,
+      "train_max_seq_len": 2048,
+      "attention_segment_cap": 2560,
+      "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+      "cplm": true,
+      "softcap": [
+        23.0,
+        5.0,
+        7.5
+      ],
+      "moe_aux_weight": 0.01,
+      "reduction": "mean-of-eight-logical-rank-token-means",
+      "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+      "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+      "model_wide_hyperparameters": "original-pr393"
+    },
+    "reference_source_step": 519,
+    "comparable_runs": 21,
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-geometry00625-20261025T192621-0bf0aa/events.jsonl",
+      "sha256": "596988559ecd6857cb12f4f57a51454fd6b92559d8803eeacf3b895f9fc2f5db",
+      "line": 553,
+      "row_sha256": "a8215ad9b2d8335196c0808ef23b411a266baa2254a239365c7f4f7ce03d5f26"
+    },
+    "step": 519,
+    "train_seconds": 272.1985370340117,
+    "reference_snapshot_sha256": "d1aa8115fc83e0b67754e26f749232f01be314e23fc25982dd24b36d9a496e89",
+    "utc": "2026-10-26T00:47:53.167526+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_all",
+    "run_id": "matched-ks3-all-routedgeom00625-20261026T004110-83ba84",
+    "seed": 168,
+    "code_commit": "2fff608401407ca40d5f24d2b6f9b1858eb1c8fe",
+    "training_projection_gs32": true
+  },
+  "timing": null,
+  "correctness": null,
+  "exit_code": 0,
+  "events_sha256": "7408219d8338f4ddb1cc3015e9b9a26dd5e2474a5679608dc469cd7a9921fa93",
+  "completed_utc": "2026-10-26T00:47:55.445779+00:00",
+  "qualifies": false
+}

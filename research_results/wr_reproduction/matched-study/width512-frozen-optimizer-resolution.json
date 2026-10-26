@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-25T22:29:32.336210+00:00",
+  "status": "excluded_unsupported_shape",
+  "run_id": "matched-ks3-all-width512-normlr-20261025T222621-997955",
+  "result_sha256": "effa112aca7556ba489a21e8f15df2c5c6dcd53bf3cefe9d62bd9715851623fe",
+  "events_sha256": "aa8c4cf8eb88c1aad0dabf6190bd23a9bd231071dc18c437dd773248a8941569",
+  "console_sha256": "fb6c657c28d163c12ed18effae1b72010493671c2c75ee91c0219e4ca880b2a9",
+  "prerequisite_manifest": "logs/wr-reproduction/matched-study/pending-width512-normalized-rate.json",
+  "error": "KeyError: ('XXT', 512)",
+  "failure_stage": "optimizer_warmup",
+  "timed_training_updates": 0,
+  "full_validation": null,
+  "shared_backend_modified": false,
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "decision": "Preserve the failed candidate and its passed standalone KS3 oracle. Exclude width512 under the frozen shared ANVIL backend; do not alter common optimizer kernels or rerun the same unsupported shape. Resolve this queue for the next supported1024-wide KS3-only candidate."
+}

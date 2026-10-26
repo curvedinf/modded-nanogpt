@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-26T01:50:45.318920+00:00",
+  "correctness_run_id": "matched-ks3-all-rank2-width768-normlr-20261026T014945-7f5fb1",
+  "passed": true,
+  "features": 768,
+  "charts": 384,
+  "rank": 2,
+  "max_relative_rms": 0.0016537599731236696,
+  "relative_rms_tolerance": 0.015,
+  "checks": 6,
+  "cache_checks": 5,
+  "code_commit": "4540d42037c4f704294b14670ecd17a9de1bae88",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "active_discovery_run_id": "matched-ks3-all-rank2-width768-normlr-20261026T015008-b638d5",
+  "gate_result_sha256": "7132fc0873c41c2936d52a2f91e062001e86e9df5349f7346172ebdae562a64f",
+  "actual_model_graph_warmup_pending": true
+}

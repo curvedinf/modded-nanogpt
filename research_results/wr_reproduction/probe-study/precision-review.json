@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-26T03:11:57.884294+00:00",
+  "status": "review_before_comparative_candidates",
+  "reason": "Early cross-architecture paired-block95% halfwidth exceeds0.01, unlike adjacent-update calibration.",
+  "placement_controller": "wr-probe-placements-baccb0b1.service",
+  "placement_controller_stopped": true,
+  "active_exempt_reference_continues": true,
+  "required_frozen_replication_still_authorized": true,
+  "next": "Assess margin-scale later observations and enlargement cost; no comparative placement launch until the precision limitation is resolved or explicitly escalated.",
+  "original_mlp_count": 1,
+  "additional_mlp_control_not_launched": true,
+  "constraints": "User requests exactly one instrumented MLP and frozen common probing; enlargement needs compatible reference curves, which cannot be fabricated from terminal geometry.",
+  "latest_utc": "2026-10-26T03:20:04.680494+00:00",
+  "unresolved_pairs": 9,
+  "full_validation_qualifying_result": "probe-ks3-experts-reference-20261026T030119-bb4dc7",
+  "required_replication_started": true
+}

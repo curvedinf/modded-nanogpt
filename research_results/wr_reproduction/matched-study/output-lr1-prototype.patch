@@ -1,0 +1,58 @@
+--- a/wr_reproduction/ks3_feedforward.py
++++ b/wr_reproduction/ks3_feedforward.py
+@@ -1,7 +1,7 @@
+ """KS3 at every dense and routed feedforward site, with explicit edge hybrids.
+ 
+ The dense KS3 projections retain the original mlp_bank ANVIL label, master
+-mantissas, alternating2x output LR, sharding/padding, and gradient accumulation.
++mantissas, default alternating2x output LR, sharding/padding, and gradient accumulation.
+ Hybrid MLPs use a separately padded original-width bank with identical policy.
+ """
+ import math
+@@ -110,6 +110,10 @@
+     geometry_multiplier=recipe.get('dense_geometry_lr_multiplier',geometry['lr_mul'])
+     if not math.isfinite(geometry_multiplier) or geometry_multiplier<0:
+         raise ValueError('Dense KS3 geometry LR multiplier must be finite and nonnegative')
++    output_multiplier=recipe.get('ks3_output_projection_lr_multiplier',2.)
++    if (isinstance(output_multiplier,bool) or not isinstance(output_multiplier,(int,float))
++            or not math.isfinite(output_multiplier) or output_multiplier<=0):
++        raise ValueError('KS3 output projection LR multiplier must be finite and positive')
+     decay_multiplier=recipe.get('ks3_projection_weight_decay_multiplier',1.)
+     if not math.isfinite(decay_multiplier) or decay_multiplier<0:
+         raise ValueError('KS3 projection weight decay multiplier must be finite and nonnegative')
+@@ -208,11 +212,20 @@
+                         dense_geometry_coefficient_gs32=True,
+                         routed_training_projection_gs32=routed_gs32,routed_validation_projection_gs32=True,
+                         dense_fp8_activation_scale_slots=scale_mapping if dense_precision=='fp8' else None)
+-    # Extend the original per-matrix output-LR/padding policy to the retained
+-    # bank. All existing labels execute the byte-for-byte original method.
++    # Original builder owns shapes, padding and all optimizer semantics.
++    # Explicit KS3-only output-rate ablations remap active output matrix rates
++    # before the original bank scalar staging. Retained MLPs keep original2x.
+     original_build=anvil.AnvilAndAdam._build_param_cfg
+     def build(optimizer,param,label):
+-        if label!='retained_mlp_bank':return original_build(optimizer,param,label)
++        if label!='retained_mlp_bank':
++            result=original_build(optimizer,param,label)
++            if label in ('mlp_bank','moe_bank'):
++                cfg=optimizer.param_cfgs[param]
++                assert cfg.per_matrix_lr_mul is not None
++                assert all(value in (0.,1.,2.) for value in cfg.per_matrix_lr_mul)
++                cfg.per_matrix_lr_mul=[output_multiplier if value==2. else value
++                                       for value in cfg.per_matrix_lr_mul]
++            return result
+         saved=optimizer.param_table['mlp_bank']
+         try:
+             optimizer.param_table['mlp_bank']=optimizer.param_table[label]
+@@ -245,7 +258,10 @@
+                                 shape_scale=shape_scale,base_lr=cfg.lr,weight_decay=cfg.weight_decay,
+                                 ks3_weight_decay_multiplier=decay_multiplier,
+                                 dense_weight_decay_multiplier=cfg.wd_mul,
+-                                routed_weight_decay_multiplier=routed[0].wd_mul)
++                                routed_weight_decay_multiplier=routed[0].wd_mul,
++                                ks3_output_projection_multiplier=output_multiplier,
++                                dense_per_matrix_lr_multipliers=list(cfg.per_matrix_lr_mul),
++                                routed_per_matrix_lr_multipliers=list(routed[0].per_matrix_lr_mul))
+         dense_geometry=[cfg for cfg in result.param_cfgs.values() if cfg.label=='ks3_dense_geometry']
+         assert len(dense_geometry)==1
+         geom=dense_geometry[0]

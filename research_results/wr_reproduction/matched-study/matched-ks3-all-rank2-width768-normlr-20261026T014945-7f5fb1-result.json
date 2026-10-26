@@ -1,0 +1,184 @@
+{
+  "run_id": "matched-ks3-all-rank2-width768-normlr-20261026T014945-7f5fb1",
+  "status": "correctness_passed",
+  "seed": 172,
+  "code_commit": "4540d42037c4f704294b14670ecd17a9de1bae88",
+  "recipe": {
+    "precision": "bf16",
+    "charts": 384,
+    "rank": 2,
+    "group_size": 32,
+    "nonlinearity": "fp16",
+    "geometry": {
+      "lr_mul": 0.125,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay": 0,
+      "raw_scale": 0.75,
+      "raw_shift": 0.0,
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "projection_accumulation": "fp32",
+    "training_gs32": true,
+    "weight_packing": "loop",
+    "geometry_backward_rows": 64,
+    "bf16_kernel_mode": "tuned",
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "ks3_all",
+    "name": "matched-ks3-all-rank2-width768-normlr",
+    "hypothesis": "Reduce both dense and routed rank-two KS3 projection width from 1024 to 768 features (384 charts of rank two). This distinct capacity interaction tests whether coupled chart geometry can retain useful expressivity with lower feedforward cost, following separate rank-one width768 and rank-two width1024 proxy-pruned trials. Normalize projection rates by sqrt(1024/768), preserving the baseline effective ANVIL rate and original output2x factors. Keep zero coefficients, geometry Adam0.125 with [.9,.99], GS32/BF16, MoE8top1, all shared sources and model-wide settings fixed. Independent dense and routed output/all-gradient numerical gates and actual graph warmup are mandatory; earlier proxy prunes provide no full-validation ranking.",
+    "dense_charts": 384,
+    "projection_lr_multiplier": 1.1547005383792515
+  },
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "validation": null,
+  "pruning": null,
+  "timing": null,
+  "correctness": {
+    "event": "kernel_correctness",
+    "passed": true,
+    "features": 768,
+    "rank": 2,
+    "charts": 384,
+    "checks": [
+      {
+        "branch": "dense",
+        "tokens": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "input_gradient": 0.0,
+          "up_gradient": 7.114921629636228e-08,
+          "down_gradient": 0.0,
+          "geometry_gradient": 3.7984480627528683e-07,
+          "post_gradient": 0.0
+        }
+      },
+      {
+        "branch": "dense",
+        "tokens": 257,
+        "relative_rms": {
+          "output": 0.0001489403803134337,
+          "input_gradient": 5.820392834721133e-05,
+          "up_gradient": 4.0469363739248365e-05,
+          "down_gradient": 9.83445715974085e-05,
+          "geometry_gradient": 6.64361834878946e-07,
+          "post_gradient": 0.0
+        }
+      },
+      {
+        "branch": "dense",
+        "tokens": 4096,
+        "relative_rms": {
+          "output": 0.00018483579333405942,
+          "input_gradient": 0.00012553695705719292,
+          "up_gradient": 0.00018301027012057602,
+          "down_gradient": 0.00027771375607699156,
+          "geometry_gradient": 8.542018576918053e-07,
+          "post_gradient": 0.0
+        }
+      },
+      {
+        "branch": "routed",
+        "tokens": 1,
+        "active_experts": 1,
+        "relative_rms": {
+          "output": 0.0,
+          "probabilities": 0.0,
+          "input_gradient": 0.0014053573831915855,
+          "router_gradient": 0.0,
+          "post_gradient": 0.0,
+          "geometry_gradient": 3.8921703549021913e-07,
+          "up_gradient": 0.0,
+          "down_gradient": 0.0
+        },
+        "unrelated_gradient_bank_unchanged": true
+      },
+      {
+        "branch": "routed",
+        "tokens": 257,
+        "active_experts": 1,
+        "relative_rms": {
+          "output": 0.00020244861661922187,
+          "probabilities": 0.0,
+          "input_gradient": 0.00011112293577753007,
+          "router_gradient": 0.00013513928570318967,
+          "post_gradient": 0.0,
+          "geometry_gradient": 7.190601536422037e-07,
+          "up_gradient": 7.522312080254778e-05,
+          "down_gradient": 0.00015904988686088473
+        },
+        "unrelated_gradient_bank_unchanged": true
+      },
+      {
+        "branch": "routed",
+        "tokens": 4096,
+        "active_experts": 8,
+        "relative_rms": {
+          "output": 0.00013741309521719813,
+          "probabilities": 0.0,
+          "input_gradient": 0.0016537599731236696,
+          "router_gradient": 0.0006764059653505683,
+          "post_gradient": 0.0,
+          "geometry_gradient": 5.988168254589255e-07,
+          "up_gradient": 0.00011740511399693787,
+          "down_gradient": 0.00012401257117744535
+        },
+        "unrelated_gradient_bank_unchanged": true
+      }
+    ],
+    "cache_checks": [
+      {
+        "training": true,
+        "routed_training_gs32": true,
+        "cache_gs32": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "training": false,
+        "routed_training_gs32": true,
+        "cache_gs32": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "training": true,
+        "routed_training_gs32": true,
+        "cache_gs32": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "captured_replay": true,
+        "cache_bytes_exact": true
+      },
+      {
+        "captured_replay": true,
+        "cache_bytes_exact": true
+      }
+    ],
+    "relative_rms_tolerance": 0.015,
+    "shared_backend_modified": false,
+    "validation": false,
+    "oracle": "Independent Torch GS32/products/top1 routing, pinned nonlinear forward, independent rank-two smooth STE and original FP32 routed scalar derivatives; dense and routed all-gradient checks plus exact cache/graph replay"
+  },
+  "exit_code": 0,
+  "events_sha256": "ca02449f41cd164658eea7faf1c39953a082d4c0f6511d6c2a13c03e6f9e8954",
+  "completed_utc": "2026-10-26T01:50:08.731279+00:00",
+  "qualifies": false
+}

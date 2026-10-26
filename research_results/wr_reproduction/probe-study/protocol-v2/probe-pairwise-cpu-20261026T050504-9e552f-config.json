@@ -1,0 +1,24 @@
+{
+  "run_id": "probe-pairwise-cpu-20261026T050504-9e552f",
+  "kind": "cpu_mathematical_gate",
+  "seed": 601,
+  "device": "cpu",
+  "directory": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-pairwise-cpu-20261026T050504-9e552f",
+  "command": [
+    "/root/modded-nanogpt/.venv-mi300/bin/python",
+    "-m",
+    "ks3_research.check_pairwise_reference",
+    "--out",
+    "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-pairwise-cpu-20261026T050504-9e552f/result.json"
+  ],
+  "code_commit": "e36d46ecce913939456fbf8a2c468c2bbbd3fd18",
+  "source_hashes": {
+    "ks3_research/pairwise_reference.py": "46538205a52fa2f25709ec795dc96637e8c8f36da14b76bc48ba25716d3973c1",
+    "ks3_research/check_pairwise_reference.py": "317bb50de0bde785c1ab6304a7138c6def02a040520c83ed9065c3217ec0b700",
+    "ks3_research/vendor/ks3_reference.py": "81efd8fd89bd37a6dd7e75a9101fc67b1408a9ee16377a841a0e1f729c471080"
+  },
+  "created_utc": "2026-10-26T05:05:04.464709+00:00",
+  "continuous_from_initialization": false,
+  "hypothesis": "Retain independent rank-one paths and add bounded adjacent-coordinate products with zero-initialized coefficients; verify math before GPU implementation.",
+  "not_in_active_training_source": true
+}

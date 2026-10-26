@@ -1,0 +1,45 @@
+{
+  "precision": "bf16",
+  "charts": 1024,
+  "rank": 1,
+  "group_size": 32,
+  "nonlinearity": "fp16",
+  "geometry": {
+    "lr_mul": 0.125,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "raw_scale": 0.75,
+    "raw_shift": 0.0,
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "projection_accumulation": "fp32",
+  "training_gs32": true,
+  "weight_packing": "loop",
+  "geometry_backward_rows": 64,
+  "bf16_kernel_mode": "tuned",
+  "shared_fp8_gemm_tuning": "mi300-v1",
+  "shared_fp8_amax": "atomic",
+  "shared_fp8_decode": "scalar",
+  "shared_fp8_head_tuning": "legacy",
+  "shared_fp8_pipeline_tuning": "legacy",
+  "validation_window_policy": "accepted-control",
+  "validation_precision": "bf16",
+  "max_train_seconds": 900.0,
+  "validation_setup_reserve_seconds": 2.0,
+  "model_wide_hyperparameters": "original-pr393",
+  "architecture": "ks3_all",
+  "name": "matched-ks3-all-routedproj125",
+  "hypothesis": "Raise the ANVIL projection learning rate by25 percent only for the forty routed KS3 experts, explicitly preserving the five dense KS3 projection rates. The earlier global1.25 arm changed both branches and was training-proxy pruned; branch isolation tests whether expert projection adaptation benefits from the higher rate without altering dense learning. Keep all45 feedforward branches KS3, rank one and width1024, geometry Adam0.125 and zero coefficient initialization, BF16/GS32, decay, MoE8top1, and all shared/model-wide settings fixed. No full-validation advantage is inferred from earlier proxy curves.",
+  "projection_lr_multiplier": 1.25,
+  "dense_projection_lr_multiplier": 1.0
+}

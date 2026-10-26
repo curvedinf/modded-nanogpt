@@ -1,0 +1,71 @@
+{
+  "event": "pairwise_cpu_mathematical_gate",
+  "passed": true,
+  "seed": 601,
+  "device": "cpu",
+  "seconds": 0.29198033901047893,
+  "checks": {
+    "pair_output_max_error": 0.0,
+    "pair_coordinate_vjp_max_error": 1.734723475976807e-18,
+    "pair_coefficient_vjp_max_error": 6.938893903907228e-18,
+    "finite_difference_gradcheck": true,
+    "finite_difference_gradgradcheck": true,
+    "mixed_derivative_max_error": 0.0,
+    "nonzero_cross_derivative": -0.00946919188035134,
+    "maximum_bounded_added_feature": 0.75,
+    "zero_pair_initial_output_bitwise_equal": true,
+    "zero_pair_existing_gradient_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "zero_pair_new_coefficient_gradient_max_abs": 0.007833474602526164,
+    "zero_pair_cross_derivative_zero": true,
+    "nonzero_pair_block_output_max_error": 0.0,
+    "nonzero_pair_input_weight_geometry_gradient_max_errors": [
+      0.0,
+      4.336808689942018e-19,
+      0.0,
+      0.0,
+      1.3010426069826053e-18
+    ],
+    "original_width_checks": [
+      {
+        "width": 1024,
+        "shape_preserved": [
+          3,
+          1024
+        ],
+        "zero_initial_function_exact": true
+      },
+      {
+        "width": 2816,
+        "shape_preserved": [
+          3,
+          2816
+        ],
+        "zero_initial_function_exact": true
+      }
+    ]
+  },
+  "source_hashes": {
+    "/root/modded-nanogpt/ks3_research/check_pairwise_reference.py": "317bb50de0bde785c1ab6304a7138c6def02a040520c83ed9065c3217ec0b700",
+    "/root/modded-nanogpt/ks3_research/pairwise_reference.py": "46538205a52fa2f25709ec795dc96637e8c8f36da14b76bc48ba25716d3973c1",
+    "/root/modded-nanogpt/ks3_research/vendor/ks3_reference.py": "81efd8fd89bd37a6dd7e75a9101fc67b1408a9ee16377a841a0e1f729c471080"
+  },
+  "initial_pair_coefficients": 0,
+  "independent_rank_one_pathways_retained": true,
+  "coordinate_averaging": false,
+  "gpu_kernel_tested": false,
+  "quantized_ste_tested": false,
+  "convergence_claim": false,
+  "remaining_gates": [
+    "GS32/FP16 GPU forward and all-gradient checks",
+    "actual-model graph execution after five isolated placement trials"
+  ],
+  "run_id": "probe-pairwise-cpu-20261026T050504-9e552f",
+  "code_commit": "e36d46ecce913939456fbf8a2c468c2bbbd3fd18",
+  "exit_code": 0,
+  "completed_utc": "2026-10-26T05:05:06.216827+00:00"
+}

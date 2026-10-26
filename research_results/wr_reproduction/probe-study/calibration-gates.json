@@ -1,0 +1,111 @@
+{
+  "status": "passed",
+  "utc": "2026-10-26T02:43:45.240671+00:00",
+  "architectures": {
+    "mlp": {
+      "run_id": "probe-mlp-calibration-20261026T023438-f8d818",
+      "calibration": {
+        "passed": true,
+        "mode": "probe",
+        "updates": 4,
+        "all_original_logical_ranks": 8,
+        "probe_seconds": [
+          0.16338713798904791,
+          0.15766420899308287,
+          0.1612417240103241
+        ],
+        "paired_adjacent_update": {
+          "available": true,
+          "blocks": 8,
+          "mean_difference": -0.1340329647064209,
+          "standard_error": 0.0017339583536754148,
+          "normal95_halfwidth": 0.0033985583732038128,
+          "resolves_001": true,
+          "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+        },
+        "full_convergence_verified": false
+      },
+      "state_restoration": {
+        "checked_entries": 386,
+        "changed": [],
+        "passed": true
+      },
+      "continuation": {
+        "passed": true,
+        "same_checkpoint": true,
+        "same_eight_logical_microbatches": true,
+        "baseline_loss": 15.067641258239746,
+        "with_probe_loss": 15.067641258239746,
+        "maximum_parameter_relative_rms": 0.0,
+        "all_parameters_bitwise_equal": true
+      },
+      "paired_student_uncertainty": {
+        "available": true,
+        "blocks": 8,
+        "mean_difference": -0.1340329647064209,
+        "standard_error": 0.0017339583536754148,
+        "normal95_halfwidth": 0.0033985583732038128,
+        "student95_halfwidth": 0.004100811506442356,
+        "resolves_001": true,
+        "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+      }
+    },
+    "ks3_experts": {
+      "run_id": "probe-ks3-experts-calibration-20261026T023901-ac2b88",
+      "calibration": {
+        "passed": true,
+        "mode": "probe",
+        "updates": 4,
+        "all_original_logical_ranks": 8,
+        "probe_seconds": [
+          0.16944215900730342,
+          0.16393798601347953,
+          0.16540958598488942
+        ],
+        "paired_adjacent_update": {
+          "available": true,
+          "blocks": 8,
+          "mean_difference": -0.1339247226715088,
+          "standard_error": 0.0017051384916856645,
+          "normal95_halfwidth": 0.0033420714437039025,
+          "student95_halfwidth": 0.004032652532836597,
+          "resolves_001": true,
+          "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+        },
+        "full_convergence_verified": false
+      },
+      "state_restoration": {
+        "checked_entries": 416,
+        "changed": [],
+        "passed": true
+      },
+      "continuation": {
+        "passed": true,
+        "same_checkpoint": true,
+        "same_eight_logical_microbatches": true,
+        "baseline_loss": 15.067480087280273,
+        "with_probe_loss": 15.067480087280273,
+        "maximum_parameter_relative_rms": 0.0,
+        "all_parameters_bitwise_equal": true
+      },
+      "paired_student_uncertainty": {
+        "available": true,
+        "blocks": 8,
+        "mean_difference": -0.1339247226715088,
+        "standard_error": 0.0017051384916856645,
+        "normal95_halfwidth": 0.0033420714437039025,
+        "student95_halfwidth": 0.004032652532836597,
+        "resolves_001": true,
+        "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+      }
+    }
+  },
+  "cpu_policy_tests_passed": 9,
+  "process_group_stop_test_passed": true,
+  "shared_backend_changes": [],
+  "sparse_table_check": "Readonly130GB table pointer/version and1024 integer-selected rows; other model/optimizer/rank tensors bytewise audited",
+  "precision_limit": "Early adjacent checkpoints and initialized-seed architecture pair only; later paired uncertainty is logged for every comparison. Adjacent text blocks can correlate; no universal0.01 precision guarantee.",
+  "clock_audit": "Continuous timer includes probes, drain/setup/scoring/restoration/screening and diagnostic readbacks. Probe start and synchronized weight-checkpoint times both recorded.",
+  "estimated_warm_probe_overhead_fraction": 0.0028333333333333335,
+  "conservative_cold_plus_warm_overhead_fraction": 0.007833333333333335
+}

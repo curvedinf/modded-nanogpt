@@ -1,0 +1,78 @@
+{
+  "utc": "2026-10-26T04:58:18.841387+00:00",
+  "protocol": "protocol-v2",
+  "status": "two_instrumented_references_complete_required_verification_running",
+  "controls_frozen": true,
+  "one_mlp_seed_intentional": true,
+  "arms": {
+    "mlp": {
+      "run_id": "probe-mlp-control-20261026T042221-0121f6",
+      "seed": 169,
+      "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+      "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+      "full_validation_loss": 3.3339109420776367,
+      "full_validation_tokens": 10485760,
+      "training_seconds": 898.1670716530061,
+      "step": 969,
+      "probe_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "probe_count": 7,
+      "probe_seconds": 18.09287875899463,
+      "total_instrumentation_seconds": 18.92067823203979,
+      "total_instrumentation_fraction": 0.021065878308383947,
+      "reserved_confirmation_loss": 3.280280850827694,
+      "reserved_confirmation_signature_hash": "13000afd8ff073a8204c0c186939a584d970cff2033fe723e1cb0132e4749737",
+      "qualifies": false
+    },
+    "ks3_experts": {
+      "run_id": "probe-ks3-experts-reference-20261026T043959-e5168d",
+      "seed": 169,
+      "code_commit": "ed40bae28e01c78801dbffacb057aa7bc76f1e58",
+      "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+      "full_validation_loss": 3.3049890995025635,
+      "full_validation_tokens": 10485760,
+      "training_seconds": 897.7509211610013,
+      "step": 1009,
+      "probe_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "probe_count": 7,
+      "probe_seconds": 18.79969219400664,
+      "total_instrumentation_seconds": 20.734063127049012,
+      "total_instrumentation_fraction": 0.02309556318832292,
+      "reserved_confirmation_loss": 3.2497796416282654,
+      "reserved_confirmation_signature_hash": "13000afd8ff073a8204c0c186939a584d970cff2033fe723e1cb0132e4749737",
+      "qualifies": true
+    }
+  },
+  "full_validation_ks3_minus_mlp": -0.028921842575073242,
+  "reserved_confirmation": {
+    "ks3_minus_mlp": -0.03050120919942856,
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 32,
+      "mean_difference": -0.03050120919942856,
+      "standard_error": 0.0013679647034716693,
+      "normal95_halfwidth": 0.002681210818804472,
+      "student95_halfwidth": 0.0027933839244891484,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "tuning_use_forbidden": true,
+    "offset": 16777216,
+    "tokens": 262144
+  },
+  "probe_precision": {
+    "comparable_observations": 7,
+    "maximum_student95_halfwidth8192": 0.007261596862072741,
+    "maximum_student95_halfwidth32768": 0.00827820221114945,
+    "all_observed_comparisons_resolve_001": true,
+    "sampling_uncertainty_not_runtime_nondeterminism": true,
+    "limitation": "Finite measured pair; adjacent blocks may remain correlated and verification-seed comparisons remain required."
+  },
+  "required_fresh_verification_seeds": [
+    369,
+    370,
+    371
+  ],
+  "decision": "Complete three fresh unpruned frozen seeds. Then review actual overhead/paired precision across the cohort before the five isolated dense replacements. No extra MLP cohort.",
+  "historical_results_separate": true,
+  "gradient_diagnostic_limitation": "gradient-diagnostic-availability-audit.json"
+}

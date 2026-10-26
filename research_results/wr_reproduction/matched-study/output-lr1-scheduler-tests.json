@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-26T01:27:45.118167+00:00",
+  "passed": true,
+  "tests": 9,
+  "gpu_initialized": false,
+  "test_log": {
+    "path": "logs/wr-reproduction/matched-study/staging/output-projection-lr/scheduler-tests.log",
+    "sha256": "55df81c03b1fc09a739803668e8b10b1a1cd87ac7e716666dddb1c968f87bb76"
+  },
+  "test_source": {
+    "path": "test_wr_matched_output_lr.py",
+    "sha256": "7f65512ec9ef34b0658f19ec4a463a6f92683a8c369a63c9e9d0406faae72b43"
+  },
+  "scheduler": {
+    "path": "run_wr_matched_output_lr.py",
+    "sha256": "3e96b1e5b5ee7e415bffdc8554930e2e41375a181048652e349988664b4e359b"
+  }
+}

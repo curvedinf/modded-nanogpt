@@ -1,0 +1,209 @@
+{
+  "utc": "2026-10-25T23:45:29.040906+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_study": "pending-routed1280-normalized-rate.json",
+  "wait_for_run": "matched-ks3-all-routed1280-normlr-20261025T233951-df2b3c",
+  "results_name": "ks3-routedgeom025-results.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_routedgeom025.json",
+      "recipe_sha256": "ddb6041345065c1f87f4b798421aea8f6c77f1d2204a12528a1ef25aee7a2004",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Double geometry Adam learning rate only for routed KS3 experts, from multiplier0.125 to0.25, explicitly retaining dense KS3 geometry multiplier0.125. Complete branch isolation after global0.25 and dense-only0.25 were training-proxy pruned: test whether expert nonlinear functions benefit from faster adaptation without doubling the dense geometry rate. Keep all45 feedforward sites KS3, dense/routed width1024, rank one, zero coefficient initialization, BF16/GS32, projection rates and decay, MoE8top1, and every shared/model-wide setting fixed. Earlier proxy results are not full-validation evidence.",
+      "changes": {
+        "geometry.lr_mul": {
+          "before": 0.125,
+          "after": 0.25
+        },
+        "dense_geometry_lr_multiplier": {
+          "before": 0.125,
+          "after": 0.125
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/routedgeom025-cpu-model-audit.json",
+        "sha256": "591adfb8f3378b7e4c29be8556fd8cb066b876c26922e6e27b395fba27278fa5"
+      },
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/routedgeom025-cpu-optimizer-audit.json",
+        "sha256": "1d7be50c32d0fcbdfcddccde7939ec6247c7ea38ccd6bd929e511ac703197234"
+      },
+      "correctness_required": false,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "KS3 routed geometry optimizer multiplier only. Existing forward/all-gradient numerical oracles apply to unchanged kernels, shapes, initialization and precision. Full-model CPU and original-ANVIL meta audits preserve all shared policies, projection rates/output2x/padding and dense geometry rate. Actual graph warmup remains mandatory.",
+      "run_id": "matched-ks3-all-routedgeom025-20261025T234833-fdac5e",
+      "result": {
+        "run_id": "matched-ks3-all-routedgeom025-20261025T234833-fdac5e",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "87f1fd05d96f77301b74b956a5f2eac77471aef1",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.25,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-routedgeom025",
+          "hypothesis": "Double geometry Adam learning rate only for routed KS3 experts, from multiplier0.125 to0.25, explicitly retaining dense KS3 geometry multiplier0.125. Complete branch isolation after global0.25 and dense-only0.25 were training-proxy pruned: test whether expert nonlinear functions benefit from faster adaptation without doubling the dense geometry rate. Keep all45 feedforward sites KS3, dense/routed width1024, rank one, zero coefficient initialization, BF16/GS32, projection rates and decay, MoE8top1, and every shared/model-wide setting fixed. Earlier proxy results are not full-validation evidence.",
+          "dense_geometry_lr_multiplier": 0.125
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 4.8174028396606445,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 1,
+            "attention_windows": [
+              384,
+              896
+            ],
+            "mtp": [
+              1.0,
+              0.14126984775066376
+            ],
+            "prefix": 0.10000000149011612,
+            "candidates": 10240,
+            "batch_tokens": 262144,
+            "global_batch_tokens": 262144,
+            "logical_batch_tokens": 32768,
+            "logical_ranks": 8,
+            "train_max_seq_len": 2048,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.0112600326538085,
+          "reference_run_id": "matched-ks3-all-warpplus0025-20261025T205832-ce3439",
+          "reference_wall_seconds": 261.8582308389887,
+          "reference_age_seconds": 1.1748542450368404,
+          "reference_objective": 4.806142807006836,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 1,
+            "attention_windows": [
+              384,
+              896
+            ],
+            "mtp": [
+              1.0,
+              0.14126984775066376
+            ],
+            "prefix": 0.10000000149011612,
+            "candidates": 10240,
+            "batch_tokens": 262144,
+            "global_batch_tokens": 262144,
+            "logical_batch_tokens": 32768,
+            "logical_ranks": 8,
+            "train_max_seq_len": 2048,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 507,
+          "comparable_runs": 20,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-warpplus0025-20261025T205832-ce3439/events.jsonl",
+            "sha256": "0440c1a9dfd80ddc31ce12989099301597289d76c8b09bcf87bbc371fb4f326c",
+            "line": 541,
+            "row_sha256": "3d2e855213686e57616fd85a757dc2d446f2b9553a5ccba0c06458a66341b738"
+          },
+          "step": 507,
+          "train_seconds": 263.0330850840255,
+          "reference_snapshot_sha256": "ae4a56128a61efc9e29db20864f018331e4a93008e6c3dc4a3bb7ba09ee8a954",
+          "utc": "2026-10-25T23:55:05.464667+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-routedgeom025-20261025T234833-fdac5e",
+          "seed": 168,
+          "code_commit": "87f1fd05d96f77301b74b956a5f2eac77471aef1",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "90f1b65d9a0f5eccec312db20ab76dafcb384b05b2f5180f73809bad8b377c61",
+        "completed_utc": "2026-10-25T23:55:07.663269+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "unit": "wr-matched-routedgeom025-ordered.service",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "a51be7013b4393887109a76c836bd2da6b336d09877160f27b9419ade5fbe955",
+    "code_commit": "87f1fd05d96f77301b74b956a5f2eac77471aef1"
+  },
+  "completed_utc": "2026-10-25T23:55:07.666785+00:00"
+}

@@ -1,0 +1,9 @@
+{
+  "utc": "2026-10-26T03:57:14.174788+00:00",
+  "draft_signature_gate": "Final screening geometry/text must match measured calibration; cadence and fresh terminal interval may be selected before freeze.",
+  "draft_cpu_policy_tests": 11,
+  "final_reserved_offset": 16777216,
+  "reserved_tokens": 262144,
+  "reason": "Fresh confirmation interval for corrected protocol, disjoint from V1 holdout, screening and full-validation text.",
+  "screening_reserved_text_excluded": true
+}

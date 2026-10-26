@@ -1,0 +1,30 @@
+{
+  "run_id": "probe-mlp-calibration-20261026T022716-850917",
+  "status": "error",
+  "seed": 169,
+  "code_commit": "3283741f3d5bdbd2a1d7b52f159873469106bfc4",
+  "recipe": {
+    "shared_fp8_gemm_tuning": "mi300-v1",
+    "shared_fp8_amax": "atomic",
+    "shared_fp8_decode": "scalar",
+    "shared_fp8_head_tuning": "legacy",
+    "shared_fp8_pipeline_tuning": "legacy",
+    "validation_window_policy": "accepted-control",
+    "validation_precision": "bf16",
+    "max_train_seconds": 900.0,
+    "validation_setup_reserve_seconds": 2.0,
+    "model_wide_hyperparameters": "original-pr393",
+    "architecture": "mlp",
+    "name": "probe-mlp",
+    "hypothesis": "Acquire one exempt fixed-probe reference under the frozen shared original-PR393 recipe."
+  },
+  "backend_hash": "provisional-calibration-not-screenable",
+  "validation": null,
+  "pruning": null,
+  "calibration": null,
+  "exit_code": -9,
+  "reserved_confirmation": null,
+  "events_sha256": "7ff9b90f18afb9a5b03c7e317c75b8efea00133b6b20bba998a139398e1bc616",
+  "completed_utc": "2026-10-26T02:30:46.598586+00:00",
+  "qualifies": false
+}

@@ -1,0 +1,43 @@
+{
+  "utc": "2026-10-25T22:18:41.005820+00:00",
+  "status": "prepared",
+  "wait_for_study": "pending-dense-geometry025.json",
+  "results_name": "ks3-width512-normalized-rate-results.json",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_width512_normlr.json",
+      "recipe_sha256": "31828ceb166775b3a9c862b33b3b693e246e7f109b201d473d8b690a2e2f31e3",
+      "seed": 168,
+      "status": "pending",
+      "hypothesis": "Reduce every dense and routed KS3 projection width to 512 at rank one, testing lower feedforward capacity and compute cost versus elapsed time. The original ANVIL shape factor is floored at 1 for widths below 768, so use sqrt(1024/768), not sqrt(1024/512), to preserve the baseline effective projection multiplier. Retain zero geometry coefficients, geometry Adam 0.125, BF16/GS32, MoE 8 top1, all shared components and model-wide settings. Require the independent 512-wide output/gradient oracle and actual full graph warmup before discovery.",
+      "changes": {
+        "charts": {
+          "before": 1024,
+          "after": 512
+        },
+        "dense_charts": {
+          "before": 1024,
+          "after": 512
+        },
+        "projection_lr_multiplier": {
+          "before": 1.0,
+          "after": 1.1547005383792515
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/width512-normalized-cpu-model-audit.json",
+        "sha256": "f0ce58036cd049e21fdfb59d2e2f1786f21dfc0b7714d5880b89aa9a68a17275"
+      },
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/width512-normalized-cpu-optimizer-audit.json",
+        "sha256": "261ff0fd4522cad522ad0b8848c2e2c01858d7dcef9c18ef6dbf2db57227757c"
+      },
+      "correctness_required": true,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "New 512-wide KS3 tensor shapes; independent outputs and all gradients before discovery. Existing kernels, optimizer and cache algorithms unchanged."
+    }
+  ],
+  "decision": "Wait for the dense-only geometry 0.25 trial and any required three-seed verification; then test the smaller 512-wide capacity with normalized effective ANVIL rates.",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24"
+}

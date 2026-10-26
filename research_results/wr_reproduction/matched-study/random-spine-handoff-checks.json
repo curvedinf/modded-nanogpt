@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-25T23:01:45.666514+00:00",
+  "passed": true,
+  "test_count": 7,
+  "command": ".venv-mi300/bin/python -m unittest test_wr_matched_ks3_random_spine -v",
+  "tested_gates": [
+    "new STOP prevents work",
+    "successful predecessor required",
+    "frozen shared fence",
+    "KS3-only source and recipe scope",
+    "pinned CPU evidence and dependencies",
+    "unfinished verification blocks deployment"
+  ],
+  "patch_check_passed": true,
+  "scheduler_sha256": "6c141bba988b935a5f2531e0b293192fb8483ace6ea3586e0275f694b104e2de",
+  "test_sha256": "3b747d4c25e21e8adef5f6f550950ac6a53e85418b7201f329e414d0bc708d9a",
+  "cpu_auditor_sha256": "847617767c6f6aac2f613176a6e90c85729ea89c6367a7b2cc6b4d96ed0cbfcf"
+}

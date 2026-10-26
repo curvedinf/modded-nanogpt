@@ -1,0 +1,201 @@
+{
+  "utc": "2026-10-25T23:32:23.554181+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_study": "pending-routed768-corrected-oracle.json",
+  "wait_for_run": "matched-ks3-all-routed768-normlr-20261025T232208-6a4fef",
+  "results_name": "ks3-random-spine001-results.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_random_spine001.json",
+      "recipe_sha256": "a027bdf63f9bd80b04f6eec39d8cc5b09bc17da8cf09a66eea2ff992e4329f0a",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Reduce seed-local randomized KS3 spine initialization from normal(0,0.05) to normal(0,0.01). Test whether weaker initial chart diversity retains nonlinear differentiation without the larger perturbation of the proxy-pruned 0.05 setting. The scale is comparable to coefficients observed descriptively in the baseline training checkpoint, which is not validation evidence. Keep all 45 feedforward branches KS3, widths1024, rank one, BF16/GS32, original geometry/projection learning rates and decay, raw warp scale0.75/shift0, MoE8top1, and every shared/model-wide setting unchanged.",
+      "changes": {
+        "geometry.coefficient_init_std": {
+          "before": 0.05,
+          "after": 0.01
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/random-spine001-cpu-model-audit.json",
+        "sha256": "41018a544158e9b86804e3e6db24b7ec2fa82f17dd9ad4950ecda3f1ad4dc326"
+      },
+      "correctness_required": false,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "Initialization magnitude only. Existing independent nonzero-coefficient forward/gradient oracles cover unchanged arithmetic. New full-model CPU audit verifies exact seeded initialization, fivefold smaller coefficient RMS, unchanged warp values, original projections/router/nonfeedforward values, global RNG, ANVIL shape/output-rate/padding policy. Mandatory actual graph warmup precedes training.",
+      "run_id": "matched-ks3-all-random-spine001-20261025T233241-ecddfb",
+      "result": {
+        "run_id": "matched-ks3-all-random-spine001-20261025T233241-ecddfb",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "80637c99c4272279e7476d57ff47c7173d03c127",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "coefficient_init_std": 0.01
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-random-spine001",
+          "hypothesis": "Reduce seed-local randomized KS3 spine initialization from normal(0,0.05) to normal(0,0.01). Test whether weaker initial chart diversity retains nonlinear differentiation without the larger perturbation of the proxy-pruned 0.05 setting. The scale is comparable to coefficients observed descriptively in the baseline training checkpoint, which is not validation evidence. Keep all 45 feedforward branches KS3, widths1024, rank one, BF16/GS32, original geometry/projection learning rates and decay, raw warp scale0.75/shift0, MoE8top1, and every shared/model-wide setting unchanged."
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 4.471463203430176,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 1,
+            "attention_windows": [
+              384,
+              896
+            ],
+            "mtp": [
+              1.0,
+              0.11269841343164444
+            ],
+            "prefix": 0.05000000074505806,
+            "candidates": 10240,
+            "batch_tokens": 262144,
+            "global_batch_tokens": 262144,
+            "logical_batch_tokens": 32768,
+            "logical_ranks": 8,
+            "train_max_seq_len": 2048,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.015398979187012,
+          "reference_run_id": "matched-ks3-all-geometry00625-20261025T192621-0bf0aa",
+          "reference_wall_seconds": 272.5968502020114,
+          "reference_age_seconds": 3.040025758993579,
+          "reference_objective": 4.456064224243164,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 1,
+            "attention_windows": [
+              384,
+              896
+            ],
+            "mtp": [
+              1.0,
+              0.11269841343164444
+            ],
+            "prefix": 0.05000000074505806,
+            "candidates": 10240,
+            "batch_tokens": 262144,
+            "global_batch_tokens": 262144,
+            "logical_batch_tokens": 32768,
+            "logical_ranks": 8,
+            "train_max_seq_len": 2048,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 525,
+          "comparable_runs": 17,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-geometry00625-20261025T192621-0bf0aa/events.jsonl",
+            "sha256": "596988559ecd6857cb12f4f57a51454fd6b92559d8803eeacf3b895f9fc2f5db",
+            "line": 559,
+            "row_sha256": "8495ae9f1e356edb47102eb69a0043357b69bdd30142b0d133112dff5ca60b3a"
+          },
+          "step": 525,
+          "train_seconds": 275.636875961005,
+          "reference_snapshot_sha256": "ad665bd3dd630a26d1af7b8f679afc139d80a126cafadd8c964fe4c68be9dae8",
+          "utc": "2026-10-25T23:39:24.300289+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-random-spine001-20261025T233241-ecddfb",
+          "seed": 168,
+          "code_commit": "80637c99c4272279e7476d57ff47c7173d03c127",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "032453f5765d2a18c2ce80954923f5a5d70ecbb4aace966022231bdbdafd56b0",
+        "completed_utc": "2026-10-25T23:39:26.214097+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "unit": "wr-matched-random-spine001-ordered.service",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "a51be7013b4393887109a76c836bd2da6b336d09877160f27b9419ade5fbe955",
+    "code_commit": "80637c99c4272279e7476d57ff47c7173d03c127"
+  },
+  "completed_utc": "2026-10-25T23:39:26.217139+00:00"
+}

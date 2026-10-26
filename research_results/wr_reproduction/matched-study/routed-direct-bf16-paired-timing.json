@@ -1,0 +1,38 @@
+{
+  "utc": "2026-10-25T22:39:04.728718+00:00",
+  "timing_gate": {
+    "passed": true,
+    "baseline": {
+      "first100_seconds": 35.65725221397588,
+      "updates25_to100_seconds": 26.625352417991962
+    },
+    "candidate": {
+      "first100_seconds": 35.554280238982756,
+      "updates25_to100_seconds": 26.547882482991554
+    },
+    "candidate_over_baseline": {
+      "first100_seconds": 0.9971121730195249,
+      "updates25_to100_seconds": 0.9970903695927023
+    },
+    "validation": false,
+    "objective_losses_not_compared": true,
+    "protocol": "Both use the same existing100-update timing loop, seed168 and source, outside the900s discovery/reference set",
+    "decision": "Proceed to fenced900s discovery"
+  },
+  "runs": {
+    "gs32_timing": {
+      "run_id": "matched-ks3-all-20261025T223218-c0122f",
+      "code_commit": "220a9007f3e3dfee14b47067570daec58f674048",
+      "events_sha256": "ac24d8ed11e64937332070d7f44447fae1129d77d4dc10e9df0be3e53936e782"
+    },
+    "direct_timing": {
+      "run_id": "matched-ks3-all-routed-direct-bf16-20261025T223503-c2327d",
+      "code_commit": "d604b970b4c5c0796c59a54fbfe5916350679398",
+      "events_sha256": "1ea2cb4762ffa74d86fc1214c563b0152b383cc033422462bce662f918b82c3e"
+    }
+  },
+  "full_validation_measured": false,
+  "matched_source_hashes": true,
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "decision": "Single paired100-update speed gate passed; launch one routed-direct BF16 discovery. The small measured timing difference is not a robust intrinsic speedup claim. Timing observations remain excluded from convergence/pruning references."
+}

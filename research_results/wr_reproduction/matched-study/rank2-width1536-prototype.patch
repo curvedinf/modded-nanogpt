@@ -1,0 +1,13 @@
+--- a/wr_reproduction/ks3_moe.py
++++ b/wr_reproduction/ks3_moe.py
+@@ -298,8 +298,8 @@
+     from track_1_short.model import gpt as gpt_module,moe as moe_module
+     global KS3_RANK
+     if subspace_rank not in (1,2,4):raise ValueError('Unsupported KS3 rank')
+-    if subspace_rank!=1 and (precision!='bf16' or charts*subspace_rank!=1024 or bf16_kernel_mode!='tuned'):
+-        raise ValueError('Higher rank requires1024 projection features and tuned BF16 training')
++    if subspace_rank!=1 and (precision!='bf16' or not (charts*subspace_rank==1024 or (subspace_rank==2 and charts==768)) or bf16_kernel_mode!='tuned'):
++        raise ValueError('Higher rank requires1024 features or rank-two1536, and tuned BF16 training')
+     if prepared_native_weights and (precision!='fp8' or charts not in (1024,1536) or subspace_rank!=1 or not batched_weight_pack):
+         raise ValueError('Prepared native weights require1024/1536 rank-one FP8 with batched packing')
+     if prepared_native_activations and not prepared_native_weights:raise ValueError('Prepared activations require prepared weights')

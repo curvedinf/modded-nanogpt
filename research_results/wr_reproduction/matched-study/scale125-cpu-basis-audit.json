@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-25T22:53:02.113544+00:00",
+  "passed": true,
+  "gpu_initialized": false,
+  "recipe_path": "configs/wr_reproduction/matched_ks3_all_scale125.json",
+  "recipe_sha256": "337a7e841172a5b8cc05e31f43dba3287665dda6580c4083edb18574c34496ab",
+  "baseline_recipe_sha256": "a84eb1c0ccffd8e009de25c8ea3e68333d4b8e35cee82d3c9b4f80769df55df3",
+  "auditor_sha256": "f37c25a7425095830707b3b0b8048fc45d42fcad09d68b04726b9de0c1b8fb28",
+  "reference_sha256": "81efd8fd89bd37a6dd7e75a9101fc67b1408a9ee16377a841a0e1f729c471080",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "only_recipe_change": "geometry.raw_scale: 0.75 -> 1.25",
+  "initial_function_identical": true,
+  "initial_input_gradient_identical": true,
+  "initial_raw_scale_and_shift_gradients_zero": true,
+  "initial_hermite_coefficient_gradients_identical": true,
+  "warp_coefficient_gradients_independently_verified": true,
+  "warp_coefficient_gradient_relative_change": 0.19204820779203133,
+  "input_sha256": "5f0955a391eac73ee7b8039ae93cf5c7e9b38bea18716ba18fea8e1ddaf1d6be",
+  "cotangent_sha256": "afe19db5a3d116c7e817c87b0f6af25dcdd9b7f165f8fdbc2102c93dffe53873",
+  "validation": false,
+  "scope": "CPU mathematical initialization audit; actual full-model graph warmup remains required."
+}

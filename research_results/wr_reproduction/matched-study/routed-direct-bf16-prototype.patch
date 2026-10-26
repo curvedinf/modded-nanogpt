@@ -1,0 +1,280 @@
+--- /dev/null
++++ b/wr_reproduction/check_ks3_routed_bf16_direct.py
+@@ -0,0 +1,151 @@
++"""Independent routed BF16 precision oracle, including router/post gradients.
++
++Both the new direct-training path and original GS32 mode are checked against
++Torch routing/products and pinned nonlinear forward with independent STEs.
++These are numerical checks, never validation or convergence measurements.
++"""
++import argparse
++import json
++import torch
++
++from wr_reproduction import ks3_moe as core
++from wr_reproduction.check_ks3_feedforward_bf16_direct import reference as direct_reference
++from wr_reproduction.check_ks3_feedforward_rank import reference as gs32_reference
++from wr_reproduction.check_ks3_feedforward_rank import quantized_value, relative_rms
++
++
++def reference(rows, router, post, up, down, geometry, gs32):
++    probabilities = torch.softmax(torch.nn.functional.linear(rows, router).float(), -1)
++    gate, assignment = probabilities.max(-1)
++    values = torch.zeros_like(rows)
++    for expert in range(up.shape[0]):
++        ids = (assignment == expert).nonzero().flatten()
++        if ids.numel():
++            if gs32:
++                result = gs32_reference(rows[ids], up[expert], down[expert], geometry[expert], 1)
++            else:
++                result = direct_reference(rows[ids], up[expert], down[expert].T, geometry[expert])
++            values = values.index_copy(0, ids, result)
++    return values * (gate * post.float()).to(values.dtype)[:, None], probabilities, assignment
++
++
++def cache_model(features):
++    from wr_reproduction.backend import install
++    install('pr393')
++    cls = core.install('bf16', charts=features, bf16_kernel_mode='tuned')
++    value = torch.nn.Module()
++    value.moe_bank = torch.nn.Parameter((torch.randn(80, features, 768, device='cuda')*.025).bfloat16())
++    value.register_buffer('ks3_up', torch.empty(5, 8, features, 768, device='cuda', dtype=torch.bfloat16))
++    value.register_buffer('ks3_down', torch.empty(5, 8, 768, features, device='cuda', dtype=torch.bfloat16))
++    return value, cls.prepare_ks3_eval
++
++
++def check_cache(value, gs32):
++    bank = value.moe_bank.view(5, 2, 8, value.ks3_up.shape[2], 768)
++    for layer in range(5):
++        for expert in range(8):
++            for weights, cached in ((bank[layer, 0, expert], value.ks3_up[layer, expert]),
++                                    (bank[layer, 1, expert].T, value.ks3_down[layer, expert])):
++                expected = quantized_value(weights).bfloat16() if gs32 else weights
++                assert torch.equal(cached, expected)
++
++
++def cache_checks(value, refresh):
++    pointers = {name: tensor.data_ptr() for name, tensor in value.named_buffers()}
++    checks = []
++    with torch.no_grad():
++        for flag in (True, False):
++            value.ks3_routed_training_gs32 = flag
++            for training in (True, False, True):
++                value.train(training)
++                core.BF16_TUNED_KERNELS = training
++                refresh(value)
++                expected_gs32 = not training or flag
++                check_cache(value, expected_gs32)
++                checks.append(dict(training=training, routed_training_gs32=flag,
++                                   cache_gs32=expected_gs32, cache_bytes_exact=True))
++        graph = torch.cuda.CUDAGraph()
++        torch.cuda.synchronize()
++        with torch.cuda.graph(graph):
++            refresh(value)
++        for _ in range(2):
++            value.moe_bank.add_(torch.randn_like(value.moe_bank)*.001)
++            graph.replay()
++            check_cache(value, False)
++            checks.append(dict(captured_replay=True, cache_bytes_exact=True))
++    assert pointers == {name: tensor.data_ptr() for name, tensor in value.named_buffers()}
++    return checks
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument('--out', required=True)
++    parser.add_argument('--features', type=int, choices=(1024,), default=1024)
++    args = parser.parse_args()
++    torch.set_num_threads(1)
++    torch.set_float32_matmul_precision('highest')
++    torch.manual_seed(172)
++    core.KS3_RANK = 1
++    value, refresh = cache_model(args.features)
++    caches = cache_checks(value, refresh)
++    checks = []
++    features = args.features
++    for gs32 in (True, False):
++        core.BF16_TUNED_KERNELS = True
++        value.train()
++        value.ks3_routed_training_gs32 = gs32
++        refresh(value)
++        for tokens in (1, 257, 4096):
++            rows = torch.randn(tokens, 768, device='cuda', dtype=torch.bfloat16)
++            router = (torch.randn(8, 768, device='cuda')*.02).bfloat16()
++            if tokens == 257:
++                # Seven empty experts exercise padded gathers and gradient masks.
++                rows[:, 0] = rows[:, 0].abs() + .5
++                router.zero_()
++                router[0, 0] = 1.
++            rows.requires_grad_(); router.requires_grad_()
++            post = torch.tensor(.7, device='cuda', dtype=torch.bfloat16, requires_grad=True)
++            bank = value.moe_bank.detach().view(5, 2, 8, features, 768)
++            up = bank[0, 0].clone().requires_grad_()
++            down = bank[0, 1].clone().requires_grad_()
++            geometry = torch.randn(8, features, 8, device='cuda')*.01
++            geometry[..., 6] = .75
++            geometry.requires_grad_()
++            bank_gradient = torch.zeros_like(value.moe_bank)
++            output, probabilities, counts = core.RoutedKS3.apply(
++                rows, router, post, up, down, value.ks3_up[0], value.ks3_down[0],
++                geometry, bank_gradient, 0, gs32)
++            gradient = torch.randn_like(output)*.02
++            auxiliary_gradient = torch.randn_like(probabilities)*.003
++            actual = torch.autograd.grad((output, probabilities), (rows, router, post, geometry),
++                                         (gradient, auxiliary_gradient))
++            xr, rr, pr, ur, dr, gr = [tensor.detach().clone().requires_grad_()
++                                     for tensor in (rows, router, post, up, down, geometry)]
++            expected_output, expected_probabilities, assignment = reference(xr, rr, pr, ur, dr, gr, gs32)
++            expected = torch.autograd.grad((expected_output, expected_probabilities), (xr, rr, pr, gr, ur, dr),
++                                           (gradient, auxiliary_gradient))
++            assert torch.equal(counts, torch.bincount(assignment, minlength=8).to(counts.dtype))
++            if tokens == 257:
++                assert (counts[1:] == 0).all()
++            errors = dict(output=relative_rms(output, expected_output),
++                          probabilities=relative_rms(probabilities, expected_probabilities))
++            for name, a, b in zip(('input_gradient', 'router_gradient', 'post_gradient', 'geometry_gradient'), actual, expected):
++                errors[name] = relative_rms(a, b)
++            errors['up_gradient'] = relative_rms(bank_gradient[:8], expected[4])
++            errors['down_gradient'] = relative_rms(bank_gradient[8:16], expected[5])
++            assert torch.count_nonzero(bank_gradient[16:]) == 0
++            assert max(errors.values()) < .015, (tokens, gs32, errors)
++            checks.append(dict(tokens=tokens, gs32=gs32, active_experts=int((counts > 0).sum()),
++                               relative_rms=errors, unrelated_gradient_bank_unchanged=True))
++    result = dict(event='kernel_correctness', passed=True, features=features, checks=checks,
++                  cache_checks=caches, routed_training_projection_gs32=False,
++                  routed_validation_projection_gs32=True, original_routed_gs32_regression=True,
++                  geometry_coefficient_gs32=True, shared_backend_modified=False, validation=False,
++                  oracle='Independent Torch top1 routing/products and pinned nonlinear forward with independent STE; input, router, post, projection-bank and geometry gradients, empty experts, cache bytes and graph replay')
++    with open(args.out, 'w') as out:
++        out.write(json.dumps(result)+'\n')
++    print(json.dumps(result))
++
++
++if __name__ == '__main__':
++    main()
+--- a/wr_reproduction/ks3_feedforward.py
++++ b/wr_reproduction/ks3_feedforward.py
+@@ -70,6 +70,9 @@
+     if recipe['precision']!='bf16':raise ValueError('Full-feedforward implementation currently verified for BF16 KS3 only')
+     dense_precision=recipe.get('dense_precision','bf16')
+     if dense_precision not in ('bf16','fp8'):raise ValueError('Unknown dense KS3 precision')
++    routed_gs32=recipe.get('routed_training_gs32',True)
++    if type(routed_gs32) is not bool:raise ValueError('Routed GS32 selection must be boolean')
++    if not routed_gs32 and (recipe['rank']!=1 or recipe['charts']!=1024):raise ValueError('Direct routed BF16 requires1024 rank-one features')
+     dense_gs32=recipe.get('dense_training_gs32',True)
+     if type(dense_gs32) is not bool:raise ValueError('Dense GS32 selection must be boolean')
+     if not dense_gs32 and recipe['rank']!=1:raise ValueError('Direct dense encoding requires rank one')
+@@ -99,6 +102,7 @@
+                    MLP_SLOT_OF_LAYER={layer:mapping[slot] for layer,slot in DENSE.items() if slot in mapping and layer!=8})
+     init_retained,_=compile_method(method('init_mlp_fp8'),namespace)
+     class FullKS3GPT(base):
++        ks3_routed_training_gs32=routed_gs32
+         _matched_forward_sha256=forward_sha
+         retained_slots=keep
+         forward=transformed_forward
+@@ -179,6 +183,7 @@
+                         dense_training_precision=dense_precision,dense_validation_precision='bf16',
+                         dense_training_projection_gs32=dense_gs32,dense_validation_projection_gs32=True,
+                         dense_geometry_coefficient_gs32=True,
++                        routed_training_projection_gs32=routed_gs32,routed_validation_projection_gs32=True,
+                         dense_fp8_activation_scale_slots=scale_mapping if dense_precision=='fp8' else None)
+     # Extend the original per-matrix output-LR/padding policy to the retained
+     # bank. All existing labels execute the byte-for-byte original method.
+--- a/wr_reproduction/ks3_moe.py
++++ b/wr_reproduction/ks3_moe.py
+@@ -219,22 +219,22 @@
+             tl.store(O+base+6*RANK+j-6,total,j>=6)
+ 
+ @torch.library.custom_op('wr_ks3::forward',mutates_args=())
+-def forward(rows:torch.Tensor,src:torch.Tensor,tiles:torch.Tensor,up:torch.Tensor,down:torch.Tensor,g:torch.Tensor)->tuple[torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor]:
+-    if BF16_TUNED_KERNELS:
++def forward(rows:torch.Tensor,src:torch.Tensor,tiles:torch.Tensor,up:torch.Tensor,down:torch.Tensor,g:torch.Tensor,gs32:bool=True)->tuple[torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor]:
++    if BF16_TUNED_KERNELS or not gs32:
+         m,d=src.numel(),rows.shape[1]
+         x=torch.empty((m,d),device=rows.device,dtype=torch.bfloat16)
+         _pack[(tr.cdiv(m,128),tr.cdiv(d,32))](rows,x,m,d,*rows.stride(),
+-            SRC=src,INPUT_ROWS=rows.shape[0],ROWS_PER_TILE=128,num_warps=4)
++            SRC=src,INPUT_ROWS=rows.shape[0],ROWS_PER_TILE=128,GS32=gs32,num_warps=4)
+     else:
+         x=pack(torch.where((src<rows.shape[0])[:,None],rows[src.clamp(0,rows.shape[0]-1).long()],0).contiguous())
+     c=mm(x,up.transpose(1,2),tiles);h=torch.empty_like(c,dtype=torch.bfloat16)
+     bm=64 if BF16_TUNED_KERNELS else 16
+-    _geometry[(tr.cdiv(c.shape[0],bm),tr.cdiv(c.shape[1],32))](c,g,h,tiles,*c.shape,BM=bm,RANK=KS3_RANK,num_warps=4)
++    _geometry[(tr.cdiv(c.shape[0],bm),tr.cdiv(c.shape[1],32))](c,g,h,tiles,*c.shape,BM=bm,RANK=KS3_RANK,GS32=gs32,num_warps=4)
+     y=mm(h,down.transpose(1,2),tiles,dtype=rows.dtype)
+     return y,x,c,h
+ 
+ @forward.register_fake
+-def _(rows,src,tiles,up,down,g):
++def _(rows,src,tiles,up,down,g,gs32=True):
+     m=src.numel();d=rows.shape[1];n=up.shape[1]
+     return rows.new_empty((m,d)),rows.new_empty((m,d)),rows.new_empty((m,n),dtype=torch.float32),rows.new_empty((m,n))
+ 
+@@ -267,12 +267,13 @@
+ 
+ class RoutedKS3(torch.autograd.Function):
+     @staticmethod
+-    def forward(ctx,rows,router,post,w1,w2,up,down,g,bank,layer):
++    def forward(ctx,rows,router,post,w1,w2,up,down,g,bank,layer,gs32=True):
++        ctx.argument_count=len(ctx.needs_input_grad)
+         from track_1_short.perf.kernels import moe_mlp as moe
+         probs=torch.softmax(torch.nn.functional.linear(rows,router).float(),-1)
+         gate,expert=probs.max(-1);dest,src,offs,tiles,counts=moe.moe_dispatch(expert,router.shape[0])
+         pf=post.float().reshape(());scale=gate*pf
+-        y,x,c,h=forward(rows,src,tiles,up,down,g)
++        y,x,c,h=forward(rows,src,tiles,up,down,g,gs32)
+         ctx.save_for_backward(rows,router,post,probs,gate,expert,dest,src,offs,tiles,y,x,c,h,scale,g)
+         ctx.up=up;ctx.down=down;ctx.bank=bank;ctx.layer=layer
+         ctx.mark_non_differentiable(counts)
+@@ -286,7 +287,7 @@
+         dp=dp.scatter_add(1,expert[:,None],(ds*post.float()).reshape(-1,1))
+         dl=(probs*(dp-(probs*dp).sum(-1,keepdim=True))).to(torch.bfloat16)
+         dx=moe.dx_combine(dxp,dest,dl.float(),router)
+-        return dx,dl.T@rows,(ds*gate).sum().to(post.dtype).reshape(post.shape),None,None,None,None,dg,None,None
++        return (dx,dl.T@rows,(ds*gate).sum().to(post.dtype).reshape(post.shape),None,None,None,None,dg,None,None,None)[:ctx.argument_count]
+ 
+ 
+ def install(precision="bf16",geometry_config=None,training_gs32=True,charts=1024,batched_weight_pack=False,geometry_backward_rows=64,bf16_kernel_mode='legacy',projection_lr_multiplier=1.,subspace_rank=1,prepared_native_weights=False,prepared_native_activations=False,prepared_native_dual=False,prepared_native_gather=False):
+@@ -327,6 +328,7 @@
+     coefficients=geometry_config.get('coefficients',[0.]*6)
+     if len(coefficients)!=6:raise ValueError('KS3 requires six geometry coefficients')
+     class KS3GPT(GPT):
++        ks3_routed_training_gs32=True
+         def init_moe(self,model_dim,rank,grad_scale,bound):
+             initial_rng=torch.get_rng_state() if features!=1024 else None
+             super().init_moe(model_dim,rank,grad_scale,bound)
+@@ -383,7 +385,7 @@
+                 from wr_reproduction.ks3_moe_fp8 import routed
+                 out,probs,counts=routed(self,k,rows,router,post,w1,w2)
+             elif self.training:
+-                out,probs,counts=RoutedKS3.apply(rows,router,post,w1,w2,self.ks3_up[k],self.ks3_down[k],self.ks3_geometry[k],self.moe_bank_grad,k)
++                out,probs,counts=RoutedKS3.apply(rows,router,post,w1,w2,self.ks3_up[k],self.ks3_down[k],self.ks3_geometry[k],self.moe_bank_grad,k,self.ks3_routed_training_gs32)
+             else:
+                 from track_1_short.perf.kernels import moe_mlp as moe
+                 probs=torch.softmax(torch.nn.functional.linear(rows,router).float(),-1);gate,expert=probs.max(-1)
+--- a/wr_reproduction/ks3_weight_pack.py
++++ b/wr_reproduction/ks3_weight_pack.py
+@@ -63,4 +63,5 @@
+     for projection,q in ((0,m.ks3_up),(1,m.ks3_down)):
+         r,c=(n,d) if projection==0 else (d,n)
+         _weights[(tr.cdiv(r,128)*tr.cdiv(c,32),40)](
+-            m.moe_bank,q,None,None,None,n,d,projection,True,FP8=False,num_warps=4)
++            m.moe_bank,q,None,None,None,n,d,projection,
++            (not m.training or getattr(m,'ks3_routed_training_gs32',True)),FP8=False,num_warps=4)
+--- a/wr_reproduction/matched_controller.py
++++ b/wr_reproduction/matched_controller.py
+@@ -44,11 +44,12 @@
+     if recipe['architecture']!='mlp':command+=['--ks3-precision',recipe['precision']]
+     if kind=='timing':command+=['--timing-updates','100']
+     if kind=='correctness':
+-        oracle=('wr_reproduction.check_ks3_feedforward_bf16_direct' if recipe.get('dense_precision','bf16')=='bf16' and recipe.get('dense_training_gs32',True) is False else
++        oracle=('wr_reproduction.check_ks3_routed_bf16_direct' if recipe.get('routed_training_gs32',True) is False else
++                'wr_reproduction.check_ks3_feedforward_bf16_direct' if recipe.get('dense_precision','bf16')=='bf16' and recipe.get('dense_training_gs32',True) is False else
+                 'wr_reproduction.check_ks3_feedforward_fp8' if recipe.get('dense_precision')=='fp8' else
+                 'wr_reproduction.check_ks3_feedforward' if recipe['rank']==1 else 'wr_reproduction.check_ks3_feedforward_rank')
+         command=[str(PYTHON),'-m',oracle,'--out',str(directory/'events.jsonl'),
+-                 '--features',str(recipe.get('dense_charts',recipe['charts'])*recipe['rank'])]
++                 '--features',str((recipe['charts'] if recipe.get('routed_training_gs32',True) is False else recipe.get('dense_charts',recipe['charts']))*recipe['rank'])]
+         if recipe['rank']!=1:command+=['--rank',str(recipe['rank'])]
+         if recipe.get('dense_precision')=='fp8' and recipe.get('dense_training_gs32',True) is False:
+             command+=['--dense-native-pack']

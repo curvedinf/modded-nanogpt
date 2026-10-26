@@ -1,0 +1,213 @@
+{
+  "utc": "2026-10-26T02:07:04.057153+00:00",
+  "passed": true,
+  "gpu_initialized": false,
+  "checks": [
+    {
+      "passed": true,
+      "gpu_initialized": false,
+      "architecture": "ks3_all",
+      "gain": 0.0,
+      "shared_initialization_identical": true,
+      "global_rng_preserved": true,
+      "input_projections_identical": true,
+      "retained_mlps_and_padding_unchanged": true,
+      "exact_isolated_normal_draws_verified": true,
+      "original_bank_labels_shapes_and_bf16_cast_preserved": true,
+      "geometry_initialization_unchanged": true,
+      "invalid_gains_rejected": 7,
+      "initialization_policy": {
+        "distribution": "original-zero",
+        "gain": 0.0,
+        "seed": null
+      },
+      "scope": {
+        "only_initialization_validation_and_reporting_changed": true,
+        "unchanged_model_kernel_optimizer_ast_sha256": "2e018eb236362be6d79e663e4d45b0ef33df3cd8fa856512ab9258cf44bba266",
+        "base_source_sha256": "7ed38d4dcb95f78d49e13a7dfa761027170b249a1360e1c7a10b9a5a4be7cd88",
+        "staged_source_sha256": "15a43494ef9e26361e12f5f39523c3ca3597493aabb554a486ebc6c432df160d"
+      },
+      "recipe_sha256": "23069257e3d8d354a142387d4b85226f66143e89b1f4901a5807fd5a0987565f",
+      "cpu_auditor_sha256": "c122fe450f2e7eaba93f9835fa0fcd68407a92ab7dbd76ebc6600d85814035a2"
+    },
+    {
+      "passed": true,
+      "gpu_initialized": false,
+      "architecture": "ks3_all",
+      "gain": 0.1,
+      "shared_initialization_identical": true,
+      "global_rng_preserved": true,
+      "input_projections_identical": true,
+      "retained_mlps_and_padding_unchanged": true,
+      "exact_isolated_normal_draws_verified": true,
+      "original_bank_labels_shapes_and_bf16_cast_preserved": true,
+      "geometry_initialization_unchanged": true,
+      "invalid_gains_rejected": 7,
+      "initialization_policy": {
+        "distribution": "normal",
+        "gain": 0.1,
+        "seed": 169,
+        "generator": "isolated-cpu-generator-routed-then-active-dense-v1",
+        "routed_output_matrices": 40,
+        "dense_output_slots": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "routed_fan_in": 1024,
+        "dense_fan_in": 1024,
+        "routed_std": 0.003125,
+        "dense_std": 0.003125
+      },
+      "scope": {
+        "only_initialization_validation_and_reporting_changed": true,
+        "unchanged_model_kernel_optimizer_ast_sha256": "2e018eb236362be6d79e663e4d45b0ef33df3cd8fa856512ab9258cf44bba266",
+        "base_source_sha256": "7ed38d4dcb95f78d49e13a7dfa761027170b249a1360e1c7a10b9a5a4be7cd88",
+        "staged_source_sha256": "15a43494ef9e26361e12f5f39523c3ca3597493aabb554a486ebc6c432df160d"
+      },
+      "recipe_sha256": "23069257e3d8d354a142387d4b85226f66143e89b1f4901a5807fd5a0987565f",
+      "cpu_auditor_sha256": "c122fe450f2e7eaba93f9835fa0fcd68407a92ab7dbd76ebc6600d85814035a2"
+    },
+    {
+      "passed": true,
+      "gpu_initialized": false,
+      "architecture": "ks3_first_mlp",
+      "gain": 0.1,
+      "shared_initialization_identical": true,
+      "global_rng_preserved": true,
+      "input_projections_identical": true,
+      "retained_mlps_and_padding_unchanged": true,
+      "exact_isolated_normal_draws_verified": true,
+      "original_bank_labels_shapes_and_bf16_cast_preserved": true,
+      "geometry_initialization_unchanged": true,
+      "invalid_gains_rejected": 7,
+      "initialization_policy": {
+        "distribution": "normal",
+        "gain": 0.1,
+        "seed": 169,
+        "generator": "isolated-cpu-generator-routed-then-active-dense-v1",
+        "routed_output_matrices": 40,
+        "dense_output_slots": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "routed_fan_in": 1024,
+        "dense_fan_in": 1024,
+        "routed_std": 0.003125,
+        "dense_std": 0.003125
+      },
+      "scope": {
+        "only_initialization_validation_and_reporting_changed": true,
+        "unchanged_model_kernel_optimizer_ast_sha256": "2e018eb236362be6d79e663e4d45b0ef33df3cd8fa856512ab9258cf44bba266",
+        "base_source_sha256": "7ed38d4dcb95f78d49e13a7dfa761027170b249a1360e1c7a10b9a5a4be7cd88",
+        "staged_source_sha256": "15a43494ef9e26361e12f5f39523c3ca3597493aabb554a486ebc6c432df160d"
+      },
+      "recipe_sha256": "23069257e3d8d354a142387d4b85226f66143e89b1f4901a5807fd5a0987565f",
+      "cpu_auditor_sha256": "c122fe450f2e7eaba93f9835fa0fcd68407a92ab7dbd76ebc6600d85814035a2"
+    },
+    {
+      "passed": true,
+      "gpu_initialized": false,
+      "architecture": "ks3_last_mlp",
+      "gain": 0.1,
+      "shared_initialization_identical": true,
+      "global_rng_preserved": true,
+      "input_projections_identical": true,
+      "retained_mlps_and_padding_unchanged": true,
+      "exact_isolated_normal_draws_verified": true,
+      "original_bank_labels_shapes_and_bf16_cast_preserved": true,
+      "geometry_initialization_unchanged": true,
+      "invalid_gains_rejected": 7,
+      "initialization_policy": {
+        "distribution": "normal",
+        "gain": 0.1,
+        "seed": 169,
+        "generator": "isolated-cpu-generator-routed-then-active-dense-v1",
+        "routed_output_matrices": 40,
+        "dense_output_slots": [
+          0,
+          1,
+          2,
+          4
+        ],
+        "routed_fan_in": 1024,
+        "dense_fan_in": 1024,
+        "routed_std": 0.003125,
+        "dense_std": 0.003125
+      },
+      "scope": {
+        "only_initialization_validation_and_reporting_changed": true,
+        "unchanged_model_kernel_optimizer_ast_sha256": "2e018eb236362be6d79e663e4d45b0ef33df3cd8fa856512ab9258cf44bba266",
+        "base_source_sha256": "7ed38d4dcb95f78d49e13a7dfa761027170b249a1360e1c7a10b9a5a4be7cd88",
+        "staged_source_sha256": "15a43494ef9e26361e12f5f39523c3ca3597493aabb554a486ebc6c432df160d"
+      },
+      "recipe_sha256": "23069257e3d8d354a142387d4b85226f66143e89b1f4901a5807fd5a0987565f",
+      "cpu_auditor_sha256": "c122fe450f2e7eaba93f9835fa0fcd68407a92ab7dbd76ebc6600d85814035a2"
+    },
+    {
+      "passed": true,
+      "gpu_initialized": false,
+      "architecture": "ks3_both_mlp",
+      "gain": 0.1,
+      "shared_initialization_identical": true,
+      "global_rng_preserved": true,
+      "input_projections_identical": true,
+      "retained_mlps_and_padding_unchanged": true,
+      "exact_isolated_normal_draws_verified": true,
+      "original_bank_labels_shapes_and_bf16_cast_preserved": true,
+      "geometry_initialization_unchanged": true,
+      "invalid_gains_rejected": 7,
+      "initialization_policy": {
+        "distribution": "normal",
+        "gain": 0.1,
+        "seed": 169,
+        "generator": "isolated-cpu-generator-routed-then-active-dense-v1",
+        "routed_output_matrices": 40,
+        "dense_output_slots": [
+          1,
+          2,
+          4
+        ],
+        "routed_fan_in": 1024,
+        "dense_fan_in": 1024,
+        "routed_std": 0.003125,
+        "dense_std": 0.003125
+      },
+      "scope": {
+        "only_initialization_validation_and_reporting_changed": true,
+        "unchanged_model_kernel_optimizer_ast_sha256": "2e018eb236362be6d79e663e4d45b0ef33df3cd8fa856512ab9258cf44bba266",
+        "base_source_sha256": "7ed38d4dcb95f78d49e13a7dfa761027170b249a1360e1c7a10b9a5a4be7cd88",
+        "staged_source_sha256": "15a43494ef9e26361e12f5f39523c3ca3597493aabb554a486ebc6c432df160d"
+      },
+      "recipe_sha256": "23069257e3d8d354a142387d4b85226f66143e89b1f4901a5807fd5a0987565f",
+      "cpu_auditor_sha256": "c122fe450f2e7eaba93f9835fa0fcd68407a92ab7dbd76ebc6600d85814035a2"
+    }
+  ],
+  "case_reports": [
+    {
+      "path": "research_results/wr_reproduction/matched-study/output-init-gain01-default-audit.json",
+      "sha256": "41870bedeb4b7987ba02963f57f39079037202b821fb663467ed276fdb6d7b88"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/output-init-gain01-all-audit.json",
+      "sha256": "3d326a44dba2634b6aa4edf285e4a087a23462397a123f54ea33416612e83c7d"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/output-init-gain01-first-audit.json",
+      "sha256": "248b0f03cdbab51249a2dd5a1c2e3c572003e3ce2d88a903b88ce447e73168f0"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/output-init-gain01-last-audit.json",
+      "sha256": "7f361f9557c4ae35c40139f152b9cf7ef011dba185e55549d725efd67f1c45ac"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/output-init-gain01-both-audit.json",
+      "sha256": "925a9e409d87b78e7bcaaff2e9daad3a750aa992ee7725c057d5edd53503d7c1"
+    }
+  ],
+  "validation": false
+}

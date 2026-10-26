@@ -1,0 +1,47 @@
+{
+  "utc": "2026-10-26T03:01:19.824259+00:00",
+  "immutable": true,
+  "one_seed_intentional": true,
+  "best": {
+    "run_id": "probe-mlp-control-20261026T024345-ef50bf",
+    "loss": 3.318265914916992,
+    "train_seconds": 897.9328787570121
+  },
+  "evaluation_signature": {
+    "loss_definition": "pr393-cplm-full10485760-raw-no-canonical-no-tail-bf16-v1",
+    "val_tokens": 10485760,
+    "val_data": [
+      {
+        "name": "fineweb_val_000000.bin",
+        "bytes": 200001024,
+        "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+      }
+    ],
+    "cplm": true,
+    "softcap": [
+      23.0,
+      5.0,
+      7.5
+    ],
+    "attention_windows": [
+      640,
+      1408
+    ],
+    "attention_segment_cap": 2560,
+    "align_to_bos": false,
+    "val_global_batch_tokens": 2097152,
+    "logical_ranks": 8,
+    "weights": "raw",
+    "canonical_mask": false,
+    "tail_shipping": false,
+    "final_window_extension": false,
+    "expert_evaluation": "bf16",
+    "mtp": false,
+    "prefix": false,
+    "moe_aux": false,
+    "probe_backend_hash": "244af450ed03c5c27ffe275133d2f6e1bb425e1388928790e327cb38aade8a96"
+  },
+  "backend_hash": "244af450ed03c5c27ffe275133d2f6e1bb425e1388928790e327cb38aade8a96",
+  "historical_controls_separate": true,
+  "probe_overhead_on_clock": true
+}

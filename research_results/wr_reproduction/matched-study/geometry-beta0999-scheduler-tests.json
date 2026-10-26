@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-26T00:59:40.439717+00:00",
+  "passed": true,
+  "tests": 9,
+  "gpu_initialized": false,
+  "test_log": {
+    "path": "logs/wr-reproduction/matched-study/staging/geometry-beta0999/scheduler-tests.log",
+    "sha256": "603db52fd0016ca5cdcf83b2588160ae92bde08c66ba4c61dfc8a2a74cdb95c9"
+  },
+  "test_source": {
+    "path": "test_wr_matched_geometry_betas.py",
+    "sha256": "98ecda5645b628f398e172ef4613879b3271081f14614070ad639b2f37f2fd80"
+  },
+  "scheduler": {
+    "path": "run_wr_matched_geometry_betas.py",
+    "sha256": "2e3238f4bb2ee97cdf03d95668e511fb1a757b46a56c93c2c3305c2f5859735e"
+  }
+}

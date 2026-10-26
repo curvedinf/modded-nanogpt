@@ -1,0 +1,36 @@
+{
+  "utc": "2026-10-25T22:45:41.842647+00:00",
+  "passed": true,
+  "gpu_initialized": false,
+  "prior_architecture_audits": [
+    {
+      "path": "research_results/wr_reproduction/matched-study/routed-direct-bf16-cpu-all.json",
+      "sha256": "6a8967fe8ccdd661b33aa46abf3ac9873421024aa61a02b43e4eff419703a18a",
+      "architecture": "ks3_all"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/routed-direct-bf16-cpu-first.json",
+      "sha256": "3596c5fb605ef2da7fe91b7899b7f8f912e2541d1912eb3bc6b530313bb8d223",
+      "architecture": "ks3_first_mlp"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/routed-direct-bf16-cpu-last.json",
+      "sha256": "754ae4eafe1dd32736561811374d4cf9b55241b07a615dd8bd7e32dad396af9c",
+      "architecture": "ks3_last_mlp"
+    },
+    {
+      "path": "research_results/wr_reproduction/matched-study/routed-direct-bf16-cpu-both.json",
+      "sha256": "abbbc27257d869a8ea891bd290343098d60349638b3b6523630dfcbcee6bfaeb",
+      "architecture": "ks3_both_mlp"
+    }
+  ],
+  "unchanged_ast_sha256": {
+    "DenseKS3": "6a4671d476d2662fdd702640b93115aa5c1459d57a5a97cb312c8c647dd6274d",
+    "dense_forward": "e374783cd11f1e167361c9793b4e40c11dde4dd002bb61bf382050f98c09ec6d",
+    "dense_backward": "68f34c2074ad166c956d005d4b2255394ed1774fd98deb53e57ed47c9b784d7b",
+    "FullKS3GPT": "ccd4b64cfde1f80e4e4a055b88dec5c301597f5d547abf6e0b725205158ff145"
+  },
+  "base_source_sha256": "738a4d9ad208f24252c2f4f7df712596beb3265218f97297a056ac9406ef3ba4",
+  "staged_source_sha256": "95c410ffa89d7f6cd4b00d83429c7a84426de4aa5c801860a9c2352edb9fc43d",
+  "scope": "Every full-KS3 model constructor, forward, backward and cache method is AST-identical. Reuse the four architecture/initialization audits; new parameter-policy behavior is covered by the actual original ANVIL builder audit."
+}

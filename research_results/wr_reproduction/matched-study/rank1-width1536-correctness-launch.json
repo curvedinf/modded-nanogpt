@@ -1,0 +1,134 @@
+{
+  "utc": "2026-10-26T00:14:10.386922+00:00",
+  "passed": true,
+  "oracle_run_id": "matched-ks3-all-rank1-width1536-normlr-20261026T000821-d6ed15",
+  "oracle_code_commit": "1d89ab5b7ad5c7063fe7a4f31260ad098b55d9d5",
+  "oracle_result_sha256": "0cae0badc962197417fc7b530519f6810b84f24cd8c5cb14c80b38d8c1883e4a",
+  "oracle_events_sha256": "5119bbb14855ee7eb383011e0fea4e01b4d822943cd004f41c0a8771b8cb1d02",
+  "checks": [
+    {
+      "branch": "dense",
+      "tokens": 1,
+      "relative_rms": {
+        "output": 0.0,
+        "input_gradient": 0.0,
+        "up_gradient": 1.6809856333566131e-06,
+        "down_gradient": 0.0,
+        "geometry_gradient": 4.0410301949123095e-07,
+        "post_gradient": 0.0
+      }
+    },
+    {
+      "branch": "dense",
+      "tokens": 257,
+      "relative_rms": {
+        "output": 0.000176076267962344,
+        "input_gradient": 0.00016630707250442356,
+        "up_gradient": 0.00011732929124264047,
+        "down_gradient": 0.00011282821651548147,
+        "geometry_gradient": 9.78351977209968e-07,
+        "post_gradient": 0.0
+      }
+    },
+    {
+      "branch": "dense",
+      "tokens": 4096,
+      "relative_rms": {
+        "output": 0.00022190911113284528,
+        "input_gradient": 0.00015016527322586626,
+        "up_gradient": 0.00018986726354341954,
+        "down_gradient": 0.0002701969933696091,
+        "geometry_gradient": 1.3902579212299315e-06,
+        "post_gradient": 0.0
+      }
+    },
+    {
+      "branch": "routed",
+      "tokens": 1,
+      "active_experts": 1,
+      "relative_rms": {
+        "output": 0.0,
+        "probabilities": 0.0,
+        "input_gradient": 0.0005009233136661351,
+        "router_gradient": 0.0,
+        "post_gradient": 0.0,
+        "geometry_gradient": 6.867167030577548e-07,
+        "up_gradient": 3.5309341228639823e-07,
+        "down_gradient": 0.0
+      },
+      "unrelated_gradient_bank_unchanged": true
+    },
+    {
+      "branch": "routed",
+      "tokens": 257,
+      "active_experts": 1,
+      "relative_rms": {
+        "output": 0.00014126526366453618,
+        "probabilities": 0.0,
+        "input_gradient": 0.00012704319669865072,
+        "router_gradient": 0.0009158283937722445,
+        "post_gradient": 0.0,
+        "geometry_gradient": 9.458982503929292e-07,
+        "up_gradient": 9.453555685468018e-05,
+        "down_gradient": 8.497286034980789e-05
+      },
+      "unrelated_gradient_bank_unchanged": true
+    },
+    {
+      "branch": "routed",
+      "tokens": 4096,
+      "active_experts": 8,
+      "relative_rms": {
+        "output": 0.00019977765623480082,
+        "probabilities": 0.0,
+        "input_gradient": 0.0016713961958885193,
+        "router_gradient": 0.001042307703755796,
+        "post_gradient": 0.0,
+        "geometry_gradient": 1.0465804507475696e-06,
+        "up_gradient": 0.0001050744904205203,
+        "down_gradient": 0.0001617085508769378
+      },
+      "unrelated_gradient_bank_unchanged": true
+    }
+  ],
+  "cache_checks": [
+    {
+      "training": true,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "training": false,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "training": true,
+      "routed_training_gs32": true,
+      "cache_gs32": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "captured_replay": true,
+      "cache_bytes_exact": true
+    },
+    {
+      "captured_replay": true,
+      "cache_bytes_exact": true
+    }
+  ],
+  "maximum_relative_rms": 0.0016713961958885193,
+  "unchanged_relative_rms_tolerance": 0.015,
+  "rank": 1,
+  "charts": 1536,
+  "projection_features": 1536,
+  "discovery_run_id": "matched-ks3-all-rank1-width1536-normlr-20261026T000846-d87fae",
+  "discovery_code_commit": "1d89ab5b7ad5c7063fe7a4f31260ad098b55d9d5",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "control_set_sha256": "59746335a66614f8f4fa3e903601d4d7ba57cc591a27f31e48517189d09e8413",
+  "paired_initialization_sha256": "285bb8c14e5399d5b858df7ec66890201a5a67e3a6d3574ad4038ac7dda11f09",
+  "validation_measured": false,
+  "decision": "Independent numerical and cache gates passed; distinct equal-capacity rank-one discovery is training. No validation inference from numerical checks."
+}

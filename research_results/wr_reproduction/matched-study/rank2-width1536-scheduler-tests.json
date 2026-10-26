@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-25T23:56:55.612150+00:00",
+  "passed": true,
+  "tests": 7,
+  "command": ".venv-mi300/bin/python -m unittest test_wr_matched_rank2_width1536",
+  "source_sha256": "4b7a6d61a3b71571fb35a89c7cf6c7bd4acbe42f9770b2e7a45dae733074c689",
+  "scheduler_sha256": "a870c7cc5b925d6dc728d52e0b247ede63463358d7dfdae19f2b3b8f2c8e1f50",
+  "checks": [
+    "terminal successful predecessor required",
+    "six complete numerical checks at strict unchanged tolerance",
+    "wrong shapes and incomplete caches rejected",
+    "correctness command separated from discovery",
+    "interrupted runs require reconciliation",
+    "STOP before any work",
+    "only KS3 source mutation allowed"
+  ]
+}

@@ -8,6 +8,8 @@ DENSE={0:0,2:1,4:2,10:3,8:4}
 MOE=(1,3,5,6,8)
 RETAIN={'mlp':tuple(range(11)), 'ks3_all':(), 'ks3_first_mlp':(0,),
         'ks3_last_mlp':(10,), 'ks3_both_mlp':(0,10), 'ks3_experts':(0,2,4,8,10)}
+# Each probe placement retains every other original dense branch.
+RETAIN.update({f'ks3_dense_{layer}':tuple(other for other in DENSE if other!=layer) for layer in DENSE})
 
 def layer_map(architecture,features=1024,dense_features=None):
     dense_features=features if dense_features is None else dense_features

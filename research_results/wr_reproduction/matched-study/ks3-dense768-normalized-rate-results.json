@@ -1,0 +1,318 @@
+{
+  "utc": "2026-10-25T22:37:26.833481+00:00",
+  "status": "complete_choose_next_hypothesis",
+  "wait_for_study": "routed-direct-bf16-study.json",
+  "results_name": "ks3-dense768-normalized-rate-results.json",
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "items": [
+    {
+      "recipe": "configs/wr_reproduction/matched_ks3_all_dense768_normlr.json",
+      "recipe_sha256": "a2c79873c7570ee873994d04fec44faf4e824d4644792c2ed4b72507536efe24",
+      "seed": 168,
+      "status": "pruned",
+      "hypothesis": "Reduce only the five dense KS3 projection widths from1024 to768 while preserving all40 routed experts at1024. Isolate the dense capacity/elapsed-time tradeoff from the prior both-branch768 ablation. Compensate the ANVIL shape-factor change with dense projection multiplier sqrt(1024/768), preserving its baseline effective multiplier. Keep routed projections/initialization, BF16/GS32, geometry Adam0.125, MoE8top1 and all shared/model-wide settings unchanged. Width768 has already completed actual optimizer warmup; width512 remains excluded under the frozen backend.",
+      "changes": {
+        "dense_charts": {
+          "before": 1024,
+          "after": 768
+        },
+        "dense_projection_lr_multiplier": {
+          "before": 1.0,
+          "after": 1.1547005383792515
+        }
+      },
+      "cpu_audit": {
+        "path": "research_results/wr_reproduction/matched-study/dense768-normalized-cpu-model-audit.json",
+        "sha256": "0d1a8f713d0cf966d60b4c31a8b133aea659e192c05d51b929b1f900c4f48013"
+      },
+      "cpu_optimizer_audit": {
+        "path": "research_results/wr_reproduction/matched-study/dense768-normalized-cpu-optimizer-audit.json",
+        "sha256": "b5b8bbc3c38cee64e3e1c636c9c78a2ca7512987e275da2b2bf137d56ee42167"
+      },
+      "correctness_required": true,
+      "actual_full_graph_warmup_required": true,
+      "kernel_source_unchanged": true,
+      "oracle_scope": "Validate the768-wide dense projection under the current optional-precision source before this dense-only width configuration; ordinary GS32 precision remains enabled. No timing sweep.",
+      "optimizer_shape_support_evidence": {
+        "run_id": "matched-ks3-all-width768-normlr-20261025T213736-27cd6a",
+        "events_sha256": "1fe3f12cac74d9de42e75e52199b4c31782e891e5ce98245ad11b064e2e3144f",
+        "actual_warmup_passed": true
+      },
+      "correctness_run_id": "matched-ks3-all-dense768-normlr-20261025T224514-05a933",
+      "correctness_result": {
+        "run_id": "matched-ks3-all-dense768-normlr-20261025T224514-05a933",
+        "status": "correctness_passed",
+        "seed": 172,
+        "code_commit": "0d08ba32ee481932bdfa754a7417aef4a0c92558",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-dense768-normlr",
+          "hypothesis": "Reduce only the five dense KS3 projection widths from1024 to768 while preserving all40 routed experts at1024. Isolate the dense capacity/elapsed-time tradeoff from the prior both-branch768 ablation. Compensate the ANVIL shape-factor change with dense projection multiplier sqrt(1024/768), preserving its baseline effective multiplier. Keep routed projections/initialization, BF16/GS32, geometry Adam0.125, MoE8top1 and all shared/model-wide settings unchanged. Width768 has already completed actual optimizer warmup; width512 remains excluded under the frozen backend.",
+          "dense_charts": 768,
+          "dense_projection_lr_multiplier": 1.1547005383792515
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": null,
+        "timing": null,
+        "correctness": {
+          "event": "kernel_correctness",
+          "passed": true,
+          "checks": [
+            {
+              "tokens": 1,
+              "relative_rms": {
+                "output": 0.0,
+                "input_gradient": 0.0,
+                "up_gradient": 0.0016669339966028929,
+                "down_gradient": 0.0016830029198899865,
+                "geometry_gradient": 6.520330657622253e-07,
+                "post_gradient": 0.0
+              }
+            },
+            {
+              "tokens": 257,
+              "relative_rms": {
+                "output": 2.9446415283018723e-05,
+                "input_gradient": 0.00013820869207847863,
+                "up_gradient": 0.0016642448026686907,
+                "down_gradient": 0.0016599922673776746,
+                "geometry_gradient": 8.046556558838347e-07,
+                "post_gradient": 0.0
+              }
+            },
+            {
+              "tokens": 4096,
+              "relative_rms": {
+                "output": 0.0002014129131566733,
+                "input_gradient": 9.232424781657755e-05,
+                "up_gradient": 0.001660698326304555,
+                "down_gradient": 0.0016647320007905364,
+                "geometry_gradient": 9.58146870289056e-07,
+                "post_gradient": 0.0
+              }
+            }
+          ],
+          "features": 768,
+          "oracle": "Independent ks3_blas_fused_unpack autograd; all gradients, nonzero geometry and output post factor",
+          "shared_backend_modified": false,
+          "validation": false
+        },
+        "exit_code": 0,
+        "events_sha256": "5362674182d1f8a42fbb5408c77d303415313430d73c594c463ba0f9b7ca1c73",
+        "completed_utc": "2026-10-25T22:45:24.471171+00:00",
+        "qualifies": false
+      },
+      "run_id": "matched-ks3-all-dense768-normlr-20261025T224524-6029f2",
+      "result": {
+        "run_id": "matched-ks3-all-dense768-normlr-20261025T224524-6029f2",
+        "status": "pruned",
+        "seed": 168,
+        "code_commit": "0d08ba32ee481932bdfa754a7417aef4a0c92558",
+        "recipe": {
+          "precision": "bf16",
+          "charts": 1024,
+          "rank": 1,
+          "group_size": 32,
+          "nonlinearity": "fp16",
+          "geometry": {
+            "lr_mul": 0.125,
+            "betas": [
+              0.9,
+              0.99
+            ],
+            "weight_decay": 0,
+            "raw_scale": 0.75,
+            "raw_shift": 0.0,
+            "coefficients": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "projection_accumulation": "fp32",
+          "training_gs32": true,
+          "weight_packing": "loop",
+          "geometry_backward_rows": 64,
+          "bf16_kernel_mode": "tuned",
+          "shared_fp8_gemm_tuning": "mi300-v1",
+          "shared_fp8_amax": "atomic",
+          "shared_fp8_decode": "scalar",
+          "shared_fp8_head_tuning": "legacy",
+          "shared_fp8_pipeline_tuning": "legacy",
+          "validation_window_policy": "accepted-control",
+          "validation_precision": "bf16",
+          "max_train_seconds": 900.0,
+          "validation_setup_reserve_seconds": 2.0,
+          "model_wide_hyperparameters": "original-pr393",
+          "architecture": "ks3_all",
+          "name": "matched-ks3-all-dense768-normlr",
+          "hypothesis": "Reduce only the five dense KS3 projection widths from1024 to768 while preserving all40 routed experts at1024. Isolate the dense capacity/elapsed-time tradeoff from the prior both-branch768 ablation. Compensate the ANVIL shape-factor change with dense projection multiplier sqrt(1024/768), preserving its baseline effective multiplier. Keep routed projections/initialization, BF16/GS32, geometry Adam0.125, MoE8top1 and all shared/model-wide settings unchanged. Width768 has already completed actual optimizer warmup; width512 remains excluded under the frozen backend.",
+          "dense_charts": 768,
+          "dense_projection_lr_multiplier": 1.1547005383792515
+        },
+        "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+        "validation": null,
+        "pruning": {
+          "event": "screening_abort",
+          "policy_version": "dynamic-best-below5-one-sided-0.01-v1",
+          "warmup_reached": true,
+          "eligible": true,
+          "abort": true,
+          "candidate_objective": 4.2968878746032715,
+          "metric_kind": "training",
+          "candidate_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 1,
+            "attention_windows": [
+              384,
+              896
+            ],
+            "mtp": [
+              1.0,
+              0.0873015895485878
+            ],
+            "prefix": 0.05000000074505806,
+            "candidates": 10240,
+            "batch_tokens": 262144,
+            "global_batch_tokens": 262144,
+            "logical_batch_tokens": 32768,
+            "logical_ranks": 8,
+            "train_max_seq_len": 2048,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "margin": 0.01,
+          "reason": "dynamic_best_training_proxy",
+          "gap": 0.0104546546936035,
+          "reference_run_id": "matched-ks3-all-rank2-20261025T185248-cc3fd2",
+          "reference_wall_seconds": 274.75636273197597,
+          "reference_age_seconds": 4.5069353750150185,
+          "reference_objective": 4.286433219909668,
+          "reference_signature": {
+            "loss_definition": "pr393-cplm-softcap23-mtp-prefix-switchaux-tokenmean-rankmean-v1",
+            "stage": 1,
+            "attention_windows": [
+              384,
+              896
+            ],
+            "mtp": [
+              1.0,
+              0.0873015895485878
+            ],
+            "prefix": 0.05000000074505806,
+            "candidates": 10240,
+            "batch_tokens": 262144,
+            "global_batch_tokens": 262144,
+            "logical_batch_tokens": 32768,
+            "logical_ranks": 8,
+            "train_max_seq_len": 2048,
+            "attention_segment_cap": 2560,
+            "attention_mask_semantics": "faithful-pr393-document-local-mi300-v1",
+            "cplm": true,
+            "softcap": [
+              23.0,
+              5.0,
+              7.5
+            ],
+            "moe_aux_weight": 0.01,
+            "reduction": "mean-of-eight-logical-rank-token-means",
+            "prefix_table": "build_prefix_table_bucket(vocab_size,0,1)",
+            "sampling": "original-rank-local-stride20011-forced-targets-and-copy",
+            "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+            "matched_backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+            "model_wide_hyperparameters": "original-pr393"
+          },
+          "reference_source_step": 541,
+          "comparable_runs": 3,
+          "reference_evidence": {
+            "path": "/root/modded-nanogpt/logs/wr-reproduction/matched-study/runs/matched-ks3-all-rank2-20261025T185248-cc3fd2/events.jsonl",
+            "sha256": "bf0694ddc54df8b883129a7e413379d6c391a04d7bcd8052c93b9db0233bc0e8",
+            "line": 575,
+            "row_sha256": "7fabea8162502aa99b612f1953363c842b1f71d658395191e6d4d91326988ee7"
+          },
+          "step": 541,
+          "train_seconds": 279.263298106991,
+          "reference_snapshot_sha256": "0685e057de660045575858b8d42a92b5d99d34335a2988660875f675987b796f",
+          "utc": "2026-10-25T22:54:06.400068+00:00",
+          "version": "pr393",
+          "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+          "expert_block": "ks3-gs32-bf16-c1024-r1",
+          "architecture": "ks3_all",
+          "run_id": "matched-ks3-all-dense768-normlr-20261025T224524-6029f2",
+          "seed": 168,
+          "code_commit": "0d08ba32ee481932bdfa754a7417aef4a0c92558",
+          "training_projection_gs32": true
+        },
+        "timing": null,
+        "correctness": null,
+        "exit_code": 0,
+        "events_sha256": "072064d8e9f0ab2491f3b4fa92d3b90a79c89256b0c5979fcfc053d944c73e47",
+        "completed_utc": "2026-10-25T22:54:08.297240+00:00",
+        "qualifies": false
+      }
+    }
+  ],
+  "decision": "Complete routed direct-BF16 correctness/timing/discovery and any verification, then isolate dense-only supported768 capacity with unchanged1024 routed experts.",
+  "unit": "wr-matched-dense768-normlr-ordered",
+  "scheduler": {
+    "path": "run_wr_matched_ablations.py",
+    "sha256": "a51be7013b4393887109a76c836bd2da6b336d09877160f27b9419ade5fbe955",
+    "code_commit": "544043a1adcdb0ac735abd3bd24636552537a11e"
+  },
+  "completed_utc": "2026-10-25T22:54:08.300572+00:00"
+}

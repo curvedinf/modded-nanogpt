@@ -1,0 +1,78 @@
+{
+  "utc": "2026-10-25T22:12:44.920940+00:00",
+  "passed": true,
+  "paired_runs": [
+    {
+      "label": "gs32_timing",
+      "run_id": "matched-ks3-all-20261025T220528-2ca4d7",
+      "code_commit": "a55d52b446143cd8f7821a2de7d6ba87644d46ec",
+      "seed": 168,
+      "config_sha256": "a84eb1c0ccffd8e009de25c8ea3e68333d4b8e35cee82d3c9b4f80769df55df3",
+      "events_sha256": "6adeca6b1a548726018cbbee358ae1239f9355053c8536c361a81801896fec8b",
+      "timing": {
+        "event": "timing_complete",
+        "steps": 100,
+        "train_seconds": 35.63738281701808,
+        "full_schedule_complete": false,
+        "validation_performed": false,
+        "utc": "2026-10-25T22:08:13.580836+00:00",
+        "version": "pr393",
+        "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+        "expert_block": "ks3-gs32-bf16-c1024-r1",
+        "architecture": "ks3_all",
+        "run_id": "matched-ks3-all-20261025T220528-2ca4d7",
+        "seed": 168,
+        "code_commit": "a55d52b446143cd8f7821a2de7d6ba87644d46ec",
+        "training_projection_gs32": true
+      }
+    },
+    {
+      "label": "direct_timing",
+      "run_id": "matched-ks3-all-dense-direct-bf16-20261025T220815-c8734c",
+      "code_commit": "f7b914272d97154f1c7c2a08ce7d6d6839f1d671",
+      "seed": 168,
+      "config_sha256": "8587bb07ba77bf8bd15a203846ae35ac3191a61b40715e65262d58b2c6a21e54",
+      "events_sha256": "e6d1a1bd00d55c272365ce1f1953f5292764efdbdd45821f966217b05939cc14",
+      "timing": {
+        "event": "timing_complete",
+        "steps": 100,
+        "train_seconds": 35.59585744800279,
+        "full_schedule_complete": false,
+        "validation_performed": false,
+        "utc": "2026-10-25T22:12:03.724800+00:00",
+        "version": "pr393",
+        "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+        "expert_block": "ks3-gs32-bf16-c1024-r1",
+        "architecture": "ks3_all",
+        "run_id": "matched-ks3-all-dense-direct-bf16-20261025T220815-c8734c",
+        "seed": 168,
+        "code_commit": "f7b914272d97154f1c7c2a08ce7d6d6839f1d671",
+        "training_projection_gs32": true
+      }
+    }
+  ],
+  "gate": {
+    "passed": true,
+    "baseline": {
+      "first100_seconds": 35.63738281701808,
+      "updates25_to100_seconds": 26.617042054975173
+    },
+    "candidate": {
+      "first100_seconds": 35.59585744800279,
+      "updates25_to100_seconds": 26.56454357202165
+    },
+    "candidate_over_baseline": {
+      "first100_seconds": 0.9988347806226819,
+      "updates25_to100_seconds": 0.998027636472712
+    },
+    "validation": false,
+    "objective_losses_not_compared": true,
+    "protocol": "Both use the same existing100-update timing loop, seed168 and source, outside the900s discovery/reference set",
+    "decision": "Proceed to fenced900s discovery"
+  },
+  "source_hashes_identical": true,
+  "backend_hash": "4cde32668b88b717ceba5db8b84017a7e44e5148f3ef2c2ba88c99c4960ddc24",
+  "comparison_scope": "One paired timing observation. Small observed differences are not a robust hardware speedup claim or validation progress.",
+  "full_validation_measured": false,
+  "decision": "Launch one frozen nominal900s direct dense BF16 discovery with normal compatible training-proxy screening."
+}

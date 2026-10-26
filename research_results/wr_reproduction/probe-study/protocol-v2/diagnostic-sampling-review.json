@@ -1,0 +1,7 @@
+{
+  "utc": "2026-10-26T04:09:36.132120+00:00",
+  "issue": "For routed geometry327680 elements, a flat stride80 visits only channel0 modulo8. Sampled parameter and gradient RMS therefore described one coefficient channel, not all geometry.",
+  "losses_and_training_unchanged": true,
+  "activation_moments_separately_measured": true,
+  "decision": "Replace aligned stride with deterministic evenly spread integer indices before corrected protocol freeze; preserve V1 diagnostics with this limitation."
+}

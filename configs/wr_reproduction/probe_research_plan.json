@@ -1,0 +1,16 @@
+{
+  "authorized_utc": "2026-10-26T02:09:52Z",
+  "study": "probe-study",
+  "purpose": "Validated KS3 improvement per GPU-hour against equally optimized MLP",
+  "supersedes_queue": "matched-study all-KS3 scalar ablations",
+  "training_budget_seconds": 900,
+  "probe_overhead_target_fraction": 0.03,
+  "probe_initial_interval_seconds": 60,
+  "pruning": {"metric": "fixed_text_full_vocabulary_cplm_ce", "gate_strictly_below": 5.0, "worse_margin_inclusive": 0.01, "consecutive_observations": 1, "reference": "current_best_compatible_mlp_or_ks3_at_comparable_elapsed_time", "training_proxy_allowed": false},
+  "instrumented_reference_seeds": [169],
+  "references": ["original_pr393_mlp_matched_shared_backend", "verified_rank1_1024_ks3_experts_original_dense_mlps"],
+  "first_placement_batch": {"base": "verified_ks3_experts", "replace_one_dense_layer": [0, 2, 4, 8, 10], "replacement_width": 2816},
+  "local_to_exploratory_ratio": [4, 1],
+  "verification": {"fresh_seeds": [269, 270, 271], "comparative_pruning": false},
+  "manager_prompt": "configs/wr_reproduction/probe_research_prompt.txt"
+}
