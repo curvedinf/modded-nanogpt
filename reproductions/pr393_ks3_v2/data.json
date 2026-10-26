@@ -1,0 +1,71 @@
+{
+  "repository": "kjj0/fineweb10B-gpt2",
+  "revision": "889765ea1f903759787add96995d81171b632d0c",
+  "files": [
+    {
+      "path": "data/fineweb10B/fineweb_train_000001.bin",
+      "bytes": 200001024,
+      "sha256": "771fa4a99b9fe0946ffb6e848b4ba5c6a9b0fe87860ebf03bc2c1c7e45f8178e"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000002.bin",
+      "bytes": 200001024,
+      "sha256": "d4ba8d2d740905a836a4222d2aff01750560e7d49a51a745a1b3235520aec2cd"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000003.bin",
+      "bytes": 200001024,
+      "sha256": "f70fa272369730fd9e39f1848bfe4daa3289b6e490c1e7762777f00ea8b66246"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000004.bin",
+      "bytes": 200001024,
+      "sha256": "d8d88850f89fe2030e866380e90d544167467d407080403b830b903543925835"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000005.bin",
+      "bytes": 200001024,
+      "sha256": "36cef3fc41863eb6731b41e986edde38e368853ee6deb87b928990bf445a119c"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000006.bin",
+      "bytes": 200001024,
+      "sha256": "d80e5b209983e636655fc738fdf281f0132f0298bf4c0848f7e7a6bea6ca06f0"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000007.bin",
+      "bytes": 200001024,
+      "sha256": "fa9f94dce61686b5467bc6cd3078424203db23ac254d804a6d8d5d440afc1e11"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000008.bin",
+      "bytes": 200001024,
+      "sha256": "308e6937af5d78b7489a8aac3a3951dced5b46103e613f8bc4eb543f5092526c"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_train_000009.bin",
+      "bytes": 200001024,
+      "sha256": "1635300891634346ecff3a78d6e489a69c647885f0dcd249fe3eb76fac683458"
+    },
+    {
+      "path": "data/fineweb10B/fineweb_val_000000.bin",
+      "bytes": 200001024,
+      "sha256": "5b95c8e0966f0861685b307b23dc5ae42b228ef74b28cb499784ae021f201640"
+    }
+  ],
+  "provenance": "Original local download metadata, local SHA256 of all ten shards, and immutable Hugging Face revision LFS metadata agree.",
+  "tokenizer_files": [
+    {
+      "path": "data/fineweb10B/tokenizer-cache/6d1cbeee0f20b3d9449abfede4726ed8212e3aee",
+      "url": "https://openaipublic.blob.core.windows.net/gpt-2/encodings/main/vocab.bpe",
+      "bytes": 456318,
+      "sha256": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5"
+    },
+    {
+      "path": "data/fineweb10B/tokenizer-cache/6c7ea1a7e38e3a7f062df639a5b80947f075ffe6",
+      "url": "https://openaipublic.blob.core.windows.net/gpt-2/encodings/main/encoder.json",
+      "bytes": 1042301,
+      "sha256": "196139668be63f3b5d6574427317ae82f612a97c5d1cdaf36ed2256dbf636783"
+    }
+  ]
+}

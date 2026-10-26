@@ -1,0 +1,1638 @@
+{
+  "utc": "2026-10-26T06:36:12.201183+00:00",
+  "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+  "seed": 169,
+  "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+  "backend_hash": "997daa58bdc95370f61d6e88c3f9becda4353f8d5d1410f6dc83795feda65bf9",
+  "architecture": "ks3_dense_8",
+  "replaced_dense_layer": 8,
+  "dense_branch": "parallel dense branch at transformer layer8",
+  "dense_features": 2816,
+  "other_dense_branches": "original FP8 MLP",
+  "routed_experts": "incumbent KS3",
+  "status": "pruned",
+  "qualifies": false,
+  "full_validation": null,
+  "probe": {
+    "loss": 3.4004779886454344,
+    "checkpoint_elapsed_seconds": 720.5624596620037,
+    "completion_seconds": 723.3486212090065,
+    "seconds": 2.7862682979903184,
+    "cumulative_probe_seconds": 16.974546012002975,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "tokens": 1048576
+  },
+  "screen": {
+    "event": "probe_screen",
+    "abort": true,
+    "below5_latched": true,
+    "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "candidate_elapsed_seconds": 720.5624596620037,
+    "reason": "first_one_sided_gap_at_least_001",
+    "gap": 0.012752771377563477,
+    "reference_run_id": "probe-ks3-experts-verification-20261026T051513-3659e3",
+    "reference_elapsed_seconds": 720.320877369988,
+    "reference_age_seconds": 0.24158229201566428,
+    "reference_utc": "2026-10-26T05:29:30.633021+00:00",
+    "reference_loss": 3.387725217267871,
+    "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+    "reference_evidence": {
+      "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-experts-verification-20261026T051513-3659e3/events.jsonl",
+      "line": 933,
+      "row_sha256": "adfc350ca366694463ce48c35c7cd0de2a07eb066c2c06d25e4defbab69ea6b5"
+    },
+    "paired_text_uncertainty": {
+      "available": true,
+      "blocks": 128,
+      "mean_difference": 0.012752771377563477,
+      "standard_error": 0.0007878465219552107,
+      "normal95_halfwidth": 0.001544179183032213,
+      "student95_halfwidth": 0.0015599361134713172,
+      "resolves_001": true,
+      "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+    },
+    "utc": "2026-10-26T06:33:17.743429+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_dense_8",
+    "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+    "seed": 169,
+    "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+    "training_projection_gs32": true
+  },
+  "prior_screen_observations": [
+    {
+      "event": "probe_screen",
+      "abort": false,
+      "below5_latched": true,
+      "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "candidate_elapsed_seconds": 120.4601258939947,
+      "reason": "within_one_sided_margin",
+      "gap": -0.01573849841952324,
+      "reference_run_id": "probe-ks3-dense-layer4-width2816-discovery-20261026T060628-d83343",
+      "reference_elapsed_seconds": 120.32418955399771,
+      "reference_age_seconds": 0.13593633999698795,
+      "reference_utc": "2026-10-26T06:12:51.907060+00:00",
+      "reference_loss": 4.6527969893068075,
+      "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "reference_evidence": {
+        "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-dense-layer4-width2816-discovery-20261026T060628-d83343/events.jsonl",
+        "line": 325,
+        "row_sha256": "3bfc98c22ce8f636191874e6974462f263a4656d5ddbbad8307ebf87be910f11"
+      },
+      "paired_text_uncertainty": {
+        "available": true,
+        "blocks": 128,
+        "mean_difference": -0.01573849841952324,
+        "standard_error": 0.001959498149990302,
+        "normal95_halfwidth": 0.003840616373980992,
+        "student95_halfwidth": 0.003879806336980798,
+        "resolves_001": true,
+        "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+      },
+      "utc": "2026-10-26T06:23:17.939317+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1",
+      "architecture": "ks3_dense_8",
+      "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+      "seed": 169,
+      "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+      "training_projection_gs32": true
+    },
+    {
+      "event": "probe_screen",
+      "abort": false,
+      "below5_latched": true,
+      "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "candidate_elapsed_seconds": 240.50047177899978,
+      "reason": "within_one_sided_margin",
+      "gap": -0.004834918305277824,
+      "reference_run_id": "probe-ks3-experts-verification-20261026T045737-498c82",
+      "reference_elapsed_seconds": 240.20126297298702,
+      "reference_age_seconds": 0.2992088060127571,
+      "reference_utc": "2026-10-26T05:03:53.966638+00:00",
+      "reference_loss": 4.067118540406227,
+      "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "reference_evidence": {
+        "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-experts-verification-20261026T045737-498c82/events.jsonl",
+        "line": 481,
+        "row_sha256": "60753dfa713023e1cbf4b9c5638ffae21cb94f5cfc378747ea78ffc8d7bfa9eb"
+      },
+      "paired_text_uncertainty": {
+        "available": true,
+        "blocks": 128,
+        "mean_difference": -0.004834918305277824,
+        "standard_error": 0.0012793273182262733,
+        "normal95_halfwidth": 0.0025074815437234957,
+        "student95_halfwidth": 0.002533068090088021,
+        "resolves_001": true,
+        "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+      },
+      "utc": "2026-10-26T06:25:17.683241+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1",
+      "architecture": "ks3_dense_8",
+      "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+      "seed": 169,
+      "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+      "training_projection_gs32": true
+    },
+    {
+      "event": "probe_screen",
+      "abort": false,
+      "below5_latched": true,
+      "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "candidate_elapsed_seconds": 360.01539927200065,
+      "reason": "no_comparable_nonfuture_probe",
+      "max_reference_age_seconds": 3.0,
+      "utc": "2026-10-26T06:27:17.170101+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1",
+      "architecture": "ks3_dense_8",
+      "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+      "seed": 169,
+      "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+      "training_projection_gs32": true
+    },
+    {
+      "event": "probe_screen",
+      "abort": false,
+      "below5_latched": true,
+      "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "candidate_elapsed_seconds": 480.3786018740211,
+      "reason": "within_one_sided_margin",
+      "gap": -0.005966849625110626,
+      "reference_run_id": "probe-ks3-experts-verification-20261026T045737-498c82",
+      "reference_elapsed_seconds": 480.2673738769954,
+      "reference_age_seconds": 0.11122799702570774,
+      "reference_utc": "2026-10-26T05:07:54.016713+00:00",
+      "reference_loss": 3.5652831085026264,
+      "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "reference_evidence": {
+        "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-experts-verification-20261026T045737-498c82/events.jsonl",
+        "line": 736,
+        "row_sha256": "629ac8047c7b4a8a995fc3c4e6bdcea7efb5c971937c97b9f5f7675618822a84"
+      },
+      "paired_text_uncertainty": {
+        "available": true,
+        "blocks": 128,
+        "mean_difference": -0.005966849625110626,
+        "standard_error": 0.0009831634053582828,
+        "normal95_halfwidth": 0.0019270002745022342,
+        "student95_halfwidth": 0.0019466635426093999,
+        "resolves_001": true,
+        "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+      },
+      "utc": "2026-10-26T06:29:17.544072+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1",
+      "architecture": "ks3_dense_8",
+      "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+      "seed": 169,
+      "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+      "training_projection_gs32": true
+    },
+    {
+      "event": "probe_screen",
+      "abort": false,
+      "below5_latched": true,
+      "signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "candidate_elapsed_seconds": 600.2401487820025,
+      "reason": "within_one_sided_margin",
+      "gap": 0.007760530337691307,
+      "reference_run_id": "probe-ks3-experts-verification-20261026T045737-498c82",
+      "reference_elapsed_seconds": 600.2117831789947,
+      "reference_age_seconds": 0.028365603007841855,
+      "reference_utc": "2026-10-26T05:09:53.971455+00:00",
+      "reference_loss": 3.493752559646964,
+      "reference_signature_hash": "d277da78f2d67840635309869485cba59680bca859fb5542457aa3a31149aa31",
+      "reference_evidence": {
+        "path": "/root/modded-nanogpt/logs/wr-reproduction/probe-study/protocol-v2/runs/probe-ks3-experts-verification-20261026T045737-498c82/events.jsonl",
+        "line": 836,
+        "row_sha256": "d9892b7d2530b61040d1c9560737a211eb81dab1ad334d9086a6eed8619c00d5"
+      },
+      "paired_text_uncertainty": {
+        "available": true,
+        "blocks": 128,
+        "mean_difference": 0.007760530337691307,
+        "standard_error": 0.0008725691127722336,
+        "normal95_halfwidth": 0.001710235461033578,
+        "student95_halfwidth": 0.0017276868432890226,
+        "resolves_001": true,
+        "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+      },
+      "utc": "2026-10-26T06:31:17.418459+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1",
+      "architecture": "ks3_dense_8",
+      "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+      "seed": 169,
+      "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+      "training_projection_gs32": true
+    }
+  ],
+  "paired_block32768": {
+    "available": true,
+    "blocks": 32,
+    "mean_difference": 0.012752771377563477,
+    "standard_error": 0.0007008837184717141,
+    "normal95_halfwidth": 0.0013737320882045597,
+    "student95_halfwidth": 0.00143120455311924,
+    "resolves_001": true,
+    "limitation": "Text sampling uncertainty under independent-block approximation; adjacent blocks may correlate. Not inference nondeterminism."
+  },
+  "execution_coverage": {
+    "event": "feedforward_execution_coverage",
+    "dense_ks3_forward_slots": [
+      4
+    ],
+    "dense_ks3_backward_slots": [
+      4
+    ],
+    "routed_ks3_backward_layers": [
+      1,
+      3,
+      5,
+      6,
+      8
+    ],
+    "retained_original_mlp_slots": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "all_feedforward_paths_mapped": true,
+    "original_mlp_fallback_is_fatal": true,
+    "transformed_forward_sha256": "902100e3411a976eadf0316a455356c8e780ddc512cb4baf13ed6a43611a70ba",
+    "actual_graph_warmup": true,
+    "ks3_geometry_initialization": {
+      "distribution": "constant",
+      "std": 0.0,
+      "seed": null
+    },
+    "ks3_output_projection_initialization": {
+      "distribution": "original-zero",
+      "gain": 0.0,
+      "seed": null
+    },
+    "dense_projection_optimizer": {
+      "multiplier": 1.0,
+      "effective_multiplier": 1.9148542155126762,
+      "shape_scale": 1.9148542155126762,
+      "base_lr": 0.023,
+      "weight_decay": 2.25,
+      "ks3_weight_decay_multiplier": 1.0,
+      "dense_weight_decay_multiplier": 1.0,
+      "routed_weight_decay_multiplier": 1.0,
+      "ks3_output_projection_multiplier": 2.0,
+      "dense_per_matrix_lr_multipliers": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        2.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "routed_per_matrix_lr_multipliers": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ]
+    },
+    "dense_geometry_optimizer": {
+      "multiplier": 0.125,
+      "base_lr": 0.008,
+      "adam_betas": [
+        0.9,
+        0.99
+      ],
+      "weight_decay_multiplier": 0.0,
+      "eps": 1e-10,
+      "routed_geometry_multiplier": 0.125,
+      "routed_adam_betas": [
+        0.9,
+        0.99
+      ]
+    },
+    "dense_training_precision": "bf16",
+    "dense_validation_precision": "bf16",
+    "dense_training_projection_gs32": true,
+    "dense_validation_projection_gs32": true,
+    "dense_geometry_coefficient_gs32": true,
+    "routed_training_projection_gs32": true,
+    "routed_validation_projection_gs32": true,
+    "dense_fp8_activation_scale_slots": null,
+    "utc": "2026-10-26T06:21:12.867840+00:00",
+    "version": "pr393",
+    "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+    "expert_block": "ks3-gs32-bf16-c1024-r1",
+    "architecture": "ks3_dense_8",
+    "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+    "seed": 169,
+    "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+    "training_projection_gs32": true
+  },
+  "activation_diagnostics": [
+    {
+      "checkpoint_elapsed_seconds": 120.4601258939947,
+      "measurements": [
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.35423481464385986,
+            "rms": 1.2730721235275269,
+            "max_abs": 7.919201374053955,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 0.5495198965072632,
+            "rms": 2.426706552505493,
+            "max_abs": 87.0,
+            "nonzero_fraction": 0.2861328125
+          },
+          "projected_output": {
+            "mean": 0.07084580510854721,
+            "rms": 8.524696350097656,
+            "max_abs": 46.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.41221845149993896,
+            "rms": 1.2928134202957153,
+            "max_abs": 4.880229473114014,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 0.47804194688796997,
+            "rms": 1.752786636352539,
+            "max_abs": 28.0,
+            "nonzero_fraction": 0.284423828125
+          },
+          "projected_output": {
+            "mean": 0.03257804736495018,
+            "rms": 7.4237895011901855,
+            "max_abs": 59.5,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.3906688392162323,
+            "rms": 1.336890697479248,
+            "max_abs": 5.888731479644775,
+            "nonzero_fraction": 0.8984375
+          },
+          "nonlinear_output": {
+            "mean": 0.6027600765228271,
+            "rms": 2.470611572265625,
+            "max_abs": 46.25,
+            "nonzero_fraction": 0.29833984375
+          },
+          "projected_output": {
+            "mean": 0.016644474118947983,
+            "rms": 7.843194484710693,
+            "max_abs": 62.5,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.4065035283565521,
+            "rms": 1.3064738512039185,
+            "max_abs": 5.1479105949401855,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 0.5544576644897461,
+            "rms": 2.234835624694824,
+            "max_abs": 36.0,
+            "nonzero_fraction": 0.30078125
+          },
+          "projected_output": {
+            "mean": 0.06985356658697128,
+            "rms": 8.554390907287598,
+            "max_abs": 56.75,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.32374370098114014,
+            "rms": 1.2982929944992065,
+            "max_abs": 6.863622665405273,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 0.6920409202575684,
+            "rms": 3.4424641132354736,
+            "max_abs": 111.5,
+            "nonzero_fraction": 0.332763671875
+          },
+          "projected_output": {
+            "mean": -0.385983407497406,
+            "rms": 10.354329109191895,
+            "max_abs": 118.5,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -0.8868820667266846,
+            "rms": 1.6298820972442627,
+            "max_abs": 7.400168418884277,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 0.44785648584365845,
+            "rms": 2.3909318447113037,
+            "max_abs": 54.75,
+            "nonzero_fraction": 0.19970703125
+          },
+          "projected_output": {
+            "mean": -0.3757099509239197,
+            "rms": 18.17017364501953,
+            "max_abs": 338.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ]
+    },
+    {
+      "checkpoint_elapsed_seconds": 240.50047177899978,
+      "measurements": [
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.7142162919044495,
+            "rms": 1.9776233434677124,
+            "max_abs": 9.570720672607422,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 1.0728014707565308,
+            "rms": 5.302975177764893,
+            "max_abs": 132.0,
+            "nonzero_fraction": 0.258544921875
+          },
+          "projected_output": {
+            "mean": 0.34174883365631104,
+            "rms": 27.817293167114258,
+            "max_abs": 160.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.7346107959747314,
+            "rms": 2.000109910964966,
+            "max_abs": 9.492170333862305,
+            "nonzero_fraction": 0.8984375
+          },
+          "nonlinear_output": {
+            "mean": 1.1693042516708374,
+            "rms": 5.103304862976074,
+            "max_abs": 111.5,
+            "nonzero_fraction": 0.27294921875
+          },
+          "projected_output": {
+            "mean": -0.2837424874305725,
+            "rms": 25.304454803466797,
+            "max_abs": 164.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.7948620319366455,
+            "rms": 2.0321097373962402,
+            "max_abs": 10.065817832946777,
+            "nonzero_fraction": 0.896484375
+          },
+          "nonlinear_output": {
+            "mean": 1.1622053384780884,
+            "rms": 5.945458889007568,
+            "max_abs": 147.0,
+            "nonzero_fraction": 0.269775390625
+          },
+          "projected_output": {
+            "mean": 0.3250061273574829,
+            "rms": 23.728870391845703,
+            "max_abs": 190.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.7862087488174438,
+            "rms": 1.9957995414733887,
+            "max_abs": 10.59712028503418,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 1.0588810443878174,
+            "rms": 5.501079082489014,
+            "max_abs": 206.0,
+            "nonzero_fraction": 0.27392578125
+          },
+          "projected_output": {
+            "mean": 0.512281060218811,
+            "rms": 24.21382713317871,
+            "max_abs": 172.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.6929292678833008,
+            "rms": 1.951777696609497,
+            "max_abs": 10.209525108337402,
+            "nonzero_fraction": 0.8984375
+          },
+          "nonlinear_output": {
+            "mean": 1.1813294887542725,
+            "rms": 6.025489807128906,
+            "max_abs": 174.0,
+            "nonzero_fraction": 0.28466796875
+          },
+          "projected_output": {
+            "mean": -0.09372635185718536,
+            "rms": 26.499204635620117,
+            "max_abs": 239.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.3139933347702026,
+            "rms": 2.3844664096832275,
+            "max_abs": 12.119348526000977,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 0.8594259023666382,
+            "rms": 4.556424140930176,
+            "max_abs": 119.5,
+            "nonzero_fraction": 0.19189453125
+          },
+          "projected_output": {
+            "mean": 0.2131347358226776,
+            "rms": 46.50630569458008,
+            "max_abs": 660.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ]
+    },
+    {
+      "checkpoint_elapsed_seconds": 360.01539927200065,
+      "measurements": [
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9058497548103333,
+            "rms": 2.3084557056427,
+            "max_abs": 10.382165908813477,
+            "nonzero_fraction": 0.904296875
+          },
+          "nonlinear_output": {
+            "mean": 1.2640571594238281,
+            "rms": 5.494050025939941,
+            "max_abs": 122.5,
+            "nonzero_fraction": 0.251953125
+          },
+          "projected_output": {
+            "mean": 0.32439643144607544,
+            "rms": 41.25498962402344,
+            "max_abs": 258.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9500853419303894,
+            "rms": 2.34063982963562,
+            "max_abs": 8.890392303466797,
+            "nonzero_fraction": 0.8984375
+          },
+          "nonlinear_output": {
+            "mean": 1.4654881954193115,
+            "rms": 6.869389533996582,
+            "max_abs": 145.0,
+            "nonzero_fraction": 0.26171875
+          },
+          "projected_output": {
+            "mean": 0.9046317338943481,
+            "rms": 38.77655029296875,
+            "max_abs": 262.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.0101051330566406,
+            "rms": 2.4871914386749268,
+            "max_abs": 9.75059700012207,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 1.7500202655792236,
+            "rms": 8.35168170928955,
+            "max_abs": 206.0,
+            "nonzero_fraction": 0.264892578125
+          },
+          "projected_output": {
+            "mean": 0.5491646528244019,
+            "rms": 36.48475646972656,
+            "max_abs": 227.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9288698434829712,
+            "rms": 2.277285575866699,
+            "max_abs": 8.432619094848633,
+            "nonzero_fraction": 0.8984375
+          },
+          "nonlinear_output": {
+            "mean": 1.3530505895614624,
+            "rms": 6.151164531707764,
+            "max_abs": 97.5,
+            "nonzero_fraction": 0.2763671875
+          },
+          "projected_output": {
+            "mean": -0.260201632976532,
+            "rms": 36.19855499267578,
+            "max_abs": 270.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.95362389087677,
+            "rms": 2.3010549545288086,
+            "max_abs": 9.795116424560547,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 1.3844046592712402,
+            "rms": 6.982854843139648,
+            "max_abs": 171.0,
+            "nonzero_fraction": 0.25537109375
+          },
+          "projected_output": {
+            "mean": 0.29500845074653625,
+            "rms": 39.42454528808594,
+            "max_abs": 608.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.4184637069702148,
+            "rms": 2.7011311054229736,
+            "max_abs": 11.3141508102417,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 1.191741704940796,
+            "rms": 5.836280822753906,
+            "max_abs": 111.0,
+            "nonzero_fraction": 0.206298828125
+          },
+          "projected_output": {
+            "mean": -0.31832316517829895,
+            "rms": 79.58474731445312,
+            "max_abs": 1312.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ]
+    },
+    {
+      "checkpoint_elapsed_seconds": 480.3786018740211,
+      "measurements": [
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9817931652069092,
+            "rms": 2.4302220344543457,
+            "max_abs": 9.136530876159668,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 1.3194478750228882,
+            "rms": 5.491810321807861,
+            "max_abs": 96.5,
+            "nonzero_fraction": 0.25341796875
+          },
+          "projected_output": {
+            "mean": -0.06652648746967316,
+            "rms": 44.95372772216797,
+            "max_abs": 220.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9661388993263245,
+            "rms": 2.47654128074646,
+            "max_abs": 11.447290420532227,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 1.7602496147155762,
+            "rms": 8.566041946411133,
+            "max_abs": 227.0,
+            "nonzero_fraction": 0.26708984375
+          },
+          "projected_output": {
+            "mean": 0.6369328498840332,
+            "rms": 44.428855895996094,
+            "max_abs": 282.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.067484974861145,
+            "rms": 2.494795560836792,
+            "max_abs": 12.585302352905273,
+            "nonzero_fraction": 0.8984375
+          },
+          "nonlinear_output": {
+            "mean": 1.5018393993377686,
+            "rms": 7.416609764099121,
+            "max_abs": 240.0,
+            "nonzero_fraction": 0.260009765625
+          },
+          "projected_output": {
+            "mean": 0.8393998742103577,
+            "rms": 42.89882278442383,
+            "max_abs": 540.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.9709986448287964,
+            "rms": 2.481048345565796,
+            "max_abs": 8.866762161254883,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 1.7095447778701782,
+            "rms": 7.20054292678833,
+            "max_abs": 122.0,
+            "nonzero_fraction": 0.28173828125
+          },
+          "projected_output": {
+            "mean": 1.1065360307693481,
+            "rms": 40.48800277709961,
+            "max_abs": 254.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -0.988542914390564,
+            "rms": 2.3930246829986572,
+            "max_abs": 10.729192733764648,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 1.4392837285995483,
+            "rms": 6.473902225494385,
+            "max_abs": 157.0,
+            "nonzero_fraction": 0.271728515625
+          },
+          "projected_output": {
+            "mean": -0.7063099145889282,
+            "rms": 42.07598876953125,
+            "max_abs": 418.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.3793742656707764,
+            "rms": 2.7616159915924072,
+            "max_abs": 12.434870719909668,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 1.3803763389587402,
+            "rms": 6.394251346588135,
+            "max_abs": 141.0,
+            "nonzero_fraction": 0.2236328125
+          },
+          "projected_output": {
+            "mean": -0.5993962287902832,
+            "rms": 92.6264877319336,
+            "max_abs": 1648.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ]
+    },
+    {
+      "checkpoint_elapsed_seconds": 600.2401487820025,
+      "measurements": [
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.0232470035552979,
+            "rms": 2.5286924839019775,
+            "max_abs": 10.197175979614258,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 1.5968321561813354,
+            "rms": 6.997066974639893,
+            "max_abs": 124.0,
+            "nonzero_fraction": 0.2470703125
+          },
+          "projected_output": {
+            "mean": 0.04651382565498352,
+            "rms": 51.21432113647461,
+            "max_abs": 296.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.0261313915252686,
+            "rms": 2.531259059906006,
+            "max_abs": 10.45244312286377,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 1.7511930465698242,
+            "rms": 8.429179191589355,
+            "max_abs": 207.0,
+            "nonzero_fraction": 0.263671875
+          },
+          "projected_output": {
+            "mean": 0.5992310047149658,
+            "rms": 47.0731086730957,
+            "max_abs": 294.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.0993971824645996,
+            "rms": 2.6213643550872803,
+            "max_abs": 12.020087242126465,
+            "nonzero_fraction": 0.904296875
+          },
+          "nonlinear_output": {
+            "mean": 1.7235620021820068,
+            "rms": 7.490321636199951,
+            "max_abs": 191.0,
+            "nonzero_fraction": 0.2724609375
+          },
+          "projected_output": {
+            "mean": 1.0926889181137085,
+            "rms": 44.21921920776367,
+            "max_abs": 392.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.023536205291748,
+            "rms": 2.4929802417755127,
+            "max_abs": 12.291335105895996,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 1.5235604047775269,
+            "rms": 6.669009208679199,
+            "max_abs": 177.0,
+            "nonzero_fraction": 0.270751953125
+          },
+          "projected_output": {
+            "mean": 0.2157103717327118,
+            "rms": 45.213138580322266,
+            "max_abs": 384.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.0527946949005127,
+            "rms": 2.4756717681884766,
+            "max_abs": 12.686206817626953,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 1.54551362991333,
+            "rms": 8.259050369262695,
+            "max_abs": 252.0,
+            "nonzero_fraction": 0.26171875
+          },
+          "projected_output": {
+            "mean": -0.7952847480773926,
+            "rms": 45.454654693603516,
+            "max_abs": 416.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.3679981231689453,
+            "rms": 2.8185269832611084,
+            "max_abs": 13.633251190185547,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 1.5592073202133179,
+            "rms": 7.268749237060547,
+            "max_abs": 160.0,
+            "nonzero_fraction": 0.225830078125
+          },
+          "projected_output": {
+            "mean": -0.0014023780822753906,
+            "rms": 104.19757080078125,
+            "max_abs": 1872.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ]
+    },
+    {
+      "checkpoint_elapsed_seconds": 720.5624596620037,
+      "measurements": [
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.014665126800537,
+            "rms": 2.5815775394439697,
+            "max_abs": 11.614892959594727,
+            "nonzero_fraction": 0.90625
+          },
+          "nonlinear_output": {
+            "mean": 1.6348810195922852,
+            "rms": 7.247405529022217,
+            "max_abs": 168.0,
+            "nonzero_fraction": 0.25390625
+          },
+          "projected_output": {
+            "mean": 0.5655972361564636,
+            "rms": 51.98277282714844,
+            "max_abs": 300.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.1554397344589233,
+            "rms": 2.6198315620422363,
+            "max_abs": 8.874922752380371,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 1.6008107662200928,
+            "rms": 7.034356594085693,
+            "max_abs": 97.0,
+            "nonzero_fraction": 0.2578125
+          },
+          "projected_output": {
+            "mean": 0.10621929168701172,
+            "rms": 47.36323165893555,
+            "max_abs": 340.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.1785045862197876,
+            "rms": 2.6863675117492676,
+            "max_abs": 11.428013801574707,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 1.7033365964889526,
+            "rms": 7.895877361297607,
+            "max_abs": 176.0,
+            "nonzero_fraction": 0.252197265625
+          },
+          "projected_output": {
+            "mean": 0.9228763580322266,
+            "rms": 45.47633743286133,
+            "max_abs": 468.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.0497891902923584,
+            "rms": 2.5822315216064453,
+            "max_abs": 14.812431335449219,
+            "nonzero_fraction": 0.900390625
+          },
+          "nonlinear_output": {
+            "mean": 1.769707441329956,
+            "rms": 8.866254806518555,
+            "max_abs": 338.0,
+            "nonzero_fraction": 0.28076171875
+          },
+          "projected_output": {
+            "mean": 0.8607317209243774,
+            "rms": 44.91958236694336,
+            "max_abs": 258.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "routed",
+          "coordinate": {
+            "mean": -1.0552494525909424,
+            "rms": 2.55953311920166,
+            "max_abs": 12.161493301391602,
+            "nonzero_fraction": 0.90234375
+          },
+          "nonlinear_output": {
+            "mean": 1.6322349309921265,
+            "rms": 7.576512336730957,
+            "max_abs": 197.0,
+            "nonzero_fraction": 0.27197265625
+          },
+          "projected_output": {
+            "mean": -0.37199854850769043,
+            "rms": 46.128173828125,
+            "max_abs": 572.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        },
+        {
+          "branch": "dense",
+          "coordinate": {
+            "mean": -1.3365674018859863,
+            "rms": 2.8140740394592285,
+            "max_abs": 12.391719818115234,
+            "nonzero_fraction": 1.0
+          },
+          "nonlinear_output": {
+            "mean": 1.6156471967697144,
+            "rms": 7.317544937133789,
+            "max_abs": 138.0,
+            "nonzero_fraction": 0.230224609375
+          },
+          "projected_output": {
+            "mean": -0.11813592910766602,
+            "rms": 109.00052642822266,
+            "max_abs": 1888.0,
+            "nonzero_fraction": 1.0
+          },
+          "sampling": "deterministic-evenly-spaced-integer4096-elements-first-probe-chunk",
+          "training_objective_used": false
+        }
+      ]
+    }
+  ],
+  "update_diagnostics": [
+    {
+      "event": "ks3_update_diagnostics",
+      "step": 291,
+      "measurements": {
+        "ks3_geometry": {
+          "branch": "routed",
+          "parameter_rms": 0.26323676109313965,
+          "update_rms": 0.0,
+          "relative_update_rms": 0.0,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 327680,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "ks3_dense_geometry": {
+          "branch": "dense",
+          "parameter_rms": 0.26464325189590454,
+          "update_rms": 0.0,
+          "relative_update_rms": 0.0,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 112640,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "moe_bank": {
+          "branch": "routed",
+          "parameter_rms": 0.06543835252523422,
+          "update_rms": 0.00171334866899997,
+          "relative_update_rms": 0.02618263759527368,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 62914560,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "mlp_bank": {
+          "branch": "dense",
+          "parameter_rms": 0.025849876925349236,
+          "update_rms": 0.0006773248896934092,
+          "relative_update_rms": 0.026202248144137283,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 34603008,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        }
+      },
+      "train_seconds": 124.40839214401785,
+      "utc": "2026-10-26T06:23:18.714864+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1",
+      "architecture": "ks3_dense_8",
+      "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+      "seed": 169,
+      "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+      "training_projection_gs32": true
+    },
+    {
+      "event": "ks3_update_diagnostics",
+      "step": 440,
+      "measurements": {
+        "ks3_geometry": {
+          "branch": "routed",
+          "parameter_rms": 0.2619735300540924,
+          "update_rms": 0.0002190088853240013,
+          "relative_update_rms": 0.0008359962370197488,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 327680,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "ks3_dense_geometry": {
+          "branch": "dense",
+          "parameter_rms": 0.26430946588516235,
+          "update_rms": 6.789471080992371e-05,
+          "relative_update_rms": 0.00025687582010181474,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 112640,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "moe_bank": {
+          "branch": "routed",
+          "parameter_rms": 0.10016822069883347,
+          "update_rms": 0.001527738873846829,
+          "relative_update_rms": 0.015251732168031018,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 62914560,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "mlp_bank": {
+          "branch": "dense",
+          "parameter_rms": 0.03658144921064377,
+          "update_rms": 0.0005971568753011525,
+          "relative_update_rms": 0.016324035493033535,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 34603008,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        }
+      },
+      "train_seconds": 244.17910365801072,
+      "utc": "2026-10-26T06:25:18.485575+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1",
+      "architecture": "ks3_dense_8",
+      "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+      "seed": 169,
+      "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+      "training_projection_gs32": true
+    },
+    {
+      "event": "ks3_update_diagnostics",
+      "step": 589,
+      "measurements": {
+        "ks3_geometry": {
+          "branch": "routed",
+          "parameter_rms": 0.2615188658237457,
+          "update_rms": 0.0,
+          "relative_update_rms": 0.0,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 327680,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "ks3_dense_geometry": {
+          "branch": "dense",
+          "parameter_rms": 0.2642034888267517,
+          "update_rms": 0.0,
+          "relative_update_rms": 0.0,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 112640,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "moe_bank": {
+          "branch": "routed",
+          "parameter_rms": 0.11703812330961227,
+          "update_rms": 0.0012756841024383903,
+          "relative_update_rms": 0.010899731355600257,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 62914560,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "mlp_bank": {
+          "branch": "dense",
+          "parameter_rms": 0.04196726530790329,
+          "update_rms": 0.0004982022219337523,
+          "relative_update_rms": 0.011871210055708126,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 34603008,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        }
+      },
+      "train_seconds": 363.6361398510053,
+      "utc": "2026-10-26T06:27:17.942611+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1",
+      "architecture": "ks3_dense_8",
+      "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+      "seed": 169,
+      "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+      "training_projection_gs32": true
+    },
+    {
+      "event": "ks3_update_diagnostics",
+      "step": 687,
+      "measurements": {
+        "ks3_geometry": {
+          "branch": "routed",
+          "parameter_rms": 0.26130133867263794,
+          "update_rms": 0.0,
+          "relative_update_rms": 0.0,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 327680,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "ks3_dense_geometry": {
+          "branch": "dense",
+          "parameter_rms": 0.2641507089138031,
+          "update_rms": 0.0,
+          "relative_update_rms": 0.0,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 112640,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "moe_bank": {
+          "branch": "routed",
+          "parameter_rms": 0.12052881717681885,
+          "update_rms": 0.0011993066873401403,
+          "relative_update_rms": 0.009950372993213124,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 62914560,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "mlp_bank": {
+          "branch": "dense",
+          "parameter_rms": 0.042616866528987885,
+          "update_rms": 0.0004743584431707859,
+          "relative_update_rms": 0.011130767740704928,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 34603008,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        }
+      },
+      "train_seconds": 484.4571324310091,
+      "utc": "2026-10-26T06:29:18.763602+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1",
+      "architecture": "ks3_dense_8",
+      "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+      "seed": 169,
+      "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+      "training_projection_gs32": true
+    },
+    {
+      "event": "ks3_update_diagnostics",
+      "step": 782,
+      "measurements": {
+        "ks3_geometry": {
+          "branch": "routed",
+          "parameter_rms": 0.26112353801727295,
+          "update_rms": 0.00012784193677362055,
+          "relative_update_rms": 0.0004895841169445398,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 327680,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "ks3_dense_geometry": {
+          "branch": "dense",
+          "parameter_rms": 0.26412272453308105,
+          "update_rms": 4.007573443232104e-05,
+          "relative_update_rms": 0.00015173148960645984,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 112640,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "moe_bank": {
+          "branch": "routed",
+          "parameter_rms": 0.12335719168186188,
+          "update_rms": 0.0009946408681571484,
+          "relative_update_rms": 0.008063095913551003,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 62914560,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        },
+        "mlp_bank": {
+          "branch": "dense",
+          "parameter_rms": 0.0430951826274395,
+          "update_rms": 0.00036217577871866524,
+          "relative_update_rms": 0.008404089660083288,
+          "gradient_sample_rms": null,
+          "gradient_l2_estimate": null,
+          "gradient_missing_reason": "Adam-not-applied-this-original-update",
+          "sample_elements": 4096,
+          "total_elements": 34603008,
+          "sampling": "evenly-spaced-integer-indices; includes all geometry channels; bank padding may remain",
+          "single_original_update": true
+        }
+      },
+      "train_seconds": 604.3369073159993,
+      "utc": "2026-10-26T06:31:18.643378+00:00",
+      "version": "pr393",
+      "source_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "expert_block": "ks3-gs32-bf16-c1024-r1",
+      "architecture": "ks3_dense_8",
+      "run_id": "probe-ks3-dense-layer8-width2816-discovery-20261026T061653-e2d6bd",
+      "seed": 169,
+      "code_commit": "fe034856d0326f9bace3b13c532654ad93ab99f1",
+      "training_projection_gs32": true
+    }
+  ],
+  "diagnostic_limits": [
+    "Activation moments sample the first fixed-probe chunk; routed coordinate padding may be present.",
+    "Post-update null gradients do not mean zero gradients or skipped Adam. See gradient-diagnostic-availability-audit.json.",
+    "Dense mlp_bank samples contain unused bank slots.",
+    "Intermediate probe advantages did not establish a full-validation win. No full-validation endpoint exists for this pruned trial."
+  ],
+  "decision": "Reject unchanged parallel dense layer8 on its first adverse comparable observation at720.56s. Earlier observations remained within the one-sided margin. Complete isolated layer10, then inspect all five and choose diagnostic-led joint geometry/projection-rate hypotheses."
+}

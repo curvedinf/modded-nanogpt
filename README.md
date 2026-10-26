@@ -1,5 +1,10 @@
 # Modded-NanoGPT
 
+For this fork's **verified KS3 winner and matched optimized MLP on one MI300X**, follow
+[the MI300X reproduction instructions](MI300.md#reproduce-the-verified-ks3-and-optimized-mlp-runs).
+They provide frozen recipes, pinned data, environment checks, and portable launch commands.
+The upstream H100 record instructions below describe a different run.
+
 This repository hosts the *NanoGPT speedrun*, in which we (collaboratively|competitively) search for the fastest algorithm to use 8 NVIDIA H100 GPUs to train a language model that attains 3.28 cross-entropy loss on the [FineWeb](https://huggingface.co/datasets/HuggingFaceFW/fineweb) validation set.
 
 (Note: Besides the main track, there is also an [optimization track](records/track_3_optimization) where we try to minimize steps subject to fixed arch/data/bsz and with unlimited wallclock budget.)

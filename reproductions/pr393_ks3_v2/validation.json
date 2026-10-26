@@ -1,0 +1,40 @@
+{
+  "checked_utc": "2026-10-26T06:41:27.051925+00:00",
+  "status": "packaging_checks_passed",
+  "frozen_python_sources": 205,
+  "frozen_files_verified": 239,
+  "checks": {
+    "original_upstream_manifests": "passed PR393 and record360",
+    "shared_backend_and_recipe_parity": "passed both arms",
+    "unit_and_controller_integration_tests": {
+      "passed": 8,
+      "gpu_used": false,
+      "controller_child": "CPU validation event emitter; no model execution"
+    },
+    "isolated_export": "passed source checks, environment version checks, tests and all four run preparations from a checkout path containing spaces with an external data root",
+    "data": {
+      "training_shards": 9,
+      "validation_shards": 1,
+      "tokenizer_assets": 2,
+      "all_sha256_verified": true,
+      "huggingface_revision": "889765ea1f903759787add96995d81171b632d0c",
+      "remote_lfs_matches_original_local_shards": true
+    },
+    "dependency_install_resolution": {
+      "command": "python -m pip install --dry-run --ignore-installed --require-hashes -r reproductions/pr393_ks3_v2/requirements.txt",
+      "resolved_wheels": 30,
+      "passed": true,
+      "installed_new_environment": false
+    },
+    "original_training_code_modified": false,
+    "new_gpu_training_performed": false
+  },
+  "limitation": "No second-host convergence run was performed. These checks validate packaging, exact inputs, dependency resolution and launch plumbing; destination-host timing and loss must be measured by the documented runs.",
+  "packaging_sha256": {
+    "reproduce_mi300.py": "15663af8b43490b2f448f5883bff6c5d764553caa4fc581881cac683da21fbef",
+    "test_reproduce_mi300.py": "d13dd0575eb9cb2041bca7d2e066f214d6c1e44195dd756a07cff06eaa59317f",
+    "MI300.md": "cb18e4fad000e1a19a0b9c6409b4d736b74d9e478972fe1a1024920f3bbc4ae1",
+    "README.md": "5c9a7a4fdd067669dda4d14bc0a6a91a660769ddeb7b9769551bf4e5bee3d7e3",
+    "reproductions/pr393_ks3_v2/manifest.json": "94abdb2994990c8f0fbde7122337aaedae536ed0e4d8a19274c455317e64579f"
+  }
+}
