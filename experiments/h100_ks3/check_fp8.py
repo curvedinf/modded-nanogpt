@@ -64,7 +64,7 @@ def main():
     torch.backends.cuda.matmul.allow_tf32=False
     optimized.install('separate-dx-prepared-128-gate-tanh');core.BF16_TUNED_KERNELS=True
     packing=packing_check();cases=[];oracle=[]
-    for t in (16384,49152):
+    for t in map(int,os.environ.get('KS3_FP8_CHECK_TOKENS','16384,49152').split(',')):
         n=1024;rows=torch.randn(t,768,device='cuda',dtype=torch.bfloat16).requires_grad_()
         router=(torch.randn(8,768,device='cuda',dtype=torch.bfloat16)*.02).requires_grad_();post=scalar(.8).requires_grad_()
         w1=torch.randn(8,n,768,device='cuda',dtype=torch.bfloat16)*.02;w2=torch.randn_like(w1)*.02
@@ -120,5 +120,5 @@ def main():
     assembler=get_ptxas(90)
     output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,
                 ptxas=dict(path=assembler.path,version=assembler.version,sha256=hashlib.sha256(Path(assembler.path).read_bytes()).hexdigest()))
-    Path('research_results/wr_reproduction/h100-research/fp8-micro.json').write_text(json.dumps(output,indent=2)+'\n')
+    Path(os.environ.get('KS3_FP8_CHECK_OUTPUT','research_results/wr_reproduction/h100-research/fp8-micro.json')).write_text(json.dumps(output,indent=2)+'\n')
 if __name__=='__main__':main()
