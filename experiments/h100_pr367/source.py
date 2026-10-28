@@ -98,4 +98,17 @@ NUM_USED_DENSE_SLOTS = len(DENSE_LAYERS) + 1''')
         '            print0(f"[ks3-geometry] coefficient_rms_by_layer:{coefficients.square().mean(1).sqrt().tolist()} nonzero_fraction_by_layer:{(coefficients != 0).float().mean(1).tolist()}", console=True)\n' + marker)
     ast.parse(text)
     path.write_text(text)
+
+    # As in PR393, compare the graph with a grad-enabled eager call. A
+    # separately compiled no_grad graph can round the router input differently
+    # and flip top-one choices; that is not a CUDA replay correctness test.
+    path = destination / 'track_1_short/perf/cuda_graphs/step_graphs.py'
+    text = path.read_text()
+    text = replace_once(text, '    @torch.no_grad()\n    def _self_check(self, cs: CapturedStep):',
+                        '    def _self_check(self, cs: CapturedStep):')
+    text = replace_once(text, '        replay, eager = cs.loss.item(), self._loss(cs).item()',
+                        '        # PR393 MoE protocol: compare the same grad-enabled compiled graph.\n'
+                        '        replay, eager = cs.loss.item(), self._loss(cs).item()')
+    ast.parse(text)
+    path.write_text(text)
     return manifest['commit']

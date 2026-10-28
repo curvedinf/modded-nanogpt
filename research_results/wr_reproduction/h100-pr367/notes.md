@@ -19,3 +19,7 @@ Decision: finish the exact control before any KS3 training. Require the compiled
 ## 2026-10-28 21:01 UTC — compiled gradient collector passed
 
 The corrected collector passed eager and full-graph compiled backward checks: finite input, router, post-scale, geometry, up-projection and down-projection gradients; both projection gradients are bitwise equal to the kernel-written bank. Evidence is `gradient-collector-check.json`. The port and 512-wide checks were committed and pushed as `a82033e`. The first KS3 full run is queued behind the unchanged control, with no concurrent training.
+
+## 2026-10-28 21:05 UTC — MoE graph verification protocol
+
+Static review found PR367 compares a captured grad-enabled graph against a separately compiled no-grad graph. PR393 already fixes this for top-one MoE because BF16 rounding can change discrete routing. The KS3 variant now compares replay against the same grad-enabled compiled graph, retaining the original numeric tolerance. This affects warmup verification only; the immutable baseline is untouched.
