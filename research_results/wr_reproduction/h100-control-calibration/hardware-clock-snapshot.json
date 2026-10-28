@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-28T23:03:44.372266+00:00",
+  "phase": "Control 5 graph warmup; read-only hardware snapshot",
+  "command": [
+    "nvidia-smi",
+    "--query-gpu=index,name,uuid,pci.bus_id,driver_version,power.limit,clocks.current.sm,clocks.current.memory",
+    "--format=csv"
+  ],
+  "output": "index, name, uuid, pci.bus_id, driver_version, power.limit [W], clocks.current.sm [MHz], clocks.current.memory [MHz]\n0, NVIDIA H100 80GB HBM3, GPU-c57053cc-57bc-c58d-ffdd-7b2fed80e55a, 00000000:8D:00.0, 580.173.02, 700.00 W, 1980 MHz, 2619 MHz\n1, NVIDIA H100 80GB HBM3, GPU-4c9fe8b2-4b6e-6bd3-ac96-d3e8a004768b, 00000000:91:00.0, 580.173.02, 700.00 W, 1980 MHz, 2619 MHz\n2, NVIDIA H100 80GB HBM3, GPU-406aab5a-213d-67e3-6286-3dda55f69c09, 00000000:95:00.0, 580.173.02, 700.00 W, 1980 MHz, 2619 MHz\n3, NVIDIA H100 80GB HBM3, GPU-236ace9f-8347-04bf-601c-c1f559cc0a36, 00000000:99:00.0, 580.173.02, 700.00 W, 1980 MHz, 2619 MHz\n4, NVIDIA H100 80GB HBM3, GPU-8a895f7e-80d7-3377-95a4-e7a4742848d0, 00000000:AB:00.0, 580.173.02, 700.00 W, 1980 MHz, 2619 MHz\n5, NVIDIA H100 80GB HBM3, GPU-8f0d0bdb-1147-184e-2e94-16c000ccc7fa, 00000000:AF:00.0, 580.173.02, 700.00 W, 1980 MHz, 2619 MHz\n6, NVIDIA H100 80GB HBM3, GPU-33c5ab33-cb5d-eb81-3d23-7c46d3c8a4d4, 00000000:B3:00.0, 580.173.02, 700.00 W, 1980 MHz, 2619 MHz\n7, NVIDIA H100 80GB HBM3, GPU-9527760b-0011-9b2a-8ca9-71c707a98533, 00000000:B7:00.0, 580.173.02, 700.00 W, 1980 MHz, 2619 MHz\n"
+}
