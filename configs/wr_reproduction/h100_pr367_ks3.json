@@ -1,0 +1,31 @@
+{
+  "name": "pr367-retrieval-ks3-moe-cubic-1024",
+  "upstream_commit": "e390cb25cf5c732ed4471c2ad861af28114e0a56",
+  "model_dim": 512,
+  "dense_width": 1792,
+  "moe_layers": [1, 3, 5, 6, 8],
+  "experts": 8,
+  "top_k": 1,
+  "charts": 1024,
+  "rank": 1,
+  "scheduled_steps": 530,
+  "extension_steps": 10,
+  "global_batch_tokens": 131072,
+  "geometry_adam": {"lr_multiplier": 0.125, "betas": [0.9, 0.99]},
+  "expert_anvil": {"maps": "PR393 four-map", "frobenius_margin": 1.1},
+  "environment": {
+    "TRITON_PTXAS_PATH": "/root/venvs/h100-ptxas-13.3/ptxas",
+    "KS3_H100_RANK": "1",
+    "KS3_H100_GS32": "1",
+    "KS3_FP8_CUBIC": "1",
+    "KS3_FP8_DW": "tma",
+    "KS3_FP8_MM": "tma",
+    "KS3_FP8_MM_TILE": "128x256",
+    "KS3_FP8_GATHER": "tiled",
+    "KS3_FP8_VJP_ROWS": "128",
+    "KS3_FP8_VJP_WARPS": "4",
+    "KS3_FP8_TMA_STORES": "1",
+    "KS3_FP8_LAYOUT_TILE": "64",
+    "KS3_FP8_TMA_OUTPUTS": "1"
+  }
+}

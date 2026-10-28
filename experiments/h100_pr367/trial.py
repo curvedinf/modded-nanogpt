@@ -48,12 +48,11 @@ def main():
     for folder in ('experiments/h100_pr367', 'experiments/h100_ks3', 'wr_reproduction', 'ks3_research'):
         shutil.copytree(ROOT / folder, run / 'overlay' / folder,
                         ignore=shutil.ignore_patterns('__pycache__', 'upstream'))
-    best = json.loads((ROOT / 'configs/wr_reproduction/h100_ks3_best.json').read_text())['environment']
-    overrides = {k: v for k, v in best.items() if k.startswith('KS3_FP8_') or k == 'TRITON_PTXAS_PATH'}
+    recipe = json.loads((ROOT / 'configs/wr_reproduction/h100_pr367_ks3.json').read_text())
+    overrides = dict(recipe['environment'])
     # PR367's standard optimizer gathers BF16 banks before this first port's
     # local FP8 publication. Do not claim the PR393 owner-only transport path.
-    overrides.pop('KS3_FP8_PACKED_TRANSPORT', None)
-    overrides.update(TRAIN_SEED=str(args.seed), KS3_H100_RANK='1', KS3_H100_GS32='1',
+    overrides.update(TRAIN_SEED=str(args.seed),
         PATH='/root/venvs/pr393-h100/bin:' + os.environ['PATH'], CUDA_HOME='/usr/local/cuda',
         DATA_PATH=str(ROOT), PYTHONPATH=str(run / 'overlay'),
         LD_LIBRARY_PATH='/usr/local/cuda/lib64:' + os.environ.get('LD_LIBRARY_PATH', ''),
@@ -67,7 +66,7 @@ def main():
         moe_layers=[1, 3, 5, 6, 8], experts=8, top_k=1, charts=1024, rank=1, cubic=True,
         geometry_lr_multiplier=.125, transport='BF16 bank all-gather; local cached dual-layout FP8',
         shared_model_training_and_evaluation='unchanged PR367', environment=overrides,
-        reference_run_ids=[r['run_id'] for r in controls])
+        reference_run_ids=[r['run_id'] for r in controls], recipe=recipe)
     (run / 'settings.json').write_text(json.dumps(settings, indent=2) + '\n')
     (run / 'execution_manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     script = '#!/usr/bin/env bash\nset -euo pipefail\ncd "$(dirname "$0")/source"\nunset NUM_SCHEDULED_ITERATIONS\n'
