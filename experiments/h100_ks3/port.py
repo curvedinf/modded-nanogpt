@@ -76,7 +76,8 @@ def install(optimization=None):
     selected = optimization if optimization is not None else os.environ.get('KS3_H100_OPT', '')
     if selected:
         if selected=='fp8-native':
-            if rank!=1:raise ValueError('FP8 port currently supports rank1 only')
+            if rank!=1 and os.environ.get('KS3_FP8_FUSE_GEOMETRY','0')=='1':
+                raise ValueError('Fused FP8 up projection currently requires rank1')
             from experiments.h100_ks3.fp8 import attach
             return attach(H100KS3)
         from experiments.h100_ks3.optimized import install as install_optimized

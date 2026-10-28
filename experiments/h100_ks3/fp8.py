@@ -58,6 +58,15 @@ def gather(grad,y,src,scale,gg,gt,dgate,gs,rows,m):
     else:
         gather_gate[(tr.cdiv(m,4),)](grad,y,src,scale,gg,gt,dgate,gs,rows,m,num_warps=4,enable_fp_fusion=False)
 
+def prepare_geometry(g,n):
+    rank=(g.shape[-1]-2)//6
+    prepared=torch.empty(8,n,9,device=g.device)
+    if rank==1:_prepare[(tr.cdiv(8*n,256),)](g,prepared,8*n)
+    else:
+        from experiments.h100_ks3.prepared_rank import prepare
+        prepare[(tr.cdiv(8*n,256),)](g,prepared,8*n,rank)
+    return prepared
+
 @torch.library.custom_op('h100_ks3_fp8::forward',mutates_args={'pa'})
 def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tensor,down:torch.Tensor,
             us:torch.Tensor,ws:torch.Tensor,xs:torch.Tensor,ps:torch.Tensor,pa:torch.Tensor,g:torch.Tensor,
@@ -65,7 +74,8 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
     m=src.numel();n=up.shape[1];d=768
     x=torch.empty(m,d,device=rows.device,dtype=torch.float8_e4m3fn);xt=torch.empty(d,m,device=rows.device,dtype=x.dtype)
     pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],num_warps=4)
-    prepared=torch.empty(8,n,9,device=rows.device);_prepare[(tr.cdiv(8*n,256),)](g,prepared,8*n)
+    rank=(g.shape[-1]-2)//6;prepared=prepare_geometry(g,n)
+    if FUSE_GEOMETRY and rank!=1:raise ValueError('Fused FP8 up projection currently requires rank1')
     h=torch.empty(m,n,device=rows.device,dtype=x.dtype);ht=torch.empty(n,m,device=rows.device,dtype=x.dtype)
     if FUSE_GEOMETRY and MM_IMPL=='tma':
         from experiments.h100_ks3.tma_mm import mm as tma_mm
@@ -80,7 +90,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
         c=mm(x,up.transpose(1,2),table,xs,us)
         maxima=torch.empty(tr.cdiv(m,64)*tr.cdiv(n,32),device=rows.device)
         hd,htd=store_descriptors(h,ht,64)
-        _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=1,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,num_warps=4)
+        _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,num_warps=4)
     torch.maximum(pa,maxima.amax(),out=pa)
     out=torch.empty_like(rows)
     y=mm(h,down.transpose(1,2),table,ps,ws,dtype=rows.dtype,mode=2,SRC=src,GATE=scale,SCATTER=out,ROWS=rows.shape[0])
@@ -96,7 +106,7 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
                   src:torch.Tensor,offs:torch.Tensor,table:torch.Tensor,down:torch.Tensor,g:torch.Tensor,prepared:torch.Tensor,
                   us:torch.Tensor,ws:torch.Tensor,xs:torch.Tensor,gs:torch.Tensor,ps:torch.Tensor,ds:torch.Tensor,da:torch.Tensor,
                   bank:torch.Tensor,flag:torch.Tensor,layer:int)->tuple[torch.Tensor,torch.Tensor,torch.Tensor]:
-    m,n=c.shape
+    m,n=c.shape;rank=(g.shape[-1]-2)//6
     gg=torch.empty(m,768,device=c.device,dtype=torch.float8_e5m2);gt=torch.empty(768,m,device=c.device,dtype=gg.dtype)
     dgate=torch.empty(m,device=c.device)
     gather(grad,y,src,scale,gg,gt,dgate,gs,grad.shape[0],m)
@@ -104,9 +114,9 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
     dc=torch.empty(m,n,device=c.device,dtype=torch.float8_e5m2);dct=torch.empty(n,m,device=c.device,dtype=dc.dtype)
     part=torch.empty(tr.cdiv(m,VJP_ROWS),n,8,device=c.device);maxima=torch.empty(tr.cdiv(m,VJP_ROWS)*tr.cdiv(n,32),device=c.device)
     dcd,dctd=store_descriptors(dc,dct,VJP_ROWS)
-    _vjp_prepared[(tr.cdiv(m,VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=VJP_ROWS,RANK=1,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,num_warps=VJP_WARPS)
+    _vjp_prepared[(tr.cdiv(m,VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=VJP_ROWS,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,num_warps=VJP_WARPS)
     torch.maximum(da,maxima.amax(),out=da)
-    dg=torch.empty_like(g);core._reduce[(8,n)](part,dg,offs,n,part.shape[0],tr.next_power_of_2(part.shape[0]),BM=VJP_ROWS,RANK=1,num_warps=4)
+    dg=torch.empty_like(g);core._reduce[(8,n)](part,dg,offs,n,part.shape[0],tr.next_power_of_2(part.shape[0]),BM=VJP_ROWS,RANK=rank,num_warps=4)
     dw(ht,gt,bank[(2*layer+1)*8:(2*layer+2)*8],offs,ps,gs,flag)
     dw(dct,xt,bank[2*layer*8:(2*layer+1)*8],offs,ds,xs,flag)
     return dc,dgate,dg
@@ -159,9 +169,12 @@ def attach(base):
     class FP8GPT(base):
         def __init__(self,*a,**kw):
             super().__init__(*a,**kw)
-            from wr_reproduction.ks3_moe_fp8 import init_buffers
-            init_buffers(self)
             n=self.ks3_up.shape[-2]
+            for name,shape in [('ks3_f8_up',(5,8,n,768)),('ks3_f8_up_t',(5,8,768,n)),
+                               ('ks3_f8_down',(5,8,768,n)),('ks3_f8_down_t',(5,8,n,768))]:
+                self.register_buffer(name,torch.empty(shape,device=self.device,dtype=torch.float8_e4m3fn),persistent=False)
+            self.register_buffer('ks3_weight_scales',torch.ones((5,2,8),device=self.device),persistent=False)
+            self.register_buffer('ks3_weight_amax',torch.ones((5,2,8),device=self.device),persistent=False)
             self.register_buffer('ks3_fp8_transport',torch.empty((80,n*768+(64 if PACKED_TRANSPORT else 0)),device=self.device,dtype=torch.float8_e4m3fn),persistent=False)
             self.register_buffer('ks3_fp8_partial',torch.ones((80,n*768//4096),device=self.device),persistent=False)
         @torch.no_grad()
