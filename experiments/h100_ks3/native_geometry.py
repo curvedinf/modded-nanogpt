@@ -38,7 +38,7 @@ def _spine_features(x, mean, c0, c1, c2, c3, c4, c5, ps, scale, shift, LUT, vali
 
 
 @tr.jit
-def _geometry_prepared(C,G,H,TILES,M:tl.constexpr,N:tl.constexpr,HT=None,SCALE=None,AMAX=None,FP8:tl.constexpr=False,PARTIAL_AMAX:tl.constexpr=False,BM:tl.constexpr=16,GS32:tl.constexpr=True,RANK:tl.constexpr=1,NATIVE_OUT=None,NATIVE_T=None,PREPARED=None):
+def _geometry_prepared(C,G,H,TILES,M:tl.constexpr,N:tl.constexpr,HT=None,SCALE=None,AMAX=None,FP8:tl.constexpr=False,PARTIAL_AMAX:tl.constexpr=False,BM:tl.constexpr=16,GS32:tl.constexpr=True,RANK:tl.constexpr=1,NATIVE_OUT=None,NATIVE_T=None,PREPARED=None,H_DESC=None,HT_DESC=None):
     rows=tl.program_id(0)*BM+tl.arange(0,BM);cols=tl.program_id(1)*32+tl.arange(0,32)
     e=tl.load(TILES+tl.program_id(0)*BM//128);valid=cols<N
     base=(e*(N//RANK)+cols//RANK)*(6*RANK+2)
@@ -59,7 +59,10 @@ def _geometry_prepared(C,G,H,TILES,M:tl.constexpr,N:tl.constexpr,HT=None,SCALE=N
         values=h
     if FP8:
         out=tl.minimum(tl.maximum(values/tl.load(SCALE),-448.),448.).to(tl.float8e4nv)
-        tl.store(HT+cols[None,:]*M+rows[:,None],out,(rows[:,None]<M)&valid[None,:])
+        if HT_DESC is not None:
+            HT_DESC.store([tl.program_id(1)*32,tl.program_id(0)*BM],tl.trans(out))
+        else:
+            tl.store(HT+cols[None,:]*M+rows[:,None],out,(rows[:,None]<M)&valid[None,:])
         if NATIVE_OUT is not None:
             native=_native(out.to(tl.uint8,bitcast=True),False,False)
             tl.store(NATIVE_OUT+rows[:,None]*N+cols[None,:],native,(rows[:,None]<M)&valid[None,:])
@@ -70,10 +73,13 @@ def _geometry_prepared(C,G,H,TILES,M:tl.constexpr,N:tl.constexpr,HT=None,SCALE=N
                 tl.store(AMAX+tl.program_id(0)*tl.cdiv(N,32)+tl.program_id(1),largest)
             else:tl.atomic_max(AMAX,largest)
     else:out=values
-    tl.store(H+rows[:,None]*N+cols[None,:],out,(rows[:,None]<M)&valid[None,:])
+    if H_DESC is not None:
+        H_DESC.store([tl.program_id(0)*BM,tl.program_id(1)*32],out)
+    else:
+        tl.store(H+rows[:,None]*N+cols[None,:],out,(rows[:,None]<M)&valid[None,:])
 
 @tr.jit
-def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.constexpr,DCT=None,SCALE=None,AMAX=None,FP8:tl.constexpr=False,PARTIAL_AMAX:tl.constexpr=False,BM:tl.constexpr=64,RANK:tl.constexpr=1,NATIVE_OUT=None,NATIVE_T=None,PREPARED=None):
+def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.constexpr,DCT=None,SCALE=None,AMAX=None,FP8:tl.constexpr=False,PARTIAL_AMAX:tl.constexpr=False,BM:tl.constexpr=64,RANK:tl.constexpr=1,NATIVE_OUT=None,NATIVE_T=None,PREPARED=None,DC_DESC=None,DCT_DESC=None):
     rows=tl.program_id(0)*BM+tl.arange(0,BM);cols=tl.program_id(1)*32+tl.arange(0,32)
     e=tl.load(TILES+tl.program_id(0)*BM//128);mask=(rows[:,None]<M)&(cols[None,:]<N)
     real=tl.load(SRC+rows,rows<M,other=ROWS)<ROWS
@@ -97,7 +103,10 @@ def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.
     dc=tl.where((original>=-65504.)&(original<=65504.),dp+_chart_mean(dm,RANK),0.)
     if FP8:
         out=tl.minimum(tl.maximum(dc/tl.load(SCALE),-57344.),57344.).to(tl.float8e5)
-        tl.store(DCT+cols[None,:]*M+rows[:,None],out,mask)
+        if DCT_DESC is not None:
+            DCT_DESC.store([tl.program_id(1)*32,tl.program_id(0)*BM],tl.trans(out))
+        else:
+            tl.store(DCT+cols[None,:]*M+rows[:,None],out,mask)
         if NATIVE_OUT is not None:
             native=_native(out.to(tl.uint8,bitcast=True),True,True)
             tl.store(NATIVE_OUT+rows[:,None]*N+cols[None,:],native,mask)
@@ -107,7 +116,10 @@ def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.
             tl.store(AMAX+tl.program_id(0)*tl.cdiv(N,32)+tl.program_id(1),largest)
         else:tl.atomic_max(AMAX,largest)
     else:out=dc
-    tl.store(DC+rows[:,None]*N+cols[None,:],out,mask)
+    if DC_DESC is not None:
+        DC_DESC.store([tl.program_id(0)*BM,tl.program_id(1)*32],out)
+    else:
+        tl.store(DC+rows[:,None]*N+cols[None,:],out,mask)
     off=(tl.program_id(0)*N+cols)*8;t2=t*t;t3=t2*t
     tl.store(PART+off,tl.sum(dp*(2*t3-3*t2+1),0),cols<N)
     tl.store(PART+off+1,tl.sum(dp*(-2*t3+3*t2),0),cols<N)

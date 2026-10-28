@@ -16,8 +16,15 @@ DW_IMPL=os.environ.get('KS3_FP8_DW','legacy')
 VJP_ROWS=int(os.environ.get('KS3_FP8_VJP_ROWS','128'))
 VJP_WARPS=int(os.environ.get('KS3_FP8_VJP_WARPS','4'))
 GATHER_IMPL=os.environ.get('KS3_FP8_GATHER','legacy')
+TMA_STORES=os.environ.get('KS3_FP8_TMA_STORES','0')=='1'
 assert DW_IMPL in ('legacy','tma') and VJP_ROWS in (32,64,128)
 assert VJP_WARPS in (4,8) and GATHER_IMPL in ('legacy','tiled')
+
+def store_descriptors(row_major,column_major,rows):
+    if not TMA_STORES:return None,None
+    from triton.tools.tensor_descriptor import TensorDescriptor
+    assert row_major.shape[0]%rows==0 and row_major.shape[1]%32==0
+    return TensorDescriptor.from_tensor(row_major,[rows,32]),TensorDescriptor.from_tensor(column_major,[32,rows])
 
 def tile(m):return (128,128,128,8,3) if m<=32768 else (64,256,128,8,4)
 def mm(a,w,table,sa,sw,dtype=torch.float32,mode=0,**kw):
@@ -52,7 +59,8 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
     c=mm(x,up.transpose(1,2),table,xs,us)
     h=torch.empty(m,n,device=rows.device,dtype=x.dtype);ht=torch.empty(n,m,device=rows.device,dtype=x.dtype)
     maxima=torch.empty(tr.cdiv(m,64)*tr.cdiv(n,32),device=rows.device)
-    _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=1,PREPARED=prepared,num_warps=4)
+    hd,htd=store_descriptors(h,ht,64)
+    _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=1,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,num_warps=4)
     torch.maximum(pa,maxima.amax(),out=pa)
     out=torch.empty_like(rows)
     y=mm(h,down.transpose(1,2),table,ps,ws,dtype=rows.dtype,mode=2,SRC=src,GATE=scale,SCATTER=out,ROWS=rows.shape[0])
@@ -75,7 +83,8 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
     v=mm(gg,down,table,gs,ws)
     dc=torch.empty(m,n,device=c.device,dtype=torch.float8_e5m2);dct=torch.empty(n,m,device=c.device,dtype=dc.dtype)
     part=torch.empty(tr.cdiv(m,VJP_ROWS),n,8,device=c.device);maxima=torch.empty(tr.cdiv(m,VJP_ROWS)*tr.cdiv(n,32),device=c.device)
-    _vjp_prepared[(tr.cdiv(m,VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=VJP_ROWS,RANK=1,PREPARED=prepared,num_warps=VJP_WARPS)
+    dcd,dctd=store_descriptors(dc,dct,VJP_ROWS)
+    _vjp_prepared[(tr.cdiv(m,VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=VJP_ROWS,RANK=1,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,num_warps=VJP_WARPS)
     torch.maximum(da,maxima.amax(),out=da)
     dg=torch.empty_like(g);core._reduce[(8,n)](part,dg,offs,n,part.shape[0],tr.next_power_of_2(part.shape[0]),BM=VJP_ROWS,RANK=1,num_warps=4)
     dw(ht,gt,bank[(2*layer+1)*8:(2*layer+2)*8],offs,ps,gs,flag)
