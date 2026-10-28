@@ -202,23 +202,23 @@ def attach(base):
     class FP8GPT(base):
         def __init__(self,*a,**kw):
             super().__init__(*a,**kw)
-            n=self.ks3_up.shape[-2]
-            for name,shape in [('ks3_f8_up',(5,8,n,768)),('ks3_f8_up_t',(5,8,768,n)),
-                               ('ks3_f8_down',(5,8,768,n)),('ks3_f8_down_t',(5,8,n,768))]:
+            n,d=self.ks3_up.shape[-2:]
+            for name,shape in [('ks3_f8_up',(5,8,n,d)),('ks3_f8_up_t',(5,8,d,n)),
+                               ('ks3_f8_down',(5,8,d,n)),('ks3_f8_down_t',(5,8,n,d))]:
                 self.register_buffer(name,torch.empty(shape,device=self.device,dtype=torch.float8_e4m3fn),persistent=False)
             self.register_buffer('ks3_weight_scales',torch.ones((5,2,8),device=self.device),persistent=False)
             self.register_buffer('ks3_weight_amax',torch.ones((5,2,8),device=self.device),persistent=False)
-            self.register_buffer('ks3_fp8_transport',torch.empty((80,n*768+(64 if PACKED_TRANSPORT else 0)),device=self.device,dtype=torch.float8_e4m3fn),persistent=False)
-            self.register_buffer('ks3_fp8_partial',torch.ones((80,n*768//4096),device=self.device),persistent=False)
+            self.register_buffer('ks3_fp8_transport',torch.empty((80,n*d+(64 if PACKED_TRANSPORT else 0)),device=self.device,dtype=torch.float8_e4m3fn),persistent=False)
+            self.register_buffer('ks3_fp8_partial',torch.ones((80,n*d//4096),device=self.device),persistent=False)
         @torch.no_grad()
         def _quantize_moe(self,lo,hi,exact):
-            n=self.ks3_up.shape[-2];scales=self.ks3_weight_scales.view(-1)
+            n,d=self.ks3_up.shape[-2:];scales=self.ks3_weight_scales.view(-1)
             if exact:
                 flat=self.moe_bank[lo:hi].reshape(hi-lo,-1)
                 maximum=torch.maximum(flat.amax(1),-flat.amin(1)).float()
             else:maximum=self.ks3_fp8_partial[lo:hi].amax(1)
             scales[lo:hi].copy_(maximum.clamp_min(1e-12)/448.)
-            publish[(n*768//4096,hi-lo)](self.moe_bank,self.ks3_fp8_transport,scales,self.ks3_fp8_partial,lo,n,PACK_SCALE=PACKED_TRANSPORT,GS32=GS32,num_warps=4)
+            publish[(n*d//4096,hi-lo)](self.moe_bank,self.ks3_fp8_transport,scales,self.ks3_fp8_partial,lo,n,D=d,PACK_SCALE=PACKED_TRANSPORT,GS32=GS32,num_warps=4)
             if lo==0 and hi==80:self.build_moe_cols()
         def gather_moe_f8(self):
             lo,hi=self._moe_lo,self._moe_hi;q=self.ks3_fp8_transport.view(torch.uint8);s=self.ks3_weight_scales.view(-1)
@@ -227,30 +227,30 @@ def attach(base):
             return [('moe_bank',dist.all_gather_into_tensor(q,q[lo:hi],async_op=True).get_future()),('moe_scales',dist.all_gather_into_tensor(s,s[lo:hi],async_op=True).get_future())]
         @torch.no_grad()
         def build_moe_cols(self):
-            n=self.ks3_up.shape[-2]
+            n,d=self.ks3_up.shape[-2:]
             if LAYOUT_TILE:
                 from experiments.h100_ks3.weight_layouts import build
                 build(self.ks3_fp8_transport,self.ks3_f8_up,self.ks3_f8_up_t,self.ks3_f8_down,self.ks3_f8_down_t,n,self.ks3_weight_scales,packed=PACKED_TRANSPORT,tile=LAYOUT_TILE)
             else:
-                layouts[(tr.cdiv(n*768,1024),80)](self.ks3_fp8_transport,self.ks3_f8_up,self.ks3_f8_up_t,self.ks3_f8_down,self.ks3_f8_down_t,n,PACK_SCALE=PACKED_TRANSPORT,SCALE_OUT=self.ks3_weight_scales,num_warps=4)
+                layouts[(tr.cdiv(n*d,1024),80)](self.ks3_fp8_transport,self.ks3_f8_up,self.ks3_f8_up_t,self.ks3_f8_down,self.ks3_f8_down_t,n,D=d,PACK_SCALE=PACKED_TRANSPORT,SCALE_OUT=self.ks3_weight_scales,num_warps=4)
         @torch.no_grad()
         def prepare_ks3_eval(self):
             if GS32:return super().prepare_ks3_eval()
-            n=self.ks3_up.shape[-2]
-            bank=self.moe_bank.view(5,2,8,n,768)
+            n,d=self.ks3_up.shape[-2:]
+            bank=self.moe_bank.view(5,2,8,n,d)
             self.ks3_up.copy_(bank[:,0])
             self.ks3_down.copy_(bank[:,1].transpose(-1,-2))
         def _moe(self,layer,normed,weights,post):
             if not self.training:
                 if GS32:return super()._moe(layer,normed,weights,post)
                 from track_1_short.perf.kernels import moe_mlp as moe
-                k=MOE_INDEX[layer];router=weights[k][2];rows=normed.reshape(-1,768)
+                k=MOE_INDEX[layer];router=weights[k][2];rows=normed.reshape(-1,normed.shape[-1])
                 probs=torch.softmax(torch.nn.functional.linear(rows,router).float(),-1)
                 gate,expert=probs.max(-1);dest,src,_,table,counts=moe.moe_dispatch(expert,8)
                 y,_,_,_=core.forward(rows,src,table,self.ks3_up[k],self.ks3_down[k],self.ks3_geometry[k],False)
                 out=y[dest.long()]*gate[:,None].to(y.dtype)
                 return out.reshape(normed.shape),8*(counts.float()/rows.shape[0]*probs.mean(0)).sum()
-            k=MOE_INDEX[layer];w1,w2,router=weights[k];rows=normed.reshape(-1,768)
+            k=MOE_INDEX[layer];w1,w2,router=weights[k];rows=normed.reshape(-1,normed.shape[-1])
             if post is None:post=rows.new_ones(())
             caches=(self.ks3_f8_up[k],self.ks3_f8_up_t[k],self.ks3_f8_down[k],self.ks3_f8_down_t[k])
             scales=(self.ks3_weight_scales[k,0],self.ks3_weight_scales[k,1],self._mlp_x_scale,self._mlp_grad_scale,self._moe_post_scales[k:k+1],self._moe_post_amax[k],self._moe_dpre_scales[k:k+1],self._moe_dpre_amax[k])

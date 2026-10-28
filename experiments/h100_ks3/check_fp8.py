@@ -109,7 +109,39 @@ def packing_check():
         assert torch.equal(primary[layer,expert].flatten().view(torch.uint8),q[slot].view(torch.uint8))
         assert torch.equal(dual[layer,expert].T.contiguous().view(torch.uint8),primary[layer,expert].view(torch.uint8))
     assert differences/elements<1e-5,(differences,elements)
-    return dict(native_eval_weight_copy_bitwise=True if not fp8.GS32 else None,dual_layouts_bitwise=True,torch_rounding_different_elements=differences,elements=elements)
+    # Exercise the actual model methods, including dimension-dependent
+    # communication buffers and the BF16 validation refresh. The oracle above
+    # used independent row/column packing and known full-precision weights.
+    model=MODEL_CLASS.__new__(MODEL_CLASS)
+    torch.nn.Module.__init__(model)
+    model.moe_bank=bank
+    model.ks3_up=torch.empty(5,8,n,d,device='cuda',dtype=torch.bfloat16)
+    model.ks3_down=torch.empty(5,8,d,n,device='cuda',dtype=torch.bfloat16)
+    for name,value in [('ks3_f8_up',up),('ks3_f8_up_t',upt),
+                       ('ks3_f8_down',down),('ks3_f8_down_t',downt)]:
+        setattr(model,name,torch.empty_like(value))
+    model.ks3_weight_scales=torch.ones(5,2,8,device='cuda')
+    model.ks3_fp8_partial=torch.ones_like(partial)
+    model.ks3_fp8_transport=torch.empty(80,n*d+(64 if fp8.PACKED_TRANSPORT else 0),device='cuda',dtype=q.dtype)
+    model._quantize_moe(0,80,True)
+    assert torch.equal(model.ks3_weight_scales.flatten(),scale)
+    for name,value in [('ks3_f8_up',up),('ks3_f8_up_t',upt),
+                       ('ks3_f8_down',down),('ks3_f8_down_t',downt)]:
+        assert torch.equal(getattr(model,name).view(torch.uint8),value.view(torch.uint8)),name
+    delayed=model.ks3_fp8_partial.amax(1).clamp_min(1e-12)/448.
+    model._quantize_moe(0,80,False)
+    assert torch.equal(model.ks3_weight_scales.flatten(),delayed)
+    model.training=False
+    model.prepare_ks3_eval()
+    original=bank.view(5,2,8,n,d)
+    for layer in range(5):
+        eu=core.pack(original[layer,0].reshape(-1,d)).view(8,n,d) if fp8.GS32 else original[layer,0]
+        ed=torch.stack([core.pack(w.T) for w in original[layer,1]]) if fp8.GS32 else original[layer,1].transpose(-1,-2)
+        assert torch.equal(model.ks3_up[layer],eu)
+        assert torch.equal(model.ks3_down[layer],ed)
+    return dict(native_eval_weight_copy_bitwise=True if not fp8.GS32 else None,dual_layouts_bitwise=True,
+                model_refresh_and_eval_bitwise=True,delayed_model_scales_bitwise=True,
+                torch_rounding_different_elements=differences,elements=elements)
 def main():
     torch.cuda.set_device(0);torch.set_num_threads(1);torch.manual_seed(419)
     torch.backends.cuda.matmul.allow_tf32=False

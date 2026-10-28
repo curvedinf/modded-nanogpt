@@ -59,7 +59,7 @@ def refresh(m,exact):
 
 @torch.no_grad()
 def refresh_bf16(m):
-    n=m.moe_bank.shape[1];d=768
+    n,d=m.moe_bank.shape[-2:]
     for projection,q in ((0,m.ks3_up),(1,m.ks3_down)):
         r,c=(n,d) if projection==0 else (d,n)
         _weights[(tr.cdiv(r,128)*tr.cdiv(c,32),40)](

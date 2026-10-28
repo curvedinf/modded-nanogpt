@@ -19,6 +19,7 @@ def main():
     parser.add_argument('--drop-dense-layer', type=int, choices=(0,2,4))
     parser.add_argument('--drop-parallel-mlp', action='store_true')
     parser.add_argument('--dense-width', type=int, default=2816)
+    parser.add_argument('--model-dim', type=int, choices=(512,768), default=768)
     parser.add_argument('--first-batch-units', type=int, choices=(4,8,12,16), default=8)
     parser.add_argument('--first-stage-lr', type=float, default=1.)
     parser.add_argument('--final-window-blocks',type=int,default=20)
@@ -47,6 +48,16 @@ def main():
     shutil.copytree(upstream, run / 'source', ignore=shutil.ignore_patterns('__pycache__'))
     model_path=run/'source/track_1_short/model/gpt.py'
     model_source=model_path.read_text()
+    if args.model_dim!=768:
+        # Preserve 128 channels per attention head and 64 per MUDD group.
+        for before,after in [('MUDD_GROUPS = 12',f'MUDD_GROUPS = {args.model_dim//64}'),
+                             ('MUDD_GATE_HEAD_LANES = 6',f'MUDD_GATE_HEAD_LANES = {args.model_dim//128}')]:
+            assert model_source.count(before)==1
+            model_source=model_source.replace(before,after)
+        ngram_path=run/'source/track_1_short/ngram_table.py'
+        ngram_source=ngram_path.read_text();before='NGRAM_DIM = 768'
+        assert ngram_source.count(before)==1
+        ngram_path.write_text(ngram_source.replace(before,f'NGRAM_DIM = {args.model_dim}'))
     if args.drop_dense_layer is not None:
         assert model_source.count('NO_MLP_LAYERS = (7, 9)')==1
         model_source=model_source.replace('NO_MLP_LAYERS = (7, 9)',f'NO_MLP_LAYERS = {tuple(sorted((7,9,args.drop_dense_layer)))}')
@@ -85,6 +96,11 @@ def main():
         config_path.write_text(config_source.replace(before,f'WS_POST_YARN_EXT = {args.final_window_blocks}'))
     path = run / 'source/train_gpt.py'
     source = path.read_text()
+    if args.model_dim!=768:
+        for before,after in [('num_heads=6,',f'num_heads={args.model_dim//128},'),
+                             ('model_dim=768,',f'model_dim={args.model_dim},')]:
+            assert source.count(before)==1
+            source=source.replace(before,after)
     marker = '    model: nn.Module = GPT('
     assert source.count(marker) == 1
     source = source.replace(marker, '    from experiments.h100_ks3.port import install as install_h100_ks3\n    KS3GPT = install_h100_ks3()\n    model: nn.Module = KS3GPT(')

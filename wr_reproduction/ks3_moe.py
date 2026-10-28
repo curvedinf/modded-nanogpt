@@ -339,6 +339,9 @@ def install(precision="bf16",geometry_config=None,training_gs32=True,charts=1024
                 restore_original_moe_rng(initial_rng,self.moe_router,model_dim,bound)
         def __init__(self,*a,**kw):
             super().__init__(*a,**kw)
+            model_dim=self.moe_bank.shape[-1]
+            if precision=='fp8' and model_dim!=768:
+                raise ValueError('Legacy MI100 FP8 buffers require model_dim768; use the H100 overlay for other dimensions')
             global BF16_TUNED_KERNELS
             BF16_TUNED_KERNELS=precision=='bf16' and bf16_kernel_mode=='tuned'
             self.ks3_precision=precision
@@ -351,8 +354,8 @@ def install(precision="bf16",geometry_config=None,training_gs32=True,charts=1024
             for coordinate in range(subspace_rank):
                 g[...,coordinate*6:(coordinate+1)*6]=torch.tensor(coefficients,device=self.device)
             self.ks3_geometry=torch.nn.Parameter(g);self.ks3_geometry.label='ks3_geometry'
-            self.register_buffer('ks3_up',torch.empty((5,8,features,768),device=self.device,dtype=torch.bfloat16),persistent=False)
-            self.register_buffer('ks3_down',torch.empty((5,8,768,features),device=self.device,dtype=torch.bfloat16),persistent=False)
+            self.register_buffer('ks3_up',torch.empty((5,8,features,model_dim),device=self.device,dtype=torch.bfloat16),persistent=False)
+            self.register_buffer('ks3_down',torch.empty((5,8,model_dim,features),device=self.device,dtype=torch.bfloat16),persistent=False)
             if precision=='fp8':
                 from wr_reproduction.ks3_moe_fp8 import init_buffers
                 init_buffers(self)
@@ -374,10 +377,11 @@ def install(precision="bf16",geometry_config=None,training_gs32=True,charts=1024
             if self.training and BF16_TUNED_KERNELS:
                 from wr_reproduction.ks3_weight_pack import refresh_bf16
                 return refresh_bf16(self)
-            bank=self.moe_bank.view(5,2,8,features,768)
+            model_dim=self.moe_bank.shape[-1]
+            bank=self.moe_bank.view(5,2,8,features,model_dim)
             for k in range(5):
                 # GS32 groups follow each projection's input dimension.
-                self.ks3_up[k].copy_(pack(bank[k,0].reshape(8*features,768)).view(8,features,768))
+                self.ks3_up[k].copy_(pack(bank[k,0].reshape(8*features,model_dim)).view(8,features,model_dim))
                 for e in range(8):self.ks3_down[k,e].copy_(pack(bank[k,1,e].T))
         def build_moe_cols(self):pass
         def _moe(self,layer,normed,weights,post):

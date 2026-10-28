@@ -68,7 +68,7 @@ def install(optimization=None):
     class H100KS3(base):
         def __init__(self,*args,**kwargs):
             super().__init__(*args,**kwargs)
-            self.register_buffer('ks3_packed_bank',torch.empty((80,width,768),device=self.device,dtype=torch.bfloat16),persistent=False)
+            self.register_buffer('ks3_packed_bank',torch.empty_like(self.moe_bank,dtype=torch.bfloat16,device=self.device),persistent=False)
         @torch.no_grad()
         def _quantize_moe(self,lo,hi,exact):
             publish(self.moe_bank,self.ks3_packed_bank,lo,hi)
@@ -78,9 +78,10 @@ def install(optimization=None):
             return [('moe_bank',dist.all_gather_into_tensor(p,p[self._moe_lo:self._moe_hi],async_op=True).get_future())]
         @torch.no_grad()
         def build_moe_cols(self):
-            bank=self.ks3_packed_bank.view(5,2,8,width*768)
-            self.ks3_up.copy_(bank[:,0].view(5,8,width,768))
-            self.ks3_down.copy_(bank[:,1].view(5,8,768,width))
+            model_dim=self.moe_bank.shape[-1]
+            bank=self.ks3_packed_bank.view(5,2,8,width*model_dim)
+            self.ks3_up.copy_(bank[:,0].view(5,8,width,model_dim))
+            self.ks3_down.copy_(bank[:,1].view(5,8,model_dim,width))
     # Graph capture must snapshot/check the actual KS3 producer outputs.
     from track_1_short.perf.cuda_graphs import fp8_refresh_graphs as refresh
     refresh.MOE_LOCAL_OUTPUTS=('ks3_packed_bank',)
