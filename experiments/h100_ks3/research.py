@@ -86,6 +86,7 @@ def main():
     ap.add_argument('--hypothesis');ap.add_argument('--seed',type=int,default=413)
     ap.add_argument('--steps',type=int,default=981);ap.add_argument('--screen-updates',type=int,default=0)
     ap.add_argument('--growth-steps',type=int,default=52)
+    ap.add_argument('--extension-steps',type=int,default=20)
     ap.add_argument('--drop-dense-layer',type=int,choices=(0,2,4));ap.add_argument('--dense-width',type=int,default=2816)
     ap.add_argument('--model-dim',type=int,choices=(512,640,768),default=768)
     ap.add_argument('--ngram-multiplier',type=int,choices=(1,2,3),default=1)
@@ -118,6 +119,7 @@ def main():
     commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     cmd=[sys.executable,'-m','experiments.h100_ks3.prepare','--study','h100-research','--scheduled-steps',str(a.steps),'--screen-updates',str(a.screen_updates)]
     cmd.extend(['--growth-steps',str(a.growth_steps)])
+    cmd.extend(['--extension-steps',str(a.extension_steps)])
     cmd.extend(['--dense-width',str(a.dense_width),'--first-batch-units',str(a.first_batch_units)])
     cmd.extend(['--model-dim',str(a.model_dim)])
     cmd.extend(['--ngram-multiplier',str(a.ngram_multiplier)])
@@ -131,7 +133,7 @@ def main():
     custom=dict(TRAIN_SEED=str(a.seed),KS3_H100_OPT=a.variant,KS3_H100_TRANSPORT='codes',KS3_H100_PACK_ROWS='16')
     custom.update(overrides)
     if a.tail_probe:custom['KS3_H100_TAIL_PROBE']='1'
-    settings=dict(utc=utc(),code_commit=commit,hypothesis=a.hypothesis,variant=a.variant,seed=a.seed,scheduled_steps=a.steps,growth_steps=a.growth_steps,
+    settings=dict(utc=utc(),code_commit=commit,hypothesis=a.hypothesis,variant=a.variant,seed=a.seed,scheduled_steps=a.steps,growth_steps=a.growth_steps,extension_steps=a.extension_steps,
                   drop_dense_layer=a.drop_dense_layer,drop_parallel_mlp=a.drop_parallel_mlp,dense_width=a.dense_width,model_dim=a.model_dim,first_batch_units=a.first_batch_units,first_stage_lr=a.first_stage_lr,
                   final_window_blocks=a.final_window_blocks,eval_probe_windows=a.eval_probe_windows,
                   environment=custom,ngram_multiplier=a.ngram_multiplier,tail_probe=a.tail_probe,profile=a.profile,screen_updates=a.screen_updates,validation_protocol='PR393 full final canonical mask, window extension and tail shipment')

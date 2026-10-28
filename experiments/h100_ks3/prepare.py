@@ -16,6 +16,7 @@ def main():
     parser.add_argument('--study', default='h100-ks3')
     parser.add_argument('--scheduled-steps', type=int, default=981)
     parser.add_argument('--growth-steps', type=int, default=52)
+    parser.add_argument('--extension-steps', type=int, default=20)
     parser.add_argument('--drop-dense-layer', type=int, choices=(0,2,4))
     parser.add_argument('--drop-parallel-mlp', action='store_true')
     parser.add_argument('--dense-width', type=int, default=2816)
@@ -33,6 +34,8 @@ def main():
         parser.error('scheduled steps must be positive')
     if args.growth_steps < 0 or args.growth_steps % 2:
         parser.error('growth steps must be nonnegative and even to preserve stage-boundary parity')
+    if args.extension_steps <= 0 or args.extension_steps % 2:
+        parser.error('extension steps must be positive and even')
     if not math.isfinite(args.first_stage_lr) or args.first_stage_lr<=0:
         parser.error('first-stage learning-rate multiplier must be positive and finite')
     if args.dense_width <= 0 or args.dense_width % 256:
@@ -104,6 +107,11 @@ def main():
         config_source=config_path.read_text();before='SCHEDULE_GROWTH_STEPS = 52'
         assert config_source.count(before)==1
         config_path.write_text(config_source.replace(before,f'SCHEDULE_GROWTH_STEPS = {args.growth_steps}'))
+    if args.extension_steps != 20:
+        config_path=run/'source/track_1_short/config.py'
+        config_source=config_path.read_text();before='num_extension_iterations: int = 20'
+        assert config_source.count(before)==1
+        config_path.write_text(config_source.replace(before,f'num_extension_iterations: int = {args.extension_steps}'))
     if args.first_batch_units != 8 or args.first_stage_lr != 1.:
         config_path=run/'source/track_1_short/config.py'
         config_source=config_path.read_text()

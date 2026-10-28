@@ -34,7 +34,7 @@ def main():
         assert row['code_commit']==original['code_commit']
         env=row['settings']['environment'].copy();env.pop('TRAIN_SEED')
         assert env==expected
-        for key in ('scheduled_steps','growth_steps','validation_protocol','model_dim','dense_width','ngram_multiplier'):
+        for key in ('scheduled_steps','growth_steps','extension_steps','validation_protocol','model_dim','dense_width','ngram_multiplier'):
             assert row['settings'].get(key)==original['settings'].get(key),key
     losses=describe([r['validation_loss'] for r in runs]);times=describe([r['official_seconds'] for r in runs])
     if losses['sample_std']:
