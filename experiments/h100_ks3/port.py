@@ -48,9 +48,11 @@ def install(optimization=None):
         ks._dw[(tr.cdiv(h,128),tr.cdiv(d,128),e)](a,b,out,offs,h,d,False,BM=128,BN=128,BK=64,num_warps=8,num_stages=1)
     gemm.run=mm;gemm.dw=dw
     width=int(os.environ.get('KS3_H100_WIDTH','1024'))
+    rank=int(os.environ.get('KS3_H100_RANK','1'))
+    if rank not in (1,2,4) or width%rank:raise ValueError('Invalid H100 KS3 rank/width')
     geometry_lr=float(os.environ.get('KS3_H100_GEOMETRY_LR','.125'))
     projection_lr=float(os.environ.get('KS3_H100_PROJECTION_LR','1.'))
-    base=ks.install('bf16',bf16_kernel_mode='tuned',charts=width,projection_lr_multiplier=projection_lr,geometry_config={'lr_mul':geometry_lr,'betas':[.9,.99],'raw_scale':.75,'raw_shift':0.,'coefficients':[0.]*6})
+    base=ks.install('bf16',bf16_kernel_mode='tuned',charts=width//rank,subspace_rank=rank,projection_lr_multiplier=projection_lr,geometry_config={'lr_mul':geometry_lr,'betas':[.9,.99],'raw_scale':.75,'raw_shift':0.,'coefficients':[0.]*6})
     class H100KS3(base):
         def __init__(self,*args,**kwargs):
             super().__init__(*args,**kwargs)
@@ -74,6 +76,7 @@ def install(optimization=None):
     selected = optimization if optimization is not None else os.environ.get('KS3_H100_OPT', '')
     if selected:
         if selected=='fp8-native':
+            if rank!=1:raise ValueError('FP8 port currently supports rank1 only')
             from experiments.h100_ks3.fp8 import attach
             return attach(H100KS3)
         from experiments.h100_ks3.optimized import install as install_optimized

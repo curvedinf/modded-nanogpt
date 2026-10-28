@@ -15,6 +15,7 @@ def main():
     original=(matrix.run,matrix.dw,core.RoutedKS3,core.backward)
     core.BF16_TUNED_KERNELS=True
     width=int(os.environ.get('KS3_H100_WIDTH','1024'))
+    rank=int(os.environ.get('KS3_H100_RANK','1'))
     cases=[]
     for t in [int(v) for v in os.environ.get('KS3_MICRO_TOKENS','1,257,16384,32768,40960,49152').split(',')]:
         rows=torch.randn(t,768,device='cuda',dtype=torch.bfloat16).requires_grad_()
@@ -23,7 +24,7 @@ def main():
         w1=torch.randn(8,width,768,device='cuda',dtype=torch.bfloat16)*.02
         w2=torch.randn_like(w1)*.02
         up=core.pack(w1.reshape(-1,768)).reshape_as(w1);down=torch.stack([core.pack(w.T) for w in w2])
-        g=(torch.randn(8,width,8,device='cuda')*.01);g[...,6]=.75;g.requires_grad_()
+        g=(torch.randn(8,width//rank,6*rank+2,device='cuda')*.01);g[...,6*rank]=.75;g.requires_grad_()
         bank=torch.empty(16,width,768,device='cuda',dtype=torch.bfloat16)
         grad=torch.randn_like(rows)*.02;gp=torch.randn(t,8,device='cuda')*.002
         def run():
