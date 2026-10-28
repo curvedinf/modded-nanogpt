@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T21:55:23.605817+00:00",
+  "utc": "2026-10-28T21:58:14.102449+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": "20261028T215505Z",
-  "current_hypothesis": "Intermediate640-wide model,1280-chart KS3,1133updates after all core/optimizer gates pass.",
+  "current_full_run": "20261028T215705Z",
+  "current_hypothesis": "Corrected640-wide model,1280chartKS3,1133updates;128-lane value-gradient accumulation validated.",
   "planned_followups": [
     "If the candidate meets<=3.28 faster than31.099s, freeze and run three independent seeds",
     "Otherwise choose one correction from measured loss/time rather than repeat an unchanged recipe"
