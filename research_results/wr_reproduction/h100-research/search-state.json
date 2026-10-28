@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T19:36:09.388251+00:00",
+  "utc": "2026-10-28T19:41:08.609540+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -35,8 +35,9 @@
   },
   "prepared_system_candidate": "Fuse MoE ANVIL at unchanged margin1.1; numerical/timing gate before enabling",
   "queued_screens": [
-    "Four FP8 TMA/packing/VJP configurations on GPUs0-3 after current full run",
-    "BF16 activation-cache precision and paired timings on GPU4 after current full run"
+    "FP8 TMA dual stores, GPU0, compared with BF16+FP16 VJP cache",
+    "Rank-two512-chart/1024-feature prepared KS3, GPU1",
+    "Native-tanh fused forward64/128-row tiles, GPU2"
   ],
-  "next_model_candidate": "If neither architecture cut qualifies, test higher KS3 geometry learning rate on the full architecture using the fastest verified implementation."
+  "next_model_candidate": "Choose from rank-two KS3, geometry-rate response, and smaller first-stage batch using completed numerical/timing evidence."
 }
