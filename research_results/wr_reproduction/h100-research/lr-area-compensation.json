@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-28T20:42:14.788544+00:00",
+  "passed": true,
+  "original_steps": 1053,
+  "short_steps": 1001,
+  "original_lr_sum": 952.4887933158731,
+  "short_lr_sum": 895.2303593276771,
+  "scale": 1.0639594417141944,
+  "scaled_short_sum": 952.4887933158733,
+  "scaled_floor": 0.3191878325142583,
+  "scope": "Simple sum of per-update schedule multipliers; not a proof of equivalent optimizer trajectories or data exposure."
+}

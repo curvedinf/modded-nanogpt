@@ -32,6 +32,9 @@ def publish(bank,packed,lo,hi):
 
 def install(optimization=None):
     from wr_reproduction import ks3_moe as ks,ks3_bf16_gemm as gemm
+    if 'KS3_H100_LR_SCALE' in os.environ:
+        from experiments.h100_ks3.optimizer_ablation import install_schedule
+        install_schedule(float(os.environ['KS3_H100_LR_SCALE']))
     if os.environ.get('KS3_H100_SKIP_ATTENTION') is not None:
         from experiments.h100_ks3.attention_ablation import install as skip_attention
         skip_attention(os.environ['KS3_H100_SKIP_ATTENTION'])

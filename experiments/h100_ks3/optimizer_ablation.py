@@ -22,3 +22,16 @@ def install_copy(multiplier):
         return original(*args, **kwargs)
 
     training.AnvilAndAdam = optimizer
+
+
+def install_schedule(multiplier):
+    """Scale the common schedule, including its floor and sparse-table updates."""
+    if not math.isfinite(multiplier) or multiplier <= 0:
+        raise ValueError('Schedule multiplier must be positive and finite')
+    from track_1_short import schedule
+    original = schedule.TrainingSchedule.get_lr
+
+    def get_lr(self, step):
+        return original(self, step) * multiplier
+
+    schedule.TrainingSchedule.get_lr = get_lr

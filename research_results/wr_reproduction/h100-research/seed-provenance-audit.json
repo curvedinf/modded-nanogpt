@@ -1,0 +1,116 @@
+{
+  "utc": "2026-10-28T20:41:18.546035+00:00",
+  "passed": true,
+  "scope": "Registry settings versus launcher TRAIN_SEED for records containing both fields; legacy entries lacking these fields are explicitly excluded. Future mismatches are rejected before preparation.",
+  "runs": [
+    {
+      "run_id": "20261028T191044Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T191520Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T192154Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T193001Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T193734Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T194142Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T194936Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T195631Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T200024Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T200453Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T201132Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T201508Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T201842Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T202618Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T203125Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T203538Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    },
+    {
+      "run_id": "20261028T204016Z",
+      "declared_seed": 413,
+      "environment_seed": 413,
+      "matches": true
+    }
+  ],
+  "excluded_without_both_fields": [
+    "20261028T184749Z",
+    "20261028T185417Z",
+    "20261028T185722Z",
+    "20261028T190642Z",
+    "20261028T180502Z"
+  ]
+}
