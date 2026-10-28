@@ -1,0 +1,36 @@
+{
+  "utc": "2026-10-28T19:17:25.637408+00:00",
+  "target": {
+    "loss_lte": 3.28,
+    "protocol": "Full PR393 WR final validation,10485760tokens",
+    "direction": "minimize official elapsed seconds"
+  },
+  "constraints": [
+    "substantial KS3",
+    "all model aspects may change",
+    "preserve historical evidence",
+    "honor a new explicit stop",
+    "server has a couple of hours from user time-limit message"
+  ],
+  "best_ks3": {
+    "run": "20261028T191044Z",
+    "seconds": 35.911183984,
+    "loss": 3.279867172,
+    "code_commit": "1e9609ebde4dfb2b3cfabdd110330b5314129d60"
+  },
+  "current_full_run": "20261028T191520Z",
+  "current_hypothesis": "all five KS3 expert widths768, native tanh, unchanged schedule",
+  "queued_screen": "FP8 byte-store fix: all dual layouts must be bitwise and finite, then complete-block timing",
+  "next_structural_candidate": "drop dense layer4; keeps all five KS3 MoEs; dense bank falls from8slots to4",
+  "planned_followups": [
+    "choose full FP8 only if its correctness and paired timing gates pass",
+    "full depth candidate atwidth1024 to isolate bank/depth effect",
+    "combine compatible successful changes and tune schedule/optimizer",
+    "three independent seeds after a faster-than-control qualifying configuration"
+  ],
+  "reference": {
+    "run": "20261028T180502Z",
+    "seconds": 31.099,
+    "loss": 3.2765
+  }
+}
