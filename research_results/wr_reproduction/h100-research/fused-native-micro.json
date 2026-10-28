@@ -1,0 +1,253 @@
+{
+  "utc": "2026-10-28T19:41:26.782965+00:00",
+  "cases": [
+    {
+      "tokens": 1,
+      "variants": {
+        "separate-dx-prepared-128-gate-tanh-fp16v": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0019258578540757298,
+            "router": 0.0,
+            "post": 2.601999256057752e-07,
+            "geometry": 0.0002156786940759048,
+            "weights": 0.0007946231053210795
+          },
+          "post_audit": {
+            "absolute_error": 1.1175870895385742e-08,
+            "reference": 0.04295109212398529
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx-prepared-128-gate-tanh-fp16v": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0019258578540757298,
+            "router": 0.0,
+            "post": 2.601999256057752e-07,
+            "geometry": 0.0002156786940759048,
+            "weights": 0.0007946231053210795
+          },
+          "post_audit": {
+            "absolute_error": 1.1175870895385742e-08,
+            "reference": 0.04295109212398529
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx-prepared-128-gate-tanh-fp16v-f128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0019258578540757298,
+            "router": 0.0,
+            "post": 2.601999256057752e-07,
+            "geometry": 0.0002156786940759048,
+            "weights": 0.0007946231053210795
+          },
+          "post_audit": {
+            "absolute_error": 1.1175870895385742e-08,
+            "reference": 0.04295109212398529
+          },
+          "samples_ms": [],
+          "median_ms": null
+        }
+      }
+    },
+    {
+      "tokens": 257,
+      "variants": {
+        "separate-dx-prepared-128-gate-tanh-fp16v": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00023223149764817208,
+            "dx": 0.0019081059144809842,
+            "router": 0.0008571529178880155,
+            "post": 0.0004985484411008656,
+            "geometry": 0.00021727383136749268,
+            "weights": 0.0010663577122613788
+          },
+          "post_audit": {
+            "absolute_error": 0.00014609098434448242,
+            "reference": 0.2930326759815216
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx-prepared-128-gate-tanh-fp16v": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00023223149764817208,
+            "dx": 0.0019081059144809842,
+            "router": 0.0008571529178880155,
+            "post": 0.0004985484411008656,
+            "geometry": 0.00021727383136749268,
+            "weights": 0.0010663577122613788
+          },
+          "post_audit": {
+            "absolute_error": 0.00014609098434448242,
+            "reference": 0.2930326759815216
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx-prepared-128-gate-tanh-fp16v-f128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00023223149764817208,
+            "dx": 0.0019081059144809842,
+            "router": 0.0008571529178880155,
+            "post": 0.0004985484411008656,
+            "geometry": 0.00021727383136749268,
+            "weights": 0.0010663577122613788
+          },
+          "post_audit": {
+            "absolute_error": 0.00014609098434448242,
+            "reference": 0.2930326759815216
+          },
+          "samples_ms": [],
+          "median_ms": null
+        }
+      }
+    },
+    {
+      "tokens": 16384,
+      "variants": {
+        "separate-dx-prepared-128-gate-tanh-fp16v": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00022239350073505193,
+            "dx": 0.0018870352068915963,
+            "router": 0.0010166295105591416,
+            "post": 0.0013382710749283433,
+            "geometry": 0.00020732940174639225,
+            "weights": 0.001444482710212469
+          },
+          "post_audit": {
+            "absolute_error": 0.00215911865234375,
+            "reference": 1.6133642196655273
+          },
+          "samples_ms": [
+            0.7886776888812029,
+            0.7906041145324707,
+            0.7914965991316171
+          ],
+          "median_ms": 0.7906041145324707
+        },
+        "fused-dx-prepared-128-gate-tanh-fp16v": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00022239350073505193,
+            "dx": 0.0018870352068915963,
+            "router": 0.0010166295105591416,
+            "post": 0.0013382710749283433,
+            "geometry": 0.00020732940174639225,
+            "weights": 0.001444482710212469
+          },
+          "post_audit": {
+            "absolute_error": 0.00215911865234375,
+            "reference": 1.6133642196655273
+          },
+          "samples_ms": [
+            0.7795364652361189,
+            0.7826484877487708,
+            0.783641597202846
+          ],
+          "median_ms": 0.7826484877487708
+        },
+        "fused-dx-prepared-128-gate-tanh-fp16v-f128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00022239350073505193,
+            "dx": 0.0018870352068915963,
+            "router": 0.0010166295105591416,
+            "post": 0.0013382710749283433,
+            "geometry": 0.00020732940174639225,
+            "weights": 0.001444482710212469
+          },
+          "post_audit": {
+            "absolute_error": 0.00215911865234375,
+            "reference": 1.6133642196655273
+          },
+          "samples_ms": [
+            0.9045505114964076,
+            0.9037061623164586,
+            0.9041462830134801
+          ],
+          "median_ms": 0.9041462830134801
+        }
+      }
+    },
+    {
+      "tokens": 49152,
+      "variants": {
+        "separate-dx-prepared-128-gate-tanh-fp16v": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00022127330885268748,
+            "dx": 0.0018838351825252175,
+            "router": 0.001090690609999001,
+            "post": 0.00023914598568808287,
+            "geometry": 0.00021009297051932663,
+            "weights": 0.0014620936708524823
+          },
+          "post_audit": {
+            "absolute_error": 0.0014052391052246094,
+            "reference": -5.876072406768799
+          },
+          "samples_ms": [
+            2.001423814561632,
+            2.0033704456530117,
+            2.004003185696072
+          ],
+          "median_ms": 2.0033704456530117
+        },
+        "fused-dx-prepared-128-gate-tanh-fp16v": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00022127330885268748,
+            "dx": 0.0018838351825252175,
+            "router": 0.001090690609999001,
+            "post": 0.00023914598568808287,
+            "geometry": 0.00021009297051932663,
+            "weights": 0.0014620936708524823
+          },
+          "post_audit": {
+            "absolute_error": 0.0014052391052246094,
+            "reference": -5.876072406768799
+          },
+          "samples_ms": [
+            1.979034965916684,
+            1.9804672040437397,
+            1.9867707101922285
+          ],
+          "median_ms": 1.9804672040437397
+        },
+        "fused-dx-prepared-128-gate-tanh-fp16v-f128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00022127330885268748,
+            "dx": 0.0018838351825252175,
+            "router": 0.001090690609999001,
+            "post": 0.00023914598568808287,
+            "geometry": 0.00021009297051932663,
+            "weights": 0.0014620936708524823
+          },
+          "post_audit": {
+            "absolute_error": 0.0014052391052246094,
+            "reference": -5.876072406768799
+          },
+          "samples_ms": [
+            2.2960506200790407,
+            2.300188398361206,
+            2.3009268045425415
+          ],
+          "median_ms": 2.300188398361206
+        }
+      }
+    }
+  ]
+}
