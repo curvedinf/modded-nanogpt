@@ -1,6 +1,20 @@
 """Native H100 FP8 producers, dual layouts and grouped weight gradients."""
 import triton as tr
 import triton.language as tl
+
+
+@tr.jit
+def merge_amax(PARTIAL, OUT, N: tl.constexpr, B: tl.constexpr = 1024):
+    """Merge nonnegative FP32 maxima in one launch, preserving NaNs."""
+    indices = tl.program_id(0) * B + tl.arange(0, B)
+    values = tl.load(PARTIAL + indices, indices < N, other=0.)
+    nan = values != values
+    largest = tl.max(tl.where(nan, 0., values), 0)
+    bits = largest.to(tl.uint32, bitcast=True)
+    bits = tl.where(tl.sum(nan.to(tl.int32), 0) > 0, 0x7fc00000, bits).to(tl.uint32)
+    # Positive floats have the same order as their unsigned bit patterns.
+    # NaN sorts above +inf, so a later finite block cannot erase a NaN.
+    tl.atomic_max(OUT.to(tl.pointer_type(tl.uint32)), bits, sem='relaxed')
 from triton.language.extra import libdevice
 from ks3_research.vendor.ks3_int8 import _half_scale
 

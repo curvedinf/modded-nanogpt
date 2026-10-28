@@ -29,6 +29,7 @@ PACKED_TRANSPORT=os.environ.get('KS3_FP8_PACKED_TRANSPORT','0')=='1'
 LAYOUT_TILE=int(os.environ.get('KS3_FP8_LAYOUT_TILE','0'))
 CUBIC_ONLY=os.environ.get('KS3_FP8_CUBIC','0')=='1'
 TMA_OUTPUTS=os.environ.get('KS3_FP8_TMA_OUTPUTS','0')=='1'
+FUSED_AMAX=os.environ.get('KS3_FP8_FUSED_AMAX','0')=='1'
 COMPACT_PART=os.environ.get('KS3_FP8_COMPACT_PART','0')=='1'
 FUSE_CUBIC_VJP=os.environ.get('KS3_FP8_FUSE_CUBIC_VJP','0')=='1'
 DPRE_E4M3=os.environ.get('KS3_FP8_DPRE_E4M3','0')=='1'
@@ -49,6 +50,13 @@ def store_descriptors(row_major,column_major,rows,cols=32):
     from triton.tools.tensor_descriptor import TensorDescriptor
     assert row_major.shape[0]%rows==0 and row_major.shape[1]%cols==0
     return TensorDescriptor.from_tensor(row_major,[rows,cols]),TensorDescriptor.from_tensor(column_major,[cols,rows])
+
+def update_amax(partial,out):
+    if FUSED_AMAX:
+        from experiments.h100_ks3.fp8_kernels import merge_amax
+        merge_amax[(tr.cdiv(partial.numel(),1024),)](partial,out,partial.numel(),num_warps=4)
+    else:
+        torch.maximum(out,partial.amax(),out=out)
 
 def tile(m):return (128,128,128,8,3) if m<=32768 else (64,256,128,8,4)
 def mm(a,w,table,sa,sw,dtype=torch.float32,mode=0,**kw):
@@ -117,7 +125,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
         maxima=torch.empty(tr.cdiv(m,64)*tr.cdiv(n,32),device=rows.device)
         hd,htd=store_descriptors(h,ht,64)
         _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,GS32=GS32,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,CUBIC_ONLY=CUBIC_ONLY,num_warps=4)
-    torch.maximum(pa,maxima.amax(),out=pa)
+    update_amax(maxima,pa)
     out=torch.empty_like(rows)
     y=mm(h,down.transpose(1,2),table,ps,ws,dtype=rows.dtype,mode=2,SRC=src,GATE=scale,SCATTER=out,ROWS=rows.shape[0])
     return out,y,c,xt,ht,prepared
@@ -147,7 +155,7 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
         part=torch.empty(tr.cdiv(m,bm),n,4 if COMPACT_PART else 8,device=c.device);maxima=torch.empty(tr.cdiv(m,bm)*tr.cdiv(n,VJP_COLS),device=c.device)
         dcd,dctd=store_descriptors(dc,dct,bm,VJP_COLS)
         _vjp_prepared[(tr.cdiv(m,bm),tr.cdiv(n,VJP_COLS))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=bm,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=CUBIC_ONLY,COMPACT_PART=COMPACT_PART,DPRE_E4M3=DPRE_E4M3,BC=VJP_COLS,num_warps=VJP_WARPS)
-    torch.maximum(da,maxima.amax(),out=da)
+    update_amax(maxima,da)
     dg=torch.empty_like(g)
     if COMPACT_PART:
         from experiments.h100_ks3.native_geometry import reduce_cubic

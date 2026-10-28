@@ -243,11 +243,21 @@ def main():
             samples=[tr.testing.do_bench_cudagraph(lambda:run('fp8'),rep=40) for _ in range(3)]
             timing['fp8_default_vjp_tile']=dict(samples_ms=samples,median_ms=statistics.median(samples))
             fp8.VJP_ROWS,fp8.VJP_COLS,fp8.VJP_WARPS=selected_tile
-        result=dict(tokens=t,producers=producers,post_jacobian=post_check,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,errors_versus_default_vjp_tile=tile_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
+        amax_errors=None
+        if fp8.FUSED_AMAX:
+            candidate=[a.detach().clone() for a in run('fp8')]
+            fp8.FUSED_AMAX=False
+            baseline=[a.detach().clone() for a in run('fp8')]
+            amax_errors={key:err(a,b) for key,a,b in zip(('output','dx','router','post','geometry','weights'),candidate,baseline)}
+            assert max(amax_errors.values())==0.,amax_errors
+            samples=[tr.testing.do_bench_cudagraph(lambda:run('fp8'),rep=40) for _ in range(3)]
+            timing['fp8_unfused_amax']=dict(samples_ms=samples,median_ms=statistics.median(samples))
+            fp8.FUSED_AMAX=True
+        result=dict(tokens=t,producers=producers,post_jacobian=post_check,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,errors_versus_default_vjp_tile=tile_errors,errors_versus_unfused_amax=amax_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
         cases.append(result);print(json.dumps(result),flush=True)
     from triton.backends.nvidia.compiler import get_ptxas
     assembler=get_ptxas(90)
-    output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,
+    output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,fused_amax=fp8.FUSED_AMAX,
                 implementation=dict(dpre_e4m3=fp8.DPRE_E4M3,model_dim=D,width=int(os.environ.get('KS3_H100_WIDTH','1024')),gs32=fp8.GS32,rank=rank,cubic_only=fp8.CUBIC_ONLY,compact_part=fp8.COMPACT_PART,fuse_cubic_vjp=fp8.FUSE_CUBIC_VJP,cubic_vjp_tile=os.environ.get('KS3_FP8_CUBIC_VJP_TILE'),cubic_vjp_warps=os.environ.get('KS3_FP8_CUBIC_VJP_WARPS'),cubic_vjp_stages=os.environ.get('KS3_FP8_CUBIC_VJP_STAGES','3'),cubic_vjp_flatten=os.environ.get('KS3_FP8_CUBIC_VJP_FLATTEN','1'),cubic_vjp_moments=os.environ.get('KS3_FP8_CUBIC_VJP_MOMENTS','0'),fused_up_flatten=os.environ.get('KS3_FP8_FUSED_UP_FLATTEN','1'),tma_outputs=fp8.TMA_OUTPUTS,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_cols=fp8.VJP_COLS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,c_dtype=str(fp8.C_DTYPE),v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,fused_up_tile=os.environ.get('KS3_FP8_FUSED_UP_TILE'),mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
                 ptxas=dict(path=assembler.path,version=assembler.version,sha256=hashlib.sha256(Path(assembler.path).read_bytes()).hexdigest()))
     Path(os.environ.get('KS3_FP8_CHECK_OUTPUT','research_results/wr_reproduction/h100-research/fp8-micro.json')).write_text(json.dumps(output,indent=2)+'\n')
