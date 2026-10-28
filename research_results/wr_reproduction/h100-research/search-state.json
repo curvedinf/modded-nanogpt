@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T21:42:24.945917+00:00",
+  "utc": "2026-10-28T21:44:38.676329+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,12 +18,11 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": null,
-  "current_hypothesis": "Reduce KS3 expert chart count1536to1280 at model512, retaining all five8top1 sites,1237updates and dense2816. Preserve the effective ANVIL coefficient with multiplier sqrt(8/15). This keeps53million expert projection parameters and seeks enough block speedup to close the0.52s gap while preserving full CE<=3.28.",
+  "current_full_run": "20261028T214302Z",
+  "current_hypothesis": "1280-chart experts on512-wide model, same1237updates as31.620s qualifying parent",
   "planned_followups": [
-    "If this beats the31.099s control at<=3.28, run three fresh independent seeds immediately",
-    "Otherwise short512/1536 kernel screen:128x128,64x128, fused-up128x128, current128x256 reference",
-    "Only faster numerically checked kernels receive a full WR trial"
+    "If the candidate meets<=3.28 faster than31.099s, freeze and run three independent seeds",
+    "Otherwise choose one correction from measured loss/time rather than repeat an unchanged recipe"
   ],
   "reference": {
     "run": "20261028T180502Z",
@@ -31,8 +30,6 @@
     "loss": 3.2765
   },
   "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_experts1280.json",
-  "queued_screen": [
-    "model512-experts1280"
-  ],
+  "queued_screen": [],
   "status": "active"
 }
