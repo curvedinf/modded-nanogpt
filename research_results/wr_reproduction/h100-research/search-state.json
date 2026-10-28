@@ -10,21 +10,20 @@
     "all model aspects may change",
     "preserve historical evidence",
     "honor a new explicit stop",
-    "server has a couple of hours from user time-limit message"
+    "User watches the server meter and will announce changes; old estimated deadline superseded"
   ],
   "best_ks3": {
-    "run": "20261028T213503Z",
-    "seconds": 31.619848452,
-    "loss": 3.278548479,
-    "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
+    "run": "20261028T232801Z",
+    "seconds": 30.999908618,
+    "loss": 3.279639244,
+    "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "20261028T232801Z",
-  "current_hypothesis": "Close the0.000070305 validation miss of growth252 by adding only2late updates. Parent30.955472743s leaves0.123777257s headroom against31.07925s; expected cost~.064s. Keep checked fused amax and every other setting.",
+  "current_full_run": null,
+  "current_hypothesis": "Three fresh seeds of the frozen qualifying discovery",
   "planned_followups": [
-    "Prioritize +2 and +4 late-update extensions requested by the user",
-    "Keep local measured control 31.099s and published PR393 time as separately labeled comparisons",
-    "Verify a qualifying improvement with fresh frozen-configuration seeds; do not count discovery in those statistics",
-    "Defer unverified wider-kernel work until step-count results"
+    "Finish growth254: two extra updates after30.955472743s/3.280070305 near miss",
+    "If full WR loss<=3.28 and time<31.07925s, freeze and run three fresh independent seeds without comparative pruning",
+    "Otherwise continue meaningful KS3 optimization; do not resume stopped controls"
   ],
   "reference": {
     "kind": "eight_completed_controls_including_original",
@@ -35,7 +34,7 @@
   },
   "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2_plus2.json",
   "queued_screen": [],
-  "status": "ks3_running",
+  "status": "fresh_seed_verification",
   "near_target": {
     "run": "20261028T232455Z",
     "seconds": 30.955472743,
