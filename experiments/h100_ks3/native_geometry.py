@@ -81,6 +81,16 @@ def _geometry_prepared(C,G,H,TILES,M:tl.constexpr,N:tl.constexpr,HT=None,SCALE=N
         tl.store(H+rows[:,None]*N+cols[None,:],out,(rows[:,None]<M)&valid[None,:])
 
 @tr.jit
+def _tile_chart_mean(x,RANK:tl.constexpr):
+    if RANK==1:
+        return x
+    else:
+        grouped=tl.reshape(x,(x.shape[0],x.shape[1]//RANK,RANK))
+        mean=tl.sum(grouped,2)/RANK
+        return tl.reshape(tl.broadcast_to(mean[:,:,None],grouped.shape),x.shape)
+
+
+@tr.jit
 def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.constexpr,DCT=None,SCALE=None,AMAX=None,FP8:tl.constexpr=False,PARTIAL_AMAX:tl.constexpr=False,BM:tl.constexpr=64,RANK:tl.constexpr=1,NATIVE_OUT=None,NATIVE_T=None,PREPARED=None,DC_DESC=None,DCT_DESC=None,CUBIC_ONLY:tl.constexpr=False,COMPACT_PART:tl.constexpr=False,DPRE_E4M3:tl.constexpr=False,BC:tl.constexpr=32):
     tl.static_assert(not COMPACT_PART or (CUBIC_ONLY and RANK==1))
     rows=tl.program_id(0)*BM+tl.arange(0,BM);cols=tl.program_id(1)*BC+tl.arange(0,BC)
@@ -97,7 +107,7 @@ def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.
     c4=tl.load(pp+4,cols<N,other=0.)*ps;c5=tl.load(pp+5,cols<N,other=0.)*ps
     rs=tl.load(G+base+6*RANK,cols<N,other=0.);rh=tl.load(G+base+6*RANK+1,cols<N,other=0.)
     scale=tl.load(pp+7,cols<N,other=1.);shift=tl.load(pp+8,cols<N,other=0.)
-    t=4.*native_tanh(_chart_mean(x,RANK)*.25)
+    t=4.*native_tanh(_tile_chart_mean(x,RANK)*.25)
     cubic=2*c0-2*c1+c2+c3;quadratic=-3*c0+3*c1-2*c2-c3
     spine=((cubic*t+quadratic)*t+c2)*t+c0
     if CUBIC_ONLY:
@@ -108,7 +118,7 @@ def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.
         dz=((12*c5*z+4*c4)*z-3*c5)*(1.-z*z)
     dp=tl.where(mask&real[:,None],value*2.*tl.maximum(x+spine+warped,0.),0.)
     dm=dp*((3*cubic*t+2*quadratic)*t+c2+dz*scale)*(1.-t*t*.0625)
-    dc=tl.where((original>=-65504.)&(original<=65504.),dp+_chart_mean(dm,RANK),0.)
+    dc=tl.where((original>=-65504.)&(original<=65504.),dp+_tile_chart_mean(dm,RANK),0.)
     if FP8:
         if DPRE_E4M3:
             tl.static_assert(NATIVE_OUT is None)
