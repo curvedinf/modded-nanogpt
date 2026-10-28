@@ -6,5 +6,9 @@
   "control-20261028T180502Z.tar.gz": {
     "bytes": 533675,
     "sha256": "399e69981f5f4d78671813d41b6e5e474d1c61e82037e343dab295c9161f6cae"
+  },
+  "near-target-20261028T221144Z.tar.gz": {
+    "bytes": 988872,
+    "sha256": "2b30d89f2e583c8f104404811247a63e6072a2c7349eb7ca1636f8c6a5357b1c"
   }
 }
