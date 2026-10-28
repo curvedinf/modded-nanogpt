@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T23:13:58.903925+00:00",
+  "utc": "2026-10-28T23:48:09.797566+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "20261028T234107Z",
-  "current_hypothesis": "Dense1792/KS32048 fixed-active-width capacity trade at1255updates on seed701",
+  "current_full_run": "20261028T234734Z",
+  "current_hypothesis": "Fast1536-chart/dense2304 family on seed701; change only geometry Adam beta2 .99->.95.",
   "planned_followups": [
     "Finish growth254: two extra updates after30.955472743s/3.280070305 near miss",
     "If full WR loss<=3.28 and time<31.07925s, freeze and run three fresh independent seeds without comparative pruning",
@@ -120,5 +120,10 @@
     "published_pr393_seconds": 31.285,
     "published_time_win_with_significance": false,
     "scope": "Fresh-seed result with separate local-control and published-time comparisons. Published time is from a different node; no claim of maintainer acceptance or current global record."
-  }
+  },
+  "next_hypotheses": [
+    "If convergence still misses, test a directed projection learning-rate change on seed701 rather than relying on discovery seed413.",
+    "The640-wide family had83.739s runtime with sealed CUDA graphs; profile before any further640 convergence run.",
+    "A wider-KS3 architecture reached3.278320312 on seed701 but cost32.234487602s. A future batch32 late phase with fewer updates could reduce optimizer overhead; requires exact schedule/token accounting before testing."
+  ]
 }
