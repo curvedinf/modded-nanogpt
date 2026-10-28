@@ -30,6 +30,8 @@ CUBIC_ONLY=os.environ.get('KS3_FP8_CUBIC','0')=='1'
 TMA_OUTPUTS=os.environ.get('KS3_FP8_TMA_OUTPUTS','0')=='1'
 COMPACT_PART=os.environ.get('KS3_FP8_COMPACT_PART','0')=='1'
 FUSE_CUBIC_VJP=os.environ.get('KS3_FP8_FUSE_CUBIC_VJP','0')=='1'
+SKIP_MOE=frozenset(int(x) for x in os.environ.get('KS3_H100_SKIP_MOE','').split(',') if x)
+assert SKIP_MOE.issubset({1,3,5,6,8})
 assert not COMPACT_PART or CUBIC_ONLY
 assert not FUSE_CUBIC_VJP or CUBIC_ONLY
 assert LAYOUT_TILE in (0,32,64,128)
@@ -244,6 +246,10 @@ def attach(base):
             self.ks3_up.copy_(bank[:,0])
             self.ks3_down.copy_(bank[:,1].transpose(-1,-2))
         def _moe(self,layer,normed,weights,post):
+            if layer in SKIP_MOE:
+                # Explicit depth ablation. Unused bank gradients remain zero;
+                # all remaining sites retain eight experts and top-one routing.
+                return torch.zeros_like(normed),normed.new_zeros((),dtype=torch.float32)
             if not self.training:
                 if GS32:return super()._moe(layer,normed,weights,post)
                 from track_1_short.perf.kernels import moe_mlp as moe
