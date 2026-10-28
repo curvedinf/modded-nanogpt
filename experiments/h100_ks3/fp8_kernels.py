@@ -74,3 +74,21 @@ def gather_gate(G,Y,SRC,SCALE,GG,GT,DS,GS,ROWS:tl.constexpr,M:tl.constexpr,D:tl.
     tl.store(GG+rows[:,None]*D+cols[None,:],packed,mask)
     tl.store(GT+cols[None,:]*M+rows[:,None],packed,mask)
     tl.store(DS+rows,tl.sum(grad*y,1),rows<M)
+
+@tr.jit
+def gather_gate_tiled(G,Y,SRC,SCALE,GG,GT,DS,GS,ROWS:tl.constexpr,M:tl.constexpr,D:tl.constexpr=768,BM:tl.constexpr=64,BD:tl.constexpr=128):
+    rows=tl.program_id(0)*BM+tl.arange(0,BM)
+    source=tl.load(SRC+rows,rows<M,other=ROWS)
+    valid=(rows<M)&(source<ROWS)
+    scale=tl.load(SCALE+source,valid,other=0.).to(tl.bfloat16).to(tl.float32)
+    inverse=1./tl.load(GS)
+    ds=tl.zeros((BM,),tl.float32)
+    for d0 in tl.static_range(0,D,BD):
+        cols=d0+tl.arange(0,BD)
+        grad=tl.load(G+source[:,None].to(tl.int64)*D+cols[None,:],valid[:,None],other=0.).to(tl.float32)
+        y=tl.load(Y+rows[:,None]*D+cols[None,:],valid[:,None],other=0.).to(tl.float32)
+        ds+=tl.sum(grad*y,1)
+        q=tl.minimum(tl.maximum(grad*scale[:,None]*inverse,-57344.),57344.).to(tl.float8e5)
+        tl.store(GG+rows[:,None]*D+cols[None,:],q,rows[:,None]<M)
+        tl.store(GT+cols[:,None]*M+rows[None,:],tl.trans(q),rows[None,:]<M)
+    tl.store(DS+rows,ds,rows<M)

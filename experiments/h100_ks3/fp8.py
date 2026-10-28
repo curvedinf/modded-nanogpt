@@ -4,6 +4,7 @@ Geometry remains the checked FP16-forward/FP32-STE formulation. Evaluation
 uses the preserved BF16 path. Upstream delayed activation/gradient scaling
 and owner-sharded weight refresh remain on the original training clock.
 """
+import os
 import torch,triton as tr
 from experiments.h100_ks3.h100_kernels import gemm
 from experiments.h100_ks3.fp8_kernels import publish,layouts,weight_gradient,gather_gate,pack_input
@@ -11,6 +12,12 @@ from experiments.h100_ks3.native_geometry import _geometry_prepared,_vjp_prepare
 from wr_reproduction.ks3_prepared_geometry import _prepare
 from wr_reproduction import ks3_moe as core
 
+DW_IMPL=os.environ.get('KS3_FP8_DW','legacy')
+VJP_ROWS=int(os.environ.get('KS3_FP8_VJP_ROWS','128'))
+VJP_WARPS=int(os.environ.get('KS3_FP8_VJP_WARPS','4'))
+GATHER_IMPL=os.environ.get('KS3_FP8_GATHER','legacy')
+assert DW_IMPL in ('legacy','tma') and VJP_ROWS in (32,64,128)
+assert VJP_WARPS in (4,8) and GATHER_IMPL in ('legacy','tiled')
 
 def tile(m):return (128,128,128,8,3) if m<=32768 else (64,256,128,8,4)
 def mm(a,w,table,sa,sw,dtype=torch.float32,mode=0,**kw):
@@ -21,7 +28,18 @@ def mm(a,w,table,sa,sw,dtype=torch.float32,mode=0,**kw):
 
 def dw(a,b,out,offs,sa,sb,flag):
     e,h,d=out.shape
+    if DW_IMPL=='tma':
+        from track_1_short.perf.kernels.moe_mlp import _grouped_weight_grad_impl
+        _grouped_weight_grad_impl(a,b,offs,sa,sb,e,out.view(e*h,d),flag)
+        return
     weight_gradient[(tr.cdiv(h,128),tr.cdiv(d,128),e)](a,b,out,offs,sa,sb,flag,h,d,a.shape[1],num_warps=8,num_stages=3)
+
+def gather(grad,y,src,scale,gg,gt,dgate,gs,rows,m):
+    if GATHER_IMPL=='tiled':
+        from experiments.h100_ks3.fp8_kernels import gather_gate_tiled
+        gather_gate_tiled[(tr.cdiv(m,64),)](grad,y,src,scale,gg,gt,dgate,gs,rows,m,num_warps=4,enable_fp_fusion=False)
+    else:
+        gather_gate[(tr.cdiv(m,4),)](grad,y,src,scale,gg,gt,dgate,gs,rows,m,num_warps=4,enable_fp_fusion=False)
 
 @torch.library.custom_op('h100_ks3_fp8::forward',mutates_args={'pa'})
 def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tensor,down:torch.Tensor,
@@ -53,13 +71,13 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
     m,n=c.shape
     gg=torch.empty(m,768,device=c.device,dtype=torch.float8_e5m2);gt=torch.empty(768,m,device=c.device,dtype=gg.dtype)
     dgate=torch.empty(m,device=c.device)
-    gather_gate[(tr.cdiv(m,4),)](grad,y,src,scale,gg,gt,dgate,gs,grad.shape[0],m,num_warps=4,enable_fp_fusion=False)
+    gather(grad,y,src,scale,gg,gt,dgate,gs,grad.shape[0],m)
     v=mm(gg,down,table,gs,ws)
     dc=torch.empty(m,n,device=c.device,dtype=torch.float8_e5m2);dct=torch.empty(n,m,device=c.device,dtype=dc.dtype)
-    part=torch.empty(tr.cdiv(m,128),n,8,device=c.device);maxima=torch.empty(tr.cdiv(m,128)*tr.cdiv(n,32),device=c.device)
-    _vjp_prepared[(tr.cdiv(m,128),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=128,RANK=1,PREPARED=prepared,num_warps=4)
+    part=torch.empty(tr.cdiv(m,VJP_ROWS),n,8,device=c.device);maxima=torch.empty(tr.cdiv(m,VJP_ROWS)*tr.cdiv(n,32),device=c.device)
+    _vjp_prepared[(tr.cdiv(m,VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=VJP_ROWS,RANK=1,PREPARED=prepared,num_warps=VJP_WARPS)
     torch.maximum(da,maxima.amax(),out=da)
-    dg=torch.empty_like(g);core._reduce[(8,n)](part,dg,offs,n,part.shape[0],tr.next_power_of_2(part.shape[0]),BM=128,RANK=1,num_warps=4)
+    dg=torch.empty_like(g);core._reduce[(8,n)](part,dg,offs,n,part.shape[0],tr.next_power_of_2(part.shape[0]),BM=VJP_ROWS,RANK=1,num_warps=4)
     dw(ht,gt,bank[(2*layer+1)*8:(2*layer+2)*8],offs,ps,gs,flag)
     dw(dct,xt,bank[2*layer*8:(2*layer+1)*8],offs,ds,xs,flag)
     return dc,dgate,dg

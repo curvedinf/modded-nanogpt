@@ -24,12 +24,13 @@ def producer_checks(rows,router,grad,g,xs,gs,ps,ds):
     fp8._geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,PREPARED=prepared,num_warps=4)
     pairs['geometry']=(h,ht)
     dc=torch.empty(m,n,device='cuda',dtype=torch.float8_e5m2);dct=torch.empty(n,m,device='cuda',dtype=dc.dtype)
-    part=torch.empty(tr.cdiv(m,128),n,8,device='cuda');v=torch.randn_like(c)*.01
-    fp8._vjp_prepared[(tr.cdiv(m,128),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,rows.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=128,PREPARED=prepared,num_warps=4)
+    part=torch.empty(tr.cdiv(m,fp8.VJP_ROWS),n,8,device='cuda');v=torch.randn_like(c)*.01
+    maxima=torch.empty(tr.cdiv(m,fp8.VJP_ROWS)*tr.cdiv(n,32),device='cuda')
+    fp8._vjp_prepared[(tr.cdiv(m,fp8.VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,rows.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=fp8.VJP_ROWS,PREPARED=prepared,num_warps=fp8.VJP_WARPS)
     pairs['geometry_gradient']=(dc,dct)
     gg=torch.empty(m,768,device='cuda',dtype=dc.dtype);gt=torch.empty(768,m,device='cuda',dtype=dc.dtype)
     dg=torch.empty(m,device='cuda');y=torch.randn(m,768,device='cuda',dtype=torch.bfloat16)
-    fp8.gather_gate[(tr.cdiv(m,4),)](grad,y,src,gate,gg,gt,dg,gs,rows.shape[0],m,num_warps=4,enable_fp_fusion=False)
+    fp8.gather(grad,y,src,gate,gg,gt,dg,gs,rows.shape[0],m)
     pairs['gathered_gradient']=(gg,gt)
     result={name:dict(bitwise_equal=torch.equal(a.view(torch.uint8),b.T.view(torch.uint8)),finite=bool(torch.isfinite(a.float()).all()&torch.isfinite(b.float()).all())) for name,(a,b) in pairs.items()}
     print('PRODUCER_CHECK',m,json.dumps(result),flush=True)
@@ -119,6 +120,7 @@ def main():
     from triton.backends.nvidia.compiler import get_ptxas
     assembler=get_ptxas(90)
     output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,
+                implementation=dict(dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL),
                 ptxas=dict(path=assembler.path,version=assembler.version,sha256=hashlib.sha256(Path(assembler.path).read_bytes()).hexdigest()))
     Path(os.environ.get('KS3_FP8_CHECK_OUTPUT','research_results/wr_reproduction/h100-research/fp8-micro.json')).write_text(json.dumps(output,indent=2)+'\n')
 if __name__=='__main__':main()
