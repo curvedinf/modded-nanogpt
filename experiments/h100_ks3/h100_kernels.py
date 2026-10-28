@@ -4,9 +4,10 @@ import triton as tr
 import triton.language as tl
 from triton.language.extra import libdevice
 from ks3_research.vendor.ks3_int8 import _half_scale, _spine_features
+from experiments.h100_ks3.native_geometry import _spine_features as _native_spine_features
 
 @tr.jit
-def _features(x,G,e,cols,N:tl.constexpr,BM:tl.constexpr,BN:tl.constexpr,PREPARED=None):
+def _features(x,G,e,cols,N:tl.constexpr,BM:tl.constexpr,BN:tl.constexpr,PREPARED=None,NATIVE_TANH:tl.constexpr=False):
     valid=cols<N;gp=G+(e*N+cols)*8
     if PREPARED is not None:
         pp=PREPARED+(e*N+cols)*9
@@ -30,7 +31,8 @@ def _features(x,G,e,cols,N:tl.constexpr,BM:tl.constexpr,BN:tl.constexpr,PREPARED
         scale=tl.where(raw>20.,raw,libdevice.log1p(libdevice.exp(raw)))+1e-4
         shift=.5*libdevice.tanh(rh)
     x=tl.minimum(tl.maximum(x,-65504.),65504.)
-    h=_spine_features(x,x,c0,c1,c2,c3,c4,c5,ps,scale,shift,G,valid,1)
+    if NATIVE_TANH:h=_native_spine_features(x,x,c0,c1,c2,c3,c4,c5,ps,scale,shift,G,valid,1)
+    else:h=_spine_features(x,x,c0,c1,c2,c3,c4,c5,ps,scale,shift,G,valid,1)
     groups=tl.reshape(h,(BM,BN//32,32))
     hs=_half_scale(tl.max(tl.abs(groups),2))
     q=tl.minimum(tl.maximum(libdevice.nearbyint(groups/hs[:,:,None]),-127.),127.)
@@ -40,7 +42,7 @@ def _features(x,G,e,cols,N:tl.constexpr,BM:tl.constexpr,BN:tl.constexpr,PREPARED
 def gemm(A,W,O,TILES,M:tl.constexpr,N:tl.constexpr,K:tl.constexpr,
          W0:tl.constexpr,W1:tl.constexpr,W2:tl.constexpr,
          BM:tl.constexpr,BN:tl.constexpr,BK:tl.constexpr,MODE:tl.constexpr=0,
-         G=None,H=None,SRC=None,GATE=None,SCATTER=None,ROWS:tl.constexpr=0,C=None,PART=None,PACK_INPUT:tl.constexpr=False,XPACK=None,DLOG=None,ROUTER=None,PREPARED=None,ASCALE=None,WSCALE=None):
+         G=None,H=None,SRC=None,GATE=None,SCATTER=None,ROWS:tl.constexpr=0,C=None,PART=None,PACK_INPUT:tl.constexpr=False,XPACK=None,DLOG=None,ROUTER=None,PREPARED=None,ASCALE=None,WSCALE=None,NATIVE_TANH:tl.constexpr=False):
     rows=tl.program_id(0)*BM+tl.arange(0,BM)
     cols=tl.program_id(1)*BN+tl.arange(0,BN)
     kk=tl.arange(0,BK);e=tl.load(TILES+tl.program_id(0)*BM//128)
@@ -72,7 +74,7 @@ def gemm(A,W,O,TILES,M:tl.constexpr,N:tl.constexpr,K:tl.constexpr,
     else:
         tl.store(O+rows[:,None]*N+cols[None,:],acc,mask)
         if MODE==1:
-            h=_features(acc,G,e,cols,N,BM,BN,PREPARED)
+            h=_features(acc,G,e,cols,N,BM,BN,PREPARED,NATIVE_TANH)
             tl.store(H+rows[:,None]*N+cols[None,:],h,mask)
         elif MODE==2:
             source=tl.load(SRC+rows,rows<M,other=ROWS)

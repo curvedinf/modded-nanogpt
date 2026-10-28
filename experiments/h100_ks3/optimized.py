@@ -48,7 +48,8 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
             from experiments.h100_ks3.native_geometry import _geometry_prepared
         _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,BM=64,RANK=rank,num_warps=4,PREPARED=prepared)
     else:
-        gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](rows if PACK_INPUT else x,w,c,table,m,n,d,*w.stride(),bm,bn,bk,1,G=g,H=h,SRC=src,ROWS=rows.shape[0],PACK_INPUT=PACK_INPUT,XPACK=x,PREPARED=prepared if PREPARE else None,num_warps=nw,num_stages=st)
+        if 'f128' in VARIANT:bm,bn,bk,nw,st=128,128,64,8,3
+        gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](rows if PACK_INPUT else x,w,c,table,m,n,d,*w.stride(),bm,bn,bk,1,G=g,H=h,SRC=src,ROWS=rows.shape[0],PACK_INPUT=PACK_INPUT,XPACK=x,PREPARED=prepared if PREPARE else None,NATIVE_TANH=FAST_TANH_FORWARD,num_warps=nw,num_stages=st)
     y=torch.empty(m,d,device=rows.device,dtype=torch.bfloat16);out=torch.empty_like(rows)
     bm,bn,bk,nw,st=tiles(m,d);w=down.transpose(1,2)
     gemm[(tr.cdiv(m,bm),tr.cdiv(d,bn))](h,w,y,table,m,d,n,*w.stride(),bm,bn,bk,2,SRC=src,GATE=scale,SCATTER=out,ROWS=rows.shape[0],num_warps=nw,num_stages=st)
@@ -126,10 +127,12 @@ def install(variant='fused'):
     FAST_TANH_BACKWARD='tanh' in variant;FAST_TANH_FORWARD=FAST_TANH_BACKWARD and 'tanhb' not in variant
     CACHE_DTYPE=torch.float16 if 'fp16cache' in variant else torch.bfloat16 if 'bf16cache' in variant else torch.float32
     V_DTYPE=torch.float16 if 'fp16cache' in variant or 'fp16v' in variant else torch.bfloat16 if 'bf16cache' in variant or 'bf16v' in variant else torch.float32
-    if V_DTYPE!=torch.float32 and not (FAST_TANH_FORWARD and PREPARE and SEPARATE and not FUSE_VJP):
-        raise ValueError('Reduced intermediate cache requires native prepared separate geometry')
-    if FAST_TANH_BACKWARD and not (PREPARE and SEPARATE and not FUSE_VJP):
-        raise ValueError('Native tanh variants require separate prepared geometry')
+    if CACHE_DTYPE!=torch.float32 and not SEPARATE:
+        raise ValueError('Reduced preactivation cache requires separate geometry')
+    if V_DTYPE!=torch.float32 and not (FAST_TANH_FORWARD and PREPARE and not FUSE_VJP):
+        raise ValueError('Reduced VJP input cache requires native prepared geometry')
+    if FAST_TANH_BACKWARD and not (PREPARE and not FUSE_VJP):
+        raise ValueError('Native tanh variants require prepared geometry and separate VJP')
     matrix.run=mm;matrix.dw=dw
     if variant=='tiles':core.RoutedKS3=ORIGINAL_ROUTED
     elif variant=='gather':
