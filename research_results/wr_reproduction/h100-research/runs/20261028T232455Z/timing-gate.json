@@ -1,0 +1,13 @@
+{
+  "run_id": "20261028T232455Z",
+  "reference_run_id": "20261028T222044Z",
+  "first100_ms": 1404.0,
+  "updates26_to100_ms": 960.0,
+  "reference": {
+    "first100_ms": 1417.0,
+    "updates26_to100_ms": 962.0
+  },
+  "reject": false,
+  "late_growth_extension_only": true,
+  "rule": "Stop if both first 100 updates and updates 26-100 are slower than the saved same-architecture reference; otherwise continue this run."
+}

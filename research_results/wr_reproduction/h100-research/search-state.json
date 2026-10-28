@@ -18,8 +18,8 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": "20261028T231408Z",
-  "current_hypothesis": "Add two late growth updates to the closest fast KS3 recipe; use the newly accepted local mean31.07925s. User watches meter.",
+  "current_full_run": null,
+  "current_hypothesis": "Close the0.000070305 validation miss of growth252 by adding only2late updates. Parent30.955472743s leaves0.123777257s headroom against31.07925s; expected cost~.064s. Keep checked fused amax and every other setting.",
   "planned_followups": [
     "Prioritize +2 and +4 late-update extensions requested by the user",
     "Keep local measured control 31.099s and published PR393 time as separately labeled comparisons",
@@ -37,9 +37,9 @@
   "queued_screen": [],
   "status": "ks3_running",
   "near_target": {
-    "run": "20261028T221144Z",
-    "seconds": 31.040519882,
-    "loss": 3.280643225
+    "run": "20261028T232455Z",
+    "seconds": 30.955472743,
+    "loss": 3.280070305
   },
   "verification": {
     "required_fresh_seeds": 3,
