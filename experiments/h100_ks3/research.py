@@ -85,7 +85,7 @@ def main():
     ap.add_argument('--steps',type=int,default=981);ap.add_argument('--screen-updates',type=int,default=0)
     ap.add_argument('--growth-steps',type=int,default=52)
     ap.add_argument('--drop-dense-layer',type=int,choices=(0,2,4));ap.add_argument('--dense-width',type=int,default=2816)
-    ap.add_argument('--model-dim',type=int,choices=(512,768),default=768)
+    ap.add_argument('--model-dim',type=int,choices=(512,640,768),default=768)
     ap.add_argument('--drop-parallel-mlp',action='store_true')
     ap.add_argument('--first-batch-units',type=int,choices=(4,8,12,16),default=8)
     ap.add_argument('--first-stage-lr',type=float,default=1.)

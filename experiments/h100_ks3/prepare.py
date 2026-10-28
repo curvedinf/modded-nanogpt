@@ -19,7 +19,7 @@ def main():
     parser.add_argument('--drop-dense-layer', type=int, choices=(0,2,4))
     parser.add_argument('--drop-parallel-mlp', action='store_true')
     parser.add_argument('--dense-width', type=int, default=2816)
-    parser.add_argument('--model-dim', type=int, choices=(512,768), default=768)
+    parser.add_argument('--model-dim', type=int, choices=(512,640,768), default=768)
     parser.add_argument('--first-batch-units', type=int, choices=(4,8,12,16), default=8)
     parser.add_argument('--first-stage-lr', type=float, default=1.)
     parser.add_argument('--final-window-blocks',type=int,default=20)
@@ -58,6 +58,20 @@ def main():
         ngram_source=ngram_path.read_text();before='NGRAM_DIM = 768'
         assert ngram_source.count(before)==1
         ngram_path.write_text(ngram_source.replace(before,f'NGRAM_DIM = {args.model_dim}'))
+    if args.model_dim==640:
+        # Five heads cannot be interleaved as adjacent pairs. Use the original
+        # ordinary-head path and split the last value gate across two/three
+        # heads. The four- and six-head recipes keep their original behavior.
+        before='PAIRED_HEAD_LAYERS = (0, 2, 5)'
+        assert model_source.count(before)==1
+        model_source=model_source.replace(before,'PAIRED_HEAD_LAYERS = ()')
+        before='''torch.cat([mu[6], mu[7]], dim=-1).repeat_interleave(
+                        self.num_heads // 2, dim=-1
+                    ).unsqueeze(-1)'''
+        after='''torch.cat([mu[6].expand(B, T, self.num_heads // 2),
+                                         mu[7].expand(B, T, self.num_heads - self.num_heads // 2)], dim=-1).unsqueeze(-1)'''
+        assert model_source.count(before)==1
+        model_source=model_source.replace(before,after)
     if args.drop_dense_layer is not None:
         assert model_source.count('NO_MLP_LAYERS = (7, 9)')==1
         model_source=model_source.replace('NO_MLP_LAYERS = (7, 9)',f'NO_MLP_LAYERS = {tuple(sorted((7,9,args.drop_dense_layer)))}')

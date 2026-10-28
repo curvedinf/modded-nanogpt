@@ -1,6 +1,7 @@
-"""Compare every 512-wide PR393 optimizer bank with the original cascade."""
+"""Compare resized PR393 optimizer banks with the original cascade."""
 import datetime
 import json
+import os
 import statistics
 import sys
 from pathlib import Path
@@ -23,12 +24,15 @@ def main():
     torch.set_num_threads(1)
     torch.manual_seed(493)
     candidate.install()
+    dim=int(os.environ.get('KS3_CHECK_MODEL_DIM','512'))
+    width=int(os.environ.get('KS3_H100_WIDTH','1536'))
+    assert dim in (512,640)
     rows=[]
     for name,shape,margin,function in [
-        ('qk',(4,256,512),1.05,shared),
-        ('vo',(2,512,512),1.05,shared),
-        ('dense',(2,2816,512),1.05,shared),
-        ('ks3',(10,1536,512),1.1,candidate.cascade),
+        ('qk',(4,256,dim),1.05,shared),
+        ('vo',(2,dim,dim),1.05,shared),
+        ('dense',(2,2816,dim),1.05,shared),
+        ('ks3',(10,width,dim),1.1,candidate.cascade),
     ]:
         grad=torch.randn(shape,device='cuda',dtype=torch.bfloat16)*.01
         velocity=torch.randn(2,*shape,device='cuda')*.001
@@ -50,7 +54,7 @@ def main():
         rows.append(row)
         print(json.dumps(row),flush=True)
     result=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),cases=rows,passed=True)
-    Path('research_results/wr_reproduction/h100-research/model512-optimizer-check.json').write_text(json.dumps(result,indent=2)+'\n')
+    Path(os.environ.get('KS3_OPTIMIZER_CHECK_OUTPUT','research_results/wr_reproduction/h100-research/model512-optimizer-check.json')).write_text(json.dumps(result,indent=2)+'\n')
 
 
 if __name__=='__main__':main()

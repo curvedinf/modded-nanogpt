@@ -6,7 +6,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'wr_reproduction/pr393
 from experiments.h100_ks3.port import install
 MODEL_CLASS=install()
 D=int(os.environ.get('KS3_CHECK_MODEL_DIM','768'))
-assert D in (512,768)
+assert D in (512,640,768)
 from experiments.h100_ks3 import optimized,fp8
 from wr_reproduction import ks3_moe as core
 
