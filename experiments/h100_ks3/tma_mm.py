@@ -21,10 +21,10 @@ assert TILE in TILES
 def kernel(A,W,O,TABLE,SA,SW,M:tl.constexpr,N:tl.constexpr,K:tl.constexpr,
            BM:tl.constexpr,BN:tl.constexpr,BK:tl.constexpr,SMS:tl.constexpr,
            G=None,P=None,H=None,HT=None,HS=None,HM=None,MODE:tl.constexpr=0,
-           SRC=None,GATE=None,SCATTER=None,DLOG=None,ROUTER=None,ROWS:tl.constexpr=0,CUBIC_ONLY:tl.constexpr=False):
+           SRC=None,GATE=None,SCATTER=None,DLOG=None,ROUTER=None,ROWS:tl.constexpr=0,CUBIC_ONLY:tl.constexpr=False,FLATTEN:tl.constexpr=True):
     cols=tl.cdiv(N,BN);tiles=tl.cdiv(M,BM)*cols
     scale_a=tl.load(SA)
-    for tile in tl.range(tl.program_id(0),tiles,SMS,flatten=True):
+    for tile in tl.range(tl.program_id(0),tiles,SMS,flatten=FLATTEN):
         mr=tile//cols;nc=tile%cols
         expert=tl.load(TABLE+mr*BM//128)
         scale=scale_a*tl.load(SW+expert)
@@ -84,5 +84,5 @@ def mm(a,w,table,sa,sw,dtype,g=None,prepared=None,h=None,ht=None,hs=None,
         hd=TensorDescriptor.from_tensor(h,[bm,bn//2]);htd=TensorDescriptor.from_tensor(ht,[bn//2,bm])
         maxima=torch.empty(tr.cdiv(m,bm)*tr.cdiv(n,bn),device=a.device)
     kernel[(min(sms,tr.cdiv(m,bm)*tr.cdiv(n,bn)),)](ad,wd,od,table,sa,sw,m,n,k,bm,bn,bk,sms,G=g,P=prepared,H=hd,HT=htd,HS=hs,HM=maxima,
-        MODE=mode,SRC=SRC,GATE=GATE,SCATTER=SCATTER,DLOG=DLOG,ROUTER=ROUTER,ROWS=ROWS,CUBIC_ONLY=cubic_only,num_warps=nw,num_stages=st)
+        MODE=mode,SRC=SRC,GATE=GATE,SCATTER=SCATTER,DLOG=DLOG,ROUTER=ROUTER,ROWS=ROWS,CUBIC_ONLY=cubic_only,FLATTEN=(g is None or os.environ.get('KS3_FP8_FUSED_UP_FLATTEN','1')=='1'),num_warps=nw,num_stages=st)
     return out if g is None else (out,maxima)

@@ -1,0 +1,115 @@
+{
+  "utc": "2026-10-28T20:30:23.056304+00:00",
+  "packing": {
+    "dual_layouts_bitwise": true,
+    "torch_rounding_different_elements": 0,
+    "elements": 62914560
+  },
+  "oracle": [
+    {
+      "tokens": 49152,
+      "projection_relative_rms": 0.00044055585749447346
+    }
+  ],
+  "cases": [
+    {
+      "tokens": 49152,
+      "producers": {
+        "input": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "gathered_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        }
+      },
+      "post_jacobian": {
+        "jacobian_relative_rms": 0.05802227556705475,
+        "fp64_contraction": 10.55408447349274,
+        "actual_post": 10.554084777832031,
+        "contraction_error_over_l2": 4.0412862265842854e-08,
+        "cancellation_ratio": 1.401464661374832
+      },
+      "errors_versus_bf16": {
+        "output": 0.05806538462638855,
+        "dx": 0.08780469745397568,
+        "router": 0.05748343840241432,
+        "post": 0.0811784565448761,
+        "geometry": 0.0880550667643547,
+        "weights": 0.08427106589078903
+      },
+      "errors_versus_full_cache": {
+        "output": 0.00015821386477909982,
+        "dx": 9.216590115102008e-05,
+        "router": 0.00079649145482108,
+        "post": 3.4880438761319965e-05,
+        "geometry": 8.262962865046575e-07,
+        "weights": 0.00013053265865892172
+      },
+      "timing": {
+        "bf16": {
+          "samples_ms": [
+            1.8156239891052246,
+            1.8171437514455695,
+            1.8210980606079101
+          ],
+          "median_ms": 1.8171437514455695
+        },
+        "fp8": {
+          "samples_ms": [
+            1.3112825192903217,
+            1.309081416659885,
+            1.3103527386983236
+          ],
+          "median_ms": 1.3103527386983236
+        },
+        "fp8_full_cache": {
+          "samples_ms": [
+            1.5256821682578638,
+            1.5246649189999228,
+            1.5188412761688233
+          ],
+          "median_ms": 1.5246649189999228
+        }
+      },
+      "scales": {
+        "post": 0.02511041983962059,
+        "dpre": 1.3771665408057743e-06
+      },
+      "passed": true
+    }
+  ],
+  "implementation": {
+    "rank": 1,
+    "cubic_only": true,
+    "compact_part": false,
+    "fuse_cubic_vjp": false,
+    "cubic_vjp_tile": null,
+    "tma_outputs": true,
+    "dw": "tma",
+    "vjp_rows": 128,
+    "vjp_warps": 4,
+    "gather": "tiled",
+    "tma_stores": true,
+    "v_dtype": "torch.float32",
+    "fuse_geometry": false,
+    "fused_up_tile": null,
+    "mm": "tma",
+    "mm_tile": "128x256",
+    "reference_variant": "separate-dx-prepared-128-gate-tanh-fp16v-cubic"
+  },
+  "ptxas": {
+    "path": "/root/venvs/h100-ptxas-13.3/ptxas",
+    "version": "13.3",
+    "sha256": "7fdd01a4cf50e30746da98989c9272a907f491e6fd7fecfda14642e4375f88fb"
+  }
+}
