@@ -1,1 +1,4 @@
 {"utc": "2026-10-28T18:29:00.708799+00:00", "run_id": "20261028T181941Z", "code_commit": "8cecdfee2731b9bb1869b160b9009e37e86189f9", "loss": 3.278, "seconds": 44.519, "decision": "Completed requested transfer; slower than H100 baseline, no verification cohort triggered."}
+{"utc": "2026-10-28T19:01:10.265415+00:00", "run_id": "20261028T184749Z", "code_commit": "0f350e2", "config": "separate-dx-prepared-128-gate", "seed": 413, "loss": 3.2788, "seconds": 36.967, "decision": "Selected best of three"}
+{"utc": "2026-10-28T19:01:10.272317+00:00", "run_id": "20261028T185417Z", "code_commit": "0f350e2", "config": "fused-dx-prepared-128-gate", "seed": 413, "loss": 3.2798, "seconds": 37.163, "decision": "Slower than selected arm"}
+{"utc": "2026-10-28T19:01:10.279107+00:00", "run_id": "20261028T185722Z", "code_commit": "0f350e2", "config": "fused-dx-prepared-128", "seed": 413, "loss": 3.2793, "seconds": 37.558, "decision": "Slower than selected arm"}

@@ -1,0 +1,119 @@
+W1028 18:54:19.816000 78251 torch/distributed/run.py:852] 
+W1028 18:54:19.816000 78251 torch/distributed/run.py:852] *****************************************
+W1028 18:54:19.816000 78251 torch/distributed/run.py:852] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W1028 18:54:19.816000 78251 torch/distributed/run.py:852] *****************************************
+[Gloo] Rank 5 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 1 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank [Gloo] Rank 70 is connected to  is connected to 77 peer ranks.  peer ranks. Expected number of connected peer ranks is : Expected number of connected peer ranks is : 77
+
+[Gloo] Rank 3 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 4 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 2 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 6 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+logs/9e9a5add-daf4-4766-9b47-c65f52c0465b.txt
+[config] steps 981 scheduled + 52 growth + 20 extension = 1053; seed 413; train files /root/modded-nanogpt/data/fineweb10B/fineweb_train_*.bin
+[config] MoE 8 experts x h1024, top-1, layers (1, 3, 5, 6, 8), aux 0.01; ANVIL 4-map cascade, expert-bank margin 1.1 (dense banks 1.05); skipped layers [7, 9], attention-less layers [4, 6, 7, 9], no attention output gate; n-gram table 84602880 x 768 on normalized token ids (PR #375); CPLM copy band 2048 train / 8192 val; canonical mask on
+[moe] moe_bank (80, 1024, 768); mlp_bank (8, 2, 2816, 768): slot by dense layer {0: 0, 2: 1, 4: 2, 10: 3}, parallel slot 4, 3 frozen padding slots
+[kernels] dense G3 (Gluon fused linear-relu-square) True, G3 forward ping-pong 1, grouped MoE G3 True, CPLM LUT cross-entropy True
+[sampled-head] dW of the LM head sampled 1 row in 4 (positive part) at >= 32768 rows; negative part, <copy> and dX exact (PR #371/#382)
+[cplm] copy-sink pointer mixture, d=128 qk-normed, band 2048 train / 8192 val; steps 1053; CE kernels [10240, 14336, 24576, 50304]; LUT == plain CE kernels byte for byte
+Compiling model, warming up kernels and capturing CUDA graphs (~7 minutes on first execution)
+Sampling steps [0, 1, 278, 279, 280, 281, 593, 594, 595, 596, 846, 847, 848, 849, 972, 973, 974, 975, 1031, 1032, 1033, 1034, 1035, 1036] for warmup; 6 step-graph configurations (warmup visits [4, 4, 4, 4, 4, 4]); optimizer graphs captured at step 1, fp8 refresh graphs at step 973
+[graph:step] rank 2 self-check rel: no_grad eager 7.05e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 7.49e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 7.11e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 7.48e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 7.30e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 7.05e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 7.81e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 7.24e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 7.27e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 7.19e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 4.06e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 8.22e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 7.20e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 4.80e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 8.18e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 7.97e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 8.08e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 1.24e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 4.58e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 9.76e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 7.62e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 1.24e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 1.23e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 7.39e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 2.08e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 6.31e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 5.32e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 3.88e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 1.44e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 1.77e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 9.90e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 6.67e-06 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 3.85e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 2.12e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 2.66e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 9.62e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 7.89e-06 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 4.99e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 2.36e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 1.50e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 7.10e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 2.10e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 4.58e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 7.12e-06 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 2.24e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 1.19e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 1.29e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 1.82e-05 (sign +), grad eager 0.00e+00
+Resetting Model
+CUDA graphs sealed: 12 step, 4 optimizer, 5 fp8 refresh; addresses unchanged across the reset
+[barrier] rank 0 waited 0.4 ms before the clock start
+step:25/1053 train_time:519ms step_avg:20.77ms
+step:50/1053 train_time:986ms step_avg:19.73ms
+step:75/1053 train_time:1443ms step_avg:19.24ms
+step:100/1053 train_time:1911ms step_avg:19.11ms
+step:125/1053 train_time:2368ms step_avg:18.94ms
+step:150/1053 train_time:2836ms step_avg:18.91ms
+step:175/1053 train_time:3294ms step_avg:18.82ms
+step:200/1053 train_time:3763ms step_avg:18.82ms
+step:225/1053 train_time:4222ms step_avg:18.76ms
+step:250/1053 train_time:4696ms step_avg:18.78ms
+step:275/1053 train_time:5153ms step_avg:18.74ms
+step:300/1053 train_time:5827ms step_avg:19.42ms
+step:325/1053 train_time:6626ms step_avg:20.39ms
+step:350/1053 train_time:7434ms step_avg:21.24ms
+step:375/1053 train_time:8236ms step_avg:21.96ms
+step:400/1053 train_time:9048ms step_avg:22.62ms
+step:425/1053 train_time:9842ms step_avg:23.16ms
+step:450/1053 train_time:10650ms step_avg:23.67ms
+step:475/1053 train_time:11453ms step_avg:24.11ms
+step:500/1053 train_time:12267ms step_avg:24.53ms
+step:525/1053 train_time:13062ms step_avg:24.88ms
+step:550/1053 train_time:13870ms step_avg:25.22ms
+step:575/1053 train_time:14673ms step_avg:25.52ms
+step:600/1053 train_time:15488ms step_avg:25.81ms
+step:625/1053 train_time:16653ms step_avg:26.65ms
+step:650/1053 train_time:17838ms step_avg:27.44ms
+step:675/1053 train_time:19017ms step_avg:28.17ms
+step:700/1053 train_time:20213ms step_avg:28.88ms
+step:725/1053 train_time:21380ms step_avg:29.49ms
+step:750/1053 train_time:22565ms step_avg:30.09ms
+step:775/1053 train_time:23745ms step_avg:30.64ms
+step:800/1053 train_time:24943ms step_avg:31.18ms
+step:825/1053 train_time:26106ms step_avg:31.64ms
+step:850/1053 train_time:27292ms step_avg:32.11ms
+step:875/1053 train_time:28511ms step_avg:32.58ms
+step:900/1053 train_time:29755ms step_avg:33.06ms
+step:925/1053 train_time:30965ms step_avg:33.48ms
+step:950/1053 train_time:32196ms step_avg:33.89ms
+step:975/1053 train_time:33375ms step_avg:34.23ms
+step:1000/1053 train_time:34546ms step_avg:34.55ms
+step:1025/1053 train_time:35750ms step_avg:34.88ms
+step:1050/1053 train_time:36701ms step_avg:34.95ms
+step:1052/1053 train_time:36747ms step_avg:34.93ms
+step:1053/1053 train_time:36769ms step_avg:34.92ms
+step:1053/1053 val_loss:3.2798 train_time:37163ms step_avg:35.29ms
+step:1053 cplm_diag nll:3.2798 lm_nll:3.3899 alpha:0.0831 a_sink:0.0027 copy_share:0.0831
+peak memory allocated: 35868 MiB reserved: 56480 MiB
