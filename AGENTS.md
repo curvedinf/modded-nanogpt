@@ -66,3 +66,6 @@ The user directs reproducing PR367 and moving KS3 work to it with MoE. Pin PR367
 
 ## Latest return to PR393 MoE — 2026-10-28
 The user cancelled the PR367 migration and directed returning to MoE work. Stop the PR367 baseline and queue; preserve incomplete-run evidence without a validation claim. Resume the authorized H100 PR393 KS3 study from its best qualifying configuration (32.829785293 s, CE 3.279207230), retaining substantial KS3 at all five MoE sites. Only h100-research migration STOP markers are revoked; all unrelated old controllers remain stopped. Continue meaningful optimizations, full WR validation, logs, commits and pushes.
+
+## Remaining H100 server budget — 2026-10-28 21:23 UTC
+The user reports about one hour of server time remaining and asks that it be used wisely. Treat approximately 22:23 UTC as the working deadline. Prioritize the prepared PR393 MoE architecture trial and directed follow-ups; reserve the final ten minutes for fresh-seed verification if a configuration beats the control, and preserve/commit/push all evidence. Do not restart old controllers or the cancelled PR367 migration.

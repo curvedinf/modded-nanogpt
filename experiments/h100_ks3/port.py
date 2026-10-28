@@ -32,6 +32,8 @@ def publish(bank,packed,lo,hi):
 
 def install(optimization=None):
     from wr_reproduction import ks3_moe as ks,ks3_bf16_gemm as gemm
+    from experiments.h100_ks3.moe_optimizer import install_dimension_tiles
+    install_dimension_tiles()
     if 'KS3_H100_LR_SCALE' in os.environ:
         from experiments.h100_ks3.optimizer_ablation import install_schedule
         install_schedule(float(os.environ['KS3_H100_LR_SCALE']))
