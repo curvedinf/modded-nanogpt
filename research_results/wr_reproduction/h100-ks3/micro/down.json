@@ -1,0 +1,841 @@
+{
+  "utc": "2026-10-28T18:33:45.354500+00:00",
+  "mode": "down",
+  "gpu": 1,
+  "cases": [
+    {
+      "tokens": 16384,
+      "padded_rows": 17280,
+      "baseline_config": [
+        64,
+        128,
+        128,
+        4,
+        1
+      ],
+      "baseline_ms": 0.10376724963421588,
+      "best": {
+        "config": [
+          128,
+          128,
+          64,
+          8,
+          3
+        ],
+        "relative_rms": [
+          0.0
+        ],
+        "ms": 0.06983008181314332,
+        "passed": true
+      },
+      "candidates": [
+        {
+          "config": [
+            32,
+            64,
+            32,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.16940676299008456,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            64,
+            64,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.1437921971690898,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            64,
+            64,
+            4,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.14821164343092177,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            64,
+            128,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.14523689365386963,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            128,
+            32,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.13390737175941467,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            128,
+            64,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.11191818237304688,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            128,
+            64,
+            4,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.11583349550923994,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            128,
+            128,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.11960751084256763,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            64,
+            32,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.12090494437295882,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            64,
+            64,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.09947833296370832,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            64,
+            64,
+            4,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.10044989816073714,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            64,
+            128,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.1055701808653016,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            128,
+            32,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.09085133616909659,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            128,
+            64,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.07433394266634571,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            128,
+            64,
+            4,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.07958579377813653,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.09233543587930547,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            256,
+            32,
+            8,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.08991357969201129,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            256,
+            64,
+            8,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.07925121974359992,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            256,
+            64,
+            8,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.07053112011050704,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            256,
+            128,
+            8,
+            3
+          ],
+          "passed": false,
+          "exception": "out of resource: shared memory, Required: 245760, Hardware limit: 232448. Reducing block sizes or `num_stages` may help."
+        },
+        {
+          "config": [
+            128,
+            64,
+            32,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.1002509593963623,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            64,
+            64,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.08481858552888383,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            64,
+            64,
+            4,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.09340990751217573,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            64,
+            128,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.1073607352927879,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            128,
+            32,
+            8,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.08953258630001185,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            128,
+            64,
+            8,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.06983008181314332,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            128,
+            64,
+            8,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.08021623082243638,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            128,
+            128,
+            8,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.07989845808657854,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "tokens": 49152,
+      "padded_rows": 50048,
+      "baseline_config": [
+        64,
+        128,
+        64,
+        4,
+        1
+      ],
+      "baseline_ms": 0.31121429889760116,
+      "best": {
+        "config": [
+          64,
+          256,
+          64,
+          8,
+          4
+        ],
+        "relative_rms": [
+          0.0
+        ],
+        "ms": 0.18900114817497057,
+        "passed": true
+      },
+      "candidates": [
+        {
+          "config": [
+            32,
+            64,
+            32,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.6359664709671684,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            64,
+            64,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.45194433963660036,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            64,
+            64,
+            4,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.457709002494812,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            64,
+            128,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.4540209978818893,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            128,
+            32,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.4045773320727878,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            128,
+            64,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.33014841270446776,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            128,
+            64,
+            4,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.3459726822085497,
+          "passed": true
+        },
+        {
+          "config": [
+            32,
+            128,
+            128,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.34890076241842133,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            64,
+            32,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.6062368035316468,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            64,
+            64,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.4372058391571045,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            64,
+            64,
+            4,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.4372349178089815,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            64,
+            128,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.43260536474340106,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            128,
+            32,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.3267380608452691,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            128,
+            64,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.24049405895295692,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            128,
+            64,
+            4,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.2416736008691006,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            128,
+            128,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.27324741710316053,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            256,
+            32,
+            8,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.22733346498929538,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            256,
+            64,
+            8,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.2083363206045968,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            256,
+            64,
+            8,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.18900114817497057,
+          "passed": true
+        },
+        {
+          "config": [
+            64,
+            256,
+            128,
+            8,
+            3
+          ],
+          "passed": false,
+          "exception": "out of resource: shared memory, Required: 245760, Hardware limit: 232448. Reducing block sizes or `num_stages` may help."
+        },
+        {
+          "config": [
+            128,
+            64,
+            32,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.5047314742515827,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            64,
+            64,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.4410808274240205,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            64,
+            64,
+            4,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.4394060219035429,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            64,
+            128,
+            4,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.43541486684013814,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            128,
+            32,
+            8,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.282933966930096,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            128,
+            64,
+            8,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.2392404140964631,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            128,
+            64,
+            8,
+            4
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.2447660795847575,
+          "passed": true
+        },
+        {
+          "config": [
+            128,
+            128,
+            128,
+            8,
+            3
+          ],
+          "relative_rms": [
+            0.0
+          ],
+          "ms": 0.24037377248044875,
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

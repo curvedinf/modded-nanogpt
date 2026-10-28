@@ -1,0 +1,634 @@
+[
+  {
+    "tokens": 16384,
+    "kind": "forward",
+    "rows": [
+      {
+        "bm": 16,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.15457993552322788,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 16,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.15608666871723376,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.1456474776315217,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.16864166150774274,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.1154459478340897,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.18522364898297772,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.11414387625015199,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.1253413297362247,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 16,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.08008324480847101,
+        "relative_rms": [
+          0.0002762682270258665
+        ]
+      },
+      {
+        "bm": 16,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.0823574564430151,
+        "relative_rms": [
+          0.0002762682270258665
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.08723971125591232,
+        "relative_rms": [
+          0.0002762682270258665
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.0838017745140972,
+        "relative_rms": [
+          0.0002762682270258665
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.08139148158068098,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.10495154244559152,
+        "relative_rms": [
+          0.0002762682270258665
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.09060601422816147,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.08573052414701132,
+        "relative_rms": [
+          0.0
+        ]
+      }
+    ]
+  },
+  {
+    "tokens": 16384,
+    "kind": "backward",
+    "rows": [
+      {
+        "bm": 16,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.4247007996695382,
+        "relative_rms": [
+          1.3338340068003163e-06,
+          1.2045479991229513e-07
+        ]
+      },
+      {
+        "bm": 16,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.5614010576931936,
+        "relative_rms": [
+          1.3338340068003163e-06,
+          1.2050237785388163e-07
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.3868269443511963,
+        "relative_rms": [
+          1.3338340068003163e-06,
+          1.185757767530049e-07
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.5532584424288768,
+        "relative_rms": [
+          1.3338340068003163e-06,
+          1.212129916439153e-07
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.31182511379844263,
+        "relative_rms": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.5533216008600199,
+        "relative_rms": [
+          1.3338340068003163e-06,
+          1.0241010528488914e-07
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.24663365205128987,
+        "relative_rms": [
+          0.0,
+          1.1765794027951415e-07
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.3344881838018244,
+        "relative_rms": [
+          0.0,
+          1.2001156335372798e-07
+        ]
+      },
+      {
+        "bm": 16,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.35932874214358446,
+        "relative_rms": [
+          1.3338340068003163e-06,
+          1.2051380338107265e-07
+        ]
+      },
+      {
+        "bm": 16,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.49849818865458173,
+        "relative_rms": [
+          1.3338340068003163e-06,
+          1.2055291165324888e-07
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.35638160935367447,
+        "relative_rms": [
+          1.3338340068003163e-06,
+          1.185838200967737e-07
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.4843885109072826,
+        "relative_rms": [
+          1.3338340068003163e-06,
+          1.213588234350027e-07
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.2861365457182949,
+        "relative_rms": [
+          0.0,
+          1.2943595528724927e-08
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.47242945716494605,
+        "relative_rms": [
+          1.3338340068003163e-06,
+          1.0248521675748634e-07
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.22788802513709436,
+        "relative_rms": [
+          0.0,
+          1.1780599606936448e-07
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.30651536385218303,
+        "relative_rms": [
+          0.0,
+          1.2006790939267376e-07
+        ]
+      }
+    ]
+  },
+  {
+    "tokens": 49152,
+    "kind": "forward",
+    "rows": [
+      {
+        "bm": 16,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.43398673394147086,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 16,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.44111908869956856,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.4127351972791884,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.4676996594383603,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.32355053943136464,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.521537737260785,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.31918220930202035,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.3457575798034668,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 16,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.2185462979917173,
+        "relative_rms": [
+          0.00028634804766625166
+        ]
+      },
+      {
+        "bm": 16,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.23115382194519044,
+        "relative_rms": [
+          0.00028634804766625166
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.24708242575327555,
+        "relative_rms": [
+          0.00028634804766625166
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.23535197424510168,
+        "relative_rms": [
+          0.00028634804766625166
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.22649649117739146,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.2979295349121094,
+        "relative_rms": [
+          0.00028634804766625166
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.25204618260011835,
+        "relative_rms": [
+          0.0
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.2386185799875567,
+        "relative_rms": [
+          0.0
+        ]
+      }
+    ]
+  },
+  {
+    "tokens": 49152,
+    "kind": "backward",
+    "rows": [
+      {
+        "bm": 16,
+        "warps": 4,
+        "prepared": false,
+        "ms": 1.1943431701660157,
+        "relative_rms": [
+          2.4311011657118797e-06,
+          1.2867586463016778e-07
+        ]
+      },
+      {
+        "bm": 16,
+        "warps": 8,
+        "prepared": false,
+        "ms": 1.5912396430969238,
+        "relative_rms": [
+          2.4311011657118797e-06,
+          1.2932265747167548e-07
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 4,
+        "prepared": false,
+        "ms": 1.0892109058521413,
+        "relative_rms": [
+          2.4311011657118797e-06,
+          1.2588355957632302e-07
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 8,
+        "prepared": false,
+        "ms": 1.5773612234327528,
+        "relative_rms": [
+          2.4311011657118797e-06,
+          1.2754289002714359e-07
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.8743887059828814,
+        "relative_rms": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 8,
+        "prepared": false,
+        "ms": 1.5821996264987521,
+        "relative_rms": [
+          2.4311011657118797e-06,
+          1.1149087697504001e-07
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 4,
+        "prepared": false,
+        "ms": 0.6899343579314476,
+        "relative_rms": [
+          0.0,
+          1.2631134893581475e-07
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 8,
+        "prepared": false,
+        "ms": 0.9375018335157825,
+        "relative_rms": [
+          0.0,
+          1.268634832740645e-07
+        ]
+      },
+      {
+        "bm": 16,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.9830042711893717,
+        "relative_rms": [
+          2.9774787435599137e-06,
+          1.2879672794952057e-07
+        ]
+      },
+      {
+        "bm": 16,
+        "warps": 8,
+        "prepared": true,
+        "ms": 1.392892192658924,
+        "relative_rms": [
+          2.9774787435599137e-06,
+          1.2921280756472697e-07
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.9999342918395996,
+        "relative_rms": [
+          2.9774787435599137e-06,
+          1.2585290676270233e-07
+        ]
+      },
+      {
+        "bm": 32,
+        "warps": 8,
+        "prepared": true,
+        "ms": 1.3739861352103098,
+        "relative_rms": [
+          2.9774787435599137e-06,
+          1.276747951806101e-07
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.8052506008663692,
+        "relative_rms": [
+          7.68781660553941e-07,
+          1.622624701269615e-08
+        ]
+      },
+      {
+        "bm": 64,
+        "warps": 8,
+        "prepared": true,
+        "ms": 1.346660648692738,
+        "relative_rms": [
+          2.9774787435599137e-06,
+          1.116612295959385e-07
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 4,
+        "prepared": true,
+        "ms": 0.6134922663370769,
+        "relative_rms": [
+          7.68781660553941e-07,
+          1.2655087289203948e-07
+        ]
+      },
+      {
+        "bm": 128,
+        "warps": 8,
+        "prepared": true,
+        "ms": 0.8523187255859375,
+        "relative_rms": [
+          7.68781660553941e-07,
+          1.2703151242021704e-07
+        ]
+      }
+    ]
+  }
+]

@@ -4,6 +4,7 @@ The existing KS3 math/autograd and optimizer are reused. Each ANVIL owner
 publishes its GS32-rounded BF16 matrices, then gathers them before readers.
 Shared attention, dense MLPs, head, data and schedule remain upstream PR393.
 """
+import os
 import torch
 import torch.distributed as dist
 import triton as tr
@@ -28,7 +29,7 @@ def _publish(BANK, PACKED, LO:tl.constexpr, N:tl.constexpr=1024,D:tl.constexpr=7
 def publish(bank,packed,lo,hi):
     _publish[(128,hi-lo,32)](bank,packed,lo,num_warps=4)
 
-def install():
+def install(optimization=None):
     from wr_reproduction import ks3_moe as ks,ks3_bf16_gemm as gemm
     # Retain the selected tile shapes; omit AMD-only compiler arguments.
     from wr_reproduction.bf16_tiles import select_projection_tiles
@@ -63,4 +64,11 @@ def install():
     from track_1_short.perf.cuda_graphs import fp8_refresh_graphs as refresh
     refresh.MOE_LOCAL_OUTPUTS=('ks3_packed_bank',)
     refresh.MOE_COLS_OUTPUTS=('ks3_up','ks3_down')
+    selected = optimization if optimization is not None else os.environ.get('KS3_H100_OPT', '')
+    if selected:
+        from experiments.h100_ks3.optimized import install as install_optimized
+        install_optimized(selected)
+        if os.environ.get('KS3_H100_TRANSPORT', 'bf16') == 'codes':
+            from experiments.h100_ks3.transport import attach
+            return attach(H100KS3, br=int(os.environ.get('KS3_H100_PACK_ROWS', '32')))
     return H100KS3

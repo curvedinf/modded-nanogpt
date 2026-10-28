@@ -1,0 +1,787 @@
+{
+  "utc": "2026-10-28T18:40:26.290952+00:00",
+  "cases": [
+    {
+      "tokens": 1,
+      "variants": {
+        "original": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "tiles": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "gather": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-input": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-input-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-vjp-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 4.745472015343921e-09,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        }
+      }
+    },
+    {
+      "tokens": 257,
+      "variants": {
+        "original": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "tiles": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "gather": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-input": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-input-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-vjp-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 7.76454029960405e-08,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        }
+      }
+    },
+    {
+      "tokens": 16384,
+      "variants": {
+        "original": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.6116866718639027,
+            1.6167581038041547,
+            1.6166785673661666
+          ],
+          "median_ms": 1.6166785673661666
+        },
+        "tiles": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.3786109260890795,
+            1.3780245463053384,
+            1.3786544005076091
+          ],
+          "median_ms": 1.3786109260890795
+        },
+        "gather": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.070053173246838,
+            1.0699261445265549,
+            1.070590690330223
+          ],
+          "median_ms": 1.070053173246838
+        },
+        "fused": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.0278673807779948,
+            1.0271410260881697,
+            1.027054935031467
+          ],
+          "median_ms": 1.0271410260881697
+        },
+        "fused-input": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.1296179804308661,
+            1.1291568074907574,
+            1.1290490286690849
+          ],
+          "median_ms": 1.1291568074907574
+        },
+        "fused-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.0421318711905645,
+            1.0413692671677162,
+            1.0429112335731243
+          ],
+          "median_ms": 1.0421318711905645
+        },
+        "fused-input-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.1457315510716932,
+            1.142007038511079,
+            1.143319741610823
+          ],
+          "median_ms": 1.143319741610823
+        },
+        "fused-vjp-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 1.2320005282617785e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.172366180419922,
+            1.1715208689371746,
+            1.1734796905517577
+          ],
+          "median_ms": 1.172366180419922
+        }
+      }
+    },
+    {
+      "tokens": 32768,
+      "variants": {
+        "original": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            3.0253779093424478,
+            3.0296069463094075,
+            3.031580861409505
+          ],
+          "median_ms": 3.0296069463094075
+        },
+        "tiles": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.5452072397867838,
+            2.5510555775960286,
+            2.5478336079915365
+          ],
+          "median_ms": 2.5478336079915365
+        },
+        "gather": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.9766708574796978,
+            1.9769816504584419,
+            1.9789200252956816
+          ],
+          "median_ms": 1.9769816504584419
+        },
+        "fused": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.882440265856291,
+            1.88612943649292,
+            1.8872094204551295
+          ],
+          "median_ms": 1.88612943649292
+        },
+        "fused-input": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.0691891564263236,
+            2.079119470384386,
+            2.0784181170993383
+          ],
+          "median_ms": 2.0784181170993383
+        },
+        "fused-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.8624351903011924,
+            1.867137451171875,
+            1.8679188728332519
+          ],
+          "median_ms": 1.867137451171875
+        },
+        "fused-input-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.0579077614678276,
+            2.057096566094293,
+            2.056734063890245
+          ],
+          "median_ms": 2.057096566094293
+        },
+        "fused-vjp-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 1.2801056925582088e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.093607309129503,
+            2.1032054901123045,
+            2.1031864590115017
+          ],
+          "median_ms": 2.1031864590115017
+        }
+      }
+    },
+    {
+      "tokens": 40960,
+      "variants": {
+        "original": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            3.727022132873535,
+            3.737234840393066,
+            3.737405052185059
+          ],
+          "median_ms": 3.737234840393066
+        },
+        "tiles": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            3.109990692138672,
+            3.1173098564147947,
+            3.1184196790059406
+          ],
+          "median_ms": 3.1173098564147947
+        },
+        "gather": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.41760458946228,
+            2.4145804405212403,
+            2.4151780446370443
+          ],
+          "median_ms": 2.4151780446370443
+        },
+        "fused": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.3026782274246216,
+            2.3041892051696777,
+            2.304042363166809
+          ],
+          "median_ms": 2.304042363166809
+        },
+        "fused-input": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.5431253560384115,
+            2.5459116872151695,
+            2.5471642049153647
+          ],
+          "median_ms": 2.5459116872151695
+        },
+        "fused-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.272958486220416,
+            2.2788886799531825,
+            2.2762020349502565
+          ],
+          "median_ms": 2.2762020349502565
+        },
+        "fused-input-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.5251475524902345,
+            2.5228904724121093,
+            2.5236304728190104
+          ],
+          "median_ms": 2.5236304728190104
+        },
+        "fused-vjp-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 1.278093151313442e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.549795837402344,
+            2.5555914815266925,
+            2.555631383260091
+          ],
+          "median_ms": 2.5555914815266925
+        }
+      }
+    },
+    {
+      "tokens": 49152,
+      "variants": {
+        "original": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            4.380849123001099,
+            4.385392379760742,
+            4.387227201461792
+          ],
+          "median_ms": 4.385392379760742
+        },
+        "tiles": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            3.6714560317993166,
+            3.6810630798339843,
+            3.679440612792969
+          ],
+          "median_ms": 3.679440612792969
+        },
+        "gather": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.847577637892503,
+            2.850849943894606,
+            2.8484799898587743
+          ],
+          "median_ms": 2.8484799898587743
+        },
+        "fused": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.7036557606288367,
+            2.707279096330915,
+            2.7063841956002372
+          ],
+          "median_ms": 2.7063841956002372
+        },
+        "fused-input": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.996287536621094,
+            2.9980721693772536,
+            3.0004709097055287
+          ],
+          "median_ms": 2.9980721693772536
+        },
+        "fused-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.673431124005999,
+            2.683210727146694,
+            2.683888271876744
+          ],
+          "median_ms": 2.683210727146694
+        },
+        "fused-input-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.9721986330472507,
+            2.973259823138897,
+            2.9740489372840293
+          ],
+          "median_ms": 2.973259823138897
+        },
+        "fused-vjp-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 1.3059462844466907e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.9996332315298226,
+            3.0073287670428934,
+            3.0053262563852163
+          ],
+          "median_ms": 3.0053262563852163
+        }
+      }
+    }
+  ]
+}

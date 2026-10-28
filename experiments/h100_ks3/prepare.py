@@ -1,6 +1,7 @@
 """Prepare an isolated full-WR KS3 run; execute the printed launch.sh afterward."""
 from pathlib import Path
 import datetime
+import argparse
 import hashlib
 import json
 import shutil
@@ -8,6 +9,11 @@ import shutil
 ROOT = Path(__file__).resolve().parents[2]
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--screen-updates', type=int, default=0)
+    args = parser.parse_args()
+    if args.screen_updates < 0:
+        parser.error('screen updates must be nonnegative')
     upstream = ROOT / 'wr_reproduction/pr393/upstream'
     manifest = json.loads((upstream.parent / 'source_manifest.json').read_text())
     for name, digest in manifest['files'].items():
@@ -24,6 +30,19 @@ def main():
     marker = '            uncompiled_model.complete_yarn_tables()'
     assert source.count(marker) == 1
     source = source.replace(marker, '            # Refresh KS3 from final shipped weights, on the training clock.\n            uncompiled_model.prepare_ks3_eval()\n' + marker)
+    if args.screen_updates:
+        marker = '        last_step = (step == training_schedule.total_steps)'
+        assert source.count(marker) == 1
+        replacement = f"""        if step == {args.screen_updates}:
+            deferred_gathers.flush()
+            torch.cuda.synchronize()
+            elapsed_ms = training_time_ms + 1000 * (time.perf_counter() - t0)
+            print0(f"[timing-screen] updates:{{step}} elapsed_ms:{{elapsed_ms:.3f}} validation:skipped", console=True)
+            flush_log()
+            dist.destroy_process_group()
+            return
+""" + marker
+        source = source.replace(marker, replacement)
     path.write_text(source)
     for folder in ['experiments/h100_ks3', 'wr_reproduction', 'ks3_research']:
         shutil.copytree(ROOT / folder, run / 'overlay' / folder,

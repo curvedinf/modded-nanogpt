@@ -1,0 +1,599 @@
+{
+  "utc": "2026-10-28T18:43:12.263408+00:00",
+  "cases": [
+    {
+      "tokens": 1,
+      "variants": {
+        "original": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx-128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx-prepared-128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 4.745472015343921e-09,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 2.601999256057752e-07,
+            "geometry": 4.745472015343921e-09,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "separate-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 2.601999256057752e-07,
+            "geometry": 4.745472015343921e-09,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        }
+      }
+    },
+    {
+      "tokens": 257,
+      "variants": {
+        "original": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx-128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx-prepared-128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 6.546175157495782e-09,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "fused-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 1.0170306552481634e-07,
+            "geometry": 6.546175157495782e-09,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "separate-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 1.0170306552481634e-07,
+            "geometry": 6.546175157495782e-09,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        }
+      }
+    },
+    {
+      "tokens": 16384,
+      "variants": {
+        "original": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.6130863008045015,
+            1.6162144400856713,
+            1.6175447117198598
+          ],
+          "median_ms": 1.6162144400856713
+        },
+        "fused-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.035717943736485,
+            1.0445802211761475,
+            1.0451929228646415
+          ],
+          "median_ms": 1.0445802211761475
+        },
+        "fused-dx-128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 1.2117604342165578e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.0021460826580342,
+            1.000269249507359,
+            1.0009342917080584
+          ],
+          "median_ms": 1.0009342917080584
+        },
+        "fused-dx-prepared-128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 1.2128465698424407e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            0.963976181877984,
+            0.9659209115164621,
+            0.9662043131314791
+          ],
+          "median_ms": 0.9659209115164621
+        },
+        "fused-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 3.7120405522728106e-06,
+            "router": 0.00010198118980042636,
+            "post": 8.866637131177413e-07,
+            "geometry": 1.2128465698424407e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            0.9237420302170973,
+            0.9215018962991649,
+            0.922291874063426
+          ],
+          "median_ms": 0.922291874063426
+        },
+        "separate-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 3.7120405522728106e-06,
+            "router": 0.00010198118980042636,
+            "post": 8.866637131177413e-07,
+            "geometry": 1.2128465698424407e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            0.8920886925288609,
+            0.8917611023475384,
+            0.8925559929439
+          ],
+          "median_ms": 0.8920886925288609
+        }
+      }
+    },
+    {
+      "tokens": 32768,
+      "variants": {
+        "original": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            3.028717613220215,
+            3.0316637992858886,
+            3.031537087758382
+          ],
+          "median_ms": 3.031537087758382
+        },
+        "fused-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.8659704208374024,
+            1.8668324851989746,
+            1.8661102294921874
+          ],
+          "median_ms": 1.8661102294921874
+        },
+        "fused-dx-128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 1.2538653493265883e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.7672890072777159,
+            1.7732775551932198,
+            1.7734950292678107
+          ],
+          "median_ms": 1.7732775551932198
+        },
+        "fused-dx-prepared-128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 1.2532187554370466e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.6986589258367366,
+            1.7043158758254278,
+            1.7029240199497768
+          ],
+          "median_ms": 1.7029240199497768
+        },
+        "fused-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 1.5437290130648762e-05,
+            "router": 0.00018200321937911212,
+            "post": 1.9023609354462678e-07,
+            "geometry": 1.2532187554370466e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.636549221385609,
+            1.6342424973197605,
+            1.6368661880493165
+          ],
+          "median_ms": 1.636549221385609
+        },
+        "separate-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 1.5437290130648762e-05,
+            "router": 0.00018200321937911212,
+            "post": 1.9023609354462678e-07,
+            "geometry": 1.2532187554370466e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.5881097544794498,
+            1.5886519722316577,
+            1.5894344163977583
+          ],
+          "median_ms": 1.5886519722316577
+        }
+      }
+    },
+    {
+      "tokens": 40960,
+      "variants": {
+        "original": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            3.7351552200317384,
+            3.739674491882324,
+            3.737205772399902
+          ],
+          "median_ms": 3.737205772399902
+        },
+        "fused-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.278896556181066,
+            2.279662165922277,
+            2.283001013363109
+          ],
+          "median_ms": 2.279662165922277
+        },
+        "fused-dx-128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 1.262870057416876e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.160016165839301,
+            2.16008960499483,
+            2.1628811331356275
+          ],
+          "median_ms": 2.16008960499483
+        },
+        "fused-dx-prepared-128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 1.2615078048838768e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.071780480278863,
+            2.0735228220621744,
+            2.0745287365383573
+          ],
+          "median_ms": 2.0735228220621744
+        },
+        "fused-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 1.4974048099247739e-05,
+            "router": 0.00020861420489382,
+            "post": 2.2323007442537346e-07,
+            "geometry": 1.2615078048838768e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.9811040376362048,
+            1.9799491480777138,
+            1.98097327382941
+          ],
+          "median_ms": 1.98097327382941
+        },
+        "separate-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 1.4974048099247739e-05,
+            "router": 0.00020861420489382,
+            "post": 2.2323007442537346e-07,
+            "geometry": 1.2615078048838768e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            1.9319412803649902,
+            1.9362371344315379,
+            1.9329880332946776
+          ],
+          "median_ms": 1.9329880332946776
+        }
+      }
+    },
+    {
+      "tokens": 49152,
+      "variants": {
+        "original": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            4.38784556388855,
+            4.392574787139893,
+            4.389142370223999
+          ],
+          "median_ms": 4.389142370223999
+        },
+        "fused-dx": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 0.0,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.681152888706752,
+            2.6869676045009068,
+            2.684051431928362
+          ],
+          "median_ms": 2.684051431928362
+        },
+        "fused-dx-128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 1.2915027980398008e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.5580467224121093,
+            2.5546931711832683,
+            2.556474049886068
+          ],
+          "median_ms": 2.556474049886068
+        },
+        "fused-dx-prepared-128": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 0.0,
+            "geometry": 1.291293472149846e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.439762592315674,
+            2.459483133951823,
+            2.4679925537109373
+          ],
+          "median_ms": 2.459483133951823
+        },
+        "fused-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 1.0503156772756483e-05,
+            "router": 0.00024977311841212213,
+            "post": 4.451359814083844e-07,
+            "geometry": 1.291293472149846e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.3350749969482423,
+            2.331832218170166,
+            2.3343024253845215
+          ],
+          "median_ms": 2.3343024253845215
+        },
+        "separate-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 1.0503156772756483e-05,
+            "router": 0.00024977311841212213,
+            "post": 4.451359814083844e-07,
+            "geometry": 1.291293472149846e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            2.2799457774442784,
+            2.2814392328262327,
+            2.2820355583639707
+          ],
+          "median_ms": 2.2814392328262327
+        }
+      }
+    }
+  ]
+}

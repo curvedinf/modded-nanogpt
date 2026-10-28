@@ -1,0 +1,106 @@
+{
+  "utc": "2026-10-28T18:49:47.556719+00:00",
+  "hypothesis": "Tune only KS3 for H100 and fuse producers/consumers where this improves complete-block time. Preserve GS32/BF16 products, FP16 nonlinearity, router/topology and optimizer recipe.",
+  "selected": "separate-dx-prepared-128-gate",
+  "block_results": [
+    {
+      "tokens": 16384,
+      "original_ms": 1.6162144400856713,
+      "selected_ms": 0.8920886925288609,
+      "reduction_percent": 44.803816226170234,
+      "relative_rms": {
+        "output": 0.0,
+        "dx": 3.7120405522728106e-06,
+        "router": 0.00010198118980042636,
+        "post": 8.866637131177413e-07,
+        "geometry": 1.2128465698424407e-07,
+        "weights": 0.0
+      }
+    },
+    {
+      "tokens": 32768,
+      "original_ms": 3.031537087758382,
+      "selected_ms": 1.5886519722316577,
+      "reduction_percent": 47.59582593771402,
+      "relative_rms": {
+        "output": 0.0,
+        "dx": 1.5437290130648762e-05,
+        "router": 0.00018200321937911212,
+        "post": 1.9023609354462678e-07,
+        "geometry": 1.2532187554370466e-07,
+        "weights": 0.0
+      }
+    },
+    {
+      "tokens": 40960,
+      "original_ms": 3.737205772399902,
+      "selected_ms": 1.9329880332946776,
+      "reduction_percent": 48.27718485371544,
+      "relative_rms": {
+        "output": 0.0,
+        "dx": 1.4974048099247739e-05,
+        "router": 0.00020861420489382,
+        "post": 2.2323007442537346e-07,
+        "geometry": 1.2615078048838768e-07,
+        "weights": 0.0
+      }
+    },
+    {
+      "tokens": 49152,
+      "original_ms": 4.389142370223999,
+      "selected_ms": 2.2814392328262327,
+      "reduction_percent": 48.02084233349213,
+      "relative_rms": {
+        "output": 0.0,
+        "dx": 1.0503156772756483e-05,
+        "router": 0.00024977311841212213,
+        "post": 4.451359814083844e-07,
+        "geometry": 1.291293472149846e-07,
+        "weights": 0.0
+      }
+    }
+  ],
+  "transport": {
+    "ranks": 8,
+    "pack_rows": 16,
+    "all_values_bitwise": true,
+    "old_ms": 0.5497802495956421,
+    "new_ms": 0.32177600264549255,
+    "reduction_percent": 41.47188756195669,
+    "bytes_ratio": 0.53125
+  },
+  "retained": [
+    "H100 GEMM tiles and pipeline stages",
+    "BF16 backward gather and gate derivative reduction in one kernel",
+    "output projection plus gating/scatter",
+    "input-gradient projection plus router-gradient addition/scatter",
+    "geometry coefficients prepared once per expert forward and reused in backward",
+    "128-row geometry VJP",
+    "GS32 code/FP16-scale publication and fused BF16 reconstruction"
+  ],
+  "rejected": [
+    "Input GS32 packing inside GEMM: slower complete block",
+    "Backward projection and geometry VJP fused GEMM: slower",
+    "Split-K weight-gradient GEMM: not selected by sweep",
+    "Projection/geometry fusion: slower than separately prepared geometry; retained as requested comparison arm"
+  ],
+  "micro_scope": "GPU CUDA-graph block timings and eight-rank transport; no whole-run claim from these measurements. Three real runs are in progress.",
+  "numerical_note": "Forward and weight gradients were bitwise identical in the selected complete-block test. Changed floating-point reduction order produces small router/input/geometry gradient differences; see per-case relative RMS.",
+  "harness_corrections": [
+    "Discarded initial routed timing due to retained autograd graph during CUDA capture; detached timing outputs and reran.",
+    "Corrected scale-store padding mask in code/scale producer; local and all-rank bitwise tests then passed."
+  ],
+  "source_hashes": {
+    "experiments/h100_ks3/port.py": "5559f466564ad02fd91fc88ad4ba9bf8c1e3644d5bbdf2a693823bc0ab0cbdb5",
+    "experiments/h100_ks3/check_port.py": "da8e1a472873c8b6998cc14b58dc61571af07535088cd4979d6f19c7f8266aa4",
+    "experiments/h100_ks3/check_core.py": "633e4b3a8ef20acbc7eaec86507ce80ffad8be1431a935fae28354b051d19dd7",
+    "experiments/h100_ks3/prepare.py": "d63f1f38d57c28bb8d8745aca59f39cbdcd2c94fa341aa12995ed95552ed1219",
+    "experiments/h100_ks3/sweep.py": "8e2968a7d44d2b24c4d648f27a49b0da079a5dbf0d726f022a7090596a26789d",
+    "experiments/h100_ks3/transport.py": "d2cba31cc55ab0d65a3f66c3ea7dba69648d98695e01e15a54e64052fe91bdbd",
+    "experiments/h100_ks3/check_transport.py": "02f228a5518ae159b1ad1962a1883edc80a89b24786ad20ba89ad82aea649d51",
+    "experiments/h100_ks3/optimized.py": "4af3ddd01c3b4b0efbfe29113bc7b3ec41f70f15cb929d842a69a5c17a10e5f0",
+    "experiments/h100_ks3/check_fused.py": "a89232da8c087fe0ea338026803b0945cc6679e756aedabe57057a2d0294b9b0",
+    "experiments/h100_ks3/h100_kernels.py": "64900c2c896bb6ab6da90fbd761d437f4ef56728ba0b6b9080a0fd6b7081da16",
+    "experiments/h100_ks3/sweep_geometry.py": "644cbbc7b632db8162f7f98c3cd000299662cdabfac272375c8a735095b003df"
+  }
+}
