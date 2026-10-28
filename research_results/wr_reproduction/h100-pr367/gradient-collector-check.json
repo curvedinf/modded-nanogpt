@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "model_dim": 512,
+  "reports": [
+    {
+      "mode": "eager",
+      "bank_gradients_bitwise": true,
+      "all_finite": true
+    },
+    {
+      "mode": "compiled",
+      "bank_gradients_bitwise": true,
+      "all_finite": true
+    }
+  ]
+}

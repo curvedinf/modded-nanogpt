@@ -27,12 +27,12 @@ def dw(a,b,out,offs):
 
 @torch.library.custom_op('h100_ks3::forward',mutates_args=())
 def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tensor,down:torch.Tensor,g:torch.Tensor,scale:torch.Tensor)->tuple[torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor]:
-    m=src.numel();n=up.shape[1];d=768;rank=(g.shape[-1]-2)//6
+    m=src.numel();n=up.shape[1];d=rows.shape[-1];rank=(g.shape[-1]-2)//6
     if rank!=1 and not (PREPARE and SEPARATE and not FUSE_VJP):
         raise ValueError('Higher rank requires separate prepared geometry')
     x=torch.empty(m,d,device=rows.device,dtype=torch.bfloat16)
     if not PACK_INPUT:
-        core._pack[(tr.cdiv(m,128),24)](rows,x,m,d,*rows.stride(),SRC=src,INPUT_ROWS=rows.shape[0],ROWS_PER_TILE=128,GS32=GS32,num_warps=4)
+        core._pack[(tr.cdiv(m,128),tr.cdiv(d,32))](rows,x,m,d,*rows.stride(),SRC=src,INPUT_ROWS=rows.shape[0],ROWS_PER_TILE=128,GS32=GS32,num_warps=4)
     prepared=torch.empty(8,n,9,device=rows.device)
     if PREPARE:
         from wr_reproduction.ks3_prepared_geometry import _prepare
@@ -60,20 +60,20 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
 
 @forward.register_fake
 def _(rows,src,table,up,down,g,scale):
-    m=src.numel();n=up.shape[1];return torch.empty_like(rows),rows.new_empty((m,768)),rows.new_empty((m,768)),rows.new_empty((m,n),dtype=CACHE_DTYPE),rows.new_empty((m,n)),g.new_empty((8,n,9))
+    m=src.numel();n=up.shape[1];return torch.empty_like(rows),rows.new_empty((m,rows.shape[-1])),rows.new_empty((m,rows.shape[-1])),rows.new_empty((m,n),dtype=CACHE_DTYPE),rows.new_empty((m,n)),g.new_empty((8,n,9))
 
 @torch.library.custom_op('h100_ks3::backward_core',mutates_args={'bank'})
 def backward_core(grad:torch.Tensor,y:torch.Tensor,x:torch.Tensor,c:torch.Tensor,h:torch.Tensor,scale:torch.Tensor,src:torch.Tensor,offs:torch.Tensor,table:torch.Tensor,up:torch.Tensor,down:torch.Tensor,g:torch.Tensor,prepared:torch.Tensor,bank:torch.Tensor,layer:int)->tuple[torch.Tensor,torch.Tensor,torch.Tensor]:
     m,n=c.shape;rank=(g.shape[-1]-2)//6
     if FAST_GATE:
-        gg=torch.empty(m,768,device=c.device,dtype=torch.bfloat16);ds=torch.empty(m,device=c.device)
-        gather_gate[(tr.cdiv(m,4),)](grad,y,src,scale,gg,ds,grad.shape[0],m,num_warps=4,enable_fp_fusion=False)
+        gg=torch.empty(m,grad.shape[-1],device=c.device,dtype=torch.bfloat16);ds=torch.empty(m,device=c.device)
+        gather_gate[(tr.cdiv(m,4),)](grad,y,src,scale,gg,ds,grad.shape[0],m,D=grad.shape[-1],num_warps=4,enable_fp_fusion=False)
     else:gg,ds=gather(grad,y,src,scale)
     dc=torch.empty_like(c,dtype=torch.bfloat16)
     bm=VJP_ROWS
     if FUSE_VJP:
         bm,bn,bk,nw,st=(64,64,128,4,3);part=torch.empty(tr.cdiv(m,bm),n,8,device=c.device)
-        gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](gg,down,dc,table,m,n,768,*down.stride(),bm,bn,bk,3,G=g,SRC=src,ROWS=grad.shape[0],C=c,PART=part,num_warps=nw,num_stages=st)
+        gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](gg,down,dc,table,m,n,grad.shape[-1],*down.stride(),bm,bn,bk,3,G=g,SRC=src,ROWS=grad.shape[0],C=c,PART=part,num_warps=nw,num_stages=st)
     else:
         v=mm(gg,down,table,dtype=V_DTYPE);part=torch.empty(tr.cdiv(m,bm),n,8,device=c.device)
         if PREPARE:
@@ -94,11 +94,11 @@ def _(grad,y,x,c,h,scale,src,offs,table,up,down,g,prepared,bank,layer):
 
 @torch.library.custom_op('h100_ks3::dx',mutates_args=())
 def dx(dc:torch.Tensor,up:torch.Tensor,table:torch.Tensor,src:torch.Tensor,dl:torch.Tensor,router:torch.Tensor)->torch.Tensor:
-    m,k=dc.shape;n=768;bm,bn,bk,nw,st=tiles(m,n);out=torch.empty(dl.shape[0],n,device=dc.device,dtype=torch.bfloat16)
+    m,k=dc.shape;n=router.shape[-1];bm,bn,bk,nw,st=tiles(m,n);out=torch.empty(dl.shape[0],n,device=dc.device,dtype=torch.bfloat16)
     gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](dc,up,out,table,m,n,k,*up.stride(),bm,bn,bk,4,SRC=src,ROWS=dl.shape[0],DLOG=dl,ROUTER=router,num_warps=nw,num_stages=st)
     return out
 @dx.register_fake
-def _(dc,up,table,src,dl,router):return dc.new_empty((dl.shape[0],768))
+def _(dc,up,table,src,dl,router):return dc.new_empty((dl.shape[0],router.shape[-1]))
 
 class Routed(torch.autograd.Function):
     @staticmethod

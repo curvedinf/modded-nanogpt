@@ -64,9 +64,9 @@ def dw(a,b,out,offs,sa,sb,flag):
 def gather(grad,y,src,scale,gg,gt,dgate,gs,rows,m):
     if GATHER_IMPL=='tiled':
         from experiments.h100_ks3.fp8_kernels import gather_gate_tiled
-        gather_gate_tiled[(tr.cdiv(m,64),)](grad,y,src,scale,gg,gt,dgate,gs,rows,m,num_warps=4,enable_fp_fusion=False)
+        gather_gate_tiled[(tr.cdiv(m,64),)](grad,y,src,scale,gg,gt,dgate,gs,rows,m,D=grad.shape[-1],num_warps=4,enable_fp_fusion=False)
     else:
-        gather_gate[(tr.cdiv(m,4),)](grad,y,src,scale,gg,gt,dgate,gs,rows,m,num_warps=4,enable_fp_fusion=False)
+        gather_gate[(tr.cdiv(m,4),)](grad,y,src,scale,gg,gt,dgate,gs,rows,m,D=grad.shape[-1],num_warps=4,enable_fp_fusion=False)
 
 def prepare_geometry(g,n):
     rank=(g.shape[-1]-2)//6
@@ -81,9 +81,9 @@ def prepare_geometry(g,n):
 def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tensor,down:torch.Tensor,
             us:torch.Tensor,ws:torch.Tensor,xs:torch.Tensor,ps:torch.Tensor,pa:torch.Tensor,g:torch.Tensor,
             scale:torch.Tensor)->tuple[torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor]:
-    m=src.numel();n=up.shape[1];d=768
+    m=src.numel();n=up.shape[1];d=rows.shape[-1]
     x=torch.empty(m,d,device=rows.device,dtype=torch.float8_e4m3fn);xt=torch.empty(d,m,device=rows.device,dtype=x.dtype)
-    pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],GS32=GS32,num_warps=4)
+    pack_input[(tr.cdiv(m,128),tr.cdiv(d,32))](rows,x,xt,src,xs,m,rows.shape[0],D=d,GS32=GS32,num_warps=4)
     rank=(g.shape[-1]-2)//6;prepared=prepare_geometry(g,n)
     if FUSE_GEOMETRY and rank!=1:raise ValueError('Fused FP8 up projection currently requires rank1')
     if not GS32 and FUSE_GEOMETRY and MM_IMPL!='tma':raise ValueError('Native-only FP8 fusion requires TMA')
@@ -115,7 +115,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
 @forward.register_fake
 def _(rows,src,table,up,down,us,ws,xs,ps,pa,g,scale):
     m=src.numel();n=up.shape[1]
-    return torch.empty_like(rows),rows.new_empty((m,768)),rows.new_empty((m,n),dtype=C_DTYPE),rows.new_empty((768,m),dtype=torch.float8_e4m3fn),rows.new_empty((n,m),dtype=torch.float8_e4m3fn),g.new_empty((8,n,9))
+    return torch.empty_like(rows),rows.new_empty((m,rows.shape[-1])),rows.new_empty((m,n),dtype=C_DTYPE),rows.new_empty((rows.shape[-1],m),dtype=torch.float8_e4m3fn),rows.new_empty((n,m),dtype=torch.float8_e4m3fn),g.new_empty((8,n,9))
 
 @torch.library.custom_op('h100_ks3_fp8::backward_core',mutates_args={'bank','da'})
 def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tensor,ht:torch.Tensor,scale:torch.Tensor,
@@ -123,7 +123,7 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
                   us:torch.Tensor,ws:torch.Tensor,xs:torch.Tensor,gs:torch.Tensor,ps:torch.Tensor,ds:torch.Tensor,da:torch.Tensor,
                   bank:torch.Tensor,flag:torch.Tensor,layer:int)->tuple[torch.Tensor,torch.Tensor,torch.Tensor]:
     m,n=c.shape;rank=(g.shape[-1]-2)//6
-    gg=torch.empty(m,768,device=c.device,dtype=torch.float8_e5m2);gt=torch.empty(768,m,device=c.device,dtype=gg.dtype)
+    gg=torch.empty(m,grad.shape[-1],device=c.device,dtype=torch.float8_e5m2);gt=torch.empty(grad.shape[-1],m,device=c.device,dtype=gg.dtype)
     dgate=torch.empty(m,device=c.device)
     gather(grad,y,src,scale,gg,gt,dgate,gs,grad.shape[0],m)
     bm=VJP_ROWS
@@ -156,12 +156,23 @@ def dx(dc:torch.Tensor,up:torch.Tensor,table:torch.Tensor,src:torch.Tensor,dl:to
     if TMA_OUTPUTS:
         from experiments.h100_ks3.tma_mm import mm as tma_mm
         return tma_mm(dc,up,table,ds,us,torch.bfloat16,mode=4,SRC=src,DLOG=dl,ROUTER=router,ROWS=dl.shape[0])
-    m,k=dc.shape;n=768;bm,bn,bk,nw,st=tile(m)
+    m,k=dc.shape;n=router.shape[-1];bm,bn,bk,nw,st=tile(m)
     out=torch.empty(dl.shape[0],n,device=dc.device,dtype=torch.bfloat16)
     gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](dc,up,out,table,m,n,k,*up.stride(),bm,bn,bk,4,SRC=src,ROWS=dl.shape[0],DLOG=dl,ROUTER=router,ASCALE=ds,WSCALE=us,num_warps=nw,num_stages=st)
     return out
 @dx.register_fake
-def _(dc,up,table,src,dl,router,ds,us):return dc.new_empty((dl.shape[0],768),dtype=torch.bfloat16)
+def _(dc,up,table,src,dl,router,ds,us):return dc.new_empty((dl.shape[0],router.shape[-1]),dtype=torch.bfloat16)
+
+def routed_backward(ctx,grad,dprobs,dcounts):
+    rows,router,post,probs,gate,expert,dest,src,offs,table,y,c,xt,ht,scale,g,prepared=ctx.saved_tensors
+    up,upt,down,downt=ctx.caches;us,ws,xs,gs,ps,pa,ds,da=ctx.scales
+    dc,dsp,dg=backward_core(grad.contiguous(),y,c,xt,ht,scale,src,offs,table,downt.transpose(1,2),g,prepared,us,ws,xs,gs,ps,ds,da,ctx.bank,ctx.flag,ctx.layer)
+    ds_gate=dsp[dest.long()];dp=torch.zeros_like(probs) if dprobs is None else dprobs.float()
+    dp=dp.scatter_add(1,expert[:,None],(ds_gate*post.float()).reshape(-1,1))
+    dl=(probs*(dp-(probs*dp).sum(-1,keepdim=True))).to(torch.bfloat16)
+    result=dx(dc,upt.transpose(1,2),table,src,dl,router,ds,us)
+    return result,dl.T@rows,(ds_gate*gate).sum().to(post.dtype).reshape(post.shape),None,None,dg,None,None,None,None,None
+
 
 class Routed(torch.autograd.Function):
     @staticmethod
@@ -176,16 +187,7 @@ class Routed(torch.autograd.Function):
         ctx.caches=caches;ctx.scales=scales;ctx.bank=bank;ctx.flag=flag;ctx.layer=layer
         ctx.mark_non_differentiable(counts)
         return out,probs,counts
-    @staticmethod
-    def backward(ctx,grad,dprobs,dcounts):
-        rows,router,post,probs,gate,expert,dest,src,offs,table,y,c,xt,ht,scale,g,prepared=ctx.saved_tensors
-        up,upt,down,downt=ctx.caches;us,ws,xs,gs,ps,pa,ds,da=ctx.scales
-        dc,dsp,dg=backward_core(grad.contiguous(),y,c,xt,ht,scale,src,offs,table,downt.transpose(1,2),g,prepared,us,ws,xs,gs,ps,ds,da,ctx.bank,ctx.flag,ctx.layer)
-        ds_gate=dsp[dest.long()];dp=torch.zeros_like(probs) if dprobs is None else dprobs.float()
-        dp=dp.scatter_add(1,expert[:,None],(ds_gate*post.float()).reshape(-1,1))
-        dl=(probs*(dp-(probs*dp).sum(-1,keepdim=True))).to(torch.bfloat16)
-        result=dx(dc,upt.transpose(1,2),table,src,dl,router,ds,us)
-        return result,dl.T@rows,(ds_gate*gate).sum().to(post.dtype).reshape(post.shape),None,None,dg,None,None,None,None,None
+    backward = staticmethod(routed_backward)
 
 
 def attach(base):

@@ -13,6 +13,9 @@
     "Port eight-expert top-one KS3 MoE at layers1,3,5,6,8 while retaining PR367 retrieval and shared model/training settings.",
     "Screen and optimize on the new base; three fresh independent seeds after a qualifying win."
   ],
-  "baseline_status": "building_extension_and_downloading_pinned_corpus",
-  "previous_study": "h100-research; stopped and preserved"
+  "baseline_status": "running",
+  "previous_study": "h100-research; stopped and preserved",
+  "baseline_run_id": "20261028T210058Z",
+  "dataset_verified_files": 371,
+  "dataset_verified_bytes": 74200379904
 }

@@ -26,7 +26,7 @@ def kernel(Q,UP,UPT,DOWN,DOWNT,SCALES,N:tl.constexpr,D:tl.constexpr,
 
 
 def build(q,up,upt,down,downt,n,scales,*,packed=False,tile=128):
-    d=768
+    d=up.shape[-1]
     assert n%tile==0 and d%tile==0
     desc=[TensorDescriptor.from_tensor(a.view(-1,width),[tile,tile])
           for a,width in [(up,d),(upt,n),(down,n),(downt,d)]]
