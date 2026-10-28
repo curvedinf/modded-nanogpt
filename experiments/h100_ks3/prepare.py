@@ -15,6 +15,7 @@ def main():
     parser.add_argument('--study', default='h100-ks3')
     parser.add_argument('--scheduled-steps', type=int, default=981)
     parser.add_argument('--drop-dense-layer', type=int, choices=(0,2,4))
+    parser.add_argument('--drop-parallel-mlp', action='store_true')
     parser.add_argument('--dense-width', type=int, default=2816)
     parser.add_argument('--first-batch-units', type=int, choices=(4,8,12,16), default=8)
     args = parser.parse_args()
@@ -37,6 +38,13 @@ def main():
     if args.drop_dense_layer is not None:
         assert model_source.count('NO_MLP_LAYERS = (7, 9)')==1
         model_source=model_source.replace('NO_MLP_LAYERS = (7, 9)',f'NO_MLP_LAYERS = {tuple(sorted((7,9,args.drop_dense_layer)))}')
+    if args.drop_parallel_mlp:
+        before='PARALLEL_MLP_LAYER, PARALLEL_MLP_SLOT = 8, len(_MLP_LIVE_LAYERS)'
+        assert model_source.count(before)==1
+        model_source=model_source.replace(before,'PARALLEL_MLP_LAYER, PARALLEL_MLP_SLOT = -1, len(_MLP_LIVE_LAYERS)')
+        before='NUM_USED_MLP_SLOTS = PARALLEL_MLP_SLOT + 1'
+        assert model_source.count(before)==1
+        model_source=model_source.replace(before,'NUM_USED_MLP_SLOTS = PARALLEL_MLP_SLOT')
     if args.dense_width != 2816:
         assert model_source.count('MLP_HIDDEN_DIM = 2816')==1
         model_source=model_source.replace('MLP_HIDDEN_DIM = 2816',f'MLP_HIDDEN_DIM = {args.dense_width}')
