@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T20:40:51.206535+00:00",
+  "utc": "2026-10-28T20:50:29.621340+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,19 +18,17 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": "20261028T204016Z",
-  "current_hypothesis": "1280-wide GS32 cubic KS3 experts with2304-wide dense branches; original1053 updates.",
+  "current_full_run": null,
+  "current_hypothesis": "Full1053 updates; dense width2304 instead of2816; unchanged1024-chart cubic FP8 KS3 experts, original LR and attention.",
   "planned_followups": [
-    "Complete the native-only FP8 full WR validation and compare official time/loss.",
-    "Run queued numerical and timing checks for1280-wide KS3 experts under both quantization recipes.",
-    "Use quality margin to shorten the schedule, or test1280-wide KS3/2304-wide dense capacity reallocation.",
-    "Three fresh independent unpruned seeds with frozen code/config after a faster-than-control qualifier."
+    "Measure dense-width2304 single-factor full WR ablation.",
+    "Freeze and run three fresh seeds if a qualifying configuration beats31.099s."
   ],
   "reference": {
     "run": "20261028T180502Z",
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "Remove52 added late batch24 updates; select original or reallocated widths after full validation.",
+  "next_model_candidate": "Narrow original dense branches while retaining every KS3 expert site and full data schedule.",
   "queued_screen": []
 }
