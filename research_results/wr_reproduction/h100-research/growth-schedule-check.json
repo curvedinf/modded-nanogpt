@@ -1,0 +1,56 @@
+{
+  "utc": "2026-10-28T20:40:43.019364+00:00",
+  "passed": true,
+  "original_boundaries": [
+    [
+      0,
+      280
+    ],
+    [
+      280,
+      595
+    ],
+    [
+      595,
+      974
+    ],
+    [
+      974,
+      1033
+    ],
+    [
+      1033,
+      1053
+    ]
+  ],
+  "trimmed_boundaries": [
+    [
+      0,
+      280
+    ],
+    [
+      280,
+      595
+    ],
+    [
+      595,
+      922
+    ],
+    [
+      922,
+      981
+    ],
+    [
+      981,
+      1001
+    ]
+  ],
+  "original_total": 1053,
+  "trimmed_total": 1001,
+  "first_two_stage_counts_unchanged": true,
+  "stage_boundary_parity_preserved": true,
+  "extension_steps": 20,
+  "config_difference_only_growth_constant": true,
+  "gpu_run_launched": false,
+  "limitation": "Global LR cooldown is recomputed for the shorter schedule; early stage counts/MTP match, not the entire training trajectory."
+}
