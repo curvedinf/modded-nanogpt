@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T19:17:25.637408+00:00",
+  "utc": "2026-10-28T19:26:56.972847+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,10 +18,10 @@
     "loss": 3.279867172,
     "code_commit": "1e9609ebde4dfb2b3cfabdd110330b5314129d60"
   },
-  "current_full_run": "20261028T191520Z",
-  "current_hypothesis": "all five KS3 expert widths768, native tanh, unchanged schedule",
-  "queued_screen": "FP8 byte-store fix: all dual layouts must be bitwise and finite, then complete-block timing",
-  "next_structural_candidate": "drop dense layer4; keeps all five KS3 MoEs; dense bank falls from8slots to4",
+  "current_full_run": "20261028T192154Z",
+  "current_hypothesis": "Remove dense-only layer4; keep five width1024 KS3 MoEs and halve dense optimizer bank.",
+  "queued_screen": "FP8 producer/oracle/paired block tests under pinned ptxas13.3",
+  "next_structural_candidate": "Remove parallel dense branch at layer8 if more promising than dropping layer4",
   "planned_followups": [
     "choose full FP8 only if its correctness and paired timing gates pass",
     "full depth candidate atwidth1024 to isolate bank/depth effect",
@@ -32,5 +32,6 @@
     "run": "20261028T180502Z",
     "seconds": 31.099,
     "loss": 3.2765
-  }
+  },
+  "prepared_system_candidate": "Fuse MoE ANVIL at unchanged margin1.1; numerical/timing gate before enabling"
 }
