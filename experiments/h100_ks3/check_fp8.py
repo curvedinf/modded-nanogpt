@@ -1,5 +1,5 @@
 """Short independent GEMM/packing oracles and paired complete-block timing."""
-import os,sys,json,statistics,datetime
+import os,sys,json,statistics,datetime,hashlib
 from pathlib import Path
 import torch,triton as tr,triton.testing
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'wr_reproduction/pr393/upstream'))
@@ -116,6 +116,9 @@ def main():
             timing[kind]=dict(samples_ms=samples,median_ms=statistics.median(samples))
         result=dict(tokens=t,producers=producers,errors_versus_bf16=errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
         cases.append(result);print(json.dumps(result),flush=True)
-    output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases)
+    from triton.backends.nvidia.compiler import get_ptxas
+    assembler=get_ptxas(90)
+    output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,
+                ptxas=dict(path=assembler.path,version=assembler.version,sha256=hashlib.sha256(Path(assembler.path).read_bytes()).hexdigest()))
     Path('research_results/wr_reproduction/h100-research/fp8-micro.json').write_text(json.dumps(output,indent=2)+'\n')
 if __name__=='__main__':main()
