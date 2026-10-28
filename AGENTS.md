@@ -63,3 +63,6 @@ The server has approximately a couple of hours remaining; favor short paired imp
 
 ## Latest H100 target migration — 2026-10-28
 The user directs reproducing PR367 and moving KS3 work to it with MoE. Pin PR367 at e390cb25cf5c732ed4471c2ad861af28114e0a56, preserve its immutable source in wr_reproduction/pr367/upstream, and first validate its exact original dense/retrieval recipe. Then port substantial KS3 with eight-expert top-one MoE. Preserve all PR393 evidence; its h100-research STOP markers now prevent further old-base ablations. New work uses logs/wr-reproduction/h100-pr367-* and research_results/wr_reproduction/h100-pr367. Keep recording and committing/pushing results. Earlier continuous research authorization carries to this new target; honor any new stop.
+
+## Latest return to PR393 MoE — 2026-10-28
+The user cancelled the PR367 migration and directed returning to MoE work. Stop the PR367 baseline and queue; preserve incomplete-run evidence without a validation claim. Resume the authorized H100 PR393 KS3 study from its best qualifying configuration (32.829785293 s, CE 3.279207230), retaining substantial KS3 at all five MoE sites. Only h100-research migration STOP markers are revoked; all unrelated old controllers remain stopped. Continue meaningful optimizations, full WR validation, logs, commits and pushes.

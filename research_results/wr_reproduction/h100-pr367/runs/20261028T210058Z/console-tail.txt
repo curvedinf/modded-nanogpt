@@ -1,0 +1,70 @@
+mbind(MPOL_LOCAL) failed, NUMA balancing may migrate this mapping: Operation not permitted (os error 1)
+mbind(MPOL_LOCAL) failed, NUMA balancing may migrate this mapping: Operation not permitted (os error 1)
+mbind(MPOL_LOCAL) failed, NUMA balancing may migrate this mapping: Operation not permitted (os error 1)
+mbind(MPOL_LOCAL) failed, NUMA balancing may migrate this mapping: Operation not permitted (os error 1)
+mbind(MPOL_LOCAL) failed, NUMA balancing may migrate this mapping: Operation not permitted (os error 1)
+mbind(MPOL_LOCAL) failed, NUMA balancing may migrate this mapping: Operation not permitted (os error 1)
+mbind(MPOL_LOCAL) failed, NUMA balancing may migrate this mapping: Operation not permitted (os error 1)
+mbind(MPOL_LOCAL) failed, NUMA balancing may migrate this mapping: Operation not permitted (os error 1)
+mbind(MPOL_LOCAL) failed, NUMA balancing may migrate this mapping: Operation not permitted (os error 1)
+mbind(MPOL_LOCAL) failed, NUMA balancing may migrate this mapping: Operation not permitted (os error 1)
+mbind(MPOL_LOCAL) failed, NUMA balancing may migrate this mapping: Operation not permitted (os error 1)
+Compiling model, warming up kernels and capturing CUDA graphs (~7 minutes on first execution)
+Sampling steps [0, 1, 149, 150, 151, 152, 320, 321, 322, 323, 438, 439, 440, 441, 496, 497, 498, 499, 528, 529, 530, 531, 532, 533, 534] for warmup; 6 step-graph configurations (warmup visits [4, 4, 4, 4, 4, 5]); optimizer graphs captured at step 1, fp8 refresh graphs at step 497
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_inductor/lowering.py:1904: FutureWarning: `torch._prims_common.check` is deprecated and will be removed in the future. Please use `torch._check*` functions instead.
+  check(
+W1028 21:08:34.693000 230135 torch/distributed/elastic/agent/server/api.py:739] Received 15 death signal, shutting down workers
+W1028 21:08:34.693000 230135 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 230216 closing signal SIGTERM
+W1028 21:08:34.694000 230135 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 230217 closing signal SIGTERM
+W1028 21:08:34.694000 230135 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 230218 closing signal SIGTERM
+W1028 21:08:34.694000 230135 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 230219 closing signal SIGTERM
+W1028 21:08:34.695000 230135 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 230220 closing signal SIGTERM
+W1028 21:08:34.695000 230135 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 230221 closing signal SIGTERM
+W1028 21:08:34.696000 230135 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 230222 closing signal SIGTERM
+W1028 21:08:34.696000 230135 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 230223 closing signal SIGTERM

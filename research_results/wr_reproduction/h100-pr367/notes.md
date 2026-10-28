@@ -23,3 +23,7 @@ The corrected collector passed eager and full-graph compiled backward checks: fi
 ## 2026-10-28 21:05 UTC — MoE graph verification protocol
 
 Static review found PR367 compares a captured grad-enabled graph against a separately compiled no-grad graph. PR393 already fixes this for top-one MoE because BF16 rounding can change discrete routing. The KS3 variant now compares replay against the same grad-enabled compiled graph, retaining the original numeric tolerance. This affects warmup verification only; the immutable baseline is untouched.
+
+## 2026-10-28T21:08:50.416209+00:00 — cancelled by user
+
+The user observed lack of maintainer engagement and directed returning to PR393 MoE work. Stopped the unchanged baseline during untimed compilation/warmup and cancelled the queued KS3 port run. No PR367 validation or timing result exists. All source, checks, dataset manifests, and incomplete-run logs are retained. New PR367 STOP markers prohibit a restart without authorization.

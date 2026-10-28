@@ -17,5 +17,8 @@
   "previous_study": "h100-research; stopped and preserved",
   "baseline_run_id": "20261028T210058Z",
   "dataset_verified_files": 371,
-  "dataset_verified_bytes": 74200379904
+  "dataset_verified_bytes": 74200379904,
+  "status": "cancelled_by_user",
+  "cancelled_utc": "2026-10-28T21:08:34.692287+00:00",
+  "reason": "Return to PR393 MoE work; PR367 maintainer acceptance concern."
 }
