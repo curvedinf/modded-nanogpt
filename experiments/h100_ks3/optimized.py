@@ -8,7 +8,7 @@ from wr_reproduction.ks3_bf16_gather import gather
 
 VARIANT='fused';PACK_INPUT=False;FUSE_VJP=False;FUSE_DX=False;SEPARATE=False;PREPARE=False;FAST_GATE=False;VJP_ROWS=64
 FAST_TANH_FORWARD=False;FAST_TANH_BACKWARD=False
-BF16_CACHE=False;BF16_V=False
+CACHE_DTYPE=torch.float32;V_DTYPE=torch.float32
 ORIGINAL_ROUTED=core.RoutedKS3
 
 def tiles(m,n):return (128,128,64,8,3) if m<=32768 else (64,256,64,8,4)
@@ -37,7 +37,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
     bm,bn,bk,nw,st=(64,128,64,4,4)
     w=up.transpose(1,2)
     if SEPARATE:
-        c=mm(x,w,table,dtype=torch.bfloat16 if BF16_CACHE else torch.float32)
+        c=mm(x,w,table,dtype=CACHE_DTYPE)
         from wr_reproduction.ks3_prepared_geometry import _geometry_prepared
         if FAST_TANH_FORWARD:
             from experiments.h100_ks3.native_geometry import _geometry_prepared
@@ -51,7 +51,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
 
 @forward.register_fake
 def _(rows,src,table,up,down,g,scale):
-    m=src.numel();n=up.shape[1];return torch.empty_like(rows),rows.new_empty((m,768)),rows.new_empty((m,768)),rows.new_empty((m,n),dtype=torch.bfloat16 if BF16_CACHE else torch.float32),rows.new_empty((m,n)),g.new_empty((8,n,9))
+    m=src.numel();n=up.shape[1];return torch.empty_like(rows),rows.new_empty((m,768)),rows.new_empty((m,768)),rows.new_empty((m,n),dtype=CACHE_DTYPE),rows.new_empty((m,n)),g.new_empty((8,n,9))
 
 @torch.library.custom_op('h100_ks3::backward_core',mutates_args={'bank'})
 def backward_core(grad:torch.Tensor,y:torch.Tensor,x:torch.Tensor,c:torch.Tensor,h:torch.Tensor,scale:torch.Tensor,src:torch.Tensor,offs:torch.Tensor,table:torch.Tensor,up:torch.Tensor,down:torch.Tensor,g:torch.Tensor,prepared:torch.Tensor,bank:torch.Tensor,layer:int)->tuple[torch.Tensor,torch.Tensor,torch.Tensor]:
@@ -66,7 +66,7 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,x:torch.Tensor,c:torch.Tensor
         bm,bn,bk,nw,st=(64,64,128,4,3);part=torch.empty(tr.cdiv(m,bm),n,8,device=c.device)
         gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](gg,down,dc,table,m,n,768,*down.stride(),bm,bn,bk,3,G=g,SRC=src,ROWS=grad.shape[0],C=c,PART=part,num_warps=nw,num_stages=st)
     else:
-        v=mm(gg,down,table,dtype=torch.bfloat16 if BF16_V else torch.float32);part=torch.empty(tr.cdiv(m,bm),n,8,device=c.device)
+        v=mm(gg,down,table,dtype=V_DTYPE);part=torch.empty(tr.cdiv(m,bm),n,8,device=c.device)
         if PREPARE:
             from wr_reproduction.ks3_prepared_geometry import _vjp_prepared
             if FAST_TANH_BACKWARD:
@@ -114,15 +114,15 @@ class Routed(torch.autograd.Function):
         return (result,dl.T@rows,(ds*gate).sum().to(post.dtype).reshape(post.shape),None,None,None,None,dg,None,None,None)[:ctx.argument_count]
 
 def install(variant='fused'):
-    global VARIANT,PACK_INPUT,FUSE_VJP,FUSE_DX,PREPARE,FAST_GATE,VJP_ROWS,SEPARATE,FAST_TANH_FORWARD,FAST_TANH_BACKWARD,BF16_CACHE,BF16_V
+    global VARIANT,PACK_INPUT,FUSE_VJP,FUSE_DX,PREPARE,FAST_GATE,VJP_ROWS,SEPARATE,FAST_TANH_FORWARD,FAST_TANH_BACKWARD,CACHE_DTYPE,V_DTYPE
     VARIANT=variant;PACK_INPUT='input' in variant;FUSE_VJP='vjp' in variant;FUSE_DX='dx' in variant
     SEPARATE='separate' in variant
     PREPARE='prepared' in variant;FAST_GATE='gate' in variant;VJP_ROWS=128 if '128' in variant else 64
     FAST_TANH_BACKWARD='tanh' in variant;FAST_TANH_FORWARD=FAST_TANH_BACKWARD and 'tanhb' not in variant
-    BF16_CACHE='bf16cache' in variant
-    BF16_V=BF16_CACHE or 'bf16v' in variant
-    if BF16_V and not (FAST_TANH_FORWARD and PREPARE and SEPARATE and not FUSE_VJP):
-        raise ValueError('BF16 intermediate cache requires native prepared separate geometry')
+    CACHE_DTYPE=torch.float16 if 'fp16cache' in variant else torch.bfloat16 if 'bf16cache' in variant else torch.float32
+    V_DTYPE=torch.float16 if 'fp16cache' in variant or 'fp16v' in variant else torch.bfloat16 if 'bf16cache' in variant or 'bf16v' in variant else torch.float32
+    if V_DTYPE!=torch.float32 and not (FAST_TANH_FORWARD and PREPARE and SEPARATE and not FUSE_VJP):
+        raise ValueError('Reduced intermediate cache requires native prepared separate geometry')
     if FAST_TANH_BACKWARD and not (PREPARE and SEPARATE and not FUSE_VJP):
         raise ValueError('Native tanh variants require separate prepared geometry')
     matrix.run=mm;matrix.dw=dw

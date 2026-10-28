@@ -1,0 +1,133 @@
+{
+  "utc": "2026-10-28T19:36:30.350455+00:00",
+  "cases": [
+    {
+      "tokens": 1,
+      "variants": {
+        "separate-dx-prepared-128-gate-tanh": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 2.601999256057752e-07,
+            "geometry": 1.7387084881193005e-05,
+            "weights": 0.0
+          },
+          "post_audit": {
+            "absolute_error": 1.1175870895385742e-08,
+            "reference": 0.04295109212398529
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "separate-dx-prepared-128-gate-tanh-bf16v": {
+          "passed": false,
+          "exception": "({'output': 0.0, 'dx': 0.0032148410100489855, 'router': 0.0, 'post': 2.601999256057752e-07, 'geometry': 0.00154208205640316, 'weights': 0.002033811993896961}, {'absolute_error': 1.1175870895385742e-08, 'reference': 0.04295109212398529})"
+        },
+        "separate-dx-prepared-128-gate-tanh-bf16cache": {
+          "passed": false,
+          "exception": "({'output': 0.006897263694554567, 'dx': 0.005154336337000132, 'router': 0.011639917269349098, 'post': 0.006251129787415266, 'geometry': 0.0050813257694244385, 'weights': 0.005013539921492338}, {'absolute_error': 0.00026849284768104553, 'reference': 0.04295109212398529})"
+        }
+      }
+    },
+    {
+      "tokens": 257,
+      "variants": {
+        "separate-dx-prepared-128-gate-tanh": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00023223149764817208,
+            "dx": 0.000225361596676521,
+            "router": 0.0008571529178880155,
+            "post": 0.0004985484411008656,
+            "geometry": 1.9058841644437052e-05,
+            "weights": 7.906273094704375e-05
+          },
+          "post_audit": {
+            "absolute_error": 0.00014609098434448242,
+            "reference": 0.2930326759815216
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "separate-dx-prepared-128-gate-tanh-bf16v": {
+          "passed": false,
+          "exception": "({'output': 0.00023223149764817208, 'dx': 0.0034802688751369715, 'router': 0.0008571529178880155, 'post': 0.0004985484411008656, 'geometry': 0.0016500279307365417, 'weights': 0.0026185023598372936}, {'absolute_error': 0.00014609098434448242, 'reference': 0.2930326759815216})"
+        },
+        "separate-dx-prepared-128-gate-tanh-bf16cache": {
+          "passed": false,
+          "exception": "({'output': 0.0071281869895756245, 'dx': 0.004861235618591309, 'router': 0.00705300085246563, 'post': 0.012007268145680428, 'geometry': 0.006615056190639734, 'weights': 0.005431076046079397}, {'absolute_error': 0.003518521785736084, 'reference': 0.2930326759815216})"
+        }
+      }
+    },
+    {
+      "tokens": 16384,
+      "variants": {
+        "separate-dx-prepared-128-gate-tanh": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00022239350073505193,
+            "dx": 0.0002202470786869526,
+            "router": 0.0010166295105591416,
+            "post": 0.0013382710749283433,
+            "geometry": 1.8651729988050647e-05,
+            "weights": 0.00020621961448341608
+          },
+          "post_audit": {
+            "absolute_error": 0.00215911865234375,
+            "reference": 1.6133642196655273
+          },
+          "samples_ms": [
+            0.8134446730980507,
+            0.8191747665405273,
+            0.8192436878497784
+          ],
+          "median_ms": 0.8191747665405273
+        },
+        "separate-dx-prepared-128-gate-tanh-bf16v": {
+          "passed": false,
+          "exception": "({'output': 0.00022239350073505193, 'dx': 0.0034813054371625185, 'router': 0.0010166295105591416, 'post': 0.0013382710749283433, 'geometry': 0.0016751459334045649, 'weights': 0.0026974056381732225}, {'absolute_error': 0.00215911865234375, 'reference': 1.6133642196655273})"
+        },
+        "separate-dx-prepared-128-gate-tanh-bf16cache": {
+          "passed": false,
+          "exception": "({'output': 0.007150458637624979, 'dx': 0.004944862797856331, 'router': 0.007793450262397528, 'post': 0.013906138017773628, 'geometry': 0.006404226180166006, 'weights': 0.005455392878502607}, {'absolute_error': 0.022435665130615234, 'reference': 1.6133642196655273})"
+        }
+      }
+    },
+    {
+      "tokens": 49152,
+      "variants": {
+        "separate-dx-prepared-128-gate-tanh": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00022127330885268748,
+            "dx": 0.00021726048726122826,
+            "router": 0.001090690609999001,
+            "post": 0.00023914598568808287,
+            "geometry": 1.881517528090626e-05,
+            "weights": 0.0002615110424812883
+          },
+          "post_audit": {
+            "absolute_error": 0.0014052391052246094,
+            "reference": -5.876072406768799
+          },
+          "samples_ms": [
+            2.071762127346463,
+            2.073289426167806,
+            2.07433901892768
+          ],
+          "median_ms": 2.073289426167806
+        },
+        "separate-dx-prepared-128-gate-tanh-bf16v": {
+          "passed": false,
+          "exception": "({'output': 0.00022127330885268748, 'dx': 0.003482349216938019, 'router': 0.001090690609999001, 'post': 0.00023914598568808287, 'geometry': 0.0016731404466554523, 'weights': 0.002703141188248992}, {'absolute_error': 0.0014052391052246094, 'reference': -5.876072406768799})"
+        },
+        "separate-dx-prepared-128-gate-tanh-bf16cache": {
+          "passed": false,
+          "exception": "({'output': 0.007134046871215105, 'dx': 0.004940276499837637, 'router': 0.007707151584327221, 'post': 0.0038163543213158846, 'geometry': 0.006476022768765688, 'weights': 0.005441413260996342}, {'absolute_error': 0.022425174713134766, 'reference': -5.876072406768799})"
+        }
+      }
+    }
+  ]
+}
