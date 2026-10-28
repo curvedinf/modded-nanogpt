@@ -9,6 +9,7 @@ import torch
 import triton as tr
 import triton.language as tl
 from triton.tools.tensor_descriptor import TensorDescriptor
+from experiments.h100_ks3.h100_kernels import _features
 
 TILE=os.environ.get('KS3_FP8_MM_TILE','128x128')
 TILES={'64x128':(64,128,128,4,3),'128x128':(128,128,128,8,3),
@@ -18,7 +19,8 @@ assert TILE in TILES
 
 @tr.jit
 def kernel(A,W,O,TABLE,SA,SW,M:tl.constexpr,N:tl.constexpr,K:tl.constexpr,
-           BM:tl.constexpr,BN:tl.constexpr,BK:tl.constexpr,SMS:tl.constexpr):
+           BM:tl.constexpr,BN:tl.constexpr,BK:tl.constexpr,SMS:tl.constexpr,
+           G=None,P=None,H=None,HT=None,HS=None,HM=None):
     cols=tl.cdiv(N,BN);tiles=tl.cdiv(M,BM)*cols
     scale_a=tl.load(SA)
     for tile in tl.range(tl.program_id(0),tiles,SMS,flatten=True):
@@ -34,9 +36,17 @@ def kernel(A,W,O,TABLE,SA,SW,M:tl.constexpr,N:tl.constexpr,K:tl.constexpr,
         first,second=tl.split(split)
         O.store([mr*BM,nc*BN],first)
         O.store([mr*BM,nc*BN+BN//2],second)
+        if G is not None:
+            columns=nc*BN+tl.arange(0,BN)
+            h=_features(acc,G,expert,columns,N,BM,BN,P,True)
+            packed=tl.minimum(tl.maximum(h/tl.load(HS),-448.),448.).to(tl.float8e4nv)
+            first,second=tl.split(tl.permute(tl.reshape(packed,(BM,2,BN//2)),(0,2,1)))
+            H.store([mr*BM,nc*BN],first);H.store([mr*BM,nc*BN+BN//2],second)
+            HT.store([nc*BN,mr*BM],tl.trans(first));HT.store([nc*BN+BN//2,mr*BM],tl.trans(second))
+            tl.store(HM+tile,tl.max(tl.max(tl.abs(h),1),0))
 
 
-def mm(a,w,table,sa,sw,dtype):
+def mm(a,w,table,sa,sw,dtype,g=None,prepared=None,h=None,ht=None,hs=None):
     m,k=a.shape;n=w.shape[-1];bm,bn,bk,nw,st=TILES[TILE]
     rows=w.transpose(1,2)
     assert a.is_contiguous() and rows.is_contiguous()
@@ -46,5 +56,9 @@ def mm(a,w,table,sa,sw,dtype):
     ad=TensorDescriptor.from_tensor(a,[bm,bk]);wd=TensorDescriptor.from_tensor(rows,[bn,bk])
     od=TensorDescriptor.from_tensor(out,[bm,bn//2])
     sms=torch.cuda.get_device_properties(a.device).multi_processor_count
-    kernel[(min(sms,tr.cdiv(m,bm)*tr.cdiv(n,bn)),)](ad,wd,od,table,sa,sw,m,n,k,bm,bn,bk,sms,num_warps=nw,num_stages=st)
-    return out
+    hd=htd=maxima=None
+    if g is not None:
+        hd=TensorDescriptor.from_tensor(h,[bm,bn//2]);htd=TensorDescriptor.from_tensor(ht,[bn//2,bm])
+        maxima=torch.empty(tr.cdiv(m,bm)*tr.cdiv(n,bn),device=a.device)
+    kernel[(min(sms,tr.cdiv(m,bm)*tr.cdiv(n,bn)),)](ad,wd,od,table,sa,sw,m,n,k,bm,bn,bk,sms,G=g,P=prepared,H=hd,HT=htd,HS=hs,HM=maxima,num_warps=nw,num_stages=st)
+    return out if g is None else (out,maxima)

@@ -64,7 +64,10 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
     pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],num_warps=4)
     prepared=torch.empty(8,n,9,device=rows.device);_prepare[(tr.cdiv(8*n,256),)](g,prepared,8*n)
     h=torch.empty(m,n,device=rows.device,dtype=x.dtype);ht=torch.empty(n,m,device=rows.device,dtype=x.dtype)
-    if FUSE_GEOMETRY:
+    if FUSE_GEOMETRY and MM_IMPL=='tma':
+        from experiments.h100_ks3.tma_mm import mm as tma_mm
+        c,maxima=tma_mm(x,up.transpose(1,2),table,xs,us,torch.float32,g,prepared,h,ht,ps)
+    elif FUSE_GEOMETRY:
         bm,bn,bk,nw,st=64,128,128,4,4
         c=torch.empty(m,n,device=rows.device,dtype=torch.float32);weight=up.transpose(1,2)
         maxima=torch.empty(tr.cdiv(m,bm)*tr.cdiv(n,bn),device=rows.device)
