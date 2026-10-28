@@ -1,0 +1,386 @@
+[
+  {
+    "cache": "JW3TUFAY3FESCZEXHL7TLOGH3P553KOON4W5IZBL4LBO74EMNTJA",
+    "num_warps": 8,
+    "shared_bytes": 53272,
+    "descriptor_blocks": [
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 1,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          32
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 2,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          32,
+          64
+        ],
+        "fp4_padded": false
+      }
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:184 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  },
+  {
+    "cache": "7CMRAZJVTNTQOFHP2PXDLUS2JG3GRK35MJDK2X2GRERMY3IOUFLA",
+    "num_warps": 8,
+    "shared_bytes": 77848,
+    "descriptor_blocks": [
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          128,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 2,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          64
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 2,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          64
+        ],
+        "fp4_padded": false
+      }
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:255 STACK:80 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  },
+  {
+    "cache": "KBECHYLYZQFV2BDS5OWS7LGUAGYTCSHCME5QJRQ4EIFDLSAABCDA",
+    "num_warps": 4,
+    "shared_bytes": 77848,
+    "descriptor_blocks": [
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          128,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 2,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          64
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 2,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          64
+        ],
+        "fp4_padded": false
+      }
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:255 STACK:1200 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  },
+  {
+    "cache": "ZU4D77HDGZSBKBW4W5RERW72UYAHYQMIPPFZEBE336S2H27SFNCA",
+    "num_warps": 4,
+    "shared_bytes": 53272,
+    "descriptor_blocks": [
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 1,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          32
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 2,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          32,
+          64
+        ],
+        "fp4_padded": false
+      }
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:255 STACK:40 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  },
+  {
+    "cache": "2E52FTVIWTOEJWJJOMJR2IZMRT5JHHLDSOJF3PTFZCCEMRJHNWSQ",
+    "num_warps": 8,
+    "shared_bytes": 77848,
+    "descriptor_blocks": [
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          128,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 2,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          64
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 2,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          64
+        ],
+        "fp4_padded": false
+      }
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:255 STACK:80 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  },
+  {
+    "cache": "DIRRKMZBQO4NU7UPQAQ7FUEYHQITUZV56EXDB5ODHQMMN67OHCTQ",
+    "num_warps": 8,
+    "shared_bytes": 53272,
+    "descriptor_blocks": [
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 1,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          32
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 2,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          32,
+          64
+        ],
+        "fp4_padded": false
+      }
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:184 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  },
+  {
+    "cache": "SIPSIMX5LGXCGWP7GW6KIKQVZKP6TPH6I7TT3SKUXWIDSO2QS62Q",
+    "num_warps": 4,
+    "shared_bytes": 77848,
+    "descriptor_blocks": [
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          128,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 2,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          64
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 2,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          64
+        ],
+        "fp4_padded": false
+      }
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:255 STACK:1200 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  },
+  {
+    "cache": "AM63BQBPNX34B34MKXCZSOKYQEGC2YCWBA2YW7WNHMW4RBWMV2OQ",
+    "num_warps": 4,
+    "shared_bytes": 53272,
+    "descriptor_blocks": [
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 3,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          128
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 1,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          64,
+          32
+        ],
+        "fp4_padded": false
+      },
+      {
+        "swizzle": 2,
+        "elem_size": 1,
+        "elem_type": 0,
+        "block_size": [
+          32,
+          64
+        ],
+        "fp4_padded": false
+      }
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:255 STACK:40 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  }
+]
