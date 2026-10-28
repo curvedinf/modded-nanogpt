@@ -1,0 +1,38 @@
+{
+  "name": "pr393-cubic-fp8-width768-matched-anvil-lr",
+  "hypothesis": "Reduce all five KS3 expert widths1024to768 while matching the original effective ANVIL learning-rate coefficient. Retain full1053updates and shared architecture; assess numerical checks, whole-block speed and full validation separately.",
+  "base_run": "20261028T201508Z",
+  "environment": {
+    "TRAIN_SEED": "413",
+    "KS3_H100_OPT": "fp8-native",
+    "KS3_H100_TRANSPORT": "fp8",
+    "KS3_H100_PACK_ROWS": "16",
+    "TRITON_PTXAS_PATH": "/root/venvs/h100-ptxas-13.3/ptxas",
+    "KS3_H100_RANK": "1",
+    "KS3_FP8_CUBIC": "1",
+    "KS3_FP8_DW": "tma",
+    "KS3_FP8_MM": "tma",
+    "KS3_FP8_MM_TILE": "128x256",
+    "KS3_FP8_GATHER": "tiled",
+    "KS3_FP8_VJP_ROWS": "128",
+    "KS3_FP8_VJP_WARPS": "4",
+    "KS3_FP8_TMA_STORES": "1",
+    "KS3_FP8_PACKED_TRANSPORT": "1",
+    "KS3_FP8_LAYOUT_TILE": "64",
+    "KS3_FP8_TMA_OUTPUTS": "1",
+    "KS3_H100_GEOMETRY_TAIL": "1",
+    "KS3_H100_FUSED_ANVIL": "1",
+    "KS3_H100_WIDTH": "768",
+    "KS3_H100_PROJECTION_LR": "1.1547005383792515"
+  },
+  "effective_lr_coefficient": {
+    "base_shape_factor": 1.1547005383792515,
+    "base_explicit_multiplier": 1.0,
+    "candidate_shape_factor": 1.0,
+    "candidate_explicit_multiplier": 1.1547005383792515
+  },
+  "scheduled_steps": 981,
+  "growth_steps": 52,
+  "dense_width": 2816,
+  "status": "prepared_not_run"
+}
