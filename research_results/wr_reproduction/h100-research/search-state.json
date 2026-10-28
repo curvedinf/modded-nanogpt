@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T22:43:23.608572+00:00",
+  "utc": "2026-10-28T22:46:03.622265+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": "20261028T224308Z",
-  "current_hypothesis": "Increase only KS3 projection rate by 20%, preserving all other rates.",
+  "current_full_run": null,
+  "current_hypothesis": "Four short paired wider-column KS3 backward-tile screens.",
   "planned_followups": [
     "Immediately run three fresh frozen-code seeds after a qualifying control-beating result",
     "Test higher floor 0.40 if sparse-table decay does not qualify; lower floor 0.20 was worse",
