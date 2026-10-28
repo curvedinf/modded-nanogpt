@@ -76,8 +76,11 @@ def main():
             grads=torch.autograd.grad((y,p),(rows,router,post,g),(grad,gp))
             return (y.detach(),*grads,bank)
         ref=[a.detach().clone() for a in run('bf16')]
-        for _ in range(3):
-            run('fp8');ps.copy_(pa*1.03/448);ds.copy_(da*1.25/57344)
+        for warm in range(3):
+            values=run('fp8')
+            finite={name:dict(finite=int(torch.isfinite(value).sum()),elements=value.numel(),maximum=float(value.float().abs().nan_to_num().max())) for name,value in zip(('output','dx','router','post','geometry','weights'),values)}
+            print(json.dumps(dict(tokens=t,warm=warm,finite=finite,ps=ps.item(),ds=ds.item(),pa=pa.item(),da=da.item())),flush=True)
+            ps.copy_(pa*1.03/448);ds.copy_(da*1.25/57344)
         actual=run('fp8');errors={key:err(a,b) for key,a,b in zip(('output','dx','router','post','geometry','weights'),actual,ref)}
         assert all(torch.isfinite(a).all() for a in actual)
         assert max(errors.values())<.15,errors

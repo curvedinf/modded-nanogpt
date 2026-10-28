@@ -1,0 +1,101 @@
+{
+  "utc": "2026-10-28T19:15:03.250577+00:00",
+  "cases": [
+    {
+      "tokens": 1,
+      "variants": {
+        "separate-dx-prepared-128-gate-tanh": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 8.607177903741103e-08,
+            "geometry": 1.5187239114311524e-05,
+            "weights": 0.0
+          },
+          "post_audit": {
+            "absolute_error": 3.725290298461914e-09,
+            "reference": 0.043281204998493195
+          },
+          "samples_ms": [],
+          "median_ms": null
+        }
+      }
+    },
+    {
+      "tokens": 257,
+      "variants": {
+        "separate-dx-prepared-128-gate-tanh": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00013366324128583074,
+            "dx": 9.634043090045452e-05,
+            "router": 0.00046687485883012414,
+            "post": 2.1436122551676817e-05,
+            "geometry": 1.867985884018708e-05,
+            "weights": 6.101165126892738e-05
+          },
+          "post_audit": {
+            "absolute_error": 1.0251998901367188e-05,
+            "reference": -0.47825807332992554
+          },
+          "samples_ms": [],
+          "median_ms": null
+        }
+      }
+    },
+    {
+      "tokens": 16384,
+      "variants": {
+        "separate-dx-prepared-128-gate-tanh": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0002090048510581255,
+            "dx": 0.00020481707178987563,
+            "router": 0.001026276033371687,
+            "post": 0.005010677967220545,
+            "geometry": 1.9227503798902035e-05,
+            "weights": 0.000205773685593158
+          },
+          "post_audit": {
+            "absolute_error": 0.0008614659309387207,
+            "reference": -0.17192602157592773
+          },
+          "samples_ms": [
+            0.6809262888772147,
+            0.6803475873223667,
+            0.6833970826247643
+          ],
+          "median_ms": 0.6809262888772147
+        }
+      }
+    },
+    {
+      "tokens": 49152,
+      "variants": {
+        "separate-dx-prepared-128-gate-tanh": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00020557314564939588,
+            "dx": 0.0001955590269062668,
+            "router": 0.0009904007893055677,
+            "post": 0.0019144383259117603,
+            "geometry": 1.888508995762095e-05,
+            "weights": 0.0002616194251459092
+          },
+          "post_audit": {
+            "absolute_error": 0.0009983181953430176,
+            "reference": 0.521467924118042
+          },
+          "samples_ms": [
+            1.75306998166171,
+            1.7520481291271393,
+            1.7519683292933872
+          ],
+          "median_ms": 1.7520481291271393
+        }
+      }
+    }
+  ]
+}

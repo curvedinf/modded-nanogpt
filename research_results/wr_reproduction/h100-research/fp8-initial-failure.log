@@ -1,0 +1,60 @@
+DW_AUDIT 1 {"a_shape": [1024, 16384], "a_stride": [16384, 1], "b_shape": [768, 16384], "b_stride": [16384, 1], "a_finite": true, "b_finite": true, "amax": 7.0, "bmax": 320.0, "offsets": [2048, 4096, 6144, 8192, 10240, 12288, 14336, 16384], "sa": 0.015625, "sb": 0.01785714365541935, "flag": 0}
+DW_AUDIT 2 {"a_shape": [1024, 16384], "a_stride": [16384, 1], "b_shape": [768, 16384], "b_stride": [16384, 1], "a_finite": true, "b_finite": true, "amax": 7.0, "bmax": 320.0, "offsets": [2048, 4096, 6144, 8192, 10240, 12288, 14336, 16384], "sa": 0.015625, "sb": 0.01785714365541935, "flag": 1}
+DW_AUDIT 3 {"a_shape": [1024, 17280], "a_stride": [17280, 1], "b_shape": [768, 17280], "b_stride": [17280, 1], "a_finite": true, "b_finite": true, "amax": 384.0, "bmax": 2.5, "offsets": [2176, 4480, 6528, 8704, 10880, 12800, 14720, 16896], "sa": 1.0, "sb": 0.015625, "flag": 0}
+DW_AUDIT 4 {"a_shape": [1024, 17280], "a_stride": [17280, 1], "b_shape": [768, 17280], "b_stride": [17280, 1], "a_finite": true, "b_finite": false, "amax": 49152.0, "bmax": NaN, "offsets": [2176, 4480, 6528, 8704, 10880, 12800, 14720, 16896], "sa": 0.015625, "sb": 0.01785714365541935, "flag": 0}
+Traceback (most recent call last):
+  File "/tmp/audit_h100_fp8.py", line 15, in <module>
+    check_fp8.main()
+  File "/root/modded-nanogpt/experiments/h100_ks3/check_fp8.py", line 80, in main
+    values=run('fp8')
+           ^^^^^^^^^^
+  File "/root/modded-nanogpt/experiments/h100_ks3/check_fp8.py", line 76, in run
+    grads=torch.autograd.grad((y,p),(rows,router,post,g),(grad,gp))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/autograd/__init__.py", line 515, in grad
+    result = _engine_run_backward(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/autograd/graph.py", line 865, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/autograd/function.py", line 317, in apply
+    return user_fn(self, *args)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/root/modded-nanogpt/experiments/h100_ks3/fp8.py", line 97, in backward
+    dc,dsp,dg=backward_core(grad.contiguous(),y,c,xt,ht,scale,src,offs,table,downt.transpose(1,2),g,prepared,us,ws,xs,gs,ps,ds,da,ctx.bank,ctx.flag,ctx.layer)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_library/custom_ops.py", line 698, in __call__
+    return self._opoverload(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_ops.py", line 819, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_library/autograd.py", line 112, in autograd_impl
+    result = forward_no_grad(*args, Metadata(keyset, keyword_only_args))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_library/autograd.py", line 41, in forward_no_grad
+    result = op.redispatch(keyset & _C._after_autograd_keyset, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_ops.py", line 826, in redispatch
+    return self._handle.redispatch_boxed(keyset, *args, **kwargs)  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_library/custom_ops.py", line 662, in adinplaceorview_impl
+    return original_kernel.call_boxed(keyset, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_library/custom_ops.py", line 347, in backend_impl
+    result = self._backend_fns[device_type](*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_compile.py", line 54, in inner
+    return disable_fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py", line 1181, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/_library/custom_ops.py", line 382, in wrapped_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/root/modded-nanogpt/experiments/h100_ks3/fp8.py", line 64, in backward_core
+    dw(dct,xt,bank[2*layer*8:(2*layer+1)*8],offs,ds,xs,flag)
+  File "/tmp/audit_h100_fp8.py", line 13, in audit
+    raise RuntimeError('DW nonfinite; inputs saved')
+RuntimeError: DW nonfinite; inputs saved
