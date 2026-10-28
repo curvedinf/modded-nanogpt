@@ -27,7 +27,8 @@ def _publish(BANK, PACKED, LO:tl.constexpr, N:tl.constexpr=1024,D:tl.constexpr=7
     tl.store(PACKED+slot*N*D+rows[:,None]*C+cols[None,:],q,mask)
 
 def publish(bank,packed,lo,hi):
-    _publish[(128,hi-lo,32)](bank,packed,lo,num_warps=4)
+    n,d=bank.shape[-2:]
+    _publish[(tr.cdiv(max(n,d),8),hi-lo,tr.cdiv(max(n,d),32))](bank,packed,lo,N=n,D=d,num_warps=4)
 
 def install(optimization=None):
     from wr_reproduction import ks3_moe as ks,ks3_bf16_gemm as gemm
@@ -43,11 +44,14 @@ def install(optimization=None):
         e,h,d=out.shape
         ks._dw[(tr.cdiv(h,128),tr.cdiv(d,128),e)](a,b,out,offs,h,d,False,BM=128,BN=128,BK=64,num_warps=8,num_stages=1)
     gemm.run=mm;gemm.dw=dw
-    base=ks.install('bf16',bf16_kernel_mode='tuned',geometry_config={'lr_mul':.125,'betas':[.9,.99],'raw_scale':.75,'raw_shift':0.,'coefficients':[0.]*6})
+    width=int(os.environ.get('KS3_H100_WIDTH','1024'))
+    geometry_lr=float(os.environ.get('KS3_H100_GEOMETRY_LR','.125'))
+    projection_lr=float(os.environ.get('KS3_H100_PROJECTION_LR','1.'))
+    base=ks.install('bf16',bf16_kernel_mode='tuned',charts=width,projection_lr_multiplier=projection_lr,geometry_config={'lr_mul':geometry_lr,'betas':[.9,.99],'raw_scale':.75,'raw_shift':0.,'coefficients':[0.]*6})
     class H100KS3(base):
         def __init__(self,*args,**kwargs):
             super().__init__(*args,**kwargs)
-            self.register_buffer('ks3_packed_bank',torch.empty((80,1024,768),device=self.device,dtype=torch.bfloat16),persistent=False)
+            self.register_buffer('ks3_packed_bank',torch.empty((80,width,768),device=self.device,dtype=torch.bfloat16),persistent=False)
         @torch.no_grad()
         def _quantize_moe(self,lo,hi,exact):
             publish(self.moe_bank,self.ks3_packed_bank,lo,hi)
@@ -57,9 +61,9 @@ def install(optimization=None):
             return [('moe_bank',dist.all_gather_into_tensor(p,p[self._moe_lo:self._moe_hi],async_op=True).get_future())]
         @torch.no_grad()
         def build_moe_cols(self):
-            bank=self.ks3_packed_bank.view(5,2,8,1024*768)
-            self.ks3_up.copy_(bank[:,0].view(5,8,1024,768))
-            self.ks3_down.copy_(bank[:,1].view(5,8,768,1024))
+            bank=self.ks3_packed_bank.view(5,2,8,width*768)
+            self.ks3_up.copy_(bank[:,0].view(5,8,width,768))
+            self.ks3_down.copy_(bank[:,1].view(5,8,768,width))
     # Graph capture must snapshot/check the actual KS3 producer outputs.
     from track_1_short.perf.cuda_graphs import fp8_refresh_graphs as refresh
     refresh.MOE_LOCAL_OUTPUTS=('ks3_packed_bank',)

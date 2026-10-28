@@ -57,3 +57,6 @@ User authorized executing the new plan and discarding mismatched planned work. O
 
 ## Latest H100 continuous optimization authorization — 2026-10-28
 The user authorizes continuous optimization on the current 8xH100 node toward full WR validation loss <=3.28 at minimum official elapsed time, until a new explicit stop. All model/hyperparameter/system changes are now allowed; preserve immutable baseline measurements and WR data/evaluation rules. Log results and commit/push regularly, with commits after successes. Review MI100 ablation notes and profile a full run before iterating. Use isolated logs/wr-reproduction/h100-research and research_results/wr_reproduction/h100-research; no old manager restart is implied. Honor new user stop instructions or this new study STOP. Do not compare training-proxy losses as validation. This authorization supersedes older model/backend freeze constraints for the new H100 study.
+
+## H100 time budget and substantial KS3 constraint — 2026-10-28
+The server has approximately a couple of hours remaining; favor short paired implementation screens and promising full WR runs over broad sweeps or redundant runs. The solution must use KS3 significantly. Current search retains KS3 at all five MoE feedforward sites; an MLP endpoint or token KS3 presence does not satisfy the user.

@@ -33,18 +33,21 @@ def attach(cls,br=32):
     class Packed(cls):
         def __init__(self,*a,**kw):
             super().__init__(*a,**kw)
-            self.register_buffer('ks3_transport_q',torch.empty(80,1024*768,device=self.device,dtype=torch.int8),persistent=False)
-            self.register_buffer('ks3_transport_s',torch.empty(80,1024*768//32,device=self.device,dtype=torch.float16),persistent=False)
+            n=self.ks3_up.shape[-2]
+            self.register_buffer('ks3_transport_q',torch.empty(80,n*768,device=self.device,dtype=torch.int8),persistent=False)
+            self.register_buffer('ks3_transport_s',torch.empty(80,n*768//32,device=self.device,dtype=torch.float16),persistent=False)
         @torch.no_grad()
         def _quantize_moe(self,lo,hi,exact):
-            encode[(tr.cdiv(1024,br),hi-lo,32)](self.moe_bank,self.ks3_transport_q,self.ks3_transport_s,lo,BR=br,num_warps=4)
+            n=self.ks3_up.shape[-2]
+            encode[(tr.cdiv(max(n,768),br),hi-lo,tr.cdiv(max(n,768),32))](self.moe_bank,self.ks3_transport_q,self.ks3_transport_s,lo,BR=br,N=n,num_warps=4)
             if lo==0 and hi==80:self.build_moe_cols()
         def gather_moe_f8(self):
             lo,hi=self._moe_lo,self._moe_hi;q,s=self.ks3_transport_q,self.ks3_transport_s
             return [('moe_bank',dist.all_gather_into_tensor(q,q[lo:hi],async_op=True).get_future()),('moe_scales',dist.all_gather_into_tensor(s,s[lo:hi],async_op=True).get_future())]
         @torch.no_grad()
         def build_moe_cols(self):
-            decode[(768,80)](self.ks3_transport_q,self.ks3_transport_s,self.ks3_up,self.ks3_down,num_warps=4)
+            n=self.ks3_up.shape[-2]
+            decode[(tr.cdiv(n*768,1024),80)](self.ks3_transport_q,self.ks3_transport_s,self.ks3_up,self.ks3_down,N=n,num_warps=4)
     refresh.MOE_LOCAL_OUTPUTS=('ks3_transport_q','ks3_transport_s')
     refresh.MOE_COLS_OUTPUTS=('ks3_up','ks3_down')
     return Packed
