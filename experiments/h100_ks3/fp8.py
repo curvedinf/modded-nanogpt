@@ -30,10 +30,13 @@ CUBIC_ONLY=os.environ.get('KS3_FP8_CUBIC','0')=='1'
 TMA_OUTPUTS=os.environ.get('KS3_FP8_TMA_OUTPUTS','0')=='1'
 COMPACT_PART=os.environ.get('KS3_FP8_COMPACT_PART','0')=='1'
 FUSE_CUBIC_VJP=os.environ.get('KS3_FP8_FUSE_CUBIC_VJP','0')=='1'
+DPRE_E4M3=os.environ.get('KS3_FP8_DPRE_E4M3','0')=='1'
+DPRE_DTYPE=torch.float8_e4m3fn if DPRE_E4M3 else torch.float8_e5m2
 SKIP_MOE=frozenset(int(x) for x in os.environ.get('KS3_H100_SKIP_MOE','').split(',') if x)
 assert SKIP_MOE.issubset({1,3,5,6,8})
 assert not COMPACT_PART or CUBIC_ONLY
 assert not FUSE_CUBIC_VJP or CUBIC_ONLY
+assert not (DPRE_E4M3 and FUSE_CUBIC_VJP), 'E4M3 dpre uses the separate checked VJP'
 assert LAYOUT_TILE in (0,32,64,128)
 assert MM_IMPL in ('pointer','tma')
 assert DW_IMPL in ('legacy','tma') and VJP_ROWS in (32,64,128)
@@ -138,10 +141,10 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
         dc,dct,part,maxima,bm=fused_vjp(gg,down,c,prepared,table,src,gs,ws,ds,grad.shape[0],COMPACT_PART)
     else:
         v=mm(gg,down,table,gs,ws,dtype=V_DTYPE)
-        dc=torch.empty(m,n,device=c.device,dtype=torch.float8_e5m2);dct=torch.empty(n,m,device=c.device,dtype=dc.dtype)
+        dc=torch.empty(m,n,device=c.device,dtype=DPRE_DTYPE);dct=torch.empty(n,m,device=c.device,dtype=dc.dtype)
         part=torch.empty(tr.cdiv(m,bm),n,4 if COMPACT_PART else 8,device=c.device);maxima=torch.empty(tr.cdiv(m,bm)*tr.cdiv(n,32),device=c.device)
         dcd,dctd=store_descriptors(dc,dct,bm)
-        _vjp_prepared[(tr.cdiv(m,bm),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=bm,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=CUBIC_ONLY,COMPACT_PART=COMPACT_PART,num_warps=VJP_WARPS)
+        _vjp_prepared[(tr.cdiv(m,bm),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=bm,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=CUBIC_ONLY,COMPACT_PART=COMPACT_PART,DPRE_E4M3=DPRE_E4M3,num_warps=VJP_WARPS)
     torch.maximum(da,maxima.amax(),out=da)
     dg=torch.empty_like(g)
     if COMPACT_PART:
@@ -154,7 +157,7 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
 
 @backward_core.register_fake
 def _(grad,y,c,xt,ht,scale,src,offs,table,down,g,prepared,us,ws,xs,gs,ps,ds,da,bank,flag,layer):
-    return c.new_empty(c.shape,dtype=torch.float8_e5m2),c.new_empty((c.shape[0],)),torch.empty_like(g)
+    return c.new_empty(c.shape,dtype=DPRE_DTYPE),c.new_empty((c.shape[0],)),torch.empty_like(g)
 
 @torch.library.custom_op('h100_ks3_fp8::dx',mutates_args=())
 def dx(dc:torch.Tensor,up:torch.Tensor,table:torch.Tensor,src:torch.Tensor,dl:torch.Tensor,router:torch.Tensor,ds:torch.Tensor,us:torch.Tensor)->torch.Tensor:
@@ -205,6 +208,12 @@ def attach(base):
     from track_1_short.model.moe import MOE_INDEX
     from track_1_short.perf.cuda_graphs import fp8_refresh_graphs as refresh
     class FP8GPT(base):
+        def _refresh_delayed_scale(self,amax_buf,scale_buf,gain,floor):
+            if DPRE_E4M3 and amax_buf is self._moe_dpre_amax:
+                # 57344 / 448 = 128: retain the same headroom in real units.
+                # The original helper preserves bootstrap scales at zero amax.
+                gain *= 128.
+            return base._refresh_delayed_scale(amax_buf,scale_buf,gain,floor)
         def __init__(self,*a,**kw):
             super().__init__(*a,**kw)
             n,d=self.ks3_up.shape[-2:]

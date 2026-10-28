@@ -65,11 +65,11 @@ def producer_checks(rows,router,grad,g,xs,gs,ps,ds):
     hd,htd=fp8.store_descriptors(h,ht,64)
     fp8._geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,GS32=fp8.GS32,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,CUBIC_ONLY=fp8.CUBIC_ONLY,num_warps=4)
     pairs['geometry']=(h,ht)
-    dc=torch.empty(m,n,device='cuda',dtype=torch.float8_e5m2);dct=torch.empty(n,m,device='cuda',dtype=dc.dtype)
+    dc=torch.empty(m,n,device='cuda',dtype=fp8.DPRE_DTYPE);dct=torch.empty(n,m,device='cuda',dtype=dc.dtype)
     part=torch.empty(tr.cdiv(m,fp8.VJP_ROWS),n,4 if fp8.COMPACT_PART else 8,device='cuda');v=torch.randn_like(c)*.01
     maxima=torch.empty(tr.cdiv(m,fp8.VJP_ROWS)*tr.cdiv(n,32),device='cuda')
     dcd,dctd=fp8.store_descriptors(dc,dct,fp8.VJP_ROWS)
-    fp8._vjp_prepared[(tr.cdiv(m,fp8.VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,rows.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=fp8.VJP_ROWS,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=fp8.CUBIC_ONLY,COMPACT_PART=fp8.COMPACT_PART,num_warps=fp8.VJP_WARPS)
+    fp8._vjp_prepared[(tr.cdiv(m,fp8.VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,rows.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=fp8.VJP_ROWS,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=fp8.CUBIC_ONLY,COMPACT_PART=fp8.COMPACT_PART,DPRE_E4M3=fp8.DPRE_E4M3,num_warps=fp8.VJP_WARPS)
     pairs['geometry_gradient']=(dc,dct)
     gg=torch.empty(m,D,device='cuda',dtype=dc.dtype);gt=torch.empty(D,m,device='cuda',dtype=dc.dtype)
     dg=torch.empty(m,device='cuda');y=torch.randn(m,D,device='cuda',dtype=torch.bfloat16)
@@ -121,6 +121,15 @@ def packing_check():
                        ('ks3_f8_down',down),('ks3_f8_down_t',downt)]:
         setattr(model,name,torch.empty_like(value))
     model.ks3_weight_scales=torch.ones(5,2,8,device='cuda')
+    model._moe_dpre_amax=torch.tensor([[0.],[1.],[2.],[3.],[4.]],device='cuda')
+    scale_probe=torch.full((5,),.25,device='cuda')
+    expected_scale=scale_probe.clone()
+    expected_scale[1:]=model._moe_dpre_amax[1:,0]*(1.25/torch.finfo(fp8.DPRE_DTYPE).max)
+    model._refresh_delayed_scale(model._moe_dpre_amax,scale_probe,1.25/57344.,1e-12)
+    assert torch.equal(scale_probe,expected_scale) and torch.count_nonzero(model._moe_dpre_amax)==0
+    # Refreshing with no new observation must preserve even the bootstrap slot.
+    model._refresh_delayed_scale(model._moe_dpre_amax,scale_probe,1.25/57344.,1e-12)
+    assert torch.equal(scale_probe,expected_scale)
     model.ks3_fp8_partial=torch.ones_like(partial)
     model.ks3_fp8_transport=torch.empty(80,n*d+(64 if fp8.PACKED_TRANSPORT else 0),device='cuda',dtype=q.dtype)
     model._quantize_moe(0,80,True)
@@ -197,7 +206,7 @@ def main():
             values=run('fp8')
             finite={name:dict(finite=int(torch.isfinite(value).sum()),elements=value.numel(),maximum=float(value.float().abs().nan_to_num().max())) for name,value in zip(('output','dx','router','post','geometry','weights'),values)}
             print(json.dumps(dict(tokens=t,warm=warm,finite=finite,ps=ps.item(),ds=ds.item(),pa=pa.item(),da=da.item())),flush=True)
-            ps.copy_(pa*1.03/448);ds.copy_(da*1.25/57344)
+            ps.copy_(pa*1.03/448);ds.copy_(da*1.25/torch.finfo(fp8.DPRE_DTYPE).max)
         actual=run('fp8');errors={key:err(a,b) for key,a,b in zip(('output','dx','router','post','geometry','weights'),actual,ref)}
         if fp8.CUBIC_ONLY:assert torch.count_nonzero(actual[4][...,4:])==0
         assert all(torch.isfinite(a).all() for a in actual)
@@ -228,7 +237,7 @@ def main():
     from triton.backends.nvidia.compiler import get_ptxas
     assembler=get_ptxas(90)
     output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,
-                implementation=dict(model_dim=D,width=int(os.environ.get('KS3_H100_WIDTH','1024')),gs32=fp8.GS32,rank=rank,cubic_only=fp8.CUBIC_ONLY,compact_part=fp8.COMPACT_PART,fuse_cubic_vjp=fp8.FUSE_CUBIC_VJP,cubic_vjp_tile=os.environ.get('KS3_FP8_CUBIC_VJP_TILE'),cubic_vjp_warps=os.environ.get('KS3_FP8_CUBIC_VJP_WARPS'),cubic_vjp_stages=os.environ.get('KS3_FP8_CUBIC_VJP_STAGES','3'),cubic_vjp_flatten=os.environ.get('KS3_FP8_CUBIC_VJP_FLATTEN','1'),cubic_vjp_moments=os.environ.get('KS3_FP8_CUBIC_VJP_MOMENTS','0'),fused_up_flatten=os.environ.get('KS3_FP8_FUSED_UP_FLATTEN','1'),tma_outputs=fp8.TMA_OUTPUTS,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,c_dtype=str(fp8.C_DTYPE),v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,fused_up_tile=os.environ.get('KS3_FP8_FUSED_UP_TILE'),mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
+                implementation=dict(dpre_e4m3=fp8.DPRE_E4M3,model_dim=D,width=int(os.environ.get('KS3_H100_WIDTH','1024')),gs32=fp8.GS32,rank=rank,cubic_only=fp8.CUBIC_ONLY,compact_part=fp8.COMPACT_PART,fuse_cubic_vjp=fp8.FUSE_CUBIC_VJP,cubic_vjp_tile=os.environ.get('KS3_FP8_CUBIC_VJP_TILE'),cubic_vjp_warps=os.environ.get('KS3_FP8_CUBIC_VJP_WARPS'),cubic_vjp_stages=os.environ.get('KS3_FP8_CUBIC_VJP_STAGES','3'),cubic_vjp_flatten=os.environ.get('KS3_FP8_CUBIC_VJP_FLATTEN','1'),cubic_vjp_moments=os.environ.get('KS3_FP8_CUBIC_VJP_MOMENTS','0'),fused_up_flatten=os.environ.get('KS3_FP8_FUSED_UP_FLATTEN','1'),tma_outputs=fp8.TMA_OUTPUTS,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,c_dtype=str(fp8.C_DTYPE),v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,fused_up_tile=os.environ.get('KS3_FP8_FUSED_UP_TILE'),mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
                 ptxas=dict(path=assembler.path,version=assembler.version,sha256=hashlib.sha256(Path(assembler.path).read_bytes()).hexdigest()))
     Path(os.environ.get('KS3_FP8_CHECK_OUTPUT','research_results/wr_reproduction/h100-research/fp8-micro.json')).write_text(json.dumps(output,indent=2)+'\n')
 if __name__=='__main__':main()
