@@ -15,3 +15,7 @@ The initial port uses PR367's BF16 bank all-gather with locally refreshed FP8 we
 The gradient-collector check found a noncontiguous test fixture, then a Dynamo restriction on directly calling another autograd Function's backward. The fixture was corrected and the shared backward extracted as a plain function without changing its math. The compiled check is being rerun. Failure logs are preserved under the setup log directory.
 
 Decision: finish the exact control before any KS3 training. Require the compiled gradient-collector check to pass, then run the first full KS3-MoE candidate at seed 413. Prior PR393 study STOP markers remain in place.
+
+## 2026-10-28 21:01 UTC — compiled gradient collector passed
+
+The corrected collector passed eager and full-graph compiled backward checks: finite input, router, post-scale, geometry, up-projection and down-projection gradients; both projection gradients are bitwise equal to the kernel-written bank. Evidence is `gradient-collector-check.json`. The port and 512-wide checks were committed and pushed as `a82033e`. The first KS3 full run is queued behind the unchanged control, with no concurrent training.

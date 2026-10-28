@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-28T21:02:22.111419+00:00",
+  "observation": "Original retrieval extension cannot set MPOL_LOCAL inside this container; kernel NUMA balancing is enabled. No global host settings changed. This may affect retrieval construction speed.",
+  "numa_balancing": "1",
+  "transparent_hugepages": "always [madvise] never",
+  "source_unchanged": true,
+  "python": "3.11.16",
+  "torch": "2.10.0+cu128",
+  "pr_docker_python": "3.12.7"
+}
