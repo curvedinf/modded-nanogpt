@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T21:41:03.384754+00:00",
+  "utc": "2026-10-28T21:42:24.945917+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -19,7 +19,7 @@
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
   "current_full_run": null,
-  "current_hypothesis": "H100 matrix/producer retuning at model512/expert1536",
+  "current_hypothesis": "Reduce KS3 expert chart count1536to1280 at model512, retaining all five8top1 sites,1237updates and dense2816. Preserve the effective ANVIL coefficient with multiplier sqrt(8/15). This keeps53million expert projection parameters and seeks enough block speedup to close the0.52s gap while preserving full CE<=3.28.",
   "planned_followups": [
     "If this beats the31.099s control at<=3.28, run three fresh independent seeds immediately",
     "Otherwise short512/1536 kernel screen:128x128,64x128, fused-up128x128, current128x256 reference",
@@ -30,12 +30,9 @@
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_lr1125.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_experts1280.json",
   "queued_screen": [
-    "model512-retune-128x128",
-    "model512-retune-64x128",
-    "model512-retune-fused-up128x128",
-    "model512-retune-reference128x256"
+    "model512-experts1280"
   ],
   "status": "active"
 }
