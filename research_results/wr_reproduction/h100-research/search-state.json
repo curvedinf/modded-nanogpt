@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T19:26:56.972847+00:00",
+  "utc": "2026-10-28T19:28:58.724285+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.279867172,
     "code_commit": "1e9609ebde4dfb2b3cfabdd110330b5314129d60"
   },
-  "current_full_run": "20261028T192154Z",
-  "current_hypothesis": "Remove dense-only layer4; keep five width1024 KS3 MoEs and halve dense optimizer bank.",
+  "current_full_run": null,
+  "current_hypothesis": null,
   "queued_screen": "FP8 producer/oracle/paired block tests under pinned ptxas13.3",
   "next_structural_candidate": "Remove parallel dense branch at layer8 if more promising than dropping layer4",
   "planned_followups": [
