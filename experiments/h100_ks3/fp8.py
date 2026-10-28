@@ -25,7 +25,9 @@ LAYOUT_TILE=int(os.environ.get('KS3_FP8_LAYOUT_TILE','0'))
 CUBIC_ONLY=os.environ.get('KS3_FP8_CUBIC','0')=='1'
 TMA_OUTPUTS=os.environ.get('KS3_FP8_TMA_OUTPUTS','0')=='1'
 COMPACT_PART=os.environ.get('KS3_FP8_COMPACT_PART','0')=='1'
+FUSE_CUBIC_VJP=os.environ.get('KS3_FP8_FUSE_CUBIC_VJP','0')=='1'
 assert not COMPACT_PART or CUBIC_ONLY
+assert not FUSE_CUBIC_VJP or CUBIC_ONLY
 assert LAYOUT_TILE in (0,32,64,128)
 assert MM_IMPL in ('pointer','tma')
 assert DW_IMPL in ('legacy','tma') and VJP_ROWS in (32,64,128)
@@ -115,17 +117,23 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
     gg=torch.empty(m,768,device=c.device,dtype=torch.float8_e5m2);gt=torch.empty(768,m,device=c.device,dtype=gg.dtype)
     dgate=torch.empty(m,device=c.device)
     gather(grad,y,src,scale,gg,gt,dgate,gs,grad.shape[0],m)
-    v=mm(gg,down,table,gs,ws,dtype=V_DTYPE)
-    dc=torch.empty(m,n,device=c.device,dtype=torch.float8_e5m2);dct=torch.empty(n,m,device=c.device,dtype=dc.dtype)
-    part=torch.empty(tr.cdiv(m,VJP_ROWS),n,4 if COMPACT_PART else 8,device=c.device);maxima=torch.empty(tr.cdiv(m,VJP_ROWS)*tr.cdiv(n,32),device=c.device)
-    dcd,dctd=store_descriptors(dc,dct,VJP_ROWS)
-    _vjp_prepared[(tr.cdiv(m,VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=VJP_ROWS,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=CUBIC_ONLY,COMPACT_PART=COMPACT_PART,num_warps=VJP_WARPS)
+    bm=VJP_ROWS
+    if FUSE_CUBIC_VJP:
+        assert rank==1
+        from experiments.h100_ks3.fused_cubic import run as fused_vjp
+        dc,dct,part,maxima,bm=fused_vjp(gg,down,c,prepared,table,src,gs,ws,ds,grad.shape[0],COMPACT_PART)
+    else:
+        v=mm(gg,down,table,gs,ws,dtype=V_DTYPE)
+        dc=torch.empty(m,n,device=c.device,dtype=torch.float8_e5m2);dct=torch.empty(n,m,device=c.device,dtype=dc.dtype)
+        part=torch.empty(tr.cdiv(m,bm),n,4 if COMPACT_PART else 8,device=c.device);maxima=torch.empty(tr.cdiv(m,bm)*tr.cdiv(n,32),device=c.device)
+        dcd,dctd=store_descriptors(dc,dct,bm)
+        _vjp_prepared[(tr.cdiv(m,bm),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=bm,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=CUBIC_ONLY,COMPACT_PART=COMPACT_PART,num_warps=VJP_WARPS)
     torch.maximum(da,maxima.amax(),out=da)
     dg=torch.empty_like(g)
     if COMPACT_PART:
         from experiments.h100_ks3.native_geometry import reduce_cubic
-        reduce_cubic[(8,n)](part,dg,offs,n,part.shape[0],tr.next_power_of_2(part.shape[0]),BM=VJP_ROWS,num_warps=4)
-    else:core._reduce[(8,n)](part,dg,offs,n,part.shape[0],tr.next_power_of_2(part.shape[0]),BM=VJP_ROWS,RANK=rank,num_warps=4)
+        reduce_cubic[(8,n)](part,dg,offs,n,part.shape[0],tr.next_power_of_2(part.shape[0]),BM=bm,num_warps=4)
+    else:core._reduce[(8,n)](part,dg,offs,n,part.shape[0],tr.next_power_of_2(part.shape[0]),BM=bm,RANK=rank,num_warps=4)
     dw(ht,gt,bank[(2*layer+1)*8:(2*layer+2)*8],offs,ps,gs,flag)
     dw(dct,xt,bank[2*layer*8:(2*layer+1)*8],offs,ds,xs,flag)
     return dc,dgate,dg

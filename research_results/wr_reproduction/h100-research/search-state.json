@@ -18,8 +18,8 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": null,
-  "current_hypothesis": "Await compact-gradient and producer checks, then test first-attention omission.",
+  "current_full_run": "20261028T201842Z",
+  "current_hypothesis": "Skip attention0 with every cubic KS3 MoE and all dense feedforward branches retained.",
   "planned_followups": [
     "Finish the corrected rank-two FP8 run with its whole-model speed gate and full WR validation.",
     "Run queued independent checks for cubic FP8 and TMA output/input-gradient products; promote only measured improvements.",
@@ -33,7 +33,8 @@
   },
   "next_model_candidate": "Choose from FP8/cubic geometry combination or directed projection-rate tuning after full validation.",
   "queued_screen": [
-    "Corrected input/gradient TMA stores",
-    "Compact cubic gradient temporary"
+    "Fused cubic VJP64x128",
+    "Fused cubic VJP128x128",
+    "Fused cubic VJP64x256"
   ]
 }
