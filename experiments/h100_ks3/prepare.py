@@ -52,6 +52,8 @@ def main():
     marker = '    model: nn.Module = GPT('
     assert source.count(marker) == 1
     source = source.replace(marker, '    from experiments.h100_ks3.port import install as install_h100_ks3\n    KS3GPT = install_h100_ks3()\n    model: nn.Module = KS3GPT(')
+    # The upstream script imported its display constant before the overlay.
+    source = source.replace('{MOE_HIDDEN}', '{model.ks3_up.shape[-2]}')
     marker = '            uncompiled_model.complete_yarn_tables()'
     assert source.count(marker) == 1
     source = source.replace(marker, '            # Refresh KS3 from final shipped weights, on the training clock.\n            uncompiled_model.prepare_ks3_eval()\n' + marker)
