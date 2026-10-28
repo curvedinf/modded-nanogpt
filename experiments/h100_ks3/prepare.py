@@ -25,6 +25,7 @@ def main():
     parser.add_argument('--first-stage-lr', type=float, default=1.)
     parser.add_argument('--final-window-blocks',type=int,default=20)
     parser.add_argument('--eval-probe-windows',default='')
+    parser.add_argument('--tail-probe',action='store_true')
     args = parser.parse_args()
     if args.screen_updates < 0:
         parser.error('screen updates must be nonnegative')
@@ -37,6 +38,8 @@ def main():
     if args.dense_width <= 0 or args.dense_width % 256:
         parser.error('dense width must be a positive multiple of 256')
     probe_windows=[int(v) for v in args.eval_probe_windows.split(',') if v]
+    if args.tail_probe and (probe_windows or args.screen_updates):
+        parser.error('Tail averaging probes require a full run without window probes')
     if not all(1<=w<=64 for w in [args.final_window_blocks,*probe_windows]):
         parser.error('window blocks must be in1..64')
     upstream = ROOT / 'wr_reproduction/pr393/upstream'
@@ -155,6 +158,17 @@ def main():
         source=source.replace(marker,f'''            if last_step:
                 from experiments.h100_ks3.eval_probe import run as probe_eval_windows
                 probe_eval_windows(uncompiled_model,training_manager,ngram_table,val_batches,val_pulls,{probe_windows!r},print0)
+                del val_batches,val_pulls
+'''+marker)
+    if args.tail_probe:
+        marker='            del val_batches, val_pulls'
+        assert source.count(marker)==1
+        source=source.replace(marker,'            if not last_step: del val_batches, val_pulls')
+        marker="            # The clock is stopped: flush the log and collect the loop's garbage here."
+        assert source.count(marker)==1
+        source=source.replace(marker,'''            if last_step:
+                from experiments.h100_ks3.tail_probe import run as probe_tail_averages
+                probe_tail_averages(model,uncompiled_model,training_manager,tail_averages,ngram_table,val_batches,val_pulls,print0)
                 del val_batches,val_pulls
 '''+marker)
     if args.screen_updates:

@@ -49,6 +49,14 @@ def install(optimization=None):
     if os.environ.get('KS3_H100_GEOMETRY_TAIL','0') == '1':
         from experiments.h100_ks3.geometry_tail import install as install_geometry_tail
         install_geometry_tail()
+    if 'KS3_H100_RICHARDSON' in os.environ:
+        from track_1_short import tail_average
+        value=float(os.environ['KS3_H100_RICHARDSON'])
+        if not math.isfinite(value):raise ValueError('Invalid Richardson averaging coefficient')
+        tail_average.RICHARDSON_W=value
+    if os.environ.get('KS3_H100_TAIL_PROBE','0')=='1':
+        from experiments.h100_ks3.tail_probe import install as install_tail_probe
+        install_tail_probe()
     if os.environ.get('KS3_H100_FUSED_ANVIL','0') == '1':
         from experiments.h100_ks3.moe_optimizer import install as install_fused_optimizer
         install_fused_optimizer()

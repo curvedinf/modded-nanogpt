@@ -57,7 +57,7 @@ def collect(run):
     result=dict(run_id=run.name,status='complete' if code==0 else 'failed',exit_code=code,settings=settings,
                 code_commit=settings['code_commit'],source_hashes_unchanged=unchanged,
                 manifest_sha256=hashlib.sha256((run/'execution_manifest.json').read_bytes()).hexdigest(),
-                timing_reference_eligible=not (settings.get('profile',False) or settings.get('kind')=='full-profile' or settings.get('timing_reference_eligible') is False),log_directory=str(run))
+                timing_reference_eligible=not (settings.get('profile',False) or settings.get('tail_probe',False) or settings.get('kind')=='full-profile' or settings.get('timing_reference_eligible') is False),log_directory=str(run))
     if found:
         step,loss,seconds=found[-1]
         result.update(steps=int(step),validation_loss=float(loss),official_seconds=float(seconds),validation_tokens=10485760,
@@ -67,6 +67,8 @@ def collect(run):
     elif code==0:result['status']='timing_screen' if settings.get('screen_updates') else 'missing_validation'
     probes=[json.loads(line.split('[eval-window-probe] ',1)[1]) for line in text.splitlines() if line.startswith('[eval-window-probe] ')]
     if probes:result['inference_window_probes']=probes
+    tail_probes=[json.loads(line.split('[tail-average-probe] ',1)[1]) for line in text.splitlines() if line.startswith('[tail-average-probe] ')]
+    if tail_probes:result['tail_average_probes']=tail_probes
     (run/'result.json').write_text(json.dumps(result,indent=2)+'\n')
     out=RESULTS/'runs'/run.name;out.mkdir(parents=True,exist_ok=True)
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
@@ -92,6 +94,7 @@ def main():
     ap.add_argument('--first-stage-lr',type=float,default=1.)
     ap.add_argument('--final-window-blocks',type=int,default=20)
     ap.add_argument('--eval-probe-windows',default='')
+    ap.add_argument('--tail-probe',action='store_true')
     ap.add_argument('--env',action='append',default=[]);ap.add_argument('--profile',action='store_true')
     ap.add_argument('--collect',type=Path);ap.add_argument('--adopt',type=Path);a=ap.parse_args()
     if a.collect:collect(a.collect);return
@@ -123,13 +126,15 @@ def main():
     if a.drop_dense_layer is not None:cmd.extend(['--drop-dense-layer',str(a.drop_dense_layer)])
     if a.drop_parallel_mlp:cmd.append('--drop-parallel-mlp')
     if a.profile:cmd.append('--profile')
+    if a.tail_probe:cmd.append('--tail-probe')
     launch=Path(subprocess.check_output(cmd,cwd=ROOT,text=True).strip());run=launch.parent
     custom=dict(TRAIN_SEED=str(a.seed),KS3_H100_OPT=a.variant,KS3_H100_TRANSPORT='codes',KS3_H100_PACK_ROWS='16')
     custom.update(overrides)
+    if a.tail_probe:custom['KS3_H100_TAIL_PROBE']='1'
     settings=dict(utc=utc(),code_commit=commit,hypothesis=a.hypothesis,variant=a.variant,seed=a.seed,scheduled_steps=a.steps,growth_steps=a.growth_steps,
                   drop_dense_layer=a.drop_dense_layer,drop_parallel_mlp=a.drop_parallel_mlp,dense_width=a.dense_width,model_dim=a.model_dim,first_batch_units=a.first_batch_units,first_stage_lr=a.first_stage_lr,
                   final_window_blocks=a.final_window_blocks,eval_probe_windows=a.eval_probe_windows,
-                  environment=custom,ngram_multiplier=a.ngram_multiplier,profile=a.profile,screen_updates=a.screen_updates,validation_protocol='PR393 full final canonical mask, window extension and tail shipment')
+                  environment=custom,ngram_multiplier=a.ngram_multiplier,tail_probe=a.tail_probe,profile=a.profile,screen_updates=a.screen_updates,validation_protocol='PR393 full final canonical mask, window extension and tail shipment')
     (run/'settings.json').write_text(json.dumps(settings,indent=2)+'\n')
     (run/'reproduce.sh').write_text('#!/usr/bin/env bash\nset -euo pipefail\n'+''.join('export '+k+'='+shlex.quote(v)+'\n' for k,v in custom.items())+'exec '+shlex.quote(str(launch))+'\n')
     p=subprocess.Popen([str(launch)],cwd=ROOT,env=dict(os.environ,**custom),stdout=(run/'launcher.log').open('w'),stderr=subprocess.STDOUT,start_new_session=True)
