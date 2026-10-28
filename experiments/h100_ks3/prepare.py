@@ -18,6 +18,8 @@ def main():
     parser.add_argument('--drop-parallel-mlp', action='store_true')
     parser.add_argument('--dense-width', type=int, default=2816)
     parser.add_argument('--first-batch-units', type=int, choices=(4,8,12,16), default=8)
+    parser.add_argument('--final-window-blocks',type=int,default=20)
+    parser.add_argument('--eval-probe-windows',default='')
     args = parser.parse_args()
     if args.screen_updates < 0:
         parser.error('screen updates must be nonnegative')
@@ -25,6 +27,9 @@ def main():
         parser.error('scheduled steps must be positive')
     if args.dense_width <= 0 or args.dense_width % 256:
         parser.error('dense width must be a positive multiple of 256')
+    probe_windows=[int(v) for v in args.eval_probe_windows.split(',') if v]
+    if not all(1<=w<=64 for w in [args.final_window_blocks,*probe_windows]):
+        parser.error('window blocks must be in1..64')
     upstream = ROOT / 'wr_reproduction/pr393/upstream'
     manifest = json.loads((upstream.parent / 'source_manifest.json').read_text())
     for name, digest in manifest['files'].items():
@@ -55,6 +60,11 @@ def main():
         before='TrainingStage(duration=STAGE_DURATIONS[0], train_max_seq_len=896, batch_size=8 * 2048 * 8'
         assert config_source.count(before)==1
         config_path.write_text(config_source.replace(before,before.replace('batch_size=8 ',f'batch_size={args.first_batch_units} ')))
+    if args.final_window_blocks!=20:
+        config_path=run/'source/track_1_short/config.py'
+        config_source=config_path.read_text();before='WS_POST_YARN_EXT = 20'
+        assert config_source.count(before)==1
+        config_path.write_text(config_source.replace(before,f'WS_POST_YARN_EXT = {args.final_window_blocks}'))
     path = run / 'source/train_gpt.py'
     source = path.read_text()
     marker = '    model: nn.Module = GPT('
@@ -68,6 +78,17 @@ def main():
     marker = '            # CPLM diagnostics (token-averaged over all ranks)'
     assert source.count(marker) == 1
     source = source.replace(marker, '            print0(f"[wr-result] steps:{step} loss:{val_loss:.9f} seconds:{training_time_ms/1000:.9f}", console=True)\n' + marker)
+    if probe_windows:
+        marker='            del val_batches, val_pulls'
+        assert source.count(marker)==1
+        source=source.replace(marker,'            if not last_step: del val_batches, val_pulls')
+        marker="            # The clock is stopped: flush the log and collect the loop's garbage here."
+        assert source.count(marker)==1
+        source=source.replace(marker,f'''            if last_step:
+                from experiments.h100_ks3.eval_probe import run as probe_eval_windows
+                probe_eval_windows(uncompiled_model,training_manager,ngram_table,val_batches,val_pulls,{probe_windows!r},print0)
+                del val_batches,val_pulls
+'''+marker)
     if args.screen_updates:
         marker = '        last_step = (step == training_schedule.total_steps)'
         assert source.count(marker) == 1
