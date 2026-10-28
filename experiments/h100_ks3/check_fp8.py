@@ -71,7 +71,7 @@ def producer_checks(rows,router,grad,g,xs,gs,ps,ds):
     dcd,dctd=fp8.store_descriptors(dc,dct,fp8.VJP_ROWS)
     fp8._vjp_prepared[(tr.cdiv(m,fp8.VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,rows.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=fp8.VJP_ROWS,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=fp8.CUBIC_ONLY,COMPACT_PART=fp8.COMPACT_PART,DPRE_E4M3=fp8.DPRE_E4M3,num_warps=fp8.VJP_WARPS)
     pairs['geometry_gradient']=(dc,dct)
-    gg=torch.empty(m,D,device='cuda',dtype=dc.dtype);gt=torch.empty(D,m,device='cuda',dtype=dc.dtype)
+    gg=torch.empty(m,D,device='cuda',dtype=torch.float8_e5m2);gt=torch.empty(D,m,device='cuda',dtype=gg.dtype)
     dg=torch.empty(m,device='cuda');y=torch.randn(m,D,device='cuda',dtype=torch.bfloat16)
     fp8.gather(grad,y,src,gate,gg,gt,dg,gs,rows.shape[0],m)
     pairs['gathered_gradient']=(gg,gt)
