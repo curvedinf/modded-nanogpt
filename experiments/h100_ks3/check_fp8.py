@@ -10,6 +10,35 @@ from wr_reproduction import ks3_moe as core
 
 def err(a,b):return ((a.float()-b.float()).square().mean().sqrt()/b.float().square().mean().sqrt().clamp_min(1e-12)).item()
 def scalar(x):return torch.tensor([x],device='cuda')
+
+@torch.no_grad()
+def post_jacobian_check(rows,router,post,up,down,g,caches,scales,grad,actual_post):
+    """Check the scalar derivative without dividing by a cancelling projection.
+
+    The post parameter's Jacobian is the ungated output times its router gate.
+    Compare that complete vector with BF16, then independently contract the
+    FP8 Jacobian with the test gradient in FP64. Keep the old scalar relative
+    error in the report; it is not a conditioning-independent error measure.
+    """
+    from track_1_short.perf.kernels.moe_mlp import moe_dispatch
+    probs=torch.softmax(torch.nn.functional.linear(rows,router).float(),-1)
+    gate,expert=probs.max(-1);_,src,_,table,_=moe_dispatch(expert,8)
+    scale=gate*post.float().reshape(())
+    by=optimized.forward(rows,src,table,up,down,g,scale)[1]
+    us,ws,xs,_,ps,pa,_,_=scales
+    fy=fp8.forward(rows,src,table,caches[0],caches[2],us,ws,xs,ps,pa,g,scale)[1]
+    valid=src<rows.shape[0];source=src[valid].long()
+    bj=by[valid].float()*gate[source,None]
+    fj=fy[valid].float()*gate[source,None]
+    vector_error=err(fj,bj)
+    terms=fy[valid].double()*gate[source,None].double()*grad[source].double()
+    oracle=terms.sum();scale_norm=terms.square().sum().sqrt().clamp_min(1e-12)
+    normalized_error=((actual_post.double().reshape(())-oracle).abs()/scale_norm).item()
+    result=dict(jacobian_relative_rms=vector_error,fp64_contraction=float(oracle),
+                actual_post=float(actual_post),contraction_error_over_l2=normalized_error,
+                cancellation_ratio=float(oracle.abs()/scale_norm))
+    assert vector_error<.15 and normalized_error<5e-5,result
+    return result
 def producer_checks(rows,router,grad,g,xs,gs,ps,ds):
     from track_1_short.perf.kernels.moe_mlp import moe_dispatch
     probs=torch.softmax((rows@router.T).float(),-1);gate,expert=probs.max(-1)
@@ -119,7 +148,8 @@ def main():
         actual=run('fp8');errors={key:err(a,b) for key,a,b in zip(('output','dx','router','post','geometry','weights'),actual,ref)}
         if fp8.CUBIC_ONLY:assert torch.count_nonzero(actual[4][...,4:])==0
         assert all(torch.isfinite(a).all() for a in actual)
-        assert max(errors.values())<.15,errors
+        post_check=post_jacobian_check(rows,router,post,up,down,g,caches,scales,grad,actual[3])
+        assert max(v for k,v in errors.items() if k!='post')<.15,errors
         cache_errors=None
         system_variant=fp8.V_DTYPE!=torch.float32 or fp8.FUSE_GEOMETRY or fp8.MM_IMPL!='pointer' or fp8.TMA_OUTPUTS
         if system_variant:
@@ -140,7 +170,7 @@ def main():
             samples=[tr.testing.do_bench_cudagraph(lambda:run('fp8'),rep=40) for _ in range(3)]
             fp8.V_DTYPE=selected_dtype;fp8.FUSE_GEOMETRY=selected_fusion;fp8.MM_IMPL=selected_mm;fp8.TMA_OUTPUTS=selected_outputs
             timing['fp8_full_cache']=dict(samples_ms=samples,median_ms=statistics.median(samples))
-        result=dict(tokens=t,producers=producers,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
+        result=dict(tokens=t,producers=producers,post_jacobian=post_check,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
         cases.append(result);print(json.dumps(result),flush=True)
     from triton.backends.nvidia.compiler import get_ptxas
     assembler=get_ptxas(90)

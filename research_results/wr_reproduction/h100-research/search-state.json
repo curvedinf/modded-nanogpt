@@ -18,8 +18,8 @@
     "loss": 3.279222727,
     "code_commit": "5bf1c30b78fb4130cd2e073f002b7d81de0080d1"
   },
-  "current_full_run": null,
-  "current_hypothesis": "Two queued independent GPU checks: cubic FP8 and TMA output products.",
+  "current_full_run": "20261028T201132Z",
+  "current_hypothesis": "Rank-two FP8 with validated TMA output products and geometry tail averaging.",
   "planned_followups": [
     "Finish the corrected rank-two FP8 run with its whole-model speed gate and full WR validation.",
     "Run queued independent checks for cubic FP8 and TMA output/input-gradient products; promote only measured improvements.",
@@ -33,7 +33,7 @@
   },
   "next_model_candidate": "Choose from FP8/cubic geometry combination or directed projection-rate tuning after full validation.",
   "queued_screen": [
-    "fp8-cubic-tma",
-    "fp8-rank2-tma-outputs"
+    "FP8 cubic post-Jacobian diagnosis",
+    "rank-two FP8 post-Jacobian regression"
   ]
 }
