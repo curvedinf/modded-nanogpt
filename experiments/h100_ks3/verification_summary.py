@@ -48,7 +48,9 @@ def main():
                 loss=losses,seconds=times,one_sided_student_t=t,one_sided_p=p,
                 reference_seconds=31.099,loss_threshold=3.28,significance_threshold=.01,
                 local_control_win_with_significance=losses['mean']<=3.28 and p<.01 and times['mean']<31.099,
-                scope='Fresh-seed result against the immutable local PR393 baseline; no claim of maintainer acceptance or current global record.')
+                published_pr393_seconds=31.285,
+                published_time_win_with_significance=losses['mean']<=3.28 and p<.01 and times['mean']<31.285,
+                scope='Fresh-seed result with separate local-control and published-time comparisons. Published time is from a different node; no claim of maintainer acceptance or current global record.')
     out=RESULTS/'verification'/f'{a.discovery}.json';out.parent.mkdir(exist_ok=True)
     out.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 

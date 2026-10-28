@@ -7,10 +7,12 @@ from experiments.h100_ks3.research import ROOT,RESULTS,STATE,append,collect,utc
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument('original',type=Path);ap.add_argument('--seed',type=int,required=True)
+    ap.add_argument('--reference',choices=('local','published'),default='local')
     a=ap.parse_args();original=a.original.resolve()
     result=json.loads((original/'result.json').read_text())
     assert result['status']=='complete' and result['source_hashes_unchanged']
-    assert result['validation_loss']<=3.28 and result['official_seconds']<31.099
+    reference_seconds=31.099 if a.reference=='local' else 31.285
+    assert result['validation_loss']<=3.28 and result['official_seconds']<reference_seconds
     assert result['timing_reference_eligible']
     settings=json.loads((original/'settings.json').read_text())
     assert settings['seed']!=a.seed
@@ -29,6 +31,7 @@ def main():
         shutil.copy2(original/name,run/name)
     assert all(hashlib.sha256((run/p).read_bytes()).hexdigest()==h for p,h in manifest.items())
     settings.update(utc=utc(),seed=a.seed,verification_of=original.name,
+                    verification_reference=a.reference,verification_reference_seconds=reference_seconds,
                     comparative_pruning=False,hypothesis='Fresh independent seed of frozen qualifying configuration; full budget and validation, no comparative pruning.')
     settings['environment']['TRAIN_SEED']=str(a.seed)
     (run/'settings.json').write_text(json.dumps(settings,indent=2)+'\n')

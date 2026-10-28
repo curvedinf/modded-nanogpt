@@ -1,0 +1,21 @@
+{
+  "utc": "2026-10-28T22:48:50.974790+00:00",
+  "local_control": {
+    "run_id": "20261028T180502Z",
+    "seconds": 31.099,
+    "loss": 3.2765,
+    "runs": 1,
+    "same_node": true
+  },
+  "published_pr393": {
+    "url": "https://github.com/KellerJordan/modded-nanogpt/pull/393",
+    "seconds_mean": 31.285,
+    "seconds_reported_spread": 0.095,
+    "loss_mean": 3.27823,
+    "loss_reported_spread": 0.00155,
+    "runs": 12,
+    "same_node": false
+  },
+  "target_loss": 3.28,
+  "interpretation": "Maintain separate labels. A candidate between31.099 and31.285 seconds may improve on the published time but does not beat the measured local control. Three fresh seeds can verify that candidate without relabeling it a local-control win."
+}
