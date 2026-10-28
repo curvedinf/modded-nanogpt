@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T20:31:47.380883+00:00",
+  "utc": "2026-10-28T20:34:30.422314+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": "20261028T203125Z",
-  "current_hypothesis": "Remove attention0 and double CPLM pointer LR to recover its lost copy benefit.",
+  "current_full_run": null,
+  "current_hypothesis": "Finish FP16 backward-cache gates, then native-only FP8 KS3 with consistent raw BF16 inference.",
   "planned_followups": [
     "Collect scaled small-batch full validation; preserve original-batch incumbent unless faster and qualifying.",
     "Complete numerical and whole-block timing gates for queued variants.",
