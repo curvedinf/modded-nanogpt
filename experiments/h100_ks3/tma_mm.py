@@ -12,7 +12,7 @@ from triton.tools.tensor_descriptor import TensorDescriptor
 from experiments.h100_ks3.h100_kernels import _features
 
 TILE=os.environ.get('KS3_FP8_MM_TILE','128x128')
-TILES={'64x128':(64,128,128,4,3),'128x128':(128,128,128,8,3),
+TILES={'64x128':(64,128,128,4,3),'64x256':(64,256,128,4,3),'128x128':(128,128,128,8,3),
        '128x256':(128,256,128,8,3)}
 assert TILE in TILES
 
