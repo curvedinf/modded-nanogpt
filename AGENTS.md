@@ -69,3 +69,6 @@ The user cancelled the PR367 migration and directed returning to MoE work. Stop 
 
 ## Remaining H100 server budget — 2026-10-28 21:23 UTC
 The user reports about one hour of server time remaining and asks that it be used wisely. Treat approximately 22:23 UTC as the working deadline. Prioritize the prepared PR393 MoE architecture trial and directed follow-ups; reserve the final ten minutes for fresh-seed verification if a configuration beats the control, and preserve/commit/push all evidence. Do not restart old controllers or the cancelled PR367 migration.
+
+## Additional H100 hour — 2026-10-28 21:59 UTC
+The user explicitly extends the server allocation by another hour. The working deadline moves from22:23UTC to23:23UTC, with final replication/evidence reserve from23:13UTC. Continue meaningful KS3 MoE optimizations and immediately run three fresh frozen-configuration verification seeds after a qualifying control-beating result. Keep logging, committing and pushing; honor any new stop.
