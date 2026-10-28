@@ -82,11 +82,11 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
     pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],num_warps=4)
     rank=(g.shape[-1]-2)//6;prepared=prepare_geometry(g,n)
     if FUSE_GEOMETRY and rank!=1:raise ValueError('Fused FP8 up projection currently requires rank1')
-    if CUBIC_ONLY and (rank!=1 or FUSE_GEOMETRY):raise ValueError('Cubic FP8 currently requires rank1 and separate geometry')
+    if CUBIC_ONLY and (rank!=1 or (FUSE_GEOMETRY and MM_IMPL!='tma')):raise ValueError('Cubic FP8 requires rank1 and separate geometry or TMA fusion')
     h=torch.empty(m,n,device=rows.device,dtype=x.dtype);ht=torch.empty(n,m,device=rows.device,dtype=x.dtype)
     if FUSE_GEOMETRY and MM_IMPL=='tma':
         from experiments.h100_ks3.tma_mm import mm as tma_mm
-        c,maxima=tma_mm(x,up.transpose(1,2),table,xs,us,torch.float32,g,prepared,h,ht,ps)
+        c,maxima=tma_mm(x,up.transpose(1,2),table,xs,us,torch.float32,g,prepared,h,ht,ps,cubic_only=CUBIC_ONLY)
     elif FUSE_GEOMETRY:
         bm,bn,bk,nw,st=64,128,128,4,4
         c=torch.empty(m,n,device=rows.device,dtype=torch.float32);weight=up.transpose(1,2)
