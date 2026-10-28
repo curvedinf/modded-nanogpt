@@ -61,6 +61,8 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--variant',default='separate-dx-prepared-128-gate')
     ap.add_argument('--hypothesis');ap.add_argument('--seed',type=int,default=413)
     ap.add_argument('--steps',type=int,default=981);ap.add_argument('--screen-updates',type=int,default=0)
+    ap.add_argument('--drop-dense-layer',type=int,choices=(0,2,4));ap.add_argument('--dense-width',type=int,default=2816)
+    ap.add_argument('--first-batch-units',type=int,choices=(4,8,12,16),default=8)
     ap.add_argument('--env',action='append',default=[]);ap.add_argument('--profile',action='store_true')
     ap.add_argument('--collect',type=Path);a=ap.parse_args()
     if a.collect:collect(a.collect);return
@@ -70,11 +72,14 @@ def main():
     if dirty:raise SystemExit('Commit code before launching an immutable experiment: '+dirty)
     commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     cmd=[sys.executable,'-m','experiments.h100_ks3.prepare','--study','h100-research','--scheduled-steps',str(a.steps),'--screen-updates',str(a.screen_updates)]
+    cmd.extend(['--dense-width',str(a.dense_width),'--first-batch-units',str(a.first_batch_units)])
+    if a.drop_dense_layer is not None:cmd.extend(['--drop-dense-layer',str(a.drop_dense_layer)])
     if a.profile:cmd.append('--profile')
     launch=Path(subprocess.check_output(cmd,cwd=ROOT,text=True).strip());run=launch.parent
     custom=dict(TRAIN_SEED=str(a.seed),KS3_H100_OPT=a.variant,KS3_H100_TRANSPORT='codes',KS3_H100_PACK_ROWS='16')
     custom.update(dict(x.split('=',1) for x in a.env))
     settings=dict(utc=utc(),code_commit=commit,hypothesis=a.hypothesis,variant=a.variant,seed=a.seed,scheduled_steps=a.steps,
+                  drop_dense_layer=a.drop_dense_layer,dense_width=a.dense_width,first_batch_units=a.first_batch_units,
                   environment=custom,profile=a.profile,screen_updates=a.screen_updates,validation_protocol='PR393 full final canonical mask, window extension and tail shipment')
     (run/'settings.json').write_text(json.dumps(settings,indent=2)+'\n')
     (run/'reproduce.sh').write_text('#!/usr/bin/env bash\nset -euo pipefail\n'+''.join('export '+k+'='+shlex.quote(v)+'\n' for k,v in custom.items())+'exec '+shlex.quote(str(launch))+'\n')

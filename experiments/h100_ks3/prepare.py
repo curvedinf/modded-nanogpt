@@ -14,11 +14,16 @@ def main():
     parser.add_argument('--profile', action='store_true')
     parser.add_argument('--study', default='h100-ks3')
     parser.add_argument('--scheduled-steps', type=int, default=981)
+    parser.add_argument('--drop-dense-layer', type=int, choices=(0,2,4))
+    parser.add_argument('--dense-width', type=int, default=2816)
+    parser.add_argument('--first-batch-units', type=int, choices=(4,8,12,16), default=8)
     args = parser.parse_args()
     if args.screen_updates < 0:
         parser.error('screen updates must be nonnegative')
     if args.scheduled_steps <= 0:
         parser.error('scheduled steps must be positive')
+    if args.dense_width <= 0 or args.dense_width % 256:
+        parser.error('dense width must be a positive multiple of 256')
     upstream = ROOT / 'wr_reproduction/pr393/upstream'
     manifest = json.loads((upstream.parent / 'source_manifest.json').read_text())
     for name, digest in manifest['files'].items():
@@ -27,6 +32,21 @@ def main():
     run = ROOT / 'logs/wr-reproduction' / args.study / stamp
     run.mkdir(parents=True)
     shutil.copytree(upstream, run / 'source', ignore=shutil.ignore_patterns('__pycache__'))
+    model_path=run/'source/track_1_short/model/gpt.py'
+    model_source=model_path.read_text()
+    if args.drop_dense_layer is not None:
+        assert model_source.count('NO_MLP_LAYERS = (7, 9)')==1
+        model_source=model_source.replace('NO_MLP_LAYERS = (7, 9)',f'NO_MLP_LAYERS = {tuple(sorted((7,9,args.drop_dense_layer)))}')
+    if args.dense_width != 2816:
+        assert model_source.count('MLP_HIDDEN_DIM = 2816')==1
+        model_source=model_source.replace('MLP_HIDDEN_DIM = 2816',f'MLP_HIDDEN_DIM = {args.dense_width}')
+    model_path.write_text(model_source)
+    if args.first_batch_units != 8:
+        config_path=run/'source/track_1_short/config.py'
+        config_source=config_path.read_text()
+        before='TrainingStage(duration=STAGE_DURATIONS[0], train_max_seq_len=896, batch_size=8 * 2048 * 8'
+        assert config_source.count(before)==1
+        config_path.write_text(config_source.replace(before,before.replace('batch_size=8 ',f'batch_size={args.first_batch_units} ')))
     path = run / 'source/train_gpt.py'
     source = path.read_text()
     marker = '    model: nn.Module = GPT('
