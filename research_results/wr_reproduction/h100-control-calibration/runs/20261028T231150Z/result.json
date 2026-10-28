@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-28T23:13:58.903925+00:00",
+  "run_id": "20261028T231150Z",
+  "status": "stopped_by_user",
+  "reason": "User ended controls immediately to resume KS3 against current completed-run average.",
+  "seed": 608,
+  "control_index": 8,
+  "source_hashes_unchanged": true,
+  "validation_result_available": false,
+  "controller_commit": "ed22910353c2dda6630aef5597bf651a421cf3f2"
+}

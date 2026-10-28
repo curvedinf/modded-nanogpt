@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T23:11:46.311399+00:00",
+  "utc": "2026-10-28T23:13:58.903925+00:00",
   "requested_fresh_runs": 11,
   "completed_fresh_runs": 7,
   "original": {
@@ -147,5 +147,9 @@
       "minimum": 3.2765,
       "maximum": 3.2794
     }
-  }
+  },
+  "reference_frozen_by_user": true,
+  "accepted_fresh_runs": 7,
+  "batch_status": "stopped_by_user_use_current_average",
+  "interrupted_run": "20261028T231150Z"
 }

@@ -1,11 +1,22 @@
 {
-  "utc": "2026-10-28T22:48:50.974790+00:00",
+  "utc": "2026-10-28T23:14:03.033458+00:00",
   "local_control": {
-    "run_id": "20261028T180502Z",
-    "seconds": 31.099,
-    "loss": 3.2765,
-    "runs": 1,
-    "same_node": true
+    "kind": "original_plus_completed_control_mean",
+    "n": 8,
+    "seconds": 31.079250000000002,
+    "sample_std_seconds": 0.01624587859823468,
+    "loss": 3.278025,
+    "run_ids": [
+      "20261028T180502Z",
+      "20261028T224939Z",
+      "20261028T225333Z",
+      "20261028T225636Z",
+      "20261028T225939Z",
+      "20261028T230241Z",
+      "20261028T230545Z",
+      "20261028T230848Z"
+    ],
+    "source": "/root/modded-nanogpt/research_results/wr_reproduction/h100-control-calibration/summary.json"
   },
   "published_pr393": {
     "url": "https://github.com/KellerJordan/modded-nanogpt/pull/393",
@@ -17,5 +28,12 @@
     "same_node": false
   },
   "target_loss": 3.28,
-  "interpretation": "Maintain separate labels. A candidate between31.099 and31.285 seconds may improve on the published time but does not beat the measured local control. Three fresh seeds can verify that candidate without relabeling it a local-control win."
+  "interpretation": "Accepted local control is the mean of seven completed fresh controls plus the preserved original. User stopped the calibration and directed immediate KS3 optimization against31.07925s at full WR validation CE<=3.28. Interrupted control8 is excluded. Published time remains a separately labeled comparison.",
+  "historical_single_control": {
+    "run_id": "20261028T180502Z",
+    "seconds": 31.099,
+    "loss": 3.2765,
+    "runs": 1,
+    "same_node": true
+  }
 }

@@ -24,5 +24,10 @@
     "d75ed4130bc6878670f7664df239eba6a63d4cf8",
     "ed22910"
   ],
-  "active_controller_commit": "ed22910"
+  "active_controller_commit": "ed22910",
+  "status": "stopped_by_user_use_current_average",
+  "finalized_utc": "2026-10-28T23:13:58.903925+00:00",
+  "completed_fresh_runs": 7,
+  "unstarted_fresh_runs": 3,
+  "interrupted_run": "20261028T231150Z"
 }

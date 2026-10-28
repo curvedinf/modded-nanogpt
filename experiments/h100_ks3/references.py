@@ -12,17 +12,20 @@ CALIBRATION = ROOT / 'research_results/wr_reproduction/h100-control-calibration/
 def local_control_reference(path=CALIBRATION):
     if Path(path).exists():
         report = json.loads(Path(path).read_text())
-        if report['completed_fresh_runs'] == 11:
+        frozen = report.get('reference_frozen_by_user', False)
+        if report['completed_fresh_runs'] == 11 or frozen:
             rows = report['fresh_runs']
-            assert len(rows) == len({row['run_id'] for row in rows}) == 11
-            assert len({row['seed'] for row in rows}) == 11
+            count = report['accepted_fresh_runs'] if frozen else 11
+            assert count > 0 and report['completed_fresh_runs'] == count
+            assert len(rows) == len({row['run_id'] for row in rows}) == count
+            assert len({row['seed'] for row in rows}) == count
             assert all(row['status'] == 'complete' and row['source_hashes_unchanged'] for row in rows)
-            # Eleven new measurements augment the already collected control.
+            # Only completed measurements augment the already collected control.
             population = [report['original'], *rows]
-            assert len({row['run_id'] for row in population}) == 12
+            assert len({row['run_id'] for row in population}) == count + 1
             times = [row['official_seconds'] for row in population]
             assert all(math.isfinite(value) and value > 0 for value in times)
-            return dict(kind='original_plus_eleven_control_mean', n=12,
+            return dict(kind='original_plus_completed_control_mean', n=count + 1,
                         seconds=statistics.mean(times), sample_std_seconds=statistics.stdev(times),
                         loss=statistics.mean(row['validation_loss'] for row in population),
                         run_ids=[row['run_id'] for row in population], source=str(Path(path)))

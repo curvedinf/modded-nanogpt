@@ -75,3 +75,6 @@ The user explicitly extends the server allocation by another hour. The working d
 
 ## User-authorized control calibration — 2026-10-28
 The user explicitly authorizes eleven new independent runs of the exact original PR393 control, to combine with the preserved original run for twelve total measurements. This supersedes the earlier prohibition on rerunning that control. Prioritize this calibration within the remaining server allocation; preserve exact control sources and all older measurements. Report both the eleven fresh runs and the combined twelve-run time/loss statistics. Suspend KS3 ablations while these controls use the GPUs.
+
+## User ended control calibration and resumed KS3 — 2026-10-28T23:13:58.903925+00:00
+The user directs stopping the control batch immediately and continuing KS3 using the current average. Seven fresh controls completed; with the preserved original, the accepted eight-run mean is31.07925s and validation CE3.278025. Control8 is stopped without a validation result; controls9–11 must not run. Focus on KS3 achieving full WR CE<=3.28 faster than31.07925s, then begin fresh independent verification runs. The user is watching the server meter and will announce changes; the old estimated23:23 cutoff is superseded. Keep substantial KS3 and continue logs/commits/pushes.

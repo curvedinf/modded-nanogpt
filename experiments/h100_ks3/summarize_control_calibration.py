@@ -1,4 +1,4 @@
-"""Validate and report the eleven fresh, exact-PR393 control measurements."""
+"""Validate and report the accepted exact-PR393 control measurements."""
 
 import csv
 import hashlib
@@ -31,10 +31,11 @@ def describe(values):
 def main():
     summary = json.loads((OUT / 'summary.json').read_text())
     rows = sorted(summary['fresh_runs'], key=lambda row: row['control_index'])
-    assert summary['completed_fresh_runs'] == len(rows) == 11
-    assert [row['control_index'] for row in rows] == list(range(1, 12))
-    assert [row['seed'] for row in rows] == list(range(601, 612))
-    assert len({row['run_id'] for row in rows}) == 11
+    count = summary['accepted_fresh_runs'] if summary.get('reference_frozen_by_user') else 11
+    assert count > 1 and summary['completed_fresh_runs'] == len(rows) == count
+    assert [row['control_index'] for row in rows] == list(range(1, count + 1))
+    assert [row['seed'] for row in rows] == list(range(601, 601 + count))
+    assert len({row['run_id'] for row in rows}) == count
     manifest = json.loads((ORIGINAL / 'source_manifest.json').read_text())
     expected_hashes = {'source/' + name: sha for name, sha in manifest['files'].items()}
     first_folder = OUT / 'runs' / rows[0]['run_id']
@@ -60,7 +61,9 @@ def main():
     report = dict(utc=utc(), upstream_commit=manifest['commit'],
                   validation_tokens=10485760, timed_training_updates=1053,
                   fresh_runs=rows, original=summary['original'],
-                  primary_population='Preserved original plus eleven fresh independent seeds, 601 through 611; fresh-only statistics are also reported.',
+                  primary_population=f'Preserved original plus {count} fresh independent seeds; fresh-only statistics are also reported.',
+                  requested_fresh_runs=11, accepted_fresh_runs=count,
+                  reference_frozen_by_user=summary.get('reference_frozen_by_user', False),
                   spread='Sample standard deviation; CI95 is a Student-t interval for the mean.',
                   measurement_precision='Unmodified upstream logs round each time to 0.001 second and loss to 0.0001.',
                   packages_sha256=hashlib.sha256(packages).hexdigest(),
@@ -69,16 +72,18 @@ def main():
     lines = [
         '# PR393 local control calibration', '',
         f"Frozen upstream commit: `{manifest['commit']}`.", '',
-        'Eleven fresh independent seeds, with unchanged model/training sources, '
+        f'{count} fresh independent seeds, with unchanged model/training sources, '
         '1,053 updates per run and full 10,485,760-token final WR validation. '
-        'The final local reference combines these eleven with the preserved original, for twelve measurements. '
-        'The eleven fresh runs are also summarized separately.', '',
+        f'The accepted local reference combines these with the preserved original, for {count + 1} measurements. '
+        'The fresh runs are also summarized separately. The user stopped the originally planned eleven-run batch '
+        'and accepted its current average.' if count < 11 else
+        'The completed eleven-run batch is combined with the original control.', '',
         '| Population | Mean time (s) | Time SD (s) | Mean validation loss | Loss SD |',
         '| --- | ---: | ---: | ---: | ---: |',
     ]
     for name, label, group in [
-        ('fresh_only', '11 fresh runs', rows),
-        ('combined_with_original', 'Original + 11 fresh runs', [summary['original'], *rows]),
+        ('fresh_only', f'{count} fresh runs', rows),
+        ('combined_with_original', f'Original + {count} fresh runs', [summary['original'], *rows]),
     ]:
         times = describe([row['official_seconds'] for row in group])
         losses = describe([row['validation_loss'] for row in group])

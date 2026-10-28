@@ -1,0 +1,90 @@
+W1028 23:11:51.971000 380389 torch/distributed/run.py:852] 
+W1028 23:11:51.971000 380389 torch/distributed/run.py:852] *****************************************
+W1028 23:11:51.971000 380389 torch/distributed/run.py:852] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W1028 23:11:51.971000 380389 torch/distributed/run.py:852] *****************************************
+[Gloo] Rank 1 is connected to [Gloo] Rank 73 peer ranks.  is connected to Expected number of connected peer ranks is : 77 peer ranks. 
+Expected number of connected peer ranks is : 7
+[Gloo] Rank 0 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 2 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 4 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 5 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank [Gloo] Rank 76 is connected to  is connected to 77 peer ranks.  peer ranks. Expected number of connected peer ranks is : Expected number of connected peer ranks is : 77
+
+logs/75219067-8f01-474f-9a98-5955e00d35f4.txt
+[config] steps 981 scheduled + 52 growth + 20 extension = 1053; seed 608; train files /root/modded-nanogpt/data/fineweb10B/fineweb_train_*.bin
+[config] MoE 8 experts x h1024, top-1, layers (1, 3, 5, 6, 8), aux 0.01; ANVIL 4-map cascade, expert-bank margin 1.1 (dense banks 1.05); skipped layers [7, 9], attention-less layers [4, 6, 7, 9], no attention output gate; n-gram table 84602880 x 768 on normalized token ids (PR #375); CPLM copy band 2048 train / 8192 val; canonical mask on
+[moe] moe_bank (80, 1024, 768); mlp_bank (8, 2, 2816, 768): slot by dense layer {0: 0, 2: 1, 4: 2, 10: 3}, parallel slot 4, 3 frozen padding slots
+[kernels] dense G3 (Gluon fused linear-relu-square) True, G3 forward ping-pong 1, grouped MoE G3 True, CPLM LUT cross-entropy True
+[sampled-head] dW of the LM head sampled 1 row in 4 (positive part) at >= 32768 rows; negative part, <copy> and dX exact (PR #371/#382)
+[cplm] copy-sink pointer mixture, d=128 qk-normed, band 2048 train / 8192 val; steps 1053; CE kernels [10240, 14336, 24576, 50304]; LUT == plain CE kernels byte for byte
+Compiling model, warming up kernels and capturing CUDA graphs (~7 minutes on first execution)
+Sampling steps [0, 1, 278, 279, 280, 281, 593, 594, 595, 596, 846, 847, 848, 849, 972, 973, 974, 975, 1031, 1032, 1033, 1034, 1035, 1036] for warmup; 6 step-graph configurations (warmup visits [4, 4, 4, 4, 4, 4]); optimizer graphs captured at step 1, fp8 refresh graphs at step 973
+[graph:step] rank 1 self-check rel: no_grad eager 6.88e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 6.73e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 6.79e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 6.28e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 6.08e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 6.47e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 6.41e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 6.31e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 1.70e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 4.51e-06 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 1.39e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 1.64e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 1.55e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 2.76e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 1.88e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 2.71e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 1.53e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 1.94e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 1.55e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 1.67e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 1.33e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 1.63e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 1.70e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 1.86e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 6.45e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 2.40e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 5.51e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 1.05e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 2.42e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 2.59e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 6.16e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 7.39e-05 (sign -), grad eager 0.00e+00
+W1028 23:13:43.854000 380389 torch/distributed/elastic/agent/server/api.py:739] Received 15 death signal, shutting down workers
+W1028 23:13:43.855000 380389 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 380458 closing signal SIGTERM
+W1028 23:13:43.856000 380389 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 380459 closing signal SIGTERM
+W1028 23:13:43.858000 380389 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 380460 closing signal SIGTERM
+W1028 23:13:43.858000 380389 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 380461 closing signal SIGTERM
+W1028 23:13:43.859000 380389 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 380462 closing signal SIGTERM
+W1028 23:13:43.860000 380389 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 380463 closing signal SIGTERM
+W1028 23:13:43.862000 380389 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 380464 closing signal SIGTERM
+W1028 23:13:43.862000 380389 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 380465 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/root/venvs/pr393-h100/bin/torchrun", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/run.py", line 991, in main
+    run(args)
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/run.py", line 982, in run
+    elastic_launch(
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 170, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 308, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 134, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 731, in run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 908, in _invoke_run
+    time.sleep(monitor_interval)
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 86, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 380389 got signal: 15
