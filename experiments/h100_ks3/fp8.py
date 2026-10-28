@@ -17,6 +17,7 @@ VJP_ROWS=int(os.environ.get('KS3_FP8_VJP_ROWS','128'))
 VJP_WARPS=int(os.environ.get('KS3_FP8_VJP_WARPS','4'))
 GATHER_IMPL=os.environ.get('KS3_FP8_GATHER','legacy')
 TMA_STORES=os.environ.get('KS3_FP8_TMA_STORES','0')=='1'
+V_DTYPE={'float32':torch.float32,'float16':torch.float16}[os.environ.get('KS3_FP8_V_DTYPE','float32')]
 assert DW_IMPL in ('legacy','tma') and VJP_ROWS in (32,64,128)
 assert VJP_WARPS in (4,8) and GATHER_IMPL in ('legacy','tiled')
 
@@ -80,7 +81,7 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
     gg=torch.empty(m,768,device=c.device,dtype=torch.float8_e5m2);gt=torch.empty(768,m,device=c.device,dtype=gg.dtype)
     dgate=torch.empty(m,device=c.device)
     gather(grad,y,src,scale,gg,gt,dgate,gs,grad.shape[0],m)
-    v=mm(gg,down,table,gs,ws)
+    v=mm(gg,down,table,gs,ws,dtype=V_DTYPE)
     dc=torch.empty(m,n,device=c.device,dtype=torch.float8_e5m2);dct=torch.empty(n,m,device=c.device,dtype=dc.dtype)
     part=torch.empty(tr.cdiv(m,VJP_ROWS),n,8,device=c.device);maxima=torch.empty(tr.cdiv(m,VJP_ROWS)*tr.cdiv(n,32),device=c.device)
     dcd,dctd=store_descriptors(dc,dct,VJP_ROWS)
