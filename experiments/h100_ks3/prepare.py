@@ -95,7 +95,12 @@ def main():
     source = source.replace(marker, '            # Refresh KS3 from final shipped weights, on the training clock.\n            uncompiled_model.prepare_ks3_eval()\n' + marker)
     marker = '            # CPLM diagnostics (token-averaged over all ranks)'
     assert source.count(marker) == 1
-    source = source.replace(marker, '            print0(f"[wr-result] steps:{step} loss:{val_loss:.9f} seconds:{training_time_ms/1000:.9f}", console=True)\n' + marker)
+    source = source.replace(marker,
+        '            print0(f"[wr-result] steps:{step} loss:{val_loss:.9f} seconds:{training_time_ms/1000:.9f}", console=True)\n'
+        '            geometry = uncompiled_model.ks3_geometry.detach().float()\n'
+        '            geometry_rank = (geometry.shape[-1] - 2) // 6\n'
+        '            coefficient_rows = geometry[..., :6 * geometry_rank].flatten(1)\n'
+        '            print0(f"[ks3-geometry] coefficient_rms_by_layer:{coefficient_rows.square().mean(1).sqrt().tolist()} nonzero_fraction_by_layer:{(coefficient_rows != 0).float().mean(1).tolist()}", console=True)\n' + marker)
     if probe_windows:
         marker='            del val_batches, val_pulls'
         assert source.count(marker)==1
