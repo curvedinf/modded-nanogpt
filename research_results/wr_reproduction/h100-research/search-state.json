@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T22:21:43.683237+00:00",
+  "utc": "2026-10-28T22:26:38.589192+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": "20261028T222044Z",
-  "current_hypothesis": "Dense2304 instead of2816,20extra updates, double ngram table and tableLR1.15; retain all five1536-chart KS3 sites.",
+  "current_full_run": null,
+  "current_hypothesis": "Triple ngram capacity, original dense width 2816, 1217 updates and ngram LR scale 1.15.",
   "planned_followups": [
     "Immediately run three fresh frozen-code seeds after a qualifying control-beating result",
     "Use the dense-width result to choose a capacity/time follow-up; triple ngram capacity is a prepared isolated alternative",
@@ -31,7 +31,7 @@
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_dense2304_ngram2.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram3_ngramlr115.json",
   "queued_screen": [],
   "status": "active",
   "near_target": {
