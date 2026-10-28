@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T23:51:48.280078+00:00",
+  "utc": "2026-10-28T23:54:32.534934+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "20261028T235034Z",
-  "current_hypothesis": "Native projection LR1.0 versus manual2/3, on seed701.",
+  "current_full_run": "20261028T235329Z",
+  "current_hypothesis": "Growth234/extension60 trades20 batch24 updates for40 extra batch8 extension updates. Same seed701,512/2304/1536 geometry.",
   "planned_followups": [
     "If current run qualifies, freeze and run three fresh seeds711\u2013713 first.",
     "Otherwise test the prepared extension60 schedule to improve loss at roughly fixed time.",
