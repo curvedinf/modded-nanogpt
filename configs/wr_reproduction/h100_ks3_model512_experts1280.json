@@ -36,11 +36,11 @@
   "scheduled_steps": 981,
   "total_steps": 1237,
   "base_run": "20261028T213503Z",
-  "hypothesis": "Reduce KS3 expert chart count1536to1280 at model512, retaining all five8top1 sites,1237updates and dense2816. Preserve the effective ANVIL coefficient with multiplier sqrt(8/15). This keeps53million expert projection parameters and seeks enough block speedup to close the0.52s gap while preserving full CE<=3.28.",
+  "hypothesis": "Reduce KS3 expert chart count1536to1280 at model512, retaining all five8top1 sites,1237updates and dense2816. Preserve the effective ANVIL coefficient with multiplier sqrt(8/15). This keeps52.4million expert projection parameters and seeks enough block speedup to close the0.52s gap while preserving full CE<=3.28.",
   "model_dim": 512,
   "dense_width": 2816,
   "growth_steps": 236,
-  "status": "prepared_requires_kernel_gate",
+  "status": "kernel_checked_full_trial_selected",
   "effective_ks3_shape_factor": {
     "incumbent": 1.7320508075688772,
     "incumbent_multiplier": 0.6666666666666666,
