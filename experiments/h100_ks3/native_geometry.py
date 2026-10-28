@@ -48,7 +48,7 @@ def _geometry_prepared(C,G,H,TILES,M:tl.constexpr,N:tl.constexpr,HT=None,SCALE=N
     c4=tl.load(pp+4,valid,other=0.);c5=tl.load(pp+5,valid,other=0.)
     ps=tl.load(pp+6,valid,other=1.)
     scale=tl.load(pp+7,valid,other=1.);shift=tl.load(pp+8,valid,other=0.)
-    x=tl.load(C+rows[:,None]*N+cols[None,:],(rows[:,None]<M)&valid[None,:],other=0.)
+    x=tl.load(C+rows[:,None]*N+cols[None,:],(rows[:,None]<M)&valid[None,:],other=0.).to(tl.float32)
     x=tl.minimum(tl.maximum(x,-65504.),65504.)
     h=_spine_features(x,_chart_mean(x,RANK),c0,c1,c2,c3,c4,c5,ps,scale,shift,G,valid,1)
     if GS32:
@@ -77,8 +77,8 @@ def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.
     rows=tl.program_id(0)*BM+tl.arange(0,BM);cols=tl.program_id(1)*32+tl.arange(0,32)
     e=tl.load(TILES+tl.program_id(0)*BM//128);mask=(rows[:,None]<M)&(cols[None,:]<N)
     real=tl.load(SRC+rows,rows<M,other=ROWS)<ROWS
-    value=tl.load(V+rows[:,None]*N+cols[None,:],mask,other=0.)
-    original=tl.load(C+rows[:,None]*N+cols[None,:],mask,other=0.)
+    value=tl.load(V+rows[:,None]*N+cols[None,:],mask,other=0.).to(tl.float32)
+    original=tl.load(C+rows[:,None]*N+cols[None,:],mask,other=0.).to(tl.float32)
     x=tl.minimum(tl.maximum(original,-65504.),65504.)
     base=(e*(N//RANK)+cols//RANK)*(6*RANK+2)
     pp=PREPARED+(e*N+cols)*9
