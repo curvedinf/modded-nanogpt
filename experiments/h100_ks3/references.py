@@ -17,11 +17,14 @@ def local_control_reference(path=CALIBRATION):
             assert len(rows) == len({row['run_id'] for row in rows}) == 11
             assert len({row['seed'] for row in rows}) == 11
             assert all(row['status'] == 'complete' and row['source_hashes_unchanged'] for row in rows)
-            times = [row['official_seconds'] for row in rows]
+            # Eleven new measurements augment the already collected control.
+            population = [report['original'], *rows]
+            assert len({row['run_id'] for row in population}) == 12
+            times = [row['official_seconds'] for row in population]
             assert all(math.isfinite(value) and value > 0 for value in times)
-            return dict(kind='eleven_fresh_control_mean', n=11,
+            return dict(kind='original_plus_eleven_control_mean', n=12,
                         seconds=statistics.mean(times), sample_std_seconds=statistics.stdev(times),
-                        loss=statistics.mean(row['validation_loss'] for row in rows),
-                        run_ids=[row['run_id'] for row in rows], source=str(Path(path)))
+                        loss=statistics.mean(row['validation_loss'] for row in population),
+                        run_ids=[row['run_id'] for row in population], source=str(Path(path)))
     return dict(kind='historical_single_control', n=1, seconds=31.099, loss=3.2765,
                 run_ids=['20261028T180502Z'])

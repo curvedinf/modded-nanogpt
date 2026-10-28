@@ -53,7 +53,7 @@ def main():
     report = dict(utc=utc(), upstream_commit=manifest['commit'],
                   validation_tokens=10485760, timed_training_updates=1053,
                   fresh_runs=rows, original=summary['original'],
-                  primary_population='Eleven fresh independent seeds, 601 through 611.',
+                  primary_population='Preserved original plus eleven fresh independent seeds, 601 through 611; fresh-only statistics are also reported.',
                   spread='Sample standard deviation; CI95 is a Student-t interval for the mean.',
                   measurement_precision='Unmodified upstream logs round each time to 0.001 second and loss to 0.0001.',
                   source_changes=[], comparative_pruning=False)
@@ -62,7 +62,8 @@ def main():
         f"Frozen upstream commit: `{manifest['commit']}`.", '',
         'Eleven fresh independent seeds, with unchanged model/training sources, '
         '1,053 updates per run and full 10,485,760-token final WR validation. '
-        'The original measurement remains separate and is also included in a secondary twelve-run average.', '',
+        'The final local reference combines these eleven with the preserved original, for twelve measurements. '
+        'The eleven fresh runs are also summarized separately.', '',
         '| Population | Mean time (s) | Time SD (s) | Mean validation loss | Loss SD |',
         '| --- | ---: | ---: | ---: | ---: |',
     ]
