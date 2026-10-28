@@ -1,5 +1,5 @@
 """One isolated, registered H100 experiment; stop-aware, no automatic reruns."""
-import argparse,datetime,hashlib,json,os,re,shlex,signal,subprocess,sys,time
+import argparse,csv,datetime,hashlib,json,os,re,shlex,signal,subprocess,sys,time
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 RESULTS=ROOT/'research_results/wr_reproduction/h100-research'
@@ -26,6 +26,20 @@ def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 def append(name,data):
     RESULTS.mkdir(parents=True,exist_ok=True)
     with (RESULTS/name).open('a') as f:f.write(json.dumps({'utc':utc(),**data})+'\n')
+def summarize():
+    rows={}
+    for line in (RESULTS/'registry.jsonl').read_text().splitlines():
+        event=json.loads(line);key=event.get('run_id')
+        if key:rows.setdefault(key,{}).update(event)
+    with (RESULTS/'full-runs.csv').open('w',newline='') as f:
+        writer=csv.writer(f);writer.writerow(['run_id','seconds','loss','target_met','timing_eligible','variant','code_commit'])
+        for key,row in sorted(rows.items()):
+            loss=row.get('validation_loss',row.get('loss'));seconds=row.get('official_seconds',row.get('seconds'))
+            if loss is None or seconds is None:continue
+            if row.get('status') not in (None,'complete'):continue
+            settings=row.get('settings',{})
+            writer.writerow([key,seconds,loss,loss<=3.28,row.get('timing_reference_eligible',True),
+                             settings.get('variant',settings.get('config',row.get('variant',row.get('config',row.get('description',''))))),row.get('code_commit','')])
 def collect(run):
     settings=json.loads((run/'settings.json').read_text())
     text=(run/'console.log').read_text(errors='replace')
@@ -53,6 +67,7 @@ def collect(run):
         if (run/name).exists():(out/name).write_bytes((run/name).read_bytes())
     (out/'console-tail.txt').write_text('\n'.join(text.splitlines()[-60:])+'\n')
     append('registry.jsonl',result)
+    summarize()
     append('notes.jsonl',dict(kind='result',run_id=run.name,result={k:v for k,v in result.items() if k not in ('settings',)},hypothesis=settings.get('hypothesis')))
     print(json.dumps(result,indent=2),flush=True)
     return result
