@@ -42,7 +42,8 @@ def _features(x,G,e,cols,N:tl.constexpr,BM:tl.constexpr,BN:tl.constexpr,PREPARED
 def gemm(A,W,O,TILES,M:tl.constexpr,N:tl.constexpr,K:tl.constexpr,
          W0:tl.constexpr,W1:tl.constexpr,W2:tl.constexpr,
          BM:tl.constexpr,BN:tl.constexpr,BK:tl.constexpr,MODE:tl.constexpr=0,
-         G=None,H=None,SRC=None,GATE=None,SCATTER=None,ROWS:tl.constexpr=0,C=None,PART=None,PACK_INPUT:tl.constexpr=False,XPACK=None,DLOG=None,ROUTER=None,PREPARED=None,ASCALE=None,WSCALE=None,NATIVE_TANH:tl.constexpr=False):
+         G=None,H=None,SRC=None,GATE=None,SCATTER=None,ROWS:tl.constexpr=0,C=None,PART=None,PACK_INPUT:tl.constexpr=False,XPACK=None,DLOG=None,ROUTER=None,PREPARED=None,ASCALE=None,WSCALE=None,NATIVE_TANH:tl.constexpr=False,
+         H_SCALE=None,H_TRANSPOSE=None,H_DESC=None,H_TRANSPOSE_DESC=None,H_AMAX=None):
     rows=tl.program_id(0)*BM+tl.arange(0,BM)
     cols=tl.program_id(1)*BN+tl.arange(0,BN)
     kk=tl.arange(0,BK);e=tl.load(TILES+tl.program_id(0)*BM//128)
@@ -75,7 +76,16 @@ def gemm(A,W,O,TILES,M:tl.constexpr,N:tl.constexpr,K:tl.constexpr,
         tl.store(O+rows[:,None]*N+cols[None,:],acc,mask)
         if MODE==1:
             h=_features(acc,G,e,cols,N,BM,BN,PREPARED,NATIVE_TANH)
-            tl.store(H+rows[:,None]*N+cols[None,:],h,mask)
+            if H_SCALE is not None:
+                value=tl.minimum(tl.maximum(h/tl.load(H_SCALE),-448.),448.).to(tl.float8e4nv)
+                if H_DESC is not None:
+                    H_DESC.store([tl.program_id(0)*BM,tl.program_id(1)*BN],value)
+                    H_TRANSPOSE_DESC.store([tl.program_id(1)*BN,tl.program_id(0)*BM],tl.trans(value))
+                else:
+                    tl.store(H+rows[:,None]*N+cols[None,:],value,mask)
+                    tl.store(H_TRANSPOSE+cols[None,:]*M+rows[:,None],value,mask)
+                tl.store(H_AMAX+tl.program_id(0)*tl.cdiv(N,BN)+tl.program_id(1),tl.max(tl.max(tl.abs(h),1),0))
+            else:tl.store(H+rows[:,None]*N+cols[None,:],h,mask)
         elif MODE==2:
             source=tl.load(SRC+rows,rows<M,other=ROWS)
             gate=tl.load(GATE+source,(rows<M)&(source<ROWS),other=0.).to(tl.bfloat16)

@@ -32,7 +32,7 @@ def summarize():
         event=json.loads(line);key=event.get('run_id')
         if key:rows.setdefault(key,{}).update(event)
     with (RESULTS/'full-runs.csv').open('w',newline='') as f:
-        writer=csv.writer(f);writer.writerow(['run_id','seconds','loss','target_met','timing_eligible','variant','code_commit'])
+        writer=csv.writer(f,lineterminator='\n');writer.writerow(['run_id','seconds','loss','target_met','timing_eligible','variant','code_commit'])
         for key,row in sorted(rows.items()):
             loss=row.get('validation_loss',row.get('loss'));seconds=row.get('official_seconds',row.get('seconds'))
             if loss is None or seconds is None:continue

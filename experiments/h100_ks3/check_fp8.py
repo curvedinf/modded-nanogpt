@@ -115,28 +115,30 @@ def main():
         assert all(torch.isfinite(a).all() for a in actual)
         assert max(errors.values())<.15,errors
         cache_errors=None
-        if fp8.V_DTYPE!=torch.float32:
+        if fp8.V_DTYPE!=torch.float32 or fp8.FUSE_GEOMETRY:
             candidate=[a.detach().clone() for a in actual]
-            selected_dtype=fp8.V_DTYPE;fp8.V_DTYPE=torch.float32
+            selected_dtype,selected_fusion=fp8.V_DTYPE,fp8.FUSE_GEOMETRY
+            fp8.V_DTYPE=torch.float32;fp8.FUSE_GEOMETRY=False
             full_cache=[a.detach().clone() for a in run('fp8')]
-            fp8.V_DTYPE=selected_dtype
+            fp8.V_DTYPE=selected_dtype;fp8.FUSE_GEOMETRY=selected_fusion
             cache_errors={key:err(a,b) for key,a,b in zip(('output','dx','router','post','geometry','weights'),candidate,full_cache)}
             assert max(v for k,v in cache_errors.items() if k!='post')<.006 and cache_errors['post']<.02,cache_errors
         timing={}
         for kind in ('bf16','fp8'):
             samples=[tr.testing.do_bench_cudagraph(lambda:run(kind),rep=40) for _ in range(3)]
             timing[kind]=dict(samples_ms=samples,median_ms=statistics.median(samples))
-        if fp8.V_DTYPE!=torch.float32:
-            selected_dtype=fp8.V_DTYPE;fp8.V_DTYPE=torch.float32
+        if fp8.V_DTYPE!=torch.float32 or fp8.FUSE_GEOMETRY:
+            selected_dtype,selected_fusion=fp8.V_DTYPE,fp8.FUSE_GEOMETRY
+            fp8.V_DTYPE=torch.float32;fp8.FUSE_GEOMETRY=False
             samples=[tr.testing.do_bench_cudagraph(lambda:run('fp8'),rep=40) for _ in range(3)]
-            fp8.V_DTYPE=selected_dtype
+            fp8.V_DTYPE=selected_dtype;fp8.FUSE_GEOMETRY=selected_fusion
             timing['fp8_full_cache']=dict(samples_ms=samples,median_ms=statistics.median(samples))
         result=dict(tokens=t,producers=producers,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
         cases.append(result);print(json.dumps(result),flush=True)
     from triton.backends.nvidia.compiler import get_ptxas
     assembler=get_ptxas(90)
     output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,
-                implementation=dict(dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,v_dtype=str(fp8.V_DTYPE),reference_variant=reference_variant),
+                implementation=dict(dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,reference_variant=reference_variant),
                 ptxas=dict(path=assembler.path,version=assembler.version,sha256=hashlib.sha256(Path(assembler.path).read_bytes()).hexdigest()))
     Path(os.environ.get('KS3_FP8_CHECK_OUTPUT','research_results/wr_reproduction/h100-research/fp8-micro.json')).write_text(json.dumps(output,indent=2)+'\n')
 if __name__=='__main__':main()

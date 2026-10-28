@@ -18,14 +18,15 @@ VJP_WARPS=int(os.environ.get('KS3_FP8_VJP_WARPS','4'))
 GATHER_IMPL=os.environ.get('KS3_FP8_GATHER','legacy')
 TMA_STORES=os.environ.get('KS3_FP8_TMA_STORES','0')=='1'
 V_DTYPE={'float32':torch.float32,'float16':torch.float16}[os.environ.get('KS3_FP8_V_DTYPE','float32')]
+FUSE_GEOMETRY=os.environ.get('KS3_FP8_FUSE_GEOMETRY','0')=='1'
 assert DW_IMPL in ('legacy','tma') and VJP_ROWS in (32,64,128)
 assert VJP_WARPS in (4,8) and GATHER_IMPL in ('legacy','tiled')
 
-def store_descriptors(row_major,column_major,rows):
+def store_descriptors(row_major,column_major,rows,cols=32):
     if not TMA_STORES:return None,None
     from triton.tools.tensor_descriptor import TensorDescriptor
-    assert row_major.shape[0]%rows==0 and row_major.shape[1]%32==0
-    return TensorDescriptor.from_tensor(row_major,[rows,32]),TensorDescriptor.from_tensor(column_major,[32,rows])
+    assert row_major.shape[0]%rows==0 and row_major.shape[1]%cols==0
+    return TensorDescriptor.from_tensor(row_major,[rows,cols]),TensorDescriptor.from_tensor(column_major,[cols,rows])
 
 def tile(m):return (128,128,128,8,3) if m<=32768 else (64,256,128,8,4)
 def mm(a,w,table,sa,sw,dtype=torch.float32,mode=0,**kw):
@@ -57,11 +58,18 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
     x=torch.empty(m,d,device=rows.device,dtype=torch.float8_e4m3fn);xt=torch.empty(d,m,device=rows.device,dtype=x.dtype)
     pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],num_warps=4)
     prepared=torch.empty(8,n,9,device=rows.device);_prepare[(tr.cdiv(8*n,256),)](g,prepared,8*n)
-    c=mm(x,up.transpose(1,2),table,xs,us)
     h=torch.empty(m,n,device=rows.device,dtype=x.dtype);ht=torch.empty(n,m,device=rows.device,dtype=x.dtype)
-    maxima=torch.empty(tr.cdiv(m,64)*tr.cdiv(n,32),device=rows.device)
-    hd,htd=store_descriptors(h,ht,64)
-    _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=1,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,num_warps=4)
+    if FUSE_GEOMETRY:
+        bm,bn,bk,nw,st=64,128,128,4,4
+        c=torch.empty(m,n,device=rows.device,dtype=torch.float32);weight=up.transpose(1,2)
+        maxima=torch.empty(tr.cdiv(m,bm)*tr.cdiv(n,bn),device=rows.device)
+        hd,htd=store_descriptors(h,ht,bm,bn)
+        gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](x,weight,c,table,m,n,d,*weight.stride(),bm,bn,bk,1,G=g,H=h,PREPARED=prepared,ASCALE=xs,WSCALE=us,NATIVE_TANH=True,H_SCALE=ps,H_TRANSPOSE=ht,H_DESC=hd,H_TRANSPOSE_DESC=htd,H_AMAX=maxima,num_warps=nw,num_stages=st)
+    else:
+        c=mm(x,up.transpose(1,2),table,xs,us)
+        maxima=torch.empty(tr.cdiv(m,64)*tr.cdiv(n,32),device=rows.device)
+        hd,htd=store_descriptors(h,ht,64)
+        _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=1,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,num_warps=4)
     torch.maximum(pa,maxima.amax(),out=pa)
     out=torch.empty_like(rows)
     y=mm(h,down.transpose(1,2),table,ps,ws,dtype=rows.dtype,mode=2,SRC=src,GATE=scale,SCATTER=out,ROWS=rows.shape[0])
