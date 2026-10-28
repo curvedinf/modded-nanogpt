@@ -40,11 +40,16 @@
   "model_dim": 512,
   "dense_width": 2816,
   "growth_steps": 236,
-  "status": "kernel_checked_full_trial_selected",
+  "status": "complete_target_missed",
   "effective_ks3_shape_factor": {
     "incumbent": 1.7320508075688772,
     "incumbent_multiplier": 0.6666666666666666,
     "candidate": 1.5811388300841898,
     "candidate_multiplier": 0.7302967433402214
+  },
+  "measured_result": {
+    "run": "20261028T214302Z",
+    "seconds": 31.089075482,
+    "loss": 3.284430742
   }
 }

@@ -1,0 +1,50 @@
+{
+  "name": "pr393-cubic-fp8-model512-experts1280-growth256",
+  "architecture": "PR393 variant: residual/ngram512, four128-dimensional paired/ordinary attention heads as original, eight64-channel MUDD groups, five8top1 MoE sites with1280 cubic rank-one KS3 charts each, dense2816.",
+  "geometry_optimizer": {
+    "adam_betas": [
+      0.9,
+      0.99
+    ],
+    "lr_multiplier": 0.125
+  },
+  "geometry_averaging": "Replicated geometry follows original MoE tail-average and bank-blend ticks and rates; no geometry norm rescaling.",
+  "environment": {
+    "TRAIN_SEED": "413",
+    "KS3_H100_OPT": "fp8-native",
+    "KS3_H100_TRANSPORT": "fp8",
+    "KS3_H100_PACK_ROWS": "16",
+    "TRITON_PTXAS_PATH": "/root/venvs/h100-ptxas-13.3/ptxas",
+    "KS3_H100_RANK": "1",
+    "KS3_FP8_CUBIC": "1",
+    "KS3_FP8_DW": "tma",
+    "KS3_FP8_MM": "tma",
+    "KS3_FP8_MM_TILE": "128x256",
+    "KS3_FP8_GATHER": "tiled",
+    "KS3_FP8_VJP_ROWS": "128",
+    "KS3_FP8_VJP_WARPS": "4",
+    "KS3_FP8_TMA_STORES": "1",
+    "KS3_FP8_PACKED_TRANSPORT": "1",
+    "KS3_FP8_LAYOUT_TILE": "64",
+    "KS3_FP8_TMA_OUTPUTS": "1",
+    "KS3_H100_GEOMETRY_TAIL": "1",
+    "KS3_H100_FUSED_ANVIL": "1",
+    "KS3_H100_WIDTH": "1280",
+    "KS3_H100_PROJECTION_LR": "0.7302967433402214"
+  },
+  "validation_tokens": 10485760,
+  "scheduled_steps": 981,
+  "total_steps": 1257,
+  "base_run": "20261028T214302Z",
+  "hypothesis": "Add20 late updates to1280-chart512-wide model to recover the0.004430742 CE target gap. Warm final KS3 BF16 packing kernels with warmup weights before reset; all final shipped-weight packing still executes on-clock. Compare official full-validation time and loss.",
+  "model_dim": 512,
+  "dense_width": 2816,
+  "growth_steps": 256,
+  "status": "planned",
+  "effective_ks3_shape_factor": {
+    "incumbent": 1.7320508075688772,
+    "incumbent_multiplier": 0.6666666666666666,
+    "candidate": 1.5811388300841898,
+    "candidate_multiplier": 0.7302967433402214
+  }
+}

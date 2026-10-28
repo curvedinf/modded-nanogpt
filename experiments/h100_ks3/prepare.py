@@ -123,6 +123,11 @@ def main():
     marker = '            uncompiled_model.complete_yarn_tables()'
     assert source.count(marker) == 1
     source = source.replace(marker, '            # Refresh KS3 from final shipped weights, on the training clock.\n            uncompiled_model.prepare_ks3_eval()\n' + marker)
+    # Compile the final BF16 packing kernels with warmup weights. The final
+    # refresh still executes after tail shipment inside the timed region.
+    marker = '    print0("Resetting Model", console=True)'
+    assert source.count(marker) == 1
+    source = source.replace(marker, '    uncompiled_model.prepare_ks3_eval()  # kernel warmup; these weights are reset below\n' + marker)
     marker = '            # CPLM diagnostics (token-averaged over all ranks)'
     assert source.count(marker) == 1
     source = source.replace(marker,
