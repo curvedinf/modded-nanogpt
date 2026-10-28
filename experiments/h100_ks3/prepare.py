@@ -170,6 +170,9 @@ def main():
             return
 """ + marker
         source = source.replace(marker, replacement)
+        if args.profile:
+            source=source.replace('            flush_log()\n            dist.destroy_process_group()\n            return',
+                                  '            profile_full.stop(env.rank)\n            flush_log()\n            dist.destroy_process_group()\n            return')
     if args.profile:
         source = source.replace('    barrier_start = time.perf_counter()', '    from experiments.h100_ks3 import profile_full\n    profile_full.start(env.rank)\n    barrier_start = time.perf_counter()')
         source = source.replace('            model.eval()\n', '            profile_full.validation(env.rank)\n            model.eval()\n')

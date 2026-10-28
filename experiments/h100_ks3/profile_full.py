@@ -40,8 +40,9 @@ def stop(rank):
     torch.cuda.synchronize();REGION.__exit__(None,None,None);PROFILER.stop()
     path=Path('../full-profile-trace.json');PROFILER.export_chrome_trace(str(path))
     data=json.loads(path.read_text());events=data['traceEvents']
-    results={name:summarize(events,'WR/full_'+name) for name in ['training','validation']}
+    results={name:summarize(events,'WR/full_'+name) for name in ['training','validation']
+             if any(e.get('name')=='WR/full_'+name and e.get('ph')=='X' for e in events)}
     assert results['training']['kernel_count']>0,'No CUDA kernels captured'
     results.update(profiled_rank=0,profiled_device='H100',timing_reference_eligible=False,trace_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),trace_bytes=path.stat().st_size)
     Path('../full-profile-summary.json').write_text(json.dumps(results,indent=2)+'\n')
-    print('[profile] full training and validation CUDA kernel summary exported',flush=True)
+    print('[profile] available training/validation CUDA kernel summaries exported',flush=True)
