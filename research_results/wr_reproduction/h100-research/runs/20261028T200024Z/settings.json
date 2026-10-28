@@ -1,0 +1,25 @@
+{
+  "utc": "2026-10-28T20:00:24.735272+00:00",
+  "code_commit": "24bb7f726700916ec05a0ac7efce85853c4457be",
+  "hypothesis": "Use validated rank-two KS3 with a half-sized first-stage global batch65536 instead of131072 tokens. Preserve step counts and learning-rate schedule. Test whether cheaper early updates retain enough quality to beat the35.393s parent and34.939s cubic incumbent.",
+  "variant": "separate-dx-prepared-128-gate-tanh-fp16v",
+  "seed": 413,
+  "scheduled_steps": 981,
+  "drop_dense_layer": null,
+  "drop_parallel_mlp": false,
+  "dense_width": 2816,
+  "first_batch_units": 4,
+  "final_window_blocks": 20,
+  "eval_probe_windows": "",
+  "environment": {
+    "TRAIN_SEED": "413",
+    "KS3_H100_OPT": "separate-dx-prepared-128-gate-tanh-fp16v",
+    "KS3_H100_TRANSPORT": "codes",
+    "KS3_H100_PACK_ROWS": "16",
+    "KS3_H100_RANK": "2",
+    "KS3_H100_FUSED_ANVIL": "1"
+  },
+  "profile": false,
+  "screen_updates": 0,
+  "validation_protocol": "PR393 full final canonical mask, window extension and tail shipment"
+}

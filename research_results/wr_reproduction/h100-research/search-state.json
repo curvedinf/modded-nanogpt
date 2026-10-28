@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T19:59:38.418385+00:00",
+  "utc": "2026-10-28T20:04:12.502249+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -30,6 +30,6 @@
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "Choose new FP8 TMA+packed transport after timing gates, otherwise smaller first-stage batch on the validated KS3 recipe.",
-  "queued_screen": "Eight-rank packed FP8 weight+scale transport, then fused TMA128x128 and128x256 block checks."
+  "next_model_candidate": "Restore original batch schedule. Prefer FP8 TMA+coalesced weight layouts if the eight-rank and rank2 gates pass.",
+  "queued_screen": "8-rank FP8 coalesced weight layouts, then rank1/rank2 FP8/TMA block gates."
 }
