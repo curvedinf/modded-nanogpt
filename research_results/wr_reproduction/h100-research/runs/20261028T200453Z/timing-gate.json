@@ -1,0 +1,10 @@
+{
+  "run_id": "20261028T200453Z",
+  "first100_ms": 1800.0,
+  "updates26_to100_ms": 1275.0,
+  "reference_run_id": "20261028T194936Z",
+  "reference_first100_ms": 1864.0,
+  "reference_updates26_to100_ms": 1330.0,
+  "rule": "Reject when both first100 and updates26-100 are slower than the saved same-architecture BF16 prefix; continue if mixed or faster.",
+  "reject": false
+}

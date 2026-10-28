@@ -12,3 +12,4 @@ run_id,seconds,loss,target_met,timing_eligible,variant,code_commit
 20261028T194936Z,35.393438115,3.278706789,True,True,separate-dx-prepared-128-gate-tanh-fp16v,d35c4de022fe297deac415ca21968d44ff9c2451
 20261028T195631Z,34.938983384,3.279222727,True,True,separate-dx-prepared-128-gate-tanh-fp16v-cubic,5bf1c30b78fb4130cd2e073f002b7d81de0080d1
 20261028T200024Z,33.604605274,3.291386366,False,True,separate-dx-prepared-128-gate-tanh-fp16v,24bb7f726700916ec05a0ac7efce85853c4457be
+20261028T200453Z,33.874986225,3.280138016,False,True,fp8-native,fbc0e6668cf5e084311021e00acfd8aa03fea996

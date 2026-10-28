@@ -18,12 +18,13 @@
     "loss": 3.279222727,
     "code_commit": "5bf1c30b78fb4130cd2e073f002b7d81de0080d1"
   },
-  "current_full_run": "20261028T200453Z",
-  "current_hypothesis": "Rank-two FP8 with TMA products, coalesced64x64 cached-weight layouts and packed weight+scale transport; original batch schedule.",
+  "current_full_run": null,
+  "current_hypothesis": "Two queued independent GPU checks: cubic FP8 and TMA output products.",
   "planned_followups": [
-    "Screen cubic-only learned KS3 geometry, with frozen warp coefficients, against the corresponding frozen-parameter oracle.",
-    "Test smaller first-stage batch if other candidates do not supply sufficient savings.",
-    "Promote only full WR validation <=3.28; collect three fresh independent seeds after a faster-than-control qualifier."
+    "Finish the corrected rank-two FP8 run with its whole-model speed gate and full WR validation.",
+    "Run queued independent checks for cubic FP8 and TMA output/input-gradient products; promote only measured improvements.",
+    "If needed, test KS3 geometry tail averaging or a directed projection-rate change based on the resulting quality margin.",
+    "Collect three fresh independent seeds after a faster-than-control qualifier; then assess WR statistical significance."
   ],
   "reference": {
     "run": "20261028T180502Z",
@@ -31,5 +32,8 @@
     "loss": 3.2765
   },
   "next_model_candidate": "Choose from FP8/cubic geometry combination or directed projection-rate tuning after full validation.",
-  "queued_screen": null
+  "queued_screen": [
+    "fp8-cubic-tma",
+    "fp8-rank2-tma-outputs"
+  ]
 }
