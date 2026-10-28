@@ -23,6 +23,7 @@ MM_IMPL=os.environ.get('KS3_FP8_MM','pointer')
 PACKED_TRANSPORT=os.environ.get('KS3_FP8_PACKED_TRANSPORT','0')=='1'
 LAYOUT_TILE=int(os.environ.get('KS3_FP8_LAYOUT_TILE','0'))
 CUBIC_ONLY=os.environ.get('KS3_FP8_CUBIC','0')=='1'
+TMA_OUTPUTS=os.environ.get('KS3_FP8_TMA_OUTPUTS','0')=='1'
 assert LAYOUT_TILE in (0,32,64,128)
 assert MM_IMPL in ('pointer','tma')
 assert DW_IMPL in ('legacy','tma') and VJP_ROWS in (32,64,128)
@@ -36,9 +37,9 @@ def store_descriptors(row_major,column_major,rows,cols=32):
 
 def tile(m):return (128,128,128,8,3) if m<=32768 else (64,256,128,8,4)
 def mm(a,w,table,sa,sw,dtype=torch.float32,mode=0,**kw):
-    if MM_IMPL=='tma' and mode==0:
+    if MM_IMPL=='tma' and (mode==0 or TMA_OUTPUTS):
         from experiments.h100_ks3.tma_mm import mm as tma_mm
-        return tma_mm(a,w,table,sa,sw,dtype)
+        return tma_mm(a,w,table,sa,sw,dtype,mode=mode,**kw)
     m,k=a.shape;n=w.shape[-1];bm,bn,bk,nw,st=tile(m)
     out=torch.empty((m,n),device=a.device,dtype=dtype)
     gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](a,w,out,table,m,n,k,*w.stride(),bm,bn,bk,mode,ASCALE=sa,WSCALE=sw,num_warps=nw,num_stages=st,**kw)
@@ -129,6 +130,9 @@ def _(grad,y,c,xt,ht,scale,src,offs,table,down,g,prepared,us,ws,xs,gs,ps,ds,da,b
 
 @torch.library.custom_op('h100_ks3_fp8::dx',mutates_args=())
 def dx(dc:torch.Tensor,up:torch.Tensor,table:torch.Tensor,src:torch.Tensor,dl:torch.Tensor,router:torch.Tensor,ds:torch.Tensor,us:torch.Tensor)->torch.Tensor:
+    if TMA_OUTPUTS:
+        from experiments.h100_ks3.tma_mm import mm as tma_mm
+        return tma_mm(dc,up,table,ds,us,torch.bfloat16,mode=4,SRC=src,DLOG=dl,ROUTER=router,ROWS=dl.shape[0])
     m,k=dc.shape;n=768;bm,bn,bk,nw,st=tile(m)
     out=torch.empty(dl.shape[0],n,device=dc.device,dtype=torch.bfloat16)
     gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](dc,up,out,table,m,n,k,*up.stride(),bm,bn,bk,4,SRC=src,ROWS=dl.shape[0],DLOG=dl,ROUTER=router,ASCALE=ds,WSCALE=us,num_warps=nw,num_stages=st)
