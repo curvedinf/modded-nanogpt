@@ -1,6 +1,6 @@
 {
-  "name": "h100-pr393-ks3-best-of-three-20261028",
-  "code_commit": "0f350e2",
+  "name": "h100-pr393-ks3-native-tanh-20261028",
+  "code_commit": "1e9609ebde4dfb2b3cfabdd110330b5314129d60",
   "architecture": "PR393, only five MoE expert sites replaced by 1024-chart rank-one GS32/BF16 KS3; FP16 nonlinearities",
   "geometry_optimizer": {
     "adam_betas": [
@@ -10,17 +10,17 @@
     "lr_multiplier": 0.125
   },
   "environment": {
-    "KS3_H100_OPT": "separate-dx-prepared-128-gate",
+    "KS3_H100_OPT": "separate-dx-prepared-128-gate-tanh",
     "KS3_H100_TRANSPORT": "codes",
     "KS3_H100_PACK_ROWS": "16"
   },
-  "selected_run": "20261028T184749Z",
+  "selected_run": "20261028T191044Z",
   "seed_for_reported_result": 413,
-  "selection_criterion": "Fastest full WR-protocol run among three requested configs; also lowest observed loss",
-  "measured_seconds": 36.967,
-  "measured_validation_loss": 3.2788,
+  "selection_criterion": "Fastest completed H100 KS3 full WR run meeting <=3.28 so far; one seed, narrow margin",
+  "measured_seconds": 35.911183984,
+  "measured_validation_loss": 3.279867172,
   "validation_tokens": 10485760,
   "scheduled_steps": 981,
   "total_steps": 1053,
-  "statistical_scope": "One run per configuration, same seed. Not independent-seed statistical qualification."
+  "statistical_scope": "One full run at seed413, not independent-seed statistical qualification"
 }

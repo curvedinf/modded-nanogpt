@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-28T19:10:44.386737+00:00",
+  "code_commit": "1e9609ebde4dfb2b3cfabdd110330b5314129d60",
+  "hypothesis": "Native tanh cuts routed block time by 8.7 to 9.3 percent; test full WR speed and convergence with all five KS3 MoE sites unchanged.",
+  "variant": "separate-dx-prepared-128-gate-tanh",
+  "seed": 413,
+  "scheduled_steps": 981,
+  "drop_dense_layer": null,
+  "dense_width": 2816,
+  "first_batch_units": 8,
+  "environment": {
+    "TRAIN_SEED": "413",
+    "KS3_H100_OPT": "separate-dx-prepared-128-gate-tanh",
+    "KS3_H100_TRANSPORT": "codes",
+    "KS3_H100_PACK_ROWS": "16"
+  },
+  "profile": false,
+  "screen_updates": 0,
+  "validation_protocol": "PR393 full final canonical mask, window extension and tail shipment"
+}
