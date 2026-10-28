@@ -1,0 +1,23 @@
+{
+  "utc": "2026-10-28T22:49:31.836483+00:00",
+  "original_run": "20261028T180502Z",
+  "requested_new_runs": 11,
+  "seeds": [
+    601,
+    602,
+    603,
+    604,
+    605,
+    606,
+    607,
+    608,
+    609,
+    610,
+    611
+  ],
+  "upstream_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+  "controller_commit": "d75ed4130bc6878670f7664df239eba6a63d4cf8",
+  "source_changes": [],
+  "comparative_pruning": false,
+  "purpose": "User-authorized estimate of local control time/loss distribution; preserve and include original separately."
+}

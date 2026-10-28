@@ -11,7 +11,7 @@ OUT=ROOT/'research_results/wr_reproduction/h100-control-calibration'
 def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 def write(path,value):path.write_text(json.dumps(value,indent=2)+'\n')
 def event(value):
-    with (OUT/'registry.jsonl').open('a') as f:f.write(json.dumps(dict(utc=utc(),**value))+'\n')
+    with (OUT/'registry.jsonl').open('a') as f:f.write(json.dumps({'utc':utc(),**value})+'\n')
 def parse(text):
     rows=re.findall(r'step:(\d+)/\d+ val_loss:([\d.]+) train_time:([\d.]+)ms',text)
     assert len(rows)==1,rows
