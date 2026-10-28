@@ -1,0 +1,40 @@
+{
+  "utc": "2026-10-28T21:57:01.320198+00:00",
+  "passed": true,
+  "cases": [
+    {
+      "dim": 512,
+      "repeated": false,
+      "relative_rms": 1.5408428453156375e-06,
+      "relative_rms_vs_original": 0.0
+    },
+    {
+      "dim": 512,
+      "repeated": true,
+      "relative_rms": 0.0005523852305486798,
+      "relative_rms_vs_original": 0.000716222682967782
+    },
+    {
+      "dim": 640,
+      "repeated": false,
+      "relative_rms": 1.5169138123383163e-06
+    },
+    {
+      "dim": 640,
+      "repeated": true,
+      "relative_rms": 0.0005509405164048076
+    },
+    {
+      "dim": 768,
+      "repeated": false,
+      "relative_rms": 1.5380234117401415e-06,
+      "relative_rms_vs_original": 0.0
+    },
+    {
+      "dim": 768,
+      "repeated": true,
+      "relative_rms": 0.000551070726942271,
+      "relative_rms_vs_original": 0.0007139916997402906
+    }
+  ]
+}

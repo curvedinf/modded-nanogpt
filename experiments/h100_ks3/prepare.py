@@ -59,6 +59,10 @@ def main():
         assert ngram_source.count(before)==1
         ngram_path.write_text(ngram_source.replace(before,f'NGRAM_DIM = {args.model_dim}'))
     if args.model_dim==640:
+        value_path=run/'source/track_1_short/perf/kernels/value_embed.py'
+        value_source=value_path.read_text()
+        assert value_source.count('SEGMENT = 256')==1
+        value_path.write_text(value_source.replace('SEGMENT = 256','SEGMENT = 128'))
         # Five heads cannot be interleaved as adjacent pairs. Use the original
         # ordinary-head path and split the last value gate across two/three
         # heads. The four- and six-head recipes keep their original behavior.
