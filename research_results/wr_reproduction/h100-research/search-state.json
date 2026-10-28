@@ -18,7 +18,7 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": null,
+  "current_full_run": "20261028T232801Z",
   "current_hypothesis": "Close the0.000070305 validation miss of growth252 by adding only2late updates. Parent30.955472743s leaves0.123777257s headroom against31.07925s; expected cost~.064s. Keep checked fused amax and every other setting.",
   "planned_followups": [
     "Prioritize +2 and +4 late-update extensions requested by the user",

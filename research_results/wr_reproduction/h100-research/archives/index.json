@@ -10,5 +10,9 @@
   "near-target-20261028T221144Z.tar.gz": {
     "bytes": 988872,
     "sha256": "2b30d89f2e583c8f104404811247a63e6072a2c7349eb7ca1636f8c6a5357b1c"
+  },
+  "near-target-20261028T232455Z.tar.gz": {
+    "bytes": 1002352,
+    "sha256": "19ca9c86f7107f46506b631c8dc2d187f3d661ccaf470d3dff7c1fe51717b582"
   }
 }
