@@ -20,6 +20,7 @@ def main():
     parser.add_argument('--drop-parallel-mlp', action='store_true')
     parser.add_argument('--dense-width', type=int, default=2816)
     parser.add_argument('--model-dim', type=int, choices=(512,640,768), default=768)
+    parser.add_argument('--ngram-multiplier', type=int, choices=(1,2,3), default=1)
     parser.add_argument('--first-batch-units', type=int, choices=(4,8,12,16), default=8)
     parser.add_argument('--first-stage-lr', type=float, default=1.)
     parser.add_argument('--final-window-blocks',type=int,default=20)
@@ -48,6 +49,11 @@ def main():
     shutil.copytree(upstream, run / 'source', ignore=shutil.ignore_patterns('__pycache__'))
     model_path=run/'source/track_1_short/model/gpt.py'
     model_source=model_path.read_text()
+    if args.ngram_multiplier!=1:
+        ngram_path=run/'source/track_1_short/ngram_table.py'
+        ngram_source=ngram_path.read_text();before='NGRAM_VOCAB_SIZE = 84_602_880'
+        assert ngram_source.count(before)==1
+        ngram_path.write_text(ngram_source.replace(before,f'NGRAM_VOCAB_SIZE = {84_602_880*args.ngram_multiplier}'))
     if args.model_dim!=768:
         # Preserve 128 channels per attention head and 64 per MUDD group.
         for before,after in [('MUDD_GROUPS = 12',f'MUDD_GROUPS = {args.model_dim//64}'),
