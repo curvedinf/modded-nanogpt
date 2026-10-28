@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T21:12:53.223714+00:00",
+  "utc": "2026-10-28T21:15:46.826570+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": "20261028T211234Z",
-  "current_hypothesis": "Single-factor KS3 projection rate0.75, original1053updates.",
+  "current_full_run": null,
+  "current_hypothesis": "Width768 FP8 cubic expert correctness/timing screen; matched effective ANVIL learning rate.",
   "planned_followups": [
     "Use full loss margin to decide next precision/rate or schedule test"
   ],
@@ -29,6 +29,8 @@
     "loss": 3.2765
   },
   "next_model_candidate": null,
-  "queued_screen": [],
+  "queued_screen": [
+    "fp8-width768-resumed-check"
+  ],
   "status": "active"
 }
