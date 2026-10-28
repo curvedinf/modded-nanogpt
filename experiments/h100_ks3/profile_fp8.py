@@ -17,8 +17,8 @@ def profiled_bench(function, **kwargs):
     global calls
     index = calls
     calls += 1
-    if index % 3 == 0:
-        kind = 'bf16' if index % 6 == 0 else 'fp8'
+    if index in (0, 3):
+        kind = 'bf16' if index == 0 else 'fp8'
         for _ in range(3):
             function()
         torch.cuda.synchronize()
@@ -28,7 +28,8 @@ def profiled_bench(function, **kwargs):
                 function()
             torch.cuda.synchronize()
         events = sorted(profile.events(), key=lambda e: e.self_device_time_total, reverse=True)
-        path = Path('research_results/wr_reproduction/h100-research') / f'{kind}-block-kernels.csv'
+        prefix = os.environ.get('KS3_FP8_PROFILE_PREFIX', '')
+        path = Path('research_results/wr_reproduction/h100-research') / f'{prefix}{kind}-block-kernels.csv'
         totals = {}
         for event in events:
             if event.device_type == torch.autograd.DeviceType.CUDA:
