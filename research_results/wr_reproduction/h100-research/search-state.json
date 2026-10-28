@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T20:28:03.619059+00:00",
+  "utc": "2026-10-28T20:30:07.461640+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": "20261028T202618Z",
-  "current_hypothesis": "Half initial batch with LR multiplier (4/8)^0.6, on best cubic FP8 KS3 and original attention.",
+  "current_full_run": null,
+  "current_hypothesis": "Await cubic fusion, cache-precision, and profile screens; original batch restored for subsequent full candidates.",
   "planned_followups": [
     "Collect scaled small-batch full validation; preserve original-batch incumbent unless faster and qualifying.",
     "Complete numerical and whole-block timing gates for queued variants.",
