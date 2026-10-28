@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 import shutil
+import math
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -18,6 +19,7 @@ def main():
     parser.add_argument('--drop-parallel-mlp', action='store_true')
     parser.add_argument('--dense-width', type=int, default=2816)
     parser.add_argument('--first-batch-units', type=int, choices=(4,8,12,16), default=8)
+    parser.add_argument('--first-stage-lr', type=float, default=1.)
     parser.add_argument('--final-window-blocks',type=int,default=20)
     parser.add_argument('--eval-probe-windows',default='')
     args = parser.parse_args()
@@ -25,6 +27,8 @@ def main():
         parser.error('screen updates must be nonnegative')
     if args.scheduled_steps <= 0:
         parser.error('scheduled steps must be positive')
+    if not math.isfinite(args.first_stage_lr) or args.first_stage_lr<=0:
+        parser.error('first-stage learning-rate multiplier must be positive and finite')
     if args.dense_width <= 0 or args.dense_width % 256:
         parser.error('dense width must be a positive multiple of 256')
     probe_windows=[int(v) for v in args.eval_probe_windows.split(',') if v]
@@ -54,12 +58,18 @@ def main():
         assert model_source.count('MLP_HIDDEN_DIM = 2816')==1
         model_source=model_source.replace('MLP_HIDDEN_DIM = 2816',f'MLP_HIDDEN_DIM = {args.dense_width}')
     model_path.write_text(model_source)
-    if args.first_batch_units != 8:
+    if args.first_batch_units != 8 or args.first_stage_lr != 1.:
         config_path=run/'source/track_1_short/config.py'
         config_source=config_path.read_text()
-        before='TrainingStage(duration=STAGE_DURATIONS[0], train_max_seq_len=896, batch_size=8 * 2048 * 8'
-        assert config_source.count(before)==1
-        config_path.write_text(config_source.replace(before,before.replace('batch_size=8 ',f'batch_size={args.first_batch_units} ')))
+        if args.first_batch_units != 8:
+            before='TrainingStage(duration=STAGE_DURATIONS[0], train_max_seq_len=896, batch_size=8 * 2048 * 8'
+            assert config_source.count(before)==1
+            config_source=config_source.replace(before,before.replace('batch_size=8 ',f'batch_size={args.first_batch_units} '))
+        if args.first_stage_lr != 1.:
+            before='window_sizes=(1, 3), lr_mul=1.0,'
+            assert config_source.count(before)==1
+            config_source=config_source.replace(before,f'window_sizes=(1, 3), lr_mul={args.first_stage_lr!r},')
+        config_path.write_text(config_source)
     if args.final_window_blocks!=20:
         config_path=run/'source/track_1_short/config.py'
         config_source=config_path.read_text();before='WS_POST_YARN_EXT = 20'

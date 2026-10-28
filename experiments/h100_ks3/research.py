@@ -86,6 +86,7 @@ def main():
     ap.add_argument('--drop-dense-layer',type=int,choices=(0,2,4));ap.add_argument('--dense-width',type=int,default=2816)
     ap.add_argument('--drop-parallel-mlp',action='store_true')
     ap.add_argument('--first-batch-units',type=int,choices=(4,8,12,16),default=8)
+    ap.add_argument('--first-stage-lr',type=float,default=1.)
     ap.add_argument('--final-window-blocks',type=int,default=20)
     ap.add_argument('--eval-probe-windows',default='')
     ap.add_argument('--env',action='append',default=[]);ap.add_argument('--profile',action='store_true')
@@ -108,6 +109,7 @@ def main():
     commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     cmd=[sys.executable,'-m','experiments.h100_ks3.prepare','--study','h100-research','--scheduled-steps',str(a.steps),'--screen-updates',str(a.screen_updates)]
     cmd.extend(['--dense-width',str(a.dense_width),'--first-batch-units',str(a.first_batch_units)])
+    cmd.extend(['--first-stage-lr',str(a.first_stage_lr)])
     cmd.extend(['--final-window-blocks',str(a.final_window_blocks),'--eval-probe-windows',a.eval_probe_windows])
     if a.drop_dense_layer is not None:cmd.extend(['--drop-dense-layer',str(a.drop_dense_layer)])
     if a.drop_parallel_mlp:cmd.append('--drop-parallel-mlp')
@@ -116,7 +118,7 @@ def main():
     custom=dict(TRAIN_SEED=str(a.seed),KS3_H100_OPT=a.variant,KS3_H100_TRANSPORT='codes',KS3_H100_PACK_ROWS='16')
     custom.update(dict(x.split('=',1) for x in a.env))
     settings=dict(utc=utc(),code_commit=commit,hypothesis=a.hypothesis,variant=a.variant,seed=a.seed,scheduled_steps=a.steps,
-                  drop_dense_layer=a.drop_dense_layer,drop_parallel_mlp=a.drop_parallel_mlp,dense_width=a.dense_width,first_batch_units=a.first_batch_units,
+                  drop_dense_layer=a.drop_dense_layer,drop_parallel_mlp=a.drop_parallel_mlp,dense_width=a.dense_width,first_batch_units=a.first_batch_units,first_stage_lr=a.first_stage_lr,
                   final_window_blocks=a.final_window_blocks,eval_probe_windows=a.eval_probe_windows,
                   environment=custom,profile=a.profile,screen_updates=a.screen_updates,validation_protocol='PR393 full final canonical mask, window extension and tail shipment')
     (run/'settings.json').write_text(json.dumps(settings,indent=2)+'\n')
