@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T22:32:29.590504+00:00",
+  "utc": "2026-10-28T22:32:36.403035+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,13 +18,13 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": null,
+  "current_full_run": "20261028T223229Z",
   "current_hypothesis": "Halve only sparse ngram weight decay at original floor 0.30.",
   "planned_followups": [
     "Immediately run three fresh frozen-code seeds after a qualifying control-beating result",
-    "Use the dense-width result to choose a capacity/time follow-up; triple ngram capacity is a prepared isolated alternative",
-    "Tail averaging diagnostic is complete and negative; retain the original coefficient",
-    "After verification, continue optimization until the extended deadline or a new stop"
+    "Test higher floor 0.40 if sparse-table decay does not qualify; lower floor 0.20 was worse",
+    "Retain the prepared low-batch extension redistribution as a separate schedule ablation",
+    "Stop launching new ablations for the final verification/evidence reserve; honor any new stop"
   ],
   "reference": {
     "run": "20261028T180502Z",
