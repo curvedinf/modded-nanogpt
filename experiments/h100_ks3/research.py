@@ -25,7 +25,7 @@ def terminal_comparison(result):
 def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 def append(name,data):
     RESULTS.mkdir(parents=True,exist_ok=True)
-    with (RESULTS/name).open('a') as f:f.write(json.dumps(dict(utc=utc(),**data))+'\n')
+    with (RESULTS/name).open('a') as f:f.write(json.dumps({'utc':utc(),**data})+'\n')
 def collect(run):
     settings=json.loads((run/'settings.json').read_text())
     text=(run/'console.log').read_text(errors='replace')
@@ -64,8 +64,18 @@ def main():
     ap.add_argument('--drop-dense-layer',type=int,choices=(0,2,4));ap.add_argument('--dense-width',type=int,default=2816)
     ap.add_argument('--first-batch-units',type=int,choices=(4,8,12,16),default=8)
     ap.add_argument('--env',action='append',default=[]);ap.add_argument('--profile',action='store_true')
-    ap.add_argument('--collect',type=Path);a=ap.parse_args()
+    ap.add_argument('--collect',type=Path);ap.add_argument('--adopt',type=Path);a=ap.parse_args()
     if a.collect:collect(a.collect);return
+    if a.adopt:
+        run=a.adopt;pid=int((run/'launcher.pid').read_text());settings=json.loads((run/'settings.json').read_text())
+        append('registry.jsonl',dict(kind='adopt',run_id=run.name,status='running',pid=pid,**settings))
+        while not (run/'exit_code.txt').exists():
+            if any((d/'STOP').exists() for d in (STATE,RESULTS)):
+                os.killpg(pid,signal.SIGTERM)
+                append('registry.jsonl',dict(kind='stop',run_id=run.name,status='stopped'))
+                return
+            time.sleep(2)
+        collect(run);return
     if not a.hypothesis:ap.error('--hypothesis is required for a new experiment')
     if any((p/'STOP').exists() for p in (STATE,RESULTS)):raise SystemExit('New study STOP is present')
     dirty=subprocess.check_output(['git','status','--porcelain','--','experiments/h100_ks3','wr_reproduction','ks3_research'],cwd=ROOT,text=True)
