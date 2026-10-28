@@ -1,0 +1,146 @@
+[
+  {
+    "cache": "BRJKDHF33LYNWMV4FE7DCBKGZTY33I4PY4UHQ7CO3K23BLWLQAUA",
+    "num_warps": 8,
+    "shared_bytes": 180248,
+    "descriptor_blocks": [
+      [
+        128,
+        128
+      ],
+      [
+        128,
+        128
+      ],
+      [
+        128,
+        64
+      ],
+      [
+        64,
+        128
+      ]
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:255 STACK:1096 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  },
+  {
+    "cache": "ULWO7FLH3LW3MPEVBKQOYORKRLSWLDSK2W66YEQOLLJ4ORVINQJA",
+    "num_warps": 8,
+    "shared_bytes": 204824,
+    "descriptor_blocks": [
+      [
+        64,
+        128
+      ],
+      [
+        256,
+        128
+      ],
+      [
+        64,
+        128
+      ],
+      [
+        128,
+        64
+      ]
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:255 STACK:1168 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  },
+  {
+    "cache": "F4BPMKUXW32SDBJYJECZSWOA5M3AEYJUTTMD3VLMQHLV6T4TPSMA",
+    "num_warps": 4,
+    "shared_bytes": 110616,
+    "descriptor_blocks": [
+      [
+        64,
+        128
+      ],
+      [
+        128,
+        128
+      ],
+      [
+        64,
+        64
+      ],
+      [
+        64,
+        64
+      ]
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:255 STACK:1168 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  },
+  {
+    "cache": "VQO3CSSB774MZU2AUW6YZB7OG7SQOPTSNUUGM5EPQ7ADKRHEPP2A",
+    "num_warps": 8,
+    "shared_bytes": 180248,
+    "descriptor_blocks": [
+      [
+        128,
+        128
+      ],
+      [
+        128,
+        128
+      ],
+      [
+        128,
+        64
+      ],
+      [
+        64,
+        128
+      ]
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:255 STACK:1096 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  },
+  {
+    "cache": "IR6YM5JBUYTU5IQD3KKVBXCCFTTD7XZTDKP2M2FCQCO3ZHCL5DYQ",
+    "num_warps": 8,
+    "shared_bytes": 204824,
+    "descriptor_blocks": [
+      [
+        64,
+        128
+      ],
+      [
+        256,
+        128
+      ],
+      [
+        64,
+        128
+      ],
+      [
+        128,
+        64
+      ]
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:255 STACK:1168 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  },
+  {
+    "cache": "FLWGDXXMF4RXRZK6T25RH6BBQKJGHYTU6VQUDK5ITQ6I5B4URETA",
+    "num_warps": 4,
+    "shared_bytes": 110616,
+    "descriptor_blocks": [
+      [
+        64,
+        128
+      ],
+      [
+        128,
+        128
+      ],
+      [
+        64,
+        64
+      ],
+      [
+        64,
+        64
+      ]
+    ],
+    "resource_usage": "Resource usage:\n Common:\n  GLOBAL:0\n Function kernel:\n  REG:255 STACK:1168 SHARED:1024 LOCAL:0 CONSTANT[0]:1376 TEXTURE:0 SURFACE:0 SAMPLER:0"
+  }
+]
