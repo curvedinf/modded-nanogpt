@@ -18,7 +18,7 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": null,
+  "current_full_run": "20261028T231408Z",
   "current_hypothesis": "Add two late growth updates to the closest fast KS3 recipe; use the newly accepted local mean31.07925s. User watches meter.",
   "planned_followups": [
     "Prioritize +2 and +4 late-update extensions requested by the user",
@@ -35,7 +35,7 @@
   },
   "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2_plus2.json",
   "queued_screen": [],
-  "status": "resuming_ks3_after_user_finalized_calibration",
+  "status": "ks3_running",
   "near_target": {
     "run": "20261028T221144Z",
     "seconds": 31.040519882,
