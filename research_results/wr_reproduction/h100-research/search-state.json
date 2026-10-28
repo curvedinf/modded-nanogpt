@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T21:38:04.542817+00:00",
+  "utc": "2026-10-28T21:39:55.218851+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,12 +18,12 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": null,
-  "current_hypothesis": "Increase common LR by12.5% on the30.33s512/1536 growth196 recipe",
+  "current_full_run": "20261028T213805Z",
+  "current_hypothesis": "SharedLR1.125 at512/1536 growth196, against measured30.330s/3.28787 parent",
   "planned_followups": [
-    "If speed/quality tradeoff is promising, one directed schedule/rate follow-up",
-    "Otherwise tune cubic geometry around the existing768-wide qualifying parent",
-    "Reserve final10minutes for qualifying three-seed replication and preservation"
+    "If this beats the31.099s control at<=3.28, run three fresh independent seeds immediately",
+    "Otherwise short512/1536 kernel screen:128x128,64x128, fused-up128x128, current128x256 reference",
+    "Only faster numerically checked kernels receive a full WR trial"
   ],
   "reference": {
     "run": "20261028T180502Z",
