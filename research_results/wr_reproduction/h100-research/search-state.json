@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T20:50:54.972369+00:00",
+  "utc": "2026-10-28T20:56:39.519755+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": "20261028T205032Z",
-  "current_hypothesis": "Full1053 updates; dense width2304 instead of2816; unchanged1024-chart cubic FP8 KS3 experts, original LR and attention.",
+  "current_full_run": null,
+  "current_hypothesis": "Screen fused cubic moment reduction against the incumbent unfused block.",
   "planned_followups": [
     "Measure dense-width2304 single-factor full WR ablation.",
     "Freeze and run three fresh seeds if a qualifying configuration beats31.099s."
@@ -30,5 +30,9 @@
     "loss": 3.2765
   },
   "next_model_candidate": "Narrow original dense branches while retaining every KS3 expert site and full data schedule.",
-  "queued_screen": []
+  "queued_screen": [
+    "moments-64x128-s1",
+    "moments-128x128-s1",
+    "moments-unfused-control"
+  ]
 }
