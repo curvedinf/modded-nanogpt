@@ -13,9 +13,12 @@ def main():
     parser.add_argument('--screen-updates', type=int, default=0)
     parser.add_argument('--profile', action='store_true')
     parser.add_argument('--study', default='h100-ks3')
+    parser.add_argument('--scheduled-steps', type=int, default=981)
     args = parser.parse_args()
     if args.screen_updates < 0:
         parser.error('screen updates must be nonnegative')
+    if args.scheduled_steps <= 0:
+        parser.error('scheduled steps must be positive')
     upstream = ROOT / 'wr_reproduction/pr393/upstream'
     manifest = json.loads((upstream.parent / 'source_manifest.json').read_text())
     for name, digest in manifest['files'].items():
@@ -32,6 +35,9 @@ def main():
     marker = '            uncompiled_model.complete_yarn_tables()'
     assert source.count(marker) == 1
     source = source.replace(marker, '            # Refresh KS3 from final shipped weights, on the training clock.\n            uncompiled_model.prepare_ks3_eval()\n' + marker)
+    marker = '            # CPLM diagnostics (token-averaged over all ranks)'
+    assert source.count(marker) == 1
+    source = source.replace(marker, '            print0(f"[wr-result] steps:{step} loss:{val_loss:.9f} seconds:{training_time_ms/1000:.9f}", console=True)\n' + marker)
     if args.screen_updates:
         marker = '        last_step = (step == training_schedule.total_steps)'
         assert source.count(marker) == 1
@@ -66,7 +72,7 @@ export LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH:-}
 export LOCAL_KERNELS=devenpzak/flash-attn3-12864=/root/venvs/pr393-fa3-pinned
 export DATA_PATH=/root/modded-nanogpt
 export PYTHONPATH="$(pwd)/../overlay"
-unset NUM_SCHEDULED_ITERATIONS
+export NUM_SCHEDULED_ITERATIONS=__SCHEDULED_STEPS__
 nvidia-smi > ../gpu-environment.txt
 uv pip freeze --python /root/venvs/pr393-h100/bin/python > ../packages.txt
 set +e
@@ -75,7 +81,7 @@ result=$?
 printf '%s\\n' "$result" > ../exit_code.txt
 exit "$result"
 '''
-    (run / 'launch.sh').write_text(script)
+    (run / 'launch.sh').write_text(script.replace('__SCHEDULED_STEPS__',str(args.scheduled_steps)))
     (run / 'launch.sh').chmod(0o755)
     print(run / 'launch.sh')
 

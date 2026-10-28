@@ -7,6 +7,7 @@ from wr_reproduction import ks3_moe as core,ks3_bf16_gemm as matrix
 from wr_reproduction.ks3_bf16_gather import gather
 
 VARIANT='fused';PACK_INPUT=False;FUSE_VJP=False;FUSE_DX=False;SEPARATE=False;PREPARE=False;FAST_GATE=False;VJP_ROWS=64
+FAST_TANH_FORWARD=False;FAST_TANH_BACKWARD=False
 ORIGINAL_ROUTED=core.RoutedKS3
 
 def tiles(m,n):return (128,128,64,8,3) if m<=32768 else (64,256,64,8,4)
@@ -37,6 +38,8 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
     if SEPARATE:
         c=mm(x,w,table)
         from wr_reproduction.ks3_prepared_geometry import _geometry_prepared
+        if FAST_TANH_FORWARD:
+            from experiments.h100_ks3.native_geometry import _geometry_prepared
         _geometry_prepared[(tr.cdiv(m,64),32)](c,g,h,table,m,n,BM=64,RANK=1,num_warps=4,PREPARED=prepared)
     else:
         gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](rows if PACK_INPUT else x,w,c,table,m,n,d,*w.stride(),bm,bn,bk,1,G=g,H=h,SRC=src,ROWS=rows.shape[0],PACK_INPUT=PACK_INPUT,XPACK=x,PREPARED=prepared if PREPARE else None,num_warps=nw,num_stages=st)
@@ -65,6 +68,8 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,x:torch.Tensor,c:torch.Tensor
         v=mm(gg,down,table);part=torch.empty(tr.cdiv(m,bm),n,8,device=c.device)
         if PREPARE:
             from wr_reproduction.ks3_prepared_geometry import _vjp_prepared
+            if FAST_TANH_BACKWARD:
+                from experiments.h100_ks3.native_geometry import _vjp_prepared
             _vjp_prepared[(tr.cdiv(m,bm),32)](v,c,g,dc,part,table,src,m,n,grad.shape[0],BM=bm,RANK=1,num_warps=4,PREPARED=prepared)
         else:core._vjp[(tr.cdiv(m,bm),32)](v,c,g,dc,part,table,src,m,n,grad.shape[0],BM=bm,RANK=1,num_warps=4)
     dg=torch.empty_like(g);core._reduce[(8,n)](part,dg,offs,n,part.shape[0],tr.next_power_of_2(part.shape[0]),BM=bm,RANK=1,num_warps=4)
@@ -108,10 +113,13 @@ class Routed(torch.autograd.Function):
         return (result,dl.T@rows,(ds*gate).sum().to(post.dtype).reshape(post.shape),None,None,None,None,dg,None,None,None)[:ctx.argument_count]
 
 def install(variant='fused'):
-    global VARIANT,PACK_INPUT,FUSE_VJP,FUSE_DX,PREPARE,FAST_GATE,VJP_ROWS,SEPARATE
+    global VARIANT,PACK_INPUT,FUSE_VJP,FUSE_DX,PREPARE,FAST_GATE,VJP_ROWS,SEPARATE,FAST_TANH_FORWARD,FAST_TANH_BACKWARD
     VARIANT=variant;PACK_INPUT='input' in variant;FUSE_VJP='vjp' in variant;FUSE_DX='dx' in variant
     SEPARATE='separate' in variant
     PREPARE='prepared' in variant;FAST_GATE='gate' in variant;VJP_ROWS=128 if '128' in variant else 64
+    FAST_TANH_BACKWARD='tanh' in variant;FAST_TANH_FORWARD=FAST_TANH_BACKWARD and 'tanhb' not in variant
+    if FAST_TANH_BACKWARD and not (PREPARE and SEPARATE and not FUSE_VJP):
+        raise ValueError('Native tanh variants require separate prepared geometry')
     matrix.run=mm;matrix.dw=dw
     if variant=='tiles':core.RoutedKS3=ORIGINAL_ROUTED
     elif variant=='gather':
