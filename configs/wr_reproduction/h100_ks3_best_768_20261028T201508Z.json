@@ -1,0 +1,43 @@
+{
+  "name": "h100-pr393-ks3-fp8-cubic-tail-20261028",
+  "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947",
+  "architecture": "PR393; all five MoE sites use1024 independent rank-one cubic KS3 charts. Native FP8 training, original GS32/BF16 validation; warp coefficients remain zero and frozen.",
+  "geometry_optimizer": {
+    "adam_betas": [
+      0.9,
+      0.99
+    ],
+    "lr_multiplier": 0.125
+  },
+  "geometry_averaging": "Replicated geometry follows original MoE tail-average and bank-blend ticks and rates; no geometry norm rescaling.",
+  "environment": {
+    "TRAIN_SEED": "413",
+    "KS3_H100_OPT": "fp8-native",
+    "KS3_H100_TRANSPORT": "fp8",
+    "KS3_H100_PACK_ROWS": "16",
+    "TRITON_PTXAS_PATH": "/root/venvs/h100-ptxas-13.3/ptxas",
+    "KS3_H100_RANK": "1",
+    "KS3_FP8_CUBIC": "1",
+    "KS3_FP8_DW": "tma",
+    "KS3_FP8_MM": "tma",
+    "KS3_FP8_MM_TILE": "128x256",
+    "KS3_FP8_GATHER": "tiled",
+    "KS3_FP8_VJP_ROWS": "128",
+    "KS3_FP8_VJP_WARPS": "4",
+    "KS3_FP8_TMA_STORES": "1",
+    "KS3_FP8_PACKED_TRANSPORT": "1",
+    "KS3_FP8_LAYOUT_TILE": "64",
+    "KS3_FP8_TMA_OUTPUTS": "1",
+    "KS3_H100_GEOMETRY_TAIL": "1",
+    "KS3_H100_FUSED_ANVIL": "1"
+  },
+  "selected_run": "20261028T201508Z",
+  "seed_for_reported_result": 413,
+  "selection_criterion": "Fastest completed H100 KS3 full WR run meeting<=3.28 so far; one seed",
+  "measured_seconds": 32.829785293,
+  "measured_validation_loss": 3.27920723,
+  "validation_tokens": 10485760,
+  "scheduled_steps": 981,
+  "total_steps": 1053,
+  "statistical_scope": "One full run at seed413, not independent-seed statistical qualification"
+}

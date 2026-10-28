@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T21:35:16.318819+00:00",
+  "utc": "2026-10-28T21:38:04.542817+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -13,13 +13,13 @@
     "server has a couple of hours from user time-limit message"
   ],
   "best_ks3": {
-    "run": "20261028T201508Z",
-    "seconds": 32.829785293,
-    "loss": 3.27920723,
-    "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
+    "run": "20261028T213503Z",
+    "seconds": 31.619848452,
+    "loss": 3.278548479,
+    "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": "20261028T213503Z",
-  "current_hypothesis": "Add40lateupdates to512/1536 model for a faster qualifyingKS3 point",
+  "current_full_run": null,
+  "current_hypothesis": "Increase common LR by12.5% on the30.33s512/1536 growth196 recipe",
   "planned_followups": [
     "If speed/quality tradeoff is promising, one directed schedule/rate follow-up",
     "Otherwise tune cubic geometry around the existing768-wide qualifying parent",
