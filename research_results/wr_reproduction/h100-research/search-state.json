@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T21:08:50.416209+00:00",
+  "utc": "2026-10-28T21:09:34.671437+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,11 +18,10 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": null,
-  "current_hypothesis": "Test KS3 projection learning-rate multiplier1.25 from the qualifying FP8 cubic parent; seek quality margin before shortening again.",
+  "current_full_run": "20261028T210928Z",
+  "current_hypothesis": "KS3 projection learning-rate multiplier1.25 from qualifying cubic FP8 parent; full1053steps.",
   "planned_followups": [
-    "768-wide kernel regression after dimension-generalization refactor",
-    "Full PR393 KS3 projection-rate1.25 ablation"
+    "Use full loss margin to decide next precision/rate or schedule test"
   ],
   "reference": {
     "run": "20261028T180502Z",
