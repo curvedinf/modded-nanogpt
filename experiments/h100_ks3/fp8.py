@@ -21,6 +21,8 @@ V_DTYPE={'float32':torch.float32,'float16':torch.float16}[os.environ.get('KS3_FP
 FUSE_GEOMETRY=os.environ.get('KS3_FP8_FUSE_GEOMETRY','0')=='1'
 MM_IMPL=os.environ.get('KS3_FP8_MM','pointer')
 PACKED_TRANSPORT=os.environ.get('KS3_FP8_PACKED_TRANSPORT','0')=='1'
+LAYOUT_TILE=int(os.environ.get('KS3_FP8_LAYOUT_TILE','0'))
+assert LAYOUT_TILE in (0,32,64,128)
 assert MM_IMPL in ('pointer','tma')
 assert DW_IMPL in ('legacy','tma') and VJP_ROWS in (32,64,128)
 assert VJP_WARPS in (4,8) and GATHER_IMPL in ('legacy','tiled')
@@ -180,7 +182,11 @@ def attach(base):
         @torch.no_grad()
         def build_moe_cols(self):
             n=self.ks3_up.shape[-2]
-            layouts[(tr.cdiv(n*768,1024),80)](self.ks3_fp8_transport,self.ks3_f8_up,self.ks3_f8_up_t,self.ks3_f8_down,self.ks3_f8_down_t,n,PACK_SCALE=PACKED_TRANSPORT,SCALE_OUT=self.ks3_weight_scales,num_warps=4)
+            if LAYOUT_TILE:
+                from experiments.h100_ks3.weight_layouts import build
+                build(self.ks3_fp8_transport,self.ks3_f8_up,self.ks3_f8_up_t,self.ks3_f8_down,self.ks3_f8_down_t,n,self.ks3_weight_scales,packed=PACKED_TRANSPORT,tile=LAYOUT_TILE)
+            else:
+                layouts[(tr.cdiv(n*768,1024),80)](self.ks3_fp8_transport,self.ks3_f8_up,self.ks3_f8_up_t,self.ks3_f8_down,self.ks3_f8_down_t,n,PACK_SCALE=PACKED_TRANSPORT,SCALE_OUT=self.ks3_weight_scales,num_warps=4)
         def _moe(self,layer,normed,weights,post):
             if not self.training:return super()._moe(layer,normed,weights,post)
             k=MOE_INDEX[layer];w1,w2,router=weights[k];rows=normed.reshape(-1,768)

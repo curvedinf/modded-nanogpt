@@ -3,7 +3,9 @@ import datetime,json,os,statistics
 from pathlib import Path
 import torch
 import torch.distributed as dist
+import triton.testing as testing
 from experiments.h100_ks3.fp8_kernels import publish,layouts
+from experiments.h100_ks3.weight_layouts import build
 
 
 def main():
@@ -25,10 +27,13 @@ def main():
         sw=dist.all_gather_into_tensor(scale,scale[lo:hi],async_op=True)
         work.wait();sw.wait()
         layouts[(n*d//1024,80)](q,*baseline_outputs,n,num_warps=4)
-    def combined():
+    def convert(tile=0):
+        if tile:build(packed,*packed_outputs,n,out_scale,packed=True,tile=tile)
+        else:layouts[(n*d//1024,80)](packed,*packed_outputs,n,PACK_SCALE=True,SCALE_OUT=out_scale,num_warps=4)
+    def combined(tile=0):
         publish[(n*d//4096,10)](bank,packed,scale,partial,lo,n,PACK_SCALE=True,num_warps=4)
         dist.all_gather_into_tensor(packed.view(torch.uint8),packed[lo:hi].view(torch.uint8))
-        layouts[(n*d//1024,80)](packed,*packed_outputs,n,PACK_SCALE=True,SCALE_OUT=out_scale,num_warps=4)
+        convert(tile)
     original();combined()
     assert torch.equal(q.view(torch.uint8),packed[:,:n*d].view(torch.uint8))
     assert torch.equal(scale,out_scale)
@@ -42,11 +47,25 @@ def main():
         end.record();end.synchronize()
         value=torch.tensor(start.elapsed_time(end)/30,device='cuda');dist.all_reduce(value,op=dist.ReduceOp.MAX)
         return float(value)
-    pairs=[[measure(original),measure(combined)] for _ in range(3)]
+    def layout_time(fn):
+        dist.barrier()
+        value=torch.tensor(testing.do_bench_cudagraph(fn,rep=30),device='cuda')
+        dist.all_reduce(value,op=dist.ReduceOp.MAX)
+        return float(value)
+    cases=[]
+    for tile in (0,32,64,128):
+        combined(tile)
+        assert torch.equal(scale,out_scale)
+        assert all(torch.equal(a.view(torch.uint8),b.view(torch.uint8)) for a,b in zip(baseline_outputs,packed_outputs))
+        pairs=[[measure(original),measure(lambda:combined(tile))] for _ in range(3)]
+        layout_pairs=[[layout_time(lambda:convert(0)),layout_time(lambda:convert(tile))] for _ in range(3)]
+        cases.append(dict(tile=tile,bitwise=True,paired_ms=pairs,layout_only_paired_ms=layout_pairs,
+                          baseline_median_ms=statistics.median(v[0] for v in pairs),candidate_median_ms=statistics.median(v[1] for v in pairs)))
+        if rank==0:print(json.dumps(cases[-1]),flush=True)
     if rank==0:
         result=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),ranks=8,bitwise_weights_scales_and_all_dual_layouts=True,
-                    payload_ratio=(n*d+64)/(n*d),paired_ms=pairs,baseline_median_ms=statistics.median(v[0] for v in pairs),packed_median_ms=statistics.median(v[1] for v in pairs))
-        Path('research_results/wr_reproduction/h100-research/fp8-packed-transport.json').write_text(json.dumps(result,indent=2)+'\n')
+                    payload_ratio=(n*d+64)/(n*d),cases=cases)
+        Path('research_results/wr_reproduction/h100-research/fp8-weight-layouts.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(result),flush=True)
     dist.destroy_process_group()
 
