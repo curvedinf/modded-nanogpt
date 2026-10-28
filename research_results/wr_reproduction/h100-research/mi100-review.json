@@ -1,0 +1,49 @@
+{
+  "utc": "2026-10-28T19:07:07.330444+00:00",
+  "event": "mi100_ablation_review",
+  "verified_incumbent": {
+    "recipe": "1024-chart rank-one GS32/BF16 experts, FP16 nonlinearities, geometry Adam .125, original PR393 other hyperparameters",
+    "v1_mean_loss": 3.300327936808268,
+    "v1_sample_std": 0.0006624104570815424,
+    "evaluation": "Old raw-weight protocol; not numerically comparable to current H100 WR final evaluation"
+  },
+  "findings": [
+    {
+      "finding": "Earlier projection-rate, width and rank candidates were often rejected using the now-obsolete stochastic training proxy. These are not reliable evidence against retesting under full H100 WR conditions.",
+      "examples": [
+        "research/ks3-bf16-tuned-c768-20261025T062506-2d8ff9-result.json",
+        "research/ks3-bf16-shared-fp8-projlr125-20261025T124309-f9d231-result.json"
+      ]
+    },
+    {
+      "finding": "Five dense-site KS3 substitutions at width2816 all failed later fixed-text screening. Layer8 survived longest, to approximately720s. Avoid combining these unchanged recipes as an initial direction.",
+      "source": "probe-study/protocol-v2/placement-layer8-summary.json"
+    },
+    {
+      "finding": "All-product prepared FP8 improved MI100 prefix time by2.5% but failed a later compatible probe by+.0354. H100 hardware may change the time benefit; preserve exact precision/error evidence and require full validation.",
+      "source": "probe-study/protocol-v2/fp8-prepared-discovery-summary.json"
+    },
+    {
+      "finding": "At one measured checkpoint, removing the cubic spine worsened CE by.03376 while removing the warp changed CE byonly.000107. This motivates cheaper geometry variants but is not retraining evidence.",
+      "source": "probe-study/protocol-v2/geometry-effect-diagnostic-summary.json"
+    },
+    {
+      "finding": "Pairwise and sparse interactions did not produce a validated winner; backward-kernel numerical changes can perturb later trajectories. Prefer targeted efficiency experiments before increasing geometric complexity.",
+      "sources": [
+        "probe-study/protocol-v2/pairwise-b1-discovery-summary.json",
+        "probe-study/protocol-v2/sparse-interactions-discovery-summary.json"
+      ]
+    },
+    {
+      "finding": "H100 inspection shows prepared geometry VJP PTX uses exp-based tanh sequences, with no tanh.approx instructions. Native H100 tanh is a candidate pending full-run profile and correctness/microbenchmark gates.",
+      "evidence": "Inspected compiled _vjp_prepared.ptx in local Triton cache"
+    }
+  ],
+  "next_hypotheses": [
+    "Profile complete H100 training and validation to rank time costs",
+    "If geometry remains material: native H100 tanh approximation, then simplified warp or cubic-only geometry",
+    "Revisit narrower experts and projection/geometry learning rates under true WR validation",
+    "Consider native H100 FP8 KS3 with measured error/performance tradeoff",
+    "Shorten schedule only when measured loss margin supports it; verify promising winners across fresh seeds"
+  ]
+}
