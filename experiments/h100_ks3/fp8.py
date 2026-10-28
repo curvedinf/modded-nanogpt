@@ -56,6 +56,9 @@ def mm(a,w,table,sa,sw,dtype=torch.float32,mode=0,**kw):
 def dw(a,b,out,offs,sa,sb,flag):
     e,h,d=out.shape
     if DW_IMPL=='tma':
+        if os.environ.get('KS3_FP8_DW_TILE'):
+            from experiments.h100_ks3.tma_dw import run
+            return run(a,b,out,offs,sa,sb,flag)
         from track_1_short.perf.kernels.moe_mlp import _grouped_weight_grad_impl
         _grouped_weight_grad_impl(a,b,offs,sa,sb,e,out.view(e*h,d),flag)
         return
