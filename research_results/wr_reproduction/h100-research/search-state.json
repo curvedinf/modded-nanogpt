@@ -18,8 +18,8 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": null,
-  "current_hypothesis": "Trade dense2304/KS31536 for dense1792/KS32048 at unchanged total active width3840 and1255updates; correctness/micro checks first.",
+  "current_full_run": "20261028T234107Z",
+  "current_hypothesis": "Dense1792/KS32048 fixed-active-width capacity trade at1255updates on seed701",
   "planned_followups": [
     "Finish growth254: two extra updates after30.955472743s/3.280070305 near miss",
     "If full WR loss<=3.28 and time<31.07925s, freeze and run three fresh independent seeds without comparative pruning",
@@ -34,7 +34,7 @@
   },
   "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2_plus2.json",
   "queued_screen": [],
-  "status": "optimizing_after_failed_fresh_verification",
+  "status": "ks3_running",
   "near_target": {
     "run": "20261028T232455Z",
     "seconds": 30.955472743,

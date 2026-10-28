@@ -42,7 +42,7 @@
   "model_dim": 512,
   "dense_width": 1792,
   "growth_steps": 254,
-  "status": "shape_checks_passed_ready_full_run",
+  "status": "loss_target_met_time_target_missed",
   "effective_ks3_shape_factor": {
     "target": 1.1547005383792515,
     "raw": 2.0,
@@ -53,5 +53,9 @@
   "shape_evidence": [
     "research_results/wr_reproduction/h100-research/model512-expert2048-enabled-check.json",
     "research_results/wr_reproduction/h100-research/model512-dense1792-expert2048-optimizer.json"
-  ]
+  ],
+  "run_id": "20261028T234107Z",
+  "official_seconds": 32.234487602,
+  "validation_loss": 3.278320312,
+  "code_commit": "449d6da3fc00851091c3e57786a32f46503f7a8f"
 }
