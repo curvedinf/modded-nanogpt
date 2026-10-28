@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T22:43:07.966566+00:00",
+  "utc": "2026-10-28T22:43:23.608572+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,7 +18,7 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": null,
+  "current_full_run": "20261028T224308Z",
   "current_hypothesis": "Increase only KS3 projection rate by 20%, preserving all other rates.",
   "planned_followups": [
     "Immediately run three fresh frozen-code seeds after a qualifying control-beating result",

@@ -18,6 +18,7 @@ GS32=os.environ.get('KS3_H100_GS32','1')=='1'
 DW_IMPL=os.environ.get('KS3_FP8_DW','legacy')
 VJP_ROWS=int(os.environ.get('KS3_FP8_VJP_ROWS','128'))
 VJP_WARPS=int(os.environ.get('KS3_FP8_VJP_WARPS','4'))
+VJP_COLS=int(os.environ.get('KS3_FP8_VJP_COLS','32'))
 GATHER_IMPL=os.environ.get('KS3_FP8_GATHER','legacy')
 TMA_STORES=os.environ.get('KS3_FP8_TMA_STORES','0')=='1'
 V_DTYPE={'float32':torch.float32,'float16':torch.float16}[os.environ.get('KS3_FP8_V_DTYPE','float32')]
@@ -40,6 +41,7 @@ assert not (DPRE_E4M3 and FUSE_CUBIC_VJP), 'E4M3 dpre uses the separate checked 
 assert LAYOUT_TILE in (0,32,64,128)
 assert MM_IMPL in ('pointer','tma')
 assert DW_IMPL in ('legacy','tma') and VJP_ROWS in (32,64,128)
+assert VJP_COLS in (32,64,128)
 assert VJP_WARPS in (4,8) and GATHER_IMPL in ('legacy','tiled')
 
 def store_descriptors(row_major,column_major,rows,cols=32):
@@ -142,9 +144,9 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
     else:
         v=mm(gg,down,table,gs,ws,dtype=V_DTYPE)
         dc=torch.empty(m,n,device=c.device,dtype=DPRE_DTYPE);dct=torch.empty(n,m,device=c.device,dtype=dc.dtype)
-        part=torch.empty(tr.cdiv(m,bm),n,4 if COMPACT_PART else 8,device=c.device);maxima=torch.empty(tr.cdiv(m,bm)*tr.cdiv(n,32),device=c.device)
-        dcd,dctd=store_descriptors(dc,dct,bm)
-        _vjp_prepared[(tr.cdiv(m,bm),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=bm,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=CUBIC_ONLY,COMPACT_PART=COMPACT_PART,DPRE_E4M3=DPRE_E4M3,num_warps=VJP_WARPS)
+        part=torch.empty(tr.cdiv(m,bm),n,4 if COMPACT_PART else 8,device=c.device);maxima=torch.empty(tr.cdiv(m,bm)*tr.cdiv(n,VJP_COLS),device=c.device)
+        dcd,dctd=store_descriptors(dc,dct,bm,VJP_COLS)
+        _vjp_prepared[(tr.cdiv(m,bm),tr.cdiv(n,VJP_COLS))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=bm,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=CUBIC_ONLY,COMPACT_PART=COMPACT_PART,DPRE_E4M3=DPRE_E4M3,BC=VJP_COLS,num_warps=VJP_WARPS)
     torch.maximum(da,maxima.amax(),out=da)
     dg=torch.empty_like(g)
     if COMPACT_PART:

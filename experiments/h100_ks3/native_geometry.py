@@ -81,9 +81,9 @@ def _geometry_prepared(C,G,H,TILES,M:tl.constexpr,N:tl.constexpr,HT=None,SCALE=N
         tl.store(H+rows[:,None]*N+cols[None,:],out,(rows[:,None]<M)&valid[None,:])
 
 @tr.jit
-def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.constexpr,DCT=None,SCALE=None,AMAX=None,FP8:tl.constexpr=False,PARTIAL_AMAX:tl.constexpr=False,BM:tl.constexpr=64,RANK:tl.constexpr=1,NATIVE_OUT=None,NATIVE_T=None,PREPARED=None,DC_DESC=None,DCT_DESC=None,CUBIC_ONLY:tl.constexpr=False,COMPACT_PART:tl.constexpr=False,DPRE_E4M3:tl.constexpr=False):
+def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.constexpr,DCT=None,SCALE=None,AMAX=None,FP8:tl.constexpr=False,PARTIAL_AMAX:tl.constexpr=False,BM:tl.constexpr=64,RANK:tl.constexpr=1,NATIVE_OUT=None,NATIVE_T=None,PREPARED=None,DC_DESC=None,DCT_DESC=None,CUBIC_ONLY:tl.constexpr=False,COMPACT_PART:tl.constexpr=False,DPRE_E4M3:tl.constexpr=False,BC:tl.constexpr=32):
     tl.static_assert(not COMPACT_PART or (CUBIC_ONLY and RANK==1))
-    rows=tl.program_id(0)*BM+tl.arange(0,BM);cols=tl.program_id(1)*32+tl.arange(0,32)
+    rows=tl.program_id(0)*BM+tl.arange(0,BM);cols=tl.program_id(1)*BC+tl.arange(0,BC)
     e=tl.load(TILES+tl.program_id(0)*BM//128);mask=(rows[:,None]<M)&(cols[None,:]<N)
     real=tl.load(SRC+rows,rows<M,other=ROWS)<ROWS
     value=tl.load(V+rows[:,None]*N+cols[None,:],mask,other=0.).to(tl.float32)
@@ -101,7 +101,7 @@ def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.
     cubic=2*c0-2*c1+c2+c3;quadratic=-3*c0+3*c1-2*c2-c3
     spine=((cubic*t+quadratic)*t+c2)*t+c0
     if CUBIC_ONLY:
-        warped=tl.full((BM,32),0.,tl.float32);dz=warped
+        warped=tl.full((BM,BC),0.,tl.float32);dz=warped
     else:
         z=native_tanh(scale[None,:]*(t+shift[None,:]))
         warped=((4*c5*z+2*c4)*z-3*c5)*z-c4
@@ -125,7 +125,7 @@ def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.
             if NATIVE_T is not None:tl.store(NATIVE_T+cols[None,:]*M+rows[:,None],native,mask)
         largest=tl.max(tl.max(tl.abs(dc),1),0)
         if PARTIAL_AMAX:
-            tl.store(AMAX+tl.program_id(0)*tl.cdiv(N,32)+tl.program_id(1),largest)
+            tl.store(AMAX+tl.program_id(0)*tl.cdiv(N,BC)+tl.program_id(1),largest)
         else:tl.atomic_max(AMAX,largest)
     else:out=dc
     if DC_DESC is not None:
