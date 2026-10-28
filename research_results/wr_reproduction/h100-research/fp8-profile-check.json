@@ -1,0 +1,75 @@
+{
+  "utc": "2026-10-28T19:29:49.888288+00:00",
+  "packing": {
+    "dual_layouts_bitwise": true,
+    "torch_rounding_different_elements": 0,
+    "elements": 62914560
+  },
+  "oracle": [
+    {
+      "tokens": 16384,
+      "projection_relative_rms": 0.00044083784450776875,
+      "weight_gradient_relative_rms": 0.0017971296329051256,
+      "accumulated_gradient_relative_rms": 0.0017971296329051256
+    }
+  ],
+  "cases": [
+    {
+      "tokens": 16384,
+      "producers": {
+        "input": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "gathered_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        }
+      },
+      "errors_versus_bf16": {
+        "output": 0.058065079152584076,
+        "dx": 0.08787806332111359,
+        "router": 0.05910433828830719,
+        "post": 0.09842866659164429,
+        "geometry": 0.08785805851221085,
+        "weights": 0.08422486484050751
+      },
+      "timing": {
+        "bf16": {
+          "samples_ms": [
+            0.8210977201108579,
+            0.8223393122355144,
+            0.8230688024450231
+          ],
+          "median_ms": 0.8223393122355144
+        },
+        "fp8": {
+          "samples_ms": [
+            1.2832911284073538,
+            1.2865323108175526,
+            1.2869659838469132
+          ],
+          "median_ms": 1.2865323108175526
+        }
+      },
+      "scales": {
+        "post": 0.019425377249717712,
+        "dpre": 1.2703401353064692e-06
+      },
+      "passed": true
+    }
+  ],
+  "ptxas": {
+    "path": "/root/venvs/h100-ptxas-13.3/ptxas",
+    "version": "13.3",
+    "sha256": "7fdd01a4cf50e30746da98989c9272a907f491e6fd7fecfda14642e4375f88fb"
+  }
+}
