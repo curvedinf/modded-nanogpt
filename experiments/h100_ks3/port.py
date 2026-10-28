@@ -65,8 +65,9 @@ def install(optimization=None):
     rank=int(os.environ.get('KS3_H100_RANK','1'))
     if rank not in (1,2,4) or width%rank:raise ValueError('Invalid H100 KS3 rank/width')
     geometry_lr=float(os.environ.get('KS3_H100_GEOMETRY_LR','.125'))
+    geometry_beta2=float(os.environ.get('KS3_H100_GEOMETRY_BETA2','.99'))
     projection_lr=float(os.environ.get('KS3_H100_PROJECTION_LR','1.'))
-    base=ks.install('bf16',bf16_kernel_mode='tuned',charts=width//rank,subspace_rank=rank,projection_lr_multiplier=projection_lr,geometry_config={'lr_mul':geometry_lr,'betas':[.9,.99],'raw_scale':.75,'raw_shift':0.,'coefficients':[0.]*6})
+    base=ks.install('bf16',bf16_kernel_mode='tuned',charts=width//rank,subspace_rank=rank,projection_lr_multiplier=projection_lr,geometry_config={'lr_mul':geometry_lr,'betas':[.9,geometry_beta2],'raw_scale':.75,'raw_shift':0.,'coefficients':[0.]*6})
     class H100KS3(base):
         def __init__(self,*args,**kwargs):
             super().__init__(*args,**kwargs)
