@@ -53,10 +53,10 @@ def producer_checks(rows,router,grad,g,xs,gs,ps,ds):
     fp8._geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,CUBIC_ONLY=fp8.CUBIC_ONLY,num_warps=4)
     pairs['geometry']=(h,ht)
     dc=torch.empty(m,n,device='cuda',dtype=torch.float8_e5m2);dct=torch.empty(n,m,device='cuda',dtype=dc.dtype)
-    part=torch.empty(tr.cdiv(m,fp8.VJP_ROWS),n,8,device='cuda');v=torch.randn_like(c)*.01
+    part=torch.empty(tr.cdiv(m,fp8.VJP_ROWS),n,4 if fp8.COMPACT_PART else 8,device='cuda');v=torch.randn_like(c)*.01
     maxima=torch.empty(tr.cdiv(m,fp8.VJP_ROWS)*tr.cdiv(n,32),device='cuda')
     dcd,dctd=fp8.store_descriptors(dc,dct,fp8.VJP_ROWS)
-    fp8._vjp_prepared[(tr.cdiv(m,fp8.VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,rows.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=fp8.VJP_ROWS,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=fp8.CUBIC_ONLY,num_warps=fp8.VJP_WARPS)
+    fp8._vjp_prepared[(tr.cdiv(m,fp8.VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,rows.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=fp8.VJP_ROWS,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=fp8.CUBIC_ONLY,COMPACT_PART=fp8.COMPACT_PART,num_warps=fp8.VJP_WARPS)
     pairs['geometry_gradient']=(dc,dct)
     gg=torch.empty(m,768,device='cuda',dtype=dc.dtype);gt=torch.empty(768,m,device='cuda',dtype=dc.dtype)
     dg=torch.empty(m,device='cuda');y=torch.randn(m,768,device='cuda',dtype=torch.bfloat16)
@@ -151,13 +151,13 @@ def main():
         post_check=post_jacobian_check(rows,router,post,up,down,g,caches,scales,grad,actual[3])
         assert max(v for k,v in errors.items() if k!='post')<.15,errors
         cache_errors=None
-        system_variant=fp8.V_DTYPE!=torch.float32 or fp8.FUSE_GEOMETRY or fp8.MM_IMPL!='pointer' or fp8.TMA_OUTPUTS
+        system_variant=fp8.V_DTYPE!=torch.float32 or fp8.FUSE_GEOMETRY or fp8.MM_IMPL!='pointer' or fp8.TMA_OUTPUTS or fp8.COMPACT_PART
         if system_variant:
             candidate=[a.detach().clone() for a in actual]
-            selected_dtype,selected_fusion,selected_mm,selected_outputs=fp8.V_DTYPE,fp8.FUSE_GEOMETRY,fp8.MM_IMPL,fp8.TMA_OUTPUTS
-            fp8.V_DTYPE=torch.float32;fp8.FUSE_GEOMETRY=False;fp8.MM_IMPL='pointer';fp8.TMA_OUTPUTS=False
+            selected_dtype,selected_fusion,selected_mm,selected_outputs,selected_compact=fp8.V_DTYPE,fp8.FUSE_GEOMETRY,fp8.MM_IMPL,fp8.TMA_OUTPUTS,fp8.COMPACT_PART
+            fp8.V_DTYPE=torch.float32;fp8.FUSE_GEOMETRY=False;fp8.MM_IMPL='pointer';fp8.TMA_OUTPUTS=False;fp8.COMPACT_PART=False
             full_cache=[a.detach().clone() for a in run('fp8')]
-            fp8.V_DTYPE=selected_dtype;fp8.FUSE_GEOMETRY=selected_fusion;fp8.MM_IMPL=selected_mm;fp8.TMA_OUTPUTS=selected_outputs
+            fp8.V_DTYPE=selected_dtype;fp8.FUSE_GEOMETRY=selected_fusion;fp8.MM_IMPL=selected_mm;fp8.TMA_OUTPUTS=selected_outputs;fp8.COMPACT_PART=selected_compact
             cache_errors={key:err(a,b) for key,a,b in zip(('output','dx','router','post','geometry','weights'),candidate,full_cache)}
             assert max(v for k,v in cache_errors.items() if k!='post')<.006 and cache_errors['post']<.02,cache_errors
         timing={}
@@ -165,17 +165,17 @@ def main():
             samples=[tr.testing.do_bench_cudagraph(lambda:run(kind),rep=40) for _ in range(3)]
             timing[kind]=dict(samples_ms=samples,median_ms=statistics.median(samples))
         if system_variant:
-            selected_dtype,selected_fusion,selected_mm,selected_outputs=fp8.V_DTYPE,fp8.FUSE_GEOMETRY,fp8.MM_IMPL,fp8.TMA_OUTPUTS
-            fp8.V_DTYPE=torch.float32;fp8.FUSE_GEOMETRY=False;fp8.MM_IMPL='pointer';fp8.TMA_OUTPUTS=False
+            selected_dtype,selected_fusion,selected_mm,selected_outputs,selected_compact=fp8.V_DTYPE,fp8.FUSE_GEOMETRY,fp8.MM_IMPL,fp8.TMA_OUTPUTS,fp8.COMPACT_PART
+            fp8.V_DTYPE=torch.float32;fp8.FUSE_GEOMETRY=False;fp8.MM_IMPL='pointer';fp8.TMA_OUTPUTS=False;fp8.COMPACT_PART=False
             samples=[tr.testing.do_bench_cudagraph(lambda:run('fp8'),rep=40) for _ in range(3)]
-            fp8.V_DTYPE=selected_dtype;fp8.FUSE_GEOMETRY=selected_fusion;fp8.MM_IMPL=selected_mm;fp8.TMA_OUTPUTS=selected_outputs
+            fp8.V_DTYPE=selected_dtype;fp8.FUSE_GEOMETRY=selected_fusion;fp8.MM_IMPL=selected_mm;fp8.TMA_OUTPUTS=selected_outputs;fp8.COMPACT_PART=selected_compact
             timing['fp8_full_cache']=dict(samples_ms=samples,median_ms=statistics.median(samples))
         result=dict(tokens=t,producers=producers,post_jacobian=post_check,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
         cases.append(result);print(json.dumps(result),flush=True)
     from triton.backends.nvidia.compiler import get_ptxas
     assembler=get_ptxas(90)
     output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,
-                implementation=dict(rank=rank,cubic_only=fp8.CUBIC_ONLY,tma_outputs=fp8.TMA_OUTPUTS,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
+                implementation=dict(rank=rank,cubic_only=fp8.CUBIC_ONLY,compact_part=fp8.COMPACT_PART,tma_outputs=fp8.TMA_OUTPUTS,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
                 ptxas=dict(path=assembler.path,version=assembler.version,sha256=hashlib.sha256(Path(assembler.path).read_bytes()).hexdigest()))
     Path(os.environ.get('KS3_FP8_CHECK_OUTPUT','research_results/wr_reproduction/h100-research/fp8-micro.json')).write_text(json.dumps(output,indent=2)+'\n')
 if __name__=='__main__':main()

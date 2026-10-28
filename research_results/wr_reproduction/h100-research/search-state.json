@@ -18,8 +18,8 @@
     "loss": 3.278462172,
     "code_commit": "cf0f5f61660dbe694f6d305048e8b8799c0f1815"
   },
-  "current_full_run": null,
-  "current_hypothesis": "Await cubic FP8 Jacobian checks and bitwise TMA producer screens, then choose next full candidate.",
+  "current_full_run": "20261028T201508Z",
+  "current_hypothesis": "Cubic FP8/TMA with geometry tail averaging.",
   "planned_followups": [
     "Finish the corrected rank-two FP8 run with its whole-model speed gate and full WR validation.",
     "Run queued independent checks for cubic FP8 and TMA output/input-gradient products; promote only measured improvements.",
@@ -33,7 +33,7 @@
   },
   "next_model_candidate": "Choose from FP8/cubic geometry combination or directed projection-rate tuning after full validation.",
   "queued_screen": [
-    "FP8 cubic post-Jacobian diagnosis",
-    "rank-two FP8 post-Jacobian regression"
+    "Corrected input/gradient TMA stores",
+    "Compact cubic gradient temporary"
   ]
 }

@@ -81,7 +81,8 @@ def _geometry_prepared(C,G,H,TILES,M:tl.constexpr,N:tl.constexpr,HT=None,SCALE=N
         tl.store(H+rows[:,None]*N+cols[None,:],out,(rows[:,None]<M)&valid[None,:])
 
 @tr.jit
-def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.constexpr,DCT=None,SCALE=None,AMAX=None,FP8:tl.constexpr=False,PARTIAL_AMAX:tl.constexpr=False,BM:tl.constexpr=64,RANK:tl.constexpr=1,NATIVE_OUT=None,NATIVE_T=None,PREPARED=None,DC_DESC=None,DCT_DESC=None,CUBIC_ONLY:tl.constexpr=False):
+def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.constexpr,DCT=None,SCALE=None,AMAX=None,FP8:tl.constexpr=False,PARTIAL_AMAX:tl.constexpr=False,BM:tl.constexpr=64,RANK:tl.constexpr=1,NATIVE_OUT=None,NATIVE_T=None,PREPARED=None,DC_DESC=None,DCT_DESC=None,CUBIC_ONLY:tl.constexpr=False,COMPACT_PART:tl.constexpr=False):
+    tl.static_assert(not COMPACT_PART or (CUBIC_ONLY and RANK==1))
     rows=tl.program_id(0)*BM+tl.arange(0,BM);cols=tl.program_id(1)*32+tl.arange(0,32)
     e=tl.load(TILES+tl.program_id(0)*BM//128);mask=(rows[:,None]<M)&(cols[None,:]<N)
     real=tl.load(SRC+rows,rows<M,other=ROWS)<ROWS
@@ -127,16 +128,29 @@ def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.
         DC_DESC.store([tl.program_id(0)*BM,tl.program_id(1)*32],out)
     else:
         tl.store(DC+rows[:,None]*N+cols[None,:],out,mask)
-    off=(tl.program_id(0)*N+cols)*8;t2=t*t;t3=t2*t
+    off=(tl.program_id(0)*N+cols)*(4 if COMPACT_PART else 8);t2=t*t;t3=t2*t
     tl.store(PART+off,tl.sum(dp*(2*t3-3*t2+1),0),cols<N)
     tl.store(PART+off+1,tl.sum(dp*(-2*t3+3*t2),0),cols<N)
     tl.store(PART+off+2,tl.sum(dp*(t3-2*t2+t),0),cols<N)
     tl.store(PART+off+3,tl.sum(dp*(t3-t2),0),cols<N)
-    if CUBIC_ONLY:
+    if CUBIC_ONLY and not COMPACT_PART:
         tl.store(PART+off+4,0.,cols<N);tl.store(PART+off+5,0.,cols<N)
         tl.store(PART+off+6,0.,cols<N);tl.store(PART+off+7,0.,cols<N)
-    else:
+    elif not CUBIC_ONLY:
         tl.store(PART+off+4,tl.sum(dp*(2*z*z-1),0),cols<N)
         tl.store(PART+off+5,tl.sum(dp*(4*z*z*z-3*z),0),cols<N)
         tl.store(PART+off+6,tl.sum(dp*dz*(t+shift)*tl.sigmoid(rs),0),cols<N)
         tl.store(PART+off+7,tl.sum(dp*dz*scale*.5*(1.-native_tanh(rh)*native_tanh(rh)),0),cols<N)
+
+
+@tr.jit
+def reduce_cubic(P,O,OFFS,N:tl.constexpr,T:tl.constexpr,B:tl.constexpr,BM:tl.constexpr=128):
+    e=tl.program_id(0);n=tl.program_id(1)
+    lo=0
+    if e>0:lo=tl.load(OFFS+e-1)//BM
+    hi=tl.load(OFFS+e)//BM
+    r=lo+tl.arange(0,B);j=tl.arange(0,4)
+    v=tl.load(P+(r[:,None]*N+n)*4+j[None,:],(r[:,None]<hi)&(r[:,None]<T),other=0.)
+    total=tl.sum(v,0)
+    tl.store(O+(e*N+n)*8+j,total)
+    tl.store(O+(e*N+n)*8+j+4,0.)
