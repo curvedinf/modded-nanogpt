@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T23:48:09.797566+00:00",
+  "utc": "2026-10-28T23:51:48.280078+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,12 +18,12 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "20261028T234734Z",
-  "current_hypothesis": "Fast1536-chart/dense2304 family on seed701; change only geometry Adam beta2 .99->.95.",
+  "current_full_run": "20261028T235034Z",
+  "current_hypothesis": "Native projection LR1.0 versus manual2/3, on seed701.",
   "planned_followups": [
-    "Finish growth254: two extra updates after30.955472743s/3.280070305 near miss",
-    "If full WR loss<=3.28 and time<31.07925s, freeze and run three fresh independent seeds without comparative pruning",
-    "Otherwise continue meaningful KS3 optimization; do not resume stopped controls"
+    "If current run qualifies, freeze and run three fresh seeds711\u2013713 first.",
+    "Otherwise test the prepared extension60 schedule to improve loss at roughly fixed time.",
+    "Continue meaningful KS3 optimization; control batch remains stopped."
   ],
   "reference": {
     "kind": "eight_completed_controls_including_original",
@@ -32,7 +32,7 @@
     "n": 8,
     "summary": "research_results/wr_reproduction/h100-control-calibration/summary.json"
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2_plus2.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_dense2304_growth234_extension60.json",
   "queued_screen": [],
   "status": "ks3_running",
   "near_target": {

@@ -1,0 +1,108 @@
+{
+  "utc": "2026-10-28T23:51:48.280078+00:00",
+  "baseline_run": "20261028T233059Z",
+  "schedules": [
+    {
+      "growth": 254,
+      "extension": 20,
+      "steps": 1255,
+      "tokens": 369688576,
+      "split_step": 1235,
+      "stages": [
+        {
+          "stage": 0,
+          "start": 0,
+          "end": 280,
+          "steps": 280,
+          "batch_tokens": 131072,
+          "train_tokens": 36700160
+        },
+        {
+          "stage": 1,
+          "start": 280,
+          "end": 595,
+          "steps": 315,
+          "batch_tokens": 262144,
+          "train_tokens": 82575360
+        },
+        {
+          "stage": 2,
+          "start": 595,
+          "end": 1176,
+          "steps": 581,
+          "batch_tokens": 393216,
+          "train_tokens": 228458496
+        },
+        {
+          "stage": 3,
+          "start": 1176,
+          "end": 1235,
+          "steps": 59,
+          "batch_tokens": 327680,
+          "train_tokens": 19333120
+        },
+        {
+          "stage": 4,
+          "start": 1235,
+          "end": 1255,
+          "steps": 20,
+          "batch_tokens": 131072,
+          "train_tokens": 2621440
+        }
+      ]
+    },
+    {
+      "growth": 234,
+      "extension": 60,
+      "steps": 1275,
+      "tokens": 367067136,
+      "split_step": 1215,
+      "stages": [
+        {
+          "stage": 0,
+          "start": 0,
+          "end": 280,
+          "steps": 280,
+          "batch_tokens": 131072,
+          "train_tokens": 36700160
+        },
+        {
+          "stage": 1,
+          "start": 280,
+          "end": 595,
+          "steps": 315,
+          "batch_tokens": 262144,
+          "train_tokens": 82575360
+        },
+        {
+          "stage": 2,
+          "start": 595,
+          "end": 1156,
+          "steps": 561,
+          "batch_tokens": 393216,
+          "train_tokens": 220594176
+        },
+        {
+          "stage": 3,
+          "start": 1156,
+          "end": 1215,
+          "steps": 59,
+          "batch_tokens": 327680,
+          "train_tokens": 19333120
+        },
+        {
+          "stage": 4,
+          "start": 1215,
+          "end": 1275,
+          "steps": 60,
+          "batch_tokens": 131072,
+          "train_tokens": 7864320
+        }
+      ]
+    }
+  ],
+  "token_change": -2621440,
+  "token_change_fraction": -0.0070909413224605755,
+  "estimated_seconds_change": 0.0,
+  "estimate_is_not_measurement": true
+}
