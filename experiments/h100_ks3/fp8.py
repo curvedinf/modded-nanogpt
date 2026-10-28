@@ -19,6 +19,8 @@ GATHER_IMPL=os.environ.get('KS3_FP8_GATHER','legacy')
 TMA_STORES=os.environ.get('KS3_FP8_TMA_STORES','0')=='1'
 V_DTYPE={'float32':torch.float32,'float16':torch.float16}[os.environ.get('KS3_FP8_V_DTYPE','float32')]
 FUSE_GEOMETRY=os.environ.get('KS3_FP8_FUSE_GEOMETRY','0')=='1'
+MM_IMPL=os.environ.get('KS3_FP8_MM','pointer')
+assert MM_IMPL in ('pointer','tma')
 assert DW_IMPL in ('legacy','tma') and VJP_ROWS in (32,64,128)
 assert VJP_WARPS in (4,8) and GATHER_IMPL in ('legacy','tiled')
 
@@ -30,6 +32,9 @@ def store_descriptors(row_major,column_major,rows,cols=32):
 
 def tile(m):return (128,128,128,8,3) if m<=32768 else (64,256,128,8,4)
 def mm(a,w,table,sa,sw,dtype=torch.float32,mode=0,**kw):
+    if MM_IMPL=='tma' and mode==0:
+        from experiments.h100_ks3.tma_mm import mm as tma_mm
+        return tma_mm(a,w,table,sa,sw,dtype)
     m,k=a.shape;n=w.shape[-1];bm,bn,bk,nw,st=tile(m)
     out=torch.empty((m,n),device=a.device,dtype=dtype)
     gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](a,w,out,table,m,n,k,*w.stride(),bm,bn,bk,mode,ASCALE=sa,WSCALE=sw,num_warps=nw,num_stages=st,**kw)
