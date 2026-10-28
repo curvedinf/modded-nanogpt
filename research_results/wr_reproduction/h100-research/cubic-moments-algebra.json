@@ -1,0 +1,6 @@
+{
+  "utc": "2026-10-28T20:51:27.603413+00:00",
+  "passed": true,
+  "relative_fp64_error": 3.0365832985721287e-16,
+  "hypothesis": "Reduce monomial moments before the Hermite transform to shorten fused cubic VJP register lifetimes; numerical algebra check only, GPU performance unmeasured."
+}
