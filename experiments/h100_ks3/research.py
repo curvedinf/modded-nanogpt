@@ -103,6 +103,9 @@ def main():
             time.sleep(2)
         collect(run);return
     if not a.hypothesis:ap.error('--hypothesis is required for a new experiment')
+    overrides=dict(x.split('=',1) for x in a.env)
+    if 'TRAIN_SEED' in overrides and overrides['TRAIN_SEED']!=str(a.seed):
+        ap.error('--seed and TRAIN_SEED override disagree; refusing a mislabeled independent run')
     if any((p/'STOP').exists() for p in (STATE,RESULTS)):raise SystemExit('New study STOP is present')
     dirty=subprocess.check_output(['git','status','--porcelain','--','experiments/h100_ks3','wr_reproduction','ks3_research'],cwd=ROOT,text=True)
     if dirty:raise SystemExit('Commit code before launching an immutable experiment: '+dirty)
@@ -116,7 +119,7 @@ def main():
     if a.profile:cmd.append('--profile')
     launch=Path(subprocess.check_output(cmd,cwd=ROOT,text=True).strip());run=launch.parent
     custom=dict(TRAIN_SEED=str(a.seed),KS3_H100_OPT=a.variant,KS3_H100_TRANSPORT='codes',KS3_H100_PACK_ROWS='16')
-    custom.update(dict(x.split('=',1) for x in a.env))
+    custom.update(overrides)
     settings=dict(utc=utc(),code_commit=commit,hypothesis=a.hypothesis,variant=a.variant,seed=a.seed,scheduled_steps=a.steps,
                   drop_dense_layer=a.drop_dense_layer,drop_parallel_mlp=a.drop_parallel_mlp,dense_width=a.dense_width,first_batch_units=a.first_batch_units,first_stage_lr=a.first_stage_lr,
                   final_window_blocks=a.final_window_blocks,eval_probe_windows=a.eval_probe_windows,
