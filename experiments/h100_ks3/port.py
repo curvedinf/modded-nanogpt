@@ -5,6 +5,7 @@ publishes its GS32-rounded BF16 matrices, then gathers them before readers.
 Shared attention, dense MLPs, head, data and schedule remain upstream PR393.
 """
 import os
+import math
 import torch
 import torch.distributed as dist
 import triton as tr
@@ -32,6 +33,11 @@ def publish(bank,packed,lo,hi):
 
 def install(optimization=None):
     from wr_reproduction import ks3_moe as ks,ks3_bf16_gemm as gemm
+    if 'KS3_H100_NGRAM_LR_SCALE' in os.environ:
+        from track_1_short import ngram_table
+        factor=float(os.environ['KS3_H100_NGRAM_LR_SCALE'])
+        if not math.isfinite(factor) or factor<=0:raise ValueError('Invalid ngram learning-rate multiplier')
+        ngram_table.NGRAM_LR_MUL=70.*factor
     from experiments.h100_ks3.moe_optimizer import install_dimension_tiles
     install_dimension_tiles()
     if 'KS3_H100_LR_SCALE' in os.environ:
