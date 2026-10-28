@@ -1,6 +1,7 @@
 """Validate and report the eleven fresh, exact-PR393 control measurements."""
 
 import csv
+import hashlib
 import json
 import math
 import statistics
@@ -36,6 +37,9 @@ def main():
     assert len({row['run_id'] for row in rows}) == 11
     manifest = json.loads((ORIGINAL / 'source_manifest.json').read_text())
     expected_hashes = {'source/' + name: sha for name, sha in manifest['files'].items()}
+    first_folder = OUT / 'runs' / rows[0]['run_id']
+    packages = (first_folder / 'packages.txt').read_bytes()
+    launcher = (first_folder / 'launch.sh').read_bytes()
     for row in rows:
         folder = OUT / 'runs' / row['run_id']
         assert json.loads((folder / 'result.json').read_text()) == row
@@ -48,6 +52,9 @@ def main():
         assert settings['source_changes'] == [] and not settings['comparative_pruning']
         assert settings['seed'] == row['seed']
         assert settings['environment'] == {'TRAIN_SEED': str(row['seed'])}
+        assert f"; seed {row['seed']}; " in (folder / 'console.log').read_text()
+        assert (folder / 'packages.txt').read_bytes() == packages
+        assert (folder / 'launch.sh').read_bytes() == launcher
         assert (OUT / 'archives' / (row['run_id'] + '.tar.gz')).is_file()
 
     report = dict(utc=utc(), upstream_commit=manifest['commit'],
@@ -56,6 +63,8 @@ def main():
                   primary_population='Preserved original plus eleven fresh independent seeds, 601 through 611; fresh-only statistics are also reported.',
                   spread='Sample standard deviation; CI95 is a Student-t interval for the mean.',
                   measurement_precision='Unmodified upstream logs round each time to 0.001 second and loss to 0.0001.',
+                  packages_sha256=hashlib.sha256(packages).hexdigest(),
+                  launcher_sha256=hashlib.sha256(launcher).hexdigest(),
                   source_changes=[], comparative_pruning=False)
     lines = [
         '# PR393 local control calibration', '',
@@ -73,8 +82,16 @@ def main():
     ]:
         times = describe([row['official_seconds'] for row in group])
         losses = describe([row['validation_loss'] for row in group])
+        if losses['standard_error']:
+            loss_t = (losses['mean'] - 3.28) / losses['standard_error']
+            loss_p = student_cdf(loss_t, losses['n'] - 1)
+        else:
+            loss_t = None
+            loss_p = 0.0 if losses['mean'] < 3.28 else 0.5 if losses['mean'] == 3.28 else 1.0
         report[name] = dict(seconds=times, loss=losses,
-                            runs_at_or_below_target=sum(row['validation_loss'] <= 3.28 for row in group))
+                            runs_at_or_below_target=sum(row['validation_loss'] <= 3.28 for row in group),
+                            loss_target=3.28, one_sided_loss_t=loss_t, one_sided_loss_p=loss_p,
+                            loss_target_met_with_p_lt_01=losses['mean'] <= 3.28 and loss_p < 0.01)
         for metric, computed in [('seconds', times), ('loss', losses)]:
             assert math.isclose(computed['mean'], summary[name][metric]['mean'], abs_tol=1e-12)
             assert math.isclose(computed['sample_std'], summary[name][metric]['sample_std'], abs_tol=1e-12)
