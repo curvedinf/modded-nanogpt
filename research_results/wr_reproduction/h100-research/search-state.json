@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T20:34:30.422314+00:00",
+  "utc": "2026-10-28T20:35:54.390113+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": null,
-  "current_hypothesis": "Finish FP16 backward-cache gates, then native-only FP8 KS3 with consistent raw BF16 inference.",
+  "current_full_run": "20261028T203538Z",
+  "current_hypothesis": "Native-only FP8 with matching raw BF16 inference and fused forward, original architecture/schedule.",
   "planned_followups": [
     "Collect scaled small-batch full validation; preserve original-batch incumbent unless faster and qualifying.",
     "Complete numerical and whole-block timing gates for queued variants.",
@@ -31,9 +31,9 @@
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "Choose from FP8/cubic geometry combination or directed projection-rate tuning after full validation.",
+  "next_model_candidate": "1280-wide KS3 experts /2304-wide dense branches, after precision result.",
   "queued_screen": [
-    "Fused forward with FP16 backward-only C cache",
-    "Fused forward with both C/V caches FP16"
+    "1280-wide GS32 cubic FP8",
+    "1280-wide native-only cubic FP8"
   ]
 }
