@@ -13,13 +13,13 @@
     "server has a couple of hours from user time-limit message"
   ],
   "best_ks3": {
-    "run": "20261028T195631Z",
-    "seconds": 34.938983384,
-    "loss": 3.279222727,
-    "code_commit": "5bf1c30b78fb4130cd2e073f002b7d81de0080d1"
+    "run": "20261028T201132Z",
+    "seconds": 33.206341556,
+    "loss": 3.278462172,
+    "code_commit": "cf0f5f61660dbe694f6d305048e8b8799c0f1815"
   },
-  "current_full_run": "20261028T201132Z",
-  "current_hypothesis": "Rank-two FP8 with validated TMA output products and geometry tail averaging.",
+  "current_full_run": null,
+  "current_hypothesis": "Await cubic FP8 Jacobian checks and bitwise TMA producer screens, then choose next full candidate.",
   "planned_followups": [
     "Finish the corrected rank-two FP8 run with its whole-model speed gate and full WR validation.",
     "Run queued independent checks for cubic FP8 and TMA output/input-gradient products; promote only measured improvements.",

@@ -1,0 +1,28 @@
+{
+  "name": "h100-pr393-ks3-cubic-20261028",
+  "code_commit": "5bf1c30b78fb4130cd2e073f002b7d81de0080d1",
+  "architecture": "PR393; all five MoE sites use1024-chart rank-one cubic KS3, GS32/BF16 with FP16 nonlinearities and VJP cache. Warp coefficients are zero and frozen; scale/shift gradients are frozen.",
+  "geometry_optimizer": {
+    "adam_betas": [
+      0.9,
+      0.99
+    ],
+    "lr_multiplier": 0.125
+  },
+  "environment": {
+    "TRAIN_SEED": "413",
+    "KS3_H100_OPT": "separate-dx-prepared-128-gate-tanh-fp16v-cubic",
+    "KS3_H100_TRANSPORT": "codes",
+    "KS3_H100_PACK_ROWS": "16",
+    "KS3_H100_FUSED_ANVIL": "1"
+  },
+  "selected_run": "20261028T195631Z",
+  "seed_for_reported_result": 413,
+  "selection_criterion": "Fastest completed H100 KS3 full WR run meeting<=3.28 so far; one seed",
+  "measured_seconds": 34.938983384,
+  "measured_validation_loss": 3.279222727,
+  "validation_tokens": 10485760,
+  "scheduled_steps": 981,
+  "total_steps": 1053,
+  "statistical_scope": "One full run at seed413, not independent-seed statistical qualification"
+}
