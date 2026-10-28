@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T22:20:55.275856+00:00",
+  "utc": "2026-10-28T22:21:43.683237+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -21,9 +21,10 @@
   "current_full_run": "20261028T222044Z",
   "current_hypothesis": "Dense2304 instead of2816,20extra updates, double ngram table and tableLR1.15; retain all five1536-chart KS3 sites.",
   "planned_followups": [
-    "A qualifying point immediately triggers three frozen-code fresh seeds",
-    "If the learning-rate follow-up misses, use checked tail-averaging diagnostics on the best near-target recipe",
-    "After verification, optimize margin/time further; retain all prior results"
+    "Immediately run three fresh frozen-code seeds after a qualifying control-beating result",
+    "Use the dense-width result to choose a capacity/time follow-up; triple ngram capacity is a prepared isolated alternative",
+    "Tail averaging diagnostic is complete and negative; retain the original coefficient",
+    "After verification, continue optimization until the extended deadline or a new stop"
   ],
   "reference": {
     "run": "20261028T180502Z",
