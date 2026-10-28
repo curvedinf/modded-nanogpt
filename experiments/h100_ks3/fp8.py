@@ -18,6 +18,7 @@ VJP_WARPS=int(os.environ.get('KS3_FP8_VJP_WARPS','4'))
 GATHER_IMPL=os.environ.get('KS3_FP8_GATHER','legacy')
 TMA_STORES=os.environ.get('KS3_FP8_TMA_STORES','0')=='1'
 V_DTYPE={'float32':torch.float32,'float16':torch.float16}[os.environ.get('KS3_FP8_V_DTYPE','float32')]
+C_DTYPE={'float32':torch.float32,'float16':torch.float16}[os.environ.get('KS3_FP8_C_DTYPE','float32')]
 FUSE_GEOMETRY=os.environ.get('KS3_FP8_FUSE_GEOMETRY','0')=='1'
 MM_IMPL=os.environ.get('KS3_FP8_MM','pointer')
 PACKED_TRANSPORT=os.environ.get('KS3_FP8_PACKED_TRANSPORT','0')=='1'
@@ -82,11 +83,15 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
     pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],num_warps=4)
     rank=(g.shape[-1]-2)//6;prepared=prepare_geometry(g,n)
     if FUSE_GEOMETRY and rank!=1:raise ValueError('Fused FP8 up projection currently requires rank1')
+    if C_DTYPE!=torch.float32 and not (FUSE_GEOMETRY and MM_IMPL=='tma'):
+        raise ValueError('Reduced C cache requires fused TMA geometry to preserve forward FP32 inputs')
     if CUBIC_ONLY and (rank!=1 or (FUSE_GEOMETRY and MM_IMPL!='tma')):raise ValueError('Cubic FP8 requires rank1 and separate geometry or TMA fusion')
     h=torch.empty(m,n,device=rows.device,dtype=x.dtype);ht=torch.empty(n,m,device=rows.device,dtype=x.dtype)
     if FUSE_GEOMETRY and MM_IMPL=='tma':
         from experiments.h100_ks3.tma_mm import mm as tma_mm
-        c,maxima=tma_mm(x,up.transpose(1,2),table,xs,us,torch.float32,g,prepared,h,ht,ps,cubic_only=CUBIC_ONLY)
+        # Geometry consumes the original FP32 accumulator; only the saved
+        # backward input is rounded when a reduced cache is selected.
+        c,maxima=tma_mm(x,up.transpose(1,2),table,xs,us,C_DTYPE,g,prepared,h,ht,ps,cubic_only=CUBIC_ONLY)
     elif FUSE_GEOMETRY:
         bm,bn,bk,nw,st=64,128,128,4,4
         c=torch.empty(m,n,device=rows.device,dtype=torch.float32);weight=up.transpose(1,2)
@@ -106,7 +111,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
 @forward.register_fake
 def _(rows,src,table,up,down,us,ws,xs,ps,pa,g,scale):
     m=src.numel();n=up.shape[1]
-    return torch.empty_like(rows),rows.new_empty((m,768)),rows.new_empty((m,n),dtype=torch.float32),rows.new_empty((768,m),dtype=torch.float8_e4m3fn),rows.new_empty((n,m),dtype=torch.float8_e4m3fn),g.new_empty((8,n,9))
+    return torch.empty_like(rows),rows.new_empty((m,768)),rows.new_empty((m,n),dtype=C_DTYPE),rows.new_empty((768,m),dtype=torch.float8_e4m3fn),rows.new_empty((n,m),dtype=torch.float8_e4m3fn),g.new_empty((8,n,9))
 
 @torch.library.custom_op('h100_ks3_fp8::backward_core',mutates_args={'bank','da'})
 def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tensor,ht:torch.Tensor,scale:torch.Tensor,

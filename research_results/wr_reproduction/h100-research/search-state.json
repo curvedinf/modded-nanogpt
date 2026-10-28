@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T20:30:07.461640+00:00",
+  "utc": "2026-10-28T20:31:47.380883+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": null,
-  "current_hypothesis": "Await cubic fusion, cache-precision, and profile screens; original batch restored for subsequent full candidates.",
+  "current_full_run": "20261028T203125Z",
+  "current_hypothesis": "Remove attention0 and double CPLM pointer LR to recover its lost copy benefit.",
   "planned_followups": [
     "Collect scaled small-batch full validation; preserve original-batch incumbent unless faster and qualifying.",
     "Complete numerical and whole-block timing gates for queued variants.",
@@ -33,10 +33,7 @@
   },
   "next_model_candidate": "Choose from FP8/cubic geometry combination or directed projection-rate tuning after full validation.",
   "queued_screen": [
-    "Fused cubic forward 64x128",
-    "Fused cubic forward 128x128",
-    "Fused cubic forward 128x256",
-    "Native cubic FP8 block profile",
-    "TMA cubic FP16 VJP cache"
+    "Fused forward with FP16 backward-only C cache",
+    "Fused forward with both C/V caches FP16"
   ]
 }

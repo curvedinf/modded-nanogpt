@@ -151,13 +151,13 @@ def main():
         post_check=post_jacobian_check(rows,router,post,up,down,g,caches,scales,grad,actual[3])
         assert max(v for k,v in errors.items() if k!='post')<.15,errors
         cache_errors=None
-        system_variant=fp8.V_DTYPE!=torch.float32 or fp8.FUSE_GEOMETRY or fp8.MM_IMPL!='pointer' or fp8.TMA_OUTPUTS or fp8.COMPACT_PART or fp8.FUSE_CUBIC_VJP
+        system_variant=fp8.C_DTYPE!=torch.float32 or fp8.V_DTYPE!=torch.float32 or fp8.FUSE_GEOMETRY or fp8.MM_IMPL!='pointer' or fp8.TMA_OUTPUTS or fp8.COMPACT_PART or fp8.FUSE_CUBIC_VJP
         if system_variant:
             candidate=[a.detach().clone() for a in actual]
-            selected_dtype,selected_fusion,selected_mm,selected_outputs,selected_compact,selected_cubic_fusion=fp8.V_DTYPE,fp8.FUSE_GEOMETRY,fp8.MM_IMPL,fp8.TMA_OUTPUTS,fp8.COMPACT_PART,fp8.FUSE_CUBIC_VJP
-            fp8.V_DTYPE=torch.float32;fp8.FUSE_GEOMETRY=False;fp8.MM_IMPL='pointer';fp8.TMA_OUTPUTS=False;fp8.COMPACT_PART=False;fp8.FUSE_CUBIC_VJP=False
+            selected_c_dtype,selected_dtype,selected_fusion,selected_mm,selected_outputs,selected_compact,selected_cubic_fusion=fp8.C_DTYPE,fp8.V_DTYPE,fp8.FUSE_GEOMETRY,fp8.MM_IMPL,fp8.TMA_OUTPUTS,fp8.COMPACT_PART,fp8.FUSE_CUBIC_VJP
+            fp8.C_DTYPE=torch.float32;fp8.V_DTYPE=torch.float32;fp8.FUSE_GEOMETRY=False;fp8.MM_IMPL='pointer';fp8.TMA_OUTPUTS=False;fp8.COMPACT_PART=False;fp8.FUSE_CUBIC_VJP=False
             full_cache=[a.detach().clone() for a in run('fp8')]
-            fp8.V_DTYPE=selected_dtype;fp8.FUSE_GEOMETRY=selected_fusion;fp8.MM_IMPL=selected_mm;fp8.TMA_OUTPUTS=selected_outputs;fp8.COMPACT_PART=selected_compact;fp8.FUSE_CUBIC_VJP=selected_cubic_fusion
+            fp8.C_DTYPE=selected_c_dtype;fp8.V_DTYPE=selected_dtype;fp8.FUSE_GEOMETRY=selected_fusion;fp8.MM_IMPL=selected_mm;fp8.TMA_OUTPUTS=selected_outputs;fp8.COMPACT_PART=selected_compact;fp8.FUSE_CUBIC_VJP=selected_cubic_fusion
             cache_errors={key:err(a,b) for key,a,b in zip(('output','dx','router','post','geometry','weights'),candidate,full_cache)}
             assert max(v for k,v in cache_errors.items() if k!='post')<.006 and cache_errors['post']<.02,cache_errors
         timing={}
@@ -165,17 +165,17 @@ def main():
             samples=[tr.testing.do_bench_cudagraph(lambda:run(kind),rep=40) for _ in range(3)]
             timing[kind]=dict(samples_ms=samples,median_ms=statistics.median(samples))
         if system_variant:
-            selected_dtype,selected_fusion,selected_mm,selected_outputs,selected_compact,selected_cubic_fusion=fp8.V_DTYPE,fp8.FUSE_GEOMETRY,fp8.MM_IMPL,fp8.TMA_OUTPUTS,fp8.COMPACT_PART,fp8.FUSE_CUBIC_VJP
-            fp8.V_DTYPE=torch.float32;fp8.FUSE_GEOMETRY=False;fp8.MM_IMPL='pointer';fp8.TMA_OUTPUTS=False;fp8.COMPACT_PART=False;fp8.FUSE_CUBIC_VJP=False
+            selected_c_dtype,selected_dtype,selected_fusion,selected_mm,selected_outputs,selected_compact,selected_cubic_fusion=fp8.C_DTYPE,fp8.V_DTYPE,fp8.FUSE_GEOMETRY,fp8.MM_IMPL,fp8.TMA_OUTPUTS,fp8.COMPACT_PART,fp8.FUSE_CUBIC_VJP
+            fp8.C_DTYPE=torch.float32;fp8.V_DTYPE=torch.float32;fp8.FUSE_GEOMETRY=False;fp8.MM_IMPL='pointer';fp8.TMA_OUTPUTS=False;fp8.COMPACT_PART=False;fp8.FUSE_CUBIC_VJP=False
             samples=[tr.testing.do_bench_cudagraph(lambda:run('fp8'),rep=40) for _ in range(3)]
-            fp8.V_DTYPE=selected_dtype;fp8.FUSE_GEOMETRY=selected_fusion;fp8.MM_IMPL=selected_mm;fp8.TMA_OUTPUTS=selected_outputs;fp8.COMPACT_PART=selected_compact;fp8.FUSE_CUBIC_VJP=selected_cubic_fusion
+            fp8.C_DTYPE=selected_c_dtype;fp8.V_DTYPE=selected_dtype;fp8.FUSE_GEOMETRY=selected_fusion;fp8.MM_IMPL=selected_mm;fp8.TMA_OUTPUTS=selected_outputs;fp8.COMPACT_PART=selected_compact;fp8.FUSE_CUBIC_VJP=selected_cubic_fusion
             timing['fp8_full_cache']=dict(samples_ms=samples,median_ms=statistics.median(samples))
         result=dict(tokens=t,producers=producers,post_jacobian=post_check,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
         cases.append(result);print(json.dumps(result),flush=True)
     from triton.backends.nvidia.compiler import get_ptxas
     assembler=get_ptxas(90)
     output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,
-                implementation=dict(rank=rank,cubic_only=fp8.CUBIC_ONLY,compact_part=fp8.COMPACT_PART,fuse_cubic_vjp=fp8.FUSE_CUBIC_VJP,cubic_vjp_tile=os.environ.get('KS3_FP8_CUBIC_VJP_TILE'),cubic_vjp_warps=os.environ.get('KS3_FP8_CUBIC_VJP_WARPS'),cubic_vjp_stages=os.environ.get('KS3_FP8_CUBIC_VJP_STAGES','3'),cubic_vjp_flatten=os.environ.get('KS3_FP8_CUBIC_VJP_FLATTEN','1'),fused_up_flatten=os.environ.get('KS3_FP8_FUSED_UP_FLATTEN','1'),tma_outputs=fp8.TMA_OUTPUTS,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,fused_up_tile=os.environ.get('KS3_FP8_FUSED_UP_TILE'),mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
+                implementation=dict(rank=rank,cubic_only=fp8.CUBIC_ONLY,compact_part=fp8.COMPACT_PART,fuse_cubic_vjp=fp8.FUSE_CUBIC_VJP,cubic_vjp_tile=os.environ.get('KS3_FP8_CUBIC_VJP_TILE'),cubic_vjp_warps=os.environ.get('KS3_FP8_CUBIC_VJP_WARPS'),cubic_vjp_stages=os.environ.get('KS3_FP8_CUBIC_VJP_STAGES','3'),cubic_vjp_flatten=os.environ.get('KS3_FP8_CUBIC_VJP_FLATTEN','1'),fused_up_flatten=os.environ.get('KS3_FP8_FUSED_UP_FLATTEN','1'),tma_outputs=fp8.TMA_OUTPUTS,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,c_dtype=str(fp8.C_DTYPE),v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,fused_up_tile=os.environ.get('KS3_FP8_FUSED_UP_TILE'),mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
                 ptxas=dict(path=assembler.path,version=assembler.version,sha256=hashlib.sha256(Path(assembler.path).read_bytes()).hexdigest()))
     Path(os.environ.get('KS3_FP8_CHECK_OUTPUT','research_results/wr_reproduction/h100-research/fp8-micro.json')).write_text(json.dumps(output,indent=2)+'\n')
 if __name__=='__main__':main()
