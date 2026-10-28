@@ -1,7 +1,7 @@
 {
-  "utc": "2026-10-28T22:53:30.252369+00:00",
+  "utc": "2026-10-28T22:56:32.864454+00:00",
   "requested_fresh_runs": 11,
-  "completed_fresh_runs": 1,
+  "completed_fresh_runs": 2,
   "original": {
     "run_id": "20261028T180502Z",
     "seed": "original random default",
@@ -22,6 +22,20 @@
       "steps": 1053,
       "validation_loss": 3.2794,
       "official_seconds": 31.054
+    },
+    {
+      "run_id": "20261028T225333Z",
+      "seed": 602,
+      "control_index": 2,
+      "status": "complete",
+      "exit_code": 0,
+      "source_hashes_unchanged": true,
+      "controller_commit": "ed22910353c2dda6630aef5597bf651a421cf3f2",
+      "upstream_commit": "426ab710eb0ff4d283d55ecc3391fb5e884e8d61",
+      "validation_tokens": 10485760,
+      "steps": 1053,
+      "validation_loss": 3.2793,
+      "official_seconds": 31.067
     }
   ],
   "published_pr393_seconds": 31.285,
@@ -30,36 +44,36 @@
   "loss_precision": "Original unchanged control prints each loss to four decimal places.",
   "fresh_only": {
     "seconds": {
-      "n": 1,
-      "mean": 31.054,
-      "sample_std": null,
-      "standard_error": null,
+      "n": 2,
+      "mean": 31.060499999999998,
+      "sample_std": 0.009192388155426303,
+      "standard_error": 0.006500000000000838,
       "minimum": 31.054,
-      "maximum": 31.054
+      "maximum": 31.067
     },
     "loss": {
-      "n": 1,
-      "mean": 3.2794,
-      "sample_std": null,
-      "standard_error": null,
-      "minimum": 3.2794,
+      "n": 2,
+      "mean": 3.27935,
+      "sample_std": 7.071067811848996e-05,
+      "standard_error": 4.9999999999883464e-05,
+      "minimum": 3.2793,
       "maximum": 3.2794
     }
   },
   "combined_with_original": {
     "seconds": {
-      "n": 2,
-      "mean": 31.0765,
-      "sample_std": 0.031819805153395844,
-      "standard_error": 0.022500000000000853,
+      "n": 3,
+      "mean": 31.073333333333334,
+      "sample_std": 0.023158871590243046,
+      "standard_error": 0.013370780746754801,
       "minimum": 31.054,
       "maximum": 31.099
     },
     "loss": {
-      "n": 2,
-      "mean": 3.2779499999999997,
-      "sample_std": 0.002050609665440919,
-      "standard_error": 0.0014499999999999513,
+      "n": 3,
+      "mean": 3.2784,
+      "sample_std": 0.0016462077633154404,
+      "standard_error": 0.0009504384952922213,
       "minimum": 3.2765,
       "maximum": 3.2794
     }
