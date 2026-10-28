@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T22:29:35.134012+00:00",
+  "utc": "2026-10-28T22:32:29.590504+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": "20261028T222932Z",
-  "current_hypothesis": "Change only the common learning-rate floor from 0.30 to 0.20 on the doubled-table recipe.",
+  "current_full_run": null,
+  "current_hypothesis": "Halve only sparse ngram weight decay at original floor 0.30.",
   "planned_followups": [
     "Immediately run three fresh frozen-code seeds after a qualifying control-beating result",
     "Use the dense-width result to choose a capacity/time follow-up; triple ngram capacity is a prepared isolated alternative",
@@ -31,7 +31,7 @@
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2_floor020.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2_ngramwd050.json",
   "queued_screen": [],
   "status": "active",
   "near_target": {
