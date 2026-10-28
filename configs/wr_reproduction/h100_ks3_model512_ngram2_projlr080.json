@@ -1,0 +1,52 @@
+{
+  "name": "pr393-cubic-fp8-model512-ngram2-projlr080",
+  "architecture": "PR393 variant: residual width512, four128-dimensional attention heads, eight64-channel MUDD groups, ngram width512. All five top1-eight-expert MoE sites use1536 rank-one cubic KS3 charts; dense hidden width2816.",
+  "geometry_optimizer": {
+    "adam_betas": [
+      0.9,
+      0.99
+    ],
+    "lr_multiplier": 0.125
+  },
+  "geometry_averaging": "Replicated geometry follows original MoE tail-average and bank-blend ticks and rates; no geometry norm rescaling.",
+  "environment": {
+    "TRAIN_SEED": "413",
+    "KS3_H100_OPT": "fp8-native",
+    "KS3_H100_TRANSPORT": "fp8",
+    "KS3_H100_PACK_ROWS": "16",
+    "TRITON_PTXAS_PATH": "/root/venvs/h100-ptxas-13.3/ptxas",
+    "KS3_H100_RANK": "1",
+    "KS3_FP8_CUBIC": "1",
+    "KS3_FP8_DW": "tma",
+    "KS3_FP8_MM": "tma",
+    "KS3_FP8_MM_TILE": "128x256",
+    "KS3_FP8_GATHER": "tiled",
+    "KS3_FP8_VJP_ROWS": "128",
+    "KS3_FP8_VJP_WARPS": "4",
+    "KS3_FP8_TMA_STORES": "1",
+    "KS3_FP8_PACKED_TRANSPORT": "1",
+    "KS3_FP8_LAYOUT_TILE": "64",
+    "KS3_FP8_TMA_OUTPUTS": "1",
+    "KS3_H100_GEOMETRY_TAIL": "1",
+    "KS3_H100_FUSED_ANVIL": "1",
+    "KS3_H100_WIDTH": "1536",
+    "KS3_H100_PROJECTION_LR": "0.8",
+    "KS3_H100_NGRAM_LR_SCALE": "1.15"
+  },
+  "validation_tokens": 10485760,
+  "scheduled_steps": 981,
+  "total_steps": 1217,
+  "base_run": "20261028T221144Z",
+  "hypothesis": "Increase only KS3 projection learning rate from 2/3 to 0.8 on the 512-residual,1536-chart recipe. The inherited compensation kept the original 768/1024 effective factor fixed; test whether the wider aspect-ratio experts benefit from a 20% stronger update while dense/head/table rates remain fixed.",
+  "model_dim": 512,
+  "dense_width": 2816,
+  "growth_steps": 216,
+  "status": "prepared_not_run",
+  "effective_ks3_shape_factor": {
+    "previous": 1.1547005383792515,
+    "candidate": 1.3856406460551018,
+    "candidate_multiplier": 0.8
+  },
+  "ngram_multiplier": 2,
+  "memory_estimate": "Adds10.83GB decimal (10.09GiB) per GPU to the BF16 sharded ngram table, plus~85MB row optimizer state. Prior512 peak26464MiB and reserved42626MiB leave room on80GB H100."
+}
