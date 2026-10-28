@@ -21,13 +21,13 @@ def producer_checks(rows,router,grad,g,xs,gs,ps,ds):
     h=torch.empty(m,n,device='cuda',dtype=x.dtype);ht=torch.empty(n,m,device='cuda',dtype=x.dtype)
     maxima=torch.empty(tr.cdiv(m,64)*tr.cdiv(n,32),device='cuda')
     hd,htd=fp8.store_descriptors(h,ht,64)
-    fp8._geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,num_warps=4)
+    fp8._geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,CUBIC_ONLY=fp8.CUBIC_ONLY,num_warps=4)
     pairs['geometry']=(h,ht)
     dc=torch.empty(m,n,device='cuda',dtype=torch.float8_e5m2);dct=torch.empty(n,m,device='cuda',dtype=dc.dtype)
     part=torch.empty(tr.cdiv(m,fp8.VJP_ROWS),n,8,device='cuda');v=torch.randn_like(c)*.01
     maxima=torch.empty(tr.cdiv(m,fp8.VJP_ROWS)*tr.cdiv(n,32),device='cuda')
     dcd,dctd=fp8.store_descriptors(dc,dct,fp8.VJP_ROWS)
-    fp8._vjp_prepared[(tr.cdiv(m,fp8.VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,rows.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=fp8.VJP_ROWS,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,num_warps=fp8.VJP_WARPS)
+    fp8._vjp_prepared[(tr.cdiv(m,fp8.VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,rows.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=fp8.VJP_ROWS,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=fp8.CUBIC_ONLY,num_warps=fp8.VJP_WARPS)
     pairs['geometry_gradient']=(dc,dct)
     gg=torch.empty(m,768,device='cuda',dtype=dc.dtype);gt=torch.empty(768,m,device='cuda',dtype=dc.dtype)
     dg=torch.empty(m,device='cuda');y=torch.randn(m,768,device='cuda',dtype=torch.bfloat16)
@@ -67,13 +67,18 @@ def main():
     reference_variant=os.environ.get('KS3_FP8_REFERENCE_VARIANT','separate-dx-prepared-128-gate-tanh')
     rank=int(os.environ.get('KS3_H100_RANK','1'))
     optimized.install(reference_variant);core.BF16_TUNED_KERNELS=True
+    assert fp8.CUBIC_ONLY==optimized.CUBIC_ONLY
     packing=packing_check();cases=[];oracle=[]
     for t in map(int,os.environ.get('KS3_FP8_CHECK_TOKENS','16384,49152').split(',')):
         n=1024;rows=torch.randn(t,768,device='cuda',dtype=torch.bfloat16).requires_grad_()
         router=(torch.randn(8,768,device='cuda',dtype=torch.bfloat16)*.02).requires_grad_();post=scalar(.8).requires_grad_()
         w1=torch.randn(8,n,768,device='cuda',dtype=torch.bfloat16)*.02;w2=torch.randn_like(w1)*.02
         up=core.pack(w1.reshape(-1,768)).reshape_as(w1);down=torch.stack([core.pack(w.T) for w in w2])
-        g=torch.randn(8,n//rank,6*rank+2,device='cuda')*.01;g[...,6*rank]=.75;g.requires_grad_()
+        g=torch.randn(8,n//rank,6*rank+2,device='cuda')*.01;g[...,6*rank]=.75
+        if fp8.CUBIC_ONLY:
+            assert rank==1
+            g[...,4:6]=0.
+        g.requires_grad_()
         bank=torch.empty(16,n,768,device='cuda',dtype=torch.bfloat16);flag=torch.zeros((),device='cuda',dtype=torch.int32)
         grad=torch.randn_like(rows)*.02;gp=torch.randn(t,8,device='cuda')*.002
         us=up.float().abs().amax((1,2)).clamp_min(1e-12)/448;ws=down.float().abs().amax((1,2)).clamp_min(1e-12)/448
@@ -112,6 +117,7 @@ def main():
             print(json.dumps(dict(tokens=t,warm=warm,finite=finite,ps=ps.item(),ds=ds.item(),pa=pa.item(),da=da.item())),flush=True)
             ps.copy_(pa*1.03/448);ds.copy_(da*1.25/57344)
         actual=run('fp8');errors={key:err(a,b) for key,a,b in zip(('output','dx','router','post','geometry','weights'),actual,ref)}
+        if fp8.CUBIC_ONLY:assert torch.count_nonzero(actual[4][...,4:])==0
         assert all(torch.isfinite(a).all() for a in actual)
         assert max(errors.values())<.15,errors
         cache_errors=None
@@ -139,7 +145,7 @@ def main():
     from triton.backends.nvidia.compiler import get_ptxas
     assembler=get_ptxas(90)
     output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,
-                implementation=dict(rank=rank,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
+                implementation=dict(rank=rank,cubic_only=fp8.CUBIC_ONLY,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
                 ptxas=dict(path=assembler.path,version=assembler.version,sha256=hashlib.sha256(Path(assembler.path).read_bytes()).hexdigest()))
     Path(os.environ.get('KS3_FP8_CHECK_OUTPUT','research_results/wr_reproduction/h100-research/fp8-micro.json')).write_text(json.dumps(output,indent=2)+'\n')
 if __name__=='__main__':main()

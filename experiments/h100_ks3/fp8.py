@@ -22,6 +22,7 @@ FUSE_GEOMETRY=os.environ.get('KS3_FP8_FUSE_GEOMETRY','0')=='1'
 MM_IMPL=os.environ.get('KS3_FP8_MM','pointer')
 PACKED_TRANSPORT=os.environ.get('KS3_FP8_PACKED_TRANSPORT','0')=='1'
 LAYOUT_TILE=int(os.environ.get('KS3_FP8_LAYOUT_TILE','0'))
+CUBIC_ONLY=os.environ.get('KS3_FP8_CUBIC','0')=='1'
 assert LAYOUT_TILE in (0,32,64,128)
 assert MM_IMPL in ('pointer','tma')
 assert DW_IMPL in ('legacy','tma') and VJP_ROWS in (32,64,128)
@@ -76,6 +77,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
     pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],num_warps=4)
     rank=(g.shape[-1]-2)//6;prepared=prepare_geometry(g,n)
     if FUSE_GEOMETRY and rank!=1:raise ValueError('Fused FP8 up projection currently requires rank1')
+    if CUBIC_ONLY and (rank!=1 or FUSE_GEOMETRY):raise ValueError('Cubic FP8 currently requires rank1 and separate geometry')
     h=torch.empty(m,n,device=rows.device,dtype=x.dtype);ht=torch.empty(n,m,device=rows.device,dtype=x.dtype)
     if FUSE_GEOMETRY and MM_IMPL=='tma':
         from experiments.h100_ks3.tma_mm import mm as tma_mm
@@ -90,7 +92,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
         c=mm(x,up.transpose(1,2),table,xs,us)
         maxima=torch.empty(tr.cdiv(m,64)*tr.cdiv(n,32),device=rows.device)
         hd,htd=store_descriptors(h,ht,64)
-        _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,num_warps=4)
+        _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,CUBIC_ONLY=CUBIC_ONLY,num_warps=4)
     torch.maximum(pa,maxima.amax(),out=pa)
     out=torch.empty_like(rows)
     y=mm(h,down.transpose(1,2),table,ps,ws,dtype=rows.dtype,mode=2,SRC=src,GATE=scale,SCATTER=out,ROWS=rows.shape[0])
@@ -114,7 +116,7 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
     dc=torch.empty(m,n,device=c.device,dtype=torch.float8_e5m2);dct=torch.empty(n,m,device=c.device,dtype=dc.dtype)
     part=torch.empty(tr.cdiv(m,VJP_ROWS),n,8,device=c.device);maxima=torch.empty(tr.cdiv(m,VJP_ROWS)*tr.cdiv(n,32),device=c.device)
     dcd,dctd=store_descriptors(dc,dct,VJP_ROWS)
-    _vjp_prepared[(tr.cdiv(m,VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=VJP_ROWS,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,num_warps=VJP_WARPS)
+    _vjp_prepared[(tr.cdiv(m,VJP_ROWS),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=VJP_ROWS,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=CUBIC_ONLY,num_warps=VJP_WARPS)
     torch.maximum(da,maxima.amax(),out=da)
     dg=torch.empty_like(g);core._reduce[(8,n)](part,dg,offs,n,part.shape[0],tr.next_power_of_2(part.shape[0]),BM=VJP_ROWS,RANK=rank,num_warps=4)
     dw(ht,gt,bank[(2*layer+1)*8:(2*layer+2)*8],offs,ps,gs,flag)

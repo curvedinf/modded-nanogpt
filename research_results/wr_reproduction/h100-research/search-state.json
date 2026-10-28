@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T20:04:12.502249+00:00",
+  "utc": "2026-10-28T20:05:03.783303+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.279222727,
     "code_commit": "5bf1c30b78fb4130cd2e073f002b7d81de0080d1"
   },
-  "current_full_run": null,
-  "current_hypothesis": null,
+  "current_full_run": "20261028T200453Z",
+  "current_hypothesis": "Rank-two FP8 with TMA products, coalesced64x64 cached-weight layouts and packed weight+scale transport; original batch schedule.",
   "planned_followups": [
     "Screen cubic-only learned KS3 geometry, with frozen warp coefficients, against the corresponding frozen-parameter oracle.",
     "Test smaller first-stage batch if other candidates do not supply sufficient savings.",
@@ -30,6 +30,6 @@
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "Restore original batch schedule. Prefer FP8 TMA+coalesced weight layouts if the eight-rank and rank2 gates pass.",
-  "queued_screen": "8-rank FP8 coalesced weight layouts, then rank1/rank2 FP8/TMA block gates."
+  "next_model_candidate": "Choose from FP8/cubic geometry combination or directed projection-rate tuning after full validation.",
+  "queued_screen": null
 }
