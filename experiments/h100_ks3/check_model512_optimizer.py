@@ -26,12 +26,13 @@ def main():
     candidate.install()
     dim=int(os.environ.get('KS3_CHECK_MODEL_DIM','512'))
     width=int(os.environ.get('KS3_H100_WIDTH','1536'))
+    dense_width=int(os.environ.get('KS3_CHECK_DENSE_WIDTH','2816'))
     assert dim in (512,640)
     rows=[]
     for name,shape,margin,function in [
         ('qk',(4,256,dim),1.05,shared),
         ('vo',(2,dim,dim),1.05,shared),
-        ('dense',(2,2816,dim),1.05,shared),
+        ('dense',(2,dense_width,dim),1.05,shared),
         ('ks3',(10,width,dim),1.1,candidate.cascade),
     ]:
         grad=torch.randn(shape,device='cuda',dtype=torch.bfloat16)*.01

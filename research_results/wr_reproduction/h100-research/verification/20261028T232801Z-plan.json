@@ -30,7 +30,7 @@
   "validation_tokens": 10485760,
   "comparative_pruning": false,
   "discovery_excluded_from_statistics": true,
-  "status": "2_of_3_complete",
+  "status": "complete_loss_target_not_verified",
   "completed": [
     {
       "run_id": "20261028T233059Z",
@@ -43,6 +43,12 @@
       "seed": 702,
       "seconds": 31.00863251,
       "loss": 3.283313036
+    },
+    {
+      "run_id": "20261028T233656Z",
+      "seed": 703,
+      "seconds": 31.079024103,
+      "loss": 3.282528877
     }
   ]
 }

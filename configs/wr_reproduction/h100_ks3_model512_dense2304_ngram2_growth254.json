@@ -42,7 +42,7 @@
   "model_dim": 512,
   "dense_width": 2304,
   "growth_steps": 254,
-  "status": "qualifying_discovery_pending_independent_seeds",
+  "status": "single_seed_qualifying_but_fresh_verification_failed",
   "effective_ks3_shape_factor": {
     "incumbent": 1.1547005383792515,
     "candidate": 1.7320508075688772,
@@ -54,5 +54,6 @@
   "official_seconds": 30.999908618,
   "validation_loss": 3.279639244,
   "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f",
-  "manifest_sha256": "52957425f8db19350d29564fc34a8070856d99fa3bb3a00eae26be96287dde1f"
+  "manifest_sha256": "52957425f8db19350d29564fc34a8070856d99fa3bb3a00eae26be96287dde1f",
+  "verification_summary": "research_results/wr_reproduction/h100-research/verification/20261028T232801Z.json"
 }

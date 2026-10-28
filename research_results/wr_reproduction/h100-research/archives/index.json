@@ -18,5 +18,17 @@
   "ks3-20261028T232801Z.tar.gz": {
     "bytes": 1002238,
     "sha256": "d8a7dff26fdf97fd2d6e3368abf9b1a79995b9113f0ac6b2b1ebe5349d6fb976"
+  },
+  "verification-20261028T233059Z.tar.gz": {
+    "bytes": 1002463,
+    "sha256": "289e9b22c02d757fa2c11a9f9a9bc812bf0745e9a53dca23f72470fe3bd65b04"
+  },
+  "verification-20261028T233358Z.tar.gz": {
+    "bytes": 1002484,
+    "sha256": "6d0b6ba1d427a612d620c169d8c68f446b2a0e1d6b02507eaca552c09ae5d656"
+  },
+  "verification-20261028T233656Z.tar.gz": {
+    "bytes": 1002416,
+    "sha256": "05daeda932cba597165e89bdc374c9b7b59d4cecc9ff351eaded10c12f069fd9"
   }
 }
