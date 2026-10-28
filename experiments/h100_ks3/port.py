@@ -32,6 +32,9 @@ def publish(bank,packed,lo,hi):
 
 def install(optimization=None):
     from wr_reproduction import ks3_moe as ks,ks3_bf16_gemm as gemm
+    if os.environ.get('KS3_H100_GEOMETRY_TAIL','0') == '1':
+        from experiments.h100_ks3.geometry_tail import install as install_geometry_tail
+        install_geometry_tail()
     if os.environ.get('KS3_H100_FUSED_ANVIL','0') == '1':
         from experiments.h100_ks3.moe_optimizer import install as install_fused_optimizer
         install_fused_optimizer()
