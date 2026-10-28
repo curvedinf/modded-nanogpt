@@ -126,7 +126,7 @@ def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.
         else:
             out=tl.minimum(tl.maximum(dc/tl.load(SCALE),-57344.),57344.).to(tl.float8e5)
         if DCT_DESC is not None:
-            DCT_DESC.store([tl.program_id(1)*32,tl.program_id(0)*BM],tl.trans(out))
+            DCT_DESC.store([tl.program_id(1)*BC,tl.program_id(0)*BM],tl.trans(out))
         else:
             tl.store(DCT+cols[None,:]*M+rows[:,None],out,mask)
         if NATIVE_OUT is not None:
@@ -139,7 +139,7 @@ def _vjp_prepared(V,C,G,DC,PART,TILES,SRC,M:tl.constexpr,N:tl.constexpr,ROWS:tl.
         else:tl.atomic_max(AMAX,largest)
     else:out=dc
     if DC_DESC is not None:
-        DC_DESC.store([tl.program_id(0)*BM,tl.program_id(1)*32],out)
+        DC_DESC.store([tl.program_id(0)*BM,tl.program_id(1)*BC],out)
     else:
         tl.store(DC+rows[:,None]*N+cols[None,:],out,mask)
     off=(tl.program_id(0)*N+cols)*(4 if COMPACT_PART else 8);t2=t*t;t3=t2*t

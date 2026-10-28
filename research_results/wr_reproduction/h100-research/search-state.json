@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T22:46:03.622265+00:00",
+  "utc": "2026-10-28T22:47:46.312829+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -19,7 +19,7 @@
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
   "current_full_run": null,
-  "current_hypothesis": "Four short paired wider-column KS3 backward-tile screens.",
+  "current_hypothesis": "User-directed +2 growth updates on the closest fast near-target recipe.",
   "planned_followups": [
     "Immediately run three fresh frozen-code seeds after a qualifying control-beating result",
     "Test higher floor 0.40 if sparse-table decay does not qualify; lower floor 0.20 was worse",
@@ -31,7 +31,7 @@
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2_projlr080.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2_plus2.json",
   "queued_screen": [],
   "status": "active",
   "near_target": {
