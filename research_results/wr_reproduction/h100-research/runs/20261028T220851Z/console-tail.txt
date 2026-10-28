@@ -1,0 +1,60 @@
+[graph:step] rank 1 self-check rel: no_grad eager 8.93e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 9.91e-05 (sign -), grad eager 0.00e+00
+Resetting Model
+CUDA graphs sealed: 12 step, 4 optimizer, 5 fp8 refresh; addresses unchanged across the reset
+[barrier] rank 0 waited 0.4 ms before the clock start
+step:25/1217 train_time:436ms step_avg:17.46ms
+step:50/1217 train_time:771ms step_avg:15.42ms
+step:75/1217 train_time:1094ms step_avg:14.58ms
+step:100/1217 train_time:1428ms step_avg:14.28ms
+step:125/1217 train_time:1752ms step_avg:14.01ms
+step:150/1217 train_time:2087ms step_avg:13.91ms
+step:175/1217 train_time:2410ms step_avg:13.77ms
+step:200/1217 train_time:2745ms step_avg:13.72ms
+step:225/1217 train_time:3068ms step_avg:13.64ms
+step:250/1217 train_time:3403ms step_avg:13.61ms
+step:275/1217 train_time:3726ms step_avg:13.55ms
+step:300/1217 train_time:4199ms step_avg:14.00ms
+step:325/1217 train_time:4747ms step_avg:14.61ms
+step:350/1217 train_time:5304ms step_avg:15.15ms
+step:375/1217 train_time:5857ms step_avg:15.62ms
+step:400/1217 train_time:6419ms step_avg:16.05ms
+step:425/1217 train_time:6963ms step_avg:16.38ms
+step:450/1217 train_time:7521ms step_avg:16.71ms
+step:475/1217 train_time:8072ms step_avg:16.99ms
+step:500/1217 train_time:8634ms step_avg:17.27ms
+step:525/1217 train_time:9178ms step_avg:17.48ms
+step:550/1217 train_time:9735ms step_avg:17.70ms
+step:575/1217 train_time:10287ms step_avg:17.89ms
+step:600/1217 train_time:10850ms step_avg:18.08ms
+step:625/1217 train_time:11636ms step_avg:18.62ms
+step:650/1217 train_time:12438ms step_avg:19.14ms
+step:675/1217 train_time:13235ms step_avg:19.61ms
+step:700/1217 train_time:14048ms step_avg:20.07ms
+step:725/1217 train_time:14831ms step_avg:20.46ms
+step:750/1217 train_time:15634ms step_avg:20.84ms
+step:775/1217 train_time:16429ms step_avg:21.20ms
+step:800/1217 train_time:17240ms step_avg:21.55ms
+step:825/1217 train_time:18028ms step_avg:21.85ms
+step:850/1217 train_time:18831ms step_avg:22.15ms
+step:875/1217 train_time:19628ms step_avg:22.43ms
+step:900/1217 train_time:20437ms step_avg:22.71ms
+step:925/1217 train_time:21228ms step_avg:22.95ms
+step:950/1217 train_time:22031ms step_avg:23.19ms
+step:975/1217 train_time:22847ms step_avg:23.43ms
+step:1000/1217 train_time:23694ms step_avg:23.69ms
+step:1025/1217 train_time:24519ms step_avg:23.92ms
+step:1050/1217 train_time:25359ms step_avg:24.15ms
+step:1075/1217 train_time:26194ms step_avg:24.37ms
+step:1100/1217 train_time:27043ms step_avg:24.58ms
+step:1125/1217 train_time:27869ms step_avg:24.77ms
+step:1150/1217 train_time:28649ms step_avg:24.91ms
+step:1175/1217 train_time:29486ms step_avg:25.09ms
+step:1200/1217 train_time:30313ms step_avg:25.26ms
+step:1216/1217 train_time:30643ms step_avg:25.20ms
+step:1217/1217 train_time:30658ms step_avg:25.19ms
+step:1217/1217 val_loss:3.2818 train_time:31018ms step_avg:25.49ms
+[wr-result] steps:1217 loss:3.281791210 seconds:31.017690161
+[ks3-geometry] coefficient_rms_by_layer:[0.014281673356890678, 0.019112611189484596, 0.02143089659512043, 0.021194500848650932, 0.026982635259628296] nonzero_fraction_by_layer:[0.6666666865348816, 0.6666666865348816, 0.6666666865348816, 0.6666666865348816, 0.6666666865348816]
+step:1217 cplm_diag nll:3.2818 lm_nll:3.4001 alpha:0.1385 a_sink:0.5255 copy_share:0.0861
+peak memory allocated: 37320 MiB reserved: 54084 MiB
