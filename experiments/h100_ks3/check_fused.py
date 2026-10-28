@@ -16,6 +16,8 @@ def main():
     core.BF16_TUNED_KERNELS=True
     width=int(os.environ.get('KS3_H100_WIDTH','1024'))
     rank=int(os.environ.get('KS3_H100_RANK','1'))
+    cubic=os.environ.get('KS3_MICRO_CUBIC','0')=='1'
+    if cubic and rank!=1:raise ValueError('Cubic frozen-parameter oracle covers rank1')
     cases=[]
     for t in [int(v) for v in os.environ.get('KS3_MICRO_TOKENS','1,257,16384,32768,40960,49152').split(',')]:
         rows=torch.randn(t,768,device='cuda',dtype=torch.bfloat16).requires_grad_()
@@ -24,7 +26,9 @@ def main():
         w1=torch.randn(8,width,768,device='cuda',dtype=torch.bfloat16)*.02
         w2=torch.randn_like(w1)*.02
         up=core.pack(w1.reshape(-1,768)).reshape_as(w1);down=torch.stack([core.pack(w.T) for w in w2])
-        g=(torch.randn(8,width//rank,6*rank+2,device='cuda')*.01);g[...,6*rank]=.75;g.requires_grad_()
+        g=(torch.randn(8,width//rank,6*rank+2,device='cuda')*.01);g[...,6*rank]=.75
+        if cubic:g[...,4:6]=0.
+        g.requires_grad_()
         bank=torch.empty(16,width,768,device='cuda',dtype=torch.bfloat16)
         grad=torch.randn_like(rows)*.02;gp=torch.randn(t,8,device='cuda')*.002
         def run():
@@ -35,11 +39,19 @@ def main():
             matrix.run,matrix.dw,core.RoutedKS3,core.backward=original
             if v!='original':opt.install(v)
         setup('original');ref=[v.detach().clone() for v in run()]
+        if cubic:ref[4][...,4:]=0.
         variants={}
         for v in os.environ.get('KS3_MICRO_VARIANTS','original,tiles,gather,fused,fused-input,fused-dx,fused-input-dx,fused-vjp-dx').split(','):
             setup(v)
             try:
-                actual=run();errors={n:err(a,b) for n,a,b in zip(['output','dx','router','post','geometry','weights'],actual,ref)}
+                actual=run()
+                if cubic:
+                    # Verify freezing outside CUDA graph capture, then compare
+                    # only the trainable cubic coefficients with the oracle.
+                    if opt.CUBIC_ONLY and core.RoutedKS3 is opt.Routed:
+                        assert torch.count_nonzero(actual[4][...,4:])==0
+                    actual[4][...,4:]=0.
+                errors={n:err(a,b) for n,a,b in zip(['output','dx','router','post','geometry','weights'],actual,ref)}
                 assert all(torch.isfinite(x).all() for x in actual)
                 post_audit={'absolute_error':float((actual[3]-ref[3]).abs().max()),'reference':float(ref[3].flatten()[0])}
                 # A single signed scalar reduction is more cancellation-sensitive

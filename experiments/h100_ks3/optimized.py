@@ -9,6 +9,7 @@ from wr_reproduction.ks3_bf16_gather import gather
 VARIANT='fused';PACK_INPUT=False;FUSE_VJP=False;FUSE_DX=False;SEPARATE=False;PREPARE=False;FAST_GATE=False;VJP_ROWS=64
 FAST_TANH_FORWARD=False;FAST_TANH_BACKWARD=False
 CACHE_DTYPE=torch.float32;V_DTYPE=torch.float32
+CUBIC_ONLY=False
 ORIGINAL_ROUTED=core.RoutedKS3
 
 def tiles(m,n):return (128,128,64,8,3) if m<=32768 else (64,256,64,8,4)
@@ -46,7 +47,8 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
         from wr_reproduction.ks3_prepared_geometry import _geometry_prepared
         if FAST_TANH_FORWARD:
             from experiments.h100_ks3.native_geometry import _geometry_prepared
-        _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,BM=64,RANK=rank,num_warps=4,PREPARED=prepared)
+        extra={'CUBIC_ONLY':CUBIC_ONLY} if FAST_TANH_FORWARD else {}
+        _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,BM=64,RANK=rank,num_warps=4,PREPARED=prepared,**extra)
     else:
         if 'f128' in VARIANT:bm,bn,bk,nw,st=128,128,64,8,3
         gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](rows if PACK_INPUT else x,w,c,table,m,n,d,*w.stride(),bm,bn,bk,1,G=g,H=h,SRC=src,ROWS=rows.shape[0],PACK_INPUT=PACK_INPUT,XPACK=x,PREPARED=prepared if PREPARE else None,NATIVE_TANH=FAST_TANH_FORWARD,num_warps=nw,num_stages=st)
@@ -77,7 +79,8 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,x:torch.Tensor,c:torch.Tensor
             from wr_reproduction.ks3_prepared_geometry import _vjp_prepared
             if FAST_TANH_BACKWARD:
                 from experiments.h100_ks3.native_geometry import _vjp_prepared
-            _vjp_prepared[(tr.cdiv(m,bm),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],BM=bm,RANK=rank,num_warps=4,PREPARED=prepared)
+            extra={'CUBIC_ONLY':CUBIC_ONLY} if FAST_TANH_BACKWARD else {}
+            _vjp_prepared[(tr.cdiv(m,bm),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],BM=bm,RANK=rank,num_warps=4,PREPARED=prepared,**extra)
         else:core._vjp[(tr.cdiv(m,bm),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,grad.shape[0],BM=bm,RANK=1,num_warps=4)
     dg=torch.empty_like(g);core._reduce[(8,n)](part,dg,offs,n,part.shape[0],tr.next_power_of_2(part.shape[0]),BM=bm,RANK=rank,num_warps=4)
     dw(h,gg,bank[(2*layer+1)*8:(2*layer+2)*8],offs);dw(dc,x,bank[2*layer*8:(2*layer+1)*8],offs)
@@ -120,13 +123,16 @@ class Routed(torch.autograd.Function):
         return (result,dl.T@rows,(ds*gate).sum().to(post.dtype).reshape(post.shape),None,None,None,None,dg,None,None,None)[:ctx.argument_count]
 
 def install(variant='fused'):
-    global VARIANT,PACK_INPUT,FUSE_VJP,FUSE_DX,PREPARE,FAST_GATE,VJP_ROWS,SEPARATE,FAST_TANH_FORWARD,FAST_TANH_BACKWARD,CACHE_DTYPE,V_DTYPE
+    global VARIANT,PACK_INPUT,FUSE_VJP,FUSE_DX,PREPARE,FAST_GATE,VJP_ROWS,SEPARATE,FAST_TANH_FORWARD,FAST_TANH_BACKWARD,CACHE_DTYPE,V_DTYPE,CUBIC_ONLY
     VARIANT=variant;PACK_INPUT='input' in variant;FUSE_VJP='vjp' in variant;FUSE_DX='dx' in variant
     SEPARATE='separate' in variant
     PREPARE='prepared' in variant;FAST_GATE='gate' in variant;VJP_ROWS=128 if '128' in variant else 64
     FAST_TANH_BACKWARD='tanh' in variant;FAST_TANH_FORWARD=FAST_TANH_BACKWARD and 'tanhb' not in variant
     CACHE_DTYPE=torch.float16 if 'fp16cache' in variant else torch.bfloat16 if 'bf16cache' in variant else torch.float32
     V_DTYPE=torch.float16 if 'fp16cache' in variant or 'fp16v' in variant else torch.bfloat16 if 'bf16cache' in variant or 'bf16v' in variant else torch.float32
+    CUBIC_ONLY='cubic' in variant
+    if CUBIC_ONLY and not (FAST_TANH_FORWARD and PREPARE and SEPARATE and not FUSE_VJP):
+        raise ValueError('Cubic-only KS3 requires separate native prepared geometry')
     if CACHE_DTYPE!=torch.float32 and not SEPARATE:
         raise ValueError('Reduced preactivation cache requires separate geometry')
     if V_DTYPE!=torch.float32 and not (FAST_TANH_FORWARD and PREPARE and not FUSE_VJP):

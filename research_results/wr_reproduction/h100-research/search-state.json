@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T19:41:08.609540+00:00",
+  "utc": "2026-10-28T19:43:25.627629+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,26 +18,17 @@
     "loss": 3.279867172,
     "code_commit": "1e9609ebde4dfb2b3cfabdd110330b5314129d60"
   },
-  "current_full_run": null,
-  "current_hypothesis": null,
-  "queued_screen": "FP8 producer/oracle/paired block tests under pinned ptxas13.3",
-  "next_structural_candidate": "Remove parallel dense branch at layer8 if more promising than dropping layer4",
+  "current_full_run": "20261028T194142Z",
+  "current_hypothesis": "Native FP8 with TMA dual stores, original width1024/rank1/geometryLR0.125 and all five KS3 MoEs.",
   "planned_followups": [
-    "choose full FP8 only if its correctness and paired timing gates pass",
-    "full depth candidate atwidth1024 to isolate bank/depth effect",
-    "combine compatible successful changes and tune schedule/optimizer",
-    "three independent seeds after a faster-than-control qualifying configuration"
+    "Screen cubic-only learned KS3 geometry, with frozen warp coefficients, against the corresponding frozen-parameter oracle.",
+    "Test smaller first-stage batch if other candidates do not supply sufficient savings.",
+    "Promote only full WR validation <=3.28; collect three fresh independent seeds after a faster-than-control qualifier."
   ],
   "reference": {
     "run": "20261028T180502Z",
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "prepared_system_candidate": "Fuse MoE ANVIL at unchanged margin1.1; numerical/timing gate before enabling",
-  "queued_screens": [
-    "FP8 TMA dual stores, GPU0, compared with BF16+FP16 VJP cache",
-    "Rank-two512-chart/1024-feature prepared KS3, GPU1",
-    "Native-tanh fused forward64/128-row tiles, GPU2"
-  ],
-  "next_model_candidate": "Choose from rank-two KS3, geometry-rate response, and smaller first-stage batch using completed numerical/timing evidence."
+  "next_model_candidate": "BF16 width1024 rank2/512 charts, geometryLR0.125, original dense architecture."
 }
