@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T21:51:23.519120+00:00",
+  "utc": "2026-10-28T21:55:23.605817+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": "20261028T214955Z",
-  "current_hypothesis": "Add20 late updates to1280-chart512-wide model to recover the0.004430742 CE target gap. Warm final KS3 BF16 packing kernels with warmup weights before reset; all final shipped-weight packing still executes on-clock. Compare official full-validation time and loss.",
+  "current_full_run": "20261028T215505Z",
+  "current_hypothesis": "Intermediate640-wide model,1280-chart KS3,1133updates after all core/optimizer gates pass.",
   "planned_followups": [
     "If the candidate meets<=3.28 faster than31.099s, freeze and run three independent seeds",
     "Otherwise choose one correction from measured loss/time rather than repeat an unchanged recipe"
@@ -29,9 +29,7 @@
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_experts1280_growth256.json",
-  "queued_screen": [
-    "KS3-only TMA dW launch tiles, if current full run is not a control-beating candidate"
-  ],
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model640.json",
+  "queued_screen": [],
   "status": "active"
 }
