@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T21:58:14.102449+00:00",
+  "utc": "2026-10-28T22:06:44.350629+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,18 +18,19 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": "20261028T215705Z",
-  "current_hypothesis": "Corrected640-wide model,1280chartKS3,1133updates;128-lane value-gradient accumulation validated.",
+  "current_full_run": "20261028T220551Z",
+  "current_hypothesis": "Double sparse ngram capacity on512/1536 and shorten20growthupdates; allfiveKS3MoEs retained.",
   "planned_followups": [
-    "If the candidate meets<=3.28 faster than31.099s, freeze and run three independent seeds",
-    "Otherwise choose one correction from measured loss/time rather than repeat an unchanged recipe"
+    "Immediate three fresh frozen-config seeds after a qualifying win",
+    "Otherwise choose table-capacity or geometry/dense-width follow-up from measured time/loss",
+    "640 slowdown remains unresolved; a100-update training-only profile is available if useful"
   ],
   "reference": {
     "run": "20261028T180502Z",
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model640.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2.json",
   "queued_screen": [],
   "status": "active"
 }
