@@ -33,6 +33,10 @@ def main():
         old_grad();new_grad()
         assert torch.equal(gg.view(torch.uint8),ng.view(torch.uint8))
         assert torch.equal(gt.view(torch.uint8),nt.view(torch.uint8))
+        print(json.dumps(dict(rows=rows,gate_gradient_bitwise=torch.equal(ds,nd),
+                              gate_gradient_max_abs=float((ds-nd).abs().max()),
+                              gate_gradient_relative_rms=float((ds-nd).square().mean().sqrt()/ds.square().mean().sqrt()),
+                              finite=bool(torch.isfinite(nd).all()))),flush=True)
         assert torch.equal(ds,nd)
         timing={}
         for name,fn in [('pointer_input',old_pack),('tma_input',new_pack),('pointer_gradient',old_grad),('tma_gradient',new_grad)]:

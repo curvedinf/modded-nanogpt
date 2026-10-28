@@ -35,7 +35,8 @@ def gradient_kernel(G,Y,SRC,SCALE,GG,GT,DS,GS,ROWS:tl.constexpr,M:tl.constexpr,
         y=tl.load(Y+rows[:,None]*D+cols[None,:],valid[:,None],other=0.).to(tl.float32)
         ds+=tl.sum(grad*y,1)
         q=tl.minimum(tl.maximum(grad*scale[:,None]*inverse,-57344.),57344.).to(tl.float8e5)
-        GG.store([tl.program_id(0)*BM,d0],q)
+        # Retain the original row-major store to anchor the reduction layout.
+        tl.store(GG+rows[:,None]*D+cols[None,:],q,rows[:,None]<M)
         GT.store([d0,tl.program_id(0)*BM],tl.trans(q))
     tl.store(DS+rows,ds,rows<M)
 
@@ -50,6 +51,5 @@ def pack(rows,primary,dual,src,scale):
 
 def gather(grad,y,src,scale,primary,dual,dgate,gs,rows,m):
     assert m%64==0 and primary.shape==(m,768)
-    a=TensorDescriptor.from_tensor(primary,[64,128])
     b=TensorDescriptor.from_tensor(dual,[128,64])
-    gradient_kernel[(m//64,)](grad,y,src,scale,a,b,dgate,gs,rows,m,num_warps=4,enable_fp_fusion=False)
+    gradient_kernel[(m//64,)](grad,y,src,scale,primary,b,dgate,gs,rows,m,num_warps=4,enable_fp_fusion=False)
