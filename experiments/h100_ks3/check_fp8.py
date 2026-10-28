@@ -4,7 +4,7 @@ from pathlib import Path
 import torch,triton as tr,triton.testing
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'wr_reproduction/pr393/upstream'))
 from experiments.h100_ks3.port import install
-install()
+MODEL_CLASS=install()
 from experiments.h100_ks3 import optimized,fp8
 from wr_reproduction import ks3_moe as core
 
@@ -25,6 +25,17 @@ def post_jacobian_check(rows,router,post,up,down,g,caches,scales,grad,actual_pos
     gate,expert=probs.max(-1);_,src,_,table,_=moe_dispatch(expert,8)
     scale=gate*post.float().reshape(())
     by=optimized.forward(rows,src,table,up,down,g,scale)[1]
+    if not fp8.GS32:
+        # Exercise the final-validation core independently of the optimized
+        # BF16 training oracle, including unquantized input/hidden packing.
+        previous_mode=core.BF16_TUNED_KERNELS
+        core.BF16_TUNED_KERNELS=False
+        try:eval_y,eval_x,_,_=core.forward(rows,src,table,up,down,g,False)
+        finally:core.BF16_TUNED_KERNELS=previous_mode
+        valid_src=src<rows.shape[0]
+        assert torch.equal(eval_x[valid_src],rows[src[valid_src].long()])
+        assert torch.count_nonzero(eval_x[~valid_src])==0
+        assert err(by,eval_y)<.006,('native BF16 validation mismatch',err(by,eval_y))
     us,ws,xs,_,ps,pa,_,_=scales
     fy=fp8.forward(rows,src,table,caches[0],caches[2],us,ws,xs,ps,pa,g,scale)[1]
     valid=src<rows.shape[0];source=src[valid].long()
@@ -44,13 +55,13 @@ def producer_checks(rows,router,grad,g,xs,gs,ps,ds):
     probs=torch.softmax((rows@router.T).float(),-1);gate,expert=probs.max(-1)
     _,src,offs,table,_=moe_dispatch(expert,8);m=src.numel();rank=(g.shape[-1]-2)//6;n=g.shape[1]*rank
     x=torch.empty(m,768,device='cuda',dtype=torch.float8_e4m3fn);xt=torch.empty(768,m,device='cuda',dtype=x.dtype)
-    fp8.pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],num_warps=4)
+    fp8.pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],GS32=fp8.GS32,num_warps=4)
     pairs={'input':(x,xt)}
     c=torch.randn(m,n,device='cuda')*.5;prepared=fp8.prepare_geometry(g,n)
     h=torch.empty(m,n,device='cuda',dtype=x.dtype);ht=torch.empty(n,m,device='cuda',dtype=x.dtype)
     maxima=torch.empty(tr.cdiv(m,64)*tr.cdiv(n,32),device='cuda')
     hd,htd=fp8.store_descriptors(h,ht,64)
-    fp8._geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,CUBIC_ONLY=fp8.CUBIC_ONLY,num_warps=4)
+    fp8._geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,GS32=fp8.GS32,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,CUBIC_ONLY=fp8.CUBIC_ONLY,num_warps=4)
     pairs['geometry']=(h,ht)
     dc=torch.empty(m,n,device='cuda',dtype=torch.float8_e5m2);dct=torch.empty(n,m,device='cuda',dtype=dc.dtype)
     part=torch.empty(tr.cdiv(m,fp8.VJP_ROWS),n,4 if fp8.COMPACT_PART else 8,device='cuda');v=torch.randn_like(c)*.01
@@ -70,9 +81,16 @@ def packing_check():
     n=1024;d=768
     bank=torch.randn(80,n,d,device='cuda',dtype=torch.bfloat16)*.03
     scale=bank.float().abs().amax((1,2))/448
+    if not fp8.GS32:
+        from types import SimpleNamespace
+        dummy=SimpleNamespace(moe_bank=bank,ks3_up=torch.empty(5,8,n,d,device='cuda',dtype=bank.dtype),ks3_down=torch.empty(5,8,d,n,device='cuda',dtype=bank.dtype))
+        MODEL_CLASS.prepare_ks3_eval(dummy)
+        original=bank.view(5,2,8,n,d)
+        assert torch.equal(dummy.ks3_up,original[:,0])
+        assert torch.equal(dummy.ks3_down,original[:,1].transpose(-1,-2))
     q=torch.empty(80,n*d,device='cuda',dtype=torch.float8_e4m3fn)
     partial=torch.empty(80,n*d//4096,device='cuda')
-    fp8.publish[(n*d//4096,80)](bank,q,scale,partial,0,n,num_warps=4)
+    fp8.publish[(n*d//4096,80)](bank,q,scale,partial,0,n,GS32=fp8.GS32,num_warps=4)
     up=torch.empty(5,8,n,d,device='cuda',dtype=q.dtype);upt=torch.empty(5,8,d,n,device='cuda',dtype=q.dtype)
     down=torch.empty_like(upt);downt=torch.empty_like(up)
     fp8.layouts[(tr.cdiv(n*d,1024),80)](q,up,upt,down,downt,n,num_warps=4)
@@ -81,7 +99,7 @@ def packing_check():
         weight=bank[slot] if slot%16<8 else bank[slot].T
         a=weight.float().reshape(weight.shape[0],-1,32)
         s=(a.abs().amax(-1)/127).clamp(2**-24,65504).half().float()
-        values=(a/s[:,:,None]).round().clamp(-127,127)*s[:,:,None]
+        values=(a/s[:,:,None]).round().clamp(-127,127)*s[:,:,None] if fp8.GS32 else a
         expected=(values/scale[slot]).clamp(-448,448).to(q.dtype).reshape(weight.shape)
         differences+=int((q[slot].view(torch.uint8)!=expected.flatten().view(torch.uint8)).sum());elements+=expected.numel()
         layer=slot//16;expert=slot%8
@@ -89,7 +107,7 @@ def packing_check():
         assert torch.equal(primary[layer,expert].flatten().view(torch.uint8),q[slot].view(torch.uint8))
         assert torch.equal(dual[layer,expert].T.contiguous().view(torch.uint8),primary[layer,expert].view(torch.uint8))
     assert differences/elements<1e-5,(differences,elements)
-    return dict(dual_layouts_bitwise=True,torch_rounding_different_elements=differences,elements=elements)
+    return dict(native_eval_weight_copy_bitwise=True if not fp8.GS32 else None,dual_layouts_bitwise=True,torch_rounding_different_elements=differences,elements=elements)
 def main():
     torch.cuda.set_device(0);torch.set_num_threads(1);torch.manual_seed(419)
     torch.backends.cuda.matmul.allow_tf32=False
@@ -102,7 +120,8 @@ def main():
         n=1024;rows=torch.randn(t,768,device='cuda',dtype=torch.bfloat16).requires_grad_()
         router=(torch.randn(8,768,device='cuda',dtype=torch.bfloat16)*.02).requires_grad_();post=scalar(.8).requires_grad_()
         w1=torch.randn(8,n,768,device='cuda',dtype=torch.bfloat16)*.02;w2=torch.randn_like(w1)*.02
-        up=core.pack(w1.reshape(-1,768)).reshape_as(w1);down=torch.stack([core.pack(w.T) for w in w2])
+        up=core.pack(w1.reshape(-1,768)).reshape_as(w1) if fp8.GS32 else w1
+        down=torch.stack([core.pack(w.T) for w in w2]) if fp8.GS32 else w2.transpose(1,2).contiguous()
         g=torch.randn(8,n//rank,6*rank+2,device='cuda')*.01;g[...,6*rank]=.75
         if fp8.CUBIC_ONLY:
             assert rank==1
@@ -175,7 +194,7 @@ def main():
     from triton.backends.nvidia.compiler import get_ptxas
     assembler=get_ptxas(90)
     output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,
-                implementation=dict(rank=rank,cubic_only=fp8.CUBIC_ONLY,compact_part=fp8.COMPACT_PART,fuse_cubic_vjp=fp8.FUSE_CUBIC_VJP,cubic_vjp_tile=os.environ.get('KS3_FP8_CUBIC_VJP_TILE'),cubic_vjp_warps=os.environ.get('KS3_FP8_CUBIC_VJP_WARPS'),cubic_vjp_stages=os.environ.get('KS3_FP8_CUBIC_VJP_STAGES','3'),cubic_vjp_flatten=os.environ.get('KS3_FP8_CUBIC_VJP_FLATTEN','1'),fused_up_flatten=os.environ.get('KS3_FP8_FUSED_UP_FLATTEN','1'),tma_outputs=fp8.TMA_OUTPUTS,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,c_dtype=str(fp8.C_DTYPE),v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,fused_up_tile=os.environ.get('KS3_FP8_FUSED_UP_TILE'),mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
+                implementation=dict(gs32=fp8.GS32,rank=rank,cubic_only=fp8.CUBIC_ONLY,compact_part=fp8.COMPACT_PART,fuse_cubic_vjp=fp8.FUSE_CUBIC_VJP,cubic_vjp_tile=os.environ.get('KS3_FP8_CUBIC_VJP_TILE'),cubic_vjp_warps=os.environ.get('KS3_FP8_CUBIC_VJP_WARPS'),cubic_vjp_stages=os.environ.get('KS3_FP8_CUBIC_VJP_STAGES','3'),cubic_vjp_flatten=os.environ.get('KS3_FP8_CUBIC_VJP_FLATTEN','1'),fused_up_flatten=os.environ.get('KS3_FP8_FUSED_UP_FLATTEN','1'),tma_outputs=fp8.TMA_OUTPUTS,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,c_dtype=str(fp8.C_DTYPE),v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,fused_up_tile=os.environ.get('KS3_FP8_FUSED_UP_TILE'),mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
                 ptxas=dict(path=assembler.path,version=assembler.version,sha256=hashlib.sha256(Path(assembler.path).read_bytes()).hexdigest()))
     Path(os.environ.get('KS3_FP8_CHECK_OUTPUT','research_results/wr_reproduction/h100-research/fp8-micro.json')).write_text(json.dumps(output,indent=2)+'\n')
 if __name__=='__main__':main()

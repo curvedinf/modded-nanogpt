@@ -7,7 +7,7 @@ from ks3_research.vendor.ks3_int8 import _half_scale, _spine_features
 from experiments.h100_ks3.native_geometry import _spine_features as _native_spine_features
 
 @tr.jit
-def _features(x,G,e,cols,N:tl.constexpr,BM:tl.constexpr,BN:tl.constexpr,PREPARED=None,NATIVE_TANH:tl.constexpr=False,CUBIC_ONLY:tl.constexpr=False):
+def _features(x,G,e,cols,N:tl.constexpr,BM:tl.constexpr,BN:tl.constexpr,PREPARED=None,NATIVE_TANH:tl.constexpr=False,CUBIC_ONLY:tl.constexpr=False,GS32:tl.constexpr=True):
     tl.static_assert(not CUBIC_ONLY or NATIVE_TANH)
     valid=cols<N;gp=G+(e*N+cols)*8
     if PREPARED is not None:
@@ -34,6 +34,7 @@ def _features(x,G,e,cols,N:tl.constexpr,BM:tl.constexpr,BN:tl.constexpr,PREPARED
     x=tl.minimum(tl.maximum(x,-65504.),65504.)
     if NATIVE_TANH:h=_native_spine_features(x,x,c0,c1,c2,c3,c4,c5,ps,scale,shift,G,valid,1,CUBIC_ONLY)
     else:h=_spine_features(x,x,c0,c1,c2,c3,c4,c5,ps,scale,shift,G,valid,1)
+    if not GS32:return h
     groups=tl.reshape(h,(BM,BN//32,32))
     hs=_half_scale(tl.max(tl.abs(groups),2))
     q=tl.minimum(tl.maximum(libdevice.nearbyint(groups/hs[:,:,None]),-127.),127.)

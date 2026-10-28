@@ -5,12 +5,13 @@ from triton.language.extra import libdevice
 from ks3_research.vendor.ks3_int8 import _half_scale
 
 @tr.jit
-def pack_input(A,O,OT,SRC,SCALE,M:tl.constexpr,ROWS:tl.constexpr,D:tl.constexpr=768,BM:tl.constexpr=128):
+def pack_input(A,O,OT,SRC,SCALE,M:tl.constexpr,ROWS:tl.constexpr,D:tl.constexpr=768,BM:tl.constexpr=128,GS32:tl.constexpr=True):
     rows=tl.program_id(0)*BM+tl.arange(0,BM);cols=tl.program_id(1)*32+tl.arange(0,32)
     source=tl.load(SRC+rows,rows<M,other=ROWS)
     value=tl.load(A+source[:,None].to(tl.int64)*D+cols[None,:],(rows[:,None]<M)&(source[:,None]<ROWS)&(cols[None,:]<D),other=0.).to(tl.float32)
-    s=_half_scale(tl.max(tl.abs(value),1))
-    value=tl.minimum(tl.maximum(libdevice.nearbyint(value/s[:,None]),-127.),127.)*s[:,None]
+    if GS32:
+        s=_half_scale(tl.max(tl.abs(value),1))
+        value=tl.minimum(tl.maximum(libdevice.nearbyint(value/s[:,None]),-127.),127.)*s[:,None]
     value=tl.minimum(tl.maximum(value/tl.load(SCALE),-448.),448.).to(tl.float8e4nv)
     mask=(rows[:,None]<M)&(cols[None,:]<D)
     # Requires the corrected ptxas >=13.3, enforced by the FP8 model overlay.
@@ -18,15 +19,17 @@ def pack_input(A,O,OT,SRC,SCALE,M:tl.constexpr,ROWS:tl.constexpr,D:tl.constexpr=
     tl.store(OT+cols[None,:]*M+rows[:,None],value,mask)
 
 @tr.jit
-def publish(BANK,Q,SCALE,PART,LO:tl.constexpr,N:tl.constexpr,D:tl.constexpr=768,BR:tl.constexpr=128,PACK_SCALE:tl.constexpr=False):
+def publish(BANK,Q,SCALE,PART,LO:tl.constexpr,N:tl.constexpr,D:tl.constexpr=768,BR:tl.constexpr=128,PACK_SCALE:tl.constexpr=False,GS32:tl.constexpr=True):
     slot=LO+tl.program_id(1);down=(slot%16)>=8
     r=tl.where(down,D,N);c=tl.where(down,N,D)
     tile=tl.program_id(0);rows=(tile//(c//32))*BR+tl.arange(0,BR);cols=(tile%(c//32))*32+tl.arange(0,32)
     mask=(rows[:,None]<r)&(cols[None,:]<c)
     off=tl.where(down,cols[None,:]*D+rows[:,None],rows[:,None]*D+cols[None,:])
     a=tl.load(BANK+slot*N*D+off,mask,other=0.).to(tl.float32)
-    s=_half_scale(tl.max(tl.abs(a),1))
-    value=tl.minimum(tl.maximum(libdevice.nearbyint(a/s[:,None]),-127.),127.)*s[:,None]
+    if GS32:
+        s=_half_scale(tl.max(tl.abs(a),1))
+        value=tl.minimum(tl.maximum(libdevice.nearbyint(a/s[:,None]),-127.),127.)*s[:,None]
+    else:value=a
     q=tl.minimum(tl.maximum(value/tl.load(SCALE+slot),-448.),448.).to(tl.float8e4nv)
     stride=N*D+(64 if PACK_SCALE else 0)
     tl.store(Q+slot*stride+rows[:,None]*c+cols[None,:],q,mask)

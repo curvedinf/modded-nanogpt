@@ -12,6 +12,9 @@ from experiments.h100_ks3.native_geometry import _geometry_prepared,_vjp_prepare
 from wr_reproduction.ks3_prepared_geometry import _prepare
 from wr_reproduction import ks3_moe as core
 
+# This flag covers projection weights, inputs and hidden activations.
+# Learned KS3 coefficient packing and its straight-through gradient remain.
+GS32=os.environ.get('KS3_H100_GS32','1')=='1'
 DW_IMPL=os.environ.get('KS3_FP8_DW','legacy')
 VJP_ROWS=int(os.environ.get('KS3_FP8_VJP_ROWS','128'))
 VJP_WARPS=int(os.environ.get('KS3_FP8_VJP_WARPS','4'))
@@ -80,9 +83,10 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
             scale:torch.Tensor)->tuple[torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor]:
     m=src.numel();n=up.shape[1];d=768
     x=torch.empty(m,d,device=rows.device,dtype=torch.float8_e4m3fn);xt=torch.empty(d,m,device=rows.device,dtype=x.dtype)
-    pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],num_warps=4)
+    pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],GS32=GS32,num_warps=4)
     rank=(g.shape[-1]-2)//6;prepared=prepare_geometry(g,n)
     if FUSE_GEOMETRY and rank!=1:raise ValueError('Fused FP8 up projection currently requires rank1')
+    if not GS32 and FUSE_GEOMETRY and MM_IMPL!='tma':raise ValueError('Native-only FP8 fusion requires TMA')
     if C_DTYPE!=torch.float32 and not (FUSE_GEOMETRY and MM_IMPL=='tma'):
         raise ValueError('Reduced C cache requires fused TMA geometry to preserve forward FP32 inputs')
     if CUBIC_ONLY and (rank!=1 or (FUSE_GEOMETRY and MM_IMPL!='tma')):raise ValueError('Cubic FP8 requires rank1 and separate geometry or TMA fusion')
@@ -91,7 +95,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
         from experiments.h100_ks3.tma_mm import mm as tma_mm
         # Geometry consumes the original FP32 accumulator; only the saved
         # backward input is rounded when a reduced cache is selected.
-        c,maxima=tma_mm(x,up.transpose(1,2),table,xs,us,C_DTYPE,g,prepared,h,ht,ps,cubic_only=CUBIC_ONLY)
+        c,maxima=tma_mm(x,up.transpose(1,2),table,xs,us,C_DTYPE,g,prepared,h,ht,ps,cubic_only=CUBIC_ONLY,gs32=GS32)
     elif FUSE_GEOMETRY:
         bm,bn,bk,nw,st=64,128,128,4,4
         c=torch.empty(m,n,device=rows.device,dtype=torch.float32);weight=up.transpose(1,2)
@@ -102,7 +106,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
         c=mm(x,up.transpose(1,2),table,xs,us)
         maxima=torch.empty(tr.cdiv(m,64)*tr.cdiv(n,32),device=rows.device)
         hd,htd=store_descriptors(h,ht,64)
-        _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,CUBIC_ONLY=CUBIC_ONLY,num_warps=4)
+        _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,GS32=GS32,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,CUBIC_ONLY=CUBIC_ONLY,num_warps=4)
     torch.maximum(pa,maxima.amax(),out=pa)
     out=torch.empty_like(rows)
     y=mm(h,down.transpose(1,2),table,ps,ws,dtype=rows.dtype,mode=2,SRC=src,GATE=scale,SCATTER=out,ROWS=rows.shape[0])
@@ -189,6 +193,8 @@ def attach(base):
     from triton.backends.nvidia.compiler import get_ptxas
     if tuple(map(int,get_ptxas(90).version.split('.'))) < (13,3):
         raise RuntimeError('H100 FP8 dual stores require ptxas >=13.3; run setup_ptxas and set TRITON_PTXAS_PATH. See triton-lang/triton#11111.')
+    if not GS32 and int(os.environ.get('RANK','0'))==0:
+        print('[h100-ks3] Native FP8 inputs/weights/hidden; raw BF16 validation; learned KS3 coefficient packing retained.',flush=True)
     from track_1_short.model.moe import MOE_INDEX
     from track_1_short.perf.cuda_graphs import fp8_refresh_graphs as refresh
     class FP8GPT(base):
@@ -210,7 +216,7 @@ def attach(base):
                 maximum=torch.maximum(flat.amax(1),-flat.amin(1)).float()
             else:maximum=self.ks3_fp8_partial[lo:hi].amax(1)
             scales[lo:hi].copy_(maximum.clamp_min(1e-12)/448.)
-            publish[(n*768//4096,hi-lo)](self.moe_bank,self.ks3_fp8_transport,scales,self.ks3_fp8_partial,lo,n,PACK_SCALE=PACKED_TRANSPORT,num_warps=4)
+            publish[(n*768//4096,hi-lo)](self.moe_bank,self.ks3_fp8_transport,scales,self.ks3_fp8_partial,lo,n,PACK_SCALE=PACKED_TRANSPORT,GS32=GS32,num_warps=4)
             if lo==0 and hi==80:self.build_moe_cols()
         def gather_moe_f8(self):
             lo,hi=self._moe_lo,self._moe_hi;q=self.ks3_fp8_transport.view(torch.uint8);s=self.ks3_weight_scales.view(-1)
@@ -225,8 +231,23 @@ def attach(base):
                 build(self.ks3_fp8_transport,self.ks3_f8_up,self.ks3_f8_up_t,self.ks3_f8_down,self.ks3_f8_down_t,n,self.ks3_weight_scales,packed=PACKED_TRANSPORT,tile=LAYOUT_TILE)
             else:
                 layouts[(tr.cdiv(n*768,1024),80)](self.ks3_fp8_transport,self.ks3_f8_up,self.ks3_f8_up_t,self.ks3_f8_down,self.ks3_f8_down_t,n,PACK_SCALE=PACKED_TRANSPORT,SCALE_OUT=self.ks3_weight_scales,num_warps=4)
+        @torch.no_grad()
+        def prepare_ks3_eval(self):
+            if GS32:return super().prepare_ks3_eval()
+            n=self.ks3_up.shape[-2]
+            bank=self.moe_bank.view(5,2,8,n,768)
+            self.ks3_up.copy_(bank[:,0])
+            self.ks3_down.copy_(bank[:,1].transpose(-1,-2))
         def _moe(self,layer,normed,weights,post):
-            if not self.training:return super()._moe(layer,normed,weights,post)
+            if not self.training:
+                if GS32:return super()._moe(layer,normed,weights,post)
+                from track_1_short.perf.kernels import moe_mlp as moe
+                k=MOE_INDEX[layer];router=weights[k][2];rows=normed.reshape(-1,768)
+                probs=torch.softmax(torch.nn.functional.linear(rows,router).float(),-1)
+                gate,expert=probs.max(-1);dest,src,_,table,counts=moe.moe_dispatch(expert,8)
+                y,_,_,_=core.forward(rows,src,table,self.ks3_up[k],self.ks3_down[k],self.ks3_geometry[k],False)
+                out=y[dest.long()]*gate[:,None].to(y.dtype)
+                return out.reshape(normed.shape),8*(counts.float()/rows.shape[0]*probs.mean(0)).sum()
             k=MOE_INDEX[layer];w1,w2,router=weights[k];rows=normed.reshape(-1,768)
             if post is None:post=rows.new_ones(())
             caches=(self.ks3_f8_up[k],self.ks3_f8_up_t[k],self.ks3_f8_down[k],self.ks3_f8_down_t[k])

@@ -1,0 +1,14 @@
+PRODUCER_CHECK 17280 {"input": {"bitwise_equal": true, "finite": true}, "geometry": {"bitwise_equal": true, "finite": true}, "geometry_gradient": {"bitwise_equal": true, "finite": true}, "gathered_gradient": {"bitwise_equal": true, "finite": true}}
+{"tokens": 16384, "warm": 0, "finite": {"output": {"finite": 12582912, "elements": 12582912, "maximum": 0.6328125}, "dx": {"finite": 12582912, "elements": 12582912, "maximum": 0.01129150390625}, "router": {"finite": 6144, "elements": 6144, "maximum": 3.78125}, "post": {"finite": 1, "elements": 1, "maximum": 6.596988201141357}, "geometry": {"finite": 65536, "elements": 65536, "maximum": 0.4714779853820801}, "weights": {"finite": 12582912, "elements": 12582912, "maximum": 0.458984375}}, "ps": 1.0, "ds": 0.015625, "pa": 8.39483642578125, "da": 0.058491937816143036}
+{"tokens": 16384, "warm": 1, "finite": {"output": {"finite": 12582912, "elements": 12582912, "maximum": 0.640625}, "dx": {"finite": 12582912, "elements": 12582912, "maximum": 0.01123046875}, "router": {"finite": 6144, "elements": 6144, "maximum": 3.796875}, "post": {"finite": 1, "elements": 1, "maximum": 6.704000473022461}, "geometry": {"finite": 65536, "elements": 65536, "maximum": 0.4714779853820801}, "weights": {"finite": 12582912, "elements": 12582912, "maximum": 0.458984375}}, "ps": 0.01930062845349312, "ds": 1.275023123525898e-06, "pa": 8.39483642578125, "da": 0.058491937816143036}
+{"tokens": 16384, "warm": 2, "finite": {"output": {"finite": 12582912, "elements": 12582912, "maximum": 0.640625}, "dx": {"finite": 12582912, "elements": 12582912, "maximum": 0.01123046875}, "router": {"finite": 6144, "elements": 6144, "maximum": 3.796875}, "post": {"finite": 1, "elements": 1, "maximum": 6.704000473022461}, "geometry": {"finite": 65536, "elements": 65536, "maximum": 0.4714779853820801}, "weights": {"finite": 12582912, "elements": 12582912, "maximum": 0.458984375}}, "ps": 0.01930062845349312, "ds": 1.275023123525898e-06, "pa": 8.39483642578125, "da": 0.058491937816143036}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/root/modded-nanogpt/experiments/h100_ks3/check_fp8.py", line 181, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/root/modded-nanogpt/experiments/h100_ks3/check_fp8.py", line 162, in main
+    assert max(v for k,v in cache_errors.items() if k!='post')<.006 and cache_errors['post']<.02,cache_errors
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'output': 0.00010933721205219626, 'dx': 0.006340372376143932, 'router': 0.0006901712622493505, 'post': 5.1071976486127824e-05, 'geometry': 0.0009207630064338446, 'weights': 0.005157473962754011}

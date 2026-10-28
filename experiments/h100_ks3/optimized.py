@@ -10,6 +10,7 @@ VARIANT='fused';PACK_INPUT=False;FUSE_VJP=False;FUSE_DX=False;SEPARATE=False;PRE
 FAST_TANH_FORWARD=False;FAST_TANH_BACKWARD=False
 CACHE_DTYPE=torch.float32;V_DTYPE=torch.float32
 CUBIC_ONLY=False
+GS32=os.environ.get('KS3_H100_GS32','1')=='1'
 ORIGINAL_ROUTED=core.RoutedKS3
 
 def tiles(m,n):return (128,128,64,8,3) if m<=32768 else (64,256,64,8,4)
@@ -31,7 +32,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
         raise ValueError('Higher rank requires separate prepared geometry')
     x=torch.empty(m,d,device=rows.device,dtype=torch.bfloat16)
     if not PACK_INPUT:
-        core._pack[(tr.cdiv(m,128),24)](rows,x,m,d,*rows.stride(),SRC=src,INPUT_ROWS=rows.shape[0],ROWS_PER_TILE=128,GS32=True,num_warps=4)
+        core._pack[(tr.cdiv(m,128),24)](rows,x,m,d,*rows.stride(),SRC=src,INPUT_ROWS=rows.shape[0],ROWS_PER_TILE=128,GS32=GS32,num_warps=4)
     prepared=torch.empty(8,n,9,device=rows.device)
     if PREPARE:
         from wr_reproduction.ks3_prepared_geometry import _prepare
@@ -48,7 +49,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
         if FAST_TANH_FORWARD:
             from experiments.h100_ks3.native_geometry import _geometry_prepared
         extra={'CUBIC_ONLY':CUBIC_ONLY} if FAST_TANH_FORWARD else {}
-        _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,BM=64,RANK=rank,num_warps=4,PREPARED=prepared,**extra)
+        _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,BM=64,RANK=rank,GS32=GS32,num_warps=4,PREPARED=prepared,**extra)
     else:
         if 'f128' in VARIANT:bm,bn,bk,nw,st=128,128,64,8,3
         gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](rows if PACK_INPUT else x,w,c,table,m,n,d,*w.stride(),bm,bn,bk,1,G=g,H=h,SRC=src,ROWS=rows.shape[0],PACK_INPUT=PACK_INPUT,XPACK=x,PREPARED=prepared if PREPARE else None,NATIVE_TANH=FAST_TANH_FORWARD,num_warps=nw,num_stages=st)
@@ -131,6 +132,8 @@ def install(variant='fused'):
     CACHE_DTYPE=torch.float16 if 'fp16cache' in variant else torch.bfloat16 if 'bf16cache' in variant else torch.float32
     V_DTYPE=torch.float16 if 'fp16cache' in variant or 'fp16v' in variant else torch.bfloat16 if 'bf16cache' in variant or 'bf16v' in variant else torch.float32
     CUBIC_ONLY='cubic' in variant
+    if not GS32 and not (PREPARE and SEPARATE and FAST_TANH_FORWARD):
+        raise ValueError('Unquantized reference requires separate prepared native geometry')
     if CUBIC_ONLY and not (FAST_TANH_FORWARD and PREPARE and SEPARATE and not FUSE_VJP):
         raise ValueError('Cubic-only KS3 requires separate native prepared geometry')
     if CACHE_DTYPE!=torch.float32 and not SEPARATE:
