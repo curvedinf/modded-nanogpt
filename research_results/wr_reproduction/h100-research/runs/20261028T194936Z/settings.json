@@ -1,0 +1,25 @@
+{
+  "utc": "2026-10-28T19:49:36.068783+00:00",
+  "code_commit": "d35c4de022fe297deac415ca21968d44ff9c2451",
+  "hypothesis": "Rank-two KS3 at all five MoE sites:512 charts and1024 features, geometryLR0.125, original dense architecture and schedule. Test richer paired-feature geometry and measured lower block cost. Afterwards probe causal inference windows on frozen weights separately from the official20-block result.",
+  "variant": "separate-dx-prepared-128-gate-tanh-fp16v",
+  "seed": 413,
+  "scheduled_steps": 981,
+  "drop_dense_layer": null,
+  "drop_parallel_mlp": false,
+  "dense_width": 2816,
+  "first_batch_units": 8,
+  "final_window_blocks": 20,
+  "eval_probe_windows": "16,24,32",
+  "environment": {
+    "TRAIN_SEED": "413",
+    "KS3_H100_OPT": "separate-dx-prepared-128-gate-tanh-fp16v",
+    "KS3_H100_TRANSPORT": "codes",
+    "KS3_H100_PACK_ROWS": "16",
+    "KS3_H100_RANK": "2",
+    "KS3_H100_FUSED_ANVIL": "1"
+  },
+  "profile": false,
+  "screen_updates": 0,
+  "validation_protocol": "PR393 full final canonical mask, window extension and tail shipment"
+}

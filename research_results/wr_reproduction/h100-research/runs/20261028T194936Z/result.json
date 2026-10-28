@@ -1,0 +1,88 @@
+{
+  "run_id": "20261028T194936Z",
+  "status": "complete",
+  "exit_code": 0,
+  "settings": {
+    "utc": "2026-10-28T19:49:36.068783+00:00",
+    "code_commit": "d35c4de022fe297deac415ca21968d44ff9c2451",
+    "hypothesis": "Rank-two KS3 at all five MoE sites:512 charts and1024 features, geometryLR0.125, original dense architecture and schedule. Test richer paired-feature geometry and measured lower block cost. Afterwards probe causal inference windows on frozen weights separately from the official20-block result.",
+    "variant": "separate-dx-prepared-128-gate-tanh-fp16v",
+    "seed": 413,
+    "scheduled_steps": 981,
+    "drop_dense_layer": null,
+    "drop_parallel_mlp": false,
+    "dense_width": 2816,
+    "first_batch_units": 8,
+    "final_window_blocks": 20,
+    "eval_probe_windows": "16,24,32",
+    "environment": {
+      "TRAIN_SEED": "413",
+      "KS3_H100_OPT": "separate-dx-prepared-128-gate-tanh-fp16v",
+      "KS3_H100_TRANSPORT": "codes",
+      "KS3_H100_PACK_ROWS": "16",
+      "KS3_H100_RANK": "2",
+      "KS3_H100_FUSED_ANVIL": "1"
+    },
+    "profile": false,
+    "screen_updates": 0,
+    "validation_protocol": "PR393 full final canonical mask, window extension and tail shipment"
+  },
+  "code_commit": "d35c4de022fe297deac415ca21968d44ff9c2451",
+  "source_hashes_unchanged": true,
+  "manifest_sha256": "e8e03bcfc55a4c88aaf201187b428424249ca0157742ba4b1a2ee2f1a4db3a5c",
+  "timing_reference_eligible": true,
+  "log_directory": "/root/modded-nanogpt/logs/wr-reproduction/h100-research/20261028T194936Z",
+  "steps": 1053,
+  "validation_loss": 3.278706789,
+  "official_seconds": 35.393438115,
+  "validation_tokens": 10485760,
+  "target_met": true,
+  "terminal_comparison": {
+    "abort": false,
+    "below5_latched": true,
+    "signature_hash": "3c6f38211a910f7be1b1b53081714ec6098114ee1d98bc58053e4010b23e0699",
+    "candidate_elapsed_seconds": 35.393438115,
+    "reason": "within_one_sided_margin",
+    "gap": -0.007907628999999972,
+    "reference_run_id": "20261028T191520Z",
+    "reference_elapsed_seconds": 34.634042858,
+    "reference_age_seconds": 0.7593952570000013,
+    "reference_utc": null,
+    "reference_loss": 3.286614418,
+    "reference_signature_hash": "3c6f38211a910f7be1b1b53081714ec6098114ee1d98bc58053e4010b23e0699",
+    "reference_evidence": null,
+    "paired_text_uncertainty": {
+      "available": false
+    }
+  },
+  "inference_window_probes": [
+    {
+      "long_window_blocks": 20,
+      "loss": 3.279369592666626,
+      "tokens": 10485760,
+      "official_timing_eligible": false,
+      "interpretation": "Same frozen weights; exploratory inference architecture only"
+    },
+    {
+      "long_window_blocks": 16,
+      "loss": 3.2794578075408936,
+      "tokens": 10485760,
+      "official_timing_eligible": false,
+      "interpretation": "Same frozen weights; exploratory inference architecture only"
+    },
+    {
+      "long_window_blocks": 24,
+      "loss": 3.279784917831421,
+      "tokens": 10485760,
+      "official_timing_eligible": false,
+      "interpretation": "Same frozen weights; exploratory inference architecture only"
+    },
+    {
+      "long_window_blocks": 32,
+      "loss": 3.2802531719207764,
+      "tokens": 10485760,
+      "official_timing_eligible": false,
+      "interpretation": "Same frozen weights; exploratory inference architecture only"
+    }
+  ]
+}

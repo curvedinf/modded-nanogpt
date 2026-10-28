@@ -1,7 +1,7 @@
 {
-  "name": "h100-pr393-ks3-native-tanh-20261028",
-  "code_commit": "1e9609ebde4dfb2b3cfabdd110330b5314129d60",
-  "architecture": "PR393, only five MoE expert sites replaced by 1024-chart rank-one GS32/BF16 KS3; FP16 nonlinearities",
+  "name": "h100-pr393-ks3-rank2-20261028",
+  "code_commit": "d35c4de022fe297deac415ca21968d44ff9c2451",
+  "architecture": "PR393; all five MoE sites use512-chart rank-two GS32/BF16 KS3,1024 features, FP16 nonlinearities and VJP input cache",
   "geometry_optimizer": {
     "adam_betas": [
       0.9,
@@ -10,15 +10,18 @@
     "lr_multiplier": 0.125
   },
   "environment": {
-    "KS3_H100_OPT": "separate-dx-prepared-128-gate-tanh",
+    "TRAIN_SEED": "413",
+    "KS3_H100_OPT": "separate-dx-prepared-128-gate-tanh-fp16v",
     "KS3_H100_TRANSPORT": "codes",
-    "KS3_H100_PACK_ROWS": "16"
+    "KS3_H100_PACK_ROWS": "16",
+    "KS3_H100_RANK": "2",
+    "KS3_H100_FUSED_ANVIL": "1"
   },
-  "selected_run": "20261028T191044Z",
+  "selected_run": "20261028T194936Z",
   "seed_for_reported_result": 413,
-  "selection_criterion": "Fastest completed H100 KS3 full WR run meeting <=3.28 so far; one seed, narrow margin",
-  "measured_seconds": 35.911183984,
-  "measured_validation_loss": 3.279867172,
+  "selection_criterion": "Fastest completed H100 KS3 full WR run meeting<=3.28 so far; one seed",
+  "measured_seconds": 35.393438115,
+  "measured_validation_loss": 3.278706789,
   "validation_tokens": 10485760,
   "scheduled_steps": 981,
   "total_steps": 1053,

@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T19:50:01.974306+00:00",
+  "utc": "2026-10-28T19:56:31.293775+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -13,13 +13,13 @@
     "server has a couple of hours from user time-limit message"
   ],
   "best_ks3": {
-    "run": "20261028T191044Z",
-    "seconds": 35.911183984,
-    "loss": 3.279867172,
-    "code_commit": "1e9609ebde4dfb2b3cfabdd110330b5314129d60"
+    "run": "20261028T194936Z",
+    "seconds": 35.393438115,
+    "loss": 3.278706789,
+    "code_commit": "d35c4de022fe297deac415ca21968d44ff9c2451"
   },
-  "current_full_run": "20261028T194936Z",
-  "current_hypothesis": "Rank-two512-chart/1024-feature KS3 at all five MoE sites; original dense model and geometryLR0.125; frozen-weight window diagnostics follow official full validation.",
+  "current_full_run": null,
+  "current_hypothesis": null,
   "planned_followups": [
     "Screen cubic-only learned KS3 geometry, with frozen warp coefficients, against the corresponding frozen-parameter oracle.",
     "Test smaller first-stage batch if other candidates do not supply sufficient savings.",
@@ -30,5 +30,5 @@
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "Cubic-only KS3, supported by10 percent block speedup and frozen-warp correctness checks."
+  "next_model_candidate": "Rank-one cubic-only KS3 at all five MoE sites, original model and schedule."
 }

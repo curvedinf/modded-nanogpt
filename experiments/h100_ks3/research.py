@@ -20,7 +20,12 @@ def terminal_comparison(result):
             row=json.loads(line)
             if row.get('timing_reference_eligible') and row.get('status')=='complete' and 'validation_loss' in row:
                 references.append(point(row))
-    return decision(point(result),references,False,max_age=3.)
+    # Completed models remain available at every larger time budget. An age
+    # cutoff is appropriate for live learning-curve probes, but must not hide
+    # a faster completed control from a slower terminal result.
+    comparison=decision(point(result),references,False,max_age=result['official_seconds'])
+    comparison['scope']='best completed full-validation model available within this time budget'
+    return comparison
 
 def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 def append(name,data):

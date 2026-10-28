@@ -9,3 +9,4 @@ run_id,seconds,loss,target_met,timing_eligible,variant,code_commit
 20261028T192154Z,34.792350958,3.287367344,False,True,separate-dx-prepared-128-gate-tanh,86d0a3d970a653b403db83f671255ea572066e60
 20261028T193001Z,34.78260233,3.291225433,False,True,separate-dx-prepared-128-gate-tanh,826210fc5080d4892129434d671130fde57c3291
 20261028T193734Z,35.667240087,3.280144215,False,True,separate-dx-prepared-128-gate-tanh-fp16v,d463731471d12e2e5b36beef8508b1350ced2577
+20261028T194936Z,35.393438115,3.278706789,True,True,separate-dx-prepared-128-gate-tanh-fp16v,d35c4de022fe297deac415ca21968d44ff9c2451
