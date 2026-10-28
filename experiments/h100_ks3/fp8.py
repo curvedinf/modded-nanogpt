@@ -6,7 +6,7 @@ and owner-sharded weight refresh remain on the original training clock.
 """
 import torch,triton as tr
 from experiments.h100_ks3.h100_kernels import gemm
-from experiments.h100_ks3.fp8_kernels import publish,layouts,weight_gradient,gather_gate
+from experiments.h100_ks3.fp8_kernels import publish,layouts,weight_gradient,gather_gate,pack_input
 from experiments.h100_ks3.native_geometry import _geometry_prepared,_vjp_prepared
 from wr_reproduction.ks3_prepared_geometry import _prepare
 from wr_reproduction import ks3_moe as core
@@ -29,7 +29,7 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
             scale:torch.Tensor)->tuple[torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor,torch.Tensor]:
     m=src.numel();n=up.shape[1];d=768
     x=torch.empty(m,d,device=rows.device,dtype=torch.float8_e4m3fn);xt=torch.empty(d,m,device=rows.device,dtype=x.dtype)
-    core._pack[(tr.cdiv(m,128),24)](rows,x,m,d,*rows.stride(),SCALE=xs,OT=xt,SRC=src,INPUT_ROWS=rows.shape[0],FP8=True,ROWS_PER_TILE=128,GS32=True,num_warps=4)
+    pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],num_warps=4)
     prepared=torch.empty(8,n,9,device=rows.device);_prepare[(tr.cdiv(8*n,256),)](g,prepared,8*n)
     c=mm(x,up.transpose(1,2),table,xs,us)
     h=torch.empty(m,n,device=rows.device,dtype=x.dtype);ht=torch.empty(n,m,device=rows.device,dtype=x.dtype)

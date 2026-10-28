@@ -10,6 +10,31 @@ from wr_reproduction import ks3_moe as core
 
 def err(a,b):return ((a.float()-b.float()).square().mean().sqrt()/b.float().square().mean().sqrt().clamp_min(1e-12)).item()
 def scalar(x):return torch.tensor([x],device='cuda')
+def producer_checks(rows,router,grad,g,xs,gs,ps,ds):
+    from track_1_short.perf.kernels.moe_mlp import moe_dispatch
+    probs=torch.softmax((rows@router.T).float(),-1);gate,expert=probs.max(-1)
+    _,src,offs,table,_=moe_dispatch(expert,8);m=src.numel();n=g.shape[1]
+    x=torch.empty(m,768,device='cuda',dtype=torch.float8_e4m3fn);xt=torch.empty(768,m,device='cuda',dtype=x.dtype)
+    fp8.pack_input[(tr.cdiv(m,128),24)](rows,x,xt,src,xs,m,rows.shape[0],num_warps=4)
+    pairs={'input':(x,xt)}
+    c=torch.randn(m,n,device='cuda')*.5;prepared=torch.empty(8,n,9,device='cuda')
+    fp8._prepare[(tr.cdiv(8*n,256),)](g,prepared,8*n)
+    h=torch.empty(m,n,device='cuda',dtype=x.dtype);ht=torch.empty(n,m,device='cuda',dtype=x.dtype)
+    maxima=torch.empty(tr.cdiv(m,64)*tr.cdiv(n,32),device='cuda')
+    fp8._geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,PREPARED=prepared,num_warps=4)
+    pairs['geometry']=(h,ht)
+    dc=torch.empty(m,n,device='cuda',dtype=torch.float8_e5m2);dct=torch.empty(n,m,device='cuda',dtype=dc.dtype)
+    part=torch.empty(tr.cdiv(m,128),n,8,device='cuda');v=torch.randn_like(c)*.01
+    fp8._vjp_prepared[(tr.cdiv(m,128),tr.cdiv(n,32))](v,c,g,dc,part,table,src,m,n,rows.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=128,PREPARED=prepared,num_warps=4)
+    pairs['geometry_gradient']=(dc,dct)
+    gg=torch.empty(m,768,device='cuda',dtype=dc.dtype);gt=torch.empty(768,m,device='cuda',dtype=dc.dtype)
+    dg=torch.empty(m,device='cuda');y=torch.randn(m,768,device='cuda',dtype=torch.bfloat16)
+    fp8.gather_gate[(tr.cdiv(m,4),)](grad,y,src,gate,gg,gt,dg,gs,rows.shape[0],m,num_warps=4,enable_fp_fusion=False)
+    pairs['gathered_gradient']=(gg,gt)
+    result={name:dict(bitwise_equal=torch.equal(a.view(torch.uint8),b.T.view(torch.uint8)),finite=bool(torch.isfinite(a.float()).all()&torch.isfinite(b.float()).all())) for name,(a,b) in pairs.items()}
+    print('PRODUCER_CHECK',m,json.dumps(result),flush=True)
+    assert all(v['bitwise_equal'] and v['finite'] for v in result.values()),result
+    return result
 def packing_check():
     n=1024;d=768
     bank=torch.randn(80,n,d,device='cuda',dtype=torch.bfloat16)*.03
@@ -53,6 +78,7 @@ def main():
         caches=(uf,uf.transpose(1,2).contiguous(),wf,wf.transpose(1,2).contiguous())
         xs=scalar(8/448);gs=scalar(2**-6);ps=scalar(1.);pa=scalar(0.);ds=scalar(2**-6);da=scalar(0.)
         scales=(us,ws,xs,gs,ps,pa,ds,da)
+        producers=producer_checks(rows,router,grad,g,xs,gs,ps,ds)
         table=torch.arange(8,device='cuda',dtype=torch.int32).repeat_interleave(t//8//128)
         af=(rows.detach().float()/xs).clamp(-448,448).to(torch.float8_e4m3fn)
         actual=fp8.mm(af,uf.transpose(1,2),table,xs,us)
@@ -88,7 +114,7 @@ def main():
         for kind in ('bf16','fp8'):
             samples=[tr.testing.do_bench_cudagraph(lambda:run(kind),rep=40) for _ in range(3)]
             timing[kind]=dict(samples_ms=samples,median_ms=statistics.median(samples))
-        result=dict(tokens=t,errors_versus_bf16=errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
+        result=dict(tokens=t,producers=producers,errors_versus_bf16=errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
         cases.append(result);print(json.dumps(result),flush=True)
     output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases)
     Path('research_results/wr_reproduction/h100-research/fp8-micro.json').write_text(json.dumps(output,indent=2)+'\n')
