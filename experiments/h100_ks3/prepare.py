@@ -11,6 +11,8 @@ ROOT = Path(__file__).resolve().parents[2]
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--screen-updates', type=int, default=0)
+    parser.add_argument('--profile', action='store_true')
+    parser.add_argument('--study', default='h100-ks3')
     args = parser.parse_args()
     if args.screen_updates < 0:
         parser.error('screen updates must be nonnegative')
@@ -19,7 +21,7 @@ def main():
     for name, digest in manifest['files'].items():
         assert hashlib.sha256((upstream / name).read_bytes()).hexdigest() == digest, name
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
-    run = ROOT / 'logs/wr-reproduction/h100-ks3' / stamp
+    run = ROOT / 'logs/wr-reproduction' / args.study / stamp
     run.mkdir(parents=True)
     shutil.copytree(upstream, run / 'source', ignore=shutil.ignore_patterns('__pycache__'))
     path = run / 'source/train_gpt.py'
@@ -43,6 +45,10 @@ def main():
             return
 """ + marker
         source = source.replace(marker, replacement)
+    if args.profile:
+        source = source.replace('    barrier_start = time.perf_counter()', '    from experiments.h100_ks3 import profile_full\n    profile_full.start(env.rank)\n    barrier_start = time.perf_counter()')
+        source = source.replace('            model.eval()\n', '            profile_full.validation(env.rank)\n            model.eval()\n')
+        source = source.replace('    print0(f"peak memory allocated:', '    profile_full.stop(env.rank)\n    print0(f"peak memory allocated:')
     path.write_text(source)
     for folder in ['experiments/h100_ks3', 'wr_reproduction', 'ks3_research']:
         shutil.copytree(ROOT / folder, run / 'overlay' / folder,
