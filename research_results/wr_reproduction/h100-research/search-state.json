@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T19:56:31.293775+00:00",
+  "utc": "2026-10-28T19:59:38.418385+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -13,10 +13,10 @@
     "server has a couple of hours from user time-limit message"
   ],
   "best_ks3": {
-    "run": "20261028T194936Z",
-    "seconds": 35.393438115,
-    "loss": 3.278706789,
-    "code_commit": "d35c4de022fe297deac415ca21968d44ff9c2451"
+    "run": "20261028T195631Z",
+    "seconds": 34.938983384,
+    "loss": 3.279222727,
+    "code_commit": "5bf1c30b78fb4130cd2e073f002b7d81de0080d1"
   },
   "current_full_run": null,
   "current_hypothesis": null,
@@ -30,5 +30,6 @@
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "Rank-one cubic-only KS3 at all five MoE sites, original model and schedule."
+  "next_model_candidate": "Choose new FP8 TMA+packed transport after timing gates, otherwise smaller first-stage batch on the validated KS3 recipe.",
+  "queued_screen": "Eight-rank packed FP8 weight+scale transport, then fused TMA128x128 and128x256 block checks."
 }
