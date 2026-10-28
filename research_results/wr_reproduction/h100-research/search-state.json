@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T21:32:16.936707+00:00",
+  "utc": "2026-10-28T21:35:02.156022+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": "20261028T213158Z",
-  "current_hypothesis": "144 additional late updates for512/1536 model; target full CE<=3.28 within31.099s",
+  "current_full_run": null,
+  "current_hypothesis": "Extend measured512/1536 growth196 recipe by40 late updates to growth236. Adding144 previously recovered0.035527229 CE in4.337761772s; parent now30.33023438s/CE3.287868738. Aim for a faster qualifying KS3 point with projected time31.6s and CE near3.28. Keep all architecture, optimizer and evaluation settings fixed.",
   "planned_followups": [
     "If speed/quality tradeoff is promising, one directed schedule/rate follow-up",
     "Otherwise tune cubic geometry around the existing768-wide qualifying parent",
@@ -30,7 +30,7 @@
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model640.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_growth236.json",
   "queued_screen": [],
   "status": "active"
 }
