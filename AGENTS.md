@@ -72,3 +72,6 @@ The user reports about one hour of server time remaining and asks that it be use
 
 ## Additional H100 hour — 2026-10-28 21:59 UTC
 The user explicitly extends the server allocation by another hour. The working deadline moves from22:23UTC to23:23UTC, with final replication/evidence reserve from23:13UTC. Continue meaningful KS3 MoE optimizations and immediately run three fresh frozen-configuration verification seeds after a qualifying control-beating result. Keep logging, committing and pushing; honor any new stop.
+
+## User-authorized control calibration — 2026-10-28
+The user explicitly authorizes eleven new independent runs of the exact original PR393 control, to combine with the preserved original run for twelve total measurements. This supersedes the earlier prohibition on rerunning that control. Prioritize this calibration within the remaining server allocation; preserve exact control sources and all older measurements. Report both the eleven fresh runs and the combined twelve-run time/loss statistics. Suspend KS3 ablations while these controls use the GPUs.
