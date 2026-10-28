@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T20:35:54.390113+00:00",
+  "utc": "2026-10-28T20:37:51.547294+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,13 +18,13 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": "20261028T203538Z",
-  "current_hypothesis": "Native-only FP8 with matching raw BF16 inference and fused forward, original architecture/schedule.",
+  "current_full_run": null,
+  "current_hypothesis": "Validate1280-wide expert kernels before dense-to-KS3 capacity transfer.",
   "planned_followups": [
-    "Collect scaled small-batch full validation; preserve original-batch incumbent unless faster and qualifying.",
-    "Complete numerical and whole-block timing gates for queued variants.",
-    "Address measured fused VJP register spills with smaller tiles, more warps and non-flattened loops.",
-    "Three fresh independent unpruned seeds after a faster-than-control qualifier."
+    "Complete the native-only FP8 full WR validation and compare official time/loss.",
+    "Run queued numerical and timing checks for1280-wide KS3 experts under both quantization recipes.",
+    "Use quality margin to shorten the schedule, or test1280-wide KS3/2304-wide dense capacity reallocation.",
+    "Three fresh independent unpruned seeds with frozen code/config after a faster-than-control qualifier."
   ],
   "reference": {
     "run": "20261028T180502Z",

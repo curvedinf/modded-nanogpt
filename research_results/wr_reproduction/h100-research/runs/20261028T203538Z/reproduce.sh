@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export TRAIN_SEED=413
+export KS3_H100_OPT=fp8-native
+export KS3_H100_TRANSPORT=fp8
+export KS3_H100_PACK_ROWS=16
+export TRITON_PTXAS_PATH=/root/venvs/h100-ptxas-13.3/ptxas
+export KS3_H100_RANK=1
+export KS3_FP8_CUBIC=1
+export KS3_FP8_DW=tma
+export KS3_FP8_MM=tma
+export KS3_FP8_MM_TILE=128x256
+export KS3_FP8_GATHER=tiled
+export KS3_FP8_VJP_ROWS=128
+export KS3_FP8_VJP_WARPS=4
+export KS3_FP8_TMA_STORES=1
+export KS3_FP8_PACKED_TRANSPORT=1
+export KS3_FP8_LAYOUT_TILE=64
+export KS3_FP8_TMA_OUTPUTS=1
+export KS3_H100_GEOMETRY_TAIL=1
+export KS3_H100_FUSED_ANVIL=1
+export KS3_H100_GS32=0
+export KS3_FP8_FUSE_GEOMETRY=1
+export KS3_FP8_FUSED_UP_TILE=128x256
+exec /root/modded-nanogpt/logs/wr-reproduction/h100-research/20261028T203538Z/launch.sh

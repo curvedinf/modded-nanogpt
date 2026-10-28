@@ -1,0 +1,21 @@
+{
+  "utc": "2026-10-28T20:36:51.819512+00:00",
+  "original": {
+    "expert_width": 1024,
+    "dense_width": 2816,
+    "active_matrix_entries_per_token": 29491200,
+    "live_feedforward_parameters": 84541440,
+    "allocated_bank_parameters": 97517568
+  },
+  "candidate": {
+    "expert_width": 1280,
+    "dense_width": 2304,
+    "active_matrix_entries_per_token": 27525120,
+    "live_feedforward_parameters": 96337920,
+    "allocated_bank_parameters": 106954752
+  },
+  "active_matrix_work_change": -0.06666666666666665,
+  "live_parameter_change": 0.13953488372093026,
+  "allocated_bank_parameter_change": 0.09677419354838701,
+  "scope": "Static dimensions only. Five live dense branches and five top1-of8 KS3 MoE sites; excludes routing, nonlinearities, padding, optimizer costs, communication and shared model. Does not predict measured latency."
+}
