@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-28T20:58:01.262829+00:00",
+  "pr_url": "https://github.com/KellerJordan/modded-nanogpt/pull/367",
+  "upstream_commit": "e390cb25cf5c732ed4471c2ad861af28114e0a56",
+  "reported": {
+    "seconds_mean": 6.702,
+    "loss_mean": 3.27406,
+    "runs": 16,
+    "pr_state": "open"
+  },
+  "order": [
+    "Original PR367 full validation with unchanged512-wide dense model,540updates,37B training-token retrieval index,original48buildthreads.",
+    "Port eight-expert top-one KS3 MoE at layers1,3,5,6,8 while retaining PR367 retrieval and shared model/training settings.",
+    "Screen and optimize on the new base; three fresh independent seeds after a qualifying win."
+  ],
+  "baseline_status": "building_extension_and_downloading_pinned_corpus",
+  "previous_study": "h100-research; stopped and preserved"
+}

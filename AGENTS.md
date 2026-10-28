@@ -60,3 +60,6 @@ The user authorizes continuous optimization on the current 8xH100 node toward fu
 
 ## H100 time budget and substantial KS3 constraint — 2026-10-28
 The server has approximately a couple of hours remaining; favor short paired implementation screens and promising full WR runs over broad sweeps or redundant runs. The solution must use KS3 significantly. Current search retains KS3 at all five MoE feedforward sites; an MLP endpoint or token KS3 presence does not satisfy the user.
+
+## Latest H100 target migration — 2026-10-28
+The user directs reproducing PR367 and moving KS3 work to it with MoE. Pin PR367 at e390cb25cf5c732ed4471c2ad861af28114e0a56, preserve its immutable source in wr_reproduction/pr367/upstream, and first validate its exact original dense/retrieval recipe. Then port substantial KS3 with eight-expert top-one MoE. Preserve all PR393 evidence; its h100-research STOP markers now prevent further old-base ablations. New work uses logs/wr-reproduction/h100-pr367-* and research_results/wr_reproduction/h100-pr367. Keep recording and committing/pushing results. Earlier continuous research authorization carries to this new target; honor any new stop.

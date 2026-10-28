@@ -1,0 +1,51 @@
+Traceback (most recent call last):
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 798, in hf_raise_for_status
+    response.raise_for_status()
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://huggingface.co/api/kernels/devenpzak/flash-attn3-12864/tree/64c1e6d1f2780e7931839f41426ddcdb564a7cb9/build?recursive=false&expand=false'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/root/modded-nanogpt/experiments/h100_ks3/check_fp8.py", line 7, in <module>
+    MODEL_CLASS=install()
+                ^^^^^^^^^
+  File "/root/modded-nanogpt/experiments/h100_ks3/port.py", line 67, in install
+    base=ks.install('bf16',bf16_kernel_mode='tuned',charts=width//rank,subspace_rank=rank,projection_lr_multiplier=projection_lr,geometry_config={'lr_mul':geometry_lr,'betas':[.9,.99],'raw_scale':.75,'raw_shift':0.,'coefficients':[0.]*6})
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/modded-nanogpt/wr_reproduction/ks3_moe.py", line 295, in install
+    from track_1_short.model.gpt import GPT
+  File "/root/modded-nanogpt/wr_reproduction/pr393/upstream/track_1_short/model/gpt.py", line 10, in <module>
+    from track_1_short.model.attention import AttnArgs, CausalSelfAttention, Yarn
+  File "/root/modded-nanogpt/wr_reproduction/pr393/upstream/track_1_short/model/attention.py", line 39, in <module>
+    flash_attn_interface = load_flash_attn3()
+                           ^^^^^^^^^^^^^^^^^^
+  File "/root/modded-nanogpt/wr_reproduction/pr393/upstream/track_1_short/model/attention.py", line 32, in load_flash_attn3
+    fa3 = get_kernel(FA3_REPO, revision=FA3_REVISION, trust_remote_code=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/kernels/utils.py", line 518, in get_kernel
+    variant_path = install_kernel(
+                   ^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/kernels/utils.py", line 292, in install_kernel
+    variants = get_variants(api, repo_id=repo_id, revision=revision)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/kernels/variants.py", line 241, in get_variants
+    variant_strs = {item.path.split("/")[-1] for item in tree if isinstance(item, RepoFolder)}
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/kernels/variants.py", line 241, in <setcomp>
+    variant_strs = {item.path.split("/")[-1] for item in tree if isinstance(item, RepoFolder)}
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/huggingface_hub/hf_api.py", line 4098, in list_repo_tree
+    for path_info in paginate(path=tree_url, headers=headers, params={"recursive": recursive, "expand": expand}):
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/huggingface_hub/utils/_pagination.py", line 37, in paginate
+    hf_raise_for_status(r)
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 928, in hf_raise_for_status
+    raise _format(HfHubHTTPError, str(e), response) from e
+huggingface_hub.errors.HfHubHTTPError: Client error '401 Unauthorized' for url 'https://huggingface.co/api/kernels/devenpzak/flash-attn3-12864/tree/64c1e6d1f2780e7931839f41426ddcdb564a7cb9/build?recursive=false&expand=false' (Request ID: Root=1-6ae26185-6c378b1821cdff9d32d4e1bb;e389b22c-144d-4672-8616-3fabdc3f4a81)
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+Invalid username or password.
