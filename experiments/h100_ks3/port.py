@@ -70,6 +70,9 @@ def install(optimization=None):
     refresh.MOE_COLS_OUTPUTS=('ks3_up','ks3_down')
     selected = optimization if optimization is not None else os.environ.get('KS3_H100_OPT', '')
     if selected:
+        if selected=='fp8-native':
+            from experiments.h100_ks3.fp8 import attach
+            return attach(H100KS3)
         from experiments.h100_ks3.optimized import install as install_optimized
         install_optimized(selected)
         if os.environ.get('KS3_H100_TRANSPORT', 'bf16') == 'codes':

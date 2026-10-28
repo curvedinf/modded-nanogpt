@@ -40,7 +40,7 @@ def _features(x,G,e,cols,N:tl.constexpr,BM:tl.constexpr,BN:tl.constexpr,PREPARED
 def gemm(A,W,O,TILES,M:tl.constexpr,N:tl.constexpr,K:tl.constexpr,
          W0:tl.constexpr,W1:tl.constexpr,W2:tl.constexpr,
          BM:tl.constexpr,BN:tl.constexpr,BK:tl.constexpr,MODE:tl.constexpr=0,
-         G=None,H=None,SRC=None,GATE=None,SCATTER=None,ROWS:tl.constexpr=0,C=None,PART=None,PACK_INPUT:tl.constexpr=False,XPACK=None,DLOG=None,ROUTER=None,PREPARED=None):
+         G=None,H=None,SRC=None,GATE=None,SCATTER=None,ROWS:tl.constexpr=0,C=None,PART=None,PACK_INPUT:tl.constexpr=False,XPACK=None,DLOG=None,ROUTER=None,PREPARED=None,ASCALE=None,WSCALE=None):
     rows=tl.program_id(0)*BM+tl.arange(0,BM)
     cols=tl.program_id(1)*BN+tl.arange(0,BN)
     kk=tl.arange(0,BK);e=tl.load(TILES+tl.program_id(0)*BM//128)
@@ -57,6 +57,7 @@ def gemm(A,W,O,TILES,M:tl.constexpr,N:tl.constexpr,K:tl.constexpr,
             a=tl.load(A+rows[:,None]*K+k[None,:],(rows[:,None]<M)&(k[None,:]<K),other=0.)
         w=tl.load(W+e*W0+k[:,None]*W1+cols[None,:]*W2,(k[:,None]<K)&(cols[None,:]<N),other=0.)
         acc=tl.dot(a,w,acc)
+    if ASCALE is not None:acc=acc*tl.load(ASCALE)*tl.load(WSCALE+e)
     mask=(rows[:,None]<M)&(cols[None,:]<N)
     if MODE==3:
         _vjp_epilogue(acc,C,G,O,PART,SRC,rows,cols,mask,e,M,N,ROWS,BM)
