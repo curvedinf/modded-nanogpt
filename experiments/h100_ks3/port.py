@@ -38,6 +38,12 @@ def install(optimization=None):
         factor=float(os.environ['KS3_H100_NGRAM_LR_SCALE'])
         if not math.isfinite(factor) or factor<=0:raise ValueError('Invalid ngram learning-rate multiplier')
         ngram_table.NGRAM_LR_MUL=70.*factor
+    if 'KS3_H100_NGRAM_WD_SCALE' in os.environ:
+        from track_1_short import ngram_table
+        factor=float(os.environ['KS3_H100_NGRAM_WD_SCALE'])
+        if not math.isfinite(factor) or factor<0:raise ValueError('Invalid ngram weight-decay multiplier')
+        ngram_table.NGRAM_WD_MUL=5.*factor
+        ngram_table.NGRAM_WD_MUL_PERIOD4=10.*factor
     from experiments.h100_ks3.moe_optimizer import install_dimension_tiles
     install_dimension_tiles()
     if 'KS3_H100_LR_SCALE' in os.environ:
