@@ -1,0 +1,9 @@
+{
+  "utc": "2026-10-28T19:06:42.668858+00:00",
+  "kind": "full-profile",
+  "seed": 413,
+  "config": "separate-dx-prepared-128-gate",
+  "transport": "codes",
+  "timing_reference_eligible": false,
+  "code_commit": "c1323564a9a9c8a18b425b288103324006e39177"
+}

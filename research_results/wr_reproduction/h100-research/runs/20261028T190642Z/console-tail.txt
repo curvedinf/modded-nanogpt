@@ -1,0 +1,60 @@
+[graph:step] rank 4 self-check rel: no_grad eager 1.92e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 4.02e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 4.47e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 1.97e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 1.88e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 9.32e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 4.81e-05 (sign +), grad eager 0.00e+00
+Resetting Model
+CUDA graphs sealed: 12 step, 4 optimizer, 5 fp8 refresh; addresses unchanged across the reset
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/profiler/profiler.py:217: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+[barrier] rank 0 waited 2.3 ms before the clock start
+step:25/1053 train_time:531ms step_avg:21.23ms
+step:50/1053 train_time:1004ms step_avg:20.08ms
+step:75/1053 train_time:1464ms step_avg:19.52ms
+step:100/1053 train_time:1938ms step_avg:19.38ms
+step:125/1053 train_time:2398ms step_avg:19.18ms
+step:150/1053 train_time:2873ms step_avg:19.15ms
+step:175/1053 train_time:3332ms step_avg:19.04ms
+step:200/1053 train_time:3809ms step_avg:19.04ms
+step:225/1053 train_time:4271ms step_avg:18.98ms
+step:250/1053 train_time:4752ms step_avg:19.01ms
+step:275/1053 train_time:5209ms step_avg:18.94ms
+step:300/1053 train_time:5889ms step_avg:19.63ms
+step:325/1053 train_time:6686ms step_avg:20.57ms
+step:350/1053 train_time:7495ms step_avg:21.42ms
+step:375/1053 train_time:8297ms step_avg:22.13ms
+step:400/1053 train_time:9111ms step_avg:22.78ms
+step:425/1053 train_time:9905ms step_avg:23.31ms
+step:450/1053 train_time:10715ms step_avg:23.81ms
+step:475/1053 train_time:11517ms step_avg:24.25ms
+step:500/1053 train_time:12333ms step_avg:24.67ms
+step:525/1053 train_time:13129ms step_avg:25.01ms
+step:550/1053 train_time:13939ms step_avg:25.34ms
+step:575/1053 train_time:14745ms step_avg:25.64ms
+step:600/1053 train_time:15565ms step_avg:25.94ms
+step:625/1053 train_time:16726ms step_avg:26.76ms
+step:650/1053 train_time:17909ms step_avg:27.55ms
+step:675/1053 train_time:19087ms step_avg:28.28ms
+step:700/1053 train_time:20286ms step_avg:28.98ms
+step:725/1053 train_time:21448ms step_avg:29.58ms
+step:750/1053 train_time:22629ms step_avg:30.17ms
+step:775/1053 train_time:23802ms step_avg:30.71ms
+step:800/1053 train_time:24992ms step_avg:31.24ms
+step:825/1053 train_time:26156ms step_avg:31.70ms
+step:850/1053 train_time:27340ms step_avg:32.16ms
+step:875/1053 train_time:28557ms step_avg:32.64ms
+step:900/1053 train_time:29795ms step_avg:33.11ms
+step:925/1053 train_time:31007ms step_avg:33.52ms
+step:950/1053 train_time:32239ms step_avg:33.94ms
+step:975/1053 train_time:33425ms step_avg:34.28ms
+step:1000/1053 train_time:34591ms step_avg:34.59ms
+step:1025/1053 train_time:35792ms step_avg:34.92ms
+step:1050/1053 train_time:36741ms step_avg:34.99ms
+step:1052/1053 train_time:36788ms step_avg:34.97ms
+step:1053/1053 train_time:36809ms step_avg:34.96ms
+step:1053/1053 val_loss:3.2786 train_time:37204ms step_avg:35.33ms
+step:1053 cplm_diag nll:3.2786 lm_nll:3.3739 alpha:0.0749 a_sink:0.0027 copy_share:0.0740
+[profile] full training and validation CUDA kernel summary exported
+peak memory allocated: 35868 MiB reserved: 56620 MiB

@@ -1,0 +1,149 @@
+{
+  "utc": "2026-10-28T19:10:34.674207+00:00",
+  "cases": [
+    {
+      "tokens": 1,
+      "variants": {
+        "separate-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 2.601999256057752e-07,
+            "geometry": 4.745472015343921e-09,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "separate-dx-prepared-128-gate-tanhb": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 2.601999256057752e-07,
+            "geometry": 1.7387084881193005e-05,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "separate-dx-prepared-128-gate-tanh": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 2.601999256057752e-07,
+            "geometry": 1.7387084881193005e-05,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        }
+      }
+    },
+    {
+      "tokens": 257,
+      "variants": {
+        "separate-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.0,
+            "router": 0.0,
+            "post": 1.0170306552481634e-07,
+            "geometry": 6.546175157495782e-09,
+            "weights": 0.0
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "separate-dx-prepared-128-gate-tanhb": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 5.142050576978363e-05,
+            "router": 0.0,
+            "post": 1.0170306552481634e-07,
+            "geometry": 1.9058841644437052e-05,
+            "weights": 1.7649232177063823e-05
+          },
+          "samples_ms": [],
+          "median_ms": null
+        },
+        "separate-dx-prepared-128-gate-tanh": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00023223149764817208,
+            "dx": 0.000225361596676521,
+            "router": 0.0008571529178880155,
+            "post": 0.0004985484411008656,
+            "geometry": 1.9058841644437052e-05,
+            "weights": 7.906273094704375e-05
+          },
+          "samples_ms": [],
+          "median_ms": null
+        }
+      }
+    },
+    {
+      "tokens": 16384,
+      "variants": {
+        "separate-dx-prepared-128-gate": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 3.7120405522728106e-06,
+            "router": 0.00010198118980042636,
+            "post": 8.866637131177413e-07,
+            "geometry": 1.2128465698424407e-07,
+            "weights": 0.0
+          },
+          "samples_ms": [
+            0.8900985036577497,
+            0.8960844584873744,
+            0.8964488418013962
+          ],
+          "median_ms": 0.8960844584873744
+        },
+        "separate-dx-prepared-128-gate-tanhb": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.0,
+            "dx": 0.00011912183981621638,
+            "router": 0.00010198118980042636,
+            "post": 8.866637131177413e-07,
+            "geometry": 1.8651729988050647e-05,
+            "weights": 0.00010048277181340382
+          },
+          "samples_ms": [
+            0.833282504762922,
+            0.8377529076167515,
+            0.8382766859872001
+          ],
+          "median_ms": 0.8377529076167515
+        },
+        "separate-dx-prepared-128-gate-tanh": {
+          "passed": true,
+          "relative_rms": {
+            "output": 0.00022239350073505193,
+            "dx": 0.0002202470786869526,
+            "router": 0.0010166295105591416,
+            "post": 0.0013382710749283433,
+            "geometry": 1.8651729988050647e-05,
+            "weights": 0.00020621961448341608
+          },
+          "samples_ms": [
+            0.8173564570290701,
+            0.8181828566959926,
+            0.818097380229405
+          ],
+          "median_ms": 0.818097380229405
+        }
+      }
+    }
+  ]
+}
