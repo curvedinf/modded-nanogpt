@@ -37,7 +37,8 @@ def main():
         data = json.loads((RESULTS / evidence).read_text())
         assert data.get('passed', all(c['passed'] for c in data.get('cases', [])))
     dirty = subprocess.check_output(['git', 'status', '--porcelain', '--',
-        'experiments/h100_pr367', 'experiments/h100_ks3', 'wr_reproduction/pr367'], cwd=ROOT, text=True)
+        'experiments/h100_pr367', 'experiments/h100_ks3', 'wr_reproduction/pr367',
+        'configs/wr_reproduction/h100_pr367_ks3.json'], cwd=ROOT, text=True)
     if dirty:
         raise SystemExit('Commit the candidate code first: ' + dirty)
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()

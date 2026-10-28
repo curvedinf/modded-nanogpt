@@ -93,7 +93,9 @@ NUM_USED_DENSE_SLOTS = len(DENSE_LAYERS) + 1''')
         '            uncompiled_model.prepare_ks3_eval()\n            uncompiled_model.complete_yarn_tables()')
     marker = '            # The clock is stopped: flush the log and collect the loop\'s garbage here.'
     text = replace_once(text, marker,
-        '            print0(f"[wr-result] steps:{step} loss:{val_loss:.9f} seconds:{training_time_ms/1000:.9f}", console=True)\n' + marker)
+        '            print0(f"[wr-result] steps:{step} loss:{val_loss:.9f} seconds:{training_time_ms/1000:.9f}", console=True)\n'
+        '            coefficients = uncompiled_model.ks3_geometry.detach()[..., :4].flatten(1)\n'
+        '            print0(f"[ks3-geometry] coefficient_rms_by_layer:{coefficients.square().mean(1).sqrt().tolist()} nonzero_fraction_by_layer:{(coefficients != 0).float().mean(1).tolist()}", console=True)\n' + marker)
     ast.parse(text)
     path.write_text(text)
     return manifest['commit']
