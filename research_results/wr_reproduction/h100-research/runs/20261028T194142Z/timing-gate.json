@@ -1,0 +1,10 @@
+{
+  "run_id": "20261028T194142Z",
+  "first100_ms": 1944.0,
+  "updates26_to100_ms": 1358.0,
+  "reference_run_id": "20261028T193734Z",
+  "reference_first100_ms": 1861.0,
+  "reference_updates26_to100_ms": 1340.0,
+  "rule": "Reject when both first100 and updates26-100 are slower than the saved BF16 prefix; continue if the timing evidence is mixed or faster.",
+  "reject": true
+}

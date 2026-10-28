@@ -1,0 +1,60 @@
+[graph:step] rank 5 self-check rel: no_grad eager 8.15e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 7.18e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 7.21e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 7.76e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 4.63e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 5.07e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 6.07e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 7.83e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 5.03e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 5.36e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 8.05e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 4.62e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 1.37e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 1.21e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 1.18e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 8.84e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 1.29e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 7.62e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 8.62e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 8.21e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 3.61e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 8.07e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 1.98e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 2.17e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 1.70e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 8.13e-06 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 6.30e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 3.90e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 6.29e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 7.95e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 6.33e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 6.36e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 6.84e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 7.11e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 6.71e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 1.25e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 7.87e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 5.34e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 6.15e-06 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 1.10e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 1.24e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 1.57e-07 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 1.36e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 1.32e-05 (sign -), grad eager 0.00e+00
+Resetting Model
+CUDA graphs sealed: 12 step, 4 optimizer, 5 fp8 refresh; addresses unchanged across the reset
+[barrier] rank 0 waited 0.5 ms before the clock start
+step:25/1053 train_time:586ms step_avg:23.44ms
+step:50/1053 train_time:1042ms step_avg:20.85ms
+step:75/1053 train_time:1487ms step_avg:19.83ms
+step:100/1053 train_time:1944ms step_avg:19.44ms
+W1028 19:48:58.842000 121536 torch/distributed/elastic/agent/server/api.py:739] Received 15 death signal, shutting down workers
+W1028 19:48:58.842000 121536 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 121607 closing signal SIGTERM
+W1028 19:48:58.843000 121536 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 121608 closing signal SIGTERM
+W1028 19:48:58.843000 121536 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 121609 closing signal SIGTERM
+W1028 19:48:58.845000 121536 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 121610 closing signal SIGTERM
+W1028 19:48:58.846000 121536 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 121611 closing signal SIGTERM
+W1028 19:48:58.848000 121536 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 121612 closing signal SIGTERM
+W1028 19:48:58.849000 121536 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 121613 closing signal SIGTERM
+W1028 19:48:58.849000 121536 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 121614 closing signal SIGTERM

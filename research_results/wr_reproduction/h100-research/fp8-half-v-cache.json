@@ -1,0 +1,173 @@
+{
+  "utc": "2026-10-28T19:49:25.887373+00:00",
+  "packing": {
+    "dual_layouts_bitwise": true,
+    "torch_rounding_different_elements": 0,
+    "elements": 62914560
+  },
+  "oracle": [
+    {
+      "tokens": 16384,
+      "projection_relative_rms": 0.00044083784450776875,
+      "weight_gradient_relative_rms": 0.0017971296329051256,
+      "accumulated_gradient_relative_rms": 0.0017971296329051256
+    },
+    {
+      "tokens": 49152,
+      "projection_relative_rms": 0.00044123444240540266
+    }
+  ],
+  "cases": [
+    {
+      "tokens": 16384,
+      "producers": {
+        "input": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "gathered_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        }
+      },
+      "errors_versus_bf16": {
+        "output": 0.0580650232732296,
+        "dx": 0.08788085728883743,
+        "router": 0.059087738394737244,
+        "post": 0.09841733425855637,
+        "geometry": 0.08785343915224075,
+        "weights": 0.08422708511352539
+      },
+      "errors_versus_full_cache": {
+        "output": 0.0,
+        "dx": 0.005303011275827885,
+        "router": 0.0,
+        "post": 0.0,
+        "geometry": 0.00021076247503515333,
+        "weights": 0.00432744063436985
+      },
+      "timing": {
+        "bf16": {
+          "samples_ms": [
+            0.7997367019653321,
+            0.8034983034487124,
+            0.8041777787385164
+          ],
+          "median_ms": 0.8034983034487124
+        },
+        "fp8": {
+          "samples_ms": [
+            0.6894125896951426,
+            0.6900523227194081,
+            0.689652451224949
+          ],
+          "median_ms": 0.689652451224949
+        },
+        "fp8_full_cache": {
+          "samples_ms": [
+            0.6488091598857533,
+            0.6528685136274858,
+            0.6529431213032115
+          ],
+          "median_ms": 0.6528685136274858
+        }
+      },
+      "scales": {
+        "post": 0.019425377249717712,
+        "dpre": 1.2706436791631859e-06
+      },
+      "passed": true
+    },
+    {
+      "tokens": 49152,
+      "producers": {
+        "input": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "gathered_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        }
+      },
+      "errors_versus_bf16": {
+        "output": 0.058192744851112366,
+        "dx": 0.0879712700843811,
+        "router": 0.058989983052015305,
+        "post": 0.1401587724685669,
+        "geometry": 0.0862395316362381,
+        "weights": 0.0843246653676033
+      },
+      "errors_versus_full_cache": {
+        "output": 0.0,
+        "dx": 0.005434898659586906,
+        "router": 0.0,
+        "post": 0.0,
+        "geometry": 0.00020577416580636054,
+        "weights": 0.004521549213677645
+      },
+      "timing": {
+        "bf16": {
+          "samples_ms": [
+            2.0155413097805446,
+            2.021943113538954,
+            2.0192943784925674
+          ],
+          "median_ms": 2.0192943784925674
+        },
+        "fp8": {
+          "samples_ms": [
+            1.7698736000061035,
+            1.7726565837860107,
+            1.7712422013282776
+          ],
+          "median_ms": 1.7712422013282776
+        },
+        "fp8_full_cache": {
+          "samples_ms": [
+            1.673463603428432,
+            1.6722031784057618,
+            1.6709107208251952
+          ],
+          "median_ms": 1.6722031784057618
+        }
+      },
+      "scales": {
+        "post": 0.022740168496966362,
+        "dpre": 1.4317899967863923e-06
+      },
+      "passed": true
+    }
+  ],
+  "implementation": {
+    "dw": "tma",
+    "vjp_rows": 128,
+    "vjp_warps": 4,
+    "gather": "tiled",
+    "tma_stores": true,
+    "v_dtype": "torch.float16",
+    "fuse_geometry": false,
+    "reference_variant": "separate-dx-prepared-128-gate-tanh-fp16v"
+  },
+  "ptxas": {
+    "path": "/root/venvs/h100-ptxas-13.3/ptxas",
+    "version": "13.3",
+    "sha256": "7fdd01a4cf50e30746da98989c9272a907f491e6fd7fecfda14642e4375f88fb"
+  }
+}
