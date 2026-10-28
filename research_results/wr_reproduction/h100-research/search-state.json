@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T21:22:25.293967+00:00",
+  "utc": "2026-10-28T21:24:41.686809+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,10 +18,12 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": null,
-  "current_hypothesis": "Check512-wide model buffers, FP8 blocks and all optimizer bank shapes before full architecture trial.",
+  "current_full_run": "20261028T212324Z",
+  "current_hypothesis": "512-wide PR393 residual architecture with1536-chart KS3 experts and original full1053updates",
   "planned_followups": [
-    "Use full loss margin to decide next precision/rate or schedule test"
+    "If speed/quality tradeoff is promising, one directed schedule/rate follow-up",
+    "Otherwise tune cubic geometry around the existing768-wide qualifying parent",
+    "Reserve final10minutes for qualifying three-seed replication and preservation"
   ],
   "reference": {
     "run": "20261028T180502Z",
@@ -29,9 +31,6 @@
     "loss": 3.2765
   },
   "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512.json",
-  "queued_screen": [
-    "model512-experts1536",
-    "model512-optimizer"
-  ],
+  "queued_screen": [],
   "status": "active"
 }
