@@ -44,4 +44,8 @@ def cascade(grad_chunk, velocity, momentum_t, split_baddbmm,
 
 
 def install():
+    # PR393's original table covers only its 768-wide residual stream. These
+    # tiles also divide 512; keep every existing entry and arithmetic rule.
+    for family in ('XTX','XXT','baAA'):
+        fused._GRAM_CFG.setdefault((family,512),(64,128,128,4,3))
     anvil.anvil_cascade = cascade
