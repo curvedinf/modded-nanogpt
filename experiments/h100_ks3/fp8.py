@@ -20,6 +20,7 @@ TMA_STORES=os.environ.get('KS3_FP8_TMA_STORES','0')=='1'
 V_DTYPE={'float32':torch.float32,'float16':torch.float16}[os.environ.get('KS3_FP8_V_DTYPE','float32')]
 FUSE_GEOMETRY=os.environ.get('KS3_FP8_FUSE_GEOMETRY','0')=='1'
 MM_IMPL=os.environ.get('KS3_FP8_MM','pointer')
+PACKED_TRANSPORT=os.environ.get('KS3_FP8_PACKED_TRANSPORT','0')=='1'
 assert MM_IMPL in ('pointer','tma')
 assert DW_IMPL in ('legacy','tma') and VJP_ROWS in (32,64,128)
 assert VJP_WARPS in (4,8) and GATHER_IMPL in ('legacy','tiled')
@@ -159,7 +160,7 @@ def attach(base):
             from wr_reproduction.ks3_moe_fp8 import init_buffers
             init_buffers(self)
             n=self.ks3_up.shape[-2]
-            self.register_buffer('ks3_fp8_transport',torch.empty((80,n*768),device=self.device,dtype=torch.float8_e4m3fn),persistent=False)
+            self.register_buffer('ks3_fp8_transport',torch.empty((80,n*768+(64 if PACKED_TRANSPORT else 0)),device=self.device,dtype=torch.float8_e4m3fn),persistent=False)
             self.register_buffer('ks3_fp8_partial',torch.ones((80,n*768//4096),device=self.device),persistent=False)
         @torch.no_grad()
         def _quantize_moe(self,lo,hi,exact):
@@ -169,15 +170,17 @@ def attach(base):
                 maximum=torch.maximum(flat.amax(1),-flat.amin(1)).float()
             else:maximum=self.ks3_fp8_partial[lo:hi].amax(1)
             scales[lo:hi].copy_(maximum.clamp_min(1e-12)/448.)
-            publish[(n*768//4096,hi-lo)](self.moe_bank,self.ks3_fp8_transport,scales,self.ks3_fp8_partial,lo,n,num_warps=4)
+            publish[(n*768//4096,hi-lo)](self.moe_bank,self.ks3_fp8_transport,scales,self.ks3_fp8_partial,lo,n,PACK_SCALE=PACKED_TRANSPORT,num_warps=4)
             if lo==0 and hi==80:self.build_moe_cols()
         def gather_moe_f8(self):
             lo,hi=self._moe_lo,self._moe_hi;q=self.ks3_fp8_transport.view(torch.uint8);s=self.ks3_weight_scales.view(-1)
+            if PACKED_TRANSPORT:
+                return [('moe_bank',dist.all_gather_into_tensor(q,q[lo:hi],async_op=True).get_future())]
             return [('moe_bank',dist.all_gather_into_tensor(q,q[lo:hi],async_op=True).get_future()),('moe_scales',dist.all_gather_into_tensor(s,s[lo:hi],async_op=True).get_future())]
         @torch.no_grad()
         def build_moe_cols(self):
             n=self.ks3_up.shape[-2]
-            layouts[(tr.cdiv(n*768,1024),80)](self.ks3_fp8_transport,self.ks3_f8_up,self.ks3_f8_up_t,self.ks3_f8_down,self.ks3_f8_down_t,n,num_warps=4)
+            layouts[(tr.cdiv(n*768,1024),80)](self.ks3_fp8_transport,self.ks3_f8_up,self.ks3_f8_up_t,self.ks3_f8_down,self.ks3_f8_down_t,n,PACK_SCALE=PACKED_TRANSPORT,SCALE_OUT=self.ks3_weight_scales,num_warps=4)
         def _moe(self,layer,normed,weights,post):
             if not self.training:return super()._moe(layer,normed,weights,post)
             k=MOE_INDEX[layer];w1,w2,router=weights[k];rows=normed.reshape(-1,768)
@@ -188,4 +191,5 @@ def attach(base):
             return out.reshape(normed.shape),8*(counts.float()/rows.shape[0]*probs.mean(0)).sum()
     refresh.MOE_LOCAL_OUTPUTS=('ks3_fp8_transport','ks3_weight_scales','ks3_fp8_partial')
     refresh.MOE_COLS_OUTPUTS=('ks3_f8_up','ks3_f8_up_t','ks3_f8_down','ks3_f8_down_t')
+    if PACKED_TRANSPORT:refresh.MOE_COLS_OUTPUTS+=('ks3_weight_scales',)
     return FP8GPT

@@ -18,7 +18,7 @@ def pack_input(A,O,OT,SRC,SCALE,M:tl.constexpr,ROWS:tl.constexpr,D:tl.constexpr=
     tl.store(OT+cols[None,:]*M+rows[:,None],value,mask)
 
 @tr.jit
-def publish(BANK,Q,SCALE,PART,LO:tl.constexpr,N:tl.constexpr,D:tl.constexpr=768,BR:tl.constexpr=128):
+def publish(BANK,Q,SCALE,PART,LO:tl.constexpr,N:tl.constexpr,D:tl.constexpr=768,BR:tl.constexpr=128,PACK_SCALE:tl.constexpr=False):
     slot=LO+tl.program_id(1);down=(slot%16)>=8
     r=tl.where(down,D,N);c=tl.where(down,N,D)
     tile=tl.program_id(0);rows=(tile//(c//32))*BR+tl.arange(0,BR);cols=(tile%(c//32))*32+tl.arange(0,32)
@@ -28,14 +28,23 @@ def publish(BANK,Q,SCALE,PART,LO:tl.constexpr,N:tl.constexpr,D:tl.constexpr=768,
     s=_half_scale(tl.max(tl.abs(a),1))
     value=tl.minimum(tl.maximum(libdevice.nearbyint(a/s[:,None]),-127.),127.)*s[:,None]
     q=tl.minimum(tl.maximum(value/tl.load(SCALE+slot),-448.),448.).to(tl.float8e4nv)
-    tl.store(Q+slot*N*D+rows[:,None]*c+cols[None,:],q,mask)
+    stride=N*D+(64 if PACK_SCALE else 0)
+    tl.store(Q+slot*stride+rows[:,None]*c+cols[None,:],q,mask)
+    if PACK_SCALE and tile==0:
+        trailer=(Q+slot*stride+N*D).to(tl.pointer_type(tl.float32))
+        offsets=tl.arange(0,16)
+        tl.store(trailer+offsets,tl.where(offsets==0,tl.load(SCALE+slot),0.))
     tl.store(PART+slot*(N*D//(BR*32))+tile,tl.max(tl.max(tl.abs(value),1),0))
 
 @tr.jit
-def layouts(Q,UP,UPT,DOWN,DOWNT,N:tl.constexpr,D:tl.constexpr=768,B:tl.constexpr=1024):
+def layouts(Q,UP,UPT,DOWN,DOWNT,N:tl.constexpr,D:tl.constexpr=768,B:tl.constexpr=1024,PACK_SCALE:tl.constexpr=False,SCALE_OUT=None):
     slot=tl.program_id(1);down=(slot%16)>=8;e=slot//16*8+slot%8
     i=tl.program_id(0)*B+tl.arange(0,B);valid=i<N*D
-    q=tl.load(Q+slot*N*D+i,valid,other=0.)
+    stride=N*D+(64 if PACK_SCALE else 0)
+    q=tl.load(Q+slot*stride+i,valid,other=0.)
+    if PACK_SCALE and tl.program_id(0)==0:
+        trailer=(Q+slot*stride+N*D).to(tl.pointer_type(tl.float32))
+        tl.store(SCALE_OUT+slot,tl.load(trailer))
     if down:
         tl.store(DOWN+e*N*D+i,q,valid)
         tl.store(DOWNT+e*N*D+(i%N)*D+i//N,q,valid)
