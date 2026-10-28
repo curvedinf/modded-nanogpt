@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T22:11:54.658662+00:00",
+  "utc": "2026-10-28T22:14:52.720397+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,19 +18,31 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": "20261028T221144Z",
-  "current_hypothesis": "Sparse ngram LR1.15 on512/1536 double-table at1217updates; originalKS3 geometry restored.",
+  "current_full_run": "20261028T221440Z",
+  "current_hypothesis": "Follow positive ngram learning-rate trend from1.15to1.35; same512/1536 architecture, double table,1217updates.",
   "planned_followups": [
-    "Immediate three fresh frozen-config seeds after a qualifying win",
-    "Otherwise choose table-capacity or geometry/dense-width follow-up from measured time/loss",
-    "640 slowdown remains unresolved; a100-update training-only profile is available if useful"
+    "A qualifying point immediately triggers three frozen-code fresh seeds",
+    "If the learning-rate follow-up misses, use checked tail-averaging diagnostics on the best near-target recipe",
+    "After verification, optimize margin/time further; retain all prior results"
   ],
   "reference": {
     "run": "20261028T180502Z",
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2_ngramlr115.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2_ngramlr135.json",
   "queued_screen": [],
-  "status": "active"
+  "status": "active",
+  "near_target": {
+    "run": "20261028T221144Z",
+    "seconds": 31.040519882,
+    "loss": 3.280643225
+  },
+  "verification": {
+    "required_fresh_seeds": 3,
+    "discovery_excluded": true,
+    "p_threshold": 0.01,
+    "replicator": "experiments/h100_ks3/replicate.py",
+    "summary": "experiments/h100_ks3/verification_summary.py"
+  }
 }
