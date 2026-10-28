@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T22:47:46.312829+00:00",
+  "utc": "2026-10-28T22:47:52.983586+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,13 +18,13 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": null,
+  "current_full_run": "20261028T224746Z",
   "current_hypothesis": "User-directed +2 growth updates on the closest fast near-target recipe.",
   "planned_followups": [
-    "Immediately run three fresh frozen-code seeds after a qualifying control-beating result",
-    "Test higher floor 0.40 if sparse-table decay does not qualify; lower floor 0.20 was worse",
-    "Retain the prepared low-batch extension redistribution as a separate schedule ablation",
-    "Stop launching new ablations for the final verification/evidence reserve; honor any new stop"
+    "Prioritize +2 and +4 late-update extensions requested by the user",
+    "Keep local measured control 31.099s and published PR393 time as separately labeled comparisons",
+    "Verify a qualifying improvement with fresh frozen-configuration seeds; do not count discovery in those statistics",
+    "Defer unverified wider-kernel work until step-count results"
   ],
   "reference": {
     "run": "20261028T180502Z",
