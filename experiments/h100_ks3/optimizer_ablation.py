@@ -35,3 +35,11 @@ def install_schedule(multiplier):
         return original(self, step) * multiplier
 
     schedule.TrainingSchedule.get_lr = get_lr
+
+
+def install_floor(value):
+    """Change the cooldown endpoint without scaling the early learning rate."""
+    if not math.isfinite(value) or value <= 0:
+        raise ValueError('Learning-rate floor must be positive and finite')
+    from track_1_short import schedule
+    schedule.LR_FLOOR = value
