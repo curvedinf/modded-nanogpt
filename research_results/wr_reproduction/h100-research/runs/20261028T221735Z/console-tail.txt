@@ -1,0 +1,60 @@
+step:50/1217 train_time:774ms step_avg:15.48ms
+step:75/1217 train_time:1097ms step_avg:14.63ms
+step:100/1217 train_time:1433ms step_avg:14.33ms
+step:125/1217 train_time:1756ms step_avg:14.05ms
+step:150/1217 train_time:2091ms step_avg:13.94ms
+step:175/1217 train_time:2415ms step_avg:13.80ms
+step:200/1217 train_time:2750ms step_avg:13.75ms
+step:225/1217 train_time:3074ms step_avg:13.66ms
+step:250/1217 train_time:3409ms step_avg:13.64ms
+step:275/1217 train_time:3733ms step_avg:13.57ms
+step:300/1217 train_time:4206ms step_avg:14.02ms
+step:325/1217 train_time:4754ms step_avg:14.63ms
+step:350/1217 train_time:5312ms step_avg:15.18ms
+step:375/1217 train_time:5865ms step_avg:15.64ms
+step:400/1217 train_time:6428ms step_avg:16.07ms
+step:425/1217 train_time:6972ms step_avg:16.40ms
+step:450/1217 train_time:7529ms step_avg:16.73ms
+step:475/1217 train_time:8081ms step_avg:17.01ms
+step:500/1217 train_time:8644ms step_avg:17.29ms
+step:525/1217 train_time:9189ms step_avg:17.50ms
+step:550/1217 train_time:9746ms step_avg:17.72ms
+step:575/1217 train_time:10298ms step_avg:17.91ms
+step:600/1217 train_time:10863ms step_avg:18.10ms
+step:625/1217 train_time:11648ms step_avg:18.64ms
+step:650/1217 train_time:12449ms step_avg:19.15ms
+step:675/1217 train_time:13246ms step_avg:19.62ms
+step:700/1217 train_time:14057ms step_avg:20.08ms
+step:725/1217 train_time:14844ms step_avg:20.47ms
+step:750/1217 train_time:15646ms step_avg:20.86ms
+step:775/1217 train_time:16443ms step_avg:21.22ms
+step:800/1217 train_time:17255ms step_avg:21.57ms
+step:825/1217 train_time:18042ms step_avg:21.87ms
+step:850/1217 train_time:18845ms step_avg:22.17ms
+step:875/1217 train_time:19642ms step_avg:22.45ms
+step:900/1217 train_time:20455ms step_avg:22.73ms
+step:925/1217 train_time:21243ms step_avg:22.97ms
+step:950/1217 train_time:22050ms step_avg:23.21ms
+step:975/1217 train_time:22868ms step_avg:23.45ms
+step:1000/1217 train_time:23718ms step_avg:23.72ms
+step:1025/1217 train_time:24544ms step_avg:23.95ms
+step:1050/1217 train_time:25387ms step_avg:24.18ms
+step:1075/1217 train_time:26224ms step_avg:24.39ms
+step:1100/1217 train_time:27074ms step_avg:24.61ms
+step:1125/1217 train_time:27900ms step_avg:24.80ms
+step:1150/1217 train_time:28679ms step_avg:24.94ms
+step:1175/1217 train_time:29517ms step_avg:25.12ms
+step:1200/1217 train_time:30342ms step_avg:25.29ms
+step:1216/1217 train_time:30673ms step_avg:25.22ms
+step:1217/1217 train_time:30688ms step_avg:25.22ms
+step:1217/1217 val_loss:3.2825 train_time:31052ms step_avg:25.52ms
+[wr-result] steps:1217 loss:3.282464266 seconds:31.052273486
+[ks3-geometry] coefficient_rms_by_layer:[0.011192131787538528, 0.014643947593867779, 0.01592576876282692, 0.015311402268707752, 0.02207956649363041] nonzero_fraction_by_layer:[0.6666666865348816, 0.6666666865348816, 0.6666666865348816, 0.6666666865348816, 0.6666666865348816]
+step:1217 cplm_diag nll:3.2825 lm_nll:3.4074 alpha:0.1407 a_sink:0.5248 copy_share:0.0889
+[tail-probe-reconstruction] {"vo_bank": true, "mlp_bank": true, "moe_bank": true, "geometry": true}
+[tail-average-probe] {"richardson": 0.2007, "loss": 3.2824642658233643, "tokens": 10485760, "official_timing_eligible": false, "interpretation": "Averaging diagnostic on one trained trajectory; requires a fresh frozen-recipe run"}
+[tail-average-probe] {"richardson": 0.0, "loss": 3.2831053733825684, "tokens": 10485760, "official_timing_eligible": false, "interpretation": "Averaging diagnostic on one trained trajectory; requires a fresh frozen-recipe run"}
+[tail-average-probe] {"richardson": 0.4, "loss": 3.282388925552368, "tokens": 10485760, "official_timing_eligible": false, "interpretation": "Averaging diagnostic on one trained trajectory; requires a fresh frozen-recipe run"}
+[tail-average-probe] {"richardson": 0.55, "loss": 3.2826988697052, "tokens": 10485760, "official_timing_eligible": false, "interpretation": "Averaging diagnostic on one trained trajectory; requires a fresh frozen-recipe run"}
+[tail-average-probe] {"richardson": 0.7, "loss": 3.2833898067474365, "tokens": 10485760, "official_timing_eligible": false, "interpretation": "Averaging diagnostic on one trained trajectory; requires a fresh frozen-recipe run"}
+peak memory allocated: 37320 MiB reserved: 54084 MiB
