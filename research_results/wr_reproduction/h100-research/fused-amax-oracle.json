@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-28T23:24:24.065801+00:00",
+  "passed": true,
+  "exact_finite_and_nan_propagation_cases": 25,
+  "timings": [
+    {
+      "elements": 1536,
+      "original_ms": 0.0035892563197992434,
+      "fused_ms": 0.001526866480478024
+    },
+    {
+      "elements": 12288,
+      "original_ms": 0.004524469110068577,
+      "fused_ms": 0.0015897424726035085
+    },
+    {
+      "elements": 36864,
+      "original_ms": 0.0065792736882915,
+      "fused_ms": 0.0016510290504549426
+    }
+  ]
+}

@@ -31,13 +31,14 @@
     "KS3_H100_FUSED_ANVIL": "1",
     "KS3_H100_WIDTH": "1536",
     "KS3_H100_PROJECTION_LR": "0.6666666666666666",
-    "KS3_H100_NGRAM_LR_SCALE": "1.15"
+    "KS3_H100_NGRAM_LR_SCALE": "1.15",
+    "KS3_FP8_FUSED_AMAX": "1"
   },
   "validation_tokens": 10485760,
   "scheduled_steps": 981,
   "total_steps": 1253,
   "base_run": "20261028T222044Z",
-  "hypothesis": "Use the faster2304-wide dense branches with all five1536-chart KS3 MoE sites. Add16 late updates to the30.538784947s/3.283665657 parent; measured late updates cost~32ms, leaving an estimated~.026s below31.07925s. Test whether extra optimization reaches full WR loss<=3.28.",
+  "hypothesis": "Use the faster2304-wide dense branches with all five1536-chart KS3 MoE sites. Add16 late updates to the30.538784947s/3.283665657 parent; measured late updates cost~32ms, leaving an estimated~.026s below31.07925s. Test whether extra optimization reaches full WR loss<=3.28. Include checked exact fused amax; paired full-block improvement1.2\u20131.4%. First100-update timing is compared with the original2304/growth236 parent.",
   "model_dim": 512,
   "dense_width": 2304,
   "growth_steps": 252,
