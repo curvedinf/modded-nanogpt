@@ -12,10 +12,10 @@ def pack_input(A,O,OT,SRC,SCALE,M:tl.constexpr,ROWS:tl.constexpr,D:tl.constexpr=
     s=_half_scale(tl.max(tl.abs(value),1))
     value=tl.minimum(tl.maximum(libdevice.nearbyint(value/s[:,None]),-127.),127.)*s[:,None]
     value=tl.minimum(tl.maximum(value/tl.load(SCALE),-448.),448.).to(tl.float8e4nv)
-    bits=value.to(tl.uint8,bitcast=True);mask=(rows[:,None]<M)&(cols[None,:]<D)
-    # Byte stores avoid the old ptxas dual-layout FP8 store corruption.
-    tl.store(O.to(tl.pointer_type(tl.uint8))+rows[:,None]*D+cols[None,:],bits,mask)
-    tl.store(OT.to(tl.pointer_type(tl.uint8))+cols[:,None]*M+rows[None,:],tl.trans(bits),tl.trans(mask))
+    mask=(rows[:,None]<M)&(cols[None,:]<D)
+    # Requires the corrected ptxas >=13.3, enforced by the FP8 model overlay.
+    tl.store(O+rows[:,None]*D+cols[None,:],value,mask)
+    tl.store(OT+cols[None,:]*M+rows[:,None],value,mask)
 
 @tr.jit
 def publish(BANK,Q,SCALE,PART,LO:tl.constexpr,N:tl.constexpr,D:tl.constexpr=768,BR:tl.constexpr=128):
@@ -71,7 +71,6 @@ def gather_gate(G,Y,SRC,SCALE,GG,GT,DS,GS,ROWS:tl.constexpr,M:tl.constexpr,D:tl.
     value=grad*scale[:,None]/tl.load(GS)
     packed=tl.minimum(tl.maximum(value,-57344.),57344.).to(tl.float8e5)
     mask=(rows[:,None]<M)&(cols[None,:]<D)
-    bits=packed.to(tl.uint8,bitcast=True)
-    tl.store(GG.to(tl.pointer_type(tl.uint8))+rows[:,None]*D+cols[None,:],bits,mask)
-    tl.store(GT.to(tl.pointer_type(tl.uint8))+cols[:,None]*M+rows[None,:],tl.trans(bits),tl.trans(mask))
+    tl.store(GG+rows[:,None]*D+cols[None,:],packed,mask)
+    tl.store(GT+cols[None,:]*M+rows[:,None],packed,mask)
     tl.store(DS+rows,tl.sum(grad*y,1),rows<M)

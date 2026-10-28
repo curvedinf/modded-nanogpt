@@ -104,6 +104,9 @@ class Routed(torch.autograd.Function):
 
 def attach(base):
     import torch.distributed as dist
+    from triton.backends.nvidia.compiler import get_ptxas
+    if tuple(map(int,get_ptxas(90).version.split('.'))) < (13,3):
+        raise RuntimeError('H100 FP8 dual stores require ptxas >=13.3; run setup_ptxas and set TRITON_PTXAS_PATH. See triton-lang/triton#11111.')
     from track_1_short.model.moe import MOE_INDEX
     from track_1_short.perf.cuda_graphs import fp8_refresh_graphs as refresh
     class FP8GPT(base):
