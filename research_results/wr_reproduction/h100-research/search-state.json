@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T22:08:58.652611+00:00",
+  "utc": "2026-10-28T22:11:54.658662+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.278548479,
     "code_commit": "b6c8d9c7f71b37ea926ef59352e66aacefefd2ef"
   },
-  "current_full_run": "20261028T220851Z",
-  "current_hypothesis": "KS3 geometry LR0.1875 on double-ngram512/1536 at unchanged1217updates.",
+  "current_full_run": "20261028T221144Z",
+  "current_hypothesis": "Sparse ngram LR1.15 on512/1536 double-table at1217updates; originalKS3 geometry restored.",
   "planned_followups": [
     "Immediate three fresh frozen-config seeds after a qualifying win",
     "Otherwise choose table-capacity or geometry/dense-width follow-up from measured time/loss",
@@ -30,7 +30,7 @@
     "seconds": 31.099,
     "loss": 3.2765
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2_geometry01875.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512_ngram2_ngramlr115.json",
   "queued_screen": [],
   "status": "active"
 }
