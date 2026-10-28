@@ -42,7 +42,7 @@
   "model_dim": 512,
   "dense_width": 2816,
   "growth_steps": 216,
-  "status": "awaiting_precision_microcheck",
+  "status": "microcheck_passed_pending_whole_update_gate",
   "effective_ks3_shape_factor": {
     "incumbent": 1.1547005383792515,
     "candidate": 1.7320508075688772,
