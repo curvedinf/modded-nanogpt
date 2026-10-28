@@ -19,5 +19,10 @@
   "controller_commit": "d75ed4130bc6878670f7664df239eba6a63d4cf8",
   "source_changes": [],
   "comparative_pruning": false,
-  "purpose": "User-authorized estimate of local control time/loss distribution; preserve and include original separately."
+  "purpose": "User-authorized estimate of local control time/loss distribution; preserve and include original separately.",
+  "controller_history": [
+    "d75ed4130bc6878670f7664df239eba6a63d4cf8",
+    "ed22910"
+  ],
+  "active_controller_commit": "ed22910"
 }

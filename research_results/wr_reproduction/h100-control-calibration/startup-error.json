@@ -1,0 +1,8 @@
+{
+  "utc": "2026-10-28T22:49:46.906405+00:00",
+  "run_id": "20261028T224931Z",
+  "status": "controller_startup_error",
+  "seed": 601,
+  "reason": "Initial controller failed while writing duplicate UTC metadata immediately after launch. The process group was terminated before a completed training measurement. Registry helper fixed before the active retry.",
+  "followup": "psutil wait encountered an environment pidfd error after termination; nvidia-smi verified no remaining GPU process before the new run."
+}
