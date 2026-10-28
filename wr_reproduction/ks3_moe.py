@@ -307,10 +307,10 @@ def install(precision="bf16",geometry_config=None,training_gs32=True,charts=1024
     if prepared_native_gather and not prepared_native_dual:raise ValueError('Prepared gather requires native dual layouts')
     KS3_RANK=subspace_rank
     features=charts*subspace_rank
-    if features not in (512,768,1024,1280,1536):raise ValueError('Unsupported KS3 projection width')
-    if features==1280 and precision!='bf16':raise ValueError('1280-feature preparation covers BF16 only')
+    if features not in (512,768,1024,1280,1536,1792,2048):raise ValueError('Unsupported KS3 projection width')
+    if features in (1280,1792,2048) and precision!='bf16':raise ValueError('This width requires BF16 preparation (the H100 FP8 overlay prepares from BF16)')
     if bf16_kernel_mode not in ('legacy','tuned'):raise ValueError('Unknown BF16 kernel mode')
-    if bf16_kernel_mode=='tuned' and (precision!='bf16' or features not in (512,768,1024,1280,1536)):raise ValueError('Unsupported tuned BF16 width')
+    if bf16_kernel_mode=='tuned' and (precision!='bf16' or features not in (512,768,1024,1280,1536,1792,2048)):raise ValueError('Unsupported tuned BF16 width')
     if geometry_backward_rows not in (32,64,128):raise ValueError('Invalid geometry tile')
     if precision=='fp8':
         from wr_reproduction import ks3_moe_fp8

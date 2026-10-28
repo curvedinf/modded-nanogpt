@@ -1,0 +1,114 @@
+{
+  "utc": "2026-10-28T23:40:14.980161+00:00",
+  "cases": [
+    {
+      "bank": "qk",
+      "shape": [
+        4,
+        256,
+        512
+      ],
+      "relative_rms": 0.0,
+      "output_bitwise_equal": true,
+      "velocity_bitwise_equal": true,
+      "original": {
+        "samples_ms": [
+          0.08445302837497586,
+          0.08315628947633685,
+          0.08366924072134084
+        ],
+        "median_ms": 0.08366924072134084
+      },
+      "fused": {
+        "samples_ms": [
+          0.05621536016464233,
+          0.05478016727573269,
+          0.05468720825769568
+        ],
+        "median_ms": 0.05478016727573269
+      }
+    },
+    {
+      "bank": "vo",
+      "shape": [
+        2,
+        512,
+        512
+      ],
+      "relative_rms": 0.0,
+      "output_bitwise_equal": true,
+      "velocity_bitwise_equal": true,
+      "original": {
+        "samples_ms": [
+          0.0911895118841604,
+          0.08948825790036109,
+          0.08780071167718796
+        ],
+        "median_ms": 0.08948825790036109
+      },
+      "fused": {
+        "samples_ms": [
+          0.0699203384623808,
+          0.06938327904585953,
+          0.0693735467063056
+        ],
+        "median_ms": 0.06938327904585953
+      }
+    },
+    {
+      "bank": "dense",
+      "shape": [
+        2,
+        1792,
+        512
+      ],
+      "relative_rms": 0.0,
+      "output_bitwise_equal": true,
+      "velocity_bitwise_equal": true,
+      "original": {
+        "samples_ms": [
+          0.14087259809849625,
+          0.13926861559758422,
+          0.1389161309888286
+        ],
+        "median_ms": 0.13926861559758422
+      },
+      "fused": {
+        "samples_ms": [
+          0.10153900710019198,
+          0.10165727138519287,
+          0.10194994727177406
+        ],
+        "median_ms": 0.10165727138519287
+      }
+    },
+    {
+      "bank": "ks3",
+      "shape": [
+        10,
+        2048,
+        512
+      ],
+      "relative_rms": 0.0,
+      "output_bitwise_equal": true,
+      "velocity_bitwise_equal": true,
+      "original": {
+        "samples_ms": [
+          0.5033309082486737,
+          0.5030808357965378,
+          0.5027806157651155
+        ],
+        "median_ms": 0.5030808357965378
+      },
+      "fused": {
+        "samples_ms": [
+          0.32931209564208985,
+          0.32919498941172726,
+          0.3291477203369141
+        ],
+        "median_ms": 0.32919498941172726
+      }
+    }
+  ],
+  "passed": true
+}
