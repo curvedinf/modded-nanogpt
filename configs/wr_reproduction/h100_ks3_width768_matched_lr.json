@@ -34,5 +34,10 @@
   "scheduled_steps": 981,
   "growth_steps": 52,
   "dense_width": 2816,
-  "status": "kernel_checked_full_trial_selected"
+  "status": "rejected_full_validation",
+  "result": {
+    "run_id": "20261028T211623Z",
+    "loss": 3.285758734,
+    "official_seconds": 32.327561877
+  }
 }

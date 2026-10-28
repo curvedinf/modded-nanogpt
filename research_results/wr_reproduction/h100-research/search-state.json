@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T21:17:45.769032+00:00",
+  "utc": "2026-10-28T21:22:25.293967+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.27920723,
     "code_commit": "151b31d7d83bbc443af9336f6ef74682b465d947"
   },
-  "current_full_run": "20261028T211623Z",
-  "current_hypothesis": "768-chart KS3 experts with matched effective ANVIL LR; full WR validation",
+  "current_full_run": null,
+  "current_hypothesis": "Check512-wide model buffers, FP8 blocks and all optimizer bank shapes before full architecture trial.",
   "planned_followups": [
     "Use full loss margin to decide next precision/rate or schedule test"
   ],
@@ -30,7 +30,8 @@
   },
   "next_model_candidate": "configs/wr_reproduction/h100_ks3_model512.json",
   "queued_screen": [
-    "model512-experts1536-kernel-check"
+    "model512-experts1536",
+    "model512-optimizer"
   ],
   "status": "active"
 }
