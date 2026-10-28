@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/root/modded-nanogpt/experiments/h100_ks3/check_input_layouts.py", line 47, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/root/modded-nanogpt/experiments/h100_ks3/check_input_layouts.py", line 36, in main
+    assert torch.equal(ds,nd)
+           ^^^^^^^^^^^^^^^^^^
+AssertionError
