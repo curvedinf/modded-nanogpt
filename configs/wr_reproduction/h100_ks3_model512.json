@@ -40,7 +40,7 @@
   "model_dim": 512,
   "dense_width": 2816,
   "growth_steps": 52,
-  "status": "implementation_prepared_requires_kernel_gate",
+  "status": "kernel_and_optimizer_checked_full_trial_selected",
   "effective_ks3_shape_factor": {
     "incumbent": 1.1547005383792515,
     "candidate": 1.7320508075688772,
