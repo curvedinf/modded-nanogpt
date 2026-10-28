@@ -53,6 +53,9 @@ def install(optimization=None):
         e,h,d=out.shape
         ks._dw[(tr.cdiv(h,128),tr.cdiv(d,128),e)](a,b,out,offs,h,d,False,BM=128,BN=128,BK=64,num_warps=8,num_stages=1)
     gemm.run=mm;gemm.dw=dw
+    if 'KS3_H100_COPY_LR' in os.environ:
+        from experiments.h100_ks3.optimizer_ablation import install_copy
+        install_copy(float(os.environ['KS3_H100_COPY_LR']))
     width=int(os.environ.get('KS3_H100_WIDTH','1024'))
     rank=int(os.environ.get('KS3_H100_RANK','1'))
     if rank not in (1,2,4) or width%rank:raise ValueError('Invalid H100 KS3 rank/width')
