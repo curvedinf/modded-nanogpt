@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "tokens": 1,
+      "relative_rms": {
+        "output": 0.0,
+        "dx": 0.0,
+        "bank": 0.0,
+        "geometry": 0.0
+      },
+      "active_experts": 1
+    },
+    {
+      "tokens": 257,
+      "relative_rms": {
+        "output": 0.0005768289556726813,
+        "dx": 0.0,
+        "bank": 0.00038814294384792447,
+        "geometry": 1.0045378218137557e-07
+      },
+      "active_experts": 1
+    },
+    {
+      "tokens": 4096,
+      "relative_rms": {
+        "output": 0.0006042620516382158,
+        "dx": 9.196759492624551e-06,
+        "bank": 0.0004287533229216933,
+        "geometry": 1.0706019537565226e-07
+      },
+      "active_experts": 8
+    }
+  ]
+}
