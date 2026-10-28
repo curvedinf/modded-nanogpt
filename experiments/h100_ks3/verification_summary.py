@@ -3,6 +3,7 @@ import argparse,json,math,statistics
 from pathlib import Path
 import mpmath
 from experiments.h100_ks3.research import RESULTS,STATE,utc
+from experiments.h100_ks3.references import local_control_reference
 
 
 def student_cdf(t,df):
@@ -42,12 +43,13 @@ def main():
         p=student_cdf(t,losses['n']-1)
     else:
         t=None;p=0. if losses['mean']<3.28 else .5 if losses['mean']==3.28 else 1.
+    reference=local_control_reference()
     report=dict(utc=utc(),discovery=a.discovery,discovery_excluded_from_statistics=True,
                 code_commit=original['code_commit'],manifest_sha256=original['manifest_sha256'],
                 runs=[dict(run_id=r['run_id'],seed=r['settings']['seed'],loss=r['validation_loss'],seconds=r['official_seconds']) for r in runs],
                 loss=losses,seconds=times,one_sided_student_t=t,one_sided_p=p,
-                reference_seconds=31.099,loss_threshold=3.28,significance_threshold=.01,
-                local_control_win_with_significance=losses['mean']<=3.28 and p<.01 and times['mean']<31.099,
+                reference_seconds=reference['seconds'],reference_details=reference,loss_threshold=3.28,significance_threshold=.01,
+                local_control_win_with_significance=losses['mean']<=3.28 and p<.01 and times['mean']<reference['seconds'],
                 published_pr393_seconds=31.285,
                 published_time_win_with_significance=losses['mean']<=3.28 and p<.01 and times['mean']<31.285,
                 scope='Fresh-seed result with separate local-control and published-time comparisons. Published time is from a different node; no claim of maintainer acceptance or current global record.')
