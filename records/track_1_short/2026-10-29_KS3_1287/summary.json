@@ -15,5 +15,9 @@
   "reference_evidence": "https://github.com/curvedinf/modded-nanogpt/blob/109d6a7/research_results/wr_reproduction/h100-control-calibration/summary.json",
   "qualifies_against_reference": false,
   "pre_port_seeds": [],
-  "port_check": "https://github.com/curvedinf/modded-nanogpt/blob/master/research_results/wr_reproduction/h100-research/clean-port/equivalence.json"
+  "port_check": "https://github.com/curvedinf/modded-nanogpt/blob/master/research_results/wr_reproduction/h100-research/clean-port/equivalence.json",
+  "status": "stopped_by_user",
+  "interrupted_seed": 727,
+  "completed_runs": 5,
+  "requested_runs_before_stop": 10
 }
