@@ -153,6 +153,8 @@ def packing_check():
                 torch_rounding_different_elements=differences,elements=elements)
 def main():
     torch.cuda.set_device(0);torch.set_num_threads(1);torch.manual_seed(419)
+    measure_approximation=os.environ.get('KS3_FP8_MEASURE_APPROXIMATION','0')=='1'
+    assert not measure_approximation or (fp8.ROUND_C and fp8.C_DTYPE==torch.float16)
     torch.backends.cuda.matmul.allow_tf32=False
     reference_variant=os.environ.get('KS3_FP8_REFERENCE_VARIANT','separate-dx-prepared-128-gate-tanh')
     rank=int(os.environ.get('KS3_H100_RANK','1'))
@@ -185,6 +187,10 @@ def main():
         expected=torch.cat([(af[i*t//8:(i+1)*t//8].float()*xs)@(uf[i].float()*us[i]).T for i in range(8)])
         error=err(actual,expected);assert error<.003,error
         oracle_row=dict(tokens=t,projection_relative_rms=error)
+        if measure_approximation:
+            rounded=fp8.mm(af,uf.transpose(1,2),table,xs,us,dtype=torch.float16)
+            oracle_row['rounded_projection_matches_fp32_cast']=torch.equal(rounded,actual.half())
+            assert oracle_row['rounded_projection_matches_fp32_cast'],oracle_row
         if t==16384:
             hf=(torch.randn(n,t,device='cuda')*.02/gs).to(torch.float8_e5m2)
             off=torch.arange(1,9,device='cuda',dtype=torch.int32)*(t//8)
@@ -213,6 +219,7 @@ def main():
         post_check=post_jacobian_check(rows,router,post,up,down,g,caches,scales,grad,actual[3])
         assert max(v for k,v in errors.items() if k!='post')<.15,errors
         cache_errors=None
+        cache_equivalent=True
         system_variant=fp8.C_DTYPE!=torch.float32 or fp8.V_DTYPE!=torch.float32 or fp8.FUSE_GEOMETRY or fp8.MM_IMPL!='pointer' or fp8.TMA_OUTPUTS or fp8.COMPACT_PART or fp8.FUSE_CUBIC_VJP
         if system_variant:
             candidate=[a.detach().clone() for a in actual]
@@ -221,7 +228,8 @@ def main():
             full_cache=[a.detach().clone() for a in run('fp8')]
             fp8.C_DTYPE=selected_c_dtype;fp8.V_DTYPE=selected_dtype;fp8.FUSE_GEOMETRY=selected_fusion;fp8.MM_IMPL=selected_mm;fp8.TMA_OUTPUTS=selected_outputs;fp8.COMPACT_PART=selected_compact;fp8.FUSE_CUBIC_VJP=selected_cubic_fusion
             cache_errors={key:err(a,b) for key,a,b in zip(('output','dx','router','post','geometry','weights'),candidate,full_cache)}
-            assert max(v for k,v in cache_errors.items() if k!='post')<.006 and cache_errors['post']<.02,cache_errors
+            cache_equivalent=max(v for k,v in cache_errors.items() if k!='post')<.006 and cache_errors['post']<.02
+            assert cache_equivalent or measure_approximation,cache_errors
         timing={}
         for kind in ('bf16','fp8'):
             samples=[tr.testing.do_bench_cudagraph(lambda:run(kind),rep=40) for _ in range(3)]
@@ -244,13 +252,15 @@ def main():
             timing['fp8_default_vjp_tile']=dict(samples_ms=samples,median_ms=statistics.median(samples))
             fp8.VJP_ROWS,fp8.VJP_COLS,fp8.VJP_WARPS=selected_tile
         temporary_errors=None
+        temporary_equivalent=True
         if fp8.C_DTYPE!=torch.float32 or fp8.V_DTYPE!=torch.float32:
             candidate=[a.detach().clone() for a in run('fp8')]
             selected_temporaries=fp8.C_DTYPE,fp8.V_DTYPE
             fp8.C_DTYPE=fp8.V_DTYPE=torch.float32
             baseline=[a.detach().clone() for a in run('fp8')]
             temporary_errors={key:err(a,b) for key,a,b in zip(('output','dx','router','post','geometry','weights'),candidate,baseline)}
-            assert max(v for k,v in temporary_errors.items() if k!='post')<.006 and temporary_errors['post']<.02,temporary_errors
+            temporary_equivalent=max(v for k,v in temporary_errors.items() if k!='post')<.006 and temporary_errors['post']<.02
+            assert temporary_equivalent or measure_approximation,temporary_errors
             samples=[tr.testing.do_bench_cudagraph(lambda:run('fp8'),rep=40) for _ in range(3)]
             timing['fp8_full_precision_temporaries']=dict(samples_ms=samples,median_ms=statistics.median(samples))
             fp8.C_DTYPE,fp8.V_DTYPE=selected_temporaries
@@ -264,11 +274,11 @@ def main():
             samples=[tr.testing.do_bench_cudagraph(lambda:run('fp8'),rep=40) for _ in range(3)]
             timing['fp8_unfused_amax']=dict(samples_ms=samples,median_ms=statistics.median(samples))
             fp8.FUSED_AMAX=True
-        result=dict(tokens=t,producers=producers,post_jacobian=post_check,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,errors_versus_default_vjp_tile=tile_errors,errors_versus_full_precision_temporaries=temporary_errors,errors_versus_unfused_amax=amax_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
+        result=dict(tokens=t,producers=producers,post_jacobian=post_check,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,errors_versus_default_vjp_tile=tile_errors,errors_versus_full_precision_temporaries=temporary_errors,errors_versus_unfused_amax=amax_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),oracle_passed=True,strict_equivalence_passed=cache_equivalent and temporary_equivalent,passed=cache_equivalent and temporary_equivalent)
         cases.append(result);print(json.dumps(result),flush=True)
     from triton.backends.nvidia.compiler import get_ptxas
     assembler=get_ptxas(90)
-    output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,fused_amax=fp8.FUSED_AMAX,round_c=fp8.ROUND_C,
+    output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,fused_amax=fp8.FUSED_AMAX,round_c=fp8.ROUND_C,measure_approximation=measure_approximation,
                 implementation=dict(dpre_e4m3=fp8.DPRE_E4M3,model_dim=D,width=int(os.environ.get('KS3_H100_WIDTH','1024')),gs32=fp8.GS32,rank=rank,cubic_only=fp8.CUBIC_ONLY,compact_part=fp8.COMPACT_PART,fuse_cubic_vjp=fp8.FUSE_CUBIC_VJP,cubic_vjp_tile=os.environ.get('KS3_FP8_CUBIC_VJP_TILE'),cubic_vjp_warps=os.environ.get('KS3_FP8_CUBIC_VJP_WARPS'),cubic_vjp_stages=os.environ.get('KS3_FP8_CUBIC_VJP_STAGES','3'),cubic_vjp_flatten=os.environ.get('KS3_FP8_CUBIC_VJP_FLATTEN','1'),cubic_vjp_moments=os.environ.get('KS3_FP8_CUBIC_VJP_MOMENTS','0'),fused_up_flatten=os.environ.get('KS3_FP8_FUSED_UP_FLATTEN','1'),tma_outputs=fp8.TMA_OUTPUTS,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_cols=fp8.VJP_COLS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,c_dtype=str(fp8.C_DTYPE),v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,fused_up_tile=os.environ.get('KS3_FP8_FUSED_UP_TILE'),mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
                 ptxas=dict(path=assembler.path,version=assembler.version,sha256=hashlib.sha256(Path(assembler.path).read_bytes()).hexdigest()))
     Path(os.environ.get('KS3_FP8_CHECK_OUTPUT','research_results/wr_reproduction/h100-research/fp8-micro.json')).write_text(json.dumps(output,indent=2)+'\n')
