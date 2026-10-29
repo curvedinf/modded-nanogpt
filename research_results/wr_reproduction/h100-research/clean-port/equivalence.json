@@ -1,0 +1,47 @@
+{
+  "utc": "2026-10-29T00:48:18.138951+00:00",
+  "initialization_parameters_and_rng_bitwise_equal": true,
+  "block_tokens": 16384,
+  "block": {
+    "output": {
+      "bitwise_equal": true,
+      "max_abs_error": 0.0
+    },
+    "dx": {
+      "bitwise_equal": true,
+      "max_abs_error": 0.0
+    },
+    "router": {
+      "bitwise_equal": true,
+      "max_abs_error": 0.0
+    },
+    "post": {
+      "bitwise_equal": true,
+      "max_abs_error": 0.0
+    },
+    "geometry": {
+      "bitwise_equal": true,
+      "max_abs_error": 0.0
+    },
+    "weights": {
+      "bitwise_equal": true,
+      "max_abs_error": 0.0
+    },
+    "post_amax": {
+      "bitwise_equal": true,
+      "max_abs_error": 0.0
+    },
+    "dpre_amax": {
+      "bitwise_equal": true,
+      "max_abs_error": 0.0
+    },
+    "eval": {
+      "bitwise_equal": true,
+      "max_abs_error": 0.0
+    }
+  },
+  "passed": true,
+  "clean_source_commit": "1583221",
+  "original_source_commit": "de06b76dc292eea0f2c0cc7946d7720120c686cc",
+  "original_run": "20261029T003007Z"
+}
