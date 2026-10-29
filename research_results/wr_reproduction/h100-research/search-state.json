@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:25:03.300874+00:00",
+  "utc": "2026-10-29T00:28:14.749765+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,11 +18,12 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "20261029T002414Z",
-  "current_hypothesis": "Dense ANVIL learning rate1.1 on half C/V temporaries and growth266; seed701. Parent31.001478524s/3.281089783.",
+  "current_full_run": "20261029T002709Z",
+  "current_hypothesis": "Ngram learning rate1.30 versus1.15 on half C/V cache growth266 parent; dense rate restored to1.0.",
   "planned_followups": [
-    "Three fresh frozen seeds711\u2013713 immediately after any qualifying local win.",
-    "Otherwise test directed dense or sparse-table learning-rate increases on the same new recipe."
+    "After the already-running ngram trial, prioritize extra growth updates until full CE <=3.28; start from best recent seed701 recipe.",
+    "Run three nearby full-run versions of the loss-compliant recipe.",
+    "If both CE <=3.28 and time <31.07925s, run three fresh frozen independent seeds before unrelated experiments."
   ],
   "reference": {
     "kind": "eight_completed_controls_including_original",
@@ -121,9 +122,7 @@
     "scope": "Fresh-seed result with separate local-control and published-time comparisons. Published time is from a different node; no claim of maintainer acceptance or current global record."
   },
   "next_hypotheses": [
-    "If full run qualifies, three fresh frozen seeds first.",
-    "If it misses, short paired screen of explicitly rounded FP16 preactivation cache; halve C traffic without expensive fused geometry.",
-    "Conservative geometry Adam0.0625 remains prepared."
+    "Add training steps for loss compliance, recording any excess over control time."
   ],
   "current_timing_screen": null,
   "prior_startup_failure": "20261029T001347Z",
@@ -131,5 +130,10 @@
     "run": "20261029T002115Z",
     "seconds": 31.001478524,
     "loss": 3.281089783
-  }
+  },
+  "deferred_screens": [
+    "FP16-temporary VJP row/warp sweep",
+    "Further unrelated optimizer ablations"
+  ],
+  "latest_user_priority": "Loss compliance through step count, then multiple full-run versions."
 }
