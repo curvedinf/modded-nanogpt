@@ -29,7 +29,9 @@ def main():
         assert c.get('scheduled_steps',981)==previous['scheduled_steps'] and previous['scheduled_steps']>100
     else:assert c['growth_steps']==previous['growth_steps']
     assert c.get('extension_steps',20)==previous.get('extension_steps',20)
-    command=[sys.executable,'-m','experiments.h100_ks3.research','--variant','fp8-native','--hypothesis',c['hypothesis']]
+    seed=int(c['environment'].get('TRAIN_SEED',str(previous['seed'])))
+    assert seed==previous['seed'],'Paired timing gate requires the same seed'
+    command=[sys.executable,'-m','experiments.h100_ks3.research','--variant','fp8-native','--seed',str(seed),'--hypothesis',c['hypothesis']]
     for key in ('model_dim','dense_width','growth_steps','ngram_multiplier'):
         command.extend(['--'+key.replace('_','-'),str(c[key])])
     command.extend(['--extension-steps',str(c.get('extension_steps',20))])

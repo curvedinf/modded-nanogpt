@@ -23,6 +23,7 @@ GATHER_IMPL=os.environ.get('KS3_FP8_GATHER','legacy')
 TMA_STORES=os.environ.get('KS3_FP8_TMA_STORES','0')=='1'
 V_DTYPE={'float32':torch.float32,'float16':torch.float16}[os.environ.get('KS3_FP8_V_DTYPE','float32')]
 C_DTYPE={'float32':torch.float32,'float16':torch.float16}[os.environ.get('KS3_FP8_C_DTYPE','float32')]
+ROUND_C=os.environ.get('KS3_FP8_ROUND_C','0')=='1'
 FUSE_GEOMETRY=os.environ.get('KS3_FP8_FUSE_GEOMETRY','0')=='1'
 MM_IMPL=os.environ.get('KS3_FP8_MM','pointer')
 PACKED_TRANSPORT=os.environ.get('KS3_FP8_PACKED_TRANSPORT','0')=='1'
@@ -105,8 +106,8 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
     rank=(g.shape[-1]-2)//6;prepared=prepare_geometry(g,n)
     if FUSE_GEOMETRY and rank!=1:raise ValueError('Fused FP8 up projection currently requires rank1')
     if not GS32 and FUSE_GEOMETRY and MM_IMPL!='tma':raise ValueError('Native-only FP8 fusion requires TMA')
-    if C_DTYPE!=torch.float32 and not (FUSE_GEOMETRY and MM_IMPL=='tma'):
-        raise ValueError('Reduced C cache requires fused TMA geometry to preserve forward FP32 inputs')
+    if C_DTYPE!=torch.float32 and not (ROUND_C or (FUSE_GEOMETRY and MM_IMPL=='tma')):
+        raise ValueError('Reduced C cache needs fused TMA geometry or explicit ROUND_C approximation')
     if CUBIC_ONLY and (rank!=1 or (FUSE_GEOMETRY and MM_IMPL!='tma')):raise ValueError('Cubic FP8 requires rank1 and separate geometry or TMA fusion')
     h=torch.empty(m,n,device=rows.device,dtype=x.dtype);ht=torch.empty(n,m,device=rows.device,dtype=x.dtype)
     if FUSE_GEOMETRY and MM_IMPL=='tma':
@@ -121,7 +122,9 @@ def forward(rows:torch.Tensor,src:torch.Tensor,table:torch.Tensor,up:torch.Tenso
         hd,htd=store_descriptors(h,ht,bm,bn)
         gemm[(tr.cdiv(m,bm),tr.cdiv(n,bn))](x,weight,c,table,m,n,d,*weight.stride(),bm,bn,bk,1,G=g,H=h,PREPARED=prepared,ASCALE=xs,WSCALE=us,NATIVE_TANH=True,H_SCALE=ps,H_TRANSPOSE=ht,H_DESC=hd,H_TRANSPOSE_DESC=htd,H_AMAX=maxima,num_warps=nw,num_stages=st)
     else:
-        c=mm(x,up.transpose(1,2),table,xs,us)
+        # ROUND_C explicitly permits rounding the geometry's forward input.
+        # This is a precision ablation, not an exact cache-only substitution.
+        c=mm(x,up.transpose(1,2),table,xs,us,dtype=C_DTYPE)
         maxima=torch.empty(tr.cdiv(m,64)*tr.cdiv(n,32),device=rows.device)
         hd,htd=store_descriptors(h,ht,64)
         _geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,GS32=GS32,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,CUBIC_ONLY=CUBIC_ONLY,num_warps=4)

@@ -59,14 +59,14 @@ def producer_checks(rows,router,grad,g,xs,gs,ps,ds):
     x=torch.empty(m,D,device='cuda',dtype=torch.float8_e4m3fn);xt=torch.empty(D,m,device='cuda',dtype=x.dtype)
     fp8.pack_input[(tr.cdiv(m,128),tr.cdiv(D,32))](rows,x,xt,src,xs,m,rows.shape[0],D=D,GS32=fp8.GS32,num_warps=4)
     pairs={'input':(x,xt)}
-    c=torch.randn(m,n,device='cuda')*.5;prepared=fp8.prepare_geometry(g,n)
+    c=(torch.randn(m,n,device='cuda')*.5).to(fp8.C_DTYPE);prepared=fp8.prepare_geometry(g,n)
     h=torch.empty(m,n,device='cuda',dtype=x.dtype);ht=torch.empty(n,m,device='cuda',dtype=x.dtype)
     maxima=torch.empty(tr.cdiv(m,64)*tr.cdiv(n,32),device='cuda')
     hd,htd=fp8.store_descriptors(h,ht,64)
     fp8._geometry_prepared[(tr.cdiv(m,64),tr.cdiv(n,32))](c,g,h,table,m,n,HT=ht,SCALE=ps,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=64,RANK=rank,GS32=fp8.GS32,PREPARED=prepared,H_DESC=hd,HT_DESC=htd,CUBIC_ONLY=fp8.CUBIC_ONLY,num_warps=4)
     pairs['geometry']=(h,ht)
     dc=torch.empty(m,n,device='cuda',dtype=fp8.DPRE_DTYPE);dct=torch.empty(n,m,device='cuda',dtype=dc.dtype)
-    part=torch.empty(tr.cdiv(m,fp8.VJP_ROWS),n,4 if fp8.COMPACT_PART else 8,device='cuda');v=torch.randn_like(c)*.01
+    part=torch.empty(tr.cdiv(m,fp8.VJP_ROWS),n,4 if fp8.COMPACT_PART else 8,device='cuda');v=torch.randn(m,n,device='cuda',dtype=fp8.V_DTYPE)*.01
     maxima=torch.empty(tr.cdiv(m,fp8.VJP_ROWS)*tr.cdiv(n,fp8.VJP_COLS),device='cuda')
     dcd,dctd=fp8.store_descriptors(dc,dct,fp8.VJP_ROWS,fp8.VJP_COLS)
     fp8._vjp_prepared[(tr.cdiv(m,fp8.VJP_ROWS),tr.cdiv(n,fp8.VJP_COLS))](v,c,g,dc,part,table,src,m,n,rows.shape[0],DCT=dct,SCALE=ds,AMAX=maxima,FP8=True,PARTIAL_AMAX=True,BM=fp8.VJP_ROWS,RANK=rank,PREPARED=prepared,DC_DESC=dcd,DCT_DESC=dctd,CUBIC_ONLY=fp8.CUBIC_ONLY,COMPACT_PART=fp8.COMPACT_PART,DPRE_E4M3=fp8.DPRE_E4M3,BC=fp8.VJP_COLS,num_warps=fp8.VJP_WARPS)
@@ -243,6 +243,17 @@ def main():
             samples=[tr.testing.do_bench_cudagraph(lambda:run('fp8'),rep=40) for _ in range(3)]
             timing['fp8_default_vjp_tile']=dict(samples_ms=samples,median_ms=statistics.median(samples))
             fp8.VJP_ROWS,fp8.VJP_COLS,fp8.VJP_WARPS=selected_tile
+        temporary_errors=None
+        if fp8.C_DTYPE!=torch.float32 or fp8.V_DTYPE!=torch.float32:
+            candidate=[a.detach().clone() for a in run('fp8')]
+            selected_temporaries=fp8.C_DTYPE,fp8.V_DTYPE
+            fp8.C_DTYPE=fp8.V_DTYPE=torch.float32
+            baseline=[a.detach().clone() for a in run('fp8')]
+            temporary_errors={key:err(a,b) for key,a,b in zip(('output','dx','router','post','geometry','weights'),candidate,baseline)}
+            assert max(v for k,v in temporary_errors.items() if k!='post')<.006 and temporary_errors['post']<.02,temporary_errors
+            samples=[tr.testing.do_bench_cudagraph(lambda:run('fp8'),rep=40) for _ in range(3)]
+            timing['fp8_full_precision_temporaries']=dict(samples_ms=samples,median_ms=statistics.median(samples))
+            fp8.C_DTYPE,fp8.V_DTYPE=selected_temporaries
         amax_errors=None
         if fp8.FUSED_AMAX:
             candidate=[a.detach().clone() for a in run('fp8')]
@@ -253,11 +264,11 @@ def main():
             samples=[tr.testing.do_bench_cudagraph(lambda:run('fp8'),rep=40) for _ in range(3)]
             timing['fp8_unfused_amax']=dict(samples_ms=samples,median_ms=statistics.median(samples))
             fp8.FUSED_AMAX=True
-        result=dict(tokens=t,producers=producers,post_jacobian=post_check,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,errors_versus_default_vjp_tile=tile_errors,errors_versus_unfused_amax=amax_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
+        result=dict(tokens=t,producers=producers,post_jacobian=post_check,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,errors_versus_default_vjp_tile=tile_errors,errors_versus_full_precision_temporaries=temporary_errors,errors_versus_unfused_amax=amax_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),passed=True)
         cases.append(result);print(json.dumps(result),flush=True)
     from triton.backends.nvidia.compiler import get_ptxas
     assembler=get_ptxas(90)
-    output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,fused_amax=fp8.FUSED_AMAX,
+    output=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),packing=packing,oracle=oracle,cases=cases,fused_amax=fp8.FUSED_AMAX,round_c=fp8.ROUND_C,
                 implementation=dict(dpre_e4m3=fp8.DPRE_E4M3,model_dim=D,width=int(os.environ.get('KS3_H100_WIDTH','1024')),gs32=fp8.GS32,rank=rank,cubic_only=fp8.CUBIC_ONLY,compact_part=fp8.COMPACT_PART,fuse_cubic_vjp=fp8.FUSE_CUBIC_VJP,cubic_vjp_tile=os.environ.get('KS3_FP8_CUBIC_VJP_TILE'),cubic_vjp_warps=os.environ.get('KS3_FP8_CUBIC_VJP_WARPS'),cubic_vjp_stages=os.environ.get('KS3_FP8_CUBIC_VJP_STAGES','3'),cubic_vjp_flatten=os.environ.get('KS3_FP8_CUBIC_VJP_FLATTEN','1'),cubic_vjp_moments=os.environ.get('KS3_FP8_CUBIC_VJP_MOMENTS','0'),fused_up_flatten=os.environ.get('KS3_FP8_FUSED_UP_FLATTEN','1'),tma_outputs=fp8.TMA_OUTPUTS,dw=fp8.DW_IMPL,vjp_rows=fp8.VJP_ROWS,vjp_cols=fp8.VJP_COLS,vjp_warps=fp8.VJP_WARPS,gather=fp8.GATHER_IMPL,tma_stores=fp8.TMA_STORES,c_dtype=str(fp8.C_DTYPE),v_dtype=str(fp8.V_DTYPE),fuse_geometry=fp8.FUSE_GEOMETRY,fused_up_tile=os.environ.get('KS3_FP8_FUSED_UP_TILE'),mm=fp8.MM_IMPL,mm_tile=os.environ.get('KS3_FP8_MM_TILE'),reference_variant=reference_variant),
                 ptxas=dict(path=assembler.path,version=assembler.version,sha256=hashlib.sha256(Path(assembler.path).read_bytes()).hexdigest()))
     Path(os.environ.get('KS3_FP8_CHECK_OUTPUT','research_results/wr_reproduction/h100-research/fp8-micro.json')).write_text(json.dumps(output,indent=2)+'\n')
