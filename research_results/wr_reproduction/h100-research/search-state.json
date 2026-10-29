@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T01:13:21.634372+00:00",
+  "utc": "2026-10-29T01:20:19.462697+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,10 +18,10 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": null,
+  "current_full_run": "pr1287-seed-724-20261029T012000Z",
   "current_hypothesis": "User target3.278. Use all eight old seeds mean3.280671477125 and measured0.0002520085 CE/update:10.6007 extra updates rounded up to12 to preserve even growth parity. Fixed1287-update recipe. Run series and stop on first full-validation loss>=3.28; no3.26 gate.",
   "planned_followups": [
-    "Run fixed1287-update recipe, stop on first CE>=3.28."
+    "Continue fixed1287-update seeds up to12 total; stop after first full CE>=3.28."
   ],
   "reference": {
     "kind": "eight_completed_controls_including_original",
@@ -32,7 +32,7 @@
   },
   "next_model_candidate": null,
   "queued_screen": [],
-  "status": "preparing_1287_seed_series",
+  "status": "running_fixed_1287_seed_series",
   "near_target": {
     "run": "20261028T232455Z",
     "seconds": 30.955472743,
@@ -176,32 +176,25 @@
   "clean_branch": "ks3-pr393-h100",
   "clean_worktree": "/root/modded-nanogpt-ks3-pr",
   "verification_target": 12,
-  "completed_seed_count": 8,
+  "completed_seed_count": 2,
   "current_seed_summary": {
-    "n": 8,
-    "steps": 1275,
+    "n": 2,
+    "steps": 1287,
     "validation_tokens": 10485760,
     "loss_threshold": 3.28,
-    "loss_mean": 3.280671477125,
-    "loss_sample_std": 0.011233589158782944,
-    "seconds_mean": 31.2369921335,
-    "seconds_sample_std": 0.008813490590589423,
-    "one_sided_student_t": 0.16906654562062245,
-    "one_sided_p": 0.5647369562392117,
-    "seeds_meeting_loss": 7,
+    "loss_mean": 3.275563002,
+    "loss_sample_std": 0.000873957111488873,
+    "seconds_mean": 31.604186278,
+    "seconds_sample_std": 0.006155398471356547,
+    "one_sided_student_t": -7.179829153323017,
+    "one_sided_p": 0.04405052640522761,
+    "seeds_meeting_loss": 2,
     "reference_seconds": 31.07925,
     "reference_n": 8,
     "reference_evidence": "https://github.com/curvedinf/modded-nanogpt/blob/109d6a7/research_results/wr_reproduction/h100-control-calibration/summary.json",
     "qualifies_against_reference": false,
-    "pre_port_seeds": [
-      711,
-      712,
-      713
-    ],
-    "port_check": "https://github.com/curvedinf/modded-nanogpt/blob/master/research_results/wr_reproduction/h100-research/clean-port/equivalence.json",
-    "status": "cancelled_insufficient_loss_margin",
-    "cancelled_seed": 719,
-    "qualification_note": "Eight completed seeds retained. Mean CE exceeds3.28 and one-sided p exceeds0.01. Seed719 interrupted without validation; remaining seeds cancelled."
+    "pre_port_seeds": [],
+    "port_check": "https://github.com/curvedinf/modded-nanogpt/blob/master/research_results/wr_reproduction/h100-research/clean-port/equivalence.json"
   },
   "candidate_qualified": false,
   "qualification_note": "Mean loss above3.28 and p>=0.01. Do not describe the recipe or branch as a compliant record."
