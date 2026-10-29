@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T01:23:13.159370+00:00",
+  "utc": "2026-10-29T01:26:03.136907+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,7 +18,7 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "pr1287-seed-725-20261029T012252Z",
+  "current_full_run": "pr1287-seed-726-20261029T012546Z",
   "current_hypothesis": "User target3.278. Use all eight old seeds mean3.280671477125 and measured0.0002520085 CE/update:10.6007 extra updates rounded up to12 to preserve even growth parity. Fixed1287-update recipe. Run series and stop on first full-validation loss>=3.28; no3.26 gate.",
   "planned_followups": [
     "Stop at10 total, log all outcomes, commit and push. Do not open a PR."
@@ -176,19 +176,19 @@
   "clean_branch": "ks3-pr393-h100",
   "clean_worktree": "/root/modded-nanogpt-ks3-pr",
   "verification_target": 10,
-  "completed_seed_count": 3,
+  "completed_seed_count": 4,
   "current_seed_summary": {
-    "n": 3,
+    "n": 4,
     "steps": 1287,
     "validation_tokens": 10485760,
     "loss_threshold": 3.28,
-    "loss_mean": 3.2757275106666666,
-    "loss_sample_std": 0.0006805070319887957,
-    "seconds_mean": 31.606624303,
-    "seconds_sample_std": 0.006064351809753818,
-    "one_sided_student_t": -10.874492477325486,
-    "one_sided_p": 0.004175278517951251,
-    "seeds_meeting_loss": 3,
+    "loss_mean": 3.2755321265,
+    "loss_sample_std": 0.0006792837679450339,
+    "seconds_mean": 31.600201502,
+    "seconds_sample_std": 0.013766882943888451,
+    "one_sided_student_t": -13.154659984047834,
+    "one_sided_p": 0.0004745040296393824,
+    "seeds_meeting_loss": 4,
     "reference_seconds": 31.07925,
     "reference_n": 8,
     "reference_evidence": "https://github.com/curvedinf/modded-nanogpt/blob/109d6a7/research_results/wr_reproduction/h100-control-calibration/summary.json",
