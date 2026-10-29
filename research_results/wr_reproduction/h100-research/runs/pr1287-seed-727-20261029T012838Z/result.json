@@ -1,0 +1,15 @@
+{
+  "utc": "2026-10-29T01:30:25.536826+00:00",
+  "run_id": "pr1287-seed-727-20261029T012838Z",
+  "status": "stopped_by_user",
+  "settings": {
+    "seed": 727,
+    "source_commit": "6704c52dcb2aa72e7e7e1acc977a2de55bb24cf7",
+    "source_sha256": "fe21f1a3b77ced552976916d278f2b2b15caa80af994ae60a0a43c19673aada1",
+    "branch": "ks3-pr393-h100",
+    "steps": 1287,
+    "comparative_pruning": false
+  },
+  "validation_result_exists": false,
+  "reason": "User stopped replication and requested commit/push current version."
+}

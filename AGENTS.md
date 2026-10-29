@@ -96,3 +96,6 @@ User rejected3.26 and directs target3.278 using basic step extrapolation, then a
 
 ## Latest final seed-count instruction — 2026-10-29
 User directs stopping at10 total1287-update runs, then logging all results and committing/pushing to their repo. Do not open a PR. Keep the strict stop after any full CE>=3.28. A count watcher sets the series STOP after the tenth summary is written, before another seed can launch. No subsequent research or additional seeds are authorized.
+
+## Latest explicit stop and upload clarification — 2026-10-29
+The user explicitly orders stopping and committing/pushing this version to their repo, with no PR. All GPU runs and the1287-update seed controller are stopped; five runs completed and seed727 was interrupted without validation. Global H100 study STOP markers are authoritative. Preserve the current code, five completed full-validation logs and statistics; do not resume any GPU research or further seeds without new explicit authorization. Final mean time31.607837178s, CE3.2757020474; this is slower than31.07925s MLP control and is not a record win.

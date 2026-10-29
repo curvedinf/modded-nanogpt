@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T01:26:03.136907+00:00",
+  "utc": "2026-10-29T01:30:25.536826+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,11 +18,9 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "pr1287-seed-726-20261029T012546Z",
+  "current_full_run": null,
   "current_hypothesis": "User target3.278. Use all eight old seeds mean3.280671477125 and measured0.0002520085 CE/update:10.6007 extra updates rounded up to12 to preserve even growth parity. Fixed1287-update recipe. Run series and stop on first full-validation loss>=3.28; no3.26 gate.",
-  "planned_followups": [
-    "Stop at10 total, log all outcomes, commit and push. Do not open a PR."
-  ],
+  "planned_followups": [],
   "reference": {
     "kind": "eight_completed_controls_including_original",
     "seconds": 31.079250000000002,
@@ -32,7 +30,7 @@
   },
   "next_model_candidate": null,
   "queued_screen": [],
-  "status": "running_fixed_1287_seed_series",
+  "status": "stopped_by_user",
   "near_target": {
     "run": "20261028T232455Z",
     "seconds": 30.955472743,
@@ -166,7 +164,7 @@
     "FP16-temporary VJP row/warp sweep",
     "Further unrelated optimizer ablations"
   ],
-  "latest_user_priority": "Target3.278 by step extrapolation; no3.26 gate.",
+  "latest_user_priority": "Stop all runs and commit/push current version; do not open a PR.",
   "latest_loss_compliant": {
     "run": "20261029T003007Z",
     "steps": 1275,
@@ -176,25 +174,29 @@
   "clean_branch": "ks3-pr393-h100",
   "clean_worktree": "/root/modded-nanogpt-ks3-pr",
   "verification_target": 10,
-  "completed_seed_count": 4,
+  "completed_seed_count": 5,
   "current_seed_summary": {
-    "n": 4,
+    "n": 5,
     "steps": 1287,
     "validation_tokens": 10485760,
     "loss_threshold": 3.28,
-    "loss_mean": 3.2755321265,
-    "loss_sample_std": 0.0006792837679450339,
-    "seconds_mean": 31.600201502,
-    "seconds_sample_std": 0.013766882943888451,
-    "one_sided_student_t": -13.154659984047834,
-    "one_sided_p": 0.0004745040296393824,
-    "seeds_meeting_loss": 4,
+    "loss_mean": 3.2757020474,
+    "loss_sample_std": 0.0007003109233256268,
+    "seconds_mean": 31.607837178,
+    "seconds_sample_std": 0.020824577771899902,
+    "one_sided_student_t": -13.723210444917322,
+    "one_sided_p": 8.1673068571413e-05,
+    "seeds_meeting_loss": 5,
     "reference_seconds": 31.07925,
     "reference_n": 8,
     "reference_evidence": "https://github.com/curvedinf/modded-nanogpt/blob/109d6a7/research_results/wr_reproduction/h100-control-calibration/summary.json",
     "qualifies_against_reference": false,
     "pre_port_seeds": [],
-    "port_check": "https://github.com/curvedinf/modded-nanogpt/blob/master/research_results/wr_reproduction/h100-research/clean-port/equivalence.json"
+    "port_check": "https://github.com/curvedinf/modded-nanogpt/blob/master/research_results/wr_reproduction/h100-research/clean-port/equivalence.json",
+    "status": "stopped_by_user",
+    "interrupted_seed": 727,
+    "completed_runs": 5,
+    "requested_runs_before_stop": 10
   },
   "candidate_qualified": false,
   "qualification_note": "Mean loss above3.28 and p>=0.01. Do not describe the recipe or branch as a compliant record."
