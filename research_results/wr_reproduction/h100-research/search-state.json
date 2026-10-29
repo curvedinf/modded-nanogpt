@@ -18,8 +18,8 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": null,
-  "current_hypothesis": "640-wide value-embedding gradient scatter:2 warps restores packed FP16 atomics; profile and real-token oracle passed.",
+  "current_full_run": "20261029T000304Z",
+  "current_hypothesis": "Full640/1280 seed701 after46% prefix speed gain from packed value-gradient atomics; original1133updates, fused amax enabled.",
   "planned_followups": [
     "If the whole-model timing screen confirms improvement, run one640/1280 full WR candidate on seed701.",
     "If any full candidate beats31.07925s atCE<=3.28, freeze and run three fresh independent seeds711\u2013713.",
@@ -126,5 +126,5 @@
     "The640-wide family had83.739s runtime with sealed CUDA graphs; profile before any further640 convergence run.",
     "A wider-KS3 architecture reached3.278320312 on seed701 but cost32.234487602s. A future batch32 late phase with fewer updates could reduce optimizer overhead; requires exact schedule/token accounting before testing."
   ],
-  "current_timing_screen": "20261029T000037Z"
+  "current_timing_screen": null
 }

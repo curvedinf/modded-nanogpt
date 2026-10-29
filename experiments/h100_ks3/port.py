@@ -91,6 +91,9 @@ def install(optimization=None):
     if 'KS3_H100_COPY_LR' in os.environ:
         from experiments.h100_ks3.optimizer_ablation import install_copy
         install_copy(float(os.environ['KS3_H100_COPY_LR']))
+    if 'KS3_H100_ROUTER_LR' in os.environ:
+        from experiments.h100_ks3.optimizer_ablation import install_router
+        install_router(float(os.environ['KS3_H100_ROUTER_LR']))
     width=int(os.environ.get('KS3_H100_WIDTH','1024'))
     rank=int(os.environ.get('KS3_H100_RANK','1'))
     if rank not in (1,2,4) or width%rank:raise ValueError('Invalid H100 KS3 rank/width')
