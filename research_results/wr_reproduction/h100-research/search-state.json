@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:17:13.532237+00:00",
+  "utc": "2026-10-29T00:21:26.931214+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,12 +18,11 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "20261029T001702Z",
-  "current_hypothesis": "Corrected half-C/half-V cache metadata; explicit approximation with independent oracles and~5%core gain; same-seed whole-update gate active.",
+  "current_full_run": "20261029T002115Z",
+  "current_hypothesis": "Twelve extra late updates spend most of the half-temporary speed saving; estimated31.0113s. Full WR validation on seed701.",
   "planned_followups": [
-    "If the whole-model timing screen confirms improvement, run one640/1280 full WR candidate on seed701.",
-    "If any full candidate beats31.07925s atCE<=3.28, freeze and run three fresh independent seeds711\u2013713.",
-    "Continue meaningful KS3 optimization; no further controls."
+    "Three fresh frozen seeds711\u2013713 immediately after any qualifying local win.",
+    "Otherwise test directed dense or sparse-table learning-rate increases on the same new recipe."
   ],
   "reference": {
     "kind": "eight_completed_controls_including_original",
