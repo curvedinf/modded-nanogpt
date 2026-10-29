@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:14:07.440477+00:00",
+  "utc": "2026-10-29T00:17:13.532237+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "20261029T001347Z",
-  "current_hypothesis": "Intentional FP16 C/V temporary precision, unchanged FP8 products; paired core ~5% faster, strict trajectory-equivalence failed but independent intended-rounding/BF16/Jacobian oracles passed; whole-update speed gate then full validation.",
+  "current_full_run": "20261029T001702Z",
+  "current_hypothesis": "Corrected half-C/half-V cache metadata; explicit approximation with independent oracles and~5%core gain; same-seed whole-update gate active.",
   "planned_followups": [
     "If the whole-model timing screen confirms improvement, run one640/1280 full WR candidate on seed701.",
     "If any full candidate beats31.07925s atCE<=3.28, freeze and run three fresh independent seeds711\u2013713.",
@@ -126,5 +126,6 @@
     "If it misses, short paired screen of explicitly rounded FP16 preactivation cache; halve C traffic without expensive fused geometry.",
     "Conservative geometry Adam0.0625 remains prepared."
   ],
-  "current_timing_screen": null
+  "current_timing_screen": null,
+  "prior_startup_failure": "20261029T001347Z"
 }
