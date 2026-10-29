@@ -57,7 +57,7 @@ STAGE_DURATIONS = [d / sum(STAGE_DURATIONS) for d in STAGE_DURATIONS]
 TAPER_DURATION = 0.06
 # Record #360 grew its run by 52 steps without re-deriving the fractions: the extra steps all go to
 # the batch-24 stage (index 2), which keeps every later boundary's Adam-step (odd/even) parity.
-SCHEDULE_GROWTH_STEPS = 274
+SCHEDULE_GROWTH_STEPS = 286
 SCHEDULE_GROWTH_STAGE = 2
 # The CPLM <copy> gate (perf/kernels/cplm.py) is the vocabulary's first padding row, so lm_head needs no new row;
 # the sampled softmax always keeps it in its candidate set (sampled_softmax.py).
