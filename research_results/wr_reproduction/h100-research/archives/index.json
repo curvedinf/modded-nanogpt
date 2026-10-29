@@ -87,5 +87,9 @@
   "ablation-20261029T001702Z.tar.gz": {
     "bytes": 1004374,
     "sha256": "c0d9920e871a5af535b6c121a691d418f863086c5aa70aae1948979001f8a890"
+  },
+  "near-target-20261029T002115Z.tar.gz": {
+    "bytes": 1004338,
+    "sha256": "c72838cfe73c8da363eb48eb08e87571a91eaa5c47e7f882ecb805a211c53ac8"
   }
 }

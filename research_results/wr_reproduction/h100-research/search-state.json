@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:21:26.931214+00:00",
+  "utc": "2026-10-29T00:25:03.300874+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "20261029T002115Z",
-  "current_hypothesis": "Twelve extra late updates spend most of the half-temporary speed saving; estimated31.0113s. Full WR validation on seed701.",
+  "current_full_run": "20261029T002414Z",
+  "current_hypothesis": "Dense ANVIL learning rate1.1 on half C/V temporaries and growth266; seed701. Parent31.001478524s/3.281089783.",
   "planned_followups": [
     "Three fresh frozen seeds711\u2013713 immediately after any qualifying local win.",
     "Otherwise test directed dense or sparse-table learning-rate increases on the same new recipe."
@@ -31,7 +31,7 @@
     "n": 8,
     "summary": "research_results/wr_reproduction/h100-control-calibration/summary.json"
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_dense2304_growth254_half_temporaries.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_half_growth266_ngram13.json",
   "queued_screen": [],
   "status": "ks3_running",
   "near_target": {
@@ -126,5 +126,10 @@
     "Conservative geometry Adam0.0625 remains prepared."
   ],
   "current_timing_screen": null,
-  "prior_startup_failure": "20261029T001347Z"
+  "prior_startup_failure": "20261029T001347Z",
+  "best_seed701_near_control": {
+    "run": "20261029T002115Z",
+    "seconds": 31.001478524,
+    "loss": 3.281089783
+  }
 }
