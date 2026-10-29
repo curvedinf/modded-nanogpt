@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:49:27.231746+00:00",
+  "utc": "2026-10-29T00:58:23.037166+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,7 +18,7 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "pr-seed-714-20261029T004911Z",
+  "current_full_run": "pr-seed-717-20261029T005812Z",
   "current_hypothesis": "Frozen1275-update recipe on clean PR branch; three pre-port seeds retained, nine more714-722 requested.",
   "planned_followups": [
     "Complete twelve total frozen seeds on the PR-ready branch and report all results."
@@ -175,5 +175,29 @@
   },
   "clean_branch": "ks3-pr393-h100",
   "clean_worktree": "/root/modded-nanogpt-ks3-pr",
-  "verification_target": 12
+  "verification_target": 12,
+  "completed_seed_count": 6,
+  "current_seed_summary": {
+    "n": 6,
+    "steps": 1275,
+    "validation_tokens": 10485760,
+    "loss_threshold": 3.28,
+    "loss_mean": 3.2811838386666667,
+    "loss_sample_std": 0.013244196112077037,
+    "seconds_mean": 31.238217632333335,
+    "seconds_sample_std": 0.008868039563833079,
+    "one_sided_student_t": 0.21894878681738353,
+    "one_sided_p": 0.5823266116454591,
+    "seeds_meeting_loss": 5,
+    "reference_seconds": 31.07925,
+    "reference_n": 8,
+    "reference_evidence": "https://github.com/curvedinf/modded-nanogpt/blob/109d6a7/research_results/wr_reproduction/h100-control-calibration/summary.json",
+    "qualifies_against_reference": false,
+    "pre_port_seeds": [
+      711,
+      712,
+      713
+    ],
+    "port_check": "https://github.com/curvedinf/modded-nanogpt/blob/master/research_results/wr_reproduction/h100-research/clean-port/equivalence.json"
+  }
 }
