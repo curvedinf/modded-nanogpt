@@ -1,0 +1,69 @@
+{
+  "name": "pr393-ks3-dense2304-growth274-fp16-temporaries",
+  "architecture": "512 residual,1536-chart KS3 at all five8top1 MoE sites,2304-wide dense branches, doubled ngram table.",
+  "geometry_optimizer": {
+    "adam_betas": [
+      0.9,
+      0.99
+    ],
+    "lr_multiplier": 0.125
+  },
+  "geometry_averaging": "Replicated geometry follows original MoE tail-average and bank-blend ticks and rates; no geometry norm rescaling.",
+  "environment": {
+    "TRAIN_SEED": "701",
+    "KS3_H100_OPT": "fp8-native",
+    "KS3_H100_TRANSPORT": "fp8",
+    "KS3_H100_PACK_ROWS": "16",
+    "TRITON_PTXAS_PATH": "/root/venvs/h100-ptxas-13.3/ptxas",
+    "KS3_H100_RANK": "1",
+    "KS3_FP8_CUBIC": "1",
+    "KS3_FP8_DW": "tma",
+    "KS3_FP8_MM": "tma",
+    "KS3_FP8_MM_TILE": "128x256",
+    "KS3_FP8_GATHER": "tiled",
+    "KS3_FP8_VJP_ROWS": "128",
+    "KS3_FP8_VJP_WARPS": "4",
+    "KS3_FP8_TMA_STORES": "1",
+    "KS3_FP8_PACKED_TRANSPORT": "1",
+    "KS3_FP8_LAYOUT_TILE": "64",
+    "KS3_FP8_TMA_OUTPUTS": "1",
+    "KS3_H100_GEOMETRY_TAIL": "1",
+    "KS3_H100_FUSED_ANVIL": "1",
+    "KS3_H100_WIDTH": "1536",
+    "KS3_H100_PROJECTION_LR": "0.6666666666666666",
+    "KS3_H100_NGRAM_LR_SCALE": "1.15",
+    "KS3_FP8_FUSED_AMAX": "1",
+    "KS3_FP8_C_DTYPE": "float16",
+    "KS3_FP8_V_DTYPE": "float16",
+    "KS3_FP8_ROUND_C": "1"
+  },
+  "validation_tokens": 10485760,
+  "scheduled_steps": 981,
+  "total_steps": 1275,
+  "base_run": "20261029T002115Z",
+  "hypothesis": "User-directed loss-compliance trial: add eight growth updates to the best recent seed701 half-temporary recipe. All widths, learning rates, precision and full WR validation stay fixed. Prioritize full CE <=3.28; report measured time separately from31.07925s control.",
+  "model_dim": 512,
+  "dense_width": 2304,
+  "growth_steps": 274,
+  "status": "loss_compliant_time_above_control",
+  "ngram_multiplier": 2,
+  "memory_estimate": "Adds10.83GB decimal (10.09GiB) per GPU to the BF16 sharded ngram table, plus~85MB row optimizer state. Prior512 peak26464MiB and reserved42626MiB leave room on80GB H100.",
+  "precision_evidence": {
+    "path": "research_results/wr_reproduction/h100-research/model512-rounded-c16v16-approximation-measurement.json",
+    "strict_equivalence_passed": false,
+    "independent_oracles_passed": true,
+    "interpretation": "intentional approximate training precision, not exact system substitution",
+    "metadata_check": "research_results/wr_reproduction/h100-research/model512-rounded-c16v16-metadata-checked.json"
+  },
+  "timing_estimate": {
+    "extra_steps": 8,
+    "late_seconds_per_step": 0.03172,
+    "estimated_seconds": 31.255238524,
+    "estimate_not_measurement": true
+  },
+  "run_id": "20261029T003007Z",
+  "official_seconds": 31.260079786,
+  "validation_loss": 3.279073715,
+  "code_commit": "de06b76dc292eea0f2c0cc7946d7720120c686cc",
+  "manifest_sha256": "31ff5d1e703a7b5f72d66dc701f9ba8fd68b23162b83b5be869469dc2d382af1"
+}
