@@ -93,3 +93,6 @@ The user rejects the barely passing recipe and orders starting over with genuine
 
 ## Latest explicit numeric target and seed stopping rule — 2026-10-29
 User rejected3.26 and directs target3.278 using basic step extrapolation, then a fixed seed series stopping only on a full-validation CE>=3.28 (or errors/new explicit stop). Use the eight-seed mean3.280671477125, not a selected single seed. Measured slope0.0002520085 CE/update implies10.6007 extra updates; round to12 for even growth parity, yielding1287 total updates. Cancel1467-update trial, preserve it without validation. No extra selection thresholds or new optimization. Run approximately12 seeds on the clean PR branch, stopping immediately after any loss>=3.28. Keep all outcomes, minimal contest evidence, and timing versus31.07925s.
+
+## Latest final seed-count instruction — 2026-10-29
+User directs stopping at10 total1287-update runs, then logging all results and committing/pushing to their repo. Do not open a PR. Keep the strict stop after any full CE>=3.28. A count watcher sets the series STOP after the tenth summary is written, before another seed can launch. No subsequent research or additional seeds are authorized.

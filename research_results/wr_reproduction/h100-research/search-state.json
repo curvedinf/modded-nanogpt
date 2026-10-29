@@ -21,7 +21,7 @@
   "current_full_run": "pr1287-seed-725-20261029T012252Z",
   "current_hypothesis": "User target3.278. Use all eight old seeds mean3.280671477125 and measured0.0002520085 CE/update:10.6007 extra updates rounded up to12 to preserve even growth parity. Fixed1287-update recipe. Run series and stop on first full-validation loss>=3.28; no3.26 gate.",
   "planned_followups": [
-    "Continue fixed1287-update seeds up to12 total; stop after first full CE>=3.28."
+    "Stop at10 total, log all outcomes, commit and push. Do not open a PR."
   ],
   "reference": {
     "kind": "eight_completed_controls_including_original",
@@ -175,7 +175,7 @@
   },
   "clean_branch": "ks3-pr393-h100",
   "clean_worktree": "/root/modded-nanogpt-ks3-pr",
-  "verification_target": 12,
+  "verification_target": 10,
   "completed_seed_count": 3,
   "current_seed_summary": {
     "n": 3,

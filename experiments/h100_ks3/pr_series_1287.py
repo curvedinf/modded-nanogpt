@@ -51,7 +51,7 @@ def publish(message):
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--seeds',default='711,723,724,725,726,727,728,729,730,731,732,733');a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--seeds',default='711,723,724,725,726,727,728,729,730,731');a=ap.parse_args()
     seeds=[int(s) for s in a.seeds.split(',')]
     STUDY.mkdir(exist_ok=True)
     RECORDS.mkdir(parents=True,exist_ok=True)
@@ -109,7 +109,7 @@ def main():
         result={'run_id':run.name,'status':'complete','exit_code':0,'settings':settings,'code_commit':meta['source_commit'],'manifest_sha256':meta['source_sha256'],'source_hashes_unchanged':True,'timing_reference_eligible':True,'steps':1287,'official_seconds':float(seconds),'validation_loss':float(loss),'validation_tokens':10485760,'target_met':float(loss)<=3.28}
         (run/'result.json').write_text(json.dumps(result,indent=2)+'\n');out=RESULTS/'runs'/run.name;out.mkdir();(out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
         append('registry.jsonl',result);append('notes.jsonl',{'kind':'branch_seed_result','result':row,'decision':'Keep1287-update recipe frozen; continue only if this full loss is strictly below3.28.'});summarize()
-        publish(f'Record frozen KS3 seed {seed} ({len(rows)}/12)')
+        publish(f'Record frozen KS3 seed {seed} ({len(rows)}/10)')
         print(json.dumps({'completed':row,'summary':report}),flush=True)
         if float(loss)>=3.28:
             report['status']='stopped_seed_loss_at_least_3.28'
