@@ -54,6 +54,7 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--seeds',default='711,723,724,725,726,727,728,729,730,731,732,733');a=ap.parse_args()
     seeds=[int(s) for s in a.seeds.split(',')]
     STUDY.mkdir(exist_ok=True)
+    RECORDS.mkdir(parents=True,exist_ok=True)
     metadata=STUDY/'branch-source.json'
     manifest=source_manifest();digest=hashlib.sha256(json.dumps(manifest,sort_keys=True).encode()).hexdigest()
     if metadata.exists():
