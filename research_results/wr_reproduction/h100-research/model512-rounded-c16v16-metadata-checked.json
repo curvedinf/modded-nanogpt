@@ -1,0 +1,301 @@
+{
+  "utc": "2026-10-29T00:16:37.799084+00:00",
+  "packing": {
+    "native_eval_weight_copy_bitwise": null,
+    "dual_layouts_bitwise": true,
+    "model_refresh_and_eval_bitwise": true,
+    "delayed_model_scales_bitwise": true,
+    "torch_rounding_different_elements": 0,
+    "elements": 62914560
+  },
+  "oracle": [
+    {
+      "tokens": 16384,
+      "projection_relative_rms": 0.0003334515495225787,
+      "rounded_projection_matches_fp32_cast": true,
+      "weight_gradient_relative_rms": 0.0017985933227464557,
+      "accumulated_gradient_relative_rms": 0.0017985933227464557
+    },
+    {
+      "tokens": 49152,
+      "projection_relative_rms": 0.0003339658724144101,
+      "rounded_projection_matches_fp32_cast": true
+    }
+  ],
+  "cases": [
+    {
+      "tokens": 16384,
+      "producers": {
+        "input": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "gathered_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        }
+      },
+      "operator_metadata": {
+        "forward": {
+          "test_faketensor": "SUCCESS"
+        },
+        "backward": {
+          "test_faketensor": "SUCCESS"
+        }
+      },
+      "post_jacobian": {
+        "jacobian_relative_rms": 0.05807492882013321,
+        "fp64_contraction": 2.248566095418039,
+        "actual_post": 2.2485663890838623,
+        "contraction_error_over_l2": 1.1442505407194509e-07,
+        "cancellation_ratio": 0.8761397367805804
+      },
+      "errors_versus_bf16": {
+        "output": 0.05811965465545654,
+        "dx": 0.08883867412805557,
+        "router": 0.058751534670591354,
+        "post": 0.09162340313196182,
+        "geometry": 0.07983777672052383,
+        "weights": 0.08426077663898468
+      },
+      "errors_versus_full_cache": {
+        "output": 0.00792733859270811,
+        "dx": 0.007099147420376539,
+        "router": 0.008728187531232834,
+        "post": 0.010798992589116096,
+        "geometry": 0.0005895959911867976,
+        "weights": 0.007202772423624992
+      },
+      "errors_versus_default_vjp_tile": null,
+      "errors_versus_full_precision_temporaries": {
+        "output": 0.007927332073450089,
+        "dx": 0.0070965527556836605,
+        "router": 0.008727769367396832,
+        "post": 0.010958021506667137,
+        "geometry": 0.000589601113460958,
+        "weights": 0.00720135448500514
+      },
+      "errors_versus_unfused_amax": {
+        "output": 0.0,
+        "dx": 0.0,
+        "router": 0.0,
+        "post": 0.0,
+        "geometry": 0.0,
+        "weights": 0.0
+      },
+      "timing": {
+        "bf16": {
+          "samples_ms": [
+            0.7320231049149125,
+            0.7326729527226201,
+            0.7332734920360424
+          ],
+          "median_ms": 0.7326729527226201
+        },
+        "fp8": {
+          "samples_ms": [
+            0.5844911992549896,
+            0.5798168364025298,
+            0.5808555173873902
+          ],
+          "median_ms": 0.5808555173873902
+        },
+        "fp8_full_cache": {
+          "samples_ms": [
+            0.6253374680228855,
+            0.6258888369021208,
+            0.6257514216683128
+          ],
+          "median_ms": 0.6257514216683128
+        },
+        "fp8_full_precision_temporaries": {
+          "samples_ms": [
+            0.6096626281738281,
+            0.6098054409027099,
+            0.6096393085661389
+          ],
+          "median_ms": 0.6096626281738281
+        },
+        "fp8_unfused_amax": {
+          "samples_ms": [
+            0.5902307101658413,
+            0.5883468219212123,
+            0.5902988862991333
+          ],
+          "median_ms": 0.5902307101658413
+        }
+      },
+      "scales": {
+        "post": 0.019746163859963417,
+        "dpre": 8.713697070561466e-07
+      },
+      "oracle_passed": true,
+      "strict_equivalence_passed": false,
+      "passed": false
+    },
+    {
+      "tokens": 49152,
+      "producers": {
+        "input": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "gathered_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        }
+      },
+      "operator_metadata": {
+        "forward": {
+          "test_faketensor": "SUCCESS"
+        },
+        "backward": {
+          "test_faketensor": "SUCCESS"
+        }
+      },
+      "post_jacobian": {
+        "jacobian_relative_rms": 0.05805068463087082,
+        "fp64_contraction": -4.76617361453855,
+        "actual_post": -4.766172409057617,
+        "contraction_error_over_l2": 2.690112578223432e-07,
+        "cancellation_ratio": 1.0636040140527008
+      },
+      "errors_versus_bf16": {
+        "output": 0.05809544399380684,
+        "dx": 0.08869705349206924,
+        "router": 0.05786747857928276,
+        "post": 0.07078038901090622,
+        "geometry": 0.0795288011431694,
+        "weights": 0.08422049880027771
+      },
+      "errors_versus_full_cache": {
+        "output": 0.008044122718274593,
+        "dx": 0.007160412147641182,
+        "router": 0.00847721379250288,
+        "post": 0.005837432108819485,
+        "geometry": 0.0005881514516659081,
+        "weights": 0.007357059046626091
+      },
+      "errors_versus_default_vjp_tile": null,
+      "errors_versus_full_precision_temporaries": {
+        "output": 0.008044108748435974,
+        "dx": 0.007160387467592955,
+        "router": 0.00847222376614809,
+        "post": 0.005841783247888088,
+        "geometry": 0.0005881501128897071,
+        "weights": 0.00735704880207777
+      },
+      "errors_versus_unfused_amax": {
+        "output": 0.0,
+        "dx": 0.0,
+        "router": 0.0,
+        "post": 0.0,
+        "geometry": 0.0,
+        "weights": 0.0
+      },
+      "timing": {
+        "bf16": {
+          "samples_ms": [
+            1.98228480690404,
+            1.9817070219251844,
+            1.9829696052952817
+          ],
+          "median_ms": 1.98228480690404
+        },
+        "fp8": {
+          "samples_ms": [
+            1.3793348789215087,
+            1.3737625408172607,
+            1.3749864196777344
+          ],
+          "median_ms": 1.3749864196777344
+        },
+        "fp8_full_cache": {
+          "samples_ms": [
+            1.6822572072347004,
+            1.6823187691824777,
+            1.6809976486932663
+          ],
+          "median_ms": 1.6822572072347004
+        },
+        "fp8_full_precision_temporaries": {
+          "samples_ms": [
+            1.4472264340049343,
+            1.4487540817260742,
+            1.4498475170135499
+          ],
+          "median_ms": 1.4487540817260742
+        },
+        "fp8_unfused_amax": {
+          "samples_ms": [
+            1.3931499195098878,
+            1.3928192138671875,
+            1.391554718017578
+          ],
+          "median_ms": 1.3928192138671875
+        }
+      },
+      "scales": {
+        "post": 0.015255160629749298,
+        "dpre": 7.146020379877882e-07
+      },
+      "oracle_passed": true,
+      "strict_equivalence_passed": false,
+      "passed": false
+    }
+  ],
+  "fused_amax": true,
+  "round_c": true,
+  "measure_approximation": true,
+  "implementation": {
+    "dpre_e4m3": false,
+    "model_dim": 512,
+    "width": 1536,
+    "gs32": true,
+    "rank": 1,
+    "cubic_only": true,
+    "compact_part": false,
+    "fuse_cubic_vjp": false,
+    "cubic_vjp_tile": null,
+    "cubic_vjp_warps": null,
+    "cubic_vjp_stages": "3",
+    "cubic_vjp_flatten": "1",
+    "cubic_vjp_moments": "0",
+    "fused_up_flatten": "1",
+    "tma_outputs": true,
+    "dw": "tma",
+    "vjp_rows": 128,
+    "vjp_cols": 32,
+    "vjp_warps": 4,
+    "gather": "tiled",
+    "tma_stores": true,
+    "c_dtype": "torch.float16",
+    "v_dtype": "torch.float16",
+    "fuse_geometry": false,
+    "fused_up_tile": null,
+    "mm": "tma",
+    "mm_tile": "128x256",
+    "reference_variant": "separate-dx-prepared-128-gate-tanh-fp16v-cubic"
+  },
+  "ptxas": {
+    "path": "/root/venvs/h100-ptxas-13.3/ptxas",
+    "version": "13.3",
+    "sha256": "7fdd01a4cf50e30746da98989c9272a907f491e6fd7fecfda14642e4375f88fb"
+  }
+}

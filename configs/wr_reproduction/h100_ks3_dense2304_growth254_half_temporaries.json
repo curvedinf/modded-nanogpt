@@ -45,13 +45,17 @@
   "model_dim": 512,
   "dense_width": 2304,
   "growth_steps": 254,
-  "status": "ready_for_gated_precision_trial",
+  "status": "ready_metadata_fixed",
   "ngram_multiplier": 2,
   "memory_estimate": "Adds10.83GB decimal (10.09GiB) per GPU to the BF16 sharded ngram table, plus~85MB row optimizer state. Prior512 peak26464MiB and reserved42626MiB leave room on80GB H100.",
   "precision_evidence": {
     "path": "research_results/wr_reproduction/h100-research/model512-rounded-c16v16-approximation-measurement.json",
     "strict_equivalence_passed": false,
     "independent_oracles_passed": true,
-    "interpretation": "intentional approximate training precision, not exact system substitution"
-  }
+    "interpretation": "intentional approximate training precision, not exact system substitution",
+    "metadata_check": "research_results/wr_reproduction/h100-research/model512-rounded-c16v16-metadata-checked.json"
+  },
+  "failed_startup_attempts": [
+    "20261029T001347Z"
+  ]
 }
