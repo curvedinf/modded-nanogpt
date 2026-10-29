@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:58:23.037166+00:00",
+  "utc": "2026-10-29T01:06:36.698125+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,10 +18,11 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "pr-seed-717-20261029T005812Z",
+  "current_full_run": null,
   "current_hypothesis": "Frozen1275-update recipe on clean PR branch; three pre-port seeds retained, nine more714-722 requested.",
   "planned_followups": [
-    "Complete twelve total frozen seeds on the PR-ready branch and report all results."
+    "Screen known failed seed711 with1467updates for CE<=3.26.",
+    "Only after measured margin, run two fresh-seed preflights; use all observations to assess variance before any larger batch."
   ],
   "reference": {
     "kind": "eight_completed_controls_including_original",
@@ -32,7 +33,7 @@
   },
   "next_model_candidate": null,
   "queued_screen": [],
-  "status": "clean_branch_twelve_seed_series_running",
+  "status": "restart_margin_screen",
   "near_target": {
     "run": "20261028T232455Z",
     "seconds": 30.955472743,
@@ -199,5 +200,7 @@
       713
     ],
     "port_check": "https://github.com/curvedinf/modded-nanogpt/blob/master/research_results/wr_reproduction/h100-research/clean-port/equivalence.json"
-  }
+  },
+  "candidate_qualified": false,
+  "qualification_note": "Mean loss above3.28 and p>=0.01. Do not describe the recipe or branch as a compliant record."
 }
