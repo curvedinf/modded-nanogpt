@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:38:00.691704+00:00",
+  "utc": "2026-10-29T00:40:57.686951+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "20261029T003755Z",
-  "current_hypothesis": "Independent seed711 of frozen1275-update recipe; no comparative pruning.",
+  "current_full_run": "20261029T004048Z",
+  "current_hypothesis": "Independent seed712 of unchanged1275-update recipe. Seed711 missed target; complete all three without selection or pruning.",
   "planned_followups": [
     "Complete fresh frozen seeds711,712,713, report statistics and stop."
   ],
@@ -39,7 +39,7 @@
     "loss": 3.280070305
   },
   "verification": {
-    "utc": "2026-10-29T00:38:00.691704+00:00",
+    "utc": "2026-10-29T00:40:57.686951+00:00",
     "discovery": "20261029T003007Z",
     "purpose": "User-requested fresh-seed series for accepted loss-compliant recipe. This is explicitly allowed despite slower-than-control time.",
     "seeds": [
@@ -54,11 +54,28 @@
     "discovery_loss": 3.279073715,
     "frozen_code_commit": "de06b76dc292eea0f2c0cc7946d7720120c686cc",
     "frozen_manifest_sha256": "31ff5d1e703a7b5f72d66dc701f9ba8fd68b23162b83b5be869469dc2d382af1",
-    "status": "running_seed711",
+    "status": "running_seed712",
     "run_ids": [
-      "20261029T003755Z"
+      "20261029T003755Z",
+      "20261029T004048Z"
     ],
-    "after_completion": "Report all results and statistics, commit/push, do not resume optimization without new user instruction."
+    "after_completion": "Report all results and statistics, commit/push, do not resume optimization without new user instruction.",
+    "completed": [
+      {
+        "run_id": "20261029T003755Z",
+        "seed": 711,
+        "loss": 3.308180332,
+        "seconds": 31.235253784,
+        "code_commit": "de06b76dc292eea0f2c0cc7946d7720120c686cc",
+        "manifest_sha256": "31ff5d1e703a7b5f72d66dc701f9ba8fd68b23162b83b5be869469dc2d382af1"
+      }
+    ],
+    "seed711_audit": {
+      "model_and_schedule_match": true,
+      "execution_manifest_identical": true,
+      "environment_only_difference": "TRAIN_SEED701->711",
+      "loss_target_missed": true
+    }
   },
   "verification_result": {
     "utc": "2026-10-28T23:39:48.743132+00:00",

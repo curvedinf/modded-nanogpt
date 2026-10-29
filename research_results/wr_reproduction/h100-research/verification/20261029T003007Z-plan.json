@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:40:47.950764+00:00",
+  "utc": "2026-10-29T00:43:41.864915+00:00",
   "discovery": "20261029T003007Z",
   "purpose": "User-requested fresh-seed series for accepted loss-compliant recipe. This is explicitly allowed despite slower-than-control time.",
   "seeds": [
@@ -14,9 +14,10 @@
   "discovery_loss": 3.279073715,
   "frozen_code_commit": "de06b76dc292eea0f2c0cc7946d7720120c686cc",
   "frozen_manifest_sha256": "31ff5d1e703a7b5f72d66dc701f9ba8fd68b23162b83b5be869469dc2d382af1",
-  "status": "1_of_3_completed",
+  "status": "2_of_3_completed",
   "run_ids": [
-    "20261029T003755Z"
+    "20261029T003755Z",
+    "20261029T004048Z"
   ],
   "after_completion": "Report all results and statistics, commit/push, do not resume optimization without new user instruction.",
   "completed": [
@@ -27,6 +28,20 @@
       "seconds": 31.235253784,
       "code_commit": "de06b76dc292eea0f2c0cc7946d7720120c686cc",
       "manifest_sha256": "31ff5d1e703a7b5f72d66dc701f9ba8fd68b23162b83b5be869469dc2d382af1"
+    },
+    {
+      "run_id": "20261029T004048Z",
+      "seed": 712,
+      "loss": 3.275638103,
+      "seconds": 31.239329733,
+      "code_commit": "de06b76dc292eea0f2c0cc7946d7720120c686cc",
+      "manifest_sha256": "31ff5d1e703a7b5f72d66dc701f9ba8fd68b23162b83b5be869469dc2d382af1"
     }
-  ]
+  ],
+  "seed711_audit": {
+    "model_and_schedule_match": true,
+    "execution_manifest_identical": true,
+    "environment_only_difference": "TRAIN_SEED701->711",
+    "loss_target_missed": true
+  }
 }
