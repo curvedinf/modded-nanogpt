@@ -1,0 +1,23 @@
+{
+  "n": 3,
+  "steps": 1275,
+  "validation_tokens": 10485760,
+  "loss_threshold": 3.28,
+  "loss_mean": 3.286468187666667,
+  "loss_sample_std": 0.01880328652161058,
+  "seconds_mean": 31.239255900666667,
+  "seconds_sample_std": 0.003965716002852714,
+  "one_sided_student_t": 0.5958123149738639,
+  "one_sided_p": 0.6941264589816436,
+  "seeds_meeting_loss": 2,
+  "reference_seconds": 31.07925,
+  "reference_n": 8,
+  "reference_evidence": "https://github.com/curvedinf/modded-nanogpt/blob/109d6a7/research_results/wr_reproduction/h100-control-calibration/summary.json",
+  "qualifies_against_reference": false,
+  "pre_port_seeds": [
+    711,
+    712,
+    713
+  ],
+  "port_check": "https://github.com/curvedinf/modded-nanogpt/blob/master/research_results/wr_reproduction/h100-research/clean-port/equivalence.json"
+}

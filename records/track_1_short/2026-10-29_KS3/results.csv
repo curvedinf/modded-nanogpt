@@ -1,0 +1,4 @@
+seed,steps,seconds,loss,source_commit,source_sha256,log
+711,1275,31.235253784,3.308180332,de06b76dc292eea0f2c0cc7946d7720120c686cc,31ff5d1e703a7b5f72d66dc701f9ba8fd68b23162b83b5be869469dc2d382af1,https://github.com/curvedinf/modded-nanogpt/raw/109d6a7/research_results/wr_reproduction/h100-research/archives/verification-20261029T003755Z.tar.gz
+712,1275,31.239329733,3.275638103,de06b76dc292eea0f2c0cc7946d7720120c686cc,31ff5d1e703a7b5f72d66dc701f9ba8fd68b23162b83b5be869469dc2d382af1,https://github.com/curvedinf/modded-nanogpt/raw/109d6a7/research_results/wr_reproduction/h100-research/archives/verification-20261029T004048Z.tar.gz
+713,1275,31.243184185,3.275586128,de06b76dc292eea0f2c0cc7946d7720120c686cc,31ff5d1e703a7b5f72d66dc701f9ba8fd68b23162b83b5be869469dc2d382af1,https://github.com/curvedinf/modded-nanogpt/raw/109d6a7/research_results/wr_reproduction/h100-research/archives/verification-20261029T004342Z.tar.gz
