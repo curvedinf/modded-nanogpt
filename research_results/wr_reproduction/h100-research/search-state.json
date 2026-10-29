@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:37:52.590442+00:00",
+  "utc": "2026-10-29T00:38:00.691704+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": null,
-  "current_hypothesis": "Second shorter step-count version: growth270,1271 updates, identical non-schedule settings.",
+  "current_full_run": "20261029T003755Z",
+  "current_hypothesis": "Independent seed711 of frozen1275-update recipe; no comparative pruning.",
   "planned_followups": [
     "Complete fresh frozen seeds711,712,713, report statistics and stop."
   ],
@@ -32,14 +32,14 @@
   },
   "next_model_candidate": null,
   "queued_screen": [],
-  "status": "frozen_seed_series_ready",
+  "status": "frozen_seed_series_running",
   "near_target": {
     "run": "20261028T232455Z",
     "seconds": 30.955472743,
     "loss": 3.280070305
   },
   "verification": {
-    "utc": "2026-10-29T00:37:52.590442+00:00",
+    "utc": "2026-10-29T00:38:00.691704+00:00",
     "discovery": "20261029T003007Z",
     "purpose": "User-requested fresh-seed series for accepted loss-compliant recipe. This is explicitly allowed despite slower-than-control time.",
     "seeds": [
@@ -54,8 +54,10 @@
     "discovery_loss": 3.279073715,
     "frozen_code_commit": "de06b76dc292eea0f2c0cc7946d7720120c686cc",
     "frozen_manifest_sha256": "31ff5d1e703a7b5f72d66dc701f9ba8fd68b23162b83b5be869469dc2d382af1",
-    "status": "ready",
-    "run_ids": [],
+    "status": "running_seed711",
+    "run_ids": [
+      "20261029T003755Z"
+    ],
     "after_completion": "Report all results and statistics, commit/push, do not resume optimization without new user instruction."
   },
   "verification_result": {
