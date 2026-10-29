@@ -34,7 +34,29 @@
   "scheduled_steps": 981,
   "screen_updates": 100,
   "profile": false,
-  "status": "prepared_not_run",
+  "status": "passed_whole_model_timing_gate",
   "base_run": "20261028T215705Z",
-  "hypothesis": "Screen the640-wide model with only value-gradient scatter launch changed from4 to2 warps. Real-token microchecks restore packed f16x2 atomics and reduce16K scatter2.809ms to.0434ms,49K13.760ms to.0813ms with comparable FP16 accumulation error. Compare first100 with saved unprofiled640 run; no validation."
+  "hypothesis": "Screen the640-wide model with only value-gradient scatter launch changed from4 to2 warps. Real-token microchecks restore packed f16x2 atomics and reduce16K scatter2.809ms to.0434ms,49K13.760ms to.0813ms with comparable FP16 accumulation error. Compare first100 with saved unprofiled640 run; no validation.",
+  "run_id": "20261029T000037Z",
+  "result": {
+    "utc": "2026-10-29T00:02:59.723964+00:00",
+    "comparison": {
+      "original": {
+        "run_id": "20261028T215705Z",
+        "first100_ms": 2958.0,
+        "updates26_100_ms": 2172.0,
+        "code_commit": "0d175df0ad8e9bde4cdcd40dc83db03f9d6248b1"
+      },
+      "packed": {
+        "run_id": "20261029T000037Z",
+        "first100_ms": 1605.0,
+        "updates26_100_ms": 1132.0,
+        "code_commit": "1ac5dcf137d6506ca5c80f19a0871d95d183cff7"
+      }
+    },
+    "first100_ratio": 0.5425963488843814,
+    "updates26_100_ratio": 0.5211786372007366,
+    "passed": true,
+    "scope": "Same original640/1280 model and1133-step schedule,seed413. Unprofiled prefixes; no full-run convergence or speed claim."
+  }
 }

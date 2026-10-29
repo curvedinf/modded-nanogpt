@@ -1,0 +1,21 @@
+{
+  "utc": "2026-10-29T00:02:59.723964+00:00",
+  "comparison": {
+    "original": {
+      "run_id": "20261028T215705Z",
+      "first100_ms": 2958.0,
+      "updates26_100_ms": 2172.0,
+      "code_commit": "0d175df0ad8e9bde4cdcd40dc83db03f9d6248b1"
+    },
+    "packed": {
+      "run_id": "20261029T000037Z",
+      "first100_ms": 1605.0,
+      "updates26_100_ms": 1132.0,
+      "code_commit": "1ac5dcf137d6506ca5c80f19a0871d95d183cff7"
+    }
+  },
+  "first100_ratio": 0.5425963488843814,
+  "updates26_100_ratio": 0.5211786372007366,
+  "passed": true,
+  "scope": "Same original640/1280 model and1133-step schedule,seed413. Unprofiled prefixes; no full-run convergence or speed claim."
+}

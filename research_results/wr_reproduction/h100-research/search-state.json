@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-28T23:54:32.534934+00:00",
+  "utc": "2026-10-29T00:01:33.698378+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,12 +18,12 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "20261028T235329Z",
-  "current_hypothesis": "Growth234/extension60 trades20 batch24 updates for40 extra batch8 extension updates. Same seed701,512/2304/1536 geometry.",
+  "current_full_run": null,
+  "current_hypothesis": "640-wide value-embedding gradient scatter:2 warps restores packed FP16 atomics; profile and real-token oracle passed.",
   "planned_followups": [
-    "If current run qualifies, freeze and run three fresh seeds711\u2013713 first.",
-    "Otherwise test the prepared extension60 schedule to improve loss at roughly fixed time.",
-    "Continue meaningful KS3 optimization; control batch remains stopped."
+    "If the whole-model timing screen confirms improvement, run one640/1280 full WR candidate on seed701.",
+    "If any full candidate beats31.07925s atCE<=3.28, freeze and run three fresh independent seeds711\u2013713.",
+    "Continue meaningful KS3 optimization; no further controls."
   ],
   "reference": {
     "kind": "eight_completed_controls_including_original",
@@ -32,7 +32,7 @@
     "n": 8,
     "summary": "research_results/wr_reproduction/h100-control-calibration/summary.json"
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_dense2304_growth234_extension60.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model640_packed_scatter.json",
   "queued_screen": [],
   "status": "ks3_running",
   "near_target": {
@@ -125,5 +125,6 @@
     "If convergence still misses, test a directed projection learning-rate change on seed701 rather than relying on discovery seed413.",
     "The640-wide family had83.739s runtime with sealed CUDA graphs; profile before any further640 convergence run.",
     "A wider-KS3 architecture reached3.278320312 on seed701 but cost32.234487602s. A future batch32 late phase with fewer updates could reduce optimizer overhead; requires exact schedule/token accounting before testing."
-  ]
+  ],
+  "current_timing_screen": "20261029T000037Z"
 }

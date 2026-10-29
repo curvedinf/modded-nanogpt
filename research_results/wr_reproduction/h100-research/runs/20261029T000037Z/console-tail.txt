@@ -1,0 +1,60 @@
+[sampled-head] dW of the LM head sampled 1 row in 4 (positive part) at >= 32768 rows; negative part, <copy> and dX exact (PR #371/#382)
+[cplm] copy-sink pointer mixture, d=128 qk-normed, band 2048 train / 8192 val; steps 1133; CE kernels [10240, 14336, 24576, 50304]; LUT == plain CE kernels byte for byte
+Compiling model, warming up kernels and capturing CUDA graphs (~7 minutes on first execution)
+Sampling steps [0, 1, 278, 279, 280, 281, 593, 594, 595, 596, 899, 900, 901, 902, 1052, 1053, 1054, 1055, 1111, 1112, 1113, 1114, 1115, 1116] for warmup; 6 step-graph configurations (warmup visits [4, 4, 4, 4, 4, 4]); optimizer graphs captured at step 1, fp8 refresh graphs at step 1053
+[graph:step] rank 3 self-check rel: no_grad eager 5.29e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 5.83e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 5.53e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 5.00e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 5.41e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 6.02e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 5.70e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 5.63e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 2.73e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 9.35e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 7.26e-06 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 2.83e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 2.38e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 4.49e-06 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 5.49e-06 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 1.81e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 1.43e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 1.63e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 1.30e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 9.06e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 1.29e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 1.72e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 9.98e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 1.20e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 6.14e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 1.18e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 5.49e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 7.01e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 4.59e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 4.35e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 5.10e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 4.19e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 3.49e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 2.83e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 2.70e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 2.83e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 3.68e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 3.68e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 2.71e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 2.59e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 1.00e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 4.94e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 4.25e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 1.89e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 9.01e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 1.52e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 4.81e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 1.32e-05 (sign -), grad eager 0.00e+00
+Resetting Model
+CUDA graphs sealed: 12 step, 4 optimizer, 5 fp8 refresh; addresses unchanged across the reset
+[barrier] rank 0 waited 0.5 ms before the clock start
+step:25/1133 train_time:473ms step_avg:18.93ms
+step:50/1133 train_time:854ms step_avg:17.09ms
+step:75/1133 train_time:1224ms step_avg:16.32ms
+step:100/1133 train_time:1605ms step_avg:16.05ms
+[timing-screen] updates:100 elapsed_ms:1675.347 validation:skipped
