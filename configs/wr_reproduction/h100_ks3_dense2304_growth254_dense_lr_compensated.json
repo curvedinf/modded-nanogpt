@@ -43,12 +43,17 @@
   "model_dim": 512,
   "dense_width": 2304,
   "growth_steps": 254,
-  "status": "prepared_not_run",
+  "status": "rejected_loss_regression",
   "ngram_multiplier": 2,
   "memory_estimate": "Adds10.83GB decimal (10.09GiB) per GPU to the BF16 sharded ngram table, plus~85MB row optimizer state. Prior512 peak26464MiB and reserved42626MiB leave room on80GB H100.",
   "dense_shape_rate": {
     "original": 1.9148542155126762,
     "resized": 2.1213203435596424,
     "multiplier": 0.90267093384844
-  }
+  },
+  "run_id": "20261029T000926Z",
+  "official_seconds": 30.975405537,
+  "validation_loss": 3.284923315,
+  "code_commit": "159e5350fbd751d7617106d68ece1efaf71e4dc2",
+  "manifest_sha256": "0213613e3a79dbd53b5c852a27c9c1da9a4220ab2fa678fd79006fccaa38169e"
 }
