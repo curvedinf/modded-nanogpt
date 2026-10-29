@@ -1,0 +1,68 @@
+{
+  "utc": "2026-10-29T00:46:41.990711+00:00",
+  "discovery": "20261029T003007Z",
+  "discovery_excluded_from_statistics": true,
+  "code_commit": "de06b76dc292eea0f2c0cc7946d7720120c686cc",
+  "manifest_sha256": "31ff5d1e703a7b5f72d66dc701f9ba8fd68b23162b83b5be869469dc2d382af1",
+  "runs": [
+    {
+      "run_id": "20261029T003755Z",
+      "seed": 711,
+      "loss": 3.308180332,
+      "seconds": 31.235253784
+    },
+    {
+      "run_id": "20261029T004048Z",
+      "seed": 712,
+      "loss": 3.275638103,
+      "seconds": 31.239329733
+    },
+    {
+      "run_id": "20261029T004342Z",
+      "seed": 713,
+      "loss": 3.275586128,
+      "seconds": 31.243184185
+    }
+  ],
+  "loss": {
+    "n": 3,
+    "mean": 3.286468187666667,
+    "sample_std": 0.01880328652161058,
+    "minimum": 3.275586128,
+    "maximum": 3.308180332
+  },
+  "seconds": {
+    "n": 3,
+    "mean": 31.239255900666667,
+    "sample_std": 0.003965716002852714,
+    "minimum": 31.235253784,
+    "maximum": 31.243184185
+  },
+  "one_sided_student_t": 0.5958123149738639,
+  "one_sided_p": 0.6941264589816436,
+  "reference_seconds": 31.079250000000002,
+  "reference_details": {
+    "kind": "original_plus_completed_control_mean",
+    "n": 8,
+    "seconds": 31.079250000000002,
+    "sample_std_seconds": 0.01624587859823468,
+    "loss": 3.278025,
+    "run_ids": [
+      "20261028T180502Z",
+      "20261028T224939Z",
+      "20261028T225333Z",
+      "20261028T225636Z",
+      "20261028T225939Z",
+      "20261028T230241Z",
+      "20261028T230545Z",
+      "20261028T230848Z"
+    ],
+    "source": "/root/modded-nanogpt/research_results/wr_reproduction/h100-control-calibration/summary.json"
+  },
+  "loss_threshold": 3.28,
+  "significance_threshold": 0.01,
+  "local_control_win_with_significance": false,
+  "published_pr393_seconds": 31.285,
+  "published_time_win_with_significance": false,
+  "scope": "Fresh-seed result with separate local-control and published-time comparisons. Published time is from a different node; no claim of maintainer acceptance or current global record."
+}
