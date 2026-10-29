@@ -1,0 +1,60 @@
+Sampling steps [0, 1, 278, 279, 280, 281, 593, 594, 595, 596, 899, 900, 901, 902, 1052, 1053, 1054, 1055, 1111, 1112, 1113, 1114, 1115, 1116] for warmup; 6 step-graph configurations (warmup visits [4, 4, 4, 4, 4, 4]); optimizer graphs captured at step 1, fp8 refresh graphs at step 1053
+[graph:step] rank 1 self-check rel: no_grad eager 5.00e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 5.29e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 6.02e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 5.70e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 5.41e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 5.63e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 5.83e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 5.53e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 1.67e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 3.40e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 3.60e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 3.26e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 7.10e-06 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 6.25e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 8.47e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 5.42e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 1.91e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 2.10e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 2.31e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 2.35e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 1.76e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 2.24e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 1.82e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 2.28e-04 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 2.88e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 2.87e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 4.68e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 1.54e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 2.13e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 1.83e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 1.98e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 6.59e-06 (sign -), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 3.75e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 2.64e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 4.37e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 4.65e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 1.83e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 3.76e-06 (sign +), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 1.86e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 1.36e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 4 self-check rel: no_grad eager 8.34e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 7 self-check rel: no_grad eager 1.02e-04 (sign +), grad eager 0.00e+00
+[graph:step] rank 2 self-check rel: no_grad eager 1.54e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 0 self-check rel: no_grad eager 4.45e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 5 self-check rel: no_grad eager 7.34e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 1 self-check rel: no_grad eager 7.54e-05 (sign +), grad eager 0.00e+00
+[graph:step] rank 3 self-check rel: no_grad eager 4.59e-05 (sign -), grad eager 0.00e+00
+[graph:step] rank 6 self-check rel: no_grad eager 4.66e-05 (sign +), grad eager 0.00e+00
+Resetting Model
+CUDA graphs sealed: 12 step, 4 optimizer, 5 fp8 refresh; addresses unchanged across the reset
+/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/profiler/profiler.py:217: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+[barrier] rank 0 waited 2.4 ms before the clock start
+step:25/1133 train_time:771ms step_avg:30.82ms
+step:50/1133 train_time:1501ms step_avg:30.02ms
+step:75/1133 train_time:2221ms step_avg:29.61ms
+step:100/1133 train_time:2946ms step_avg:29.46ms
+[timing-screen] updates:100 elapsed_ms:3083.535 validation:skipped
+[profile] available training/validation CUDA kernel summaries exported

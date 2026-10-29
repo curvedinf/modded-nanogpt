@@ -1,0 +1,191 @@
+{
+  "utc": "2026-10-29T00:00:26.921547+00:00",
+  "passed": true,
+  "source": "Unmodified upstream value_embed._row_scatter_add_kernel; only launch warp count varies.",
+  "dataset": "/root/modded-nanogpt/data/fineweb10B/fineweb_train_000001.bin",
+  "dimension": 640,
+  "segment": 128,
+  "cases": [
+    {
+      "tokens": 256,
+      "unique": true,
+      "variants": {
+        "4": {
+          "relative_l2_to_fp32": 4.5983863827814275e-08,
+          "maximum_absolute_error": 2.9802322387695312e-08,
+          "median_ms": 0.0280888014765657,
+          "samples_ms": [
+            0.0280888014765657,
+            0.028064086660278067,
+            0.028125771712606974
+          ],
+          "ptx_atomics": [
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs11, [ %rd14 + 0 ], %rs12;",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs14, [ %rd17 + 0 ], %rs15;",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs2, [ %rd5 + 0 ], %rs3;",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs5, [ %rd8 + 0 ], %rs6;",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs8, [ %rd11 + 0 ], %rs9;"
+          ],
+          "unique_exact": true
+        },
+        "2": {
+          "relative_l2_to_fp32": 4.5983863827814275e-08,
+          "maximum_absolute_error": 2.9802322387695312e-08,
+          "median_ms": 0.02494832963821924,
+          "samples_ms": [
+            0.024942431620743843,
+            0.025050208748161017,
+            0.02494832963821924
+          ],
+          "ptx_atomics": [
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs1, %rs2 }, [ %rd5 + 0 ], { %rs3, %rs4 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs13, %rs14 }, [ %rd14 + 0 ], { %rs15, %rs16 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs17, %rs18 }, [ %rd17 + 0 ], { %rs19, %rs20 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs5, %rs6 }, [ %rd8 + 0 ], { %rs7, %rs8 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs9, %rs10 }, [ %rd11 + 0 ], { %rs11, %rs12 };"
+          ],
+          "unique_exact": true
+        },
+        "1": {
+          "relative_l2_to_fp32": 4.5983863827814275e-08,
+          "maximum_absolute_error": 2.9802322387695312e-08,
+          "median_ms": 0.025128012238736525,
+          "samples_ms": [
+            0.025214870518841043,
+            0.02511957542597128,
+            0.025128012238736525
+          ],
+          "ptx_atomics": [
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs1, %rs2, %rs3, %rs4 }, [ %rd5 + 0 ], { %rs5, %rs6, %rs7, %rs8 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs17, %rs18, %rs19, %rs20 }, [ %rd11 + 0 ], { %rs21, %rs22, %rs23, %rs24 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs25, %rs26, %rs27, %rs28 }, [ %rd14 + 0 ], { %rs29, %rs30, %rs31, %rs32 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs33, %rs34, %rs35, %rs36 }, [ %rd17 + 0 ], { %rs37, %rs38, %rs39, %rs40 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs9, %rs10, %rs11, %rs12 }, [ %rd8 + 0 ], { %rs13, %rs14, %rs15, %rs16 };"
+          ],
+          "unique_exact": true
+        }
+      }
+    },
+    {
+      "tokens": 16384,
+      "unique": false,
+      "variants": {
+        "4": {
+          "relative_l2_to_fp32": 0.0016595051856711507,
+          "maximum_absolute_error": 0.005358457565307617,
+          "median_ms": 2.8092303055983323,
+          "samples_ms": [
+            2.839812328197338,
+            2.8092303055983323,
+            2.793342181614467
+          ],
+          "ptx_atomics": [
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs11, [ %rd14 + 0 ], %rs12;",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs14, [ %rd17 + 0 ], %rs15;",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs2, [ %rd5 + 0 ], %rs3;",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs5, [ %rd8 + 0 ], %rs6;",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs8, [ %rd11 + 0 ], %rs9;"
+          ],
+          "unique_exact": false
+        },
+        "2": {
+          "relative_l2_to_fp32": 0.0016300547868013382,
+          "maximum_absolute_error": 0.006255626678466797,
+          "median_ms": 0.04341551875251014,
+          "samples_ms": [
+            0.04345803807621829,
+            0.043391010286745614,
+            0.04341551875251014
+          ],
+          "ptx_atomics": [
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs1, %rs2 }, [ %rd5 + 0 ], { %rs3, %rs4 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs13, %rs14 }, [ %rd14 + 0 ], { %rs15, %rs16 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs17, %rs18 }, [ %rd17 + 0 ], { %rs19, %rs20 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs5, %rs6 }, [ %rd8 + 0 ], { %rs7, %rs8 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs9, %rs10 }, [ %rd11 + 0 ], { %rs11, %rs12 };"
+          ],
+          "unique_exact": false
+        },
+        "1": {
+          "relative_l2_to_fp32": 0.001620577066205442,
+          "maximum_absolute_error": 0.005357146263122559,
+          "median_ms": 0.04333354254706586,
+          "samples_ms": [
+            0.04333291882080651,
+            0.043427826583019795,
+            0.04333354254706586
+          ],
+          "ptx_atomics": [
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs1, %rs2, %rs3, %rs4 }, [ %rd5 + 0 ], { %rs5, %rs6, %rs7, %rs8 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs17, %rs18, %rs19, %rs20 }, [ %rd11 + 0 ], { %rs21, %rs22, %rs23, %rs24 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs25, %rs26, %rs27, %rs28 }, [ %rd14 + 0 ], { %rs29, %rs30, %rs31, %rs32 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs33, %rs34, %rs35, %rs36 }, [ %rd17 + 0 ], { %rs37, %rs38, %rs39, %rs40 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs9, %rs10, %rs11, %rs12 }, [ %rd8 + 0 ], { %rs13, %rs14, %rs15, %rs16 };"
+          ],
+          "unique_exact": false
+        }
+      }
+    },
+    {
+      "tokens": 49152,
+      "unique": false,
+      "variants": {
+        "4": {
+          "relative_l2_to_fp32": 0.002840780420228839,
+          "maximum_absolute_error": 0.01437687873840332,
+          "median_ms": 13.760301513671875,
+          "samples_ms": [
+            13.753065617879232,
+            13.760301513671875,
+            13.858104782104492
+          ],
+          "ptx_atomics": [
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs11, [ %rd14 + 0 ], %rs12;",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs14, [ %rd17 + 0 ], %rs15;",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs2, [ %rd5 + 0 ], %rs3;",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs5, [ %rd8 + 0 ], %rs6;",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.f16 %rs8, [ %rd11 + 0 ], %rs9;"
+          ],
+          "unique_exact": false
+        },
+        "2": {
+          "relative_l2_to_fp32": 0.0029781770426779985,
+          "maximum_absolute_error": 0.020287036895751953,
+          "median_ms": 0.08134499115469568,
+          "samples_ms": [
+            0.08130976172054516,
+            0.08134499115469568,
+            0.08134578079142898
+          ],
+          "ptx_atomics": [
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs1, %rs2 }, [ %rd5 + 0 ], { %rs3, %rs4 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs13, %rs14 }, [ %rd14 + 0 ], { %rs15, %rs16 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs17, %rs18 }, [ %rd17 + 0 ], { %rs19, %rs20 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs5, %rs6 }, [ %rd8 + 0 ], { %rs7, %rs8 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v2.f16 { %rs9, %rs10 }, [ %rd11 + 0 ], { %rs11, %rs12 };"
+          ],
+          "unique_exact": false
+        },
+        "1": {
+          "relative_l2_to_fp32": 0.0029334351420402527,
+          "maximum_absolute_error": 0.01700437068939209,
+          "median_ms": 0.07968618884529036,
+          "samples_ms": [
+            0.07969417196481339,
+            0.07967058976491292,
+            0.07968618884529036
+          ],
+          "ptx_atomics": [
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs1, %rs2, %rs3, %rs4 }, [ %rd5 + 0 ], { %rs5, %rs6, %rs7, %rs8 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs17, %rs18, %rs19, %rs20 }, [ %rd11 + 0 ], { %rs21, %rs22, %rs23, %rs24 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs25, %rs26, %rs27, %rs28 }, [ %rd14 + 0 ], { %rs29, %rs30, %rs31, %rs32 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs33, %rs34, %rs35, %rs36 }, [ %rd17 + 0 ], { %rs37, %rs38, %rs39, %rs40 };",
+            "@%p1 atom.global.gpu.relaxed.add.noftz.v4.f16 { %rs9, %rs10, %rs11, %rs12 }, [ %rd8 + 0 ], { %rs13, %rs14, %rs15, %rs16 };"
+          ],
+          "unique_exact": false
+        }
+      }
+    }
+  ],
+  "timing_includes_identical_buffer_clear": true
+}

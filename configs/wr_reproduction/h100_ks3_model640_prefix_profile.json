@@ -33,7 +33,8 @@
   "scheduled_steps": 981,
   "screen_updates": 100,
   "profile": true,
-  "status": "prepared_not_run",
+  "status": "complete_scatter_bottleneck_identified",
   "base_run": "20261028T215705Z",
-  "hypothesis": "Profile the original640-wide candidate for100updates to identify why sealed CUDA graphs still take over2x the512 first-stage time. Preserve its settings. This is an instrumented diagnosis with no validation or record-eligible timing; do not consume another full slow convergence run."
+  "hypothesis": "Profile the original640-wide candidate for100updates to identify why sealed CUDA graphs still take over2x the512 first-stage time. Preserve its settings. This is an instrumented diagnosis with no validation or record-eligible timing; do not consume another full slow convergence run.",
+  "run_id": "20261028T235625Z"
 }

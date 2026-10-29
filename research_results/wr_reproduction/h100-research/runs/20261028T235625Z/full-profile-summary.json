@@ -1,0 +1,3186 @@
+{
+  "training": {
+    "phase": "WR/full_training",
+    "cpu_range_us": 3086237.291015625,
+    "kernel_count": 90196,
+    "distinct_kernels": 396,
+    "sum_kernel_us": 3224485.4239999983,
+    "union_kernel_us": 2802237.630859375,
+    "ranked_kernels": [
+      {
+        "name": "_row_scatter_add_kernel",
+        "count": 400,
+        "total_us": 1209464.351,
+        "max_us": 5060.629,
+        "mean_us": 3023.6608775,
+        "summed_fraction": 0.3750875541250394
+      },
+      {
+        "name": "ncclDevKernel_ReduceScatter_Sum_bf16_RING_LL(ncclDevKernelArgsStorage<4096ul>)",
+        "count": 450,
+        "total_us": 252629.6159999999,
+        "max_us": 5505.364,
+        "mean_us": 561.3991466666664,
+        "summed_fraction": 0.07834726561939641
+      },
+      {
+        "name": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<4096ul>)",
+        "count": 304,
+        "total_us": 154824.1919999999,
+        "max_us": 4418.517,
+        "mean_us": 509.29010526315756,
+        "summed_fraction": 0.048015162620254404
+      },
+      {
+        "name": "Kernel",
+        "count": 2100,
+        "total_us": 114703.66400000006,
+        "max_us": 88.352,
+        "mean_us": 54.62079238095241,
+        "summed_fraction": 0.03557270352232181
+      },
+      {
+        "name": "ncclDevKernel_AllGather_RING_LL(ncclDevKernelArgsStorage<4096ul>)",
+        "count": 450,
+        "total_us": 107525.2270000001,
+        "max_us": 494.623,
+        "mean_us": 238.94494888888912,
+        "summed_fraction": 0.03334647637098457
+      },
+      {
+        "name": "ncclDevKernel_AllReduce_Sum_bf16_RING_LL(ncclDevKernelArgsStorage<4096ul>)",
+        "count": 50,
+        "total_us": 89523.06199999999,
+        "max_us": 4182.711,
+        "mean_us": 1790.4612399999999,
+        "summed_fraction": 0.027763518896278948
+      },
+      {
+        "name": "_vjp_prepared",
+        "count": 500,
+        "total_us": 59546.909000000014,
+        "max_us": 120.767,
+        "mean_us": 119.09381800000003,
+        "summed_fraction": 0.018467104412006188
+      },
+      {
+        "name": "_g3_kernel",
+        "count": 500,
+        "total_us": 54747.13000000003,
+        "max_us": 117.887,
+        "mean_us": 109.49426000000005,
+        "summed_fraction": 0.016978563336808576
+      },
+      {
+        "name": "nvjet_qqtst_320x128_128x3_1x2_h_bz_coopB_TNT",
+        "count": 1200,
+        "total_us": 44895.698,
+        "max_us": 46.656,
+        "mean_us": 37.41308166666666,
+        "summed_fraction": 0.013923368257719258
+      },
+      {
+        "name": "nvjet_qrtst_128x160_128x5_1x2_h_bz_coopA_algo2_TNT",
+        "count": 600,
+        "total_us": 39211.27399999998,
+        "max_us": 162.752,
+        "mean_us": 65.35212333333331,
+        "summed_fraction": 0.012160474880161842
+      },
+      {
+        "name": "grouped_dw_kernel",
+        "count": 1000,
+        "total_us": 35036.775000000016,
+        "max_us": 56.64,
+        "mean_us": 35.03677500000001,
+        "summed_fraction": 0.010865850017252252
+      },
+      {
+        "name": "_qkv_norm_rope_pack_fp8_backward_kernel",
+        "count": 700,
+        "total_us": 29876.087999999967,
+        "max_us": 64.416,
+        "mean_us": 42.680125714285666,
+        "summed_fraction": 0.009265381625741219
+      },
+      {
+        "name": "_g3pp_kernel",
+        "count": 500,
+        "total_us": 28923.059999999994,
+        "max_us": 62.56,
+        "mean_us": 57.846119999999985,
+        "summed_fraction": 0.008969821908551449
+      },
+      {
+        "name": "_transpose_copy_kernel",
+        "count": 1950,
+        "total_us": 27213.418000000027,
+        "max_us": 115.423,
+        "mean_us": 13.955598974358988,
+        "summed_fraction": 0.008439615759292711
+      },
+      {
+        "name": "_geometry_prepared",
+        "count": 500,
+        "total_us": 27181.956999999988,
+        "max_us": 55.776,
+        "mean_us": 54.36391399999997,
+        "summed_fraction": 0.008429858853658755
+      },
+      {
+        "name": "nvjet_rqtst_112x128_128x7_2x1_v_bz_coopA_algo2_TNN",
+        "count": 500,
+        "total_us": 25881.600000000013,
+        "max_us": 54.048,
+        "mean_us": 51.763200000000026,
+        "summed_fraction": 0.00802658303472611
+      },
+      {
+        "name": "_gemm_xb_kernel",
+        "count": 800,
+        "total_us": 25546.79400000002,
+        "max_us": 67.872,
+        "mean_us": 31.933492500000025,
+        "summed_fraction": 0.007922750653438846
+      },
+      {
+        "name": "nvjet_qrtst_112x128_128x7_2x1_v_bz_coopA_algo2_TNN",
+        "count": 500,
+        "total_us": 25039.053999999993,
+        "max_us": 52.896,
+        "mean_us": 50.078107999999986,
+        "summed_fraction": 0.007765286769055653
+      },
+      {
+        "name": "void cutlass::device_kernel<flash::enable_sm90<flash::FlashAttnBwdSm90<flash::CollectiveMainloopBwdSm90<2, 2, 2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<128>, cute::C<128> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, false, true, false, true, false, true, false, false, 2, 1, 2, 1, false, 0>, flash::CollectiveEpilogueBwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<128> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 256, true, false, 1, 0>, flash::SingleTileScheduler<true, false, false, 128> > > >(flash::enable_sm90<flash::FlashAttnBwdSm90<flash::CollectiveMainloopBwdSm90<2, 2, 2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<128>, cute::C<128> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, false, true, false, true, false, true, false, false, 2, 1, 2, 1, false, 0>, flash::CollectiveEpilogueBwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<128> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 256, true, false, 1, 0>, flash::SingleTileScheduler<true, false, false, 128> > >::Params)",
+        "count": 200,
+        "total_us": 21826.293999999994,
+        "max_us": 114.175,
+        "mean_us": 109.13146999999998,
+        "summed_fraction": 0.006768923139656905
+      },
+      {
+        "name": "void cutlass::device_kernel<flash::enable_sm90<flash::FlashAttnBwdSm90<flash::CollectiveMainloopBwdSm90<2, 2, 2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<128>, cute::C<64> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, false, true, false, true, false, true, false, false, 2, 1, 2, 1, false, 128>, flash::CollectiveEpilogueBwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<64> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 256, true, false, 1, 128>, flash::SingleTileScheduler<true, false, false, 128> > > >(flash::enable_sm90<flash::FlashAttnBwdSm90<flash::CollectiveMainloopBwdSm90<2, 2, 2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<128>, cute::C<64> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, false, true, false, true, false, true, false, false, 2, 1, 2, 1, false, 128>, flash::CollectiveEpilogueBwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<64> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 256, true, false, 1, 128>, flash::SingleTileScheduler<true, false, false, 128> > >::Params)",
+        "count": 300,
+        "total_us": 20256.17400000001,
+        "max_us": 70.016,
+        "mean_us": 67.52058000000004,
+        "summed_fraction": 0.006281986530077744
+      },
+      {
+        "name": "nvjet_qqtst_128x160_128x5_1x2_h_bz_coopA_algo2_TNT",
+        "count": 700,
+        "total_us": 19785.84700000001,
+        "max_us": 35.84,
+        "mean_us": 28.265495714285727,
+        "summed_fraction": 0.0061361254272489524
+      },
+      {
+        "name": "gather_gate_tiled",
+        "count": 500,
+        "total_us": 18159.328000000005,
+        "max_us": 41.76,
+        "mean_us": 36.31865600000001,
+        "summed_fraction": 0.005631697964840921
+      },
+      {
+        "name": "XTX_kernel",
+        "count": 800,
+        "total_us": 17893.62000000002,
+        "max_us": 44.096,
+        "mean_us": 22.367025000000027,
+        "summed_fraction": 0.005549294739190618
+      },
+      {
+        "name": "nvjet_qqhsq_256x128_128x4_1x2_h_bz_coopA_TNT",
+        "count": 100,
+        "total_us": 17659.096999999998,
+        "max_us": 179.36,
+        "mean_us": 176.59096999999997,
+        "summed_fraction": 0.005476562824121486
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm__scaled_mm__to_copy__unsafe_view_add_bmm_div_index_lift_fresh_mul_permute_select_slice_split_unbind_unsqueeze_view_74",
+        "count": 100,
+        "total_us": 16551.548,
+        "max_us": 166.56,
+        "mean_us": 165.51548,
+        "summed_fraction": 0.005133081972337676
+      },
+      {
+        "name": "ba_plus_cAA_kernel",
+        "count": 1600,
+        "total_us": 16032.771999999999,
+        "max_us": 39.584,
+        "mean_us": 10.0204825,
+        "summed_fraction": 0.004972195526351993
+      },
+      {
+        "name": "nvjet_rqtst_144x128_128x6_2x1_v_bz_coopA_algo2_TNN",
+        "count": 100,
+        "total_us": 15747.423,
+        "max_us": 163.744,
+        "mean_us": 157.47423,
+        "summed_fraction": 0.004883701096240405
+      },
+      {
+        "name": "_qk_norm_rope_forward_kernel",
+        "count": 700,
+        "total_us": 14881.343999999985,
+        "max_us": 36.32,
+        "mean_us": 21.259062857142837,
+        "summed_fraction": 0.0046151066118139145
+      },
+      {
+        "name": "nvjet_tst_320x128_64x3_1x2_h_bz_coopB_TNT",
+        "count": 700,
+        "total_us": 14853.297000000002,
+        "max_us": 24.288,
+        "mean_us": 21.218995714285718,
+        "summed_fraction": 0.004606408479767409
+      },
+      {
+        "name": "nvjet_tst_128x64_64x8_1x4_h_bz_splitK_NTT",
+        "count": 500,
+        "total_us": 14156.714000000002,
+        "max_us": 32.0,
+        "mean_us": 28.313428000000002,
+        "summed_fraction": 0.00439037928180134
+      },
+      {
+        "name": "cplm_ce_fwd_bwd_lut_kernel",
+        "count": 100,
+        "total_us": 13924.329000000002,
+        "max_us": 140.544,
+        "mean_us": 139.24329,
+        "summed_fraction": 0.0043183104182641235
+      },
+      {
+        "name": "nvjet_tst_320x128_64x3_1x2_h_bz_coopB_NNT",
+        "count": 700,
+        "total_us": 13795.309999999992,
+        "max_us": 24.704,
+        "mean_us": 19.707585714285702,
+        "summed_fraction": 0.004278298142494565
+      },
+      {
+        "name": "void cutlass::device_kernel<flash::enable_sm90<flash::FlashAttnBwdSm90<flash::CollectiveMainloopBwdSm90<2, 2, 2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<128>, cute::C<128>, cute::C<64> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, false, true, false, true, false, true, false, false, 2, 1, 2, 2, false, 0>, flash::CollectiveEpilogueBwd<cute::tuple<cute::C<128>, cute::C<128>, cute::C<64> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 256, true, false, 1, 0>, flash::SingleTileScheduler<true, false, false, 128> > > >(flash::enable_sm90<flash::FlashAttnBwdSm90<flash::CollectiveMainloopBwdSm90<2, 2, 2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<128>, cute::C<128>, cute::C<64> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, false, true, false, true, false, true, false, false, 2, 1, 2, 2, false, 0>, flash::CollectiveEpilogueBwd<cute::tuple<cute::C<128>, cute::C<128>, cute::C<64> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 256, true, false, 1, 0>, flash::SingleTileScheduler<true, false, false, 128> > >::Params)",
+        "count": 200,
+        "total_us": 11978.128999999999,
+        "max_us": 62.304,
+        "mean_us": 59.89064499999999,
+        "summed_fraction": 0.0037147412454856255
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_backward__to_copy__unsafe_view_add_mul_select_select_backward_slice_split_sum_unsqueeze_view_89",
+        "count": 100,
+        "total_us": 11571.197000000004,
+        "max_us": 116.831,
+        "mean_us": 115.71197000000004,
+        "summed_fraction": 0.0035885406439970344
+      },
+      {
+        "name": "void cutlass::device_kernel<flash::enable_sm90<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<128>, cute::C<128>, cute::C<64> >, 128, cutlass::bfloat16_t, float, cutlass::arch::Sm90, false, true, false, true, false, false, false, true, true, false, false, false>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<128>, cute::C<128>, cute::C<128> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 256, true, false, false, false>, flash::VarlenDynamicPersistentTileScheduler<128, 128, 256, 32, false, false, true, true, false, true> > > >(flash::enable_sm90<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<128>, cute::C<128>, cute::C<64> >, 128, cutlass::bfloat16_t, float, cutlass::arch::Sm90, false, true, false, true, false, false, false, true, true, false, false, false>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<128>, cute::C<128>, cute::C<128> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 256, true, false, false, false>, flash::VarlenDynamicPersistentTileScheduler<128, 128, 256, 32, false, false, true, true, false, true> > >::Params)",
+        "count": 300,
+        "total_us": 11543.506999999994,
+        "max_us": 40.48,
+        "mean_us": 38.47835666666665,
+        "summed_fraction": 0.0035799532272905075
+      },
+      {
+        "name": "_pre_kernel",
+        "count": 400,
+        "total_us": 10825.639999999992,
+        "max_us": 87.712,
+        "mean_us": 27.064099999999982,
+        "summed_fraction": 0.0033573232861976174
+      },
+      {
+        "name": "void cutlass::device_kernel<flash::enable_sm90<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<128>, cute::C<128>, cute::C<128> >, 128, cutlass::bfloat16_t, float, cutlass::arch::Sm90, false, true, false, true, false, false, false, true, true, false, false, false>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<128>, cute::C<128>, cute::C<128> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 256, true, false, false, false>, flash::VarlenDynamicPersistentTileScheduler<128, 128, 256, 32, false, false, true, true, false, true> > > >(flash::enable_sm90<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<128>, cute::C<128>, cute::C<128> >, 128, cutlass::bfloat16_t, float, cutlass::arch::Sm90, false, true, false, true, false, false, false, true, true, false, false, false>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<128>, cute::C<128>, cute::C<128> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 256, true, false, false, false>, flash::VarlenDynamicPersistentTileScheduler<128, 128, 256, 32, false, false, true, true, false, true> > >::Params)",
+        "count": 200,
+        "total_us": 10202.048999999997,
+        "max_us": 53.76,
+        "mean_us": 51.01024499999998,
+        "summed_fraction": 0.00316393087841727
+      },
+      {
+        "name": "pack_input",
+        "count": 500,
+        "total_us": 8863.783000000001,
+        "max_us": 22.88,
+        "mean_us": 17.727566000000003,
+        "summed_fraction": 0.002748898454936854
+      },
+      {
+        "name": "_scatter_add_rows_kernel",
+        "count": 200,
+        "total_us": 8855.603000000001,
+        "max_us": 79.072,
+        "mean_us": 44.278015,
+        "summed_fraction": 0.0027463616160542477
+      },
+      {
+        "name": "nvjet_qqtst_112x64_128x9_2x4_v_bz_algo2_TNN",
+        "count": 300,
+        "total_us": 8723.375,
+        "max_us": 30.144,
+        "mean_us": 29.077916666666667,
+        "summed_fraction": 0.0027053541427328235
+      },
+      {
+        "name": "triton_poi_fused__to_copy_add_copy__div_gt_mul_sqrt_0",
+        "count": 100,
+        "total_us": 8518.445000000003,
+        "max_us": 141.952,
+        "mean_us": 85.18445000000003,
+        "summed_fraction": 0.002641799816056482
+      },
+      {
+        "name": "void at::native::vectorized_gather_kernel<16, int>(char*, char*, int*, int, long, long, long, long, bool)",
+        "count": 203,
+        "total_us": 8511.724,
+        "max_us": 79.072,
+        "mean_us": 41.929674876847294,
+        "summed_fraction": 0.002639715452470907
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_backward__to_copy_add_as_strided_backward_core_div_expand_mul_pow_select_slice_slice_backward_sum_transpose_view_49",
+        "count": 100,
+        "total_us": 8308.269999999995,
+        "max_us": 84.16,
+        "mean_us": 83.08269999999995,
+        "summed_fraction": 0.002576618873250642
+      },
+      {
+        "name": "triton_poi_fused_select_backward_slice_squeeze_23",
+        "count": 600,
+        "total_us": 8100.318999999997,
+        "max_us": 15.584,
+        "mean_us": 13.500531666666662,
+        "summed_fraction": 0.0025121276528989518
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_bf16_256x128_32x3_nn_align2>(cutlass_80_tensorop_bf16_s16816gemm_bf16_256x128_32x3_nn_align2::Params)",
+        "count": 300,
+        "total_us": 7750.048000000008,
+        "max_us": 40.192,
+        "mean_us": 25.83349333333336,
+        "summed_fraction": 0.00240349915751395
+      },
+      {
+        "name": "_merge_adam_kernel",
+        "count": 50,
+        "total_us": 7693.643000000002,
+        "max_us": 176.287,
+        "mean_us": 153.87286000000003,
+        "summed_fraction": 0.002386006443923068
+      },
+      {
+        "name": "void cutlass::device_kernel<flash::enable_sm90<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<192>, cute::C<128>, cute::C<64> >, 64, cutlass::bfloat16_t, float, cutlass::arch::Sm90, false, true, false, true, false, false, false, true, true, false, false, false>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<192>, cute::C<64>, cute::C<128> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 384, true, false, false, false>, flash::VarlenDynamicPersistentTileScheduler<192, 128, 384, 32, false, false, true, true, false, true> > > >(flash::enable_sm90<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<192>, cute::C<128>, cute::C<64> >, 64, cutlass::bfloat16_t, float, cutlass::arch::Sm90, false, true, false, true, false, false, false, true, true, false, false, false>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<192>, cute::C<64>, cute::C<128> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 384, true, false, false, false>, flash::VarlenDynamicPersistentTileScheduler<192, 128, 384, 32, false, false, true, true, false, true> > >::Params)",
+        "count": 200,
+        "total_us": 7630.152,
+        "max_us": 40.127,
+        "mean_us": 38.15076,
+        "summed_fraction": 0.0023663161703906042
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm__fused_rms_norm_backward__to_copy_add_mul_sum_unsqueeze_view_9",
+        "count": 100,
+        "total_us": 7559.4760000000015,
+        "max_us": 76.352,
+        "mean_us": 75.59476000000001,
+        "summed_fraction": 0.0023443976343432856
+      },
+      {
+        "name": "triton_poi_fused___lshift_____rshift____to_copy_bitwise_or_copy__ge_mul_sub_view_0",
+        "count": 400,
+        "total_us": 7474.295999999993,
+        "max_us": 55.232,
+        "mean_us": 18.68573999999998,
+        "summed_fraction": 0.0023179810162478804
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<8, at::native::CUDAFunctor_add<c10::BFloat16>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<c10::BFloat16>, std::array<char*, 3ul>)",
+        "count": 600,
+        "total_us": 7344.312999999993,
+        "max_us": 67.2,
+        "mean_us": 12.240521666666655,
+        "summed_fraction": 0.0022776697780476605
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_backward__to_copy__unsafe_view_add_mul_select_split_sum_view_56",
+        "count": 100,
+        "total_us": 7328.449999999999,
+        "max_us": 74.528,
+        "mean_us": 73.2845,
+        "summed_fraction": 0.0022727502334028236
+      },
+      {
+        "name": "triton_poi_fused_select_backward_slice_squeeze_47",
+        "count": 1100,
+        "total_us": 7073.162999999993,
+        "max_us": 8.48,
+        "mean_us": 6.430148181818176,
+        "summed_fraction": 0.0021935788412483135
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__fused_rms_norm_backward__unsafe_view_add_mul_select_split_sum_view_19",
+        "count": 100,
+        "total_us": 6973.8460000000005,
+        "max_us": 71.136,
+        "mean_us": 69.73846,
+        "summed_fraction": 0.0021627779577148443
+      },
+      {
+        "name": "nvjet_qqtst_80x128_128x8_4x1_v_bz_algo2_TNN",
+        "count": 200,
+        "total_us": 6846.255000000004,
+        "max_us": 35.616,
+        "mean_us": 34.23127500000002,
+        "summed_fraction": 0.0021232085433052364
+      },
+      {
+        "name": "triton_red_fused__unsafe_view_add_mul_select_select_backward_split_sum_unsqueeze_view_20",
+        "count": 100,
+        "total_us": 6657.391,
+        "max_us": 67.456,
+        "mean_us": 66.57391,
+        "summed_fraction": 0.0020646367170552926
+      },
+      {
+        "name": "triton_poi_fused_embedding_dense_backward_111",
+        "count": 100,
+        "total_us": 6539.568999999999,
+        "max_us": 67.776,
+        "mean_us": 65.39568999999999,
+        "summed_fraction": 0.0020280969333356805
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm_backward__to_copy_add_mul_sum_unsqueeze_view_40",
+        "count": 100,
+        "total_us": 6469.966999999998,
+        "max_us": 65.727,
+        "mean_us": 64.69966999999998,
+        "summed_fraction": 0.002006511473689329
+      },
+      {
+        "name": "void cutlass::device_kernel<flash::FlashAttnBwdPreprocess<cute::tuple<cute::C<64>, cute::C<128> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, true, true, 64> >(flash::FlashAttnBwdPreprocess<cute::tuple<cute::C<64>, cute::C<128> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, true, true, 64>::Params)",
+        "count": 300,
+        "total_us": 6407.4299999999985,
+        "max_us": 23.328,
+        "mean_us": 21.358099999999993,
+        "summed_fraction": 0.0019871170613175028
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_backward__to_copy__unsafe_view_add_as_strided_backward_core_clamp_mul_reciprocal_select_select_backward_slice_split_transpose_view_31",
+        "count": 100,
+        "total_us": 6133.105,
+        "max_us": 62.624,
+        "mean_us": 61.33105,
+        "summed_fraction": 0.0019020414712843815
+      },
+      {
+        "name": "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::MaxNanFunctor<float> >, unsigned int, float, 4, 4> >(at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::MaxNanFunctor<float> >, unsigned int, float, 4, 4>)",
+        "count": 1955,
+        "total_us": 5987.539000000004,
+        "max_us": 6.24,
+        "mean_us": 3.0626797953964218,
+        "summed_fraction": 0.0018568975240000985
+      },
+      {
+        "name": "ncclDevKernel_AllReduce_Sum_f32_RING_LL(ncclDevKernelArgsStorage<4096ul>)",
+        "count": 51,
+        "total_us": 5975.445000000001,
+        "max_us": 186.847,
+        "mean_us": 117.16558823529412,
+        "summed_fraction": 0.0018531468480286744
+      },
+      {
+        "name": "triton_per_fused__to_copy_add_as_strided_clamp_div_expand_glue_fp8_t_lrs_g3_bwd_mul_pow_reciprocal_select_slice_slice_backward_sum_unsqueeze_view_87",
+        "count": 100,
+        "total_us": 5694.288999999998,
+        "max_us": 57.92,
+        "mean_us": 56.94288999999998,
+        "summed_fraction": 0.001765952780439674
+      },
+      {
+        "name": "void cutlass::device_kernel<flash::FlashAttnBwdPreprocess<cute::tuple<cute::C<64>, cute::C<128> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, true, true, 128> >(flash::FlashAttnBwdPreprocess<cute::tuple<cute::C<64>, cute::C<128> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, true, true, 128>::Params)",
+        "count": 200,
+        "total_us": 5689.453999999999,
+        "max_us": 31.104,
+        "mean_us": 28.447269999999993,
+        "summed_fraction": 0.0017644533163813122
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_backward__unsafe_view_add_mul_select_backward_sigmoid_slice_slice_backward_squeeze_unsqueeze_value_embed_grad_accumulate_view_110",
+        "count": 100,
+        "total_us": 5608.984000000001,
+        "max_us": 57.024,
+        "mean_us": 56.08984000000001,
+        "summed_fraction": 0.0017394973964689271
+      },
+      {
+        "name": "nvjet_tst_64x32_64x16_4x1_v_bz_splitK_NTT",
+        "count": 500,
+        "total_us": 5594.068000000002,
+        "max_us": 13.152,
+        "mean_us": 11.188136000000004,
+        "summed_fraction": 0.0017348715420957056
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm_backward__to_copy_add_mul_sum_view_80",
+        "count": 200,
+        "total_us": 5583.287999999996,
+        "max_us": 30.335,
+        "mean_us": 27.91643999999998,
+        "summed_fraction": 0.0017315283730059122
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_index_mul_select_slice_split_unbind_unsqueeze_view_60",
+        "count": 100,
+        "total_us": 5267.279,
+        "max_us": 53.728,
+        "mean_us": 52.672790000000006,
+        "summed_fraction": 0.0016335254489895947
+      },
+      {
+        "name": "nvjet_tst_64x32_64x16_4x2_v_bz_splitK_NTT",
+        "count": 400,
+        "total_us": 5206.037,
+        "max_us": 18.177,
+        "mean_us": 13.015092500000002,
+        "summed_fraction": 0.0016145326510863468
+      },
+      {
+        "name": "void cublasLt::splitKreduce_kernel<32, 16, int, float, __nv_bfloat16, float, __nv_bfloat16, false, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, true, false, false>(cublasLt::cublasSplitKParams<float>, float const*, __nv_bfloat16 const*, __nv_bfloat16*, __nv_bfloat16*, float const*, float const*, __nv_bfloat16 const*, float const*, __nv_bfloat16*, void*, long, float*, int*, float*, float*, float const*, float const*, float const*, float const*, float const*)",
+        "count": 1300,
+        "total_us": 5172.638999999998,
+        "max_us": 7.009,
+        "mean_us": 3.9789530769230756,
+        "summed_fraction": 0.001604175029448048
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm_backward__to_copy_add_mul_sum_view_55",
+        "count": 100,
+        "total_us": 5019.925000000003,
+        "max_us": 51.679,
+        "mean_us": 50.19925000000003,
+        "summed_fraction": 0.0015568142943480105
+      },
+      {
+        "name": "_reduce",
+        "count": 500,
+        "total_us": 4925.261000000004,
+        "max_us": 10.272,
+        "mean_us": 9.850522000000009,
+        "summed_fraction": 0.0015274564317583985
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm_backward__to_copy_add_mul_sum_unsqueeze_view_64",
+        "count": 100,
+        "total_us": 4919.957000000003,
+        "max_us": 50.048,
+        "mean_us": 49.19957000000003,
+        "summed_fraction": 0.0015258115181357402
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm_backward__to_copy_add_as_strided_clamp_glue_fp8_t_lrs_g3_bwd_mul_reciprocal_select_sum_unsqueeze_view_60",
+        "count": 100,
+        "total_us": 4899.38,
+        "max_us": 50.752,
+        "mean_us": 48.9938,
+        "summed_fraction": 0.0015194300347998728
+      },
+      {
+        "name": "triton_red_fused__to_copy_add_clamp_mean_mul_pow_reciprocal_rsqrt_select_slice_unbind_view_50",
+        "count": 100,
+        "total_us": 4889.685000000001,
+        "max_us": 50.176,
+        "mean_us": 48.896850000000015,
+        "summed_fraction": 0.0015164233535080803
+      },
+      {
+        "name": "triton_poi_fused__to_copy_add_mul_select_slice_unbind_unsqueeze_view_57",
+        "count": 100,
+        "total_us": 4725.615999999999,
+        "max_us": 48.255,
+        "mean_us": 47.256159999999994,
+        "summed_fraction": 0.0014655411262916602
+      },
+      {
+        "name": "nvjet_qqtst_64x80_128x11_2x4_v_bz_algo2_TNT",
+        "count": 200,
+        "total_us": 4663.5459999999985,
+        "max_us": 24.096,
+        "mean_us": 23.317729999999994,
+        "summed_fraction": 0.001446291543230124
+      },
+      {
+        "name": "nvjet_tst_128x80_64x8_2x4_v_bx_NNT",
+        "count": 400,
+        "total_us": 4642.194999999995,
+        "max_us": 25.568,
+        "mean_us": 11.605487499999988,
+        "summed_fraction": 0.0014396700215941177
+      },
+      {
+        "name": "_densify_kernel",
+        "count": 100,
+        "total_us": 4640.815999999999,
+        "max_us": 48.639,
+        "mean_us": 46.40815999999999,
+        "summed_fraction": 0.0014392423564573078
+      },
+      {
+        "name": "void cutlass::device_kernel<flash::FlashAttnBwdPostprocessConvertdQ<cute::tuple<cute::C<64>, cute::C<128> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, 256, cute::TiledMMA<cute::MMA_Atom<cute::SM90::GMMA::MMA_64x64x16_F32BF16BF16_SS<(cute::SM90::GMMA::Major)0, (cute::SM90::GMMA::Major)1, (cute::SM90::GMMA::ScaleIn)1, (cute::SM90::GMMA::ScaleIn)1> >, cute::Layout<cute::tuple<cute::C<1>, cute::C<2>, cute::C<1> >, cute::tuple<cute::C<0>, cute::C<1>, cute::C<0> > >, cute::tuple<cute::Underscore, cute::Underscore, cute::Underscore> >, false> >(flash::FlashAttnBwdPostprocessConvertdQ<cute::tuple<cute::C<64>, cute::C<128> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, 256, cute::TiledMMA<cute::MMA_Atom<cute::SM90::GMMA::MMA_64x64x16_F32BF16BF16_SS<(cute::SM90::GMMA::Major)0, (cute::SM90::GMMA::Major)1, (cute::SM90::GMMA::ScaleIn)1, (cute::SM90::GMMA::ScaleIn)1> >, cute::Layout<cute::tuple<cute::C<1>, cute::C<2>, cute::C<1> >, cute::tuple<cute::C<0>, cute::C<1>, cute::C<0> > >, cute::tuple<cute::Underscore, cute::Underscore, cute::Underscore> >, false>::Params)",
+        "count": 200,
+        "total_us": 4455.612999999998,
+        "max_us": 24.192,
+        "mean_us": 22.278064999999987,
+        "summed_fraction": 0.0013818059051644825
+      },
+      {
+        "name": "publish",
+        "count": 100,
+        "total_us": 4414.331000000002,
+        "max_us": 60.128,
+        "mean_us": 44.14331000000002,
+        "summed_fraction": 0.0013690032422363973
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy__unsafe_view_add_mul_select_slice_unbind_unsqueeze_45",
+        "count": 100,
+        "total_us": 4173.918,
+        "max_us": 44.448,
+        "mean_us": 41.73918,
+        "summed_fraction": 0.0012944446791209939
+      },
+      {
+        "name": "void cublasLt::splitKreduce_kernel<32, 16, int, float, __nv_bfloat16, float, __nv_bfloat16, false, float, __nv_bfloat16, __nv_bfloat16, true, false, false>(cublasLt::cublasSplitKParams<float>, float const*, __nv_bfloat16 const*, float*, __nv_bfloat16*, float const*, float const*, __nv_bfloat16 const*, float const*, __nv_bfloat16*, void*, long, float*, int*, float*, float*, float const*, float const*, float const*, float const*, float const*)",
+        "count": 1700,
+        "total_us": 4143.871999999975,
+        "max_us": 3.616,
+        "mean_us": 2.4375717647058677,
+        "summed_fraction": 0.0012851266031959515
+      },
+      {
+        "name": "triton_poi_fused_embedding_dense_backward_108",
+        "count": 100,
+        "total_us": 4009.079999999999,
+        "max_us": 41.087,
+        "mean_us": 40.09079999999999,
+        "summed_fraction": 0.0012433239642394493
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy__unsafe_view_add_clamp_mul_reciprocal_select_split_unsqueeze_view_62",
+        "count": 100,
+        "total_us": 3970.999999999999,
+        "max_us": 41.183,
+        "mean_us": 39.709999999999994,
+        "summed_fraction": 0.0012315143279742118
+      },
+      {
+        "name": "nvjet_tst_8x128_64x12_1x2_h_bz_TNN",
+        "count": 500,
+        "total_us": 3925.9670000000033,
+        "max_us": 11.104,
+        "mean_us": 7.851934000000006,
+        "summed_fraction": 0.0012175483786587603
+      },
+      {
+        "name": "triton_poi_fused_add_clamp_min_div_expand_ge_mul_neg_pow_scalar_tensor_select_backward_slice_unsqueeze_view_where_76",
+        "count": 100,
+        "total_us": 3866.0769999999998,
+        "max_us": 39.616,
+        "mean_us": 38.66077,
+        "summed_fraction": 0.001198974872463248
+      },
+      {
+        "name": "_transpose_add_kernel",
+        "count": 50,
+        "total_us": 3836.253,
+        "max_us": 86.111,
+        "mean_us": 76.72506,
+        "summed_fraction": 0.0011897256447328268
+      },
+      {
+        "name": "_copy_fwd_kernel",
+        "count": 100,
+        "total_us": 3817.717999999998,
+        "max_us": 41.023,
+        "mean_us": 38.17717999999998,
+        "summed_fraction": 0.001183977440736603
+      },
+      {
+        "name": "triton_per_fused__to_copy_add_div_expand_mul_pow_slice_slice_backward_sum_view_83",
+        "count": 100,
+        "total_us": 3817.3009999999986,
+        "max_us": 39.072,
+        "mean_us": 38.173009999999984,
+        "summed_fraction": 0.0011838481177764506
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy__unsafe_view_add_mul_select_slice_unbind_unsqueeze_23",
+        "count": 100,
+        "total_us": 3814.267999999999,
+        "max_us": 39.616,
+        "mean_us": 38.14267999999999,
+        "summed_fraction": 0.001182907502577069
+      },
+      {
+        "name": "_copy_bwd_dq_kernel",
+        "count": 100,
+        "total_us": 3802.2000000000003,
+        "max_us": 42.048,
+        "mean_us": 38.022000000000006,
+        "summed_fraction": 0.0011791648899077184
+      },
+      {
+        "name": "triton_poi_fused_index_view_11",
+        "count": 100,
+        "total_us": 3734.018,
+        "max_us": 38.464,
+        "mean_us": 37.340180000000004,
+        "summed_fraction": 0.0011580198106052912
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy__unsafe_view_add_clamp_mul_reciprocal_select_slice_unbind_unsqueeze_view_41",
+        "count": 100,
+        "total_us": 3659.987000000001,
+        "max_us": 37.408,
+        "mean_us": 36.59987000000001,
+        "summed_fraction": 0.0011350607984637001
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm_backward__to_copy_add_as_strided_clamp_glue_fp8_t_lrs_g3_bwd_mul_reciprocal_select_sum_view_77",
+        "count": 100,
+        "total_us": 3643.6369999999984,
+        "max_us": 37.633,
+        "mean_us": 36.43636999999998,
+        "summed_fraction": 0.0011299902219685147
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm_backward_add_view_8",
+        "count": 100,
+        "total_us": 3632.028,
+        "max_us": 37.377,
+        "mean_us": 36.32028,
+        "summed_fraction": 0.0011263899575934327
+      },
+      {
+        "name": "_dispatch_place_kernel",
+        "count": 500,
+        "total_us": 3581.456999999989,
+        "max_us": 7.233,
+        "mean_us": 7.162913999999978,
+        "summed_fraction": 0.0011107065249366718
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_backward_add_embedding_dense_backward_mul_select_sigmoid_slice_slice_backward_squeeze_unsqueeze_view_109",
+        "count": 100,
+        "total_us": 3532.439999999999,
+        "max_us": 38.304,
+        "mean_us": 35.32439999999999,
+        "summed_fraction": 0.0010955050296422122
+      },
+      {
+        "name": "_xxt_copy_kernel",
+        "count": 600,
+        "total_us": 3531.8060000000046,
+        "max_us": 22.176,
+        "mean_us": 5.886343333333341,
+        "summed_fraction": 0.0010953084091224617
+      },
+      {
+        "name": "void cutlass::device_kernel<flash::FlashAttnBwdPostprocessConvertdQ<cute::tuple<cute::C<64>, cute::C<64> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, 256, cute::TiledMMA<cute::MMA_Atom<cute::SM90::GMMA::MMA_64x32x16_F32BF16BF16_SS<(cute::SM90::GMMA::Major)0, (cute::SM90::GMMA::Major)1, (cute::SM90::GMMA::ScaleIn)1, (cute::SM90::GMMA::ScaleIn)1> >, cute::Layout<cute::tuple<cute::C<1>, cute::C<2>, cute::C<1> >, cute::tuple<cute::C<0>, cute::C<1>, cute::C<0> > >, cute::tuple<cute::Underscore, cute::Underscore, cute::Underscore> >, false> >(flash::FlashAttnBwdPostprocessConvertdQ<cute::tuple<cute::C<64>, cute::C<64> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, 256, cute::TiledMMA<cute::MMA_Atom<cute::SM90::GMMA::MMA_64x32x16_F32BF16BF16_SS<(cute::SM90::GMMA::Major)0, (cute::SM90::GMMA::Major)1, (cute::SM90::GMMA::ScaleIn)1, (cute::SM90::GMMA::ScaleIn)1> >, cute::Layout<cute::tuple<cute::C<1>, cute::C<2>, cute::C<1> >, cute::tuple<cute::C<0>, cute::C<1>, cute::C<0> > >, cute::tuple<cute::Underscore, cute::Underscore, cute::Underscore> >, false>::Params)",
+        "count": 300,
+        "total_us": 3531.087999999999,
+        "max_us": 12.896,
+        "mean_us": 11.77029333333333,
+        "summed_fraction": 0.0010950857379344757
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_backward_add_mul_view_73",
+        "count": 100,
+        "total_us": 3457.9410000000003,
+        "max_us": 36.16,
+        "mean_us": 34.57941,
+        "summed_fraction": 0.0010724008780633278
+      },
+      {
+        "name": "nvjet_tst_64x128_64x8_1x1_v_bz_splitK_NTN",
+        "count": 200,
+        "total_us": 3449.9480000000003,
+        "max_us": 19.2,
+        "mean_us": 17.249740000000003,
+        "summed_fraction": 0.0010699220329302385
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm__to_copy__unsafe_view_add_as_strided_clamp_glue_fp8_t_lrs_g3_fwd_mul_reciprocal_select_slice_unbind_view_54",
+        "count": 100,
+        "total_us": 3447.6680000000006,
+        "max_us": 35.712,
+        "mean_us": 34.47668000000001,
+        "summed_fraction": 0.0010692149433639377
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm__to_copy_add_mul_select_slice_unbind_view_48",
+        "count": 100,
+        "total_us": 3432.7569999999996,
+        "max_us": 36.384,
+        "mean_us": 34.327569999999994,
+        "summed_fraction": 0.0010645906396257294
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_75_tensorop_s1688gemm_bf16_64x64_nt_align1>(cutlass_75_tensorop_s1688gemm_bf16_64x64_nt_align1::Params)",
+        "count": 500,
+        "total_us": 3401.9870000000064,
+        "max_us": 9.696,
+        "mean_us": 6.803974000000013,
+        "summed_fraction": 0.0010550480317506959
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_bf16_64x128_64x6_tn_align2>(cutlass_80_tensorop_bf16_s16816gemm_bf16_64x128_64x6_tn_align2::Params)",
+        "count": 200,
+        "total_us": 3386.553000000001,
+        "max_us": 19.232,
+        "mean_us": 16.932765000000003,
+        "summed_fraction": 0.001050261531590041
+      },
+      {
+        "name": "nvjet_tst_160x64_64x6_2x4_v_bx_NNN",
+        "count": 400,
+        "total_us": 3343.8140000000017,
+        "max_us": 24.48,
+        "mean_us": 8.359535000000005,
+        "summed_fraction": 0.0010370070136189282
+      },
+      {
+        "name": "triton_red_fused_sum_view_41",
+        "count": 1900,
+        "total_us": 3336.3610000000326,
+        "max_us": 2.688,
+        "mean_us": 1.7559794736842278,
+        "summed_fraction": 0.0010346956370673407
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__scaled_mm__to_copy__unsafe_view_add_clamp_glue_fp8_t_mul_permute_reciprocal_select_slice_unsqueeze_view_14",
+        "count": 100,
+        "total_us": 3023.540000000001,
+        "max_us": 31.52,
+        "mean_us": 30.23540000000001,
+        "summed_fraction": 0.0009376813979358222
+      },
+      {
+        "name": "_copy_bwd_dk_kernel",
+        "count": 100,
+        "total_us": 2942.686000000001,
+        "max_us": 32.608,
+        "mean_us": 29.426860000000012,
+        "summed_fraction": 0.0009126063892543751
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy__unsafe_view_add_clamp_mul_reciprocal_select_slice_unbind_view_17",
+        "count": 100,
+        "total_us": 2914.7490000000003,
+        "max_us": 30.176,
+        "mean_us": 29.14749,
+        "summed_fraction": 0.0009039423711781684
+      },
+      {
+        "name": "_quantize_weights_dual_kernel",
+        "count": 200,
+        "total_us": 2911.2289999999985,
+        "max_us": 16.416,
+        "mean_us": 14.556144999999992,
+        "summed_fraction": 0.00090285072412844
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy__unsafe_view_add_clamp_mul_reciprocal_select_slice_unbind_view_32",
+        "count": 100,
+        "total_us": 2875.674000000001,
+        "max_us": 29.824,
+        "mean_us": 28.756740000000008,
+        "summed_fraction": 0.0008918241585451814
+      },
+      {
+        "name": "_ngram_embed_bwd_kernel",
+        "count": 100,
+        "total_us": 2831.0589999999993,
+        "max_us": 30.272,
+        "mean_us": 28.310589999999994,
+        "summed_fraction": 0.0008779878423168833
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_bf16_256x128_64x3_tn_align2>(cutlass_80_tensorop_bf16_s16816gemm_bf16_256x128_64x3_tn_align2::Params)",
+        "count": 100,
+        "total_us": 2817.4929999999995,
+        "max_us": 28.672,
+        "mean_us": 28.174929999999996,
+        "summed_fraction": 0.0008737806593973926
+      },
+      {
+        "name": "triton_per_fused__to_copy_add_clamp_mean_mul_pow_reciprocal_rsqrt_select_unbind_view_27",
+        "count": 100,
+        "total_us": 2787.925999999999,
+        "max_us": 28.768,
+        "mean_us": 27.87925999999999,
+        "summed_fraction": 0.0008646111343066814
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm__to_copy_add_clamp_mul_reciprocal_select_unbind_view_42",
+        "count": 100,
+        "total_us": 2757.7809999999986,
+        "max_us": 28.448,
+        "mean_us": 27.577809999999985,
+        "summed_fraction": 0.0008552623558083729
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm__to_copy_add_clamp_mul_reciprocal_select_unbind_view_33",
+        "count": 100,
+        "total_us": 2752.092999999998,
+        "max_us": 28.927,
+        "mean_us": 27.52092999999998,
+        "summed_fraction": 0.0008534983534166534
+      },
+      {
+        "name": "_ngram_embed_fwd_kernel",
+        "count": 100,
+        "total_us": 2743.6419999999994,
+        "max_us": 28.576,
+        "mean_us": 27.436419999999995,
+        "summed_fraction": 0.0008508774701162987
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm_backward__to_copy_add_mul_sum_view_74",
+        "count": 100,
+        "total_us": 2743.4729999999995,
+        "max_us": 29.792,
+        "mean_us": 27.434729999999995,
+        "summed_fraction": 0.0008508250586528318
+      },
+      {
+        "name": "nvjet_tst_160x128_64x5_1x2_h_bz_NNN",
+        "count": 200,
+        "total_us": 2703.6380000000013,
+        "max_us": 14.784,
+        "mean_us": 13.518190000000006,
+        "summed_fraction": 0.0008384711494977447
+      },
+      {
+        "name": "triton_poi_fused__to_copy_clamp_min_copy__div_lerp_mean_mul_pow_rsqrt_sqrt_2",
+        "count": 300,
+        "total_us": 2703.604000000001,
+        "max_us": 24.832,
+        "mean_us": 9.012013333333337,
+        "summed_fraction": 0.0008384606051796507
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm_backward__to_copy_add_mul_sum_view_88",
+        "count": 100,
+        "total_us": 2682.806,
+        "max_us": 27.584,
+        "mean_us": 26.82806,
+        "summed_fraction": 0.0008320105837761732
+      },
+      {
+        "name": "void cutlass::device_kernel<flash::FlashAttnBwdPreprocess<cute::tuple<cute::C<128>, cute::C<64> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, true, true, 64> >(flash::FlashAttnBwdPreprocess<cute::tuple<cute::C<128>, cute::C<64> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, true, true, 64>::Params)",
+        "count": 200,
+        "total_us": 2675.0300000000016,
+        "max_us": 14.72,
+        "mean_us": 13.375150000000009,
+        "summed_fraction": 0.0008295990362026841
+      },
+      {
+        "name": "triton_red_fused__to_copy_index_mul_sum_45",
+        "count": 500,
+        "total_us": 2608.487000000003,
+        "max_us": 6.145,
+        "mean_us": 5.216974000000006,
+        "summed_fraction": 0.0008089622550577869
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm__to_copy__unsafe_view_add_mul_select_unbind_37",
+        "count": 100,
+        "total_us": 2559.9010000000003,
+        "max_us": 26.944,
+        "mean_us": 25.599010000000003,
+        "summed_fraction": 0.0007938944245015144
+      },
+      {
+        "name": "_packed_batched_matrix_amax_partial_kernel",
+        "count": 300,
+        "total_us": 2546.2670000000007,
+        "max_us": 14.496,
+        "mean_us": 8.48755666666667,
+        "summed_fraction": 0.0007896661529458357
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm_backward_add_unsqueeze_view_105",
+        "count": 100,
+        "total_us": 2508.186,
+        "max_us": 26.336,
+        "mean_us": 25.081860000000002,
+        "summed_fraction": 0.0007778562065535954
+      },
+      {
+        "name": "void cutlass::device_kernel<flash::FlashAttnBwdPostprocessConvertdQ<cute::tuple<cute::C<128>, cute::C<64> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, 256, cute::TiledMMA<cute::MMA_Atom<cute::SM90::GMMA::MMA_64x64x16_F32BF16BF16_SS<(cute::SM90::GMMA::Major)0, (cute::SM90::GMMA::Major)1, (cute::SM90::GMMA::ScaleIn)1, (cute::SM90::GMMA::ScaleIn)1> >, cute::Layout<cute::tuple<cute::C<2>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<1>, cute::C<0>, cute::C<0> > >, cute::tuple<cute::Underscore, cute::Underscore, cute::Underscore> >, false> >(flash::FlashAttnBwdPostprocessConvertdQ<cute::tuple<cute::C<128>, cute::C<64> >, cutlass::bfloat16_t, float, cutlass::arch::Sm90, 256, cute::TiledMMA<cute::MMA_Atom<cute::SM90::GMMA::MMA_64x64x16_F32BF16BF16_SS<(cute::SM90::GMMA::Major)0, (cute::SM90::GMMA::Major)1, (cute::SM90::GMMA::ScaleIn)1, (cute::SM90::GMMA::ScaleIn)1> >, cute::Layout<cute::tuple<cute::C<2>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<1>, cute::C<0>, cute::C<0> > >, cute::tuple<cute::Underscore, cute::Underscore, cute::Underscore> >, false>::Params)",
+        "count": 200,
+        "total_us": 2413.529999999999,
+        "max_us": 13.119,
+        "mean_us": 12.067649999999993,
+        "summed_fraction": 0.0007485008249800047
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm_add_cat_mul_select_sigmoid_slice_unsqueeze_12",
+        "count": 100,
+        "total_us": 2402.043999999999,
+        "max_us": 25.376,
+        "mean_us": 24.02043999999999,
+        "summed_fraction": 0.0007449387062262622
+      },
+      {
+        "name": "triton_poi_fused__to_copy_add_div_mul_sqrt_unsqueeze_2",
+        "count": 200,
+        "total_us": 2376.5399999999995,
+        "max_us": 39.36,
+        "mean_us": 11.882699999999998,
+        "summed_fraction": 0.0007370292271477797
+      },
+      {
+        "name": "triton_per_fused__to_copy_stack_sum_view_42",
+        "count": 2100,
+        "total_us": 2371.0079999999784,
+        "max_us": 2.144,
+        "mean_us": 1.1290514285714184,
+        "summed_fraction": 0.000735313604568485
+      },
+      {
+        "name": "_quantize_lm_head_dual_kernel",
+        "count": 50,
+        "total_us": 2299.4829999999997,
+        "max_us": 47.232,
+        "mean_us": 45.98965999999999,
+        "summed_fraction": 0.0007131317706958259
+      },
+      {
+        "name": "triton_per_fused_mul_select_backward_slice_squeeze_sum_view_24",
+        "count": 100,
+        "total_us": 2284.789000000001,
+        "max_us": 24.0,
+        "mean_us": 22.84789000000001,
+        "summed_fraction": 0.0007085747645172182
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_index_mul_sigmoid_slice_unbind_unsqueeze_view_30",
+        "count": 100,
+        "total_us": 2252.5070000000005,
+        "max_us": 23.904,
+        "mean_us": 22.525070000000007,
+        "summed_fraction": 0.0006985632446140038
+      },
+      {
+        "name": "triton_per_fused__to_copy_add_clamp_mean_mul_pow_reciprocal_rsqrt_select_unbind_view_18",
+        "count": 100,
+        "total_us": 2249.5570000000002,
+        "max_us": 23.968,
+        "mean_us": 22.49557,
+        "summed_fraction": 0.0006976483699558511
+      },
+      {
+        "name": "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1} const&)::{lambda(int)#1})",
+        "count": 300,
+        "total_us": 2227.2790000000005,
+        "max_us": 16.064,
+        "mean_us": 7.424263333333335,
+        "summed_fraction": 0.000690739360588284
+      },
+      {
+        "name": "triton_red_fused__to_copy__unsafe_view_add_clamp_min_div_mul_pow_select_slice_sub_sum_tanh_unsqueeze_view_36",
+        "count": 100,
+        "total_us": 2168.9239999999995,
+        "max_us": 22.944,
+        "mean_us": 21.689239999999995,
+        "summed_fraction": 0.0006726418993420145
+      },
+      {
+        "name": "triton_per_fused__unsafe_view_mul_select_backward_sigmoid_sigmoid_backward_slice_squeeze_sum_view_82",
+        "count": 100,
+        "total_us": 2168.027,
+        "max_us": 22.976,
+        "mean_us": 21.68027,
+        "summed_fraction": 0.0006723637154205357
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::(anonymous namespace)::launch_clamp_scalar(at::TensorIteratorBase&, c10::Scalar, c10::Scalar, at::native::detail::ClampLimits)::{lambda()#1}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::(anonymous namespace)::launch_clamp_scalar(at::TensorIteratorBase&, c10::Scalar, c10::Scalar, at::native::detail::ClampLimits)::{lambda()#1}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>)",
+        "count": 1370,
+        "total_us": 2061.397999999989,
+        "max_us": 5.44,
+        "mean_us": 1.504670072992693,
+        "summed_fraction": 0.0006392951832428535
+      },
+      {
+        "name": "void at_cuda_detail::cub::DeviceRadixSortOnesweepKernel<at_cuda_detail::cub::DeviceRadixSortPolicy<int, at::cuda::cub::detail::OpaqueType<8>, unsigned long long>::Policy900, false, int, at::cuda::cub::detail::OpaqueType<8>, unsigned long long, int, int, at_cuda_detail::cub::detail::identity_decomposer_t>(int*, int*, unsigned long long*, unsigned long long const*, int*, int const*, at::cuda::cub::detail::OpaqueType<8>*, at::cuda::cub::detail::OpaqueType<8> const*, int, int, int, at_cuda_detail::cub::detail::identity_decomposer_t)",
+        "count": 200,
+        "total_us": 2037.566999999998,
+        "max_us": 16.8,
+        "mean_us": 10.187834999999989,
+        "summed_fraction": 0.0006319045466399971
+      },
+      {
+        "name": "triton_poi_fused__to_copy__unsafe_view_add_clamp_min_div_expand_ge_mul_neg_pow_scalar_tensor_select_select_backward_slice_tanh_view_where_85",
+        "count": 100,
+        "total_us": 2020.9340000000002,
+        "max_us": 21.184,
+        "mean_us": 20.20934,
+        "summed_fraction": 0.0006267462042030311
+      },
+      {
+        "name": "triton_per_fused__to_copy_mean_pow_0",
+        "count": 300,
+        "total_us": 2015.026000000002,
+        "max_us": 32.096,
+        "mean_us": 6.71675333333334,
+        "summed_fraction": 0.0006249139738707044
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_mul_select_split_view_63",
+        "count": 100,
+        "total_us": 1924.4459999999995,
+        "max_us": 20.287,
+        "mean_us": 19.244459999999993,
+        "summed_fraction": 0.0005968226699603776
+      },
+      {
+        "name": "triton_poi_fused__to_copy_add_mul_select_unbind_view_39",
+        "count": 100,
+        "total_us": 1904.2150000000001,
+        "max_us": 20.64,
+        "mean_us": 19.042150000000003,
+        "summed_fraction": 0.0005905484905674677
+      },
+      {
+        "name": "triton_red_fused__flash_attn_backward_add_clamp_min_div_expand_mul_neg_select_slice_sum_unsqueeze_view_75",
+        "count": 100,
+        "total_us": 1874.6230000000005,
+        "max_us": 19.744,
+        "mean_us": 18.746230000000004,
+        "summed_fraction": 0.0005813712123016877
+      },
+      {
+        "name": "_scatter_copy_rows_kernel",
+        "count": 51,
+        "total_us": 1860.0609999999995,
+        "max_us": 40.609,
+        "mean_us": 36.47178431372548,
+        "summed_fraction": 0.000576855142887444
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<8, at::native::FillFunctor<c10::Half>, std::array<char*, 1ul> >(int, at::native::FillFunctor<c10::Half>, std::array<char*, 1ul>)",
+        "count": 100,
+        "total_us": 1766.9450000000002,
+        "max_us": 24.16,
+        "mean_us": 17.66945,
+        "summed_fraction": 0.0005479773568981099
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctorOnSelf_add<int>, std::array<char*, 2ul> >(int, at::native::CUDAFunctorOnSelf_add<int>, std::array<char*, 2ul>)",
+        "count": 403,
+        "total_us": 1744.0670000000002,
+        "max_us": 16.8,
+        "mean_us": 4.327709677419356,
+        "summed_fraction": 0.0005408822713288845
+      },
+      {
+        "name": "nvjet_tst_64x128_64x8_1x2_h_bz_TNN",
+        "count": 200,
+        "total_us": 1739.3570000000009,
+        "max_us": 11.808,
+        "mean_us": 8.696785000000004,
+        "summed_fraction": 0.0005394215731458682
+      },
+      {
+        "name": "_prepare",
+        "count": 500,
+        "total_us": 1726.6929999999966,
+        "max_us": 4.128,
+        "mean_us": 3.453385999999993,
+        "summed_fraction": 0.0005354941247828688
+      },
+      {
+        "name": "nvjet_tst_64x64_64x13_2x4_v_bz_splitK_NTT",
+        "count": 100,
+        "total_us": 1667.229,
+        "max_us": 17.504,
+        "mean_us": 16.67229,
+        "summed_fraction": 0.0005170527326905358
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_backward__to_copy__unsafe_view_add_clamp_mul_reciprocal_select_split_view_18",
+        "count": 100,
+        "total_us": 1622.1720000000005,
+        "max_us": 17.376,
+        "mean_us": 16.221720000000005,
+        "summed_fraction": 0.0005030793403270169
+      },
+      {
+        "name": "triton_poi_fused_expand_mul_stack_zeros_115",
+        "count": 400,
+        "total_us": 1607.6089999999992,
+        "max_us": 5.568,
+        "mean_us": 4.019022499999998,
+        "summed_fraction": 0.0004985629607857703
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 2ul> >(int, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 2ul>)",
+        "count": 1070,
+        "total_us": 1550.2679999999893,
+        "max_us": 5.216,
+        "mean_us": 1.4488485981308312,
+        "summed_fraction": 0.0004807799683203003
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_75_tensorop_s1688gemm_bf16_64x64_tn_align1>(cutlass_75_tensorop_s1688gemm_bf16_64x64_tn_align1::Params)",
+        "count": 300,
+        "total_us": 1482.9910000000016,
+        "max_us": 5.28,
+        "mean_us": 4.943303333333339,
+        "summed_fraction": 0.00045991555395537813
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_backward_add_mul_select_sigmoid_sigmoid_backward_slice_squeeze_sum_unsqueeze_view_106",
+        "count": 100,
+        "total_us": 1434.2700000000002,
+        "max_us": 16.288,
+        "mean_us": 14.342700000000002,
+        "summed_fraction": 0.0004448058562537329
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_s16816gemm_bf16_64x64_32x6_nt_align2>(cutlass_80_tensorop_s16816gemm_bf16_64x64_32x6_nt_align2::Params)",
+        "count": 200,
+        "total_us": 1430.2050000000002,
+        "max_us": 8.384,
+        "mean_us": 7.151025000000001,
+        "summed_fraction": 0.0004435451899874989
+      },
+      {
+        "name": "triton_per_fused_squeeze_sum_10",
+        "count": 900,
+        "total_us": 1413.8259999999918,
+        "max_us": 2.976,
+        "mean_us": 1.5709177777777688,
+        "summed_fraction": 0.00043846561980923147
+      },
+      {
+        "name": "triton_poi_fused__to_copy_add_div_mul_pow_sqrt_unsqueeze_3",
+        "count": 200,
+        "total_us": 1390.7420000000004,
+        "max_us": 28.896,
+        "mean_us": 6.953710000000002,
+        "summed_fraction": 0.0004313066480774395
+      },
+      {
+        "name": "triton_red_fused__unsafe_view_mul_select_backward_sigmoid_sigmoid_backward_slice_backward_sum_view_48",
+        "count": 100,
+        "total_us": 1372.4409999999996,
+        "max_us": 14.88,
+        "mean_us": 13.724409999999995,
+        "summed_fraction": 0.0004256310137998628
+      },
+      {
+        "name": "void flash::prepare_varlen_num_blocks_kernel<4, false>(int, int, int, int const*, int const*, int const*, int const*, int const*, int const*, int, int, int, int, int, cutlass::FastDivmod, cutlass::FastDivmod, int*, int*, int*, int*, int*, bool, bool, bool, int)",
+        "count": 700,
+        "total_us": 1368.4569999999974,
+        "max_us": 2.623,
+        "mean_us": 1.9549385714285676,
+        "summed_fraction": 0.0004243954678208519
+      },
+      {
+        "name": "_fused_adam_kernel",
+        "count": 100,
+        "total_us": 1347.0350000000003,
+        "max_us": 26.944,
+        "mean_us": 13.470350000000003,
+        "summed_fraction": 0.00041775192716765125
+      },
+      {
+        "name": "triton_red_fused__unsafe_view_mul_sigmoid_sigmoid_backward_slice_backward_sum_view_86",
+        "count": 100,
+        "total_us": 1328.1239999999998,
+        "max_us": 14.432,
+        "mean_us": 13.281239999999999,
+        "summed_fraction": 0.00041188711541838887
+      },
+      {
+        "name": "_quantize_dual_layout_packed_batched_kernel",
+        "count": 300,
+        "total_us": 1321.441,
+        "max_us": 8.064,
+        "mean_us": 4.404803333333334,
+        "summed_fraction": 0.0004098145366589199
+      },
+      {
+        "name": "triton_poi_fused_add_slice_backward_stack_view_135",
+        "count": 100,
+        "total_us": 1291.9049999999995,
+        "max_us": 13.184,
+        "mean_us": 12.919049999999995,
+        "summed_fraction": 0.00040065462550529433
+      },
+      {
+        "name": "triton_per_fused__to_copy_diagonal_sum_1",
+        "count": 400,
+        "total_us": 1263.2049999999997,
+        "max_us": 12.8,
+        "mean_us": 3.1580124999999994,
+        "summed_fraction": 0.00039175398052597937
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_75_tensorop_bf16_s1688gemm_bf16_64x64_nn_align1>(cutlass_75_tensorop_bf16_s1688gemm_bf16_64x64_nn_align1::Params)",
+        "count": 300,
+        "total_us": 1255.5750000000012,
+        "max_us": 4.416,
+        "mean_us": 4.185250000000004,
+        "summed_fraction": 0.00038938771149489365
+      },
+      {
+        "name": "triton_red_fused__to_copy_diagonal_sum_0",
+        "count": 400,
+        "total_us": 1252.5120000000006,
+        "max_us": 12.288,
+        "mean_us": 3.1312800000000016,
+        "summed_fraction": 0.0003884377924854286
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_index_mul_sigmoid_slice_unbind_unsqueeze_view_21",
+        "count": 100,
+        "total_us": 1250.749000000001,
+        "max_us": 13.728,
+        "mean_us": 12.50749000000001,
+        "summed_fraction": 0.0003878910385795565
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_75_tensorop_s1688gemm_bf16_64x64_nn_align1>(cutlass_75_tensorop_s1688gemm_bf16_64x64_nn_align1::Params)",
+        "count": 300,
+        "total_us": 1219.902,
+        "max_us": 4.864,
+        "mean_us": 4.06634,
+        "summed_fraction": 0.0003783245509253078
+      },
+      {
+        "name": "XXT_kernel",
+        "count": 200,
+        "total_us": 1203.7780000000002,
+        "max_us": 18.56,
+        "mean_us": 6.018890000000002,
+        "summed_fraction": 0.00037332406313274775
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_index_mul_sigmoid_slice_unbind_unsqueeze_view_53",
+        "count": 100,
+        "total_us": 1194.6519999999998,
+        "max_us": 12.864,
+        "mean_us": 11.946519999999998,
+        "summed_fraction": 0.0003704938441055271
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_gelu_backward_view_30",
+        "count": 300,
+        "total_us": 1188.5069999999996,
+        "max_us": 4.256,
+        "mean_us": 3.9616899999999986,
+        "summed_fraction": 0.0003685881136735448
+      },
+      {
+        "name": "_zero_rows_kernel",
+        "count": 50,
+        "total_us": 1181.4350000000004,
+        "max_us": 34.112,
+        "mean_us": 23.62870000000001,
+        "summed_fraction": 0.0003663948955100009
+      },
+      {
+        "name": "triton_red_fused__softmax__to_copy_exp_mean_sub_25",
+        "count": 500,
+        "total_us": 1181.4300000000019,
+        "max_us": 4.16,
+        "mean_us": 2.362860000000004,
+        "summed_fraction": 0.0003663933448749876
+      },
+      {
+        "name": "triton_poi_fused_expand_mul_stack_zeros_117",
+        "count": 600,
+        "total_us": 1135.6819999999982,
+        "max_us": 2.24,
+        "mean_us": 1.8928033333333303,
+        "summed_fraction": 0.00035220565475255775
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_75_tensorop_bf16_s1688gemm_bf16_64x64_tn_align1>(cutlass_75_tensorop_bf16_s1688gemm_bf16_64x64_tn_align1::Params)",
+        "count": 200,
+        "total_us": 1109.7649999999999,
+        "max_us": 6.368,
+        "mean_us": 5.548824999999999,
+        "summed_fraction": 0.00034416809322193435
+      },
+      {
+        "name": "triton_poi_fused_embedding_9",
+        "count": 100,
+        "total_us": 1097.912,
+        "max_us": 12.16,
+        "mean_us": 10.97912,
+        "summed_fraction": 0.00034049215785817756
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<8, at::native::AUnaryFunctor<c10::Half, c10::Half, c10::Half, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 2ul> >(int, at::native::AUnaryFunctor<c10::Half, c10::Half, c10::Half, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 2ul>)",
+        "count": 50,
+        "total_us": 1036.092,
+        "max_us": 23.904,
+        "mean_us": 20.72184,
+        "summed_fraction": 0.00032132010654733253
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_gelu_13",
+        "count": 400,
+        "total_us": 1017.9789999999965,
+        "max_us": 2.592,
+        "mean_us": 2.5449474999999913,
+        "summed_fraction": 0.00031570277614627454
+      },
+      {
+        "name": "triton_per_fused__flash_attn_backward__to_copy__unsafe_view_add_clamp_min_div_expand_ge_mul_neg_scalar_tensor_select_slice_sum_tanh_view_where_84",
+        "count": 100,
+        "total_us": 985.3689999999996,
+        "max_us": 10.592,
+        "mean_us": 9.853689999999995,
+        "summed_fraction": 0.00030558953458615485
+      },
+      {
+        "name": "triton_red_fused_mul_sum_21",
+        "count": 500,
+        "total_us": 970.2009999999976,
+        "max_us": 2.751,
+        "mean_us": 1.9404019999999953,
+        "summed_fraction": 0.00030088552820823613
+      },
+      {
+        "name": "void at::native::(anonymous namespace)::searchsorted_cuda_kernel<int, int>(int*, int const*, int const*, long const*, long, long, long, bool, bool)",
+        "count": 100,
+        "total_us": 968.9330000000001,
+        "max_us": 13.024,
+        "mean_us": 9.689330000000002,
+        "summed_fraction": 0.00030049228716873266
+      },
+      {
+        "name": "triton_poi_fused__to_copy_add_div_mul_pow_sqrt_unsqueeze_2",
+        "count": 200,
+        "total_us": 956.5349999999999,
+        "max_us": 21.632,
+        "mean_us": 4.782674999999999,
+        "summed_fraction": 0.0002966473325884696
+      },
+      {
+        "name": "void at::native::(anonymous namespace)::multi_tensor_apply_kernel<at::native::(anonymous namespace)::TensorListMetadata<2>, at::native::(anonymous namespace)::UnaryOpFunctor<float, 2, 1, 1>, at::native::Copy<float, float> >(at::native::(anonymous namespace)::TensorListMetadata<2>, at::native::(anonymous namespace)::UnaryOpFunctor<float, 2, 1, 1>, at::native::Copy<float, float>)",
+        "count": 50,
+        "total_us": 946.179,
+        "max_us": 19.425,
+        "mean_us": 18.92358,
+        "summed_fraction": 0.0002934356573478499
+      },
+      {
+        "name": "triton_per_fused__softmax__to_copy_div_expand_index_max_mul_scatter_add_unsqueeze_view_54",
+        "count": 400,
+        "total_us": 942.277000000001,
+        "max_us": 3.04,
+        "mean_us": 2.355692500000002,
+        "summed_fraction": 0.00029222554178306667
+      },
+      {
+        "name": "triton_poi_fused_stack_136",
+        "count": 1100,
+        "total_us": 919.161999999995,
+        "max_us": 0.897,
+        "mean_us": 0.8356018181818137,
+        "summed_fraction": 0.00028505695611418446
+      },
+      {
+        "name": "void at::native::(anonymous namespace)::multi_tensor_apply_kernel<at::native::(anonymous namespace)::TensorListMetadata<2>, at::native::(anonymous namespace)::UnaryOpFunctor<c10::BFloat16, 2, 1, 1>, at::native::Copy<c10::BFloat16, c10::BFloat16> >(at::native::(anonymous namespace)::TensorListMetadata<2>, at::native::(anonymous namespace)::UnaryOpFunctor<c10::BFloat16, 2, 1, 1>, at::native::Copy<c10::BFloat16, c10::BFloat16>)",
+        "count": 50,
+        "total_us": 890.998,
+        "max_us": 18.208,
+        "mean_us": 17.819960000000002,
+        "summed_fraction": 0.0002763225392083523
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_32x32_32x1_nn_align2>(cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_32x32_32x1_nn_align2::Params)",
+        "count": 200,
+        "total_us": 886.7080000000001,
+        "max_us": 4.576,
+        "mean_us": 4.433540000000001,
+        "summed_fraction": 0.00027499209436649655
+      },
+      {
+        "name": "triton_poi_fused__to_copy_add_clone_div_mul_sqrt_unsqueeze_3",
+        "count": 200,
+        "total_us": 827.1699999999998,
+        "max_us": 10.464,
+        "mean_us": 4.13585,
+        "summed_fraction": 0.0002565277528759579
+      },
+      {
+        "name": "void at::native::vectorized_gather_kernel<16, long>(char*, char*, long*, int, long, long, long, long, bool)",
+        "count": 100,
+        "total_us": 806.87,
+        "max_us": 8.832,
+        "mean_us": 8.0687,
+        "summed_fraction": 0.0002502321747198571
+      },
+      {
+        "name": "triton_poi_fused_mul_116",
+        "count": 200,
+        "total_us": 800.6459999999996,
+        "max_us": 5.6,
+        "mean_us": 4.0032299999999985,
+        "summed_fraction": 0.0002483019442546564
+      },
+      {
+        "name": "triton_poi_fused_expand_mul_stack_zeros_113",
+        "count": 200,
+        "total_us": 793.882,
+        "max_us": 5.503,
+        "mean_us": 3.96941,
+        "summed_fraction": 0.00024620424520796356
+      },
+      {
+        "name": "triton_poi_fused_mul_114",
+        "count": 200,
+        "total_us": 786.7519999999996,
+        "max_us": 5.344,
+        "mean_us": 3.933759999999998,
+        "summed_fraction": 0.00024399303967825907
+      },
+      {
+        "name": "triton_per_fused__to_copy__unsafe_view_add_clamp_min_div_mul_pow_select_slice_sub_sum_tanh_view_22",
+        "count": 100,
+        "total_us": 772.3469999999996,
+        "max_us": 7.903,
+        "mean_us": 7.723469999999996,
+        "summed_fraction": 0.0002395256602034496
+      },
+      {
+        "name": "_dispatch_count_kernel",
+        "count": 500,
+        "total_us": 762.3349999999955,
+        "max_us": 1.569,
+        "mean_us": 1.524669999999991,
+        "summed_fraction": 0.00023642066865177925
+      },
+      {
+        "name": "triton_poi_fused__to_copy_div_expand_index_mul_scatter_add_unsqueeze_view_37",
+        "count": 500,
+        "total_us": 737.4360000000001,
+        "max_us": 1.888,
+        "mean_us": 1.4748720000000004,
+        "summed_fraction": 0.0002286988164099701
+      },
+      {
+        "name": "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl_nocast<at::native::AbsFunctor<c10::BFloat16> >(at::TensorIteratorBase&, at::native::AbsFunctor<c10::BFloat16> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::AbsFunctor<c10::BFloat16> >(at::TensorIteratorBase&, at::native::AbsFunctor<c10::BFloat16> const&)::{lambda(int)#1})",
+        "count": 30,
+        "total_us": 734.2060000000001,
+        "max_us": 27.008,
+        "mean_us": 24.47353333333334,
+        "summed_fraction": 0.00022769710619104368
+      },
+      {
+        "name": "triton_per_fused__softmax__to_copy_mul_sub_sum_39",
+        "count": 500,
+        "total_us": 729.1760000000005,
+        "max_us": 1.505,
+        "mean_us": 1.458352000000001,
+        "summed_fraction": 0.00022613716736714294
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__fused_rms_norm_backward__to_copy_add_mul_split_sub_view_5",
+        "count": 100,
+        "total_us": 702.138,
+        "max_us": 7.327,
+        "mean_us": 7.021380000000001,
+        "summed_fraction": 0.00021775195346642088
+      },
+      {
+        "name": "_replay_rows_kernel",
+        "count": 50,
+        "total_us": 685.5970000000001,
+        "max_us": 32.32,
+        "mean_us": 13.711940000000002,
+        "summed_fraction": 0.00021262214271370838
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul>)",
+        "count": 400,
+        "total_us": 678.6489999999993,
+        "max_us": 4.192,
+        "mean_us": 1.6966224999999984,
+        "summed_fraction": 0.00021046738029850673
+      },
+      {
+        "name": "triton_red_fused_mul_sum_62",
+        "count": 300,
+        "total_us": 669.5990000000011,
+        "max_us": 2.912,
+        "mean_us": 2.2319966666666704,
+        "summed_fraction": 0.00020766073092349678
+      },
+      {
+        "name": "triton_red_fused__softmax__to_copy_exp_mean_sub_26",
+        "count": 500,
+        "total_us": 640.3229999999979,
+        "max_us": 1.313,
+        "mean_us": 1.280645999999996,
+        "summed_fraction": 0.000198581452790589
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_bf16_128x64_64x3_tn_align2>(cutlass_80_tensorop_bf16_s16816gemm_bf16_128x64_64x3_tn_align2::Params)",
+        "count": 100,
+        "total_us": 640.2619999999998,
+        "max_us": 6.657,
+        "mean_us": 6.402619999999998,
+        "summed_fraction": 0.00019856253504342097
+      },
+      {
+        "name": "triton_poi_fused_expand_mul_select_slice_split_with_sizes_stack_view_zeros_134",
+        "count": 100,
+        "total_us": 639.6129999999999,
+        "max_us": 7.423,
+        "mean_us": 6.396129999999999,
+        "summed_fraction": 0.00019836126261862745
+      },
+      {
+        "name": "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<c10::BFloat16, at::native::func_wrapper_t<c10::BFloat16, at::native::MaxNanFunctor<c10::BFloat16> >, unsigned int, c10::BFloat16, 4, 4> >(at::native::ReduceOp<c10::BFloat16, at::native::func_wrapper_t<c10::BFloat16, at::native::MaxNanFunctor<c10::BFloat16> >, unsigned int, c10::BFloat16, 4, 4>)",
+        "count": 45,
+        "total_us": 624.3530000000002,
+        "max_us": 21.632,
+        "mean_us": 13.874511111111115,
+        "summed_fraction": 0.00019362872455645517
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<float>, std::array<char*, 1ul> >(int, at::native::FillFunctor<float>, std::array<char*, 1ul>)",
+        "count": 613,
+        "total_us": 614.9959999999999,
+        "max_us": 3.104,
+        "mean_us": 1.0032561174551384,
+        "summed_fraction": 0.00019072686619159615
+      },
+      {
+        "name": "triton_poi_fused_add_mul_select_backward_squeeze_11",
+        "count": 100,
+        "total_us": 608.2200000000001,
+        "max_us": 6.784,
+        "mean_us": 6.082200000000001,
+        "summed_fraction": 0.00018862544562087016
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_bf16_64x64_32x6_nn_align2>(cutlass_80_tensorop_bf16_s16816gemm_bf16_64x64_32x6_nn_align2::Params)",
+        "count": 100,
+        "total_us": 594.148,
+        "max_us": 6.112,
+        "mean_us": 5.94148,
+        "summed_fraction": 0.0001842613384379809
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<float, float, float, at::native::maximum_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float, float)#1}>, std::array<char*, 3ul> >(int, at::native::BinaryFunctor<float, float, float, at::native::maximum_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float, float)#1}>, std::array<char*, 3ul>)",
+        "count": 400,
+        "total_us": 593.8859999999994,
+        "max_us": 1.824,
+        "mean_us": 1.4847149999999985,
+        "summed_fraction": 0.00018418008516325664
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::(anonymous namespace)::where_kernel_impl(at::TensorIterator&)::{lambda()#1}::operator()() const::{lambda()#11}::operator()() const::{lambda(bool, float, float)#1}, std::array<char*, 4ul> >(int, at::native::(anonymous namespace)::where_kernel_impl(at::TensorIterator&)::{lambda()#1}::operator()() const::{lambda()#11}::operator()() const::{lambda(bool, float, float)#1}, std::array<char*, 4ul>)",
+        "count": 400,
+        "total_us": 591.1930000000002,
+        "max_us": 1.76,
+        "mean_us": 1.4779825000000004,
+        "summed_fraction": 0.00018334491314481456
+      },
+      {
+        "name": "triton_poi_fused_slice_backward_stack_132",
+        "count": 100,
+        "total_us": 580.0049999999999,
+        "max_us": 7.328,
+        "mean_us": 5.800049999999999,
+        "summed_fraction": 0.0001798752122378954
+      },
+      {
+        "name": "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4> >(at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4>)",
+        "count": 100,
+        "total_us": 569.8779999999999,
+        "max_us": 6.177,
+        "mean_us": 5.698779999999999,
+        "summed_fraction": 0.00017673455608090857
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_bf16_64x64_32x6_nt_align2>(cutlass_80_tensorop_bf16_s16816gemm_bf16_64x64_32x6_nt_align2::Params)",
+        "count": 100,
+        "total_us": 558.8759999999999,
+        "max_us": 6.08,
+        "mean_us": 5.588759999999999,
+        "summed_fraction": 0.00017332253879650354
+      },
+      {
+        "name": "ncclDevKernel_AllReduce_Sum_u64_RING_LL(ncclDevKernelArgsStorage<4096ul>)",
+        "count": 1,
+        "total_us": 537.022,
+        "max_us": 537.022,
+        "mean_us": 537.022,
+        "summed_fraction": 0.00016654502327810813
+      },
+      {
+        "name": "memcpy32_post",
+        "count": 510,
+        "total_us": 536.3299999999996,
+        "max_us": 5.28,
+        "mean_us": 1.0516274509803913,
+        "summed_fraction": 0.00016633041539219556
+      },
+      {
+        "name": "void at::native::unrolled_elementwise_kernel<at::native::BinaryFunctor<float, float, float, at::native::maximum_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float, float)#1}>, std::array<char*, 3ul>, 4, TrivialOffsetCalculator<2, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast>(int, at::native::BinaryFunctor<float, float, float, at::native::maximum_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float, float)#1}>, std::array<char*, 3ul>, TrivialOffsetCalculator<2, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast)",
+        "count": 400,
+        "total_us": 526.8859999999986,
+        "max_us": 1.984,
+        "mean_us": 1.3172149999999965,
+        "summed_fraction": 0.00016340157597809592
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::nan_to_num_kernel_cuda(at::TensorIteratorBase&, std::optional<double>, std::optional<double>, std::optional<double>)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::nan_to_num_kernel_cuda(at::TensorIteratorBase&, std::optional<double>, std::optional<double>, std::optional<double>)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>)",
+        "count": 400,
+        "total_us": 523.3929999999973,
+        "max_us": 1.728,
+        "mean_us": 1.3084824999999933,
+        "summed_fraction": 0.0001623183023574423
+      },
+      {
+        "name": "triton_poi_fused__to_copy_copy__lerp_mean_pow_3",
+        "count": 300,
+        "total_us": 514.413,
+        "max_us": 5.568,
+        "mean_us": 1.71471,
+        "summed_fraction": 0.00015953336187262614
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::compare_scalar_kernel<float>(at::TensorIteratorBase&, at::native::(anonymous namespace)::OpType, float)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::compare_scalar_kernel<float>(at::TensorIteratorBase&, at::native::(anonymous namespace)::OpType, float)::{lambda(float)#1}, std::array<char*, 2ul>)",
+        "count": 400,
+        "total_us": 477.52700000000056,
+        "max_us": 1.376,
+        "mean_us": 1.1938175000000013,
+        "summed_fraction": 0.00014809401724868854
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_split_with_sizes_stack_view_133",
+        "count": 100,
+        "total_us": 465.56300000000005,
+        "max_us": 5.535,
+        "mean_us": 4.65563,
+        "summed_fraction": 0.00014438365778762481
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy_mul_split_sum_6",
+        "count": 100,
+        "total_us": 462.3019999999999,
+        "max_us": 4.864,
+        "mean_us": 4.6230199999999995,
+        "summed_fraction": 0.00014337233363161272
+      },
+      {
+        "name": "triton_red_fused_cat_mul_slice_sum_unbind_view_25",
+        "count": 100,
+        "total_us": 460.3850000000001,
+        "max_us": 5.344,
+        "mean_us": 4.603850000000001,
+        "summed_fraction": 0.00014277782016731497
+      },
+      {
+        "name": "triton_poi_fused__to_copy_cat_index_mul_slice_unbind_unsqueeze_view_29",
+        "count": 100,
+        "total_us": 454.1060000000001,
+        "max_us": 5.28,
+        "mean_us": 4.541060000000001,
+        "summed_fraction": 0.00014083053271696239
+      },
+      {
+        "name": "triton_red_fused__to_copy_clamp_min_lerp_mean_mul_pow_rsqrt_sum_1",
+        "count": 200,
+        "total_us": 443.7369999999999,
+        "max_us": 5.409,
+        "mean_us": 2.2186849999999994,
+        "summed_fraction": 0.00013761482582530667
+      },
+      {
+        "name": "void at::native::index_elementwise_kernel<128, 4, at::native::index_copy_kernel_impl<at::native::OpaqueType<4> >(at::TensorIterator&, long, long, long)::{lambda(int)#1}>(long, at::native::index_copy_kernel_impl<at::native::OpaqueType<4> >(at::TensorIterator&, long, long, long)::{lambda(int)#1})",
+        "count": 100,
+        "total_us": 442.81799999999987,
+        "max_us": 4.991,
+        "mean_us": 4.4281799999999985,
+        "summed_fraction": 0.00013732981910976694
+      },
+      {
+        "name": "triton_poi_fused__to_copy_cat_index_mul_slice_unbind_unsqueeze_view_52",
+        "count": 100,
+        "total_us": 442.20300000000003,
+        "max_us": 5.503,
+        "mean_us": 4.42203,
+        "summed_fraction": 0.00013713909100306738
+      },
+      {
+        "name": "triton_red_fused__to_copy_mul_mv_sub_t_2",
+        "count": 100,
+        "total_us": 435.1639999999998,
+        "max_us": 4.896,
+        "mean_us": 4.351639999999998,
+        "summed_fraction": 0.0001349561070306144
+      },
+      {
+        "name": "triton_poi_fused__to_copy_clamp_min_copy__div_lerp_mean_mul_pow_rsqrt_sqrt_3",
+        "count": 100,
+        "total_us": 435.03900000000004,
+        "max_us": 14.048,
+        "mean_us": 4.350390000000001,
+        "summed_fraction": 0.00013491734115526902
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_32x32_32x1_tn_align2>(cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_32x32_32x1_tn_align2::Params)",
+        "count": 100,
+        "total_us": 430.884,
+        "max_us": 4.992,
+        "mean_us": 4.30884,
+        "summed_fraction": 0.0001336287634587863
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_32x32_32x2_tn_align2>(cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_32x32_32x2_tn_align2::Params)",
+        "count": 100,
+        "total_us": 424.9579999999999,
+        "max_us": 4.416,
+        "mean_us": 4.249579999999999,
+        "summed_fraction": 0.00013179095084040924
+      },
+      {
+        "name": "triton_red_fused__unsafe_view_add_mul_select_sum_99",
+        "count": 100,
+        "total_us": 419.6439999999999,
+        "max_us": 4.257,
+        "mean_us": 4.196439999999999,
+        "summed_fraction": 0.00013014293594772351
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__fused_rms_norm_backward__to_copy_split_4",
+        "count": 100,
+        "total_us": 418.9480000000001,
+        "max_us": 4.543,
+        "mean_us": 4.1894800000000005,
+        "summed_fraction": 0.00012992708755380013
+      },
+      {
+        "name": "void dot_kernel<float, 128, 0, cublasDotParams<cublasGemvTensorStridedBatched<__nv_bfloat16 const>, cublasGemvTensorStridedBatched<float> > >(cublasDotParams<cublasGemvTensorStridedBatched<__nv_bfloat16 const>, cublasGemvTensorStridedBatched<float> >)",
+        "count": 100,
+        "total_us": 418.40000000000026,
+        "max_us": 4.736,
+        "mean_us": 4.184000000000003,
+        "summed_fraction": 0.00012975713795628573
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_bmm_gelu_gelu_backward_permute_squeeze_view_17",
+        "count": 100,
+        "total_us": 413.6929999999999,
+        "max_us": 4.384,
+        "mean_us": 4.1369299999999996,
+        "summed_fraction": 0.0001282973701542774
+      },
+      {
+        "name": "triton_red_fused_add_cplm_copy_bwd_mul_select_backward_sum_view_0",
+        "count": 100,
+        "total_us": 413.0210000000002,
+        "max_us": 4.448,
+        "mean_us": 4.130210000000002,
+        "summed_fraction": 0.00012808896480842036
+      },
+      {
+        "name": "triton_per_fused_mul_sum_63",
+        "count": 300,
+        "total_us": 410.2819999999995,
+        "max_us": 2.016,
+        "mean_us": 1.367606666666665,
+        "summed_fraction": 0.0001272395269478507
+      },
+      {
+        "name": "std::enable_if<true, void>::type internal::gemvx::kernel<int, int, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, true, true, true, false, 7, false, cublasGemvParamsEx<int, cublasGemvTensorStridedBatched<__nv_bfloat16 const>, cublasGemvTensorStridedBatched<__nv_bfloat16 const>, cublasGemvTensorStridedBatched<__nv_bfloat16>, float> >(cublasGemvParamsEx<int, cublasGemvTensorStridedBatched<__nv_bfloat16 const>, cublasGemvTensorStridedBatched<__nv_bfloat16 const>, cublasGemvTensorStridedBatched<__nv_bfloat16>, float>)",
+        "count": 100,
+        "total_us": 408.80499999999984,
+        "max_us": 5.216,
+        "mean_us": 4.088049999999998,
+        "summed_fraction": 0.00012678146936476897
+      },
+      {
+        "name": "triton_poi_fused__to_copy_cat_index_mul_slice_unbind_unsqueeze_view_19",
+        "count": 100,
+        "total_us": 402.4930000000001,
+        "max_us": 4.8,
+        "mean_us": 4.024930000000001,
+        "summed_fraction": 0.00012482394772332528
+      },
+      {
+        "name": "triton_red_fused_cat_mul_slice_sum_unbind_view_79",
+        "count": 100,
+        "total_us": 380.442,
+        "max_us": 4.448,
+        "mean_us": 3.80442,
+        "summed_fraction": 0.00011798533718538534
+      },
+      {
+        "name": "triton_poi_fused__to_copy__unsafe_view_add_clamp_min_div_mul_select_slice_slice_backward_tanh_tanh_backward_view_98",
+        "count": 100,
+        "total_us": 376.95500000000015,
+        "max_us": 3.968,
+        "mean_us": 3.7695500000000015,
+        "summed_fraction": 0.00011690392432674876
+      },
+      {
+        "name": "triton_red_fused_mul_sum_50",
+        "count": 200,
+        "total_us": 376.92899999999963,
+        "max_us": 2.656,
+        "mean_us": 1.8846449999999981,
+        "summed_fraction": 0.00011689586102467674
+      },
+      {
+        "name": "triton_red_fused__to_copy_mean_pow_0",
+        "count": 100,
+        "total_us": 372.54200000000003,
+        "max_us": 13.824,
+        "mean_us": 3.72542,
+        "summed_fraction": 0.000115535333863553
+      },
+      {
+        "name": "triton_red_fused__unsafe_view_cat_clone_mul_slice_sum_unbind_view_93",
+        "count": 100,
+        "total_us": 369.9820000000002,
+        "max_us": 4.0,
+        "mean_us": 3.699820000000002,
+        "summed_fraction": 0.00011474140873647826
+      },
+      {
+        "name": "triton_per_fused__to_copy_mean_pow_1",
+        "count": 100,
+        "total_us": 366.23899999999986,
+        "max_us": 16.352,
+        "mean_us": 3.6623899999999985,
+        "summed_fraction": 0.00011358060336513404
+      },
+      {
+        "name": "triton_per_fused__to_copy_clamp_min_lerp_mean_mul_pow_rsqrt_sum_2",
+        "count": 100,
+        "total_us": 362.91200000000015,
+        "max_us": 15.424,
+        "mean_us": 3.6291200000000017,
+        "summed_fraction": 0.00011254881082693967
+      },
+      {
+        "name": "void cublasLt::splitKreduce_kernel<32, 16, int, __nv_bfloat16, __nv_bfloat16, float, __nv_bfloat16, false, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, true, false, false>(cublasLt::cublasSplitKParams<float>, __nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16*, __nv_bfloat16*, float const*, float const*, __nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16*, void*, long, float*, int*, float*, float*, float const*, float const*, float const*, float const*, float const*)",
+        "count": 100,
+        "total_us": 361.2800000000003,
+        "max_us": 3.711,
+        "mean_us": 3.612800000000003,
+        "summed_fraction": 0.00011204268355842954
+      },
+      {
+        "name": "triton_red_fused__unsafe_view_cat_clone_mul_slice_sum_unbind_view_52",
+        "count": 100,
+        "total_us": 343.586,
+        "max_us": 3.936,
+        "mean_us": 3.43586,
+        "summed_fraction": 0.0001065552963715305
+      },
+      {
+        "name": "triton_red_fused__to_copy_mul_sum_unbind_view_65",
+        "count": 100,
+        "total_us": 338.2689999999999,
+        "max_us": 4.127,
+        "mean_us": 3.382689999999999,
+        "summed_fraction": 0.00010490635109783646
+      },
+      {
+        "name": "triton_red_fused__to_copy_mul_sum_unbind_view_81",
+        "count": 100,
+        "total_us": 338.23700000000014,
+        "max_us": 4.095,
+        "mean_us": 3.382370000000001,
+        "summed_fraction": 0.0001048964270337481
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy_cplm_copy_fwd_mul_mv_split_view_75",
+        "count": 100,
+        "total_us": 333.1810000000001,
+        "max_us": 3.424,
+        "mean_us": 3.331810000000001,
+        "summed_fraction": 0.00010332842490777538
+      },
+      {
+        "name": "triton_poi_fused_add_select_backward_36",
+        "count": 200,
+        "total_us": 312.61000000000024,
+        "max_us": 2.273,
+        "mean_us": 1.5630500000000012,
+        "summed_fraction": 9.694880233392564e-05
+      },
+      {
+        "name": "triton_red_fused__to_copy_mul_sum_unbind_view_43",
+        "count": 100,
+        "total_us": 306.9070000000002,
+        "max_us": 3.744,
+        "mean_us": 3.069070000000002,
+        "summed_fraction": 9.518014803716488e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_copy__lerp_mean_pow_4",
+        "count": 100,
+        "total_us": 304.50600000000014,
+        "max_us": 11.423,
+        "mean_us": 3.045060000000001,
+        "summed_fraction": 9.443553310352949e-05
+      },
+      {
+        "name": "void at::native::(anonymous namespace)::CatArrayBatchedCopy_alignedK_contig<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 1, 128, 1, 16>(at::native::(anonymous namespace)::OpaqueType<4u>*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 128, 1>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)",
+        "count": 149,
+        "total_us": 303.9139999999999,
+        "max_us": 4.896,
+        "mean_us": 2.0396912751677845,
+        "summed_fraction": 9.425193791789335e-05
+      },
+      {
+        "name": "triton_red_fused__to_copy_mul_sum_unbind_view_95",
+        "count": 100,
+        "total_us": 302.97200000000004,
+        "max_us": 3.105,
+        "mean_us": 3.02972,
+        "summed_fraction": 9.395979828129011e-05
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy_split_76",
+        "count": 100,
+        "total_us": 289.059,
+        "max_us": 2.945,
+        "mean_us": 2.8905900000000004,
+        "summed_fraction": 8.964500129184029e-05
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<2, at::native::BinaryFunctor<float, float, float, at::native::maximum_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float, float)#1}>, std::array<char*, 3ul> >(int, at::native::BinaryFunctor<float, float, float, at::native::maximum_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float, float)#1}>, std::array<char*, 3ul>)",
+        "count": 200,
+        "total_us": 284.1629999999995,
+        "max_us": 1.632,
+        "mean_us": 1.4208149999999975,
+        "summed_fraction": 8.81266194863096e-05
+      },
+      {
+        "name": "triton_per_fused__unsafe_view_cat_clone_mul_slice_sum_unbind_view_53",
+        "count": 200,
+        "total_us": 278.79099999999977,
+        "max_us": 1.632,
+        "mean_us": 1.393954999999999,
+        "summed_fraction": 8.646061722746367e-05
+      },
+      {
+        "name": "triton_red_fused_mul_sigmoid_sum_107",
+        "count": 100,
+        "total_us": 277.474,
+        "max_us": 2.944,
+        "mean_us": 2.77474,
+        "summed_fraction": 8.60521799648241e-05
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul> >(int, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul>)",
+        "count": 200,
+        "total_us": 275.01300000000003,
+        "max_us": 1.665,
+        "mean_us": 1.3750650000000002,
+        "summed_fraction": 8.528895741102293e-05
+      },
+      {
+        "name": "triton_poi_fused_add_select_backward_91",
+        "count": 100,
+        "total_us": 274.8120000000001,
+        "max_us": 2.944,
+        "mean_us": 2.7481200000000015,
+        "summed_fraction": 8.522662188346747e-05
+      },
+      {
+        "name": "triton_per_fused_cat_mul_slice_sum_unbind_view_26",
+        "count": 200,
+        "total_us": 274.08799999999974,
+        "max_us": 1.728,
+        "mean_us": 1.3704399999999988,
+        "summed_fraction": 8.500208993346651e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy_clamp_min_lerp_mean_mul_pow_rsqrt_sum_1",
+        "count": 100,
+        "total_us": 260.7630000000001,
+        "max_us": 7.647,
+        "mean_us": 2.607630000000001,
+        "summed_fraction": 8.08696476216418e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy_add_mul_stack_sum_unbind_view_66",
+        "count": 200,
+        "total_us": 257.95299999999975,
+        "max_us": 1.729,
+        "mean_us": 1.2897649999999987,
+        "summed_fraction": 7.9998190743876e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_add_select_backward_137",
+        "count": 200,
+        "total_us": 254.93499999999995,
+        "max_us": 1.44,
+        "mean_us": 1.2746749999999998,
+        "summed_fraction": 7.906222744953555e-05
+      },
+      {
+        "name": "triton_per_fused_mul_sum_59",
+        "count": 200,
+        "total_us": 252.10100000000006,
+        "max_us": 1.984,
+        "mean_us": 1.2605050000000002,
+        "summed_fraction": 7.818332752370357e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy_stack_sum_view_94",
+        "count": 200,
+        "total_us": 245.47800000000032,
+        "max_us": 1.568,
+        "mean_us": 1.2273900000000015,
+        "summed_fraction": 7.612935638440041e-05
+      },
+      {
+        "name": "void at_cuda_detail::cub::DeviceRadixSortHistogramKernel<at_cuda_detail::cub::DeviceRadixSortPolicy<int, at::cuda::cub::detail::OpaqueType<8>, unsigned long long>::Policy900, false, int, unsigned long long, at_cuda_detail::cub::detail::identity_decomposer_t>(unsigned long long*, int const*, unsigned long long, int, int, at_cuda_detail::cub::detail::identity_decomposer_t)",
+        "count": 50,
+        "total_us": 241.18299999999994,
+        "max_us": 7.072,
+        "mean_us": 4.8236599999999985,
+        "summed_fraction": 7.479736090753068e-05
+      },
+      {
+        "name": "void at::native::(anonymous namespace)::indexSelectSmallIndex<float, long, unsigned int, 1, 1, -2>(at::cuda::detail::TensorInfo<float, unsigned int>, at::cuda::detail::TensorInfo<float const, unsigned int>, at::cuda::detail::TensorInfo<long const, unsigned int>, int, int, unsigned int, long)",
+        "count": 100,
+        "total_us": 239.97099999999998,
+        "max_us": 2.656,
+        "mean_us": 2.39971,
+        "summed_fraction": 7.442148698018122e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_add_mul_slice_backward_67",
+        "count": 100,
+        "total_us": 238.428,
+        "max_us": 2.625,
+        "mean_us": 2.38428,
+        "summed_fraction": 7.394296101491701e-05
+      },
+      {
+        "name": "triton_per_fused__softmax__to_copy_div_expand_index_max_mul_scatter_add_unsqueeze_view_38",
+        "count": 100,
+        "total_us": 237.44300000000007,
+        "max_us": 2.817,
+        "mean_us": 2.3744300000000007,
+        "summed_fraction": 7.36374859171949e-05
+      },
+      {
+        "name": "triton_per_fused__unsafe_view_add_mul_select_slice_slice_backward_sum_68",
+        "count": 100,
+        "total_us": 234.46199999999993,
+        "max_us": 2.496,
+        "mean_us": 2.3446199999999995,
+        "summed_fraction": 7.271299732195659e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_slice_backward_split_with_sizes_stack_view_125",
+        "count": 100,
+        "total_us": 224.512,
+        "max_us": 2.624,
+        "mean_us": 2.24512,
+        "summed_fraction": 6.96272336444589e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_cat_clone_slice_unbind_view_87",
+        "count": 100,
+        "total_us": 222.11799999999994,
+        "max_us": 2.304,
+        "mean_us": 2.2211799999999995,
+        "summed_fraction": 6.888478959984285e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_slice_backward_split_with_sizes_stack_view_127",
+        "count": 100,
+        "total_us": 221.18099999999995,
+        "max_us": 2.624,
+        "mean_us": 2.2118099999999994,
+        "summed_fraction": 6.859420059825337e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_cat_clone_slice_unbind_view_88",
+        "count": 100,
+        "total_us": 216.35100000000008,
+        "max_us": 2.432,
+        "mean_us": 2.163510000000001,
+        "summed_fraction": 6.709628717490527e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_split_with_sizes_view_130",
+        "count": 100,
+        "total_us": 215.32000000000008,
+        "max_us": 2.368,
+        "mean_us": 2.153200000000001,
+        "summed_fraction": 6.677654623505602e-05
+      },
+      {
+        "name": "triton_per_fused_mul_sum_57",
+        "count": 100,
+        "total_us": 211.80599999999998,
+        "max_us": 2.688,
+        "mean_us": 2.11806,
+        "summed_fraction": 6.568675994734474e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_view_123",
+        "count": 100,
+        "total_us": 211.74300000000008,
+        "max_us": 3.488,
+        "mean_us": 2.1174300000000006,
+        "summed_fraction": 6.566722194617065e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_view_121",
+        "count": 100,
+        "total_us": 211.51800000000017,
+        "max_us": 3.264,
+        "mean_us": 2.115180000000002,
+        "summed_fraction": 6.559744337054888e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_split_with_sizes_view_128",
+        "count": 100,
+        "total_us": 210.45900000000012,
+        "max_us": 2.848,
+        "mean_us": 2.1045900000000013,
+        "summed_fraction": 6.526901887462222e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_view_129",
+        "count": 100,
+        "total_us": 210.14300000000003,
+        "max_us": 2.496,
+        "mean_us": 2.10143,
+        "summed_fraction": 6.517101874174889e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_split_with_sizes_view_118",
+        "count": 100,
+        "total_us": 210.07700000000003,
+        "max_us": 2.592,
+        "mean_us": 2.1007700000000002,
+        "summed_fraction": 6.51505503595665e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_view_119",
+        "count": 100,
+        "total_us": 209.7000000000001,
+        "max_us": 2.304,
+        "mean_us": 2.097000000000001,
+        "summed_fraction": 6.503363247952464e-05
+      },
+      {
+        "name": "void at::native::(anonymous namespace)::CatArrayBatchedCopy<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 1, 64, 64>(at::native::(anonymous namespace)::OpaqueType<4u>*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 64, 64>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)",
+        "count": 102,
+        "total_us": 208.51200000000006,
+        "max_us": 2.816,
+        "mean_us": 2.0442352941176476,
+        "summed_fraction": 6.46652016002415e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_view_131",
+        "count": 100,
+        "total_us": 206.3310000000001,
+        "max_us": 2.911,
+        "mean_us": 2.063310000000001,
+        "summed_fraction": 6.398881460721412e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_split_with_sizes_view_120",
+        "count": 100,
+        "total_us": 205.89300000000003,
+        "max_us": 2.304,
+        "mean_us": 2.05893,
+        "summed_fraction": 6.385297898000364e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_slice_backward_split_with_sizes_stack_view_124",
+        "count": 100,
+        "total_us": 205.212,
+        "max_us": 2.912,
+        "mean_us": 2.05212,
+        "summed_fraction": 6.364178249112163e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_split_with_sizes_view_122",
+        "count": 100,
+        "total_us": 203.65299999999993,
+        "max_us": 3.136,
+        "mean_us": 2.0365299999999995,
+        "summed_fraction": 6.315829449381317e-05
+      },
+      {
+        "name": "triton_red_fused_mul_sum_32",
+        "count": 100,
+        "total_us": 202.43400000000005,
+        "max_us": 2.24,
+        "mean_us": 2.0243400000000005,
+        "summed_fraction": 6.27802496774444e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_mul_select_slice_t_unbind_view_16",
+        "count": 100,
+        "total_us": 199.97399999999993,
+        "max_us": 2.816,
+        "mean_us": 1.9997399999999994,
+        "summed_fraction": 6.201733725064593e-05
+      },
+      {
+        "name": "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, 4, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >(int, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1>)",
+        "count": 145,
+        "total_us": 199.32900000000032,
+        "max_us": 1.728,
+        "mean_us": 1.3746827586206918,
+        "summed_fraction": 6.181730533386353e-05
+      },
+      {
+        "name": "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<c10::BFloat16, at::native::func_wrapper_t<c10::BFloat16, at::native::MinNanFunctor<c10::BFloat16> >, unsigned int, c10::BFloat16, 4, 4> >(at::native::ReduceOp<c10::BFloat16, at::native::func_wrapper_t<c10::BFloat16, at::native::MinNanFunctor<c10::BFloat16> >, unsigned int, c10::BFloat16, 4, 4>)",
+        "count": 15,
+        "total_us": 199.20099999999996,
+        "max_us": 20.992,
+        "mean_us": 13.280066666666665,
+        "summed_fraction": 6.177760907750969e-05
+      },
+      {
+        "name": "triton_poi_fused_index_10",
+        "count": 100,
+        "total_us": 196.38099999999991,
+        "max_us": 2.528,
+        "mean_us": 1.9638099999999992,
+        "summed_fraction": 6.090305092971635e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_slice_backward_split_with_sizes_stack_view_126",
+        "count": 100,
+        "total_us": 195.23900000000003,
+        "max_us": 2.656,
+        "mean_us": 1.9523900000000003,
+        "summed_fraction": 6.054888589256037e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_cat_clone_slice_unbind_view_86",
+        "count": 100,
+        "total_us": 193.63099999999986,
+        "max_us": 2.176,
+        "mean_us": 1.9363099999999986,
+        "summed_fraction": 6.005020167211646e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_t_unbind_view_61",
+        "count": 100,
+        "total_us": 192.544,
+        "max_us": 2.752,
+        "mean_us": 1.92544,
+        "summed_fraction": 5.971309362011249e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_mul_select_slice_t_unbind_view_44",
+        "count": 100,
+        "total_us": 192.288,
+        "max_us": 2.784,
+        "mean_us": 1.9228800000000001,
+        "summed_fraction": 5.963370110740501e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_mul_select_slice_t_unbind_view_31",
+        "count": 100,
+        "total_us": 190.68699999999998,
+        "max_us": 2.08,
+        "mean_us": 1.9068699999999998,
+        "summed_fraction": 5.9137187775980494e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_mul_select_slice_t_unbind_view_34",
+        "count": 100,
+        "total_us": 190.33199999999997,
+        "max_us": 2.176,
+        "mean_us": 1.9033199999999997,
+        "summed_fraction": 5.9027092689999416e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy__unsafe_view_clone_mul_select_slice_t_unbind_view_5",
+        "count": 100,
+        "total_us": 188.54399999999993,
+        "max_us": 2.368,
+        "mean_us": 1.8854399999999993,
+        "summed_fraction": 5.8472585609058104e-05
+      },
+      {
+        "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})",
+        "count": 100,
+        "total_us": 186.04300000000003,
+        "max_us": 3.584,
+        "mean_us": 1.8604300000000003,
+        "summed_fraction": 5.7696957975146405e-05
+      },
+      {
+        "name": "triton_poi_fused_clone_slice_unbind_view_6",
+        "count": 100,
+        "total_us": 184.033,
+        "max_us": 2.175,
+        "mean_us": 1.8403299999999998,
+        "summed_fraction": 5.7073602699591576e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy__unsafe_view_clone_mul_select_slice_t_unbind_view_7",
+        "count": 100,
+        "total_us": 183.29100000000003,
+        "max_us": 1.953,
+        "mean_us": 1.8329100000000003,
+        "summed_fraction": 5.6843488463541e-05
+      },
+      {
+        "name": "triton_poi_fused_clone_slice_unbind_view_4",
+        "count": 100,
+        "total_us": 182.65200000000004,
+        "max_us": 2.048,
+        "mean_us": 1.8265200000000004,
+        "summed_fraction": 5.664531730877508e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_add_mul_select_backward_sigmoid_backward_view_138",
+        "count": 100,
+        "total_us": 182.558,
+        "max_us": 1.888,
+        "mean_us": 1.82558,
+        "summed_fraction": 5.6616165370515284e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_add_arange_clamp_index_searchsorted_80",
+        "count": 100,
+        "total_us": 179.55200000000008,
+        "max_us": 1.857,
+        "mean_us": 1.7955200000000007,
+        "summed_fraction": 5.568392360020796e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_view_29",
+        "count": 100,
+        "total_us": 166.783,
+        "max_us": 1.984,
+        "mean_us": 1.66783,
+        "summed_fraction": 5.1723911901919664e-05
+      },
+      {
+        "name": "triton_per_fused__softmax__to_copy_exp_max_mul_prepare_softmax_online_select_sub_unbind_38",
+        "count": 100,
+        "total_us": 165.11700000000002,
+        "max_us": 1.824,
+        "mean_us": 1.6511700000000002,
+        "summed_fraction": 5.120724031531553e-05
+      },
+      {
+        "name": "triton_per_fused__softmax__to_copy_exp_max_mul_prepare_softmax_online_select_sub_unbind_46",
+        "count": 100,
+        "total_us": 164.9940000000001,
+        "max_us": 1.824,
+        "mean_us": 1.649940000000001,
+        "summed_fraction": 5.116909469397565e-05
+      },
+      {
+        "name": "triton_per_fused__softmax__to_copy_exp_max_mul_prepare_softmax_online_select_sub_unbind_49",
+        "count": 100,
+        "total_us": 162.97700000000003,
+        "max_us": 1.855,
+        "mean_us": 1.6297700000000004,
+        "summed_fraction": 5.054356852940146e-05
+      },
+      {
+        "name": "triton_per_fused__softmax__to_copy_exp_max_mul_prepare_softmax_online_select_sub_unbind_24",
+        "count": 100,
+        "total_us": 159.2959999999999,
+        "max_us": 2.304,
+        "mean_us": 1.592959999999999,
+        "summed_fraction": 4.940199103222865e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_stack_112",
+        "count": 100,
+        "total_us": 158.81499999999994,
+        "max_us": 2.624,
+        "mean_us": 1.5881499999999995,
+        "summed_fraction": 4.925281994389937e-05
+      },
+      {
+        "name": "triton_per_fused__softmax__to_copy_exp_max_mul_prepare_softmax_online_select_sub_unbind_55",
+        "count": 100,
+        "total_us": 158.11499999999998,
+        "max_us": 1.76,
+        "mean_us": 1.5811499999999998,
+        "summed_fraction": 4.903573104196487e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_bmm_mul_permute_select_slice_split_view_64",
+        "count": 100,
+        "total_us": 157.44399999999993,
+        "max_us": 1.632,
+        "mean_us": 1.5744399999999994,
+        "summed_fraction": 4.882763582311049e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_bmm_mul_permute_select_slice_split_view_65",
+        "count": 100,
+        "total_us": 156.381,
+        "max_us": 1.6,
+        "mean_us": 1.56381,
+        "summed_fraction": 4.8497970819172814e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_view_28",
+        "count": 100,
+        "total_us": 154.529,
+        "max_us": 2.048,
+        "mean_us": 1.54529,
+        "summed_fraction": 4.792361561005465e-05
+      },
+      {
+        "name": "void reduce_1Block_kernel<float, 128, 7, cublasGemvTensorStridedBatched<float>, cublasGemvTensorStridedBatched<__nv_bfloat16 const>, cublasGemvTensorStridedBatched<__nv_bfloat16> >(float const*, float, cublasGemvTensorStridedBatched<float>, int, float const*, float, cublasGemvTensorStridedBatched<__nv_bfloat16 const>, cublasGemvTensorStridedBatched<__nv_bfloat16>, cublasPointerMode_t, cublasLtEpilogue_t, cublasGemvTensorStridedBatched<biasType<cublasGemvTensorStridedBatched<__nv_bfloat16>::value_type, float>::type const>)",
+        "count": 100,
+        "total_us": 154.01800000000003,
+        "max_us": 1.792,
+        "mean_us": 1.5401800000000003,
+        "summed_fraction": 4.7765140711642466e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_view_20",
+        "count": 100,
+        "total_us": 153.59900000000002,
+        "max_us": 1.728,
+        "mean_us": 1.5359900000000002,
+        "summed_fraction": 4.763519749748452e-05
+      },
+      {
+        "name": "triton_poi_fused_slice_squeeze_sum_27",
+        "count": 100,
+        "total_us": 153.279,
+        "max_us": 1.92,
+        "mean_us": 1.5327899999999999,
+        "summed_fraction": 4.7535956856600164e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_view_43",
+        "count": 100,
+        "total_us": 150.649,
+        "max_us": 2.08,
+        "mean_us": 1.50649,
+        "summed_fraction": 4.672032283933192e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_8",
+        "count": 100,
+        "total_us": 150.39699999999988,
+        "max_us": 1.888,
+        "mean_us": 1.5039699999999987,
+        "summed_fraction": 4.664217083463546e-05
+      },
+      {
+        "name": "triton_per_fused__softmax__to_copy_add_div_exp_mean_mul_sub_sum_56",
+        "count": 100,
+        "total_us": 150.0849999999999,
+        "max_us": 2.144,
+        "mean_us": 1.500849999999999,
+        "summed_fraction": 4.6545411209773225e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_view_15",
+        "count": 100,
+        "total_us": 149.53599999999997,
+        "max_us": 2.176,
+        "mean_us": 1.4953599999999998,
+        "summed_fraction": 4.637515148525604e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_bmm_mul_permute_select_slice_split_view_69",
+        "count": 100,
+        "total_us": 149.118,
+        "max_us": 1.536,
+        "mean_us": 1.49118,
+        "summed_fraction": 4.624551839810087e-05
+      },
+      {
+        "name": "triton_red_fused__to_copy_mul_sum_101",
+        "count": 100,
+        "total_us": 149.02099999999987,
+        "max_us": 1.536,
+        "mean_us": 1.4902099999999987,
+        "summed_fraction": 4.621543607883276e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_bmm_mul_permute_select_slice_split_view_67",
+        "count": 100,
+        "total_us": 148.9949999999999,
+        "max_us": 1.536,
+        "mean_us": 1.489949999999999,
+        "summed_fraction": 4.6207372776760916e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_bmm_mul_permute_select_slice_split_view_66",
+        "count": 100,
+        "total_us": 148.66799999999998,
+        "max_us": 1.505,
+        "mean_us": 1.4866799999999998,
+        "summed_fraction": 4.6105961246857245e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_view_35",
+        "count": 100,
+        "total_us": 148.41799999999995,
+        "max_us": 1.983,
+        "mean_us": 1.4841799999999994,
+        "summed_fraction": 4.602842949616634e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_view_51",
+        "count": 100,
+        "total_us": 148.31599999999995,
+        "max_us": 1.696,
+        "mean_us": 1.4831599999999994,
+        "summed_fraction": 4.599679654188445e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_bmm_mul_permute_select_slice_split_view_71",
+        "count": 100,
+        "total_us": 147.966,
+        "max_us": 1.505,
+        "mean_us": 1.47966,
+        "summed_fraction": 4.588825209091722e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_select_slice_view_59",
+        "count": 100,
+        "total_us": 146.97899999999987,
+        "max_us": 1.953,
+        "mean_us": 1.4697899999999988,
+        "summed_fraction": 4.558215673918951e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy__unsafe_view_add_mul_select_slice_40",
+        "count": 100,
+        "total_us": 145.43499999999986,
+        "max_us": 1.665,
+        "mean_us": 1.4543499999999987,
+        "summed_fraction": 4.5103320646922525e-05
+      },
+      {
+        "name": "at::native::(anonymous namespace)::fill_reverse_indices_kernel(long*, int, at::cuda::detail::IntDivider<unsigned int>)",
+        "count": 50,
+        "total_us": 145.312,
+        "max_us": 5.28,
+        "mean_us": 2.9062400000000004,
+        "summed_fraction": 4.506517502558265e-05
+      },
+      {
+        "name": "triton_per_fused_squeeze_sum_12",
+        "count": 100,
+        "total_us": 144.54599999999988,
+        "max_us": 1.92,
+        "mean_us": 1.4454599999999989,
+        "summed_fraction": 4.4827617741465704e-05
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::BUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 2ul> >(int, at::native::BUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 2ul>)",
+        "count": 100,
+        "total_us": 144.163,
+        "max_us": 3.808,
+        "mean_us": 1.4416300000000002,
+        "summed_fraction": 4.4708839099407287e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_81",
+        "count": 100,
+        "total_us": 143.80699999999996,
+        "max_us": 1.792,
+        "mean_us": 1.4380699999999995,
+        "summed_fraction": 4.4598433886423435e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_bmm_mul_permute_select_slice_split_view_73",
+        "count": 100,
+        "total_us": 143.35399999999987,
+        "max_us": 1.473,
+        "mean_us": 1.4335399999999987,
+        "summed_fraction": 4.4457946354171505e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_bmm_mul_permute_select_slice_split_view_68",
+        "count": 100,
+        "total_us": 143.29599999999988,
+        "max_us": 1.473,
+        "mean_us": 1.4329599999999987,
+        "summed_fraction": 4.4439958988011213e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_bmm_mul_permute_select_slice_split_view_70",
+        "count": 100,
+        "total_us": 142.6189999999999,
+        "max_us": 1.471,
+        "mean_us": 1.426189999999999,
+        "summed_fraction": 4.423000300714027e-05
+      },
+      {
+        "name": "void at_cuda_detail::cub::DeviceRadixSortExclusiveSumKernel<at_cuda_detail::cub::DeviceRadixSortPolicy<int, at::cuda::cub::detail::OpaqueType<8>, unsigned long long>::Policy900, unsigned long long>(unsigned long long*)",
+        "count": 50,
+        "total_us": 142.49300000000002,
+        "max_us": 6.912,
+        "mean_us": 2.8498600000000005,
+        "summed_fraction": 4.41909270047921e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_select_0",
+        "count": 100,
+        "total_us": 141.635,
+        "max_us": 2.496,
+        "mean_us": 1.41635,
+        "summed_fraction": 4.3924838036420927e-05
+      },
+      {
+        "name": "triton_red_fused_mul_sum_14",
+        "count": 100,
+        "total_us": 140.00199999999998,
+        "max_us": 1.44,
+        "mean_us": 1.4000199999999998,
+        "summed_fraction": 4.3418400640907985e-05
+      },
+      {
+        "name": "triton_poi_fused_add_mul_84",
+        "count": 100,
+        "total_us": 137.43699999999993,
+        "max_us": 1.92,
+        "mean_us": 1.3743699999999992,
+        "summed_fraction": 4.262292487881936e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_cat_expand_mul_select_split_58",
+        "count": 100,
+        "total_us": 137.11900000000009,
+        "max_us": 1.6,
+        "mean_us": 1.3711900000000008,
+        "summed_fraction": 4.252430449194059e-05
+      },
+      {
+        "name": "triton_red_fused_sum_71",
+        "count": 100,
+        "total_us": 136.67100000000002,
+        "max_us": 1.408,
+        "mean_us": 1.3667100000000003,
+        "summed_fraction": 4.238536759470248e-05
+      },
+      {
+        "name": "triton_red_fused__to_copy_mul_mv_sub_t_3",
+        "count": 100,
+        "total_us": 136.26100000000002,
+        "max_us": 1.408,
+        "mean_us": 1.3626100000000003,
+        "summed_fraction": 4.225821552356941e-05
+      },
+      {
+        "name": "triton_poi_fused__unsafe_view_add_bmm_mul_permute_select_slice_split_view_72",
+        "count": 100,
+        "total_us": 132.88999999999984,
+        "max_us": 1.345,
+        "mean_us": 1.3288999999999984,
+        "summed_fraction": 4.12127773972533e-05
+      },
+      {
+        "name": "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl_nocast<at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1} const&)::{lambda(int)#1})",
+        "count": 100,
+        "total_us": 132.57,
+        "max_us": 1.6,
+        "mean_us": 1.3256999999999999,
+        "summed_fraction": 4.1113536756369e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy_mul_select_slice_stack_sum_view_51",
+        "count": 100,
+        "total_us": 132.391,
+        "max_us": 1.6,
+        "mean_us": 1.32391,
+        "summed_fraction": 4.105802402287431e-05
+      },
+      {
+        "name": "triton_per_fused_mul_sum_22",
+        "count": 100,
+        "total_us": 132.15599999999992,
+        "max_us": 1.696,
+        "mean_us": 1.3215599999999992,
+        "summed_fraction": 4.098514417722485e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy_add_mul_stack_sum_unbind_view_96",
+        "count": 100,
+        "total_us": 131.42399999999998,
+        "max_us": 1.6,
+        "mean_us": 1.3142399999999999,
+        "summed_fraction": 4.0758131211201916e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy_mul_select_slice_stack_sum_view_97",
+        "count": 100,
+        "total_us": 131.26300000000003,
+        "max_us": 1.728,
+        "mean_us": 1.3126300000000004,
+        "summed_fraction": 4.0708200763756996e-05
+      },
+      {
+        "name": "triton_poi_fused_add_select_backward_slice_backward_35",
+        "count": 100,
+        "total_us": 131.19600000000003,
+        "max_us": 1.505,
+        "mean_us": 1.3119600000000002,
+        "summed_fraction": 4.0687422254571835e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy_mul_select_slice_stack_sum_view_92",
+        "count": 100,
+        "total_us": 131.04199999999997,
+        "max_us": 1.536,
+        "mean_us": 1.3104199999999997,
+        "summed_fraction": 4.0639662696146224e-05
+      },
+      {
+        "name": "triton_per_fused__unsafe_view_add_mul_select_slice_slice_backward_sum_70",
+        "count": 100,
+        "total_us": 131.0049999999999,
+        "max_us": 1.6,
+        "mean_us": 1.310049999999999,
+        "summed_fraction": 4.0628187997043956e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy_mul_select_slice_stack_sum_view_61",
+        "count": 100,
+        "total_us": 130.68700000000007,
+        "max_us": 2.112,
+        "mean_us": 1.3068700000000006,
+        "summed_fraction": 4.052956761016518e-05
+      },
+      {
+        "name": "triton_poi_fused_add_select_backward_slice_backward_view_34",
+        "count": 100,
+        "total_us": 130.6210000000001,
+        "max_us": 1.632,
+        "mean_us": 1.306210000000001,
+        "summed_fraction": 4.050909922798279e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy_mul_sum_unbind_view_44",
+        "count": 100,
+        "total_us": 130.04500000000004,
+        "max_us": 1.504,
+        "mean_us": 1.3004500000000005,
+        "summed_fraction": 4.033046607439095e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy__unsafe_view_add_mul_select_sum_100",
+        "count": 100,
+        "total_us": 129.99100000000007,
+        "max_us": 1.569,
+        "mean_us": 1.2999100000000008,
+        "summed_fraction": 4.031371921624172e-05
+      },
+      {
+        "name": "triton_poi_fused_mul_view_16",
+        "count": 100,
+        "total_us": 129.69399999999996,
+        "max_us": 1.343,
+        "mean_us": 1.2969399999999995,
+        "summed_fraction": 4.02216114964209e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_clamp_77",
+        "count": 100,
+        "total_us": 128.64000000000013,
+        "max_us": 1.472,
+        "mean_us": 1.2864000000000013,
+        "summed_fraction": 3.989473763550813e-05
+      },
+      {
+        "name": "triton_red_fused_mul_sum_33",
+        "count": 100,
+        "total_us": 126.59000000000012,
+        "max_us": 1.28,
+        "mean_us": 1.2659000000000011,
+        "summed_fraction": 3.9258977279842774e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy_mul_select_slice_stack_sum_view_90",
+        "count": 100,
+        "total_us": 126.21100000000001,
+        "max_us": 1.952,
+        "mean_us": 1.26211,
+        "summed_fraction": 3.914143914579534e-05
+      },
+      {
+        "name": "triton_poi_fused_add_select_backward_slice_backward_view_103",
+        "count": 100,
+        "total_us": 125.59599999999985,
+        "max_us": 1.44,
+        "mean_us": 1.2559599999999984,
+        "summed_fraction": 3.895071103909568e-05
+      },
+      {
+        "name": "triton_per_fused_sum_1",
+        "count": 100,
+        "total_us": 124.86600000000001,
+        "max_us": 1.536,
+        "mean_us": 1.24866,
+        "summed_fraction": 3.872431832707831e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy_mul_select_slice_stack_sum_view_78",
+        "count": 100,
+        "total_us": 124.19800000000004,
+        "max_us": 1.44,
+        "mean_us": 1.2419800000000003,
+        "summed_fraction": 3.851715348923224e-05
+      },
+      {
+        "name": "triton_red_fused_sum_72",
+        "count": 100,
+        "total_us": 124.03000000000003,
+        "max_us": 1.28,
+        "mean_us": 1.2403000000000004,
+        "summed_fraction": 3.8465052152767956e-05
+      },
+      {
+        "name": "triton_per_fused__unsafe_view_add_mul_select_slice_slice_backward_sum_69",
+        "count": 100,
+        "total_us": 123.71300000000008,
+        "max_us": 1.28,
+        "mean_us": 1.2371300000000007,
+        "summed_fraction": 3.836674189289191e-05
+      },
+      {
+        "name": "triton_poi_fused_select_sigmoid_47",
+        "count": 100,
+        "total_us": 123.3309999999999,
+        "max_us": 1.856,
+        "mean_us": 1.233309999999999,
+        "summed_fraction": 3.824827337783617e-05
+      },
+      {
+        "name": "triton_poi_fused_slice_squeeze_sum_28",
+        "count": 100,
+        "total_us": 122.20899999999993,
+        "max_us": 1.249,
+        "mean_us": 1.2220899999999992,
+        "summed_fraction": 3.7900310880735434e-05
+      },
+      {
+        "name": "triton_per_fused__fused_rms_norm__to_copy_mul_split_sum_7",
+        "count": 100,
+        "total_us": 121.72699999999985,
+        "max_us": 1.249,
+        "mean_us": 1.2172699999999985,
+        "summed_fraction": 3.775082966540336e-05
+      },
+      {
+        "name": "triton_per_fused_mul_sum_58",
+        "count": 100,
+        "total_us": 121.53999999999986,
+        "max_us": 1.249,
+        "mean_us": 1.2153999999999987,
+        "summed_fraction": 3.769283591588657e-05
+      },
+      {
+        "name": "triton_red_fused_mul_sum_15",
+        "count": 100,
+        "total_us": 120.67199999999983,
+        "max_us": 1.248,
+        "mean_us": 1.2067199999999982,
+        "summed_fraction": 3.7423645677487765e-05
+      },
+      {
+        "name": "triton_poi_fused_add_select_backward_slice_backward_104",
+        "count": 100,
+        "total_us": 119.99099999999991,
+        "max_us": 1.44,
+        "mean_us": 1.1999099999999991,
+        "summed_fraction": 3.721244918860579e-05
+      },
+      {
+        "name": "triton_red_fused__to_copy_mul_sum_102",
+        "count": 100,
+        "total_us": 118.35499999999992,
+        "max_us": 1.217,
+        "mean_us": 1.1835499999999992,
+        "summed_fraction": 3.6705081412084554e-05
+      },
+      {
+        "name": "triton_per_fused__to_copy_add_index_mul_stack_sum_46",
+        "count": 100,
+        "total_us": 116.44300000000008,
+        "max_us": 1.377,
+        "mean_us": 1.1644300000000007,
+        "summed_fraction": 3.6112118582800625e-05
+      },
+      {
+        "name": "triton_poi_fused_lift_fresh_83",
+        "count": 100,
+        "total_us": 115.26300000000006,
+        "max_us": 1.185,
+        "mean_us": 1.1526300000000007,
+        "summed_fraction": 3.574616871953958e-05
+      },
+      {
+        "name": "triton_poi_fused_lift_fresh_85",
+        "count": 100,
+        "total_us": 114.46200000000009,
+        "max_us": 1.184,
+        "mean_us": 1.1446200000000009,
+        "summed_fraction": 3.5497756990325955e-05
+      },
+      {
+        "name": "triton_poi_fused_bmm_permute_slice_backward_squeeze_view_13",
+        "count": 100,
+        "total_us": 112.89600000000011,
+        "max_us": 1.153,
+        "mean_us": 1.128960000000001,
+        "summed_fraction": 3.501209810399818e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_select_2",
+        "count": 100,
+        "total_us": 110.47000000000001,
+        "max_us": 1.377,
+        "mean_us": 1.1047000000000002,
+        "summed_fraction": 3.4259729995293684e-05
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<int>, std::array<char*, 1ul> >(int, at::native::FillFunctor<int>, std::array<char*, 1ul>)",
+        "count": 100,
+        "total_us": 106.082,
+        "max_us": 1.343,
+        "mean_us": 1.0608199999999999,
+        "summed_fraction": 3.289889270716705e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_select_1",
+        "count": 100,
+        "total_us": 102.68600000000005,
+        "max_us": 1.057,
+        "mean_us": 1.0268600000000006,
+        "summed_fraction": 3.1845701405781916e-05
+      },
+      {
+        "name": "triton_poi_fused__to_copy_select_3",
+        "count": 100,
+        "total_us": 101.73300000000008,
+        "max_us": 1.057,
+        "mean_us": 1.0173300000000007,
+        "summed_fraction": 3.1550150372148226e-05
+      },
+      {
+        "name": "triton_poi_fused_lift_fresh_82",
+        "count": 100,
+        "total_us": 90.13300000000001,
+        "max_us": 0.929,
+        "mean_us": 0.9013300000000001,
+        "summed_fraction": 2.7952677140090574e-05
+      },
+      {
+        "name": "triton_poi_fused_new_full_79",
+        "count": 100,
+        "total_us": 85.47299999999997,
+        "max_us": 0.865,
+        "mean_us": 0.8547299999999997,
+        "summed_fraction": 2.6507485307212235e-05
+      },
+      {
+        "name": "triton_poi_fused_new_zeros_78",
+        "count": 100,
+        "total_us": 85.15399999999994,
+        "max_us": 0.865,
+        "mean_us": 0.8515399999999994,
+        "summed_fraction": 2.6408554793330642e-05
+      },
+      {
+        "name": "void at::native::unrolled_elementwise_kernel<at::native::FillFunctor<float>, std::array<char*, 1ul>, 4, TrivialOffsetCalculator<0, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast>(int, at::native::FillFunctor<float>, std::array<char*, 1ul>, TrivialOffsetCalculator<0, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast)",
+        "count": 25,
+        "total_us": 54.912,
+        "max_us": 3.936,
+        "mean_us": 2.1964799999999998,
+        "summed_fraction": 1.70296939757542e-05
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<8, at::native::(anonymous namespace)::launch_clamp_scalar(at::TensorIteratorBase&, c10::Scalar, c10::Scalar, at::native::detail::ClampLimits)::{lambda()#1}::operator()() const::{lambda()#9}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul> >(int, at::native::(anonymous namespace)::launch_clamp_scalar(at::TensorIteratorBase&, c10::Scalar, c10::Scalar, at::native::detail::ClampLimits)::{lambda()#1}::operator()() const::{lambda()#9}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>)",
+        "count": 30,
+        "total_us": 44.063,
+        "max_us": 1.728,
+        "mean_us": 1.4687666666666668,
+        "summed_fraction": 1.3665126122772023e-05
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<8, at::native::BUnaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 2ul> >(int, at::native::BUnaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 2ul>)",
+        "count": 30,
+        "total_us": 36.99300000000001,
+        "max_us": 1.472,
+        "mean_us": 1.2331000000000003,
+        "summed_fraction": 1.1472528213233452e-05
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<2, at::native::FillFunctor<float>, std::array<char*, 1ul> >(int, at::native::FillFunctor<float>, std::array<char*, 1ul>)",
+        "count": 13,
+        "total_us": 29.375999999999998,
+        "max_us": 3.008,
+        "mean_us": 2.2596923076923074,
+        "summed_fraction": 9.11029083318319e-06
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<8, at::native::BinaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16, at::native::maximum_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#4}::operator()() const::{lambda(c10::BFloat16, c10::BFloat16)#1}>, std::array<char*, 3ul> >(int, at::native::BinaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16, at::native::maximum_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#4}::operator()() const::{lambda(c10::BFloat16, c10::BFloat16)#1}>, std::array<char*, 3ul>)",
+        "count": 15,
+        "total_us": 23.613000000000003,
+        "max_us": 1.759,
+        "mean_us": 1.5742000000000003,
+        "summed_fraction": 7.323028916256628e-06
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<8, at::native::neg_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#9}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul> >(int, at::native::neg_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#9}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>)",
+        "count": 15,
+        "total_us": 19.331,
+        "max_us": 2.4,
+        "mean_us": 1.2887333333333333,
+        "summed_fraction": 5.9950650904229394e-06
+      },
+      {
+        "name": "void at::native::(anonymous namespace)::CatArrayBatchedCopy_vectorized<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 1, 128, 1, 16, 4>(char*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 128, 1>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)",
+        "count": 1,
+        "total_us": 3.52,
+        "max_us": 3.52,
+        "mean_us": 3.52,
+        "summed_fraction": 1.0916470497278333e-06
+      }
+    ],
+    "warning": "Kernel duration sums include overlapping streams and are not wall-time shares. Profiling overhead is present."
+  },
+  "profiled_rank": 0,
+  "profiled_device": "H100",
+  "timing_reference_eligible": false,
+  "trace_sha256": "66f3575a07c03de612ddcff2668acf072ad22a6bb185905ede2189adbcc5a624",
+  "trace_bytes": 105119566
+}

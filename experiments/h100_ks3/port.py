@@ -33,6 +33,13 @@ def publish(bank,packed,lo,hi):
 
 def install(optimization=None):
     from wr_reproduction import ks3_moe as ks,ks3_bf16_gemm as gemm
+    if 'KS3_H100_VALUE_SCATTER_WARPS' in os.environ:
+        from track_1_short.perf.kernels import value_embed
+        warps=int(os.environ['KS3_H100_VALUE_SCATTER_WARPS'])
+        if warps not in (1,2,4):raise ValueError('Invalid value-embedding scatter warp count')
+        # At 640 channels the 128-element segments need two warps to
+        # retain packed f16x2 atomics; four warps emit contended scalars.
+        value_embed.NUM_WARPS=warps
     if 'KS3_H100_NGRAM_LR_SCALE' in os.environ:
         from track_1_short import ngram_table
         factor=float(os.environ['KS3_H100_NGRAM_LR_SCALE'])
