@@ -19,5 +19,8 @@
     712,
     713
   ],
-  "port_check": "https://github.com/curvedinf/modded-nanogpt/blob/master/research_results/wr_reproduction/h100-research/clean-port/equivalence.json"
+  "port_check": "https://github.com/curvedinf/modded-nanogpt/blob/master/research_results/wr_reproduction/h100-research/clean-port/equivalence.json",
+  "status": "cancelled_insufficient_loss_margin",
+  "cancelled_seed": 719,
+  "qualification_note": "Eight completed seeds retained. Mean CE exceeds3.28 and one-sided p exceeds0.01. Seed719 interrupted without validation; remaining seeds cancelled."
 }
