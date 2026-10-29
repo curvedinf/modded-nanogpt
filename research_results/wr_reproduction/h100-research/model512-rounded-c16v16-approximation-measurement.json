@@ -1,0 +1,285 @@
+{
+  "utc": "2026-10-29T00:13:30.453948+00:00",
+  "packing": {
+    "native_eval_weight_copy_bitwise": null,
+    "dual_layouts_bitwise": true,
+    "model_refresh_and_eval_bitwise": true,
+    "delayed_model_scales_bitwise": true,
+    "torch_rounding_different_elements": 0,
+    "elements": 62914560
+  },
+  "oracle": [
+    {
+      "tokens": 16384,
+      "projection_relative_rms": 0.0003334515495225787,
+      "rounded_projection_matches_fp32_cast": true,
+      "weight_gradient_relative_rms": 0.0017985933227464557,
+      "accumulated_gradient_relative_rms": 0.0017985933227464557
+    },
+    {
+      "tokens": 49152,
+      "projection_relative_rms": 0.0003339658724144101,
+      "rounded_projection_matches_fp32_cast": true
+    }
+  ],
+  "cases": [
+    {
+      "tokens": 16384,
+      "producers": {
+        "input": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "gathered_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        }
+      },
+      "post_jacobian": {
+        "jacobian_relative_rms": 0.05807492882013321,
+        "fp64_contraction": 2.248566095418039,
+        "actual_post": 2.2485663890838623,
+        "contraction_error_over_l2": 1.1442505407194509e-07,
+        "cancellation_ratio": 0.8761397367805804
+      },
+      "errors_versus_bf16": {
+        "output": 0.05811965465545654,
+        "dx": 0.08883867412805557,
+        "router": 0.058751534670591354,
+        "post": 0.09162340313196182,
+        "geometry": 0.07983777672052383,
+        "weights": 0.08426077663898468
+      },
+      "errors_versus_full_cache": {
+        "output": 0.00792733859270811,
+        "dx": 0.007099147420376539,
+        "router": 0.008728187531232834,
+        "post": 0.010798992589116096,
+        "geometry": 0.0005895959911867976,
+        "weights": 0.007202772423624992
+      },
+      "errors_versus_default_vjp_tile": null,
+      "errors_versus_full_precision_temporaries": {
+        "output": 0.007927332073450089,
+        "dx": 0.0070965527556836605,
+        "router": 0.008727769367396832,
+        "post": 0.010958021506667137,
+        "geometry": 0.000589601113460958,
+        "weights": 0.00720135448500514
+      },
+      "errors_versus_unfused_amax": {
+        "output": 0.0,
+        "dx": 0.0,
+        "router": 0.0,
+        "post": 0.0,
+        "geometry": 0.0,
+        "weights": 0.0
+      },
+      "timing": {
+        "bf16": {
+          "samples_ms": [
+            0.7357148417720089,
+            0.734314979825701,
+            0.7355755465371269
+          ],
+          "median_ms": 0.7355755465371269
+        },
+        "fp8": {
+          "samples_ms": [
+            0.5824007624671572,
+            0.5828929583231608,
+            0.5817223288796165
+          ],
+          "median_ms": 0.5824007624671572
+        },
+        "fp8_full_cache": {
+          "samples_ms": [
+            0.6262465435525645,
+            0.6268296324688456,
+            0.6270015965337339
+          ],
+          "median_ms": 0.6268296324688456
+        },
+        "fp8_full_precision_temporaries": {
+          "samples_ms": [
+            0.6110989661443801,
+            0.6109419202804566,
+            0.6108271280924479
+          ],
+          "median_ms": 0.6109419202804566
+        },
+        "fp8_unfused_amax": {
+          "samples_ms": [
+            0.5921299752734956,
+            0.5892363166809083,
+            0.5915131478082566
+          ],
+          "median_ms": 0.5915131478082566
+        }
+      },
+      "scales": {
+        "post": 0.019746163859963417,
+        "dpre": 8.713697070561466e-07
+      },
+      "oracle_passed": true,
+      "strict_equivalence_passed": false,
+      "passed": false
+    },
+    {
+      "tokens": 49152,
+      "producers": {
+        "input": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "geometry_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        },
+        "gathered_gradient": {
+          "bitwise_equal": true,
+          "finite": true
+        }
+      },
+      "post_jacobian": {
+        "jacobian_relative_rms": 0.05805068463087082,
+        "fp64_contraction": -4.76617361453855,
+        "actual_post": -4.766172409057617,
+        "contraction_error_over_l2": 2.690112578223432e-07,
+        "cancellation_ratio": 1.0636040140527008
+      },
+      "errors_versus_bf16": {
+        "output": 0.05809544399380684,
+        "dx": 0.08869705349206924,
+        "router": 0.05786747857928276,
+        "post": 0.07078038901090622,
+        "geometry": 0.0795288011431694,
+        "weights": 0.08422049880027771
+      },
+      "errors_versus_full_cache": {
+        "output": 0.008044122718274593,
+        "dx": 0.007160412147641182,
+        "router": 0.00847721379250288,
+        "post": 0.005837432108819485,
+        "geometry": 0.0005881514516659081,
+        "weights": 0.007357059046626091
+      },
+      "errors_versus_default_vjp_tile": null,
+      "errors_versus_full_precision_temporaries": {
+        "output": 0.008044108748435974,
+        "dx": 0.007160387467592955,
+        "router": 0.00847222376614809,
+        "post": 0.005841783247888088,
+        "geometry": 0.0005881501128897071,
+        "weights": 0.00735704880207777
+      },
+      "errors_versus_unfused_amax": {
+        "output": 0.0,
+        "dx": 0.0,
+        "router": 0.0,
+        "post": 0.0,
+        "geometry": 0.0,
+        "weights": 0.0
+      },
+      "timing": {
+        "bf16": {
+          "samples_ms": [
+            1.983839155498304,
+            1.98393430207905,
+            1.9847619106895045
+          ],
+          "median_ms": 1.98393430207905
+        },
+        "fp8": {
+          "samples_ms": [
+            1.3777945927211217,
+            1.3758724666777111,
+            1.3779801654815673
+          ],
+          "median_ms": 1.3777945927211217
+        },
+        "fp8_full_cache": {
+          "samples_ms": [
+            1.6850488090515137,
+            1.686750448317755,
+            1.6859371185302734
+          ],
+          "median_ms": 1.6859371185302734
+        },
+        "fp8_full_precision_temporaries": {
+          "samples_ms": [
+            1.4529957998366583,
+            1.4500585651397706,
+            1.4500331211090087
+          ],
+          "median_ms": 1.4500585651397706
+        },
+        "fp8_unfused_amax": {
+          "samples_ms": [
+            1.3948710346221924,
+            1.3951942253112792,
+            1.3929828929901122
+          ],
+          "median_ms": 1.3948710346221924
+        }
+      },
+      "scales": {
+        "post": 0.015255160629749298,
+        "dpre": 7.146020379877882e-07
+      },
+      "oracle_passed": true,
+      "strict_equivalence_passed": false,
+      "passed": false
+    }
+  ],
+  "fused_amax": true,
+  "round_c": true,
+  "measure_approximation": true,
+  "implementation": {
+    "dpre_e4m3": false,
+    "model_dim": 512,
+    "width": 1536,
+    "gs32": true,
+    "rank": 1,
+    "cubic_only": true,
+    "compact_part": false,
+    "fuse_cubic_vjp": false,
+    "cubic_vjp_tile": null,
+    "cubic_vjp_warps": null,
+    "cubic_vjp_stages": "3",
+    "cubic_vjp_flatten": "1",
+    "cubic_vjp_moments": "0",
+    "fused_up_flatten": "1",
+    "tma_outputs": true,
+    "dw": "tma",
+    "vjp_rows": 128,
+    "vjp_cols": 32,
+    "vjp_warps": 4,
+    "gather": "tiled",
+    "tma_stores": true,
+    "c_dtype": "torch.float16",
+    "v_dtype": "torch.float16",
+    "fuse_geometry": false,
+    "fused_up_tile": null,
+    "mm": "tma",
+    "mm_tile": "128x256",
+    "reference_variant": "separate-dx-prepared-128-gate-tanh-fp16v-cubic"
+  },
+  "ptxas": {
+    "path": "/root/venvs/h100-ptxas-13.3/ptxas",
+    "version": "13.3",
+    "sha256": "7fdd01a4cf50e30746da98989c9272a907f491e6fd7fecfda14642e4375f88fb"
+  }
+}
