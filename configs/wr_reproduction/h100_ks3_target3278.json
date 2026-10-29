@@ -1,0 +1,66 @@
+{
+  "name": "ks3-1287-user-target3278",
+  "architecture": "512 residual,1536-chart KS3 at all five8top1 MoE sites,2304-wide dense branches, doubled ngram table.",
+  "geometry_optimizer": {
+    "adam_betas": [
+      0.9,
+      0.99
+    ],
+    "lr_multiplier": 0.125
+  },
+  "geometry_averaging": "Replicated geometry follows original MoE tail-average and bank-blend ticks and rates; no geometry norm rescaling.",
+  "environment": {
+    "TRAIN_SEED": "711",
+    "KS3_H100_OPT": "fp8-native",
+    "KS3_H100_TRANSPORT": "fp8",
+    "KS3_H100_PACK_ROWS": "16",
+    "TRITON_PTXAS_PATH": "/root/venvs/h100-ptxas-13.3/ptxas",
+    "KS3_H100_RANK": "1",
+    "KS3_FP8_CUBIC": "1",
+    "KS3_FP8_DW": "tma",
+    "KS3_FP8_MM": "tma",
+    "KS3_FP8_MM_TILE": "128x256",
+    "KS3_FP8_GATHER": "tiled",
+    "KS3_FP8_VJP_ROWS": "128",
+    "KS3_FP8_VJP_WARPS": "4",
+    "KS3_FP8_TMA_STORES": "1",
+    "KS3_FP8_PACKED_TRANSPORT": "1",
+    "KS3_FP8_LAYOUT_TILE": "64",
+    "KS3_FP8_TMA_OUTPUTS": "1",
+    "KS3_H100_GEOMETRY_TAIL": "1",
+    "KS3_H100_FUSED_ANVIL": "1",
+    "KS3_H100_WIDTH": "1536",
+    "KS3_H100_PROJECTION_LR": "0.6666666666666666",
+    "KS3_H100_NGRAM_LR_SCALE": "1.15",
+    "KS3_FP8_FUSED_AMAX": "1",
+    "KS3_FP8_C_DTYPE": "float16",
+    "KS3_FP8_V_DTYPE": "float16",
+    "KS3_FP8_ROUND_C": "1"
+  },
+  "validation_tokens": 10485760,
+  "scheduled_steps": 981,
+  "total_steps": 1287,
+  "base_run": "20261029T003007Z",
+  "hypothesis": "User target3.278. Use all eight old seeds mean3.280671477125 and measured0.0002520085 CE/update:10.6007 extra updates rounded up to12 to preserve even growth parity. Fixed1287-update recipe. Run series and stop on first full-validation loss>=3.28; no3.26 gate.",
+  "model_dim": 512,
+  "dense_width": 2304,
+  "growth_steps": 286,
+  "status": "prepared",
+  "ngram_multiplier": 2,
+  "memory_estimate": "Adds10.83GB decimal (10.09GiB) per GPU to the BF16 sharded ngram table, plus~85MB row optimizer state. Prior512 peak26464MiB and reserved42626MiB leave room on80GB H100.",
+  "precision_evidence": {
+    "path": "research_results/wr_reproduction/h100-research/model512-rounded-c16v16-approximation-measurement.json",
+    "strict_equivalence_passed": false,
+    "independent_oracles_passed": true,
+    "interpretation": "intentional approximate training precision, not exact system substitution",
+    "metadata_check": "research_results/wr_reproduction/h100-research/model512-rounded-c16v16-metadata-checked.json"
+  },
+  "step_calculation": {
+    "old_mean_ce": 3.280671477125,
+    "target_ce": 3.278,
+    "ce_improvement_per_update": 0.0002520085000000116,
+    "unrounded_extra_updates": 10.600742137664794,
+    "extra_updates": 12,
+    "growth_parity": 2
+  }
+}
