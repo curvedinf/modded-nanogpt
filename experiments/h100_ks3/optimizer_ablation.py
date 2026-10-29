@@ -40,6 +40,22 @@ def install_router(multiplier):
     training.AnvilAndAdam = optimizer
 
 
+def install_dense(multiplier):
+    """Adjust the dense feedforward bank's shape-scaled ANVIL updates."""
+    if not math.isfinite(multiplier) or multiplier <= 0:
+        raise ValueError('Dense learning-rate multiplier must be positive and finite')
+    from track_1_short import training
+    original = training.AnvilAndAdam
+
+    def optimizer(*args, **kwargs):
+        entry = kwargs['param_table']['mlp_bank']
+        assert entry['optim'] == 'anvil' and entry['comms'] == 'sharded'
+        entry['lr_mul'] = entry.get('lr_mul', 1.) * multiplier
+        return original(*args, **kwargs)
+
+    training.AnvilAndAdam = optimizer
+
+
 def install_schedule(multiplier):
     """Scale the common schedule, including its floor and sparse-table updates."""
     if not math.isfinite(multiplier) or multiplier <= 0:
