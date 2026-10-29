@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:28:14.749765+00:00",
+  "utc": "2026-10-29T00:28:58.174933+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -32,7 +32,7 @@
     "n": 8,
     "summary": "research_results/wr_reproduction/h100-control-calibration/summary.json"
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_half_growth266_ngram13.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_dense2304_growth274_half_temporaries.json",
   "queued_screen": [],
   "status": "ks3_running",
   "near_target": {
