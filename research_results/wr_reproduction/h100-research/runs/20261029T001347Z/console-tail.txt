@@ -1,0 +1,60 @@
+Failures:
+[1]:
+  time      : 2026-10-29_00:14:32
+  host      : 0947bd176348
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 427582)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2026-10-29_00:14:32
+  host      : 0947bd176348
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 427583)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2026-10-29_00:14:32
+  host      : 0947bd176348
+  rank      : 3 (local_rank: 3)
+  exitcode  : -15 (pid: 427584)
+  error_file: <N/A>
+  traceback : Signal 15 (SIGTERM) received by PID 427584
+[4]:
+  time      : 2026-10-29_00:14:32
+  host      : 0947bd176348
+  rank      : 4 (local_rank: 4)
+  exitcode  : 1 (pid: 427585)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[5]:
+  time      : 2026-10-29_00:14:32
+  host      : 0947bd176348
+  rank      : 5 (local_rank: 5)
+  exitcode  : 1 (pid: 427586)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[6]:
+  time      : 2026-10-29_00:14:32
+  host      : 0947bd176348
+  rank      : 6 (local_rank: 6)
+  exitcode  : 1 (pid: 427587)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[7]:
+  time      : 2026-10-29_00:14:32
+  host      : 0947bd176348
+  rank      : 7 (local_rank: 7)
+  exitcode  : 1 (pid: 427588)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-10-29_00:14:31
+  host      : 0947bd176348
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 427581)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

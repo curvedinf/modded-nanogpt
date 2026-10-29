@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:09:50.411700+00:00",
+  "utc": "2026-10-29T00:14:07.440477+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -18,8 +18,8 @@
     "loss": 3.279639244,
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
-  "current_full_run": "20261029T000926Z",
-  "current_hypothesis": "Dense ANVIL rate0.90267093384844 compensates changed shape, all else as seed701 fast baseline.",
+  "current_full_run": "20261029T001347Z",
+  "current_hypothesis": "Intentional FP16 C/V temporary precision, unchanged FP8 products; paired core ~5% faster, strict trajectory-equivalence failed but independent intended-rounding/BF16/Jacobian oracles passed; whole-update speed gate then full validation.",
   "planned_followups": [
     "If the whole-model timing screen confirms improvement, run one640/1280 full WR candidate on seed701.",
     "If any full candidate beats31.07925s atCE<=3.28, freeze and run three fresh independent seeds711\u2013713.",
@@ -32,7 +32,7 @@
     "n": 8,
     "summary": "research_results/wr_reproduction/h100-control-calibration/summary.json"
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_model640_packed_scatter.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_dense2304_growth254_half_temporaries.json",
   "queued_screen": [],
   "status": "ks3_running",
   "near_target": {

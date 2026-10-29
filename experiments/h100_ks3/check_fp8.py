@@ -13,6 +13,19 @@ from wr_reproduction import ks3_moe as core
 def err(a,b):return ((a.float()-b.float()).square().mean().sqrt()/b.float().square().mean().sqrt().clamp_min(1e-12)).item()
 def scalar(x):return torch.tensor([x],device='cuda')
 
+def metadata_checks(rows,router,post,g,caches,scales,grad,bank,flag):
+    from track_1_short.perf.kernels.moe_mlp import moe_dispatch
+    probs=torch.softmax(torch.nn.functional.linear(rows,router).float(),-1)
+    gate,expert=probs.max(-1);_,src,offs,table,_=moe_dispatch(expert,8)
+    scale=gate*post.float().reshape(())
+    us,ws,xs,gs,ps,pa,ds,da=scales
+    forward_args=(rows,src,table,caches[0],caches[2],us,ws,xs,ps,pa,g,scale)
+    result={'forward':torch.library.opcheck(fp8.forward,forward_args,test_utils=('test_faketensor',))}
+    _,y,c,xt,ht,prepared=fp8.forward(*forward_args)
+    backward_args=(grad.contiguous(),y,c,xt,ht,scale,src,offs,table,caches[3].transpose(1,2),g,prepared,us,ws,xs,gs,ps,ds,da,bank,flag,0)
+    result['backward']=torch.library.opcheck(fp8.backward_core,backward_args,test_utils=('test_faketensor',))
+    return result
+
 @torch.no_grad()
 def post_jacobian_check(rows,router,post,up,down,g,caches,scales,grad,actual_post):
     """Check the scalar derivative without dividing by a cancelling projection.
@@ -181,6 +194,7 @@ def main():
         xs=scalar(8/448);gs=scalar(2**-6);ps=scalar(1.);pa=scalar(0.);ds=scalar(2**-6);da=scalar(0.)
         scales=(us,ws,xs,gs,ps,pa,ds,da)
         producers=producer_checks(rows,router,grad,g,xs,gs,ps,ds)
+        operator_metadata=metadata_checks(rows,router,post,g,caches,scales,grad,bank,flag)
         table=torch.arange(8,device='cuda',dtype=torch.int32).repeat_interleave(t//8//128)
         af=(rows.detach().float()/xs).clamp(-448,448).to(torch.float8_e4m3fn)
         actual=fp8.mm(af,uf.transpose(1,2),table,xs,us)
@@ -274,7 +288,7 @@ def main():
             samples=[tr.testing.do_bench_cudagraph(lambda:run('fp8'),rep=40) for _ in range(3)]
             timing['fp8_unfused_amax']=dict(samples_ms=samples,median_ms=statistics.median(samples))
             fp8.FUSED_AMAX=True
-        result=dict(tokens=t,producers=producers,post_jacobian=post_check,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,errors_versus_default_vjp_tile=tile_errors,errors_versus_full_precision_temporaries=temporary_errors,errors_versus_unfused_amax=amax_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),oracle_passed=True,strict_equivalence_passed=cache_equivalent and temporary_equivalent,passed=cache_equivalent and temporary_equivalent)
+        result=dict(tokens=t,producers=producers,operator_metadata=operator_metadata,post_jacobian=post_check,errors_versus_bf16=errors,errors_versus_full_cache=cache_errors,errors_versus_default_vjp_tile=tile_errors,errors_versus_full_precision_temporaries=temporary_errors,errors_versus_unfused_amax=amax_errors,timing=timing,scales=dict(post=ps.item(),dpre=ds.item()),oracle_passed=True,strict_equivalence_passed=cache_equivalent and temporary_equivalent,passed=cache_equivalent and temporary_equivalent)
         cases.append(result);print(json.dumps(result),flush=True)
     from triton.backends.nvidia.compiler import get_ptxas
     assembler=get_ptxas(90)

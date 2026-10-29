@@ -170,7 +170,7 @@ def backward_core(grad:torch.Tensor,y:torch.Tensor,c:torch.Tensor,xt:torch.Tenso
 
 @backward_core.register_fake
 def _(grad,y,c,xt,ht,scale,src,offs,table,down,g,prepared,us,ws,xs,gs,ps,ds,da,bank,flag,layer):
-    return c.new_empty(c.shape,dtype=DPRE_DTYPE),c.new_empty((c.shape[0],)),torch.empty_like(g)
+    return c.new_empty(c.shape,dtype=DPRE_DTYPE),c.new_empty((c.shape[0],),dtype=torch.float32),torch.empty_like(g)
 
 @torch.library.custom_op('h100_ks3_fp8::dx',mutates_args=())
 def dx(dc:torch.Tensor,up:torch.Tensor,table:torch.Tensor,src:torch.Tensor,dl:torch.Tensor,router:torch.Tensor,ds:torch.Tensor,us:torch.Tensor)->torch.Tensor:
