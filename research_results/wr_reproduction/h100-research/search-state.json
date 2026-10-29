@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:33:00.675311+00:00",
+  "utc": "2026-10-29T00:35:59.592180+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -19,7 +19,7 @@
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
   "current_full_run": null,
-  "current_hypothesis": "User-directed step compliance: eight extra updates, growth274 and1275 total, prior best settings restored.",
+  "current_hypothesis": "First shorter step-count version: growth268,1269 updates. Same seed701 and all non-schedule settings as the compliant1275-update run.",
   "planned_followups": [
     "After the already-running ngram trial, prioritize extra growth updates until full CE <=3.28; start from best recent seed701 recipe.",
     "Run three nearby full-run versions of the loss-compliant recipe.",
@@ -32,9 +32,9 @@
     "n": 8,
     "summary": "research_results/wr_reproduction/h100-control-calibration/summary.json"
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_dense2304_growth268_half_temporaries.json",
+  "next_model_candidate": "configs/wr_reproduction/h100_ks3_dense2304_growth270_half_temporaries.json",
   "queued_screen": [],
-  "status": "loss_compliant_nearby_versions_next",
+  "status": "ks3_step_versions_running",
   "near_target": {
     "run": "20261028T232455Z",
     "seconds": 30.955472743,
@@ -127,9 +127,9 @@
   "current_timing_screen": null,
   "prior_startup_failure": "20261029T001347Z",
   "best_seed701_near_control": {
-    "run": "20261029T002115Z",
-    "seconds": 31.001478524,
-    "loss": 3.281089783
+    "run": "20261029T003302Z",
+    "seconds": 31.04571777,
+    "loss": 3.280622005
   },
   "deferred_screens": [
     "FP16-temporary VJP row/warp sweep",
