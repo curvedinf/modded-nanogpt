@@ -1,0 +1,36 @@
+{
+  "utc": "2026-10-29T00:37:52.590442+00:00",
+  "checks": [
+    {
+      "case": "slow_requires_explicit_override",
+      "passed": true,
+      "accepted": false
+    },
+    {
+      "case": "user_selected_slow_allowed",
+      "passed": true,
+      "accepted": true
+    },
+    {
+      "case": "bad_loss_still_rejected",
+      "passed": true,
+      "accepted": false
+    },
+    {
+      "case": "missing_source_integrity_rejected",
+      "passed": true,
+      "accepted": false
+    },
+    {
+      "case": "profile_timing_rejected",
+      "passed": true,
+      "accepted": false
+    },
+    {
+      "case": "fast_qualifier_unchanged",
+      "passed": true,
+      "accepted": true
+    }
+  ],
+  "reference_seconds": 31.07925
+}

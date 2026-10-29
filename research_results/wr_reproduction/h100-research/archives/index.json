@@ -103,5 +103,9 @@
   "ablation-20261029T003302Z.tar.gz": {
     "bytes": 1004270,
     "sha256": "3c481900eae98e482925f38f358a526177460b15a57af6faabfdb8703762857a"
+  },
+  "stopped-20261029T003600Z.tar.gz": {
+    "bytes": 1001940,
+    "sha256": "63a197284a15271005885bfdfb7837a037a5162890fddba27ceb8b9c54b599e4"
   }
 }

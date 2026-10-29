@@ -1,0 +1,35 @@
+W1029 00:37:44.039000 443798 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 443871 closing signal SIGTERM
+W1029 00:37:44.040000 443798 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 443872 closing signal SIGTERM
+W1029 00:37:44.041000 443798 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 443873 closing signal SIGTERM
+W1029 00:37:44.042000 443798 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 443874 closing signal SIGTERM
+W1029 00:37:44.043000 443798 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 443875 closing signal SIGTERM
+W1029 00:37:44.044000 443798 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 443876 closing signal SIGTERM
+W1029 00:37:44.044000 443798 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 443877 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/root/venvs/pr393-h100/bin/torchrun", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/run.py", line 991, in main
+    run(args)
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/run.py", line 982, in run
+    elastic_launch(
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 170, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 308, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 134, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 731, in run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 908, in _invoke_run
+    time.sleep(monitor_interval)
+  File "/root/venvs/pr393-h100/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 86, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 443798 got signal: 15

@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:35:59.592180+00:00",
+  "utc": "2026-10-29T00:37:52.590442+00:00",
   "instruction": "Get KS3 compliant through step count, then run multiple versions.",
   "base_run": "20261029T002115Z",
   "base_steps": 1267,
@@ -11,9 +11,9 @@
   "control_seconds": 31.07925,
   "validation_tokens": 10485760,
   "validation_protocol": "PR393 full final canonical mask, window extension and tail shipment",
-  "current_run": "20261029T003302Z",
-  "current_growth": 268,
-  "current_total_steps": 1269,
+  "current_run": null,
+  "current_growth": 270,
+  "current_total_steps": 1271,
   "subsequent_variants": "Choose three nearby step-count variants based on full validation. Prioritize fresh frozen-seed verification immediately if both loss and time qualify.",
   "results": [
     {
@@ -41,9 +41,10 @@
     "environment_identical": true
   },
   "first_loss_compliant_run": "20261029T003007Z",
-  "pending_growth_versions": [
-    270,
-    272
+  "pending_growth_versions": [],
+  "status": "ended_by_user_freeze_compliant_recipe",
+  "stopped_without_validation": [
+    "20261029T003600Z"
   ],
-  "status": "first_shorter_version_misses_loss"
+  "selected_frozen_run": "20261029T003007Z"
 }

@@ -1,5 +1,5 @@
 {
-  "utc": "2026-10-29T00:35:59.592180+00:00",
+  "utc": "2026-10-29T00:37:52.590442+00:00",
   "target": {
     "loss_lte": 3.28,
     "protocol": "Full PR393 WR final validation,10485760tokens",
@@ -19,11 +19,9 @@
     "code_commit": "463c3ef4d0f948e4633b4aa9072179cb66369b5f"
   },
   "current_full_run": null,
-  "current_hypothesis": "First shorter step-count version: growth268,1269 updates. Same seed701 and all non-schedule settings as the compliant1275-update run.",
+  "current_hypothesis": "Second shorter step-count version: growth270,1271 updates, identical non-schedule settings.",
   "planned_followups": [
-    "After the already-running ngram trial, prioritize extra growth updates until full CE <=3.28; start from best recent seed701 recipe.",
-    "Run three nearby full-run versions of the loss-compliant recipe.",
-    "If both CE <=3.28 and time <31.07925s, run three fresh frozen independent seeds before unrelated experiments."
+    "Complete fresh frozen seeds711,712,713, report statistics and stop."
   ],
   "reference": {
     "kind": "eight_completed_controls_including_original",
@@ -32,26 +30,33 @@
     "n": 8,
     "summary": "research_results/wr_reproduction/h100-control-calibration/summary.json"
   },
-  "next_model_candidate": "configs/wr_reproduction/h100_ks3_dense2304_growth270_half_temporaries.json",
+  "next_model_candidate": null,
   "queued_screen": [],
-  "status": "ks3_step_versions_running",
+  "status": "frozen_seed_series_ready",
   "near_target": {
     "run": "20261028T232455Z",
     "seconds": 30.955472743,
     "loss": 3.280070305
   },
   "verification": {
-    "required_fresh_seeds": 3,
-    "discovery_excluded": true,
-    "p_threshold": 0.01,
-    "replicator": "experiments/h100_ks3/replicate.py",
-    "summary": "experiments/h100_ks3/verification_summary.py",
-    "discovery": "20261028T232801Z",
-    "planned_seeds": [
-      701,
-      702,
-      703
-    ]
+    "utc": "2026-10-29T00:37:52.590442+00:00",
+    "discovery": "20261029T003007Z",
+    "purpose": "User-requested fresh-seed series for accepted loss-compliant recipe. This is explicitly allowed despite slower-than-control time.",
+    "seeds": [
+      711,
+      712,
+      713
+    ],
+    "comparative_pruning": false,
+    "reference_seconds": 31.07925,
+    "loss_threshold": 3.28,
+    "discovery_seconds": 31.260079786,
+    "discovery_loss": 3.279073715,
+    "frozen_code_commit": "de06b76dc292eea0f2c0cc7946d7720120c686cc",
+    "frozen_manifest_sha256": "31ff5d1e703a7b5f72d66dc701f9ba8fd68b23162b83b5be869469dc2d382af1",
+    "status": "ready",
+    "run_ids": [],
+    "after_completion": "Report all results and statistics, commit/push, do not resume optimization without new user instruction."
   },
   "verification_result": {
     "utc": "2026-10-28T23:39:48.743132+00:00",
@@ -121,9 +126,7 @@
     "published_time_win_with_significance": false,
     "scope": "Fresh-seed result with separate local-control and published-time comparisons. Published time is from a different node; no claim of maintainer acceptance or current global record."
   },
-  "next_hypotheses": [
-    "Add training steps for loss compliance, recording any excess over control time."
-  ],
+  "next_hypotheses": [],
   "current_timing_screen": null,
   "prior_startup_failure": "20261029T001347Z",
   "best_seed701_near_control": {
